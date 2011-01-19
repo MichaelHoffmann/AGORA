@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+				layout="absolute" xmlns:classes="classes.*" 
+				backgroundGradientAlphas="[1.0, 1.0]" 
+				backgroundGradientColors="[#FFFFFF, #FFFFFF]" 
+				borderStyle="none" 
+				borderThickness="0"
+				xmlns:components = "components.*"
+				verticalScrollPolicy="on"
+				creationComplete="init()"  
+>
+	<mx:states>
+		<mx:State name="loginState">
+			<mx:RemoveChild target="{claimStart}"/>
+			<mx:RemoveChild target="{schemeStart}"/>
+			<mx:RemoveChild target="{conceptStart}"/>
+			<mx:RemoveChild target="{argumentPaste}"/>
+			
+			<mx:AddChild position="lastChild">
+				<mx:Label x="10" 
+						  y="53" 
+						  text="Username"/>
+			</mx:AddChild>
+			
+			<mx:AddChild position="lastChild">
+				<mx:TextInput x="80" 
+							  y="51" 
+							  id="username"/>
+			</mx:AddChild>
+			
+			<mx:AddChild position="lastChild">
+				<mx:Label x="10" 
+						  y="79" 
+						  text="Password"/>
+			</mx:AddChild>
+			
+			<mx:AddChild position="lastChild">
+				<mx:TextInput x="80" 
+							  y="77" 
+							  id="password" 
+							  displayAsPassword="true"
+							  enter="login()"/>
+			</mx:AddChild>
+			
+			<mx:AddChild position="lastChild">
+				<mx:Button x="80" 
+						   y="107" 
+						   label="Login"
+						   click="login()"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<components:PromptLabel id="loginPrompt"
+										x="10" 
+										y="25"
+										labelText="Please Login To Continue">
+				</components:PromptLabel>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	<mx:Script source="scripts/mainApplicationScript.as"	/>
+	
+	<mx:TextArea  id="claimStart"
+				  x="10" 
+				  y="67" 
+				  width="191" 
+				  height="45" 
+				  text="What is the main claim of your argument?" 
+				  toolTip="The easiest way to construct an argument"
+				  textAlign="center"
+				  click="startWithClaim()"/>
+	<mx:TextArea id="schemeStart"
+				 x="338" 
+				 y="67" 
+				 text="Click here if you want to use a specific argument scheme" 
+				 textAlign="center" 
+				 width="184"
+				 click="startWithScheme()"/>
+	<classes:DynamicTextArea id="conceptStart"
+				 x="658" 
+				 y="67" 
+				 minWidth="195"
+				 textAlign="center"/>
+	<classes:DynamicTextArea id="argumentPaste"
+		 					 x="1027" 
+		 					 y="67"  
+		 					 click="{argumentPaste.text=''}" 
+		 					 textAlign="center"/>
+	
+	
+	<mx:RemoteObject id="loginService" destination="amfphp" source="loginmodelservice">
+		<mx:method name="verifyLogin" fault="onFault(event)" result="verifyLogin(event)" />
+	</mx:RemoteObject>	 					 
+	<components:PromptLabel id="taskPrompt"
+							x="10" 
+							y="10">
+	</components:PromptLabel>
+</mx:Application>

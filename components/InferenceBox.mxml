@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+@Author: Karthik Rangarajan
+@Version: 0.3
+
+@Description: This is a custom component that builds upon the dynamic text area. It dispatches a custom event on pressing enter. The event holds the inference that was input by the user and sends it to the main application.
+
+Changes since version 0:
+	0.4 Database interaction, changes for the same.
+	0.3	Changes in the inference text area also accepted as user input. Any change in the reason or claim updated accordingly in the reasonbox and claimbox respectively.
+	0.2 Inference box has a minimum height and minimum width which does not change when text is added. Padding offsets also taken care of through changes in DynamicTextArea.as. 
+	0.1	Minor changes in fonts, colors, and general display
+
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+		   xmlns:classes = "classes.*"
+		   creationComplete = "init()">
+	<mx:Metadata>
+		[Event(name="inferenceAccepted",type="events.StatementAcceptEvent")]
+	</mx:Metadata>
+	<mx:Script source="../scripts/inferenceBoxScript.as" />
+	
+	<!--
+	padding properties important to ensure that the text does not go out of the bounds of the text box. Flash/Flex does not recognize that the text box is rounded, and hence we need to take care of that using the padding.
+	-->
+	<classes:DynamicTextArea id="inference" 
+							 width="229" 
+							 minHeight="107" 
+							 borderThickness="1" 
+							 backgroundAlpha="0.7" 
+							 textAlign="center" 
+							 backgroundSize="100%" 
+							 backgroundColor="#D3D2D2" 
+							 cornerRadius="100" 
+							 paddingLeft="30" 
+							 paddingRight="30"
+							 paddingBottom="35"
+							 paddingTop="35" 
+							 visible = "true"
+							 fontWeight="normal" 
+							 fontSize="10" 
+							 fontFamily="Verdana"							  
+							 fontAntiAliasType="advanced"
+							 shadowDirection="center" 
+							 focusRoundedCorners="tr br tl bl" 
+							 focusThickness="0"
+							 keyDown="checkForEnter(event)"
+							 textInput="preventNewLine(event)"
+							 >
+		</classes:DynamicTextArea>
+		<mx:Button id="done"
+   	           textRollOverColor="#0b333c" 
+		       color="#B1B9BB"
+		       click="inferenceDone(event)"
+		       focusRoundedCorners="tr br tl bl"
+   		       cornerRadius="5"
+			   x="60"  
+			   label="Done" 
+			   width="100"
+			   y="{done.y-25}"
+		>
+		</mx:Button>
+	
+	<mx:RemoteObject id="inferenceService" destination="amfphp" source="inferencemodelservice">
+		<mx:method name="storeInference" fault="onFault(event)" result="storeInference(event)" />
+		<mx:method name="updateInference" fault="onFault(event)" result="updateInference(event)" />
+	</mx:RemoteObject>
+	
+
+</mx:Canvas>
