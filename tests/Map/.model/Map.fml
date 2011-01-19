@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="MapsService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">MapsService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.mapsservice</item>
+      <item name="Endpoint">gateway.php</item>
+      <item name="Destination">MapsService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">PHP</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">Map-debug/services/MapsService.php</item>
+      <item name="PHP_SERVER_ROOT">/Applications/MAMP/htdocs</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">/Applications/MAMP/htdocs/Map-debug/services</item>
+      <item name="PHP_LOCATION">/Applications/MAMP/htdocs/Map-debug/services/MapsService.php</item>
+      <item name="LINKED_FILE">MapsService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost:8888/</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:8888/Map-debug/gateway.php</item>
+      <item name="PHP_CLASS_NAME">MapsService</item>
+    </annotation>
+    <function name="getAllMaps" return-type="Maps[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">title,map_id,userName,user_id,createdDate,modifiedDate</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getMapsByID" arguments="itemID:integer" return-type="Maps">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="createMaps" arguments="item:Maps" return-type="integer">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="updateMaps" arguments="item:Maps" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="deleteMaps" arguments="itemID:integer" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="count" return-type="integer">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getMaps_paged" arguments="startIndex:integer,numItems:integer" return-type="Maps[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque,opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+  </service>
+  <entity name="Maps" persistent="true">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Maps</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">MapsService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="DataManagement">
+      <item name="create">createMaps</item>
+      <item name="update">updateMaps</item>
+      <item name="get">getMapsByID</item>
+      <item name="delete">deleteMaps</item>
+      <item name="fillFunc">getAllMaps,getMaps_paged</item>
+      <item name="managingService">MapsService</item>
+    </annotation>
+    <annotation name="getMapsByID">
+      <item name="propertySpecifier">title,map_id,userName,user_id,createdDate,modifiedDate</item>
+    </annotation>
+    <annotation name="getAllMaps">
+      <item name="propertySpecifier">title,map_id,userName,user_id,createdDate,modifiedDate</item>
+    </annotation>
+    <annotation name="getMaps_paged">
+      <item name="propertySpecifier">title,map_id,userName,user_id,createdDate,modifiedDate</item>
+      <item name="pagingEnabled">true</item>
+      <item name="positionalPagingParameters">true</item>
+      <item name="countOperation">count</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="title" type="string" required="true"/>
+    <id name="map_id" type="integer"/>
+    <property name="userName" type="string" required="true"/>
+    <property name="user_id" type="integer" required="true"/>
+    <property name="createdDate" type="date" required="true"/>
+    <property name="modifiedDate" type="date" required="true"/>
+  </entity>
+  <service name="UsersService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">UsersService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.usersservice</item>
+      <item name="Endpoint">gateway.php</item>
+      <item name="Destination">UsersService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">PHP</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">Map-debug/services/UsersService.php</item>
+      <item name="PHP_SERVER_ROOT">/Applications/MAMP/htdocs</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">/Applications/MAMP/htdocs/Map-debug/services</item>
+      <item name="PHP_LOCATION">/Applications/MAMP/htdocs/Map-debug/services/UsersService.php</item>
+      <item name="LINKED_FILE">UsersService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost:8888/</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:8888/Map-debug/gateway.php</item>
+      <item name="PHP_CLASS_NAME">UsersService</item>
+    </annotation>
+    <function name="getAllUsers" return-type="Users[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getUsersByID" arguments="itemID:integer" return-type="Users">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">lastName,email,userLevel,userName,user_id,firstName,createdDate,password</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="createUsers" arguments="item:Users" return-type="integer">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="updateUsers" arguments="item:Users" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="deleteUsers" arguments="itemID:integer" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="count" return-type="integer">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getUsers_paged" arguments="startIndex:integer,numItems:integer" return-type="Users[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque,opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+  </service>
+  <entity name="Users" persistent="true">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Users</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">UsersService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="DataManagement">
+      <item name="create">createUsers</item>
+      <item name="update">updateUsers</item>
+      <item name="get">getUsersByID</item>
+      <item name="delete">deleteUsers</item>
+      <item name="fillFunc">getAllUsers,getUsers_paged</item>
+      <item name="managingService">UsersService</item>
+    </annotation>
+    <annotation name="getAllUsers">
+      <item name="propertySpecifier">lastName,email,userLevel,userName,user_id,firstName,createdDate,password</item>
+    </annotation>
+    <annotation name="getUsers_paged">
+      <item name="propertySpecifier">lastName,email,userLevel,userName,user_id,firstName,createdDate,password</item>
+      <item name="pagingEnabled">true</item>
+      <item name="positionalPagingParameters">true</item>
+      <item name="countOperation">count</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="getUsersByID">
+      <item name="propertySpecifier">lastName,email,userLevel,userName,user_id,firstName,createdDate,password</item>
+    </annotation>
+    <property name="lastName" type="string" required="true"/>
+    <property name="email" type="string" required="true"/>
+    <property name="userLevel" type="integer" required="true"/>
+    <property name="userName" type="string" required="true"/>
+    <id name="user_id" type="integer"/>
+    <property name="firstName" type="string" required="true"/>
+    <property name="createdDate" type="date" required="true"/>
+    <property name="password" type="string" required="true"/>
+  </entity>
+</model>
