@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HTTPServiceConsumingFlickrRSSFeed.mxml -->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="400" height="500"
+			   creationComplete="photoService.send();">
+	
+	<fx:Declarations>
+		<!-- Model -->
+		<!-- Define the HTTP service -->
+		<mx:HTTPService id="photoService"
+						url="http://api.flickr.com/services/feeds/photos_public.gne"
+						resultFormat="e4x"
+						result="photoResultHandler(event);"
+						fault="photoFaultHandler(event);"/>
+		
+		<!-- Effects -->
+		<mx:Fade id="fadeIn" duration="3000" alphaFrom="0" alphaTo="1"/>
+		<mx:Fade id="fadeOut" duration="3000" alphaFrom="1" alphaTo="0"/>
+	</fx:Declarations>
+	
+	<!-- Controller -->
+	<fx:Script>
+		<![CDATA[
+			import flash.net.navigateToURL;
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable]
+			private var photoFeed:XML;
+			
+			// Define and use atom namespace
+			private namespace atom = "http://www.w3.org/2005/Atom";
+			use namespace atom;
+			
+			// The darn image URL is in the HTML content (nice one)
+			// so we have to parse it out
+			private function parseImageUrl(fromHtml:XMLList):String {
+				var pattern:RegExp = /img src="(.+?)" /;
+				var results:Array = pattern.exec(fromHtml);
+				var imageURL:String = results[1]; // backreference 1 from pattern
+				
+				return imageURL;
+			}
+			
+			// Result handler - gets called once RSS is loaded in
+			private function photoResultHandler(event:ResultEvent):void {
+				photoFeed = event.result as XML;
+			}
+			
+			// Fault handler - displays the error
+			private function photoFaultHandler(event:FaultEvent):void {
+				Alert.show(event.fault.message, "Could not load photo feed");
+			}
+			
+			// Opens author's HTML page in external window
+			private function openAuthorPage(event:MouseEvent):void {
+				var dataIndex:uint = Number(event.target.instanceIndices.toString());
+				var urlRequest:URLRequest = new URLRequest(photoFeed.entry[dataIndex].author.uri)
+				navigateToURL(urlRequest, "_blank");
+			}
+		]]>
+	</fx:Script>
+	
+	<!-- View -->
+	<!-- User Interface -->
+	<s:Panel title="Public photos" width="100%" height="100%">
+		
+		<mx:Tile width="100%" height="100%">
+			<mx:Repeater id="photos" dataProvider="{photoFeed.entry}">
+				<mx:VBox>
+					<mx:Image id="myImage"
+							  source="{parseImageUrl(photos.currentItem.content)}"
+							  completeEffect="{fadeIn}"/>
+					<s:Label text="{photos.currentItem.title}"/>
+					<mx:LinkButton label="{photos.currentItem.author.name}"
+								   click="openAuthorPage(event);" fontWeight="bold"/>
+				</mx:VBox>
+			</mx:Repeater>
+		</mx:Tile>
+		
+		<s:controlBarContent>
+			<s:Button label="Update" click="photoService.send();"/>
+		</s:controlBarContent>
+	</s:Panel>
+</s:Application>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+		   xmlns:classes="classes.*">
+		   
+		   <mx:Metadata>
+		   		[Event(name="reasonAccepted",type="events.StatementAcceptEvent")]
+		   </mx:Metadata>
+		   <mx:Script source="../scripts/reasonBoxScript.as" />	
+		   
+		    <mx:Button id="done"
+		   	          textRollOverColor="#0b333c" 
+				      color="#B1B9BB"
+				      click="callReasonAccept(event)"
+				      focusRoundedCorners="tr br tl bl"
+   				      cornerRadius="5"
+					  label="Done" 
+					  width="190"/>
+			
+			<mx:RemoteObject id="reasonService"
+						     destination="amfphp" 
+						     source="ReasonModelService">
+				<mx:method name="acceptReason" result="acceptReason(event)" fault="onFault(event)" />
+				<mx:method name="updateReason" result="updateReason(event)" fault="onFault(event)" />
+				<mx:method name="returnReason" result="displayReason(event)" fault="onFault(event)" />
+			</mx:RemoteObject>
+						      
+</mx:Canvas>

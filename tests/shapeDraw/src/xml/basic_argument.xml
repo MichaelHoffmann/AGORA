@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<author>
+		<firstName>Jonathan</firstName>
+		<lastName>Silver</lastName>
+		<userName>lucubratist</userName>
+	</author>
+	<title>Test argument</title>
+	<lastModified>10-26-2010 12:00:00</lastModified>
+	<argument>
+		<claim id="1">
+			<textValue>We should bring an umbrella.</textValue>
+			<lastModified>10-26-2010 12:00:00</lastModified>
+			<author>lucubratist</author>
+			<enabler id="1">
+				<textValue>If it's raining outside and we have to go outside, then we should bring an umbrella.</textValue>
+				<lastModified>10-26-2010 12:00:00</lastModified>
+				<author>lucubratist</author>
+				<reason id="1" isUniversal="0">
+					<textValue>It's raining outside.</textValue>
+					<lastModified>10-26-2010 12:00:00</lastModified>
+					<author>lucubratist</author>
+				</reason>
+				<reason id="2" isUniversal="0">
+					<textValue>We have to go outside.</textValue>
+					<lastModified>10-26-2010 12:00:00</lastModified>
+					<author>lucubratist</author>
+				</reason>
+			</enabler>
+		</claim>
+	</argument>
+</map>
+					

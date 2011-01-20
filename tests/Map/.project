@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Map</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.flexnature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<location>/Applications/MAMP/htdocs/Map-debug</location>
+		</link>
+		<link>
+			<name>services/MapsService.php</name>
+			<type>1</type>
+			<location>/Applications/MAMP/htdocs/Map-debug/services/MapsService.php</location>
+		</link>
+		<link>
+			<name>services/UsersService.php</name>
+			<type>1</type>
+			<location>/Applications/MAMP/htdocs/Map-debug/services/UsersService.php</location>
+		</link>
+	</linkedResources>
+</projectDescription>
