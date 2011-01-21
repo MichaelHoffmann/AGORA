@@ -1,4 +1,4 @@
-package
+package tests.SquareArrows.src
 {
 	import flash.display.Shape;
 	import flash.display.Sprite;
