@@ -1,8 +1,3 @@
-#Ignore flex properties
-*.actionScriptProperties
-*.flexProperties
-*.project
-
 #Ignore flex settings
 *.settings/
 
