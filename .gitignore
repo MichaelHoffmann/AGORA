@@ -4,3 +4,4 @@
 #Ignore flex build directories
 bin-debug/
 html-template/
+src/
