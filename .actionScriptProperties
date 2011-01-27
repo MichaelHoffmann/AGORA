@@ -9,6 +9,9 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/Common/"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/FlexProject/"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LOCALE_LOCATION}/version4locale/"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -19,6 +22,7 @@
     <application path="tests/readXML/src/readXMLworkin.mxml"/>
     <application path="tests/Map/src/Map.mxml"/>
     <application path="index.mxml"/>
+    <application path="FlexUnitCompilerApplication.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
