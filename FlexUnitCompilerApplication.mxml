@@ -16,14 +16,12 @@ Please click on the "Refresh" icon in "FlexUnit Results" view to regenerate this
 			import unittests.TestCase1;
 			import unittests.TestSuite1;
 
-			private var unittests_TestCase1_obj:unittests.TestCase1;
-			private var unittests_TestSuite1_obj:unittests.TestSuite1;
 			
 			private var core:FlexUnitCore;
 			public function runMe():void {
 				core = new FlexUnitCore();
 				core.addListener(uiListener);
-				core.run(unittests_TestSuite1_obj);
+				core.run(unittests.TestSuite1);
 			}
 
 		]]>
