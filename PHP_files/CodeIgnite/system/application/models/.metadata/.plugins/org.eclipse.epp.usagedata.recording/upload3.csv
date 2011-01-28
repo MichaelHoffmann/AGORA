@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.update.configurator,3.3.0.v20090312,"org.eclipse.update.configurator",1264441274369
+started,bundle,org.eclipse.update.core,3.2.300.v20090525,"org.eclipse.update.core",1264441274376
+started,bundle,org.eclipse.update.scheduler,3.2.200.v20081127,"org.eclipse.update.scheduler",1264441274379
+started,bundle,org.eclipse.wst.jsdt.core,1.0.201.v200908101420,"org.eclipse.wst.jsdt.core",1264441274382
+started,bundle,org.eclipse.wst.jsdt.manipulation,1.0.100.v200809240707,"org.eclipse.wst.jsdt.manipulation",1264441274388
+started,bundle,org.eclipse.wst.jsdt.ui,1.0.200.v200905242047,"org.eclipse.wst.jsdt.ui",1264441274388
+started,bundle,org.eclipse.wst.sse.core,1.1.401.v200909172215,"org.eclipse.wst.sse.core",1264441274391
+started,bundle,org.eclipse.wst.sse.ui,1.1.101.v200908261807,"org.eclipse.wst.sse.ui",1264441274394
+started,bundle,org.eclipse.wst.ws.service.policy.ui,1.0.102.v200903070248,"org.eclipse.wst.ws.service.policy.ui",1264441274398
+os,sysinfo,,,"win32",1264441274405
+arch,sysinfo,,,"x86",1264441274405
+ws,sysinfo,,,"win32",1264441274405
+locale,sysinfo,,,"en_US",1264441274405
+processors,sysinfo,,,"2",1264441274405
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1264441274405
+java.runtime.version,sysinfo,,,"1.6.0_17-b04",1264441274405
+java.specification.name,sysinfo,,,"Java Platform API Specification",1264441274405
+java.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1264441274405
+java.specification.version,sysinfo,,,"1.6",1264441274405
+java.vendor,sysinfo,,,"Sun Microsystems Inc.",1264441274405
+java.version,sysinfo,,,"1.6.0_17",1264441274405
+java.vm.info,sysinfo,,,"mixed mode, sharing",1264441274405
+java.vm.name,sysinfo,,,"Java HotSpot(TM) Client VM",1264441274405
+java.vm.specification.name,sysinfo,,,"Java Virtual Machine Specification",1264441274405
+java.vm.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1264441274405
