@@ -14,10 +14,8 @@
   </compiler>
   <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/frameworks/themes/Halo"/>
   <applications>
-    <application path="tests/shapeDraw/src/shapeDrawin.mxml"/>
-    <application path="tests/readXML/src/readXML.mxml"/>
-    <application path="tests/readXML/src/readXMLworkin.mxml"/>
-    <application path="tests/Map/src/Map.mxml"/>
+    <application path="PHP_files/CodeIgnite/system/application/libraries/amfphp/browser/servicebrowser.mxml"/>
+    <application path="PHP_files/amfphp/browser/servicebrowser.mxml"/>
     <application path="index.mxml"/>
     <application path="FlexUnitCompilerApplication.mxml"/>
   </applications>
