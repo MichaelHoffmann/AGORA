@@ -10,7 +10,6 @@
 			import org.flexunit.listeners.UIListener;
 			import org.flexunit.runner.FlexUnitCore;
 			
-			import unittests.TestCase1;
 			import unittests.TestSuite1;
 
 			
