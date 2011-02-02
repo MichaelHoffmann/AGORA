@@ -11,7 +11,7 @@ package unittests
 		[Before]
 		public function setUp():void
 		{
-			argSchemes = new ArgumentSchemes("Basic Claim", "Basic Reason".split(""), false, "Basic Inference", true);
+			argSchemes = new ArgumentSchemes("Basic Claim", ["Basic Reason", "Secondary Reason"], false, "Basic Inference", true);
 		}
 		
 		[After]
@@ -36,7 +36,7 @@ package unittests
 		}
 		[Test]
 		public function testConstructorReason():void{
-			Assert.assertEquals("Basic Reason".split("").toString(), argSchemes.getReason().toString());
+			Assert.assertEquals("Basic Reason", argSchemes.getReason()[0]);
 		}
 		[Test]
 		public function testConstructorInference():void{
