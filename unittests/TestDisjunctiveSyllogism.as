@@ -3,8 +3,10 @@ package unittests
 	public class TestDisjunctiveSyllogism
 	{		
 		import logic.DisjunctiveSyllogism;
-		import org.flexunit.Assert;
+		
 		import mx.controls.Alert;
+		
+		import org.flexunit.Assert;
 		private var djs:DisjunctiveSyllogism;
 		
 		[Before]
@@ -41,11 +43,19 @@ package unittests
 		public function testNotPTrue():void{
 			djs.notP(true);
 			Assert.assertEquals("It is not the case that Foo", djs.getReason()[0]);
+			trace("Printing all reasons in NotPTrue");
+			for each (var reason:String in djs.getReason()){
+				trace(reason);
+			}
 		}
 		[Test]
 		public function testNotPFalse():void{
 			djs.notP(false);
 			Assert.assertEquals("It is not the case that Reason 1", djs.getReason()[0]);
+			trace("Printing all reasons in NotPFalse");
+			for each (var reason:String in djs.getReason()){
+				trace(reason);
+			}
 		}
 		
 	}
