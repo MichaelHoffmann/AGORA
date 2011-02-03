@@ -3,10 +3,8 @@ package unittests
 	public class TestArgumentSchemes
 	{		
 		import logic.ArgumentSchemes;
-		
-		import org.flexunit.Assert;
+				import org.flexunit.Assert;
 				
-		private var count:int = 0;
 		private var argSchemes:ArgumentSchemes;
 		[Before]
 		public function setUp():void
@@ -17,7 +15,6 @@ package unittests
 		[After]
 		public function tearDown():void
 		{
-			count = 0;
 		}
 		
 		[BeforeClass]
