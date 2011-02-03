@@ -3,15 +3,25 @@ Code flow:-
 index.html
 index.mxml
  |- claimStartScript.as
+  -> claimHandlerScript.as (claimInit() -> also adds text "what is your claim?", the left-arrow.png image and x,y numbers)
+   -> ClaimBox.mxml
+   -> claimBoxScript.as (assigns 'Particular' statement directly. does not go to statementPromptScript which is supposed to do this)
+    -> DynamicTestArea.as
+    -> acceptClaim()    // this is where the claimbox changes to have 2 buttons on bottom 1.add.. 2.use as..
+  -> reasonHandlerScript.as (reasonInit()) -- init array reasonText[], reasonAccepted event
+   -> ReasonBox.mxml
+   -> reasonBoxScript.as (assigns 'Particular' statement directly)
+   -> add argument scheme -- breaks here
+  -> inferenceHandlerScript.as (inferenceInit())
+   -> init array inferenceText[]
   -> SchemeSelector.mxml
    -> schemeSelectorScript.as
   -> PromptLabel.mxml
    -> promptLabelScript.as
-   
- |- schemeStartScript.as
+ |- schemeStartScript.as (TODO)
   -> StatementPrompt.mxml, SchemeSelector.mxml
    -> schemeSelectedEvent.as (for "rollover" and "schemeaccepted")
- |- 
+ |- (other 2 under constructinon)
 mainApplicationScript.as
 components.SchemeSelector.mxml <- invokes functions, definitions in below file
 e.g main schemes : onRollOver/onClick - getSchemeLanguages(event)
@@ -19,7 +29,7 @@ selecting arguments: rollOver - rollOverLanguageType(event), click - acceptLangu
 (itemRollOver and itemClick are from ListEvent)
 schemeSelectorScript.as (has attributes with names beginning with _ )
 ResultEvent.as
-SchemeSelectedEvent.as (is passed on variables from schemeSelectorScript)
+ |-SchemeSelectedEvent.as (is passed on variables from schemeSelectorScript)
 
 
 
