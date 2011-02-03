@@ -1,0 +1,80 @@
+Code flow:-
+
+index.html
+index.mxml
+ |- claimStartScript.as
+  -> SchemeSelector.mxml
+   -> schemeSelectorScript.as
+  -> PromptLabel.mxml
+   -> promptLabelScript.as
+   
+ |- schemeStartScript.as
+  -> StatementPrompt.mxml, SchemeSelector.mxml
+   -> schemeSelectedEvent.as (for "rollover" and "schemeaccepted")
+ |- 
+mainApplicationScript.as
+components.SchemeSelector.mxml <- invokes functions, definitions in below file
+e.g main schemes : onRollOver/onClick - getSchemeLanguages(event)
+selecting arguments: rollOver - rollOverLanguageType(event), click - acceptLanguageType(event) ->calls-> getLanguageFunction back in mxml file ->calls->sendScheme
+(itemRollOver and itemClick are from ListEvent)
+schemeSelectorScript.as (has attributes with names beginning with _ )
+ResultEvent.as
+SchemeSelectedEvent.as (is passed on variables from schemeSelectorScript)
+
+
+
+
+web display file or labelled event <--> source :-
+
+SchemeSelector.mxml <--> scripts/schemeSelectorScript.as
+events invoked
+ |- schemeAccepted <--> events/SchemeSelectedEvent.as
+ |- schemeRollOver <--> events/SchemeSelectedEvent.as
+ 
+StatementPrompt.mxml <--> scripts/statementPromptScript.as
+events invoked
+ |- statementClassified <--> events/StatementClassifierEvent.as
+
+ArgScheme.mxml <--> scripts/argSchemeScript.as
+events invoked: 
+ |- changeScheme <--> events/SchemeChangeEvent.as
+ 
+ClaimBox.mxml <--> scripts/claimBoxScript.as
+events invoked
+ |- claimAccepted <--> events/StatementAcceptEvent.as
+ 
+InferenceBox.mxml <--> scripts/inferenceBoxScript.as
+events invoked
+ |- inferenceAccepted <--> events/StatementAcceptEvent.as
+refers to 'inferenceService' with functions 'storeInference() and 'updateInference()'
+
+ReasonBox.mxml <--> scripts/reasonBoxScript.as
+events invoked
+ |- reasonAccepted <--> events/StatementAcceptEvent.as
+refers to 'reasonService' with functions 'acceptReason()', 'updateReason()' and 'displayReason()'
+ 
+CustomImage.mxml <--> scripts/customImageScript.as
+static element _imageSource
+
+CustomLine.mxml <--> scripts/customLine.as
+
+PromptLabel.mxml <--> scripts/promptLabelScript.as
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+what/where is?
+schemeService
+argumentSelector
+
+
