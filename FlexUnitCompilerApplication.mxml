@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <mx:Application  
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="http://www.adobe.com/2006/mxml"
-			   creationComplete="runMe()" 
-			   xmlns:adobe="http://www.adobe.com/2009/flexUnitUIRunner">
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	creationComplete="runMe()" 
+	xmlns:adobe="http://www.adobe.com/2009/flexUnitUIRunner">
 	<mx:Script>
 		<![CDATA[
+			import unittests.TestDisjunctiveSyllogism;
 			import org.flexunit.listeners.UIListener;
 			import org.flexunit.runner.FlexUnitCore;
 			
 			import unittests.TestSuite1;
-
+			
+			private var unittests_TestDisjunctiveSyllogism_obj:unittests.TestDisjunctiveSyllogism;
+			
+			
 			
 			private var core:FlexUnitCore;
 			public function runMe():void {
@@ -19,7 +23,7 @@
 				core.addListener(uiListener);
 				core.run(unittests.TestSuite1);
 			}
-
+			
 		]]>
 	</mx:Script>
 	<adobe:TestRunnerBase id="uiListener" width="100%" height="100%"  />

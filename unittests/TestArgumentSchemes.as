@@ -3,7 +3,7 @@ package unittests
 	public class TestArgumentSchemes
 	{		
 		import logic.ArgumentSchemes;
-				import org.flexunit.Assert;
+		import org.flexunit.Assert;
 				
 		private var argSchemes:ArgumentSchemes;
 		[Before]
@@ -34,11 +34,6 @@ package unittests
 		[Test]
 		public function testConstructorReason():void{
 			Assert.assertEquals("Basic Reason", argSchemes.getReason()[0]);
-		}
-		[Test]
-		public function testConstructorInference():void{
-			//Don't test this until we know what to use in args to getInference(selectFunction:String)
-			//Assert.assertEquals("Basic Inference", argSchemes.getInference(""));
 		}
 	}
 }
