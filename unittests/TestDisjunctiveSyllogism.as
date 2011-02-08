@@ -106,12 +106,12 @@ package unittests
 		}
 		[Test]
 		public function testAlternatePTrue():void{
-			djs.notQ(true);
+			djs.alternateP(true);
 			trace("~~ Printing all reasons in AlternatePTrue");
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
-			djsReverse.notQ(true);
+			djsReverse.alternateP(true);
 			trace("~~ Printing all reasons in Reverse AlternatePTrue");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
@@ -119,12 +119,12 @@ package unittests
 		}
 		[Test]
 		public function testAlternatePFalse():void{
-			djs.notQ(false);
+			djs.alternateP(false);
 			trace("~~ Printing all reasons in AlternatePFalse");
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
-			djsReverse.notQ(false);
+			djsReverse.alternateP(false);
 			trace("~~ Printing all reasons in Reverse AlternatePFalse");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
