@@ -55,15 +55,18 @@ package unittests
 		[Test(order=1)]
 		public function testNotPTrue():void{
 			djs.notP(true);
+			
 			trace("~~ Printing all reasons in NotPTrue");
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.notP(true);
 			trace("~~ Printing all reasons in Reverse NotPTrue");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 		[Test(order=2)]
 		public function testNotPFalse():void{
@@ -72,11 +75,13 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.notP(false);
 			trace("~~ Printing all reasons in Reverse NotPFalse");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 		[Test(order=3)]
 		public function testNotQTrue():void{
@@ -85,11 +90,13 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.notQ(true);
 			trace("~~ Printing all reasons in Reverse NotQTrue");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 		[Test(order=4)]
 		public function testNotQFalse():void{
@@ -98,11 +105,13 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.notQ(false);
 			trace("~~ Printing all reasons in Reverse NotQFalse");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 		[Test(order=5)]
 		public function testAlternatePTrue():void{
@@ -111,11 +120,13 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.alternateP(true);
 			trace("~~ Printing all reasons in Reverse AlternatePTrue");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
-			}			
+			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 		[Test(order=6)]
 		public function testAlternatePFalse():void{
@@ -124,11 +135,13 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.alternateP(false);
 			trace("~~ Printing all reasons in Reverse AlternatePFalse");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 		[Test(order=7)]
 		public function testAlternateQTrue():void{
@@ -137,11 +150,13 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.alternateQ(true);
 			trace("~~ Printing all reasons in Reverse AlternateQTrue");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
-			}			
+			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 		[Test(order=8)]
 		public function testAlternateQFalse():void{
@@ -150,11 +165,13 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djs.getClaim());
 			djsReverse.alternateQ(false);
 			trace("~~ Printing all reasons in Reverse AlternateQFalse");
 			for each (reason in djsReverse.getReason()){
 				trace(reason);
 			}
+			trace("Claim: ", djsReverse.getClaim());
 		}
 	}
 }
