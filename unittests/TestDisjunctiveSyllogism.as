@@ -52,7 +52,7 @@ package unittests
 		}
 		//New tests for this subclass's particular functions
 		//Not asserting anything because it's currently pointless
-		[Test]
+		[Test(order=1)]
 		public function testNotPTrue():void{
 			djs.notP(true);
 			trace("Printing all reasons in NotPTrue");
@@ -65,7 +65,7 @@ package unittests
 				trace(reason);
 			}
 		}
-		[Test]
+		[Test(order=2)]
 		public function testNotPFalse():void{
 			djs.notP(false);
 			trace("~~ Printing all reasons in NotPFalse");
@@ -78,7 +78,7 @@ package unittests
 				trace(reason);
 			}
 		}
-		[Test]
+		[Test(order=3)]
 		public function testNotQTrue():void{
 			djs.notQ(true);
 			trace("~~ Printing all reasons in NotQTrue");
@@ -91,7 +91,7 @@ package unittests
 				trace(reason);
 			}
 		}
-		[Test]
+		[Test(order=4)]
 		public function testNotQFalse():void{
 			djs.notQ(false);
 			trace("~~ Printing all reasons in NotQFalse");
@@ -104,7 +104,7 @@ package unittests
 				trace(reason);
 			}
 		}
-		[Test]
+		[Test(order=5)]
 		public function testAlternatePTrue():void{
 			djs.alternateP(true);
 			trace("~~ Printing all reasons in AlternatePTrue");
@@ -117,7 +117,7 @@ package unittests
 				trace(reason);
 			}			
 		}
-		[Test]
+		[Test(order=6)]
 		public function testAlternatePFalse():void{
 			djs.alternateP(false);
 			trace("~~ Printing all reasons in AlternatePFalse");
@@ -130,6 +130,31 @@ package unittests
 				trace(reason);
 			}
 		}
-		
+		[Test(order=7)]
+		public function testAlternateQTrue():void{
+			djs.alternateQ(true);
+			trace("~~ Printing all reasons in AlternateQTrue");
+			for each (var reason:String in djs.getReason()){
+				trace(reason);
+			}
+			djsReverse.alternateQ(true);
+			trace("~~ Printing all reasons in Reverse AlternateQTrue");
+			for each (reason in djsReverse.getReason()){
+				trace(reason);
+			}			
+		}
+		[Test(order=8)]
+		public function testAlternateQFalse():void{
+			djs.alternateQ(false);
+			trace("~~ Printing all reasons in AlternateQFalse");
+			for each (var reason:String in djs.getReason()){
+				trace(reason);
+			}
+			djsReverse.alternateQ(false);
+			trace("~~ Printing all reasons in Reverse AlternateQFalse");
+			for each (reason in djsReverse.getReason()){
+				trace(reason);
+			}
+		}
 	}
 }
