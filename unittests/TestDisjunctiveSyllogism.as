@@ -4,7 +4,7 @@ package unittests
 	{		
 		import logic.DisjunctiveSyllogism;
 		
-		import mx.controls.Alert;
+		
 		
 		import org.flexunit.Assert;
 		private var djs:DisjunctiveSyllogism;
