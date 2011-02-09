@@ -6,13 +6,11 @@ package unittests
 		import org.flexunit.Assert;
 		
 		private var djs:DisjunctiveSyllogism;
-		private var djsReverse:DisjunctiveSyllogism;
 		
 		[Before]
 		public function setUp():void
 		{
 			//DisjunctiveSyllogism(claimText:String, reasonText:Array, reversePos:Boolean,inferenceText:String="", inferencePresent:Boolean=false)
-			djsReverse = new DisjunctiveSyllogism("Basic Claim", ["Reason 1", "Reason 2"], true, "Either Foo or Bar, and Baz unless Quux", false);
 			djs = new DisjunctiveSyllogism("Basic Claim", ["Reason 1", "Reason 2"], false, "Either Foo or Bar, and Baz unless Quux", false);
 		}
 		
@@ -49,11 +47,8 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
-			djsReverse.notP(true);
-			trace("~~ Printing all reasons in Reverse NotPTrue");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("notP"));
 		}
 		[Test(order=2)]
 		public function testNotPFalse():void{
@@ -62,11 +57,8 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
-			djsReverse.notP(false);
-			trace("~~ Printing all reasons in Reverse NotPFalse");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("notP"));
 		}
 		[Test(order=3)]
 		public function testNotQTrue():void{
@@ -75,11 +67,8 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
-			djsReverse.notQ(true);
-			trace("~~ Printing all reasons in Reverse NotQTrue");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("notQ"));
 		}
 		[Test(order=4)]
 		public function testNotQFalse():void{
@@ -88,11 +77,8 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
-			djsReverse.notQ(false);
-			trace("~~ Printing all reasons in Reverse NotQFalse");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("notQ"));
 		}
 		[Test(order=5)]
 		public function testAlternatePTrue():void{
@@ -100,12 +86,9 @@ package unittests
 			trace("~~ Printing all reasons in AlternatePTrue");
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
-			}
-			djsReverse.alternateP(true);
-			trace("~~ Printing all reasons in Reverse AlternatePTrue");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}			
+			}		
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("alternateP"));
 		}
 		[Test(order=6)]
 		public function testAlternatePFalse():void{
@@ -113,12 +96,9 @@ package unittests
 			trace("~~ Printing all reasons in AlternatePFalse");
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
-			}
-			djsReverse.alternateP(false);
-			trace("~~ Printing all reasons in Reverse AlternatePFalse");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}
+			}		
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("alternateP"));
 		}
 		[Test(order=7)]
 		public function testAlternateQTrue():void{
@@ -127,11 +107,8 @@ package unittests
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
 			}
-			djsReverse.alternateQ(true);
-			trace("~~ Printing all reasons in Reverse AlternateQTrue");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}			
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("alternateQ"));
 		}
 		[Test(order=8)]
 		public function testAlternateQFalse():void{
@@ -139,12 +116,9 @@ package unittests
 			trace("~~ Printing all reasons in AlternateQFalse");
 			for each (var reason:String in djs.getReason()){
 				trace(reason);
-			}
-			djsReverse.alternateQ(false);
-			trace("~~ Printing all reasons in Reverse AlternateQFalse");
-			for each (reason in djsReverse.getReason()){
-				trace(reason);
-			}
+			}		
+			trace("The claim is: ", djs.getClaim());
+			trace("The inference is: ", djs.getInference("alternateQ"));
 		}
 	}
 }
