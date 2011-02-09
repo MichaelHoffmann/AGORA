@@ -12,7 +12,6 @@ package unittests
 		public function setUp():void
 		{
 			//Equivalence(claimText:String,reasonText:Array,reversePos:Boolean,inferenceText:String="",inferencePresent:Boolean = false)
-			eqReverse = new Equivalence("Basic Claim", ["Reason 1", "Reason 2"], true, "Foo if and only if Bar just in case Baz is a necessary and sufficient condition for Quux", false);
 			eq= new Equivalence("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo if and only if Bar just in case Baz is a necessary and sufficient condition for Quux", false);
 		}
 		
