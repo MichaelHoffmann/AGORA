@@ -3,25 +3,14 @@ package unittests
 	public class TestDisjunctiveSyllogism
 	{		
 		import logic.DisjunctiveSyllogism;
-		
-		
-		
 		import org.flexunit.Assert;
+		
 		private var djs:DisjunctiveSyllogism;
 		private var djsReverse:DisjunctiveSyllogism;
 		
 		[Before]
 		public function setUp():void
 		{
-			/*
-			* reversePos apparently differentiates between Basic Claim and Reason 1.
-			* ~~ Printing all reasons in NotPFalse
-			* It is not the case that Reason 1
-			* Reason 2
-			* ~~ Printing all reasons in Reverse NotPFalse
-			* It is not the case that Basic Claim
-			* Reason 2
-			*/
 			//DisjunctiveSyllogism(claimText:String, reasonText:Array, reversePos:Boolean,inferenceText:String="", inferencePresent:Boolean=false)
 			djsReverse = new DisjunctiveSyllogism("Basic Claim", ["Reason 1", "Reason 2"], true, "Either Foo or Bar, and Baz unless Quux", false);
 			djs = new DisjunctiveSyllogism("Basic Claim", ["Reason 1", "Reason 2"], false, "Either Foo or Bar, and Baz unless Quux", false);
