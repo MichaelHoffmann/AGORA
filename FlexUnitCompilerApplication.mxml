@@ -7,11 +7,15 @@
 	xmlns:adobe="http://www.adobe.com/2009/flexUnitUIRunner">
 	<mx:Script>
 		<![CDATA[
+			import unittests.TestEquivalence;
 			import unittests.TestDisjunctiveSyllogism;
 			import org.flexunit.listeners.UIListener;
 			import org.flexunit.runner.FlexUnitCore;
 			
 			import unittests.TestSuite1;
+			
+			private var unittests_TestEquivalence_obj:unittests.TestEquivalence;
+			
 			
 			private var unittests_TestDisjunctiveSyllogism_obj:unittests.TestDisjunctiveSyllogism;
 			
