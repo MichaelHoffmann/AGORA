@@ -10,5 +10,6 @@ package unittests
 		public var test2:unittests.TestDisjunctiveSyllogism;
 		public var test3:unittests.TestEquivalence;
 		public var test4:unittests.TestModusPonens;
+		public var test5:unittests.TestModusTollens;
 	}
 }

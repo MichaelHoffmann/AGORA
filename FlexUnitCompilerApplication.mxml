@@ -7,6 +7,7 @@
 	xmlns:adobe="http://www.adobe.com/2009/flexUnitUIRunner">
 	<mx:Script>
 		<![CDATA[
+			import unittests.TestModusTollens;
 			import unittests.TestModusPonens;
 			import unittests.TestEquivalence;
 			import unittests.TestDisjunctiveSyllogism;
@@ -14,6 +15,9 @@
 			import org.flexunit.runner.FlexUnitCore;
 			
 			import unittests.TestSuite1;
+			
+			private var unittests_TestModusTollens_obj:unittests.TestModusTollens;
+			
 			
 			private var unittests_TestModusPonens_obj:unittests.TestModusPonens;
 			
