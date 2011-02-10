@@ -63,10 +63,50 @@ package unittests
 			trace("The inference is: ", mp.getInference("ifThen"));
 		}
 		
-		[Test]
-		public function testImplies():void
+		[Test(order=3)]
+		public function testImpliesTrue():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			mp.implies(true);
+			trace("~~ Printing all reasons in testImpliesTrue");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("implies"));
+		}
+		[Test(order=4)]
+		public function testImpliesFalse():void
+		{
+			mp.implies(false);
+			trace("~~ Printing all reasons in testImpliesFalse");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("implies"));
+		}
+		
+		[Test(order=5)]
+		public function testWheneverTrue():void
+		{
+			mp.whenever(true);
+			trace("~~ Printing all reasons in testWheneverTrue");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("whenever"));			
+		}		
+		[Test(order=6)]
+		public function testWheneverFalse():void
+		{
+			mp.whenever(false);
+			trace("~~ Printing all reasons in testWheneverFalse");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("whenever"));			
 		}
 		
 		[Test]
@@ -99,10 +139,6 @@ package unittests
 			Assert.fail("Test method Not yet implemented");
 		}
 		
-		[Test]
-		public function testWhenever():void
-		{
-			Assert.fail("Test method Not yet implemented");
-		}		
+
 	}
 }
