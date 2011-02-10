@@ -11,5 +11,6 @@ package unittests
 		public var test3:unittests.TestEquivalence;
 		public var test4:unittests.TestModusPonens;
 		public var test5:unittests.TestModusTollens;
+		public var test6:unittests.TestNotBothSyllogism;
 	}
 }
