@@ -12,7 +12,7 @@ package unittests
 		{
 			//ModusPonens(claimText:String,reasonText:Array,reversePos:Boolean,inferenceText:String="",inferencePresent:Boolean = false)
 			mp = new ModusPonens("Basic Claim", ["Reason 1", "Reason 2"], false, 
-				"If Foo, then Bar is a sufficient condition for Baz, and Quux implies Flarp", false);
+				"If Foo, then Bar is a sufficient condition for Baz provided Quux, and Flarp implies Bletch only if Snork", false);
 		}
 		
 		[After]
