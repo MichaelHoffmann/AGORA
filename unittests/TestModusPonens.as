@@ -11,7 +11,8 @@ package unittests
 		public function setUp():void
 		{
 			//ModusPonens(claimText:String,reasonText:Array,reversePos:Boolean,inferenceText:String="",inferencePresent:Boolean = false)
-			mp = new ModusPonens("Basic Claim", ["Reason 1", "Reason 2"], false, "If Foo, then Bar, and Baz implies Quux", false);
+			mp = new ModusPonens("Basic Claim", ["Reason 1", "Reason 2"], false, 
+				"If Foo, then Bar is a sufficient condition for Baz, and Quux implies Flarp", false);
 		}
 		
 		[After]
@@ -155,6 +156,28 @@ package unittests
 			trace("The inference is: ", mp.getInference("onlyIf"));		
 		}
 		
+		[Test(order=11)]
+		public function testSufficientConditionTrue():void
+		{
+			mp.sufficientCondition(true);
+			trace("~~ Printing all reasons in testSufficientConditionTrue");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("sufficientCondition"));	
+		}
+		[Test(order=12)]
+		public function testSufficientConditionFalse():void
+		{
+			mp.sufficientCondition(true);
+			trace("~~ Printing all reasons in testSufficientConditionFalse");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("sufficientCondition"));	
+		}
 		[Test]
 		public function testModusPonens():void
 		{
@@ -167,15 +190,5 @@ package unittests
 			Assert.fail("Test method Not yet implemented");
 		}
 		
-
-		
-		
-		[Test]
-		public function testSufficientCondition():void
-		{
-			Assert.fail("Test method Not yet implemented");
-		}
-		
-
 	}
 }
