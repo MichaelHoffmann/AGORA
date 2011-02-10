@@ -6,7 +6,6 @@ package unittests
 		import org.flexunit.Assert;
 		
 		private var eq:Equivalence;
-		private var eqReverse:Equivalence;
 		
 		[Before]
 		public function setUp():void
