@@ -109,6 +109,52 @@ package unittests
 			trace("The inference is: ", mp.getInference("whenever"));			
 		}
 		
+		[Test(order=7)]
+		public function testProvidedThatTrue():void
+		{
+			mp.providedThat(true);
+			trace("~~ Printing all reasons in testProvidedThatTrue");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("providedThat"));		
+		}
+		[Test(order=8)]
+		public function testProvidedThatFalse():void
+		{
+			mp.providedThat(false);
+			trace("~~ Printing all reasons in testProvidedThatFalse");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("providedThat"));		
+		}
+		
+		[Test(order=9)]
+		public function testOnlyIfTrue():void
+		{
+			mp.onlyIf(true);
+			trace("~~ Printing all reasons in testOnlyIfTrue");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("onlyIf"));		
+		}
+		[Test(order=10)]
+		public function testOnlyIfFalse():void
+		{
+			mp.onlyIf(true);
+			trace("~~ Printing all reasons in testOnlyIfFalse");
+			for each (var reason:String in mp.getReason()){
+				trace(reason);
+			}
+			trace("The claim is: ", mp.getClaim());
+			trace("The inference is: ", mp.getInference("onlyIf"));		
+		}
+		
 		[Test]
 		public function testModusPonens():void
 		{
@@ -121,17 +167,8 @@ package unittests
 			Assert.fail("Test method Not yet implemented");
 		}
 		
-		[Test]
-		public function testOnlyIf():void
-		{
-			Assert.fail("Test method Not yet implemented");
-		}
+
 		
-		[Test]
-		public function testProvidedThat():void
-		{
-			Assert.fail("Test method Not yet implemented");
-		}
 		
 		[Test]
 		public function testSufficientCondition():void
