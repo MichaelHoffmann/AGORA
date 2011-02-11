@@ -103,7 +103,7 @@ package unittests
 		}
 		[Test(order=8)]
 		public function testAlternateQFalse():void{
-			djs = new DisjunctiveSyllogism("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo unless Bar, and Baz", false);
+			djs = new DisjunctiveSyllogism("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);
 			trace("~~ The inference is: ", djs.getInference("alternateQ"));
 			trace("Printing all reasons in AlternateQFalse");
 			for each (var reason:String in djs.getReason()){
