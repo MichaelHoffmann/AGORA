@@ -12,6 +12,6 @@ package unittests
 		public var test4:unittests.TestModusPonens;
 		public var test5:unittests.TestModusTollens;
 		public var test6:unittests.TestNotBothSyllogism;
-		//public var test7:unittests.TestXORSyllogism;
+		public var test7:unittests.TestXORSyllogism;
 	}
 }
