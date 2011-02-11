@@ -33,180 +33,164 @@ package unittests
 		public function testIfThenTrue():void
 		{
 			//ModusTollens(claimText:String,reasonText:Array,reversePos:Boolean,inferenceText:String="",inferencePresent:Boolean = false)
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "If Foo, then Bar, and Baz", false);
-			mt.ifThen(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "If Foo, then Bar, and Baz", true);
+			trace("The inference is: ", mt.getInference("ifThen"));
 			trace("~~ Printing all reasons in testIfThenTrue");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("ifThen"));
 		}
 		[Test(order=2)]
 		public function testIfThenFalse():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "If Foo, then Bar, and Baz", false);
-			mt.ifThen(false);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);
+			trace("The inference is: ", mt.getInference("ifThen"));
 			trace("~~ Printing all reasons in testIfThenFalse");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("ifThen"));
 		}
 		
 		[Test(order=3)]
 		public function testImpliesTrue():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo implies Bar, and Baz", false);
-			mt.implies(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo implies Bar, and Baz", true);
+			trace("The inference is: ", mt.getInference("implies"));
 			trace("~~ Printing all reasons in testImpliesTrue");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("implies"));
 		}
 		[Test(order=4)]
 		public function testImpliesFalse():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo implies Bar, and Baz", false);
-			mt.implies(false);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);
+			trace("The inference is: ", mt.getInference("implies"));
 			trace("~~ Printing all reasons in testImpliesFalse");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("implies"));
 		}
 		
 		[Test(order=5)]
 		public function testWheneverTrue():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Whenever Foo, Bar, and Baz", false);
-			mt.whenever(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Whenever Foo, Bar, and Baz", true);
+			trace("The inference is: ", mt.getInference("whenever"));		
 			trace("~~ Printing all reasons in testWheneverTrue");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
-			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("whenever"));			
+			trace("The claim is: ", mt.getClaim());	
 		}		
 		[Test(order=6)]
 		public function testWheneverFalse():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Whenever Foo, Bar, and Baz", false);
-			mt.whenever(false);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);
+			trace("The inference is: ", mt.getInference("whenever"));			
 			trace("~~ Printing all reasons in testWheneverFalse");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("whenever"));			
 		}
 		
 		[Test(order=7)]
 		public function testProvidedThatTrue():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo provided that Bar, and Baz", false);			
-			mt.providedThat(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo provided that Bar, and Baz", true);
+			trace("The inference is: ", mt.getInference("providedThat"));		
 			trace("~~ Printing all reasons in testProvidedThatTrue");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("providedThat"));		
 		}
 		[Test(order=8)]
 		public function testProvidedThatFalse():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo provided that Bar, and Baz", false);	
-			mt.providedThat(false);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);	
+			trace("The inference is: ", mt.getInference("providedThat"));	
 			trace("~~ Printing all reasons in testProvidedThatFalse");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
-			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("providedThat"));		
+			trace("The claim is: ", mt.getClaim());	
 		}
 		
 		[Test(order=9)]
 		public function testOnlyIfTrue():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo only if Bar, and Baz", false);	
-			mt.onlyIf(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo only if Bar, and Baz", true);	
+			trace("The inference is: ", mt.getInference("onlyIf"));		
 			trace("~~ Printing all reasons in testOnlyIfTrue");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("onlyIf"));		
 		}
 		[Test(order=10)]
 		public function testOnlyIfFalse():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "Foo only if Bar, and Baz", false);
-			mt.onlyIf(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);
+			trace("The inference is: ", mt.getInference("onlyIf"));		
 			trace("~~ Printing all reasons in testOnlyIfFalse");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("onlyIf"));		
 		}
 		
 		[Test(order=11)]
 		public function testSufficientConditionTrue():void
 		{
 			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, 
-				"Foo is a sufficient condition for Bar, and Baz", false);
-			mt.sufficientCondition(true);
+				"Foo is a sufficient condition for Bar, and Baz", true);
+			trace("The inference is: ", mt.getInference("sufficientCondition"));	
 			trace("~~ Printing all reasons in testSufficientConditionTrue");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("sufficientCondition"));	
 		}
 		[Test(order=12)]
 		public function testSufficientConditionFalse():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, 
-				"Foo is a sufficient condition for Bar, and Baz", false);
-			mt.sufficientCondition(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);
+			trace("The inference is: ", mt.getInference("sufficientCondition"));
 			trace("~~ Printing all reasons in testSufficientConditionFalse");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("sufficientCondition"));	
 		}
 		
 		[Test(order=13)]
 		public function testNecessaryConditionTrue():void
 		{
 			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, 
-				"Foo is a necessary condition for Bar, and Baz", false);
-			mt.necessaryCondition(true);
+				"Foo is a necessary condition for Bar, and Baz", true);
+			trace("The inference is: ", mt.getInference("necessaryCondition"));	
 			trace("~~ Printing all reasons in testNecessaryConditionTrue");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("necessaryCondition"));	
 		}
 		[Test(order=14)]
 		public function testNecessaryConditionFalse():void
 		{
-			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, 
-				"Foo is a necessary condition for Bar, and Baz", false);
-			mt.necessaryCondition(true);
+			mt = new ModusTollens("Basic Claim", ["Reason 1", "Reason 2"], false, "", false);
+			trace("The inference is: ", mt.getInference("necessaryCondition"));	
 			trace("~~ Printing all reasons in testNecessaryConditionFalse");
 			for each (var reason:String in mt.getReason()){
 				trace(reason);
 			}
 			trace("The claim is: ", mt.getClaim());
-			trace("The inference is: ", mt.getInference("necessaryCondition"));	
 		}
 		
 	}
