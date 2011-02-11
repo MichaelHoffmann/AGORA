@@ -8,5 +8,10 @@ package unittests
 	{
 		public var test1:unittests.TestArgumentSchemes;
 		public var test2:unittests.TestDisjunctiveSyllogism;
+		public var test3:unittests.TestEquivalence;
+		public var test4:unittests.TestModusPonens;
+		public var test5:unittests.TestModusTollens;
+		public var test6:unittests.TestNotBothSyllogism;
+		public var test7:unittests.TestXORSyllogism;
 	}
 }

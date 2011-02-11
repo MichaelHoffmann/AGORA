@@ -315,7 +315,7 @@ package logic
 					this._claimText = this._reasonText[0];
 					this._reasonText[0] = temp;
 				}
-				this._inferenceText = this._reasonText[0] + " and " + this._claimText + " are equivaent";
+				this._inferenceText = this._reasonText[0] + " and " + this._claimText + " are equivalent";
 				this._reversePos = false;
 			}
 		}
