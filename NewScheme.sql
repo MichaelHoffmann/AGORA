@@ -5,7 +5,9 @@ SET storage_engine=INNODB;
 
 DROP TABLE IF EXISTS `agora`.`connections`;
 DROP TABLE IF EXISTS `agora`.`arguments`;
-DROP TABLE IF EXISTS `agora`.`connectionTypes` ;
+DROP TABLE IF EXISTS `agora`.`connectionTypes`;
+DROP TABLE IF EXISTS `agora`.`nodetext`;
+DROP TABLE IF EXISTS `agora`.`textboxes`;
 DROP TABLE IF EXISTS `agora`.`nodes`;
 DROP TABLE IF EXISTS `agora`.`nodetypes`;
 DROP TABLE IF EXISTS `agora`.`maps`;
@@ -87,6 +89,34 @@ CREATE TABLE IF NOT EXISTS `agora`.`nodes` (
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION);
 
+-- -----------------------------------------------------
+-- Table `agora`.`textboxes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `agora`.`textboxes` (
+	`textbox_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`text` TEXT,
+	PRIMARY KEY (`textbox_id`));
+
+-- -----------------------------------------------------
+-- Table `agora`.`nodetext`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `agora`.`nodetext` (
+	`nodetext_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`node_id` INT UNSIGNED NOT NULL,
+	`textbox_id` INT UNSIGNED NOT NULL,
+	PRIMARY KEY (`nodetext_id`),
+	INDEX `node_id` (`node_id` ASC),
+	INDEX `textbox_id` (`textbox_id` ASC),
+	FOREIGN KEY(`node_id`)
+	  REFERENCES `agora`.`nodes` (`node_id`)
+	  ON DELETE NO ACTION
+	  ON UPDATE NO ACTION,
+	FOREIGN KEY(`textbox_id`)
+	  REFERENCES `agora`.`textboxes` (`textbox_id`)
+	  ON DELETE NO ACTION
+	  ON UPDATE NO ACTION);
+
+	
 -- -----------------------------------------------------
 -- Table `agora`.`connectionTypes`
 -- -----------------------------------------------------
