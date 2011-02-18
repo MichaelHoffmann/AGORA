@@ -12,7 +12,7 @@ INSERT INTO nodetext (node_id, textbox_id, position) VALUES
 	(1, 1, 1), (2, 2, 1), (3,1,1), (3, 2, 2);
 -- This is something like:
 --
---        MP
+--     ModusPonens
 -- BAR -------- FOO
 --        |
 --        |
