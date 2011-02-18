@@ -5,7 +5,7 @@ SET storage_engine=INNODB;
 
 DROP TABLE IF EXISTS `agora`.`connections`;
 DROP TABLE IF EXISTS `agora`.`arguments`;
-DROP TABLE IF EXISTS `agora`.`connectionTypes`;
+DROP TABLE IF EXISTS `agora`.`connection_types`;
 DROP TABLE IF EXISTS `agora`.`nodetext`;
 DROP TABLE IF EXISTS `agora`.`textboxes`;
 DROP TABLE IF EXISTS `agora`.`nodes`;
@@ -120,16 +120,18 @@ CREATE TABLE IF NOT EXISTS `agora`.`nodetext` (
 
 	
 -- -----------------------------------------------------
--- Table `agora`.`connectionTypes`
+-- Table `agora`.`connection_types`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `agora`.`connectionTypes` (
+CREATE  TABLE IF NOT EXISTS `agora`.`connection_types` (
   `type_id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(60) NULL ,
+  `name` VARCHAR(60) NOT NULL ,
+  `description` VARCHAR(255) NULL,
   PRIMARY KEY (`type_id`));
--- Note that one of the connection types is "comments on"
--- Others include "objects to", "refutes", "proposes an amendment", etc.
--- That's why this is "connection types" and not "argument types".
-
+  
+INSERT INTO connection_types (name, description) VALUES 
+	("Commentary", "A comment on another node"), ("Objection", "An objection to another node"), ("Refutation", "A refutation of another node"), ("Amendment", "Proposed amendment for another node");
+	
+INSERT INTO connection_types(name, description) VALUES ("MPtherefore", "Modus Ponens - Therefore phrasing, in English.");
 
 -- -----------------------------------------------------
 -- Table `agora`.`arguments`
@@ -153,7 +155,7 @@ CREATE  TABLE IF NOT EXISTS `agora`.`arguments` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   FOREIGN KEY (`type_id`)
-    REFERENCES `agora`.`connectionTypes` (`type_id`)
+    REFERENCES `agora`.`connection_types` (`type_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 -- The node_id is the claim.
