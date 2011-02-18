@@ -19,4 +19,9 @@ INSERT INTO nodetext (node_id, textbox_id, position) VALUES
 --        |
 -- FOO therefore BAR
 --
--- Of course, we don't yet have the connection so it's sort of nonsensical.
+
+INSERT INTO arguments (map_id, node_id, type_id) VALUES
+	(1, 2, (SELECT type_id FROM connection_types WHERE name="MPtherefore"));
+
+INSERT INTO connections (argument_id, node_id) VALUES
+	(1,1), (1,3);
