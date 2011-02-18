@@ -104,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `agora`.`nodetext` (
 	`nodetext_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`node_id` INT UNSIGNED NOT NULL,
 	`textbox_id` INT UNSIGNED NOT NULL,
+	`position` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`nodetext_id`),
 	INDEX `node_id` (`node_id` ASC),
 	INDEX `textbox_id` (`textbox_id` ASC),
