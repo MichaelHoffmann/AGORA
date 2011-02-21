@@ -3,13 +3,20 @@
 	<xs:element name="map">
 		<xs:complexType>
 			<xs:sequence>
-					<xs:element name="argument" type="argumentType" />
-				</xs:sequence>
-			</xs:complexType>
+				<xs:element name="node" type="node" />
+				<xs:element name="argument" type="argument" />
+				<xs:element name="nodeType" type="xs:String" />
+				<xs:element name="connectionType" type="xs:String" />
+				<xs:element name="node">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nodeType" type="xs:String" />
+							<!--<xs:element name="text" type="textBox" /> -->
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+			</xs:sequence>
+		</xs:complexType>
 	</xs:element>
-
-	<xs:element name="nodeType" type="xs:String">
-	<xs:element name="connectionType" type="xs:String">
-   
-
 </xs:schema>
