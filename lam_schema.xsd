@@ -10,8 +10,11 @@
 
    <xs:complexType name="nodeType">
 		<xs:sequence>
+			<xs:element name="standard" type="nodeType" minOccurs="0" />
+			<xs:element name="inference" type="nodeType" minOccurs="0" />
 			<xs:element name="objection" type="nodeType" minOccurs="0" />
 			<xs:element name="question" type="nodeType" minOccurs="0" />
+			<xs:element name="amendment" type="nodeType" minOccurs="0" />
 			<xs:element name="comment" type="nodeType" minOccurs="0" />
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:integer" />
