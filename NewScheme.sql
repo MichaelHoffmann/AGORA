@@ -18,18 +18,18 @@ DROP TABLE IF EXISTS agora.users;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agora.users (
   user_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  isDeleted TINYINT(1)  NULL DEFAULT 1 ,
-  firstName VARCHAR(30) NULL ,
-  lastName VARCHAR(30) NULL ,
-  userName VARCHAR(32) NOT NULL ,
+  is_deleted TINYINT(1)  NULL DEFAULT 1 ,
+  firstname VARCHAR(30) NULL ,
+  lastname VARCHAR(30) NULL ,
+  username VARCHAR(32) NOT NULL ,
   password VARCHAR(32) NOT NULL ,
   email VARCHAR(255) NOT NULL ,
   url VARCHAR(255) NULL ,
-  userLevel TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user\n9 = Administrator' ,
-  createdDate DATETIME NULL ,
-  lastLogin DATETIME NULL ,	
+  user_level TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user\n9 = Administrator' ,
+  created_date DATETIME NULL ,
+  last_login DATETIME NULL ,	
   PRIMARY KEY (user_id) ,
-  UNIQUE INDEX userName_UNIQUE (userName ASC) ,
+  UNIQUE INDEX username_UNIQUE (username ASC) ,
   UNIQUE INDEX email_UNIQUE (email ASC));
 
 
@@ -41,8 +41,8 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
   user_id INT UNSIGNED NULL ,
   title VARCHAR(100) NULL ,
   description VARCHAR(255) NULL ,
-  createdDate DATETIME NULL ,
-  modifiedDate DATETIME NULL ,
+  created_date DATETIME NULL ,
+  modified_date DATETIME NULL ,
   PRIMARY KEY (map_id) ,
   INDEX user_id (user_id ASC) ,
   FOREIGN KEY (user_id)
@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   user_id INT UNSIGNED NOT NULL ,
   map_id INT UNSIGNED NULL , 
   node_type INT UNSIGNED NOT NULL,
-  createdDate DATETIME NULL ,
-  modifiedDate DATETIME NULL ,
+  created_date DATETIME NULL ,
+  modified_date DATETIME NULL ,
   x_coord INT NULL,
   y_coord INT NULL,
   width INT NULL,
