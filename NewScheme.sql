@@ -59,6 +59,8 @@ CREATE TABLE IF NOT EXISTS agora.node_types (
   PRIMARY KEY (nodetype_id));
 
 INSERT INTO node_types (name) VALUES ("Standard"), ("Inference"), ("Objection"), ("Amendment"), ("Comment");
+-- A standard node is a claim/reason.
+
 -- -------------------------------------------------------
 -- Table agora.nodes
 -- -------------------------------------------------------
