@@ -1,6 +1,6 @@
 
-CREATE SCHEMA IF NOT EXISTS agora DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE agora ;
+CREATE SCHEMA IF NOT EXISTS agora DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE agora;
 SET storage_engine=INNODB;
 
 DROP TABLE IF EXISTS agora.connections;
