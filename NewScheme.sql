@@ -17,19 +17,19 @@ DROP TABLE IF EXISTS agora.users;
 -- Table agora.users
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agora.users (
-  user_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  is_deleted TINYINT(1)  NULL DEFAULT 1 ,
-  firstname VARCHAR(30) NULL ,
-  lastname VARCHAR(30) NULL ,
-  username VARCHAR(32) NOT NULL ,
-  password VARCHAR(32) NOT NULL ,
-  email VARCHAR(255) NOT NULL ,
-  url VARCHAR(255) NULL ,
-  user_level TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user\n9 = Administrator' ,
-  created_date DATETIME NULL ,
-  last_login DATETIME NULL ,	
-  PRIMARY KEY (user_id) ,
-  UNIQUE INDEX username_UNIQUE (username ASC) ,
+  user_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  is_deleted TINYINT(1)  NULL DEFAULT 1,
+  firstname VARCHAR(30) NULL,
+  lastname VARCHAR(30) NULL,
+  username VARCHAR(32) NOT NULL,
+  password VARCHAR(32) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  url VARCHAR(255) NULL,
+  user_level TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user\n9 = Administrator',
+  created_date DATETIME NULL,
+  last_login DATETIME NULL,	
+  PRIMARY KEY (user_id),
+  UNIQUE INDEX username_UNIQUE (username ASC),
   UNIQUE INDEX email_UNIQUE (email ASC));
 
 
@@ -37,14 +37,14 @@ CREATE  TABLE IF NOT EXISTS agora.users (
 -- Table agora.maps
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agora.maps (
-  map_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  user_id INT UNSIGNED NULL ,
-  title VARCHAR(100) NULL ,
-  description VARCHAR(255) NULL ,
-  created_date DATETIME NULL ,
-  modified_date DATETIME NULL ,
-  PRIMARY KEY (map_id) ,
-  INDEX user_id (user_id ASC) ,
+  map_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id INT UNSIGNED NULL,
+  title VARCHAR(100) NULL,
+  description VARCHAR(255) NULL,
+  created_date DATETIME NULL,
+  modified_date DATETIME NULL,
+  PRIMARY KEY (map_id),
+  INDEX user_id (user_id ASC),
   FOREIGN KEY (user_id)
     REFERENCES agora.users (user_id)
     ON DELETE NO ACTION
@@ -63,20 +63,20 @@ INSERT INTO node_types (name) VALUES ("Standard"), ("Inference"), ("Objection"),
 -- Table agora.nodes
 -- -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.nodes (
-  node_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  user_id INT UNSIGNED NOT NULL ,
-  map_id INT UNSIGNED NULL , 
+  node_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id INT UNSIGNED NOT NULL,
+  map_id INT UNSIGNED NULL, 
   node_type INT UNSIGNED NOT NULL,
-  created_date DATETIME NULL ,
-  modified_date DATETIME NULL ,
+  created_date DATETIME NULL,
+  modified_date DATETIME NULL,
   x_coord INT NULL,
   y_coord INT NULL,
   width INT NULL,
   height INT NULL,
-  PRIMARY KEY (node_id) ,
-  INDEX user_id (user_id ASC) ,
-  INDEX map_id (map_id ASC) ,
-  INDEX node_type (node_type ASC) ,
+  PRIMARY KEY (node_id),
+  INDEX user_id (user_id ASC),
+  INDEX map_id (map_id ASC),
+  INDEX node_type (node_type ASC),
   FOREIGN KEY (user_id)
 	REFERENCES agora.users (user_id)
     ON DELETE NO ACTION
@@ -123,8 +123,8 @@ CREATE TABLE IF NOT EXISTS agora.nodetext (
 -- Table agora.connection_types
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agora.connection_types (
-  type_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  name VARCHAR(60) NOT NULL ,
+  type_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(60) NOT NULL,
   description VARCHAR(255) NULL,
   PRIMARY KEY (type_id));
   
@@ -138,14 +138,14 @@ INSERT INTO connection_types(name, description) VALUES ("MPtherefore", "Modus Po
 -- -----------------------------------------------------
 
 CREATE  TABLE IF NOT EXISTS agora.arguments (
-  argument_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  argument_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   map_id INT UNSIGNED NULL,
-  node_id INT UNSIGNED NULL ,
-  type_id INT UNSIGNED NULL ,
-  PRIMARY KEY (argument_id) ,
-  INDEX map_id (map_id ASC) ,
-  INDEX node_id (node_id ASC) ,
-  INDEX type_id (type_id ASC) ,
+  node_id INT UNSIGNED NULL,
+  type_id INT UNSIGNED NULL,
+  PRIMARY KEY (argument_id),
+  INDEX map_id (map_id ASC),
+  INDEX node_id (node_id ASC),
+  INDEX type_id (type_id ASC),
   FOREIGN KEY (map_id)
     REFERENCES agora.maps (map_id)
     ON DELETE NO ACTION
