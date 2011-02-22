@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<nodeType>"Standard"</nodeType>
+	<connectionType>"ModusPonens"</connectionType>
+	<textbox>
+		<textboxID>1</textboxID>
+		<text>"Foo"</text>
+	</textbox>
+		<textbox>
+		<textboxID>2</textboxID>
+		<text>"Bar"</text>
+	</textbox>
+</map>
