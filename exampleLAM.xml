@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map id="1" creator="JoshJ" title="Default" description="A basic argument for testing the database layout.">
 	<textbox id="1">
-		<text>Foo</text>
+		<text>FOO</text>
 	</textbox>
 	<textbox id="2">
-		<text>Bar</text>
+		<text>BAR</text>
 	</textbox>
 	<node id="1" author="JoshJ" map="1" type="standard"> <!--also created/modified dates -->
 		<nodetext id="1" />
