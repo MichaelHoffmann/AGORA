@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map>
-	<nodeType>"Standard"</nodeType>
-	<connectionType>"ModusPonens"</connectionType>
-	<textbox>
-		<textboxID>1</textboxID>
-		<text>"Foo"</text>
+<map id="1" creator="JoshJ" title="Default" description="A basic argument for testing the database layout.">
+	<textbox id="1">
+		<text>Foo</text>
 	</textbox>
-	<textbox>
-		<textboxID>2</textboxID>
-		<text>"Bar"</text>
+	<textbox id="2">
+		<text>Bar</text>
 	</textbox>
+	<node id="1" author="JoshJ" map="1" type="standard"> <!--also created/modified dates -->
+		<nodetext id="1" />
+	</node>
+	<node id="2" author="JoshJ" map="1" type="standard">
+		<nodetext id="2" />
+	</node>
+	<node id="3" author="JoshJ" map="1" type="inference">
+		<nodetext id="1" />
+		<nodetext id="2" />
+	</node>
+	<argument id="1" map="1" type="MPtherefore">
+		<targetnode id="2">
+		<sourcenode id="1">
+		<sourcenode id="3">
+	</argument>
 </map>
