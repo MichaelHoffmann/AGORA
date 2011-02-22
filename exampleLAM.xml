@@ -17,8 +17,8 @@
 		<nodetext id="2" />
 	</node>
 	<argument id="1" map="1" type="MPtherefore">
-		<targetnode id="2">
-		<sourcenode id="1">
-		<sourcenode id="3">
+		<targetnode id="2" />
+		<sourcenode id="1" />
+		<sourcenode id="3" />
 	</argument>
 </map>
