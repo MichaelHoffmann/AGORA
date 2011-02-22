@@ -12,9 +12,9 @@
 		<nodetext id="1" />
 		<nodetext id="2" />
 	</node>
-	<argument id="1" map="1" type="MPtherefore">
+	<connection id="1" map="1" type="MPtherefore">
 		<targetnode id="2" />
 		<sourcenode id="1" />
 		<sourcenode id="3" />
-	</argument>
+	</connection>
 </map>
