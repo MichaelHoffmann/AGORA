@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="map">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="nodeType" type="xs:String" />
+				<xs:element name="connectionType" type="xs:String" />
+				<xs:element name="textbox"> <!-- Should be able to have any number of these...-->
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="textboxID" type="xs:integer" />
+							<xs:element name="text" type="xs:String" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="node"> <!-- Should be able to have any number of these...-->
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nodeID" type="xs:integer" />
+							<xs:element name="nodeType" type="nodeType" />
+							<xs:element name="text" type="textBox" /> <!-- Should be able to have any number of these...-->
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="argument"> <!-- Should be able to have any number of these...-->
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="argumentID" type="xs:integer" />
+							<xs:element name="connectionType" type="connectionType" />
+							<xs:element name="targetNode" type="node" />
+							<xs:element name="sourceNode" type="node" /> <!-- Should be able to have any number of these...-->
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
