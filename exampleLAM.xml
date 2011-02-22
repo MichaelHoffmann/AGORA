@@ -6,7 +6,7 @@
 		<textboxID>1</textboxID>
 		<text>"Foo"</text>
 	</textbox>
-		<textbox>
+	<textbox>
 		<textboxID>2</textboxID>
 		<text>"Bar"</text>
 	</textbox>
