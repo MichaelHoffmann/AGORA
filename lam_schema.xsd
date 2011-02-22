@@ -28,7 +28,7 @@
     <xsd:attribute name="id" type="xsd:int" />
   </xsd:complexType>
   <xsd:complexType name="nodeType">
-    <xsd:sequence>
+    <xsd:sequence maxOccurs="unbounded">
       <xsd:element name="nodetext" type="nodetextType" />
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:int" />
