@@ -21,7 +21,7 @@ INSERT INTO nodetext (node_id, textbox_id, position) VALUES
 --
 
 INSERT INTO arguments (map_id, node_id, type_id) VALUES
-	(1, 2, (SELECT type_id FROM connection_types WHERE name="MPtherefore"));
+	(1, 2, (SELECT type_id FROM connection_types WHERE conn_name="MPtherefore"));
 
 INSERT INTO connections (argument_id, node_id) VALUES
 	(1,1), (1,3);

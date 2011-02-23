@@ -55,10 +55,10 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
 -- -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.node_types (
   nodetype_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  type_name VARCHAR(30) NOT NULL,
+  type VARCHAR(30) NOT NULL,
   PRIMARY KEY (nodetype_id));
 
-INSERT INTO node_types (type_name) VALUES ("Standard"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment");
+INSERT INTO node_types (type) VALUES ("Standard"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment");
 -- A standard node is a claim/reason.
 
 -- -------------------------------------------------------
@@ -126,14 +126,14 @@ CREATE TABLE IF NOT EXISTS agora.nodetext (
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agora.connection_types (
   type_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(60) NOT NULL,
+  conn_name VARCHAR(60) NOT NULL,
   description VARCHAR(255) NULL,
   PRIMARY KEY (type_id));
   
-INSERT INTO connection_types (name, description) VALUES 
+INSERT INTO connection_types (conn_name, description) VALUES 
 	("Commentary", "A comment on another node"), ("Objection", "An objection to another node"), ("Refutation", "A refutation of another node"), ("Amendment", "Proposed amendment for another node");
 	
-INSERT INTO connection_types(name, description) VALUES ("MPtherefore", "Modus Ponens - Therefore phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPtherefore", "Modus Ponens - Therefore phrasing, in English.");
 
 -- -----------------------------------------------------
 -- Table agora.arguments
