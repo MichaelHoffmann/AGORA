@@ -55,10 +55,10 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
 -- -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.node_types (
   nodetype_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
+  type_name VARCHAR(30) NOT NULL,
   PRIMARY KEY (nodetype_id));
 
-INSERT INTO node_types (name) VALUES ("Standard"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment");
+INSERT INTO node_types (type_name) VALUES ("Standard"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment");
 -- A standard node is a claim/reason.
 
 -- -------------------------------------------------------
