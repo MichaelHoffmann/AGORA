@@ -4,7 +4,7 @@ INSERT INTO users (is_deleted, firstname, lastname, username, password, email, u
 
 INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES ((SELECT user_id FROM users WHERE userName="JoshJ"), "Default", "A basic argument for testing the database layout.", NOW(), NOW());
 
-INSERT INTO nodes (user_id, map_id, node_type, created_date, modified_date) VALUES (1,1,1,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW());
+INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date) VALUES (1,1,1,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW());
 
 INSERT INTO textboxes (text) VALUES ("FOO"), ("BAR");
 

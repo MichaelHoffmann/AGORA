@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   node_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NULL, 
-  node_type INT UNSIGNED NOT NULL,
+  nodetype_id INT UNSIGNED NOT NULL,
   created_date DATETIME NULL,
   modified_date DATETIME NULL,
   x_coord INT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   PRIMARY KEY (node_id),
   INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
-  INDEX node_type (node_type ASC),
+  INDEX nodetype_id (nodetype_id ASC),
   FOREIGN KEY (user_id)
 	REFERENCES agora.users (user_id)
     ON DELETE NO ACTION
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
 	REFERENCES agora.maps (map_id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  FOREIGN KEY(node_type)
+  FOREIGN KEY(nodetype_id)
     REFERENCES agora.node_types (nodetype_id)
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION);
