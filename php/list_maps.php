@@ -10,7 +10,7 @@
 	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 		$row = mysql_fetch_assoc($resultID);
 		$map = $xml->addChild("map");
-		$map->addAttribute("creator", $row['username']
+		$map->addAttribute("creator", $row['username']);
 	}
 	print($xml->asXML());
 ?>
