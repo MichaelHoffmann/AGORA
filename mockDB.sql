@@ -2,7 +2,7 @@ USE agora;
 
 INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, "Joshua", "Justice", "JoshJ", "password", "joshj777@gmail.com", "http://github.com/joshjgt", 9, NOW(), NOW());
 
-INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES ((SELECT user_id FROM users WHERE userName="JoshJ"), "Default", "A basic argument for testing the database layout.", NOW(), NOW());
+INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES ((SELECT user_id FROM users WHERE userName="JoshJ"), "Generic", "A basic argument for testing the database layout.", NOW(), NOW()) , (1, "Second Map", "A pointless circular argument designed solely to fill space", NOW(), NOW()), (1, "Babelfish", "Douglas Adams's proof by contradiction of the nonexistence of god.", NOW(), NOW());
 
 INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date) VALUES (1,1,1,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW());
 
