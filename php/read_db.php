@@ -5,7 +5,7 @@
 	$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 
 	header("Content-type: text/xml");
-	$xmlstr = "<?xml version='1.0' ?>\n<book></book>";
+	$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 	$xml = new SimpleXMLElement($xmlstr);
 	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 		$row = mysql_fetch_assoc($resultID);
