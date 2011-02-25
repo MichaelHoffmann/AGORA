@@ -11,6 +11,7 @@
 		$row = mysql_fetch_assoc($resultID);
 		$map = $xml->addChild("map");
 		$map->addAttribute("id", $row['map_id']);
+		$map->addAttribute("title", $row['title']);
 		$map->addAttribute("creator", $row['username']);
 	}
 	print($xml->asXML());
