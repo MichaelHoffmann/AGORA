@@ -26,10 +26,17 @@ private var _statementType:int;
 private var _statementIndicator:Label;
 private var _addButtonPosition:int;
 private var _useButtonPosition:int;
+[Bindable]
 private var _buttonPosition:int;
+[Bindable]
 private var _addButton:Button;
+[Bindable]
 private var _useButton:Button;
+private var _claimAccepted:Boolean;
 
+public function get claimbox():DynamicTextArea{
+	return this._claimbox;
+}
 public function set buttonPosition(value:int):void{
 	this._buttonPosition = value;
 	done.y = this._buttonPosition+this._claimbox.y;
@@ -103,6 +110,7 @@ public function init():void{
 	prompt.setStyle("borderThickness",0);
 	prompt.height = 10;
 	prompt.addEventListener("click",changeType);*/
+	this._claimAccepted = false;
 	_statementIndicator = new Label();
 	_statementIndicator.x = 30;
 	_statementIndicator.y = 0;
@@ -123,7 +131,8 @@ public function init():void{
 	else{
 		setClaim(_claimtext);
 	}
-	BindingUtils.bindProperty(this,"buttonPosition",_claimbox,"height");
+	BindingUtils.bindProperty(this,"buttonPosition",_claimbox,"height"); //to automatically get where to place button from where the claimbox is rendered.
+	//instead, the buttons can be included in the custom component structure and placed relatively
 	
 }
 
@@ -171,7 +180,7 @@ private function setClaimBoxPropertiesUniversal():void{
 	_claimbox.setStyle("backgroundColor","#D3D2D2"); 
 	_claimbox.setStyle("paddingLeft","7");
 	_claimbox.setStyle("paddingRight","7");
-	_claimbox.setStyle("paddingTop","2");
+	_claimbox.setStyle("paddingTop","");
 	_claimbox.minHeight=65;
 	_claimbox.setStyle("focusRoundedCorners","tr br tl bl");
 	_claimbox.setStyle("cornerRadius","75");
@@ -187,6 +196,7 @@ private function setClaimBoxPropertiesUniversal():void{
  */
 public function callClaimAccept(event:MouseEvent):void{
 	_claimtext = _claimbox.text;
+	Alert.show("1.inside callClaimAccept");
 	dispatchClaimEvent();
 }
 
@@ -197,17 +207,19 @@ public function callClaimAccept(event:MouseEvent):void{
  * 
  */
 private function acceptClaim(event:ResultEvent):void{
+	Alert.show("5.inside acceptClaim finally");
 	_addButton = new Button();
 	
 	removeChild(done);
+	this._claimAccepted = true;
 	
-	BindingUtils.bindProperty(_addButton,"x",_claimbox,"x");
+	BindingUtils.bindProperty(_addButton,"x",claimbox,"x");
 	BindingUtils.bindProperty(_addButton,"y",this,"buttonPosition");
 	_addButton.setStyle("textRollOverColor","#0b333c");
 	_addButton.setStyle("color","#B1B9BB");
 	_addButton.setStyle("focusRoundedCorners","tr br tl bl");
    	_addButton.setStyle("cornerRadius",5);
-	_addButton.label="add..." 
+	_addButton.label="add reason" 
 	_addButton.width=95;
 	BindingUtils.bindProperty(this,"addButtonPosition",_claimbox,"height");
 	addChild(_addButton);
@@ -231,7 +243,34 @@ private function acceptClaim(event:ResultEvent):void{
  * 
  */
 public function updateClaim(event:ResultEvent):void{
-	
+	if(!(this._claimAccepted)){
+		_addButton = new Button();
+		
+		removeChild(done);
+		this._claimAccepted = true;
+		BindingUtils.bindProperty(_addButton,"x",_claimbox,"x");
+		BindingUtils.bindProperty(_addButton,"y",this,"buttonPosition");
+		_addButton.setStyle("textRollOverColor","#0b333c");
+		_addButton.setStyle("color","#B1B9BB");
+		_addButton.setStyle("focusRoundedCorners","tr br tl bl");
+	   	_addButton.setStyle("cornerRadius",5);
+		_addButton.label="add reason" 
+		_addButton.width=95;
+		BindingUtils.bindProperty(this,"addButtonPosition",_claimbox,"height");
+		addChild(_addButton);
+		
+		_useButton = new Button();
+		BindingUtils.bindProperty(_useButton,"x",_addButton,"width");
+		BindingUtils.bindProperty(_useButton,"y",this,"buttonPosition");
+		_useButton.setStyle("color","#B1B9BB");
+		_useButton.setStyle("textRollOverColor","#0b333c") 
+		_useButton.setStyle("focusRoundedCorners","tr br tl bl");
+	   	_useButton.setStyle("cornerRadius",5);
+		_useButton.label="use as..." 
+		_useButton.width=95;
+		BindingUtils.bindProperty(this,"useButtonPosition",_claimbox,"height");
+		addChild(_useButton);
+	}
 }
 
 /**
@@ -249,6 +288,7 @@ public function displayClaim(event:ResultEvent):void{
  */
 public function dispatchClaimEvent():void{
 	var claimAcceptEvent:StatementAcceptEvent = new StatementAcceptEvent("claimAccepted",_claimtext,_claimIndex);
+	Alert.show("2.inside dispatchClaimEvent");
 	dispatchEvent(claimAcceptEvent);
 }
 /**
@@ -300,6 +340,12 @@ public function preventNewLine(event:TextEvent):void{
  * 
  */
 public function textBoxClicked(event:MouseEvent):void{
+	if(this._claimAccepted){
+		removeChild(_addButton);
+		removeChild(_useButton);
+		addChild(done);
+		this._claimAccepted = false;
+	}
 	if(_claimbox.text == "[Enter your Claim]"){
 		this.setClaim("");
 	}
@@ -329,6 +375,7 @@ public function callClaimUpdate():void{
 }
 
 public function callAcceptClaim():void{
+	Alert.show("4.inside callAcceptClaim - goes to claimService");
 	claimService.acceptClaim(_claimtext,_claimIndex,this.x,this.y,_userID);
 }
 

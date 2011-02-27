@@ -3,6 +3,9 @@ import components.ClaimBox;
 import components.CustomImage;
 
 import events.StatementAcceptEvent;
+
+import mx.events.FlexEvent;
+import mx.controls.Alert;
 //An array of ClaimBoxes
 private var _claimBox:Array;
 //The array that holds the claim texts
@@ -30,20 +33,28 @@ public function claimInit():void{
 	_claimBox[_claimIndex].init();
 }
 
+private function resizeImage(event:FlexEvent){
+	
+}
 private function claimAcceptEvent(event:StatementAcceptEvent):void{
 	var claimIndex:int = event.claimIndex;
 	if(!(_inferencePresent[claimIndex])){
+		Alert.show("3.inside claimAcceptEvent - claimHandlerScript.as");
 		_claimBox[claimIndex].callAcceptClaim();
 		_claimTextArray[claimIndex] = event.statement;
 		
 		//The following lines of code create the left arrow and bind it to the claimbox position
 		var leftArrow:CustomImage = new CustomImage();
 		leftArrow.imageSource = "images/left-arrow.png";
-		leftArrow.addx = _claimBox[claimIndex].width;
-		leftArrow.addy = (_claimBox[claimIndex].height/2) - 10;
+		
+		//leftArrow.width = _claimBox[claimIndex].width - _claimBox[claimIndex].claimbox.x + _claimBox[claimIndex].claimbox.width; 
+		leftArrow.addx = _claimBox[claimIndex].claimbox.width + _claimBox[_claimIndex].claimbox.x;
+		leftArrow.addy = (_claimBox[claimIndex].claimbox.height/2) + _claimBox[_claimIndex].claimbox.y - 10;
 		BindingUtils.bindProperty(leftArrow,"xpos",_claimBox[claimIndex],"x");
 		BindingUtils.bindProperty(leftArrow,"ypos",_claimBox[claimIndex],"y");
 		addChild(leftArrow);
+		leftArrow.arrow.width=400;
+		leftArrow.invalidateDisplayList();
 		
 		//The following lines of code create the therefore label and bind it to the left arrow's position
 		_therefore[claimIndex].addx = 85;
@@ -53,7 +64,7 @@ private function claimAcceptEvent(event:StatementAcceptEvent):void{
 		addChild(_therefore[claimIndex]);
 		
 		//The following lines of code create the leftline and bind it to therefore's position
-		var leftLine:CustomLine = new CustomLine();
+		 var leftLine:CustomLine = new CustomLine();
 		leftLine.addx = 72;
 		leftLine.addy = 8;
 		leftLine.linex = 85;

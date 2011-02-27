@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+This is the actual claim box that is being used
+-->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
 		   xmlns:classes="classes.*">
 		   
@@ -13,11 +16,17 @@
 				      click="callClaimAccept(event)"
 				      focusRoundedCorners="tr br tl bl"
    				      cornerRadius="5"
-					  x="0"  
+					  x="{_claimbox.x}"  
 					  label="Done" 
 					  width="190">
 		   	
 		   </mx:Button>
+	
+		   <!--<mx:Button id="{_addButton}"
+					  visible="false"
+					  click=>
+			   
+		   </mx:Button>-->
 			
 			<mx:RemoteObject id="claimService"
 						     destination="amfphp" 

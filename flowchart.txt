@@ -2,39 +2,38 @@ Code flow:-
 
 index.html
 index.mxml
+mainApplicationScript.as
  |- claimStartScript.as
   -> claimHandlerScript.as (claimInit() -> also adds text "what is your claim?", the left-arrow.png image and x,y numbers)
-   -> ClaimBox.mxml
-   -> claimBoxScript.as (assigns 'Particular' statement directly. does not go to statementPromptScript which is supposed to do this)
-    -> DynamicTestArea.as
-    -> acceptClaim()    // this is where the claimbox changes to have 2 buttons on bottom 1.add.. 2.use as..
+     -> ClaimBox.mxml
+     -> claimBoxScript.as (assigns 'Particular' statement directly. does not go to statementPromptScript which is supposed to do this)
+        -> DynamicTestArea.as
+        -> acceptClaim()    // this is where the claimbox changes to have 2 buttons on bottom 1.add.. 2.use as..
   -> reasonHandlerScript.as (reasonInit()) -- init array reasonText[], reasonAccepted event
-   -> ReasonBox.mxml
-   -> reasonBoxScript.as (assigns 'Particular' statement directly)
-   -> add argument scheme -- breaks here
+     -> ReasonBox.mxml
+     -> reasonBoxScript.as (assigns 'Particular' statement directly)
+     -> add argument scheme -- breaks here
   -> inferenceHandlerScript.as (inferenceInit())
-   -> init array inferenceText[]
+     -> init array inferenceText[]
   -> SchemeSelector.mxml
-   -> schemeSelectorScript.as
+     -> schemeSelectorScript.as
+       -> schemeService.getSchemeClasses(_selectedLogicName) //this function defined in the mxml file
+       -> dispatchEvent(schemeSelectedEvent) //this sends event info regarding arg scheme and language type to main application. logic scripts are run
+     -> main schemes : onRollOver/onClick - getSchemeLanguages(event)
+     -> selecting arguments: rollOver - rollOverLanguageType(event), click - acceptLanguageType(event) ->calls-> getLanguageFunction back in mxml file ->calls->sendScheme(itemRollOver and itemClick are from ListEvent)
   -> PromptLabel.mxml
-   -> promptLabelScript.as
- |- schemeStartScript.as (TODO)
+     -> promptLabelScript.as
+ |- schemeStartScript.as
   -> StatementPrompt.mxml, SchemeSelector.mxml
-   -> schemeSelectedEvent.as (for "rollover" and "schemeaccepted")
- |- (other 2 under constructinon)
-mainApplicationScript.as
-components.SchemeSelector.mxml <- invokes functions, definitions in below file
-e.g main schemes : onRollOver/onClick - getSchemeLanguages(event)
-selecting arguments: rollOver - rollOverLanguageType(event), click - acceptLanguageType(event) ->calls-> getLanguageFunction back in mxml file ->calls->sendScheme
-(itemRollOver and itemClick are from ListEvent)
-schemeSelectorScript.as (has attributes with names beginning with _ )
+     -> schemeSelectedEvent.as (for "rollover" and "schemeaccepted")
+ |- (other 2 under prototype construction)
+
 ResultEvent.as
  |-SchemeSelectedEvent.as (is passed on variables from schemeSelectorScript)
 
 
 
-
-web display file or labelled event <--> source :-
+web display file and events in it <--> source :-
 
 SchemeSelector.mxml <--> scripts/schemeSelectorScript.as
 events invoked
@@ -70,21 +69,5 @@ CustomLine.mxml <--> scripts/customLine.as
 
 PromptLabel.mxml <--> scripts/promptLabelScript.as
 
-
-
-
-
-
- 
-
-
-
-
-
-
-
-what/where is?
-schemeService
-argumentSelector
 
 
