@@ -2,12 +2,14 @@
 
 	function get_map($mapID){
 
+		//Standard SQL connection stuff
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$whereclause = mysql_real_escape_string("WHERE map_id = $mapID");
 		$query = "SELECT * FROM maps " . $whereclause ;
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		
+		//Set up the basics of the XML.
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$xml = new SimpleXMLElement($xmlstr);
@@ -15,6 +17,7 @@
 		$xml->addAttribute("id", $row['map_id']);
 		$xml->addAttribute("creator", $row['user_id']);
 		
+		// Textboxes are easy!
 		$query = "SELECT * FROM textboxes " . $whereclause ; 
 		$resultID = mysql_query($query, $linkID) or die("Data not found in textbox lookup."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -23,9 +26,10 @@
 			$textbox->addAttribute("ID", $row['textbox_id']);
 			$textbox->addAttribute("text", $row['text']);
 		}
-		
+
+
+		// Nodes take a bit more work.
 		$query = "SELECT * FROM nodes " . $whereclause;
-		
 		$resultID = mysql_query($query, $linkID) or die("Data not found in node lookup."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
@@ -33,6 +37,7 @@
 			$node = $xml->addChild("node");
 			$node->addAttribute("ID", $row['node_id']);
 			$node->addAttribute("Author", $row['user_id']);
+			//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 			$innerQuery="SELECT * from nodetext WHERE node_id=$node_id ORDER BY position ASC";
 			$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in nodetext lookup."); 
 			for($y=0; $y<mysql_num_rows($resultID2); $y++){
@@ -41,6 +46,10 @@
 				$nodetext->addAttribute("ID", $innerRow['textbox_id']);
 			}			
 		}
+
+		
+		
+		
 		
 		return $xml;
 	}
