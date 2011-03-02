@@ -19,10 +19,12 @@
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
-			$node = $xml->addChild("textbox");
-			$node->addAttribute("ID", $row['textbox_id']);
-			$node->addAttribute("text", $row['text']);
+			$textbox = $xml->addChild("textbox");
+			$textbox->addAttribute("ID", $row['textbox_id']);
+			$textbox->addAttribute("text", $row['text']);
 		}
+		
+		
 		
 		return $xml;
 	}
