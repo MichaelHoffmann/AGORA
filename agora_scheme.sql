@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS agora.nodetext (
 	PRIMARY KEY (nodetext_id),
 	INDEX node_id (node_id ASC),
 	INDEX textbox_id (textbox_id ASC),
+	INDEX position (position ASC),
 	FOREIGN KEY(node_id)
 	  REFERENCES agora.nodes (node_id)
 	  ON DELETE NO ACTION
