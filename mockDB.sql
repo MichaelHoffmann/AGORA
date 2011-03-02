@@ -6,7 +6,7 @@ INSERT INTO maps (user_id, title, description, created_date, modified_date) VALU
 
 INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date) VALUES (1,1,1,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW());
 
-INSERT INTO textboxes (text) VALUES ("FOO"), ("BAR");
+INSERT INTO textboxes (text, map_id) VALUES ("FOO", 1), ("BAR", 1);
 
 INSERT INTO nodetext (node_id, textbox_id, position) VALUES
 	(1, 1, 1), (2, 2, 1), (3,1,1), (3, 2, 2);

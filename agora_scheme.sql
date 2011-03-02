@@ -97,8 +97,14 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.textboxes (
 	textbox_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	map_id INT UNSIGNED NOT NULL,
 	text TEXT,
-	PRIMARY KEY (textbox_id));
+	PRIMARY KEY (textbox_id),
+	INDEX map_id (map_id ASC),
+	FOREIGN KEY (map_id)
+	REFERENCES agora.maps (map_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
 -- Table agora.nodetext
