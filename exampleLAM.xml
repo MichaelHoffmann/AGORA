@@ -1,20 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map id="1" creator="JoshJ" title="Default" description="A basic argument for testing the database layout.">
-	<textbox id="1" text="FOO" />
-	<textbox id="2" text="BAR" />
-	<node id="1" author="JoshJ" map="1" type="standard"> <!--also created/modified dates -->
-		<nodetext id="1" />
+<map id="1" username="JoshJ">
+	<textbox ID="1" text="FOO"/>
+	<textbox ID="2" text="BAR"/>
+
+	<node ID="1" Author="1">
+		<nodetext ID="1"/>
 	</node>
-	<node id="2" author="JoshJ" map="1" type="standard">
-		<nodetext id="2" />
+
+	<node ID="2" Author="1">
+		<nodetext ID="2"/>
 	</node>
-	<node id="3" author="JoshJ" map="1" type="inference">
-		<nodetext id="1" />
-		<nodetext id="2" />
+
+	<node ID="3" Author="1">
+		<nodetext ID="1"/>
+		<nodetext ID="2"/>
 	</node>
-	<connection id="1" map="1" type="MPtherefore">
-		<targetnode id="2" />
-		<sourcenode id="1" />
-		<sourcenode id="3" />
+
+	<connection argID="1" type="MPtherefore" targetnode="2">
+		<sourcenode nodeID="1"/>
+		<sourcenode nodeID="3"/>
 	</connection>
 </map>
