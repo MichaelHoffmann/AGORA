@@ -70,6 +70,7 @@
 		
 		return $xml;
 	}
-	$xml = get_map(1); // TODO: read this number from somewhere else.
+	$map_id = $_POST['map_id'];
+	$xml = get_map($map_id); // TODO: read this number from somewhere else.
 	print($xml->asXML());
 ?>
