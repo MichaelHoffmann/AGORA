@@ -1,3 +1,5 @@
+include "Textbox.as"
+
 public function completeHandler(e:Event):void {
 	var xml:XML = new XML(e.target.data)
 	trace(xml);
