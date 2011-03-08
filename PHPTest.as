@@ -1,9 +1,12 @@
-include "Textbox.as"
+
 
 public function completeHandler(e:Event):void {
-	var xml:XML = new XML(e.target.data)
-	trace(xml);
+	trace("Entered the handler");
+	var xml:XML = new XML(e.target.data);
+	trace("Reached this line");
+	trace(xml.child("textbox")[0].toXMLString());
 }
+
 public function init():void {
 	var uv:URLVariables = new URLVariables();
 	uv.map_id = 1; 
@@ -15,3 +18,4 @@ public function init():void {
 	ldr.addEventListener(Event.COMPLETE, completeHandler);
 	ldr.load(rq);
 }
+
