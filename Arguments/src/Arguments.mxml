@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is an application to test the AgoraPanel class. It also 
+draws a line over the canvas. It has to be made a separate 
+class, and will be done soon.
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:classes="classes.*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="initApp()">
+	<fx:Declarations>
+	</fx:Declarations>
+	
+		<s:VGroup>
+			<s:HGroup>
+			<s:Button label="Add a Component" id="add_btn" click="buttonClicked()">
+			</s:Button>
+			<s:Label text="X coordinate" id="x_lbl">
+			</s:Label>
+			<s:TextInput id="x_txt">
+			</s:TextInput>
+			
+			<s:Label text="Y coordinate" id="y_lbl">
+			</s:Label>
+			<s:TextInput id="y_txt">
+			</s:TextInput>
+			</s:HGroup>
+	<mx:Canvas id="ustage" backgroundColor="0xaaaaaa" height="600" width="800">
+		<classes:ArgumentPanel id="claim" x="100" y="100">
+		</classes:ArgumentPanel>
+		<classes:ArgumentPanel id="reason" x="400" y="100">
+		</classes:ArgumentPanel>	
+	</mx:Canvas>
+	</s:VGroup>
+	<fx:Script>
+		<![CDATA[
+			import classes.ArgumentPanel;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.containers.Canvas;
+			import mx.containers.Panel;
+			import mx.controls.Alert;
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.core.UIComponent;
+			import mx.core.mx_internal;
+			import mx.events.CalendarLayoutChangeEvent;
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			
+			import spark.primitives.Graphic;
+			public var drawUtility:UIComponent;
+			
+			public function buttonClicked():void
+			{
+				var tmp:ArgumentPanel = new ArgumentPanel();
+				//tmp.
+				ustage.addElement(tmp);
+				
+			}
+			
+			public function initApp():void
+			{
+				ustage.addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
+				ustage.addEventListener(DragEvent.DRAG_DROP, handleDrop );	
+				drawUtility = new UIComponent;
+				ustage.addElement(drawUtility);
+				BindingUtils.bindProperty(claim.input1,"text",reason.input1,"text");
+				//claim.input1.addEventListener(KeyboardEvent.KEY_DOWN,updateText);
+				claim.input1.addEventListener(KeyboardEvent.KEY_UP,updateText);
+				connectComponents();
+
+			}
+			
+			public function updateText(event:Event):void
+			{
+				reason.input1.text =  event.currentTarget.text;
+			}
+			
+			public function argumentPanelCreated(event:Event):void
+			{
+				
+				
+			}
+			
+			public function acceptDrop(d:DragEvent):void
+			{
+				DragManager.acceptDragDrop(Canvas(d.currentTarget));
+			}
+			
+			public function connectComponents():void
+			{
+				try{
+					drawUtility.graphics.clear();
+					drawUtility.graphics.lineStyle(2.0,0x000000,1.0);
+					drawUtility.graphics.moveTo(claim.width + claim.x, claim.y + claim.height/2);
+					drawUtility.graphics.lineTo(reason.x,reason.y+reason.height/2);
+				}catch(problem:Error)
+				{
+					Alert.show(problem.toString());
+				}
+			}
+			
+			public function handleDrop(dragEvent:DragEvent):void
+			{	
+				try{
+				var currentStage:Canvas = Canvas(dragEvent.currentTarget);
+				var akcdragInitiator:ArgumentPanel = ArgumentPanel(dragEvent.dragInitiator);
+				var dragSource:DragSource = dragEvent.dragSource;
+				var tmpx:int = int(dragSource.dataForFormat("x"));
+				var tmpy:int = int(dragSource.dataForFormat("y"));
+				akcdragInitiator.x = currentStage.mouseX -  tmpx;
+				akcdragInitiator.y = currentStage.mouseY - tmpy;
+				connectComponents();
+			}catch(error:Error)
+			{
+				Alert.show(error.message.toString());
+			}
+		}
+			
+		]]>
+	</fx:Script>
+	
+</s:Application>

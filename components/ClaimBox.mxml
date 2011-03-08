@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 This is the actual claim box that is being used
@@ -37,3 +38,35 @@ This is the actual claim box that is being used
 			</mx:RemoteObject>
 						      
 </mx:Canvas>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+		   xmlns:classes="classes.*">
+		   
+		   <mx:Metadata>
+		   		[Event(name="claimAccepted",type="events.StatementAcceptEvent")]
+		   </mx:Metadata>
+		   <mx:Script source="../scripts/claimBoxScript.as" />	
+		   
+		   <mx:Button id="done"
+		   	          textRollOverColor="#0b333c" 
+				      color="#B1B9BB"
+				      click="callClaimAccept(event)"
+				      focusRoundedCorners="tr br tl bl"
+   				      cornerRadius="5"
+					  x="0"  
+					  label="Done" 
+					  width="190">
+		   	
+		   </mx:Button>
+			
+			<mx:RemoteObject id="claimService"
+						     destination="amfphp" 
+						     source="ClaimModelService">
+				<mx:method name="acceptClaim" result="acceptClaim(event)" fault="onFault(event)" />
+				<mx:method name="updateClaim" result="updateClaim(event)" fault="onFault(event)" />
+				<mx:method name="returnClaim" result="displayClaim(event)" fault="onFault(event)" />
+			</mx:RemoteObject>
+						      
+</mx:Canvas>
+>>>>>>> 17655dbbb6b479da800968c898b3a0dd1b7b154f
