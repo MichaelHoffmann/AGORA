@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 This is the actual claim box that is being used
@@ -39,6 +40,8 @@ This is the actual claim box that is being used
 						      
 </mx:Canvas>
 =======
+=======
+>>>>>>> f91bce468339191fd6d51c1e876c4e2b7c26d0ed
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
 		   xmlns:classes="classes.*">
@@ -69,4 +72,7 @@ This is the actual claim box that is being used
 			</mx:RemoteObject>
 						      
 </mx:Canvas>
+<<<<<<< HEAD
 >>>>>>> 17655dbbb6b479da800968c898b3a0dd1b7b154f
+=======
+>>>>>>> f91bce468339191fd6d51c1e876c4e2b7c26d0ed
