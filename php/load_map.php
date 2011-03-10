@@ -29,13 +29,14 @@
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes " . $whereclause;
+		$query = "SELECT * FROM nodes NATURAL JOIN node_types " . $whereclause;
 		$resultID = mysql_query($query, $linkID) or die("Data not found in node lookup."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
 			$node_id = $row['node_id'];
 			$node = $xml->addChild("node");
 			$node->addAttribute("ID", $node_id);
+			$node->addAttribute("Type", $row['type']);
 			$node->addAttribute("Author", $row['user_id']);
 			//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 			$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
