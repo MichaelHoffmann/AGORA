@@ -70,7 +70,7 @@
 		
 		return $xml;
 	}
-	$map_id = $_POST['map_id'];
+	$map_id = $_REQUEST['map_id'];  //Change this back to a GET when all testing is done.
 	$xml = get_map($map_id); 
 	print($xml->asXML());
 ?>
