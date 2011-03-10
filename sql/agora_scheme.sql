@@ -141,6 +141,7 @@ INSERT INTO connection_types (conn_name, description) VALUES
 	("Commentary", "A comment on another node"), ("Objection", "An objection to another node"), ("Refutation", "A refutation of another node"), ("Amendment", "Proposed amendment for another node");
 	
 INSERT INTO connection_types(conn_name, description) VALUES ("MPtherefore", "Modus Ponens - Therefore phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("ConSyllogism", "Constructive Syllogism - Therefore phrasing, in English.");
 
 -- -----------------------------------------------------
 -- Table agora.arguments
