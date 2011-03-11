@@ -24,16 +24,20 @@ class, and will be done soon.
 			</s:Label>
 			<s:TextInput id="y_txt">
 			</s:TextInput>
+				
+			<s:TextInput id="display_string" text="default_text">
+			</s:TextInput>
+				
+			<s:TextInput id="direction_txt" text="">
+	
+			</s:TextInput>
 			</s:HGroup>
-	<mx:Canvas id="ustage" backgroundColor="0xaaaaaa" height="600" width="800">
-		<classes:ArgumentPanel id="claim" x="100" y="100">
-		</classes:ArgumentPanel>
-		<classes:ArgumentPanel id="reason" x="400" y="100">
-		</classes:ArgumentPanel>	
+	<mx:Canvas id="ustage" backgroundColor="0xaaaaaa" height="600" width="800">	
 	</mx:Canvas>
 	</s:VGroup>
 	<fx:Script>
 		<![CDATA[
+			import classes.ALayoutManager;
 			import classes.ArgumentPanel;
 			
 			import mx.binding.utils.BindingUtils;
@@ -50,56 +54,44 @@ class, and will be done soon.
 			
 			import spark.primitives.Graphic;
 			public var drawUtility:UIComponent;
+			public var numComponentsX:int;
+			public var numComponentsY:int;
+			public var layoutManager:ALayoutManager;
+			
+			public var listOfPanels:Vector.<ArgumentPanel>;
+			public var howMany:int;
 			
 			public function buttonClicked():void
 			{
 				var tmp:ArgumentPanel = new ArgumentPanel();
 				//tmp.
+				var tgridX:int;
+				var tgridY:int;
+				//tmp.input1.text = display_string.text;
+				tgridX = int(x_txt.text);
+				tgridY = int(y_txt.text);
 				ustage.addElement(tmp);
-				
+				ustage.validateSize(true);
+				layoutManager.positionArgumentPanel(listOfPanels,tmp,tgridX,tgridY);
 			}
 			
 			public function initApp():void
 			{
+				layoutManager = new ALayoutManager;
 				ustage.addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 				ustage.addEventListener(DragEvent.DRAG_DROP, handleDrop );	
 				drawUtility = new UIComponent;
 				ustage.addElement(drawUtility);
-				BindingUtils.bindProperty(claim.input1,"text",reason.input1,"text");
-				//claim.input1.addEventListener(KeyboardEvent.KEY_DOWN,updateText);
-				claim.input1.addEventListener(KeyboardEvent.KEY_UP,updateText);
-				connectComponents();
-
+				listOfPanels = new Vector.<ArgumentPanel>(0,false);
+				howMany=0;
 			}
 			
-			public function updateText(event:Event):void
-			{
-				reason.input1.text =  event.currentTarget.text;
-			}
-			
-			public function argumentPanelCreated(event:Event):void
-			{
-				
-				
-			}
 			
 			public function acceptDrop(d:DragEvent):void
 			{
 				DragManager.acceptDragDrop(Canvas(d.currentTarget));
 			}
 			
-			public function connectComponents():void
-			{
-				try{
-					drawUtility.graphics.clear();
-					drawUtility.graphics.lineStyle(2.0,0x000000,1.0);
-					drawUtility.graphics.moveTo(claim.width + claim.x, claim.y + claim.height/2);
-					drawUtility.graphics.lineTo(reason.x,reason.y+reason.height/2);
-				}catch(problem:Error)
-				{
-					Alert.show(problem.toString());
-				}
-			}
 			
 			public function handleDrop(dragEvent:DragEvent):void
 			{	
@@ -111,7 +103,6 @@ class, and will be done soon.
 				var tmpy:int = int(dragSource.dataForFormat("y"));
 				akcdragInitiator.x = currentStage.mouseX -  tmpx;
 				akcdragInitiator.y = currentStage.mouseY - tmpy;
-				connectComponents();
 			}catch(error:Error)
 			{
 				Alert.show(error.message.toString());
