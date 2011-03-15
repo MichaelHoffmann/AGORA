@@ -25,7 +25,7 @@ CREATE  TABLE IF NOT EXISTS agora.users (
   password VARCHAR(32) NOT NULL,
   email VARCHAR(255) NOT NULL,
   url VARCHAR(255) NULL,
-  user_level TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user\n9 = Administrator',
+  user_level TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user, 9 = Administrator',
   created_date DATETIME NULL,
   last_login DATETIME NULL,	
   PRIMARY KEY (user_id),
