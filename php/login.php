@@ -6,8 +6,7 @@
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
-		$query = "SELECT * FROM users WHERE username='" . $userclause .
-			"' AND password='" . $passclause . "'";
+		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$passclause'";
 
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		$row = mysql_fetch_assoc($resultID);
@@ -15,6 +14,9 @@
 		$xmlstr = "<?xml version='1.0' ?>\n<login></login>";
 		$xml = new SimpleXMLElement($xmlstr);
 		$xml->addAttribute("ID", $row['user_id']);
+		$xml->addAttribute("firstname", $row['firstname']);
+		$xml->addAttribute("lastname", $row['lastname']);
+		
 		return $xml;
 	}
 	
