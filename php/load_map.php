@@ -5,8 +5,8 @@
 		//Standard SQL connection stuff
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
-		$whereclause = mysql_real_escape_string("WHERE map_id = $mapID");
-		$query = "SELECT * FROM maps NATURAL JOIN users " . $whereclause ;
+		$whereclause = mysql_real_escape_string("$mapID");
+		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = " . $whereclause;
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
