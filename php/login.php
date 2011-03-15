@@ -9,7 +9,7 @@
 		$query = "SELECT * FROM users WHERE username='" . $userclause .
 			"' AND password='" . $passclause . "'";
 
-		$resultID = mysql_query($query, $linkID) or die("Username/Password pair not found."); 
+		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		$row = mysql_fetch_assoc($resultID);
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<login></login>";
