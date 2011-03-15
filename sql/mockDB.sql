@@ -1,7 +1,8 @@
 USE agora;
 
 INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES
-	(FALSE, "Joshua", "Justice", "JoshJ", "password", "joshj777@gmail.com", "http://github.com/joshjgt", 9, NOW(), NOW());
+	(FALSE, "Joshua", "Justice", "JoshJ", "password", "joshj777@gmail.com", "http://github.com/joshjgt", 9, NOW(), NOW()),
+	(FALSE, "George", "Burdell", "GeorgePBurdell", "YellowJackets", "GeorgeP@mailinator.com", "http://en.wikipedia.org/wiki/George_P_Burdell", 9, NOW(), NOW());
 
 INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES
 	((SELECT user_id FROM users WHERE userName="JoshJ"), "Generic", "A basic argument for testing the database layout.", NOW(), NOW()),
