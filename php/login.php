@@ -4,8 +4,10 @@
 	{
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
-		$whereclause = mysql_real_escape_string("$username");
-		$query = "SELECT * FROM users WHERE username='" . $whereclause ."'";
+		$userclause = mysql_real_escape_string("$username");
+		$passclause = mysql_real_escape_string("$pass_hash");
+		$query = "SELECT * FROM users WHERE username='" . $userclause .
+			"' AND password='" . $passclause . "'";
 
 		$resultID = mysql_query($query, $linkID) or die("Username/Password pair not found."); 
 		$row = mysql_fetch_assoc($resultID);
