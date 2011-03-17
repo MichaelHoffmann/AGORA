@@ -1,6 +1,6 @@
 <?php
 
-	function login($username, $pass_hash, $firstname, $lastname, $email, $url)
+	function register($username, $pass_hash, $firstname, $lastname, $email, $url)
 	{
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
@@ -37,6 +37,6 @@
 	$email = $_REQUEST['email']; //TODO: Change this back to a GET when all testing is done.
 	$url = $_REQUEST['url']; //TODO: Change this back to a GET when all testing is done.
 	
-	$xml = login($username, $pass_hash, $firstname, $lastname, $email, $url);
+	$xml = register($username, $pass_hash, $firstname, $lastname, $email, $url);
 	print($xml->asXML());
 ?>
