@@ -22,8 +22,8 @@ package classes
 			pixelVector = new Vector.<int>(100,false);
 			numRows=0;
 			numColumns=0;
-			uwidth = 250;
-			yPadding = 20;
+			uwidth = 50;
+			yPadding = 0;
 			for( var i:int=0;i<presentMatrix.length;i++)
 			{
 				presentMatrix[i] = new Vector.<int>(100,false);
@@ -58,7 +58,8 @@ package classes
 			{
 				argumentPanel = listOfComponents[i];
 				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
-				argumentPanel.y = pixelVector[argumentPanel.gridX] + yPadding;
+				//argumentPanel.y = pixelVector[argumentPanel.gridX] + yPadding;
+				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
 			}
 			
 		}
@@ -107,12 +108,27 @@ package classes
 			}
 			component.gridX = currGridX;
 			component.gridY = currGridY;
-			
 			presentMatrix[currGridX][currGridY] = 1;
 			listOfPanels.push(component);
 			layoutComponents(listOfPanels);
-			
-			
+		}
+		
+		public function getGridPositionX(tmpY :int):int
+		{
+				//for(var i:int = 0; i < pixelVector.length; i++)
+				//{
+				//	if(tmpY < pixelVector[i] + heightVector[i])
+				//	{
+			//			return i;
+			//		}
+			//	}
+			//	return 0;
+				return (Math.floor(tmpY/uwidth));
+		}
+		
+		public function getGridPositionY(tmpX:int):int
+		{
+			return (Math.floor(tmpX/uwidth));
 		}
 	}
 	

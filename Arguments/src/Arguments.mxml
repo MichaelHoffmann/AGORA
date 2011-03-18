@@ -101,8 +101,18 @@ class, and will be done soon.
 				var dragSource:DragSource = dragEvent.dragSource;
 				var tmpx:int = int(dragSource.dataForFormat("x"));
 				var tmpy:int = int(dragSource.dataForFormat("y"));
-				akcdragInitiator.x = currentStage.mouseX -  tmpx;
-				akcdragInitiator.y = currentStage.mouseY - tmpy;
+				//
+				tmpx = currentStage.mouseX -  tmpx;
+				tmpy = currentStage.mouseY - tmpy;
+				var tmpGridX:int = layoutManager.getGridPositionX(tmpy);//In the logical co ordinates x and y are along different axes
+				var tmpGridY:int = layoutManager.getGridPositionY(tmpx);//Got to change this though ;-)
+				//
+				//akcdragInitiator.x = currentStage.mouseX -  tmpx;
+				//akcdragInitiator.y = currentStage.mouseY - tmpy;
+				akcdragInitiator.gridX = tmpGridX;
+				akcdragInitiator.gridY = tmpGridY;
+				layoutManager.layoutComponents(listOfPanels);
+				akcdragInitiator.validateNow();
 			}catch(error:Error)
 			{
 				Alert.show(error.message.toString());
