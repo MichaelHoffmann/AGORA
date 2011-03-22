@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="500"
+		 xmlns:classes="classes.*">
+	<fx:Metadata>
+		[Event(name="addReason",type="events.AddReasonEvent")]
+		[Event(name="AddArgumentEvent",type="flash.events.Event")]
+		[Event(name="claimAccepted",type="events.StatementAcceptEvent")]
+	</fx:Metadata>
+	<fx:Script source="../scripts/nodeScript.as" />
+	<mx:Canvas>
+		<mx:Button label="Add reason" id="addReason" 
+				   click="addReason_clickHandler(event)"
+				   x="200"
+				   width="100"
+				    />
+		<mx:Button x="156" y="58" 
+				   label="Add Arg" id="addArg" 
+				   click="addArg_clickHandler(event)"
+				    />
+	</mx:Canvas>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	
+		
+</s:Application>
