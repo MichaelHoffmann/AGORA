@@ -1,6 +1,6 @@
 <?php
 
-	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url)
+	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $newpass)
 	{
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
@@ -10,21 +10,35 @@
 		$lnclause = mysql_real_escape_string("$lastname");
 		$mailclause = mysql_real_escape_string("$email");
 		$urlclause = mysql_real_escape_string("$url");
+		$npclause = mysql_real_escape_string("$newpass");
 		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$pass_hash'";
-	
+		
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<login></login>";
 		$xml = new SimpleXMLElement($xmlstr);
 		
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		$row = mysql_fetch_assoc($resultID);
-		if($row['user_id']=="") // If user doesn't exist...
+		$uid = $row['user_id'];
+		if($uid=="") // If user doesn't exist...
 		{
 			$xml->addAttribute("modified", false);
 		}else{
-			//insert into the database
-			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
-			$insID = mysql_query($iquery, $linkID) or die("Insertion failed for some reason."); 
+			//update the database
+/*
+*/
+			if($npclause!="")
+			{
+				$iquery= "UPDATE users SET firstname='$fnclause', lastname='$lnclause',	password='$npclause',
+						email='$mailclause', url='$urlclause', last_login=NOW() WHERE user_id=$uid";
+			}
+			else
+			{
+				$iquery = "UPDATE users SET firstname='$fnclause', lastname='$lnclause', email='$mailclause', 
+						url='$urlclause', last_login=NOW() WHERE user_id=$uid";
+			}
+			//$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
+			$insID = mysql_query($iquery, $linkID) or die("Update failed for some reason."); 
 			$xml->addAttribute("modified", true); // Successfully created the username.
 		}
 		return $xml;
@@ -36,7 +50,7 @@
 	$lastname = $_REQUEST['lastname']; //TODO: Change this back to a GET when all testing is done.
 	$email = $_REQUEST['email']; //TODO: Change this back to a GET when all testing is done.
 	$url = $_REQUEST['url']; //TODO: Change this back to a GET when all testing is done.
-	
-	$xml = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url);
+	$new_pass= $_REQUEST['newpass']; //TODO: Change this back to a GET when all testing is done.
+	$xml = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
 	print($xml->asXML());
 ?>
