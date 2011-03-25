@@ -52,6 +52,7 @@ package classes
 			uLayout.paddingRight = 10;
 			uLayout.paddingTop = 10;
 			width = 180;
+			minHeight = 100;
 			this.layout = uLayout;
 			
 			
@@ -136,8 +137,7 @@ package classes
 			parentMap.layoutManager.registerPanel(reason);
 			reasons.push(reason);
 			reason.claim = this;
-			parentMap.layoutManager.layoutArgument(this);
-			
+			parentMap.layoutManager.layoutArgument(this);			
 		}	
 		
 		public function linkBoxes(a:ArgumentPanel,b:ArgumentPanel,g:Group):void

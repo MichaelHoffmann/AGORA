@@ -48,8 +48,7 @@ class, and will be done soon.
 			import mx.core.UIComponent;
 			import spark.primitives.Graphic;
 			import classes.ArgumentPanel;
-			
-			public var drawUtility:UIComponent;
+			//public var drawUtility:UIComponent;
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
@@ -58,8 +57,8 @@ class, and will be done soon.
 			{
 				ArgumentPanel.parentMap = agoraMap;
 				add_btn.addEventListener(MouseEvent.CLICK,agoraMap.layoutManager.buttonClicked);
-				drawUtility = new UIComponent;
-				agoraMap.addElement(drawUtility);	
+				//drawUtility = new UIComponent;
+				//agoraMap.addElement(drawUtility);	
 			}
 		]]>
 	</fx:Script>

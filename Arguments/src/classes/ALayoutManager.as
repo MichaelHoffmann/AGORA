@@ -21,7 +21,6 @@ package classes
 		public var numColumns:int;
 		public var uwidth:int;
 		public var yPadding:int;
-		//public var drawUtility:UIComponent;
 		
 		public function ALayoutManager()
 		{
@@ -38,8 +37,23 @@ package classes
 			{
 				presentMatrix[i] = new Vector.<int>(100,false);
 			}
+			
+
+			
 		}
 		
+		public function alignReasons(reason:ArgumentPanel,tmpY:int):void
+		{
+			var i:int;
+			var claim:ArgumentPanel = reason.claim;
+			for(i=0;i<claim.reasons.length;i++)
+			{
+				var currReason:ArgumentPanel = claim.reasons[i];
+				currReason.gridY = tmpY;
+				trace(currReason.gridY);
+			}
+			layoutComponents();
+		}
 		
 		public function layoutComponents():void
 		{
@@ -69,7 +83,8 @@ package classes
 					heightVector.push(0);
 					
 				}
-
+				
+				ArgumentPanel.parentMap.connectRelatedPanels();
 				
 			}
 			
@@ -152,6 +167,7 @@ package classes
 			}
 		}
 		
+		//initial layout
 		public function layoutArgument(claim:ArgumentPanel) : void
 		{
 			//layout inference rule
@@ -169,8 +185,10 @@ package classes
 				//layoutArgument(inference);
 			}
 			//layout reasons
+		
 			if(claim.reasons.length > 0)
 			{
+				
 				var currX:int = claim.gridX;
 				var currY:int = claim.rule.gridY+Math.ceil(claim.width/uwidth)+1;
 				for(var i:int = 0; i < claim.reasons.length; i++)
@@ -178,8 +196,8 @@ package classes
 					claim.reasons[i].gridX = currX;
 					claim.reasons[i].gridY = currY;
 					currX = currX + Math.ceil(claim.reasons[i].height/uwidth) + 1;
-					//layoutArgument(claim.reasons[i]);
 				}
+				
 				layoutComponents();
 			}
 			
@@ -223,6 +241,7 @@ package classes
 			}
 				
 		}
+		
 	}
 	
 }
