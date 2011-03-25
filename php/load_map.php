@@ -1,11 +1,11 @@
 <?php
 
-	function get_map($mapID){
-
+	function get_map($mapID, $timestamp){
 		//Standard SQL connection stuff
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$whereclause = mysql_real_escape_string("$mapID");
+		$timeclause = mysql_real_escape_string("$timestamp");
 		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = " . $whereclause;
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		//Set up the basics of the XML.
@@ -16,9 +16,11 @@
 		$xml->addAttribute("id", $row['map_id']);
 		$xml->addAttribute("username", $row['username']);
 		
+		$now = mysql_query("SELECT NOW()", $linkID) or die ("Could not get timestamp from server.");
+		$xml->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes " . $whereclause ; 
+		$query = "SELECT * FROM textboxes WHERE map_id = " . $whereclause; 
 		$resultID = mysql_query($query, $linkID) or die("Data not found in textbox lookup."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
@@ -29,7 +31,7 @@
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes NATURAL JOIN node_types " . $whereclause;
+		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = " . $whereclause;
 		$resultID = mysql_query($query, $linkID) or die("Data not found in node lookup."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
@@ -49,7 +51,7 @@
 		}
 
 		// Connections will take a lot more work.
-		$query = "SELECT * FROM arguments NATURAL JOIN connection_types " . $whereclause;
+		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = " . $whereclause;
 		$resultID = mysql_query($query, $linkID) or die("Data not found in arg lookup.");
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
@@ -68,10 +70,10 @@
 			}	
 		}
 		
-		
 		return $xml;
 	}
 	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
-	$xml = get_map($map_id); 
+	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
+	$xml = get_map($map_id, $timestamp); 
 	print($xml->asXML());
 ?>
