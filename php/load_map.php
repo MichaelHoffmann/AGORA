@@ -20,7 +20,7 @@
 		$xml->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes WHERE map_id = " . $whereclause; 
+		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause"; 
 		$resultID = mysql_query($query, $linkID) or die("Data not found in textbox lookup."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
@@ -31,7 +31,7 @@
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = " . $whereclause;
+		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = $whereclause";
 		$resultID = mysql_query($query, $linkID) or die("Data not found in node lookup."); 
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
@@ -51,7 +51,7 @@
 		}
 
 		// Connections will take a lot more work.
-		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = " . $whereclause;
+		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = $whereclause";
 		$resultID = mysql_query($query, $linkID) or die("Data not found in arg lookup.");
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
