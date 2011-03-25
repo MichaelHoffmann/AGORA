@@ -96,15 +96,15 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
 -- Table agora.textboxes
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.textboxes (
-	textbox_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	map_id INT UNSIGNED NOT NULL,
-	text TEXT,
-    created_date DATETIME NULL,
-    modified_date DATETIME NULL,
-	PRIMARY KEY (textbox_id),
-	INDEX map_id (map_id ASC),
-	FOREIGN KEY (map_id)
-	REFERENCES agora.maps (map_id)
+  textbox_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  map_id INT UNSIGNED NOT NULL,
+  text TEXT,
+  created_date DATETIME NULL,
+  modified_date DATETIME NULL,
+  PRIMARY KEY (textbox_id),
+  INDEX map_id (map_id ASC),
+  FOREIGN KEY (map_id)
+    REFERENCES agora.maps (map_id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -112,26 +112,25 @@ CREATE TABLE IF NOT EXISTS agora.textboxes (
 -- Table agora.nodetext
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.nodetext (
-	nodetext_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	node_id INT UNSIGNED NOT NULL,
-	textbox_id INT UNSIGNED NOT NULL,
-	position INT UNSIGNED NOT NULL,
-    created_date DATETIME NULL,
-    modified_date DATETIME NULL,
-	PRIMARY KEY (nodetext_id),
-	INDEX node_id (node_id ASC),
-	INDEX textbox_id (textbox_id ASC),
-	INDEX position (position ASC),
-	FOREIGN KEY(node_id)
-	  REFERENCES agora.nodes (node_id)
-	  ON DELETE NO ACTION
-	  ON UPDATE NO ACTION,
-	FOREIGN KEY(textbox_id)
-	  REFERENCES agora.textboxes (textbox_id)
-	  ON DELETE NO ACTION
-	  ON UPDATE NO ACTION);
+  nodetext_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  node_id INT UNSIGNED NOT NULL,
+  textbox_id INT UNSIGNED NOT NULL,
+  position INT UNSIGNED NOT NULL,
+  created_date DATETIME NULL,
+  modified_date DATETIME NULL,
+  PRIMARY KEY (nodetext_id),
+  INDEX node_id (node_id ASC),
+  INDEX textbox_id (textbox_id ASC),
+  INDEX position (position ASC),
+  FOREIGN KEY(node_id)
+    REFERENCES agora.nodes (node_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  FOREIGN KEY(textbox_id)
+    REFERENCES agora.textboxes (textbox_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
-	
 -- -----------------------------------------------------
 -- Table agora.connection_types
 -- -----------------------------------------------------
@@ -143,7 +142,6 @@ CREATE  TABLE IF NOT EXISTS agora.connection_types (
   
 INSERT INTO connection_types (conn_name, description) VALUES 
 	("Commentary", "A comment on another node"), ("Objection", "An objection to another node"), ("Refutation", "A refutation of another node"), ("Amendment", "Proposed amendment for another node");
-	
 INSERT INTO connection_types(conn_name, description) VALUES ("MPtherefore", "Modus Ponens - Therefore phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("ConSyllogism", "Constructive Syllogism - Therefore phrasing, in English.");
 
@@ -180,19 +178,19 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
 -- Table agora.connections
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.connections (
-	connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	argument_id INT UNSIGNED NOT NULL,
-	node_id INT UNSIGNED NOT NULL,
-    created_date DATETIME NULL,
-    modified_date DATETIME NULL,
-	PRIMARY KEY (connection_id),
-	INDEX argument_id (argument_id ASC),
-	INDEX node_id (node_id ASC),
-	FOREIGN KEY (argument_id)
-	  REFERENCES agora.arguments (argument_id)
-	  ON DELETE NO ACTION
-	  ON UPDATE NO ACTION,
-	FOREIGN KEY (node_id)
-	  REFERENCES agora.nodes (node_id)
-	  ON DELETE NO ACTION
-	  ON UPDATE NO ACTION);
+  connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  argument_id INT UNSIGNED NOT NULL,
+  node_id INT UNSIGNED NOT NULL,
+  created_date DATETIME NULL,
+  modified_date DATETIME NULL,
+  PRIMARY KEY (connection_id),
+  INDEX argument_id (argument_id ASC),
+  INDEX node_id (node_id ASC),
+  FOREIGN KEY (argument_id)
+    REFERENCES agora.arguments (argument_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  FOREIGN KEY (node_id)
+    REFERENCES agora.nodes (node_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
