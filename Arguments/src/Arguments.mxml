@@ -8,12 +8,13 @@ class, and will be done soon.
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:classes="classes.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="initApp()">
+	
 	<fx:Declarations>
 	</fx:Declarations>
 	
 		<s:VGroup>
-			<s:HGroup>
-			<s:Button label="Add a Component" id="add_btn" click="buttonClicked()">
+			<s:HGroup id="top_bar">
+			<s:Button label="Add a Component" id="add_btn">
 			</s:Button>
 			<s:Label text="X coordinate" id="x_lbl">
 			</s:Label>
@@ -32,93 +33,34 @@ class, and will be done soon.
 	
 			</s:TextInput>
 			</s:HGroup>
-	<mx:Canvas id="ustage" backgroundColor="0xaaaaaa" height="600" width="800">	
+	<mx:Canvas height = "650" width="800">
+	<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" height="5000" width="5000">	
+	</classes:AgoraMap>
 	</mx:Canvas>
 	</s:VGroup>
+	
 	<fx:Script>
 		<![CDATA[
 			import classes.ALayoutManager;
 			import classes.ArgumentPanel;
-			
 			import mx.binding.utils.BindingUtils;
-			import mx.containers.Canvas;
-			import mx.containers.Panel;
 			import mx.controls.Alert;
-			import mx.core.DragSource;
-			import mx.core.IUIComponent;
 			import mx.core.UIComponent;
-			import mx.core.mx_internal;
-			import mx.events.CalendarLayoutChangeEvent;
-			import mx.events.DragEvent;
-			import mx.managers.DragManager;
-			
 			import spark.primitives.Graphic;
+			import classes.ArgumentPanel;
+			
 			public var drawUtility:UIComponent;
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
 			
-			public var listOfPanels:Vector.<ArgumentPanel>;
-			public var howMany:int;
-			
-			public function buttonClicked():void
-			{
-				var tmp:ArgumentPanel = new ArgumentPanel();
-				//tmp.
-				var tgridX:int;
-				var tgridY:int;
-				//tmp.input1.text = display_string.text;
-				tgridX = int(x_txt.text);
-				tgridY = int(y_txt.text);
-				ustage.addElement(tmp);
-				ustage.validateSize(true);
-				layoutManager.positionArgumentPanel(listOfPanels,tmp,tgridX,tgridY);
-			}
-			
 			public function initApp():void
 			{
-				layoutManager = new ALayoutManager;
-				ustage.addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
-				ustage.addEventListener(DragEvent.DRAG_DROP, handleDrop );	
+				ArgumentPanel.parentMap = agoraMap;
+				add_btn.addEventListener(MouseEvent.CLICK,agoraMap.layoutManager.buttonClicked);
 				drawUtility = new UIComponent;
-				ustage.addElement(drawUtility);
-				listOfPanels = new Vector.<ArgumentPanel>(0,false);
-				howMany=0;
+				agoraMap.addElement(drawUtility);	
 			}
-			
-			
-			public function acceptDrop(d:DragEvent):void
-			{
-				DragManager.acceptDragDrop(Canvas(d.currentTarget));
-			}
-			
-			
-			public function handleDrop(dragEvent:DragEvent):void
-			{	
-				try{
-				var currentStage:Canvas = Canvas(dragEvent.currentTarget);
-				var akcdragInitiator:ArgumentPanel = ArgumentPanel(dragEvent.dragInitiator);
-				var dragSource:DragSource = dragEvent.dragSource;
-				var tmpx:int = int(dragSource.dataForFormat("x"));
-				var tmpy:int = int(dragSource.dataForFormat("y"));
-				//
-				tmpx = currentStage.mouseX -  tmpx;
-				tmpy = currentStage.mouseY - tmpy;
-				var tmpGridX:int = layoutManager.getGridPositionX(tmpy);//In the logical co ordinates x and y are along different axes
-				var tmpGridY:int = layoutManager.getGridPositionY(tmpx);//Got to change this though ;-)
-				//
-				//akcdragInitiator.x = currentStage.mouseX -  tmpx;
-				//akcdragInitiator.y = currentStage.mouseY - tmpy;
-				akcdragInitiator.gridX = tmpGridX;
-				akcdragInitiator.gridY = tmpGridY;
-				layoutManager.layoutComponents(listOfPanels);
-				akcdragInitiator.validateNow();
-			}catch(error:Error)
-			{
-				Alert.show(error.message.toString());
-			}
-		}
-			
 		]]>
 	</fx:Script>
 	
