@@ -24,14 +24,23 @@ package classes
 		private var bottomPadding:int;
 		private var h:int;
 		public var index:int;
+		
+		public var forwardList:Vector.<DynamicTextArea>; //Arun Kumar chithanar
+		public var backwardList:Vector.<DynamicTextArea>;
+		
 		public function DynamicTextArea()
 		{
 			super();
 			super.horizontalScrollPolicy = "off";
 			super.verticalScrollPolicy = "off";
-			this.addEventListener(TextEvent.TEXT_INPUT,adjustHeightHandler);
+			this.addEventListener(Event.CHANGE,adjustHeightHandler);
+			forwardList = new Vector.<DynamicTextArea>(0,false);
+			backwardList = new Vector.<DynamicTextArea>(0,false);
 		}
 		private function adjustHeightHandler(event:Event):void {
+			
+			//Arun Kumar chithanar
+			updateOthers();
 			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
 			var paddingTop:String = this.getStyle("paddingTop");
 			var paddingBottom:String= this.getStyle("paddingBottom");
@@ -68,6 +77,32 @@ package classes
 				height = textField.textHeight+topPadding+bottomPadding;
 			}
 			validateNow();
+		}
+		
+		public function updateOthers():void
+		{
+			forwardUpdate();
+			backwardUpdate();
+		}
+		
+		public function forwardUpdate():void
+		{
+			for(var i:int = 0; i < forwardList.length; i++)
+			{
+				var currInput:DynamicTextArea = forwardList[i];
+				currInput.text = this.text;
+				currInput.forwardUpdate();
+			}
+		}
+		
+		public function backwardUpdate():void
+		{
+			for(var i:int = 0; i < backwardList.length; i++)
+			{
+				var currInput:DynamicTextArea = backwardList[i];
+				currInput.text = this.text;
+				currInput.backwardUpdate();
+			}
 		}
 		
 		/*

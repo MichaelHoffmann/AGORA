@@ -38,11 +38,14 @@ package classes
 		public var gridY:int;
 		public var reasonButton:spark.components.Button;
 		public var argschemeButton:spark.components.Button;
+	
 		
 		public static var parentMap:AgoraMap;
 		public var reasons:Vector.<ArgumentPanel>;
 		public var claim:ArgumentPanel;
 		public var rule:Inference;
+		
+		public var binders:Vector.<Binder>;
 		
 		public function ArgumentPanel()
 		{
@@ -60,6 +63,8 @@ package classes
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
 			
+			//binders = new Vector.<Binder>(0,false);
+			
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			claim = null;
 			
@@ -69,7 +74,11 @@ package classes
 		public function adjustHeight(e:Event):void
 		{
 		
-			if(this.claim != null)
+			if(this is Inference)
+			{
+				//do nothing
+			}
+			else if(this.claim != null)
 				parentMap.layoutManager.alignReasons(this, this.gridY);
 		}
 		
@@ -136,6 +145,13 @@ package classes
 			parentMap.addElement(inferenceRule);
 			rule = inferenceRule;
 			inferenceRule.claim = this;
+			
+			//inferenceRule.input1.dependentBox.push(this.input1);
+			this.input1.forwardList.push(inferenceRule.input1);
+			inferenceRule.input1.backwardList.push(this.input1);
+			
+			//binders.push(new Binder(inferenceRule.input1,this.input1));
+			
 			try{
 			
 			}catch(e:Error)
