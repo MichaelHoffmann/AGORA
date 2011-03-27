@@ -17,6 +17,8 @@ package classes
 	import mx.controls.TextArea;
 	import mx.utils.NameUtil;
 	
+	import org.osmf.layout.AbsoluteLayoutFacet;
+	
 	
 	public class DynamicTextArea extends TextArea
 	{
@@ -28,6 +30,9 @@ package classes
 		public var forwardList:Vector.<DynamicTextArea>; //Arun Kumar chithanar
 		public var backwardList:Vector.<DynamicTextArea>;
 		
+		
+		public var panelReference:ArgumentPanel;
+		
 		public function DynamicTextArea()
 		{
 			
@@ -37,6 +42,7 @@ package classes
 			this.addEventListener(Event.CHANGE,adjustHeightHandler);
 			forwardList = new Vector.<DynamicTextArea>(0,false);
 			backwardList = new Vector.<DynamicTextArea>(0,false);
+			minHeight = 20;
 		}
 		private function adjustHeightHandler(event:Event):void {
 			
@@ -64,6 +70,12 @@ package classes
 			}
 			
 		}
+		
+		public function forceUpdate():void
+		{
+			dispatchEvent(new Event(Event.CHANGE));
+		}
+		
 		override public function set text(value:String):void{
 			textField.text = value;
 			validateNow();
@@ -83,18 +95,48 @@ package classes
 		public function updateOthers():void
 		{
 			forwardUpdate();
-			backwardUpdate();
 		}
 		
 		public function forwardUpdate():void
 		{
-			for(var i:int = 0; i < forwardList.length; i++)
+			var currInput:DynamicTextArea;
+			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE)
 			{
-				var currInput:DynamicTextArea = forwardList[i];
-				currInput.text = this.text;
-				currInput.forwardUpdate();
+					
+						currInput= forwardList[0];
+						//update the string
+					
+							var infPanel:Inference = Inference(panelReference);
+							var s:String = "If ";
+							trace(infPanel.input.length);
+							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
+							{
+								s = s + infPanel.input[ind].text + " and ";	
+								trace(infPanel.input[ind]);
+							}
+							s = s + infPanel.input[ind].text;
+							s = s + ", " + infPanel.input[0].text + ".";
+							
+							currInput.text = s;
+							
+							currInput.forwardUpdate();
+						
+				
+			}else
+			{
+				
+				if(forwardList.length == 0 )
+					return;
+					currInput = forwardList[0];
+					currInput.text = text;
+					trace(currInput);
+					currInput.forwardUpdate();				
 			}
-		}
+				
+			
+			
+			}
+		 
 		
 		public function backwardUpdate():void
 		{

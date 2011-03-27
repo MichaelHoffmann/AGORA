@@ -1,5 +1,6 @@
 package classes
 {
+	//This idea wasn't a success.
 	import flash.events.TextEvent;
 	
 	import mx.controls.Text;

@@ -12,27 +12,7 @@ class, and will be done soon.
 	<fx:Declarations>
 	</fx:Declarations>
 	
-		<s:VGroup>
-			<s:HGroup id="top_bar">
-			<s:Button label="Add a Component" id="add_btn">
-			</s:Button>
-			<s:Label text="X coordinate" id="x_lbl">
-			</s:Label>
-			<s:TextInput id="x_txt">
-			</s:TextInput>
-			
-			<s:Label text="Y coordinate" id="y_lbl">
-			</s:Label>
-			<s:TextInput id="y_txt">
-			</s:TextInput>
-				
-			<s:TextInput id="display_string" text="default_text">
-			</s:TextInput>
-				
-			<s:TextInput id="direction_txt" text="">
-	
-			</s:TextInput>
-			</s:HGroup>
+	<s:VGroup>			
 	<mx:Canvas height = "650" width="800">
 	<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" height="5000" width="5000">	
 	</classes:AgoraMap>
@@ -58,7 +38,12 @@ class, and will be done soon.
 			{
 				
 				ArgumentPanel.parentMap = agoraMap;
-				add_btn.addEventListener(MouseEvent.CLICK,agoraMap.layoutManager.buttonClicked);
+				var argumentPanel:ArgumentPanel = new ArgumentPanel();
+				argumentPanel.gridX = 2;
+				argumentPanel.gridY = 3;
+				agoraMap.addElement(argumentPanel);
+				agoraMap.layoutManager.registerPanel(argumentPanel);
+				
 				//drawUtility = new UIComponent;
 				//agoraMap.addElement(drawUtility);	
 			}

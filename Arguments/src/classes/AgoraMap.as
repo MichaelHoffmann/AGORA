@@ -87,8 +87,10 @@ package classes
 					}
 					else if(akcdragInitiator.claim == null)
 					{
+						
 						akcdragInitiator.gridY = tmpGridY;
-						layoutManager.alignReasons(akcdragInitiator,tmpGridY);
+						akcdragInitiator.gridX = tmpGridX;
+						//layoutManager.alignReasons(akcdragInitiator,tmpGridY);
 						if(akcdragInitiator.rule != null)
 						{
 							layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);

@@ -19,9 +19,12 @@ package classes
 	import mx.managers.DragManager;
 	import mx.skins.Border;
 	
+	import org.osmf.events.GatewayChangeEvent;
+	
 	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.Panel;
+	import spark.components.VGroup;
 	import spark.layouts.HorizontalAlign;
 	import spark.layouts.HorizontalLayout;
 	import spark.layouts.VerticalLayout;
@@ -44,8 +47,15 @@ package classes
 		public var reasons:Vector.<ArgumentPanel>;
 		public var claim:ArgumentPanel;
 		public var rule:Inference;
+		public var logicalContainer:VGroup;
 		
 		public var binders:Vector.<Binder>;
+
+		public static const ARGUMENT_PANEL:int = 0;
+		public static const INFERENCE:int = 1;
+		
+		
+		public var panelType:int;
 		
 		public function ArgumentPanel()
 		{
@@ -59,15 +69,16 @@ package classes
 			minHeight = 100;
 			this.layout = uLayout;
 			
+			panelType = ArgumentPanel.ARGUMENT_PANEL;
 			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-			
+		
 			//binders = new Vector.<Binder>(0,false);
 			
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			claim = null;
-			
+			//v  = new VGroup();
 		}
 		
 		
@@ -106,10 +117,29 @@ package classes
 			if(this.rule != null){
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(tmp);
+			
 			try{
 				reasons.push(tmp);
 				tmp.claim = this;
 				parentMap.layoutManager.registerPanel(tmp);
+				
+				
+				//create an invisible box in the inference rule
+				var tmpInput:DynamicTextArea = new DynamicTextArea();
+				//visual
+				//inferenceRule.logicalContainer.addElement(tmpInput);
+				//inferenceRule.logicalContainer.removeElement(tmpInput);
+				parentMap.addElement(tmpInput);
+				tmpInput.visible = false;
+		
+				//logical
+				var inferenceRule:Inference = tmp.claim.rule;
+				tmpInput.panelReference = inferenceRule;
+				inferenceRule.input.push(tmpInput);		
+				//binding
+				tmpInput.forwardList.push(inferenceRule.input1);
+				tmp.input1.forwardList.push(tmpInput);
+				
 			}catch (e:Error)
 			{
 				Alert.show(e.toString());
@@ -122,9 +152,13 @@ package classes
 		}	
 		
 		//reason must be registered before inference is
+		//user must not change the inference rule. He creates the inference rule
+		//through argument type, reasons and claim
 		public function addArgSchemeHandler(event:MouseEvent):void
 		{
-			//rule = null; //necessary, in case argument scheme is changed
+			if(rule != null)
+				parentMap.removeElement(rule);
+			rule = null; //necessary, in case argument scheme is changed
 			
 			while(reasons.length > 0)
 			{
@@ -133,24 +167,60 @@ package classes
 				tmp = null;
 			}
 			
+			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(reason);
 			reasons.push(reason);
 			reason.claim = this;	
 			parentMap.layoutManager.registerPanel(reason);
-
 			
+			//an inference node
 			var inferenceRule:Inference = new Inference;
 			inferenceRule.argumentClass = Inference.MODUS_PONENS;
 			parentMap.addElement(inferenceRule);
 			rule = inferenceRule;
 			inferenceRule.claim = this;
 			
-			//inferenceRule.input1.dependentBox.push(this.input1);
-			this.input1.forwardList.push(inferenceRule.input1);
-			inferenceRule.input1.backwardList.push(this.input1);
+			//create an invisible box in the inference rule
+			var tmpInput:DynamicTextArea = new DynamicTextArea();
+			//visual
+			//inferenceRule.logicalContainer.addElement(tmpInput);
+			//inferenceRule.logicalContainer.removeElement(tmpInput);
+			parentMap.addElement(tmpInput);
+			tmpInput.visible = false;
+	
+			//logical
+			tmpInput.panelReference = inferenceRule;
+			inferenceRule.input.push(tmpInput);		
+			//binding
+			tmpInput.forwardList.push(inferenceRule.input1);
+			this.input1.forwardList.push(inferenceRule.input[0]);
 			
-			//binders.push(new Binder(inferenceRule.input1,this.input1));
+			
+			tmpInput = new DynamicTextArea();
+			//visual
+			//inferenceRule.logicalContainer.addElement(tmpInput);
+			parentMap.addElement(tmpInput);
+			tmpInput.visible = false;
+			//tmpInput.width=0;
+			//tmpInput.height=0;
+			//inferenceRule.logicalContainer.removeElement(tmpInput);
+			tmpInput.panelReference = inferenceRule;
+			inferenceRule.input.push(tmpInput);	
+			
+			tmpInput.forwardList.push(inferenceRule.input1);
+			reason.input1.forwardList.push(tmpInput);
+			rule.input1.validateNow();
+			input1.forwardUpdate();
+			reason.input1.forwardUpdate();
+			input1.forceUpdate();
+			reason.input1.forceUpdate();
+			rule.input1.forceUpdate();
+			
+			//inferenceRule.logicalContainer.removeAllElements();
+			 //although it's not added viisibility value is checked to determine the type of node
+			//trace(this.input1.forwardList[0].forwardList[0].forwardList);
+			
 			
 			try{
 			
@@ -176,6 +246,10 @@ package classes
 			}
 		}
 		
+		public function getString():String{
+			return input1.text;
+		}
+		
 		//create children must be overriden to create dynamically allocated children
 		override protected function createChildren():void{
 			//create the children of MX Panel
@@ -185,9 +259,11 @@ package classes
 			//create the Dynamic Text Area
 			//input1 = new TextInput();
 		    input1 = new DynamicTextArea();
+			input1.panelReference = this;
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 		
+			logicalContainer = new VGroup();
 			//Register event handlers
 			//Creation Complete event handlers
 			//this.input1.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
@@ -207,6 +283,7 @@ package classes
 			//addChild --> Halo
 			//addElement --> Spark
 			addElement(topArea);
+			//addElement(logicalContainer);
 			addElement(input1);	
 			
 			//Bottom Panel
