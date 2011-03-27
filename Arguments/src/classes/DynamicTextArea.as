@@ -30,6 +30,7 @@ package classes
 		
 		public function DynamicTextArea()
 		{
+			
 			super();
 			super.horizontalScrollPolicy = "off";
 			super.verticalScrollPolicy = "off";
