@@ -1,0 +1,11 @@
+#Ignore flex settings
+*.settings/
+
+#Ignore flex build directories
+bin-debug/
+html-template/
+src/
+libs/flexunit-*
+generated/
+.actionScriptProperties
+.flexProperties
