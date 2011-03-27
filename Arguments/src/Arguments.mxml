@@ -43,11 +43,12 @@ class, and will be done soon.
 		<![CDATA[
 			import classes.ALayoutManager;
 			import classes.ArgumentPanel;
+			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.core.UIComponent;
+			
 			import spark.primitives.Graphic;
-			import classes.ArgumentPanel;
 			//public var drawUtility:UIComponent;
 			public var numComponentsX:int;
 			public var numComponentsY:int;
@@ -55,6 +56,7 @@ class, and will be done soon.
 			
 			public function initApp():void
 			{
+				
 				ArgumentPanel.parentMap = agoraMap;
 				add_btn.addEventListener(MouseEvent.CLICK,agoraMap.layoutManager.buttonClicked);
 				//drawUtility = new UIComponent;

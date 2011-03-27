@@ -11,10 +11,12 @@ This class is derived from the TextArea component to provide text boxes that res
 package classes
 {
 	import flash.events.Event;
+	import flash.events.TextEvent;
 	
+	import mx.controls.Alert;
 	import mx.controls.TextArea;
 	import mx.utils.NameUtil;
-
+	
 	
 	public class DynamicTextArea extends TextArea
 	{
@@ -27,9 +29,10 @@ package classes
 			super();
 			super.horizontalScrollPolicy = "off";
 			super.verticalScrollPolicy = "off";
-			this.addEventListener(Event.CHANGE,adjustHeightHandler);
+			this.addEventListener(TextEvent.TEXT_INPUT,adjustHeightHandler);
 		}
 		private function adjustHeightHandler(event:Event):void {
+			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
 			var paddingTop:String = this.getStyle("paddingTop");
 			var paddingBottom:String= this.getStyle("paddingBottom");
 			topPadding= int(paddingTop);
@@ -49,6 +52,7 @@ package classes
 				}	
 				validateNow();
 			}
+			
 		}
 		override public function set text(value:String):void{
 			textField.text = value;

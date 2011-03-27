@@ -5,10 +5,12 @@ package classes
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.controls.Label;
+	import mx.controls.TextInput;
 	import mx.core.DragSource;
 	import mx.core.IUIComponent;
 	import mx.core.UIComponent;
@@ -27,8 +29,7 @@ package classes
 	
 	public class ArgumentPanel extends Panel
 	{
-		[bindable] public var input1:DynamicTextArea;
-		public var input2:DynamicTextArea;
+		public var input1:DynamicTextArea;
 		public var topArea:UIComponent;
 		public var buttonArea:Panel;
 		public var panelSkin:PanelSkin;
@@ -57,19 +58,26 @@ package classes
 			
 			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
+			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
 			
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			claim = null;
 			
 		}
 		
+		
+		public function adjustHeight(e:Event):void
+		{
+		
+			if(this.claim != null)
+				parentMap.layoutManager.alignReasons(this, this.gridY);
+		}
+		
 		public function beginDrag( mouseEvent: MouseEvent ):void
 		{
 			try{
 				var	dinitiator:UIComponent = UIComponent(mouseEvent.currentTarget);
-				//Alert.show(dinitiator.toString());
 				var dPInitiator:ArgumentPanel = ArgumentPanel(dinitiator.parent.parent.parent.parent.parent);
-				//Alert.show(dPInitiator.toString());
 				var ds:DragSource = new DragSource();
 				var tmpx:int = int(dPInitiator.mouseX);
 				var tmpy:int = int(dPInitiator.mouseY);
@@ -89,40 +97,26 @@ package classes
 			if(this.rule != null){
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(tmp);
-			parentMap.layoutManager.registerPanel(tmp);
 			try{
 				reasons.push(tmp);
 				tmp.claim = this;
-				tmp.gridY = reasons[reasons.length - 2].gridY;
-				tmp.gridX = reasons[reasons.length - 2].gridX + Math.ceil(reasons[reasons.length - 2].height/parentMap.layoutManager.uwidth) + 1;
-				
-				
-				parentMap.layoutManager.layoutComponents();
+				parentMap.layoutManager.registerPanel(tmp);
 			}catch (e:Error)
 			{
 				Alert.show(e.toString());
 			}
-			//parentMap.layoutManager.layoutArgument(this);
-			
 			}
 			else{
 				Alert.show("Reason cannont be added without an argument scheme");
 			}
+			
 		}	
 		
-		
+		//reason must be registered before inference is
 		public function addArgSchemeHandler(event:MouseEvent):void
 		{
-			var inferenceRule:Inference = new Inference;
-			inferenceRule.gridX = this.gridX;
-			inferenceRule.gridY = this.gridY;
-			inferenceRule.argumentClass = Inference.MODUS_PONENS;
-			parentMap.addElement(inferenceRule);
-			parentMap.layoutManager.registerPanel(inferenceRule);
-			rule = inferenceRule;
-			inferenceRule.claim = this;
+			//rule = null; //necessary, in case argument scheme is changed
 			
-			//add Reason
 			while(reasons.length > 0)
 			{
 				var	tmp:ArgumentPanel = reasons.pop();
@@ -131,13 +125,24 @@ package classes
 			}
 			
 			var reason:ArgumentPanel = new ArgumentPanel();
-			reason.gridX = this.gridX;
-			reason.gridY = this.gridY;
 			parentMap.addElement(reason);
-			parentMap.layoutManager.registerPanel(reason);
 			reasons.push(reason);
-			reason.claim = this;
-			parentMap.layoutManager.layoutArgument(this);			
+			reason.claim = this;	
+			parentMap.layoutManager.registerPanel(reason);
+
+			
+			var inferenceRule:Inference = new Inference;
+			inferenceRule.argumentClass = Inference.MODUS_PONENS;
+			parentMap.addElement(inferenceRule);
+			rule = inferenceRule;
+			inferenceRule.claim = this;
+			try{
+			
+			}catch(e:Error)
+			{
+				Alert.show(e.toString());
+			}
+			parentMap.layoutManager.registerPanel(inferenceRule);	
 		}	
 		
 		public function linkBoxes(a:ArgumentPanel,b:ArgumentPanel,g:Group):void
@@ -162,9 +167,8 @@ package classes
 			
 			//create children of Agora Panel
 			//create the Dynamic Text Area
-			input1 = new DynamicTextArea();
-			input2 = new DynamicTextArea();
-			
+			//input1 = new TextInput();
+		    input1 = new DynamicTextArea();
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 		
