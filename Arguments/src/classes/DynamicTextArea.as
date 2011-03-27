@@ -3,11 +3,8 @@
 	@Author: Karthik Rangarajan
 	@Version: 0.1
 /*
-
 This class is derived from the TextArea component to provide text boxes that resize automatically on user input, without displaying scrollbars, or hiding text.
-
 */
-
 package classes
 {
 	import flash.events.Event;
@@ -35,7 +32,6 @@ package classes
 		
 		public function DynamicTextArea()
 		{
-			
 			super();
 			super.horizontalScrollPolicy = "off";
 			super.verticalScrollPolicy = "off";
@@ -45,9 +41,8 @@ package classes
 			minHeight = 20;
 		}
 		private function adjustHeightHandler(event:Event):void {
-			
 			//Arun Kumar chithanar
-			updateOthers();
+			
 			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
 			var paddingTop:String = this.getStyle("paddingTop");
 			var paddingBottom:String= this.getStyle("paddingBottom");
@@ -68,7 +63,7 @@ package classes
 				}	
 				validateNow();
 			}
-			
+			updateOthers();
 		}
 		
 		public function forceUpdate():void
@@ -124,7 +119,6 @@ package classes
 				
 			}else
 			{
-				
 				if(forwardList.length == 0 )
 					return;
 					currInput = forwardList[0];
@@ -132,9 +126,7 @@ package classes
 					//trace(currInput);
 					currInput.forwardUpdate();				
 			}
-				
-			
-			
+
 			}
 		 
 		
