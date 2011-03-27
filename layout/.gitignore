@@ -7,3 +7,5 @@ html-template/
 src/
 libs/flexunit-*
 generated/
+.actionScriptProperties
+.flexProperties
