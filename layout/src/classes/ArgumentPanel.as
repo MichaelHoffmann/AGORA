@@ -1,5 +1,4 @@
 /*
-@Author: Arun Kumar Chithanar
 @Description: This class is the abstraction of an Agora Node.
 Thus far, only functionality to support simple text is added,
 and the implementation is primitive. Binding is provided
