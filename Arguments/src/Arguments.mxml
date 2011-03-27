@@ -13,7 +13,7 @@ class, and will be done soon.
 	</fx:Declarations>
 	
 	<s:VGroup>			
-	<mx:Canvas height = "650" width="800">
+	<mx:Canvas height = "700" width="1440">
 	<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" height="5000" width="5000">	
 	</classes:AgoraMap>
 	</mx:Canvas>

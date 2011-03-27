@@ -210,11 +210,12 @@ package classes
 			
 			tmpInput.forwardList.push(inferenceRule.input1);
 			reason.input1.forwardList.push(tmpInput);
+			
 			rule.input1.validateNow();
+			
 			input1.forwardUpdate();
 			reason.input1.forwardUpdate();
-			input1.forceUpdate();
-			reason.input1.forceUpdate();
+		
 			rule.input1.forceUpdate();
 			
 			//inferenceRule.logicalContainer.removeAllElements();

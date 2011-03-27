@@ -108,11 +108,11 @@ package classes
 					
 							var infPanel:Inference = Inference(panelReference);
 							var s:String = "If ";
-							trace(infPanel.input.length);
+							//trace(infPanel.input.length);
 							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
 							{
 								s = s + infPanel.input[ind].text + " and ";	
-								trace(infPanel.input[ind]);
+								//trace(infPanel.input[ind]);
 							}
 							s = s + infPanel.input[ind].text;
 							s = s + ", " + infPanel.input[0].text + ".";
@@ -129,7 +129,7 @@ package classes
 					return;
 					currInput = forwardList[0];
 					currInput.text = text;
-					trace(currInput);
+					//trace(currInput);
 					currInput.forwardUpdate();				
 			}
 				
