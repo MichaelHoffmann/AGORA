@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS agora.users;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agora.users (
   user_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  is_deleted TINYINT(1)  NULL DEFAULT 1,
+  is_deleted TINYINT(1)  NULL DEFAULT 0,
   firstname VARCHAR(30) NULL,
   lastname VARCHAR(30) NULL,
   username VARCHAR(32) NOT NULL,
@@ -43,6 +43,7 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
   description VARCHAR(255) NULL,
   created_date DATETIME NULL,
   modified_date DATETIME NULL,
+  is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (map_id),
   INDEX user_id (user_id ASC),
   FOREIGN KEY (user_id)
@@ -75,6 +76,7 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   y_coord INT NULL,
   width INT NULL,
   height INT NULL,
+  is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (node_id),
   INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
@@ -101,6 +103,7 @@ CREATE TABLE IF NOT EXISTS agora.textboxes (
   text TEXT,
   created_date DATETIME NULL,
   modified_date DATETIME NULL,
+  is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (textbox_id),
   INDEX map_id (map_id ASC),
   FOREIGN KEY (map_id)
@@ -118,6 +121,7 @@ CREATE TABLE IF NOT EXISTS agora.nodetext (
   position INT UNSIGNED NOT NULL,
   created_date DATETIME NULL,
   modified_date DATETIME NULL,
+  is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (nodetext_id),
   INDEX node_id (node_id ASC),
   INDEX textbox_id (textbox_id ASC),
@@ -156,6 +160,7 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
   type_id INT UNSIGNED NULL,
   created_date DATETIME NULL,
   modified_date DATETIME NULL,
+  is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (argument_id),
   INDEX map_id (map_id ASC),
   INDEX node_id (node_id ASC),
@@ -183,6 +188,7 @@ CREATE TABLE IF NOT EXISTS agora.connections (
   node_id INT UNSIGNED NOT NULL,
   created_date DATETIME NULL,
   modified_date DATETIME NULL,
+  is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (connection_id),
   INDEX argument_id (argument_id ASC),
   INDEX node_id (node_id ASC),
