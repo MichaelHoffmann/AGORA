@@ -30,6 +30,7 @@
 				$textbox = $xml->addChild("textbox");
 				$textbox->addAttribute("ID", $row['textbox_id']);
 				$textbox->addAttribute("text", $row['text']);
+				$textbox->addAttribute("deleted", $row['is_deleted']);
 			}
 		}
 
@@ -45,6 +46,7 @@
 				$node->addAttribute("ID", $node_id);
 				$node->addAttribute("Type", $row['type']);
 				$node->addAttribute("Author", $row['user_id']);
+				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in nodetext lookup."); 
@@ -67,6 +69,7 @@
 				$connection->addAttribute("argID", $arg_id);
 				$connection->addAttribute("type", $row['conn_name']);
 				$connection->addAttribute("targetnode", $row['node_id']);
+				$connection->addAttribute("deleted", $row['is_deleted']);
 				//Set up the inner query to find the source nodes
 				$innerQuery="SELECT * FROM connections WHERE argument_id=$arg_id";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in connection lookup");
