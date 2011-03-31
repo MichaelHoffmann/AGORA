@@ -274,8 +274,8 @@ package classes
 			//Draw on topArea UIComponent a rectangle
 			//to be used for clicking and dragging
 			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,20,20);
-			topArea.width = 20;
+			topArea.graphics.drawRect(0,0,160,20);
+			topArea.width = 160;
 			topArea.height = 20;
 			topArea.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			
