@@ -78,7 +78,6 @@ package classes
 			
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			claim = null;
-			//v  = new VGroup();
 		}
 		
 		
@@ -151,21 +150,56 @@ package classes
 			
 		}	
 		
+		public function deleteChildren(claim:ArgumentPanel):void
+		{
+			if(claim.rule != null)
+			{
+				while(claim.reasons.length > 0)
+				{
+					var currReason:ArgumentPanel = claim.reasons.pop();
+					deleteNode(currReason);
+				}
+				deleteNode(claim.rule);
+			}
+			
+			
+		}
+		
+		
+		public function deleteNode(claim:ArgumentPanel):void
+		{
+			if(claim.rule != null)
+			{
+				while(claim.reasons.length > 0)
+				{
+					var currReason:ArgumentPanel = claim.reasons.pop();
+					deleteNode(currReason);
+					//ArgumentPanel.parentMap.removeChild(claim.claim.reasons[claim.reasons.length-1]);
+				}
+				deleteNode(claim.rule);
+				claim.rule = null;
+				ArgumentPanel.parentMap.removeChild(claim);
+			}
+			else if(claim.rule == null)
+			{
+				ArgumentPanel.parentMap.removeChild(claim);
+				ArgumentPanel.parentMap.layoutManager.unregister(claim);
+			}
+			
+		}
+
+		
 		//reason must be registered before inference is
 		//user must not change the inference rule. He creates the inference rule
 		//through argument type, reasons and claim
 		public function addArgSchemeHandler(event:MouseEvent):void
 		{
 			if(rule != null)
-				parentMap.removeElement(rule);
-			rule = null; //necessary, in case argument scheme is changed
-			
-			while(reasons.length > 0)
 			{
-				var	tmp:ArgumentPanel = reasons.pop();
-				parentMap.removeChild(tmp);
-				tmp = null;
+				deleteChildren(this);
+				rule = null;
 			}
+
 			
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();

@@ -41,6 +41,12 @@ package classes
 			layoutComponents();
 		}
 		
+		public function unregister(panel:ArgumentPanel):void
+		{
+			var ind:int = listOfPanels.indexOf(panel);
+			listOfPanels.splice(ind,1);
+		}
+		
 		public function layoutComponents():void
 		{
 			var argumentPanel:ArgumentPanel;
