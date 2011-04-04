@@ -9,12 +9,9 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
-<<<<<<< HEAD
-=======
       <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/Common/"/>
       <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/FlexProject/"/>
       <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LOCALE_LOCATION}/version4locale/"/>
->>>>>>> f91bce468339191fd6d51c1e876c4e2b7c26d0ed
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -22,6 +19,7 @@
   <applications>
     <application path="index.mxml"/>
     <application path="FlexUnitCompilerApplication.mxml"/>
+    <application path="PHPtest.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

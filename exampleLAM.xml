@@ -1,0 +1,22 @@
+<map id="1" username="JoshJ">
+	<textbox ID="1" text="FOO"/>
+	<textbox ID="2" text="BAR"/>
+
+	<node ID="1" Author="1">
+		<nodetext ID="1"/>
+	</node>
+
+	<node ID="2" Author="1">
+		<nodetext ID="2"/>
+	</node>
+
+	<node ID="3" Author="1">
+		<nodetext ID="1"/>
+		<nodetext ID="2"/>
+	</node>
+
+	<connection argID="1" type="MPtherefore" targetnode="2">
+		<sourcenode nodeID="1"/>
+		<sourcenode nodeID="3"/>
+	</connection>
+</map>
