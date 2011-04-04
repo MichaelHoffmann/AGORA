@@ -124,6 +124,7 @@ package classes
 				if(tmp.rule != null)
 				{
 					var prevGrid:int = tmp.reasons[0].gridY - 1;
+					trace(prevGrid);
 					
 					//draw a line from the claim to the grid edge before the first reason
 					drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);

@@ -49,8 +49,7 @@ package classes
 			for( i=0;i<listOfPanels.length;i++)
 			{
 				argumentPanel = listOfPanels[i];
-				argumentPanel = listOfPanels[i];
-				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
+				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;	//actual co-ord
 				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
 			}
 			ArgumentPanel.parentMap.connectRelatedPanels();
@@ -99,19 +98,19 @@ package classes
 		
 		public function registerPanel(panel:ArgumentPanel):void
 		{
-			try{
+			try{ 
 			//find out the type and register
 			if(panel is Inference)
 			{
 				var claim:ArgumentPanel = panel.claim;
-				panel.gridX = claim.gridX;
+				panel.gridX = claim.gridX;	//starting point
 				panel.gridY = claim.gridY;
 				var plusGridWidth:int = Math.ceil(claim.width / uwidth ) + 1;
 				var plusGridHeight:int = Math.ceil(claim.height / uwidth ) + 2;
 				panel.gridY = panel.gridY + plusGridWidth;
 				panel.gridX = panel.gridX + plusGridHeight;
 				
-				//fix the gird positions of the reasons that use this inference rule to lead to the claim.
+				//fix the grid positions of the reasons that use this inference rule to lead to the claim.
 				if(claim.reasons.length > 0)
 				{
 					var currX:int = claim.gridX;
@@ -140,7 +139,6 @@ package classes
 				}
 			}
 			
-			
 			}
 			catch(e:Error)
 			{
@@ -148,6 +146,25 @@ package classes
 			}
 			
 			listOfPanels.push(panel);
+			layoutComponents();
+		}
+		
+		public function registerMPanel(mpanel:MidPanel):void
+		{	try{
+			if(mpanel.claim!=null)
+			{
+				if(mpanel.claim.rule != null) //add only when there is parent claim and inference
+				{
+					mpanel.visible = true;
+					mpanel.gridX = mpanel.claim.gridX;
+					mpanel.gridY = mpanel.claim.gridY + Math.ceil(mpanel.claim.width / uwidth ) + 1;
+				}
+			}
+			}
+			catch(e:Error)
+			{
+				Alert.show(e.toString());
+			}
 			layoutComponents();
 		}
 		

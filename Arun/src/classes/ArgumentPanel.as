@@ -37,10 +37,15 @@ package classes
 		public var buttonArea:Panel;
 		public var panelSkin:PanelSkin;
 		public var panelSkin1:PanelSkin;
+		
 		public var gridX:int;
 		public var gridY:int;
+		
 		public var reasonButton:spark.components.Button;
+		public var addButton:spark.components.Button;
+		
 		public var argschemeButton:spark.components.Button;
+		public var useButton:spark.components.Button;
 	
 		
 		public static var parentMap:AgoraMap;
@@ -48,6 +53,7 @@ package classes
 		public var claim:ArgumentPanel;
 		public var rule:Inference;
 		public var logicalContainer:VGroup;
+		public var infPanel:MidPanel;
 		
 		public var binders:Vector.<Binder>;
 
@@ -77,7 +83,8 @@ package classes
 			//binders = new Vector.<Binder>(0,false);
 			
 			reasons = new Vector.<ArgumentPanel>(0,false);
-			claim = null;
+			claim = null; infPanel = null;
+			
 			//v  = new VGroup();
 		}
 		
@@ -181,6 +188,14 @@ package classes
 			rule = inferenceRule;
 			inferenceRule.claim = this;
 			
+			// middle panel for adding reasons/changing argscheme
+			infPanel = new MidPanel();
+			infPanel.schemeLabel.text = inferenceRule.argumentClass;
+			infPanel.visible = false;
+			parentMap.addElement(infPanel);
+			infPanel.claim = this;
+			parentMap.layoutManager.registerMPanel(infPanel);
+			
 			//create an invisible box in the inference rule
 			var tmpInput:DynamicTextArea = new DynamicTextArea();
 			//visual
@@ -191,7 +206,7 @@ package classes
 	
 			//logical
 			tmpInput.panelReference = inferenceRule;
-			inferenceRule.input.push(tmpInput);		
+			inferenceRule.input.push(tmpInput);			//adding to the textbox array of the inference node
 			//binding
 			tmpInput.forwardList.push(inferenceRule.input1);
 			this.input1.forwardList.push(inferenceRule.input[0]);
@@ -291,8 +306,10 @@ package classes
 			var bLayout:HorizontalLayout = new HorizontalLayout;
 			buttonArea = new Panel;
 			buttonArea.layout = bLayout;
-			reasonButton = new spark.components.Button;
-			argschemeButton = new spark.components.Button;
+			reasonButton = new spark.components.Button;	//to be removed
+			addButton = new spark.components.Button;
+			argschemeButton = new spark.components.Button;	//to be replaced with add button
+			useButton = new spark.components.Button;	//for copy to clipboard
 			buttonArea.addElement(reasonButton);
 			buttonArea.addElement(argschemeButton);
 			buttonArea.height = 20;

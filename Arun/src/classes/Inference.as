@@ -10,6 +10,7 @@ package classes
 	{
 		public var input:Vector.<DynamicTextArea>;
 		public var argumentClass:String;
+		public var argType:String;
 		public var aLType:Label;
 		public static const MODUS_PONENS:String = "modus_ponens";
 		public function Inference()
