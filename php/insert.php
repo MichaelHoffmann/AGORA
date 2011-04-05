@@ -12,6 +12,7 @@
 		$xml = new SimpleXMLElement($xmlstr);
 	}
 	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
-	$xml = insert($map_id); 
-	print($xml->asXML());
+	$xml = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
+	$output = insert($map_id); 
+	print($output->asXML());
 ?>
