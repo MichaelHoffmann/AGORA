@@ -46,7 +46,13 @@
 		//Loop across every thing,
 			//decide whether to INSERT or UPDATE.
 			//do that
-	
+		mysql_query("START TRANSACTION");
+		
+		if(true){
+			mysql_query("COMMIT");
+		}else{
+			mysql_query("ROLLBACK");
+		}
 		
 		//Set up the basics of the output XML.
 		/*
