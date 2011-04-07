@@ -10,11 +10,22 @@
 		$mapID = $xml['id'];
 		
 		//Check to see if the map already exists
+		if($mapClause=0){
+			//If not, create it!
+			$iquery = "INSERT INTO MAPS (user_id, title, description, created_date, modified_date) VALUES
+										($userID, 'Example', 'Described', NOW(), NOW())";
+						
+			$query = "SELECT LAST_INSERT_ID()";
+			$resultID = mysql_query($query, $linkID); 
+			$row = mysql_fetch_assoc($resultID);
+			$mapID = row['LAST_INSERT_ID()'];
+			
+		}
 		$mapClause = mysql_real_escape_string("$mapID");
 		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $mapClause";
-		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
+		$resultID = mysql_query($query, $linkID); 
 		$row = mysql_fetch_assoc($resultID);
-		
+			
 		//Check to see if this is the map author
 		//If so, $ownMap is set to true.
 		$author = $row['user_id'];
@@ -23,7 +34,6 @@
 			$ownMap=true;
 		}
 		
-		//If not, create it!
 		
 		//Validate nodes
 		//Validate textboxes
