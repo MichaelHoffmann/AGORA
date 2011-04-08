@@ -20,11 +20,13 @@
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$mapClause = $row['LAST_INSERT_ID()'];  // returning zero for some reason...?
+			print "New map ID: $mapClause <BR>";
 		}
 
-		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $mapClause" or die ("Cannot get map!");
+		//$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $mapClause";
 
-		$resultID = mysql_query($query, $linkID); 
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
+		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
 		$row = mysql_fetch_assoc($resultID);
 		
 		//Check to see if this is the map author
