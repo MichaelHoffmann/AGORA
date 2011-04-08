@@ -22,7 +22,7 @@
 		$xml->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>$timeclause"; 
+		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>$timeclause";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 

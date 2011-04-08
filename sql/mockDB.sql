@@ -12,14 +12,15 @@ INSERT INTO maps (user_id, title, description, created_date, modified_date) VALU
 INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date) VALUES 
 	(1,1,1,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW());
 
-INSERT INTO textboxes (text, map_id) VALUES ("FOO", 1), ("BAR", 1), ("BAZ", 1);
+INSERT INTO textboxes (text, map_id, created_date, modified_date) VALUES 
+					("FOO", 1, NOW(), NOW()), ("BAR", 1, NOW(), NOW()), ("BAZ", 1, NOW(), NOW());
 
-INSERT INTO nodetext (node_id, textbox_id, position) VALUES
-	(1, 1, 1),
-	(2, 2, 1),
-	(3, 1, 1), (3, 2, 2),
-	(4, 1, 1), (4, 3, 2),
-	(5, 3, 1), (5, 2, 2);
+INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
+	(1, 1, 1, NOW(), NOW()),
+	(2, 2, 1, NOW(), NOW()),
+	(3, 1, 1, NOW(), NOW()), (3, 2, 2, NOW(), NOW()),
+	(4, 1, 1, NOW(), NOW()), (4, 3, 2, NOW(), NOW()),
+	(5, 3, 1, NOW(), NOW()), (5, 2, 2, NOW(), NOW());
 -- This is the following 2-part argument:
 --
 --     ModusPonens
@@ -33,9 +34,9 @@ INSERT INTO nodetext (node_id, textbox_id, position) VALUES
 --                          |
 --                  BAZ therefore BAR (5)
 
-INSERT INTO arguments (map_id, node_id, type_id) VALUES
-	(1, 2, (SELECT type_id FROM connection_types WHERE conn_name="MPtherefore")),
-	(1, 3, (SELECT type_id FROM connection_types WHERE conn_name="ConSyllogism"));
+INSERT INTO arguments (map_id, node_id, type_id, created_date, modified_date) VALUES
+	(1, 2, (SELECT type_id FROM connection_types WHERE conn_name="MPtherefore"), NOW(), NOW()),
+	(1, 3, (SELECT type_id FROM connection_types WHERE conn_name="ConSyllogism"), NOW(), NOW());
 
-INSERT INTO connections (argument_id, node_id) VALUES
-	(1,1), (1,3), (2, 4), (2,5);
+INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
+	(1,1, NOW(), NOW()), (1,3, NOW(), NOW()), (2, 4, NOW(), NOW()), (2,5, NOW(), NOW());
