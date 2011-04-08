@@ -11,16 +11,17 @@
 		$mapID = $xml['id'];
 		$mapClause = mysql_real_escape_string("$mapID");
 		//Check to see if the map already exists
+		print "Map ID passed in: $mapClause <BR>";
 		if($mapClause==0){
 			//If not, create it!
 			$iquery = "INSERT INTO MAPS (user_id, title, description, created_date, modified_date) VALUES
 										($userID, 'Example', 'Described', NOW(), NOW())";
-						
+			mysql_query($iquery, $linkID);						
 			$query = "SELECT LAST_INSERT_ID()";
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$mapID = $row['LAST_INSERT_ID()'];  // returning zero for some reason...?
-			print $mapID;
+			print "Map inserted: $mapID";
 		}
 
 		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $mapClause" or die ("Cannot get map!");
