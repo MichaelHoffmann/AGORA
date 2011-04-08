@@ -9,26 +9,28 @@
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
 		$mapID = $xml['id'];
-		
+		$mapClause = mysql_real_escape_string("$mapID");
 		//Check to see if the map already exists
-		if($mapClause=0){
+		if($mapClause==0){
 			//If not, create it!
 			$iquery = "INSERT INTO MAPS (user_id, title, description, created_date, modified_date) VALUES
 										($userID, 'Example', 'Described', NOW(), NOW())";
 						
 			$query = "SELECT LAST_INSERT_ID()";
-			$resultID = mysql_query($query, $linkID); 
+			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
-			$mapID = row['LAST_INSERT_ID()'];
-			
+			$mapID = $row['LAST_INSERT_ID()'];  // returning zero for some reason...?
+			print $mapID;
 		}
-		$mapClause = mysql_real_escape_string("$mapID");
-		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $mapClause";
+
+		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $mapClause" or die ("Cannot get map!");
+
 		$resultID = mysql_query($query, $linkID); 
 		$row = mysql_fetch_assoc($resultID);
-			
+		
 		//Check to see if this is the map author
 		//If so, $ownMap is set to true.
+		
 		$author = $row['user_id'];
 		$ownMap = false;
 		if($author == $userID){
