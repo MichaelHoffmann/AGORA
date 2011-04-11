@@ -7,7 +7,7 @@ class, and will be done soon.
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:classes="classes.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="initApp()">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="initApp()">
 	
 	<fx:Declarations>
 	</fx:Declarations>
