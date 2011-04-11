@@ -11,6 +11,7 @@ package classes
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
+	import mx.controls.Alert;
 	
 	public class AgoraMap extends Canvas
 	{
@@ -22,7 +23,6 @@ package classes
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
 		}
-		
 		
 		override protected function createChildren():void
 		{
@@ -56,50 +56,48 @@ package classes
 				if(akcdragInitiator is Inference)
 				{
 					//figure out if it's allowed
-					var lLimit:int = akcdragInitiator.claim.gridY + layoutManager.getGridSpan(akcdragInitiator.width);
-					var uLimit:int = akcdragInitiator.claim.reasons[0].gridY - layoutManager.getGridSpan(akcdragInitiator.claim.rule.width) - 1; 
+					var currInference:Inference = Inference(akcdragInitiator);
+					var lLimit:int = currInference.claim.gridY + layoutManager.getGridSpan(currInference.width);
+					var uLimit:int = currInference.reasons[0].gridY - layoutManager.getGridSpan(currInference.width) - 1; 
 					if(tmpGridY >= lLimit && tmpGridY <= uLimit)
 					{
-						akcdragInitiator.gridX = tmpGridX;
-						akcdragInitiator.gridY = tmpGridY;
-						if(akcdragInitiator.rule != null)
+						currInference.gridX = tmpGridX;
+						currInference.gridY = tmpGridY;
+						if(currInference.rules.length > 0 )
 						{
-							layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
+							layoutManager.moveConnectedPanels(currInference, diffX, diffY);
 						}
 					}
-					
 				}
 				
 				else if(akcdragInitiator is ArgumentPanel)
 				{
-					if(akcdragInitiator.claim != null)
+					if(akcdragInitiator.inference != null)
 					{
-						lLimit = akcdragInitiator.claim.rule.gridY + layoutManager.getGridSpan(akcdragInitiator.claim.rule.width);
+						lLimit = akcdragInitiator.inference.gridY + layoutManager.getGridSpan(akcdragInitiator.inference.width);
 						if( tmpGridY >= lLimit)
 						{
 							akcdragInitiator.gridY = tmpGridY;
 							layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-							if(akcdragInitiator.rule != null)
+							if(akcdragInitiator.rules.length > 0 )
 							{
 								layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
 							}
 						}
 					}
-					else if(akcdragInitiator.claim == null)
+					else if(akcdragInitiator.inference == null)
 					{
 						
 						akcdragInitiator.gridY = tmpGridY;
 						akcdragInitiator.gridX = tmpGridX;
 						//layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-						if(akcdragInitiator.rule != null)
+						if(akcdragInitiator.rules.length > 0)
 						{
 							layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
 						}
 					}
 				}
-				
-				
-	
+
 					
 			}catch(error:Error)
 			{
@@ -119,32 +117,30 @@ package classes
 			{
 				var tmp:ArgumentPanel = listOfPanels[i];
 				//connect claim to the left edge of the grid box before the one in which the first reason is placed
-				
 				//has reasons
-				if(tmp.rule != null)
+				if(tmp.rules.length > 0)
 				{
-					var prevGrid:int = tmp.reasons[0].gridY - 1;
+					var prevGrid:int = tmp.rules[0].reasons[0].gridY - 1;
 					
 					//draw a line from the claim to the grid edge before the first reason
 					drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
 					drawUtility.graphics.lineTo( prevGrid * layoutManager.uwidth, tmp.y + 30);
 					
-					for(var it:int=0; it<tmp.reasons.length;it++)
+					for(var it:int=0; it<tmp.rules[0].reasons.length;it++)
 					{
-						var currReason:ArgumentPanel = tmp.reasons[it];
+						var currReason:ArgumentPanel = tmp.rules[0].reasons[it];
 						drawUtility.graphics.moveTo(prevGrid * layoutManager.uwidth, currReason.gridX * layoutManager.uwidth + 30);
 						drawUtility.graphics.lineTo(currReason.gridY * layoutManager.uwidth, currReason.gridX * layoutManager.uwidth + 30);
 					
 					}
 					//draw vertical line
-					drawUtility.graphics.moveTo(prevGrid * layoutManager.uwidth,tmp.reasons[0].gridX * layoutManager.uwidth + 30);
-					drawUtility.graphics.lineTo(prevGrid * layoutManager.uwidth,tmp.reasons[tmp.reasons.length - 1].gridX * layoutManager.uwidth + 30);
+					drawUtility.graphics.moveTo(prevGrid * layoutManager.uwidth,tmp.rules[0].reasons[0].gridX * layoutManager.uwidth + 30);
+					drawUtility.graphics.lineTo(prevGrid * layoutManager.uwidth,tmp.rules[0].reasons[tmp.rules[0].reasons.length - 1].gridX * layoutManager.uwidth + 30);
 					
 					//draw inference
 					//assumes equal width for claim and inference rule
-					drawUtility.graphics.moveTo(tmp.rule.gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.y + 30);
-					drawUtility.graphics.lineTo(tmp.rule.gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.rule.gridX * layoutManager.uwidth);	
-					
+					drawUtility.graphics.moveTo(tmp.rules[0].gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.y + 30);
+					drawUtility.graphics.lineTo(tmp.rules[0].gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.rules[0].gridX * layoutManager.uwidth);	
 				}
 				
 				
