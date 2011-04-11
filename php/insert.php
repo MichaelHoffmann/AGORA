@@ -1,5 +1,5 @@
 <?php
-	function insert($xmlin, $userID)
+	function insert($xmlin, $userID, $pass_hash)
 	{
 		//Standard SQL connection stuff
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
@@ -69,6 +69,7 @@
 	}
 	$xml = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
-	$output = insert($xml, $userID); 
+	$passhash = $_REQUEST['pass_hash'];
+	$output = insert($xml, $userID, $pass_hash); 
 	//print($output->asXML()); //TODO: turn this back on
 ?>
