@@ -19,6 +19,7 @@
 
 	function xmlToDB($xml)
 	{
+		$retval = true;
 		//Validate nodes
 		//Validate textboxes
 		//Validate nodetext
@@ -30,7 +31,9 @@
 		//Loop across every thing,
 			//decide whether to INSERT or UPDATE.
 			//do that
-
+			
+		
+		return $retval;
 	}
 	
 	
