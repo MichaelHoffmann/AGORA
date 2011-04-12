@@ -17,6 +17,29 @@
 		}
 	}
 
+	function xmlToDB($xml)
+	{
+		//Validate nodes
+		//Validate textboxes
+		//Validate nodetext
+		//Validate arguments
+		//Validate connections
+		
+		//If ANY of the above failed, we bail out.
+		
+		//Loop across every thing,
+			//decide whether to INSERT or UPDATE.
+			//do that
+		mysql_query("START TRANSACTION");
+		
+		if(true){
+			mysql_query("COMMIT");
+		}else{
+			mysql_query("ROLLBACK");
+		}
+	}
+	
+	
 	function insert($xmlin, $userID, $pass_hash)
 	{
 		if(!checkLogin($userID, $pass_hash)){
@@ -63,24 +86,7 @@
 		}
 		
 		
-		//Validate nodes
-		//Validate textboxes
-		//Validate nodetext
-		//Validate arguments
-		//Validate connections
-		
-		//If ANY of the above failed, we bail out.
-		
-		//Loop across every thing,
-			//decide whether to INSERT or UPDATE.
-			//do that
-		mysql_query("START TRANSACTION");
-		
-		if(true){
-			mysql_query("COMMIT");
-		}else{
-			mysql_query("ROLLBACK");
-		}
+
 		
 		//Set up the basics of the output XML.
 		/*
