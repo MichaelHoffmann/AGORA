@@ -101,9 +101,9 @@
 		return $output;
 		*/
 	}
-	$xml = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
+	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
-	$output = insert($xml, $userID, $pass_hash); 
+	$output = insert($xmlparam, $userID, $pass_hash); 
 	//print($output->asXML()); //TODO: turn this back on
 ?>
