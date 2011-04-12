@@ -30,13 +30,7 @@
 		//Loop across every thing,
 			//decide whether to INSERT or UPDATE.
 			//do that
-		mysql_query("START TRANSACTION");
-		
-		if(true){
-			mysql_query("COMMIT");
-		}else{
-			mysql_query("ROLLBACK");
-		}
+
 	}
 	
 	
@@ -85,7 +79,15 @@
 			$ownMap=true;
 		}
 		
-		
+		mysql_query("START TRANSACTION");
+		$success = xmlToDB($xml);
+		if($success===true){
+			mysql_query("COMMIT");
+			print "Query committed!<BR>";
+		}else{
+			mysql_query("ROLLBACK");
+			print "Query rolled back!<BR>";
+		}
 
 		
 		//Set up the basics of the output XML.
