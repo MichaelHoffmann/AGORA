@@ -2,7 +2,7 @@
 	//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
 	$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 	mysql_select_db("agora", $linkID) or die ("Could not find database");
-	$query = "SELECT * FROM maps NATURAL JOIN users";
+	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id";
 	$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 
 	header("Content-type: text/xml");
