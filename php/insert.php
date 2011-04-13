@@ -19,21 +19,17 @@
 
 	function xmlToDB($xml)
 	{
-		$retval = true;
-		//Validate nodes
-		//Validate textboxes
-		//Validate nodetext
-		//Validate arguments
-		//Validate connections
+		//Validate and insert/update nodes
+		//Validate and insert/update textboxes
+		//Validate and insert/update nodetext
+		//Validate and insert/update arguments
+		//Validate and insert/update connections
 		
-		//If ANY of the above failed, we bail out.
+		//If ANY of the above failed, we return false and let the rollback solve our problems for us.
 		
-		//Loop across every thing,
-			//decide whether to INSERT or UPDATE.
-			//do that
-			
 		
-		return $retval;
+		
+		return $true;
 	}
 	
 	
@@ -57,7 +53,7 @@
 		if($mapClause==0){
 			//If not, create it!
 			$iquery = "INSERT INTO MAPS (user_id, title, description, created_date, modified_date) VALUES
-										($userID, 'Example', 'Described', NOW(), NOW())";
+										($userID, 'Example', 'Description', NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
 			$query = "SELECT LAST_INSERT_ID()";
 			$resultID = mysql_query($query, $linkID);
