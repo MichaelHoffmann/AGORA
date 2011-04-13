@@ -66,6 +66,7 @@ INSERT INTO node_types (type) VALUES ("Standard"), ("Inference"), ("Objection"),
 -- -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.nodes (
   node_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  node_tid INT UNSIGNED NOT NULL,
   user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NULL, 
   nodetype_id INT UNSIGNED NOT NULL,
@@ -98,6 +99,7 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.textboxes (
   textbox_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  textbox_tid INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NOT NULL,
   text TEXT,
   created_date DATETIME NOT NULL,
@@ -115,6 +117,7 @@ CREATE TABLE IF NOT EXISTS agora.textboxes (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.nodetext (
   nodetext_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nodetext_tid INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   textbox_id INT UNSIGNED NOT NULL,
   position INT UNSIGNED NOT NULL,
@@ -154,6 +157,7 @@ INSERT INTO connection_types(conn_name, description) VALUES ("ConSyllogism", "Co
 
 CREATE  TABLE IF NOT EXISTS agora.arguments (
   argument_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  arg_tid INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NULL,
   node_id INT UNSIGNED NULL,
   type_id INT UNSIGNED NULL,
@@ -183,6 +187,7 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.connections (
   connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  conn_tid INT UNSIGNED NOT NULL,
   argument_id INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   created_date DATETIME NOT NULL,

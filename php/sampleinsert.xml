@@ -6,15 +6,15 @@
 		<nodetext textboxTID="1"/>
 	</node>
 	<node TID="2" Type="Standard">
-		<nodetext textboxTID="2"/>
+		<nodetext TID="1" textboxTID="2"/>
 	</node>
 	<node TID="3" Type="Inference">
-		<nodetext textboxTID="1"/>
-		<nodetext textboxTID="2"/>
+		<nodetext TID="2" textboxTID="1"/>
+		<nodetext TID="3" textboxTID="2"/>
 	</node>
 	</node>
 	<connection argTID="1" type="MPtherefore" targetnodeTID="2">
-		<sourcenode nodeTID="1"/>
-		<sourcenode nodeTID="3"/>
+		<sourcenode connTID="1" nodeTID="1"/>
+		<sourcenode connTID="2" nodeTID="3"/>
 	</connection>
 </map>
