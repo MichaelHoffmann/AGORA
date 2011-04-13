@@ -1,31 +1,20 @@
 <map id="4" timestamp="0">
-	<textbox ID="1" text="FOO"/>
-	<textbox ID="2" text="BAR"/>
-	<textbox ID="3" text="BAZ"/>
-	<node ID="1" Type="Standard">
-		<nodetext ID="1"/>
+	<textbox TID="1" text="FOO"/>
+	<textbox TID="2" text="BAR"/>
+	<textbox TID="3" text="BAZ"/>
+	<node TID="1" Type="Standard">
+		<nodetext textboxTID="1"/>
 	</node>
-	<node ID="2" Type="Standard">
-		<nodetext ID="2"/>
+	<node TID="2" Type="Standard">
+		<nodetext textboxTID="2"/>
 	</node>
-	<node ID="3" Type="Inference">
-		<nodetext ID="1"/>
-		<nodetext ID="2"/>
+	<node TID="3" Type="Inference">
+		<nodetext textboxTID="1"/>
+		<nodetext textboxTID="2"/>
 	</node>
-	<node ID="4" Type="Standard">
-		<nodetext ID="1"/>
-		<nodetext ID="3"/>
 	</node>
-	<node ID="5" Type="Inference">
-		<nodetext ID="3"/>
-		<nodetext ID="2"/>
-	</node>
-	<connection argID="1" type="MPtherefore" targetnode="2">
-		<sourcenode nodeID="1"/>
-		<sourcenode nodeID="3"/>
-	</connection>
-	<connection argID="2" type="ConSyllogism" targetnode="3">
-		<sourcenode nodeID="4"/>
-		<sourcenode nodeID="5"/>
+	<connection argTID="1" type="MPtherefore" targetnodeTID="2">
+		<sourcenode nodeTID="1"/>
+		<sourcenode nodeTID="3"/>
 	</connection>
 </map>
