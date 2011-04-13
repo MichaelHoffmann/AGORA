@@ -5,11 +5,16 @@ package classes
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
+	import spark.components.VGroup;
 
-	public class DisplayArgType extends Panel
+	public class DisplayArgType extends GridPanel
 	{
+		public var vgroup:VGroup;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
+		public var inference:Inference;
+		public var type:Label;
+		
 		public function DisplayArgType()
 		{
 			super();
@@ -18,11 +23,17 @@ package classes
 		{
 			
 			super.createChildren();
+			type = new Label;
+			vgroup = new VGroup;
+			addElement(vgroup);
+			vgroup.addElement(type);
+			type.text = "modus_ponens";
 			hgroup = new HGroup;
-			addElement(hgroup);
+			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
 			addReasonBtn.label = "+R";
 			hgroup.addElement(addReasonBtn);
+			height = 100;
 		}
 	}
 }

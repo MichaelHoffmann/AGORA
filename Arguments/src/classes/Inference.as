@@ -30,6 +30,7 @@ package classes
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			argType = new DisplayArgType();
+			argType.inference = this;
 			argType.width = 100;
 			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
 		}
@@ -37,13 +38,15 @@ package classes
 		public function  addHandlers(fe:FlexEvent):void
 		{
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
+			//register it to the layout
+			//parentMap.layoutManager.registerPanel(argType);
 		}
 		
 		private function displayArgumentType(e: FlexEvent) : void
 		{
-			aLType = new Label();
-			aLType.text=argumentClass;
-			argType.addElement(aLType);
+			//aLType = new Label();
+			//aLType.text=argumentClass;
+			//argType.vgroup.addElement(aLType);
 			parentMap.addElement(argType);
 		}
 		

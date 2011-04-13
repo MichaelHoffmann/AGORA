@@ -11,7 +11,6 @@ package classes
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
-	import mx.controls.Alert;
 	
 	public class AgoraMap extends Canvas
 	{
@@ -108,42 +107,52 @@ package classes
 		
 		public function connectRelatedPanels():void
 		{
-			var listOfPanels:Vector.<ArgumentPanel> = layoutManager.listOfPanels;
+			//var panelList:Vector.<ArgumentPanel> = layoutManager.panelList;
+			var panelList:Vector.<GridPanel> = layoutManager.panelList;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			
 			
-			for(var i:int=0; i<listOfPanels.length; i++)
+			for(var i:int=0; i<panelList.length; i++)
 			{
-				var tmp:ArgumentPanel = listOfPanels[i];
-				//connect claim to the left edge of the grid box before the one in which the first reason is placed
-				//has reasons
-				if(tmp.rules.length > 0)
-				{
-					var prevGrid:int = tmp.rules[0].reasons[0].gridY - 1;
-					
-					//draw a line from the claim to the grid edge before the first reason
-					drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
-					drawUtility.graphics.lineTo( prevGrid * layoutManager.uwidth, tmp.y + 30);
-					
-					for(var it:int=0; it<tmp.rules[0].reasons.length;it++)
+				var tmp1:GridPanel = panelList[i];
+				if(tmp1 is ArgumentPanel){
+					var tmp:ArgumentPanel = tmp1 as ArgumentPanel;
+					var m:int;
+					for(m = 0; m < tmp.rules.length; m++)
 					{
-						var currReason:ArgumentPanel = tmp.rules[0].reasons[it];
-						drawUtility.graphics.moveTo(prevGrid * layoutManager.uwidth, currReason.gridX * layoutManager.uwidth + 30);
-						drawUtility.graphics.lineTo(currReason.gridY * layoutManager.uwidth, currReason.gridX * layoutManager.uwidth + 30);
-					
+						var gridy:int = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
+						drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[m].argType.y + 30);
+						drawUtility.graphics.lineTo(tmp.rules[m].argType.x, tmp.rules[m].argType.y + 30);
+						drawUtility.graphics.moveTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].argType.y + tmp.rules[m].argType.height);
+						drawUtility.graphics.lineTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].y);
+						//an inference always has reasons
+						var gridyreasons:int = tmp.rules[m].reasons[0].gridY - 1;
+						for(var n:int = 0; n < tmp.rules[m].reasons.length; n++){
+							//draw a line from the prev grid to the current reason
+							drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n].y + 30);
+							drawUtility.graphics.lineTo(tmp.rules[m].reasons[n].x, tmp.rules[m].reasons[n].y + 30);
+						}
+						
+						drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
+						drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n-1].y + 30);
+						
+						drawUtility.graphics.moveTo(tmp.rules[m].argType.x  + tmp.rules[m].argType.width, tmp.rules[m].argType.y + 30);
+						drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
+						
 					}
-					//draw vertical line
-					drawUtility.graphics.moveTo(prevGrid * layoutManager.uwidth,tmp.rules[0].reasons[0].gridX * layoutManager.uwidth + 30);
-					drawUtility.graphics.lineTo(prevGrid * layoutManager.uwidth,tmp.rules[0].reasons[tmp.rules[0].reasons.length - 1].gridX * layoutManager.uwidth + 30);
+					if(tmp.rules.length > 0){
+						gridy = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
+						//vert line
+						drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y+30);
+						drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[m-1].argType.y + 30);
+						
+						//first horizontal line
+						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
+						drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y + 30);
+					}
 					
-					//draw inference
-					//assumes equal width for claim and inference rule
-					drawUtility.graphics.moveTo(tmp.rules[0].gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.y + 30);
-					drawUtility.graphics.lineTo(tmp.rules[0].gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.rules[0].gridX * layoutManager.uwidth);	
 				}
-				
-				
 			}
 		}
 	}

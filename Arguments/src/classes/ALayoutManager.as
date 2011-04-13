@@ -14,14 +14,22 @@ package classes
 	
 	public class ALayoutManager
 	{
-		public var listOfPanels:Vector.<ArgumentPanel>;
+		//public var listOfPanels:Vector.<ArgumentPanel>;
+		
+		public var panelList:Vector.<GridPanel>;
 		public var uwidth:int;
-		public var yPadding:int;	
+		public var yPadding:int;
+		public var yArgDistances:int;
+		public var yArgDisplay:int;
+		
 		public function ALayoutManager()
 		{
-			listOfPanels = new Vector.<ArgumentPanel>(0,false);
+			//panelList = new Vector.<ArgumentPanel>(0,false);
+			panelList = new Vector.<GridPanel>(0,false);
 			uwidth = 25;
 			yPadding = 0;
+			yArgDistances = 10;
+			yArgDisplay  = 7;
 		}
 		
 		public function alignReasons(reason:ArgumentPanel,tmpY:int):void
@@ -30,7 +38,7 @@ package classes
 			var i:int;
 			var claim:ArgumentPanel = reason.inference.claim;
 			var inference:Inference = reason.inference;
-			var currX:int = inference.claim.gridX;
+			var currX:int = inference.argType.gridX;
 			
 			for(i=0;i< inference.reasons.length;i++)
 			{
@@ -44,29 +52,21 @@ package classes
 		
 		public function unregister(panel:ArgumentPanel):void
 		{
-			var ind:int = listOfPanels.indexOf(panel);
-			listOfPanels.splice(ind,1);
+			var ind:int = panelList.indexOf(panel);
+			panelList.splice(ind,1);
 		}
 		
 		public function layoutComponents():void
 		{
-			var argumentPanel:ArgumentPanel;
+			var argumentPanel:GridPanel;
 			var i:int;
 			
-			for( i=0;i<listOfPanels.length;i++)
+			for( i=0;i<panelList.length;i++)
 			{
 	
-				argumentPanel = listOfPanels[i];
-				
+				argumentPanel = panelList[i];
 				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
 				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
-					
-				if(argumentPanel is Inference){
-					var inference:Inference = Inference(argumentPanel);
-					var argType:DisplayArgType = inference.argType;
-					argType.x =  inference.x + inference.width/2 - argType.width/2 ;
-					argType.y = inference.claim.y;
-				}
 			}
 			ArgumentPanel.parentMap.connectRelatedPanels();
 		}
@@ -74,7 +74,6 @@ package classes
 		
 		public function moveConnectedPanels(claim:ArgumentPanel,diffX:int, diffY:int):void
 		{
-			//var inference:Inference = claim.rule;
 			if(claim.rules.length > 0)
 			{
 				var inference:Inference = claim.rules[0];
@@ -113,25 +112,29 @@ package classes
 			return (Math.floor(tmpX/uwidth));
 		}
 		
-		public function registerPanel(panel:ArgumentPanel):void
+		public function registerPanel(panel1:GridPanel):void
 		{
 			try{
-				if(panel is Inference)
+				if(panel1 is Inference)
 				{
-					var currPanel:Inference = panel as Inference;
+					var currPanel:Inference = panel1 as Inference;
 					var claim:ArgumentPanel = currPanel.claim;
 					currPanel.gridX = claim.gridX;		
 					currPanel.gridY = claim.gridY;
 					if(currPanel.claim.rules[0] == currPanel){
 						var plusGridWidth:int = Math.ceil(claim.width / uwidth ) + 2;
 						var plusGridHeight:int = Math.ceil(claim.height / uwidth ) + 2;
-						panel.gridY = panel.gridY + plusGridWidth;
-						panel.gridX = panel.gridX + plusGridHeight;
+						currPanel.gridY = currPanel.gridY + plusGridWidth;
+						currPanel.gridX = currPanel.gridX + plusGridHeight;
+						//fix the grid positins of the argument class
+						currPanel.argType.gridX = currPanel.claim.gridX;
+						currPanel.argType.gridY = currPanel.gridY;
+						registerPanel(currPanel.argType);
 						//fix the gird positions of the reasons that use this inference rule to lead to the claim.
 						if(currPanel.reasons.length > 0)
 						{
 							var currX:int = claim.gridX;
-							var currY:int = currPanel.gridY+Math.ceil(claim.width/uwidth)+1;
+							var currY:int = currPanel.gridY+Math.ceil(claim.width/uwidth) + 1;
 							for(var i:int = 0; i < currPanel.reasons.length; i++)
 							{
 								currPanel.reasons[i].gridX = currX;
@@ -153,13 +156,17 @@ package classes
 						else{
 							max = lastInferenceGridX;
 						}
-						max = max + 3;
+						max = max + yArgDistances;
 						plusGridWidth = getGridSpan(claim.width) + 2;
 						currPanel.gridY = currPanel.gridY + plusGridWidth;
 						currPanel.gridX = max;
-						currX = currPanel.gridX;
+						currPanel.argType.gridX = currPanel.gridX - yArgDisplay;
+						currPanel.argType.gridY = currPanel.gridY;
+						registerPanel(currPanel.argType);
+						
+						currX = currPanel.argType.gridX;
 						currY = currPanel.gridY + getGridSpan(claim.width) + 1;
-			
+						
 						for(i = 0; i < currPanel.reasons.length; i++)
 						{
 							currPanel.reasons[i].gridX = currX;
@@ -167,19 +174,20 @@ package classes
 							currX = currX + getGridSpan(currPanel.reasons[i].height);
 						}
 					}
-				
 				}
 			//This module is for a reason added to an existing argument
-				else if(panel is ArgumentPanel)
+				else if(panel1 is ArgumentPanel)
 				{
+					var panelArg:ArgumentPanel = panel1 as ArgumentPanel;
 					//establish it's a reason and not the first claim in the map
-					if(panel.inference != null)//will be null for the first claim added
+					if(panelArg.inference != null)//will be null for the first claim added
 					{
-						if(panel.inference.reasons.length > 1)
-							var lastReasonInd:int = panel.inference.reasons.length - 2;//last reason that was laid out
-							var lReason:ArgumentPanel = panel.inference.reasons[lastReasonInd];
-							panel.gridY = lReason.gridY;
-							panel.gridX = lReason.gridX + Math.ceil(lReason.height/uwidth) + 1;		
+						//will not hold for argument classes, and must be modified by a function isFirstReasons()
+						if(panelArg.inference.reasons.length > 1)
+							var lastReasonInd:int = panelArg.inference.reasons.length - 2;//last reason that was laid out
+							var lReason:ArgumentPanel = panelArg.inference.reasons[lastReasonInd];
+							panelArg.gridY = lReason.gridY;
+							panelArg.gridX = lReason.gridX + Math.ceil(lReason.height/uwidth) + 1;		
 					}
 				}
 			}
@@ -187,8 +195,7 @@ package classes
 			{
 				Alert.show(e.toString());
 			}
-			
-			listOfPanels.push(panel);
+			panelList.push(panel1);
 			layoutComponents();
 		}
 		
@@ -196,6 +203,7 @@ package classes
 		{
 			return Math.ceil(pixels/uwidth);
 		}
+		
 		public function buttonClicked(e:MouseEvent):void
 		{
 			var tmp:ArgumentPanel = new ArgumentPanel();

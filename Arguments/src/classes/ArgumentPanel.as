@@ -31,21 +31,17 @@ package classes
 	import spark.layouts.VerticalLayout;
 	import spark.skins.spark.PanelSkin;
 	
-	public class ArgumentPanel extends Panel
+	public class ArgumentPanel extends GridPanel
 	{
 		public var input1:DynamicTextArea;
 		public var topArea:UIComponent;
 		public var buttonArea:Panel;
 		public var panelSkin:PanelSkin;
 		public var panelSkin1:PanelSkin;
-		public var gridX:int;
-		public var gridY:int;
 		public var reasonButton:spark.components.Button;
 		public var argschemeButton:spark.components.Button;
 		public static var parentMap:AgoraMap;
-		//public var reasons:Vector.<ArgumentPanel>;
 		public var inference:Inference;
-		//public var rule:Inference;
 		public var logicalContainer:HGroup;
 		public var rules:Vector.<Inference>;
 		public var binders:Vector.<Binder>;
@@ -71,10 +67,8 @@ package classes
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-			//binders = new Vector.<Binder>(0,false);
 			inference = null;
 			rules = new Vector.<Inference>(0,false);
-			
 		}
 		
 		
@@ -83,7 +77,6 @@ package classes
 			
 			if(this is Inference)
 			{
-				//do nothing
 			}
 			else if(this.inference != null)
 				parentMap.layoutManager.alignReasons(this, this.gridY);
@@ -107,48 +100,6 @@ package classes
 				Alert.show(error.toString());
 			}
 		}
-		
-		
-		/*
-		public function deleteChildren(claim:ArgumentPanel):void
-		{
-			if(claim.rule != null)
-			{
-				while(claim.reasons.length > 0)
-				{
-					var currReason:ArgumentPanel = claim.reasons.pop();
-					deleteNode(currReason);
-				}
-				deleteNode(claim.rule);
-			}
-			
-			
-		}
-		
-		
-		public function deleteNode(claim:ArgumentPanel):void
-		{
-			if(claim.rule != null)
-			{
-				while(claim.reasons.length > 0)
-				{
-					var currReason:ArgumentPanel = claim.reasons.pop();
-					deleteNode(currReason);
-					//ArgumentPanel.parentMap.removeChild(claim.claim.reasons[claim.reasons.length-1]);
-				}
-				deleteNode(claim.rule);
-				claim.rule = null;
-				ArgumentPanel.parentMap.removeChild(claim);
-			}
-			else if(claim.rule == null)
-			{
-				ArgumentPanel.parentMap.removeChild(claim);
-				ArgumentPanel.parentMap.layoutManager.unregister(claim);
-			}
-			
-		}
-
-		*/
 		//reason must be registered before inference is
 		//user must not change the inference rule. He creates the inference rule
 		//through argument type, reasons and claim
@@ -212,7 +163,7 @@ package classes
 
 			parentMap.layoutManager.registerPanel(currInference);	
 		}	
-		
+		/*
 		public function linkBoxes(a:ArgumentPanel,b:ArgumentPanel,g:Group):void
 		{
 			var drawUtility:UIComponent = new UIComponent;
@@ -227,7 +178,7 @@ package classes
 				Alert.show(problem.toString());
 			}
 		}
-		
+		*/
 		public function getString():String{
 			return input1.text;
 		}
