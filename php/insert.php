@@ -29,7 +29,7 @@
 		
 		
 		
-		return $true;
+		return true;
 	}
 	
 	
