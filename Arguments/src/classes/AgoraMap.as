@@ -68,7 +68,7 @@ package classes
 						//currInference.argType.gridY = currInference.argType.gridY + diffY;
 						if(currInference.rules.length > 0 )
 						{
-							layoutManager.moveConnectedPanels(currInference, diffX, diffY);
+							layoutManager.moveConnectedPanels(currInference, diffX, 0);
 						}
 					}
 				}
@@ -92,8 +92,6 @@ package classes
 						akcdragInitiator.rules[i].gridY = akcdragInitiator.rules[i].gridY + diffY;
 						
 						akcdragInitiator.rules[i].argType.gridY = akcdragInitiator.rules[i].argType.gridY + diffY;
-						
-	
 						if(akcdragInitiator.inference == null)
 						{
 							akcdragInitiator.rules[i].argType.gridX=akcdragInitiator.rules[i].argType.gridX + diffX;

@@ -42,10 +42,15 @@ package classes
 			
 			for(i=0;i< inference.reasons.length;i++)
 			{
+				
 				var currReason:ArgumentPanel = inference.reasons[i];
+				var oldGridX:int = currReason.gridX;
+				var oldGridY:int = currReason.gridY;
 				currReason.gridY = tmpY;
 				currReason.gridX = currX;
 				currX = currX + getGridSpan(currReason.height) + 1;
+				if(currReason.rules.length > 0)
+					moveConnectedPanels(currReason,currReason.gridX - oldGridX, currReason.gridY - oldGridY);
 			}
 			layoutComponents();
 		}
@@ -75,6 +80,8 @@ package classes
 		{
 			if(claim is Inference){
 				var inference:Inference = claim as Inference;
+				alignReasons(inference.reasons[0],inference.reasons[0].gridY + diffY);
+				/*
 				for(var n:int=0; n < inference.reasons.length; n++)
 				{
 					inference.reasons[n].gridX = inference.reasons[n].gridX + diffX;
@@ -84,7 +91,8 @@ package classes
 						moveConnectedPanels(inference.reasons[n],diffX,diffY);
 					}
 				}
-				for(n=0; n < inference.rules.length; n++)
+				*/
+				for( var n:int =0; n < inference.rules.length; n++)
 				{
 					var currInference:Inference = inference.rules[n];
 					currInference.gridX = currInference.gridX + diffX;
@@ -102,8 +110,6 @@ package classes
 					inference.gridY = inference.gridY + diffY;	
 					inference.argType.gridX = inference.argType.gridX + diffX;
 					inference.argType.gridY = inference.argType.gridY + diffY;
-					
-					
 						moveConnectedPanels(inference,diffX,diffY);
 						
 						
