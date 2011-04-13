@@ -1,5 +1,7 @@
 package classes
 {
+	import flash.events.MouseEvent;
+	
 	import spark.components.Panel;
 	
 	public class GridPanel extends Panel
@@ -14,5 +16,6 @@ package classes
 		{
 			super.createChildren();
 		}
+	
 	}
 }

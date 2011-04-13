@@ -63,7 +63,6 @@ package classes
 			
 			for( i=0;i<panelList.length;i++)
 			{
-	
 				argumentPanel = panelList[i];
 				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
 				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
@@ -74,29 +73,41 @@ package classes
 		
 		public function moveConnectedPanels(claim:ArgumentPanel,diffX:int, diffY:int):void
 		{
-			if(claim.rules.length > 0)
-			{
-				var inference:Inference = claim.rules[0];
-				inference.gridX = inference.gridX + diffX;
-				inference.gridY = inference.gridY + diffY;	
-				if(inference.rules.length > 0)
+			if(claim is Inference){
+				var inference:Inference = claim as Inference;
+				for(var n:int=0; n < inference.reasons.length; n++)
 				{
-					moveConnectedPanels(inference,diffX,diffY);
-				}		
-			}
-	
-			if(claim.rules.length > 0)
-			{	
-				inference = claim.rules[0];
-				for(var i:int = 0; i < inference.reasons.length; i++)
-				{
-					inference.reasons[i].gridX = inference.reasons[i].gridX + diffX;
-					inference.reasons[i].gridY = inference.reasons[i].gridY + diffY;
-					if(inference.reasons[i].rules.length > 0){
-						moveConnectedPanels(inference.reasons[i],diffX,diffY);
+					inference.reasons[n].gridX = inference.reasons[n].gridX + diffX;
+					inference.reasons[n].gridY = inference.reasons[n].gridY + diffY;
+					if(inference.reasons[n].rules.length > 0)
+					{
+						moveConnectedPanels(inference.reasons[n],diffX,diffY);
 					}
 				}
-				
+				for(n=0; n < inference.rules.length; n++)
+				{
+					var currInference:Inference = inference.rules[n];
+					currInference.gridX = currInference.gridX + diffX;
+					currInference.gridY = currInference.gridY + diffY;
+					currInference.argType.gridX = currInference.argType.gridX + diffX;
+					currInference.argType.gridY = currInference.argType.gridY + diffY;
+					moveConnectedPanels(currInference,diffX,diffY);
+				}
+	
+			}
+			else{
+				for(var m:int=0; m<claim.rules.length;m++){		
+					inference = claim.rules[m];	
+					inference.gridX = inference.gridX + diffX;
+					inference.gridY = inference.gridY + diffY;	
+					inference.argType.gridX = inference.argType.gridX + diffX;
+					inference.argType.gridY = inference.argType.gridY + diffY;
+					
+					
+						moveConnectedPanels(inference,diffX,diffY);
+						
+						
+				}
 			}
 
 			layoutComponents();

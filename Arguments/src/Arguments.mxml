@@ -14,7 +14,7 @@ class, and will be done soon.
 	
 	<s:VGroup>			
 	<mx:Canvas id="agora" width="1400" height="650">
-	<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="1400" height="650" >	
+	<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="5000" height="6000" >	
 	</classes:AgoraMap>
 	</mx:Canvas>
 	</s:VGroup>

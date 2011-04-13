@@ -1,7 +1,13 @@
 package classes
 {
+	import flash.events.MouseEvent;
+	
 	import mx.containers.Panel;
 	import mx.controls.Label;
+	import mx.core.DragSource;
+	import mx.core.IUIComponent;
+	import mx.events.DragEvent;
+	import mx.managers.DragManager;
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
@@ -34,6 +40,23 @@ package classes
 			addReasonBtn.label = "+R";
 			hgroup.addElement(addReasonBtn);
 			height = 100;
+			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+		}
+		public function beginDrag( mEvent:MouseEvent):void
+		{
+			try{
+			var dInitiator:DisplayArgType = mEvent.currentTarget.parent.parent.parent.parent.parent as DisplayArgType;
+			var ds:DragSource = new DragSource;
+			ds.addData(dInitiator.mouseX,"x");
+			ds.addData(dInitiator.mouseY,"y");
+			ds.addData(dInitiator.gridX,"gx");
+			ds.addData(dInitiator.gridY,"gy");
+			trace("hm..");
+			trace(dInitiator);
+			DragManager.doDrag(dInitiator,ds,mEvent,null);
+			}catch (e:Error){
+				trace(e);
+			}
 		}
 	}
 }

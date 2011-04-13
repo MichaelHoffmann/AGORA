@@ -37,8 +37,9 @@ package classes
 		public function handleDrop(dragEvent:DragEvent):void
 		{	
 			try{
+				
 				var currentStage:Canvas = Canvas(dragEvent.currentTarget);
-				var akcdragInitiator:ArgumentPanel = ArgumentPanel(dragEvent.dragInitiator);
+				var akcdragInitiator1:GridPanel =  dragEvent.dragInitiator as GridPanel;
 				var dragSource:DragSource = dragEvent.dragSource;
 				var tmpx:int = int(dragSource.dataForFormat("x"));
 				var tmpy:int = int(dragSource.dataForFormat("y"));
@@ -51,9 +52,9 @@ package classes
 				var diffX:int = tmpGridX - int(dragSource.dataForFormat("gx"));
 				var diffY:int = tmpGridY - int(dragSource.dataForFormat("gy"));
 				
-				
-				if(akcdragInitiator is Inference)
+				if(akcdragInitiator1 is Inference)
 				{
+					var akcdragInitiator:ArgumentPanel = ArgumentPanel(dragEvent.dragInitiator);
 					//figure out if it's allowed
 					var currInference:Inference = Inference(akcdragInitiator);
 					var lLimit:int = currInference.claim.gridY + layoutManager.getGridSpan(currInference.width);
@@ -61,7 +62,10 @@ package classes
 					if(tmpGridY >= lLimit && tmpGridY <= uLimit)
 					{
 						currInference.gridX = tmpGridX;
-						currInference.gridY = tmpGridY;
+						//currInference.gridY = tmpGridY;
+	
+						//currInference.argType.gridX = currInference.argType.gridX + diffX;
+						//currInference.argType.gridY = currInference.argType.gridY + diffY;
 						if(currInference.rules.length > 0 )
 						{
 							layoutManager.moveConnectedPanels(currInference, diffX, diffY);
@@ -69,34 +73,50 @@ package classes
 					}
 				}
 				
-				else if(akcdragInitiator is ArgumentPanel)
+				else if(akcdragInitiator1 is ArgumentPanel)
 				{
-					if(akcdragInitiator.inference != null)
+					akcdragInitiator = akcdragInitiator1 as ArgumentPanel;
+					akcdragInitiator.gridY = tmpGridY;
+					if(akcdragInitiator.inference == null)
 					{
-						lLimit = akcdragInitiator.inference.gridY + layoutManager.getGridSpan(akcdragInitiator.inference.width);
-						if( tmpGridY >= lLimit)
-						{
-							akcdragInitiator.gridY = tmpGridY;
-							layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-							if(akcdragInitiator.rules.length > 0 )
-							{
-								layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
-							}
-						}
-					}
-					else if(akcdragInitiator.inference == null)
-					{
-						
-						akcdragInitiator.gridY = tmpGridY;
 						akcdragInitiator.gridX = tmpGridX;
-						//layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-						if(akcdragInitiator.rules.length > 0)
+					}
+					else
+					{
+						layoutManager.alignReasons(akcdragInitiator,tmpGridY);
+					
+					}
+					for(var i:int=0; i < akcdragInitiator.rules.length; i++)
+					{
+
+						akcdragInitiator.rules[i].gridY = akcdragInitiator.rules[i].gridY + diffY;
+						
+						akcdragInitiator.rules[i].argType.gridY = akcdragInitiator.rules[i].argType.gridY + diffY;
+						
+	
+						if(akcdragInitiator.inference == null)
 						{
-							layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
+							akcdragInitiator.rules[i].argType.gridX=akcdragInitiator.rules[i].argType.gridX + diffX;
+							akcdragInitiator.rules[i].gridX = akcdragInitiator.rules[i].gridX + diffX;
+							layoutManager.moveConnectedPanels(akcdragInitiator.rules[i],diffX,diffY);
 						}
+						else
+						{
+							layoutManager.moveConnectedPanels(akcdragInitiator.rules[i], 0, diffY);
+						}
+	
 					}
 				}
-
+				else if(akcdragInitiator1 is DisplayArgType)
+				{
+	
+					var argdisplay:DisplayArgType = akcdragInitiator1 as DisplayArgType;
+					if(argdisplay.inference != argdisplay.inference.claim.rules[0]){
+						argdisplay.gridX = argdisplay.gridX + diffX;
+						argdisplay.inference.gridX = argdisplay.inference.gridX + diffX;
+						layoutManager.moveConnectedPanels(argdisplay.inference,diffX,0);
+					}
+				}
 					
 			}catch(error:Error)
 			{
