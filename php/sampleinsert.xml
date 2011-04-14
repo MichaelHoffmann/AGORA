@@ -1,6 +1,6 @@
 <map id="4" timestamp="0">
-	<textbox ID="1" text="FOO"/>
-	<textbox ID="2" text="BAR"/>
+	<textbox TID="1" text="FOO"/>
+	<textbox TID="2" text="BAR"/>
 	<node TID="1" Type="Standard">
 		<nodetext TID="1" textboxTID="1"/>
 	</node>
