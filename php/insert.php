@@ -17,8 +17,38 @@
 		}
 	}
 
+	function textboxToDB($tb)
+	{
+		print "<BR>Textbox found";
+	}
+	function nodeToDB($node)
+	{
+		print "<BR>Node found";
+	}
+	function connectionToDB($conn)
+	{
+		print "<BR>Connection found";
+	}
+	
 	function xmlToDB($xml)
 	{
+		print "Now in xml-to-DB function<BR>";
+		$children = $xml->children();
+		print count($children);
+		foreach ($children as $child){
+			switch($child->getName()){
+				case "textbox":
+					textboxToDB($child);
+					break;
+				case "node":
+					nodeToDB($child);
+					break;
+				case "connection":
+					connectionToDB($child);
+					break;
+			}
+		}
+		
 		//Validate and insert/update nodes
 		//Validate and insert/update textboxes
 		//Validate and insert/update nodetext
@@ -82,10 +112,10 @@
 		$success = xmlToDB($xml);
 		if($success===true){
 			mysql_query("COMMIT");
-			print "Query committed!<BR>";
+			print "<BR>Query committed!<BR>";
 		}else{
 			mysql_query("ROLLBACK");
-			print "Query rolled back!<BR>";
+			print "<BR>Query rolled back!<BR>";
 		}
 
 		
