@@ -17,9 +17,18 @@
 		}
 	}
 
+	function getLastInsert($linkID)
+	{
+		$query = "SELECT LAST_INSERT_ID()";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		return $row['LAST_INSERT_ID()'];
+		print "New Textbox ID: $mapClause <BR>";
+	}
 	function textboxToDB($tb)
 	{
 		print "<BR>Textbox found";
+
 	}
 	function nodeToDB($node)
 	{
@@ -85,10 +94,8 @@
 			$iquery = "INSERT INTO MAPS (user_id, title, description, created_date, modified_date) VALUES
 										($userID, 'Example', 'Description', NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
-			$query = "SELECT LAST_INSERT_ID()";
-			$resultID = mysql_query($query, $linkID);
-			$row = mysql_fetch_assoc($resultID);
-			$mapClause = $row['LAST_INSERT_ID()'];  // returning zero for some reason...?
+			
+			$mapClause = getLastInsert($linkID);
 			print "New map ID: $mapClause <BR>";
 		}
 
@@ -109,7 +116,7 @@
 		}
 		
 		mysql_query("START TRANSACTION");
-		$success = xmlToDB($xml);
+		$success = xmlToDB($xml, $linkID);
 		if($success===true){
 			mysql_query("COMMIT");
 			print "<BR>Query committed!<BR>";
