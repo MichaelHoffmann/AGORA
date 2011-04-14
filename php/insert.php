@@ -25,21 +25,30 @@
 		return $row['LAST_INSERT_ID()'];
 		print "New Textbox ID: $mapClause <BR>";
 	}
-	function textboxToDB($tb)
+	function textboxToDB($tb, $mapID, $linkID)
 	{
 		print "<BR>Textbox found";
-
+		$attr = $tb->attributes();
+		$tid = $attr["TID"];
+		$text = $attr["text"];
+		
+		$iquery = "INSERT INTO textboxes (textbox_tid, map_id, text, created_date, modified_date) VALUES
+									($tid, $mapID, \"$text\", NOW(), NOW())";
+		print "<BR>Query: $iquery";
+		mysql_query($iquery, $linkID);
+		$newID = getLastInsert($linkID);
+		print "<BR>New textbox ID: $newID";
 	}
-	function nodeToDB($node)
+	function nodeToDB($node, $mapID, $linkID)
 	{
 		print "<BR>Node found";
 	}
-	function connectionToDB($conn)
+	function connectionToDB($conn, $mapID, $linkID)
 	{
 		print "<BR>Connection found";
 	}
 	
-	function xmlToDB($xml)
+	function xmlToDB($xml, $mapID, $linkID)
 	{
 		print "Now in xml-to-DB function<BR>";
 		$children = $xml->children();
@@ -47,13 +56,13 @@
 		foreach ($children as $child){
 			switch($child->getName()){
 				case "textbox":
-					textboxToDB($child);
+					textboxToDB($child, $mapID, $linkID);
 					break;
 				case "node":
-					nodeToDB($child);
+					nodeToDB($child, $mapID, $linkID);
 					break;
 				case "connection":
-					connectionToDB($child);
+					connectionToDB($child, $mapID, $linkID);
 					break;
 			}
 		}
@@ -116,7 +125,7 @@
 		}
 		
 		mysql_query("START TRANSACTION");
-		$success = xmlToDB($xml, $linkID);
+		$success = xmlToDB($xml, $mapClause, $linkID);
 		if($success===true){
 			mysql_query("COMMIT");
 			print "<BR>Query committed!<BR>";
