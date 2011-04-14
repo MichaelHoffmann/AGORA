@@ -17,6 +17,22 @@
 		}
 	}
 
+	function xmlToDB($xml)
+	{
+		//Validate and insert/update nodes
+		//Validate and insert/update textboxes
+		//Validate and insert/update nodetext
+		//Validate and insert/update arguments
+		//Validate and insert/update connections
+		
+		//If ANY of the above failed, we return false and let the rollback solve our problems for us.
+		
+		
+		
+		return true;
+	}
+	
+	
 	function insert($xmlin, $userID, $pass_hash)
 	{
 		if(!checkLogin($userID, $pass_hash)){
@@ -37,7 +53,7 @@
 		if($mapClause==0){
 			//If not, create it!
 			$iquery = "INSERT INTO MAPS (user_id, title, description, created_date, modified_date) VALUES
-										($userID, 'Example', 'Described', NOW(), NOW())";
+										($userID, 'Example', 'Description', NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
 			$query = "SELECT LAST_INSERT_ID()";
 			$resultID = mysql_query($query, $linkID);
@@ -62,25 +78,16 @@
 			$ownMap=true;
 		}
 		
-		
-		//Validate nodes
-		//Validate textboxes
-		//Validate nodetext
-		//Validate arguments
-		//Validate connections
-		
-		//If ANY of the above failed, we bail out.
-		
-		//Loop across every thing,
-			//decide whether to INSERT or UPDATE.
-			//do that
 		mysql_query("START TRANSACTION");
-		
-		if(true){
+		$success = xmlToDB($xml);
+		if($success===true){
 			mysql_query("COMMIT");
+			print "Query committed!<BR>";
 		}else{
 			mysql_query("ROLLBACK");
+			print "Query rolled back!<BR>";
 		}
+
 		
 		//Set up the basics of the output XML.
 		/*
@@ -90,9 +97,9 @@
 		return $output;
 		*/
 	}
-	$xml = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
+	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
-	$output = insert($xml, $userID, $pass_hash); 
+	$output = insert($xmlparam, $userID, $pass_hash); 
 	//print($output->asXML()); //TODO: turn this back on
 ?>
