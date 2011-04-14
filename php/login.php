@@ -2,6 +2,7 @@
 
 	function login($username, $pass_hash)
 	{
+		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");

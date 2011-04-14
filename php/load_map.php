@@ -2,11 +2,12 @@
 
 	function get_map($mapID, $timestamp){
 		//Standard SQL connection stuff
+		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$whereclause = mysql_real_escape_string("$mapID");
 		$timeclause = mysql_real_escape_string("$timestamp");
-		$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $whereclause";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause";
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
@@ -22,7 +23,7 @@
 		$xml->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_time>$timeclause"; 
+		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>$timeclause";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -36,7 +37,7 @@
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = $whereclause AND modified_time>$timeclause";
+		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = $whereclause AND modified_date>$timeclause";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -59,7 +60,7 @@
 		}
 
 		// Connections will take a lot more work.
-		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_time>$timeclause";
+		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_date>$timeclause";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
