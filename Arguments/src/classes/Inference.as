@@ -10,6 +10,8 @@ package classes
 	
 	import spark.components.Button;
 	import spark.components.VGroup;
+	import components.ArgSelector;
+	
 	public class Inference extends ArgumentPanel
 	{
 		public var reasons:Vector.<ArgumentPanel>;
@@ -21,6 +23,7 @@ package classes
 		public var claim:ArgumentPanel;
 		public static const MODUS_PONENS:String = "modus_ponens";
 		public var argType:DisplayArgType;
+		public var myscheme:ArgSelector;
 		
 		public function Inference()
 		{
@@ -40,6 +43,7 @@ package classes
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			//register it to the layout
 			//parentMap.layoutManager.registerPanel(argType);
+			argType.typeBtn.addEventListener(MouseEvent.CLICK,changeType);
 		}
 		
 		private function displayArgumentType(e: FlexEvent) : void
@@ -82,7 +86,16 @@ package classes
 					Alert.show(e.toString());
 				}
 			
-		}	
+		}
+		
+		public function changeType(e:MouseEvent):void
+		{
+			
+			myscheme = new ArgSelector();
+			myscheme.x = this.gridX;
+			myscheme.y = this.gridY + this.width;
+			parentMap.addElement(myscheme);
+		}
 		
 		override public function getString():String
 		{
