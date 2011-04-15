@@ -92,8 +92,8 @@ package classes
 		{
 			
 			myscheme = new ArgSelector();
-			myscheme.x = this.gridX;
-			myscheme.y = this.gridY + this.width;
+			myscheme.x = this.gridY*25 + this.width;
+			myscheme.y = this.gridX*25;
 			parentMap.addElement(myscheme);
 		}
 		

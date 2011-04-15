@@ -43,7 +43,6 @@
 			private var _languageTypeHolder:Object;
 			
 			public function init():void{
-				Alert.show("inside init");
 				_scheme = ["modus ponens","modus tollens","conjunctive syllogism","disjunctive syllogism","noth both syllogism"];
 				
 			}
