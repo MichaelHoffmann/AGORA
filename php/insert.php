@@ -45,7 +45,27 @@
 		$attr = $node->attributes();
 		$tid = $attr["TID"];
 		$type = $attr["Type"];
-		//$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord)";
+		$x = $attr["x"];
+		$y = $attr["y"];
+		$query = "SELECT * FROM node_types WHERE type=\"$type\"";
+		print "<BR>Query is: $query";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$typeID = $row['nodetype_id'];
+		print "<BR>Type ID is $typeID";
+		$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
+										($tid, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
+										
+		print "<BR>Insert Query is: $iquery";
+										
+		mysql_query($iquery, $linkID);
+		$newID = getLastInsert($linkID);
+		print "<BR>New node ID: $newID";
+		
+		
+		//nodetext handling goes here
+		
+		
 		
 	}
 	function connectionToDB($conn, $mapID, $linkID, $userID)
