@@ -42,6 +42,11 @@
 	function nodeToDB($node, $mapID, $linkID)
 	{
 		print "<BR>Node found";
+		$attr = $node->attributes();
+		$tid = $attr["TID"];
+		$type = $attr["Type"];
+		//$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord)";
+		
 	}
 	function connectionToDB($conn, $mapID, $linkID)
 	{
