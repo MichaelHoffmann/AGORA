@@ -100,10 +100,8 @@ package classes
 					
 						currInput= forwardList[0];
 						//update the string
-					
+							var s:String = "If";
 							var infPanel:Inference = Inference(panelReference);
-							var s:String = "If ";
-							//trace(infPanel.input.length);
 							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
 							{
 								s = s + infPanel.input[ind].text + " and ";	
