@@ -105,7 +105,12 @@ CREATE TABLE IF NOT EXISTS agora.textboxes (
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (textbox_id),
+  INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
+  FOREIGN KEY (user_id)
+	REFERENCES agora.users (user_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   FOREIGN KEY (map_id)
     REFERENCES agora.maps (map_id)
     ON DELETE NO ACTION
@@ -157,16 +162,22 @@ INSERT INTO connection_types(conn_name, description) VALUES ("ConSyllogism", "Co
 CREATE  TABLE IF NOT EXISTS agora.arguments (
   argument_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   arg_tid INT UNSIGNED NOT NULL,
-  map_id INT UNSIGNED NULL,
-  node_id INT UNSIGNED NULL,
-  type_id INT UNSIGNED NULL,
+  user_id INT UNSIGNED NOT NULL,
+  map_id INT UNSIGNED NOT NULL,
+  node_id INT UNSIGNED NOT NULL,
+  type_id INT UNSIGNED NOT NULL,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (argument_id),
+  INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
   INDEX node_id (node_id ASC),
   INDEX type_id (type_id ASC),
+   FOREIGN KEY (user_id)
+	REFERENCES agora.users (user_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   FOREIGN KEY (map_id)
     REFERENCES agora.maps (map_id)
     ON DELETE NO ACTION
