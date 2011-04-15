@@ -38,13 +38,14 @@ package classes
 		public var buttonArea:Panel;
 		public var panelSkin:PanelSkin;
 		public var panelSkin1:PanelSkin;
-		public var reasonButton:spark.components.Button;
+		public var useButton:spark.components.Button;
 		public var argschemeButton:spark.components.Button;
 		public static var parentMap:AgoraMap;
 		public var inference:Inference;
 		public var logicalContainer:HGroup;
 		public var rules:Vector.<Inference>;
 		public var binders:Vector.<Binder>;
+		public var state:int;	//state=0 -> universal statement and state=1 -> particular statement
 		
 		public static const ARGUMENT_PANEL:int = 0;
 		public static const INFERENCE:int = 1;
@@ -206,8 +207,8 @@ package classes
 			//Draw on topArea UIComponent a rectangle
 			//to be used for clicking and dragging
 			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,20,20);
-			topArea.width = 20;
+			topArea.graphics.drawRect(0,0,160,20);
+			topArea.width = 160;
 			topArea.height = 20;
 			topArea.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			
@@ -219,26 +220,17 @@ package classes
 			addElement(input1);	
 			addElement(logicalContainer);
 			
-			//Bottom Panel
-			/*
-			var bLayout:HorizontalLayout = new HorizontalLayout;
-			buttonArea = new Panel;
-			buttonArea.layout = bLayout;
-			reasonButton = new spark.components.Button;
-			argschemeButton = new spark.components.Button;
-			//buttonArea.addElement(reasonButton);
-			buttonArea.addElement(argschemeButton);
-			buttonArea.height = 20;
-			addElement(buttonArea);
-			this.reasonButton.label="+reason";
-			//this.reasonButton.addEventListener(MouseEvent.CLICK,addReasonHandler);
-			this.argschemeButton.label="argScheme";
-			this.argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);	
-			*/
 			argschemeButton = new spark.components.Button;
 			argschemeButton.label = "+ Args";
 			logicalContainer.addElement(argschemeButton);
 			argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
+			
+			useButton = new spark.components.Button;
+			useButton.label = "use as..";
+			logicalContainer.addElement(useButton);
+			useButton.addEventListener(MouseEvent.CLICK,toggle);
+			useButton.toolTip="Whether a statement is universal or particular determines what kind of objections are possible against it. A 'universal statement' is defined here as a statement that can be falsified by one counter-example. In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements. Anything else is treated as a particular statement, including statements about possibilities.";
+
 		}
 		
 		public function onArgumentPanelCreate( e:FlexEvent):void
@@ -251,6 +243,19 @@ package classes
 			//panelSkin1 = this.buttonArea.skin as PanelSkin;
 			//panelSkin1.topGroup.includeInLayout = false;
 			//panelSkin1.topGroup.visible = false;
+		}
+		
+		public function toggle(m:MouseEvent):void
+		{
+			if(this.state==0) {
+				Alert.show("Toggling to particular statement");
+				state = 1;
+			} 
+			else {
+				state = 0;
+				Alert.show("Toggling to universal statement");
+			} 
+			
 		}
 	}
 }

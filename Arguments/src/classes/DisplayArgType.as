@@ -18,8 +18,9 @@ package classes
 		public var vgroup:VGroup;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
+		public var typeBtn:Button;
 		public var inference:Inference;
-		public var type:Label;
+		//public var type:Label;
 		
 		public function DisplayArgType()
 		{
@@ -29,18 +30,24 @@ package classes
 		{
 			
 			super.createChildren();
-			type = new Label;
+			//type = new Label;
 			vgroup = new VGroup;
 			addElement(vgroup);
-			vgroup.addElement(type);
-			type.text = "modus_ponens";
+			//vgroup.addElement(type);
+			//type.text = "modus_ponens";
+			title = "modus_ponens";
 			hgroup = new HGroup;
 			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
 			addReasonBtn.label = "+R";
 			hgroup.addElement(addReasonBtn);
-			height = 100;
+			typeBtn = new Button;
+			typeBtn.label = "change..";
+			hgroup.addElement(typeBtn);
+			height = 20;
+			width = 150;
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+			
 		}
 		public function beginDrag( mEvent:MouseEvent):void
 		{
@@ -58,5 +65,6 @@ package classes
 				trace(e);
 			}
 		}
+		
 	}
 }
