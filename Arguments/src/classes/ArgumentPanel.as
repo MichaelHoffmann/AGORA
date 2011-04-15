@@ -23,6 +23,7 @@ package classes
 	
 	import spark.components.Button;
 	import spark.components.Group;
+	import spark.components.HGroup;
 	import spark.components.Panel;
 	import spark.components.VGroup;
 	import spark.layouts.HorizontalAlign;
@@ -30,25 +31,19 @@ package classes
 	import spark.layouts.VerticalLayout;
 	import spark.skins.spark.PanelSkin;
 	
-	public class ArgumentPanel extends Panel
+	public class ArgumentPanel extends GridPanel
 	{
 		public var input1:DynamicTextArea;
 		public var topArea:UIComponent;
 		public var buttonArea:Panel;
 		public var panelSkin:PanelSkin;
 		public var panelSkin1:PanelSkin;
-		public var gridX:int;
-		public var gridY:int;
 		public var reasonButton:spark.components.Button;
 		public var argschemeButton:spark.components.Button;
-		
-		
 		public static var parentMap:AgoraMap;
-		public var reasons:Vector.<ArgumentPanel>;
-		public var claim:ArgumentPanel;
-		public var rule:Inference;
-		public var logicalContainer:VGroup;
-		
+		public var inference:Inference;
+		public var logicalContainer:HGroup;
+		public var rules:Vector.<Inference>;
 		public var binders:Vector.<Binder>;
 		
 		public static const ARGUMENT_PANEL:int = 0;
@@ -60,6 +55,7 @@ package classes
 		public function ArgumentPanel()
 		{
 			super();
+			
 			var uLayout:VerticalLayout = new VerticalLayout;
 			uLayout.paddingBottom = 10;
 			uLayout.paddingLeft = 10;
@@ -68,16 +64,11 @@ package classes
 			width = 180;
 			minHeight = 100;
 			this.layout = uLayout;
-			
-			panelType = ArgumentPanel.ARGUMENT_PANEL;
-			
+			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-			
-			//binders = new Vector.<Binder>(0,false);
-			
-			reasons = new Vector.<ArgumentPanel>(0,false);
-			claim = null;
+			inference = null;
+			rules = new Vector.<Inference>(0,false);
 		}
 		
 		
@@ -86,9 +77,8 @@ package classes
 			
 			if(this is Inference)
 			{
-				//do nothing
 			}
-			else if(this.claim != null)
+			else if(this.inference != null)
 				parentMap.layoutManager.alignReasons(this, this.gridY);
 		}
 		
@@ -110,144 +100,59 @@ package classes
 				Alert.show(error.toString());
 			}
 		}
-		
-		public function addReasonHandler(event:MouseEvent):void
-		{
-			if(this.rule != null){
-				var tmp:ArgumentPanel = new ArgumentPanel();
-				parentMap.addElement(tmp);
-				
-				try{
-					reasons.push(tmp);
-					tmp.claim = this;
-					parentMap.layoutManager.registerPanel(tmp);
-					
-					
-					//create an invisible box in the inference rule
-					var tmpInput:DynamicTextArea = new DynamicTextArea();
-					//visual
-					//inferenceRule.logicalContainer.addElement(tmpInput);
-					//inferenceRule.logicalContainer.removeElement(tmpInput);
-					parentMap.addElement(tmpInput);
-					tmpInput.visible = false;
-					
-					//logical
-					var inferenceRule:Inference = tmp.claim.rule;
-					tmpInput.panelReference = inferenceRule;
-					inferenceRule.input.push(tmpInput);		
-					//binding
-					tmpInput.forwardList.push(inferenceRule.input1);
-					tmp.input1.forwardList.push(tmpInput);
-					
-				}catch (e:Error)
-				{
-					Alert.show(e.toString());
-				}
-			}
-			else{
-				Alert.show("Reason cannont be added without an argument scheme");
-			}
-			
-		}	
-		
-		public function deleteChildren(claim:ArgumentPanel):void
-		{
-			if(claim.rule != null)
-			{
-				while(claim.reasons.length > 0)
-				{
-					var currReason:ArgumentPanel = claim.reasons.pop();
-					deleteNode(currReason);
-				}
-				deleteNode(claim.rule);
-			}
-			
-			
-		}
-		
-		
-		public function deleteNode(claim:ArgumentPanel):void
-		{
-			if(claim.rule != null)
-			{
-				while(claim.reasons.length > 0)
-				{
-					var currReason:ArgumentPanel = claim.reasons.pop();
-					deleteNode(currReason);
-					//ArgumentPanel.parentMap.removeChild(claim.claim.reasons[claim.reasons.length-1]);
-				}
-				deleteNode(claim.rule);
-				claim.rule = null;
-				ArgumentPanel.parentMap.removeChild(claim);
-			}
-			else if(claim.rule == null)
-			{
-				ArgumentPanel.parentMap.removeChild(claim);
-				ArgumentPanel.parentMap.layoutManager.unregister(claim);
-			}
-			
-		}
-
-		
 		//reason must be registered before inference is
 		//user must not change the inference rule. He creates the inference rule
 		//through argument type, reasons and claim
 		public function addArgSchemeHandler(event:MouseEvent):void
 		{
-			if(rule != null)
-			{
-				deleteChildren(this);
-				rule = null;
-			}
-
+			//create an inference
+			var currInference:Inference = new Inference;
+			//add the inference to map
+			parentMap.addElement(currInference);
+			//add inference to the list of inferences
+			rules.push(currInference);
+			//set the claim of the inference rule to this
+			currInference.claim = this;
+			//set the class of the reason
+			currInference.argumentClass = Inference.MODUS_PONENS;
 			
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
+			//add reason to the map
 			parentMap.addElement(reason);
-			reasons.push(reason);
-			reason.claim = this;	
+			//push reason to the list of reasons belonging to this particular class
+			currInference.reasons.push(reason);
+			//set the inference of the reason
+			reason.inference = currInference;
+			//register the reason
 			parentMap.layoutManager.registerPanel(reason);
-			
-			//an inference node
-			var inferenceRule:Inference = new Inference;
-			inferenceRule.argumentClass = Inference.MODUS_PONENS;
-			parentMap.addElement(inferenceRule);
-			rule = inferenceRule;
-			inferenceRule.claim = this;
-			
-			//create an invisible box in the inference rule
+			//create an invisible box for the inference rule corresponding to the claim
 			var tmpInput:DynamicTextArea = new DynamicTextArea();
-			//visual
-			//inferenceRule.logicalContainer.addElement(tmpInput);
-			//inferenceRule.logicalContainer.removeElement(tmpInput);
+			//add it to the map
 			parentMap.addElement(tmpInput);
+			//set the input box as invisible
 			tmpInput.visible = false;
-			
 			//logical
-			tmpInput.panelReference = inferenceRule;
-			inferenceRule.input.push(tmpInput);		
+			//set the panel to which the input box belongs
+			tmpInput.panelReference = currInference;
+			//add a pointer to the input
+			currInference.input.push(tmpInput);		
 			//binding
-			tmpInput.forwardList.push(inferenceRule.input1);
-			this.input1.forwardList.push(inferenceRule.input[0]);
+			tmpInput.forwardList.push(currInference.input1);
+			this.input1.forwardList.push(currInference.input[0]);
 			
-			
+			//create an invisible box for the reason
 			tmpInput = new DynamicTextArea();
-			//visual
-			//inferenceRule.logicalContainer.addElement(tmpInput);
 			parentMap.addElement(tmpInput);
 			tmpInput.visible = false;
-			tmpInput.panelReference = inferenceRule;
-			inferenceRule.input.push(tmpInput);	
+			tmpInput.panelReference = currInference;
+			currInference.input.push(tmpInput);	
 			
-			tmpInput.forwardList.push(inferenceRule.input1);
+			tmpInput.forwardList.push(currInference.input1);
 			reason.input1.forwardList.push(tmpInput);
-			
-			rule.input1.validateNow();
-			
+				
 			input1.forwardUpdate();
 			reason.input1.forwardUpdate();
-			
-			rule.input1.forceUpdate();
 			
 			try{
 				
@@ -255,9 +160,10 @@ package classes
 			{
 				Alert.show(e.toString());
 			}
-			parentMap.layoutManager.registerPanel(inferenceRule);	
+
+			parentMap.layoutManager.registerPanel(currInference);	
 		}	
-		
+		/*
 		public function linkBoxes(a:ArgumentPanel,b:ArgumentPanel,g:Group):void
 		{
 			var drawUtility:UIComponent = new UIComponent;
@@ -272,7 +178,7 @@ package classes
 				Alert.show(problem.toString());
 			}
 		}
-		
+		*/
 		public function getString():String{
 			return input1.text;
 		}
@@ -290,7 +196,7 @@ package classes
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			
-			logicalContainer = new VGroup();
+			logicalContainer = new HGroup();
 			//Register event handlers
 			//Creation Complete event handlers
 			//this.input1.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
@@ -310,23 +216,29 @@ package classes
 			//addChild --> Halo
 			//addElement --> Spark
 			addElement(topArea);
-			//addElement(logicalContainer);
 			addElement(input1);	
+			addElement(logicalContainer);
 			
 			//Bottom Panel
+			/*
 			var bLayout:HorizontalLayout = new HorizontalLayout;
 			buttonArea = new Panel;
 			buttonArea.layout = bLayout;
 			reasonButton = new spark.components.Button;
 			argschemeButton = new spark.components.Button;
-			buttonArea.addElement(reasonButton);
+			//buttonArea.addElement(reasonButton);
 			buttonArea.addElement(argschemeButton);
 			buttonArea.height = 20;
 			addElement(buttonArea);
 			this.reasonButton.label="+reason";
-			this.reasonButton.addEventListener(MouseEvent.CLICK,addReasonHandler);
+			//this.reasonButton.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			this.argschemeButton.label="argScheme";
 			this.argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);	
+			*/
+			argschemeButton = new spark.components.Button;
+			argschemeButton.label = "+ Args";
+			logicalContainer.addElement(argschemeButton);
+			argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
 		}
 		
 		public function onArgumentPanelCreate( e:FlexEvent):void
@@ -335,9 +247,10 @@ package classes
 			panelSkin = this.skin as PanelSkin;
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
-			panelSkin1 = this.buttonArea.skin as PanelSkin;
-			panelSkin1.topGroup.includeInLayout = false;
-			panelSkin1.topGroup.visible = false;
+			
+			//panelSkin1 = this.buttonArea.skin as PanelSkin;
+			//panelSkin1.topGroup.includeInLayout = false;
+			//panelSkin1.topGroup.visible = false;
 		}
 	}
 }
