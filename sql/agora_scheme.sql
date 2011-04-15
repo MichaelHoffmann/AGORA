@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS agora.connection_types;
 DROP TABLE IF EXISTS agora.nodetext;
 DROP TABLE IF EXISTS agora.textboxes;
 DROP TABLE IF EXISTS agora.nodes;
-DROP TABLE IF EXISTS agora.nodetypes;
+DROP TABLE IF EXISTS agora.node_types;
 DROP TABLE IF EXISTS agora.maps;
 DROP TABLE IF EXISTS agora.users;
 
@@ -174,7 +174,7 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
   INDEX map_id (map_id ASC),
   INDEX node_id (node_id ASC),
   INDEX type_id (type_id ASC),
-   FOREIGN KEY (user_id)
+  FOREIGN KEY (user_id)
 	REFERENCES agora.users (user_id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
