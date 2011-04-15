@@ -25,21 +25,21 @@
 		return $row['LAST_INSERT_ID()'];
 		print "New Textbox ID: $mapClause <BR>";
 	}
-	function textboxToDB($tb, $mapID, $linkID)
+	function textboxToDB($tb, $mapID, $linkID, $userID)
 	{
 		print "<BR>Textbox found";
 		$attr = $tb->attributes();
 		$tid = $attr["TID"];
 		$text = $attr["text"];
 		
-		$iquery = "INSERT INTO textboxes (textbox_tid, map_id, text, created_date, modified_date) VALUES
-									($tid, $mapID, \"$text\", NOW(), NOW())";
+		$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
+									($tid, $userID, $mapID, \"$text\", NOW(), NOW())";
 		print "<BR>Query: $iquery";
 		mysql_query($iquery, $linkID);
 		$newID = getLastInsert($linkID);
 		print "<BR>New textbox ID: $newID";
 	}
-	function nodeToDB($node, $mapID, $linkID)
+	function nodeToDB($node, $mapID, $linkID, $userID)
 	{
 		print "<BR>Node found";
 		$attr = $node->attributes();
@@ -48,12 +48,12 @@
 		//$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord)";
 		
 	}
-	function connectionToDB($conn, $mapID, $linkID)
+	function connectionToDB($conn, $mapID, $linkID, $userID)
 	{
 		print "<BR>Connection found";
 	}
 	
-	function xmlToDB($xml, $mapID, $linkID)
+	function xmlToDB($xml, $mapID, $linkID, $userID)
 	{
 		print "Now in xml-to-DB function<BR>";
 		$children = $xml->children();
@@ -61,13 +61,13 @@
 		foreach ($children as $child){
 			switch($child->getName()){
 				case "textbox":
-					textboxToDB($child, $mapID, $linkID);
+					textboxToDB($child, $mapID, $linkID, $userID);
 					break;
 				case "node":
-					nodeToDB($child, $mapID, $linkID);
+					nodeToDB($child, $mapID, $linkID, $userID);
 					break;
 				case "connection":
-					connectionToDB($child, $mapID, $linkID);
+					connectionToDB($child, $mapID, $linkID, $userID);
 					break;
 			}
 		}
@@ -130,7 +130,7 @@
 		}
 		
 		mysql_query("START TRANSACTION");
-		$success = xmlToDB($xml, $mapClause, $linkID);
+		$success = xmlToDB($xml, $mapClause, $linkID, $userID);
 		if($success===true){
 			mysql_query("COMMIT");
 			print "<BR>Query committed!<BR>";

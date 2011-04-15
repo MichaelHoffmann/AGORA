@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
 CREATE TABLE IF NOT EXISTS agora.textboxes (
   textbox_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   textbox_tid INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NOT NULL,
   text TEXT,
   created_date DATETIME NOT NULL,

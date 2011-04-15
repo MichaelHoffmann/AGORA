@@ -12,8 +12,8 @@ INSERT INTO maps (user_id, title, description, created_date, modified_date) VALU
 INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date) VALUES 
 	(1,1,1,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW()), (1,1,1,NOW(), NOW()), (1,1,2,NOW(), NOW());
 
-INSERT INTO textboxes (text, map_id, created_date, modified_date) VALUES 
-					("FOO", 1, NOW(), NOW()), ("BAR", 1, NOW(), NOW()), ("BAZ", 1, NOW(), NOW());
+INSERT INTO textboxes (text, user_id, map_id, created_date, modified_date) VALUES 
+					("FOO", 1, 1, NOW(), NOW()), ("BAR", 1, 1, NOW(), NOW()), ("BAZ", 1, 1, NOW(), NOW());
 
 INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
 	(1, 1, 1, NOW(), NOW()),
