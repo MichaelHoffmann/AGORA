@@ -27,7 +27,7 @@
 	}
 	function textboxToDB($tb, $mapID, $linkID, $userID)
 	{
-		print "<BR>Textbox found";
+		print "<BR>---Textbox found";
 		$attr = $tb->attributes();
 		$tid = $attr["TID"];
 		$text = $attr["text"];
@@ -39,9 +39,16 @@
 		$newID = getLastInsert($linkID);
 		print "<BR>New textbox ID: $newID";
 	}
+	
+	function nodeTextToDB($nt, $mapID, $linkID, $userID)
+	{
+		print "<BR>NodeText found";
+	
+	}
+	
 	function nodeToDB($node, $mapID, $linkID, $userID)
 	{
-		print "<BR>Node found";
+		print "<BR>----Node found";
 		$attr = $node->attributes();
 		$tid = $attr["TID"];
 		$type = $attr["Type"];
@@ -64,13 +71,17 @@
 		
 		
 		//nodetext handling goes here
-		
+		$children = $node->children();
+		foreach ($children as $child)
+		{
+			nodeTextToDB($child, $mapID, $linkID, $userID);
+		}
 		
 		
 	}
 	function connectionToDB($conn, $mapID, $linkID, $userID)
 	{
-		print "<BR>Connection found";
+		print "<BR>---Connection found";
 	}
 	
 	function xmlToDB($xml, $mapID, $linkID, $userID)
@@ -78,8 +89,10 @@
 		print "Now in xml-to-DB function<BR>";
 		$children = $xml->children();
 		print count($children);
-		foreach ($children as $child){
-			switch($child->getName()){
+		foreach ($children as $child)
+		{
+			switch($child->getName())
+			{
 				case "textbox":
 					textboxToDB($child, $mapID, $linkID, $userID);
 					break;
