@@ -12,7 +12,7 @@
 		<nodetext textboxTID="2"/>
 	</node>
 	<connection argTID="1" type="MPtherefore" targetnodeTID="2">
-		<sourcenode connTID="1" nodeTID="1"/>
-		<sourcenode connTID="2" nodeTID="3"/>
+		<sourcenode nodeTID="1"/>
+		<sourcenode nodeTID="3"/>
 	</connection>
 </map>

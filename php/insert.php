@@ -86,9 +86,21 @@
 			nodeTextToDB($child, $newID, $linkID, $userID, $pos);
 		}
 	}
-	function sourceNodeToDB($child, $newID, $linkID, $userID)
+	function sourceNodeToDB($source, $argID, $linkID)
 	{
 		print "<BR>SourceNode found";
+		$attr = $source->attributes();
+		$nodeTID = $attr["nodeTID"];
+		$query = "SELECT * from nodes WHERE node_tid = $nodeTID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$nodeID = $row['node_id'];
+		
+		$iquery = "INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
+											($argID, $nodeID, NOW(), NOW())";
+		print "<BR>Insert Query is: $iquery";
+		mysql_query($iquery, $linkID);
+		
 	}
 	function connectionToDB($conn, $mapID, $linkID, $userID)
 	{
@@ -117,7 +129,7 @@
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
-			sourceNodeToDB($child, $newID, $linkID, $userID);
+			sourceNodeToDB($child, $newID, $linkID);
 		}
 		
 		

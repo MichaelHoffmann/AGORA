@@ -196,7 +196,6 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.connections (
   connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  conn_tid INT UNSIGNED NOT NULL,
   argument_id INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   created_date DATETIME NOT NULL,
