@@ -40,7 +40,7 @@
 		print "<BR>New textbox ID: $newID";
 	}
 	
-	function nodeTextToDB($nt, $mapID, $linkID, $userID)
+	function nodeTextToDB($nt, $nodeID, $linkID, $userID)
 	{
 		print "<BR>NodeText found";
 	
@@ -74,7 +74,7 @@
 		$children = $node->children();
 		foreach ($children as $child)
 		{
-			nodeTextToDB($child, $mapID, $linkID, $userID);
+			nodeTextToDB($child, $newID, $linkID, $userID);
 		}
 		
 		
