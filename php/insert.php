@@ -40,10 +40,20 @@
 		print "<BR>New textbox ID: $newID";
 	}
 	
-	function nodeTextToDB($nt, $nodeID, $linkID, $userID)
+	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position)
 	{
 		print "<BR>NodeText found";
-	
+		$attr = $nt->attributes();
+		$tTID = $attr["textboxTID"];
+		$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$textID = row['textbox_id'];
+		print "<BR>Textbox $textID found";
+		$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
+					($nodeID, $textID, $position, NOW(), NOW())";
+		print "<BR>Insert Query is: $iquery";
+		mysql_query($iquery, $linkID);
 	}
 	
 	function nodeToDB($node, $mapID, $linkID, $userID)
@@ -72,9 +82,11 @@
 		
 		//nodetext handling goes here
 		$children = $node->children();
+		$pos = 0;
 		foreach ($children as $child)
 		{
-			nodeTextToDB($child, $newID, $linkID, $userID);
+			$pos++;
+			nodeTextToDB($child, $newID, $linkID, $userID, $position);
 		}
 		
 		

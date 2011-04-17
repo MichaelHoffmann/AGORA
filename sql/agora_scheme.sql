@@ -121,7 +121,6 @@ CREATE TABLE IF NOT EXISTS agora.textboxes (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.nodetext (
   nodetext_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  nodetext_tid INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   textbox_id INT UNSIGNED NOT NULL,
   position INT UNSIGNED NOT NULL,
