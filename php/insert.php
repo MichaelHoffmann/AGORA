@@ -48,7 +48,7 @@
 		$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
-		$textID = row['textbox_id'];
+		$textID = $row['textbox_id'];
 		print "<BR>Textbox $textID found";
 		$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
 					($nodeID, $textID, $position, NOW(), NOW())";
@@ -86,7 +86,7 @@
 		foreach ($children as $child)
 		{
 			$pos++;
-			nodeTextToDB($child, $newID, $linkID, $userID, $position);
+			nodeTextToDB($child, $newID, $linkID, $userID, $pos);
 		}
 		
 		
