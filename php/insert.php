@@ -78,9 +78,6 @@
 		mysql_query($iquery, $linkID);
 		$newID = getLastInsert($linkID);
 		print "<BR>New node ID: $newID";
-		
-		
-		//nodetext handling goes here
 		$children = $node->children();
 		$pos = 0;
 		foreach ($children as $child)
@@ -88,12 +85,43 @@
 			$pos++;
 			nodeTextToDB($child, $newID, $linkID, $userID, $pos);
 		}
-		
-		
+	}
+	function sourceNodeToDB($child, $newID, $linkID, $userID)
+	{
+		print "<BR>SourceNode found";
 	}
 	function connectionToDB($conn, $mapID, $linkID, $userID)
 	{
 		print "<BR>---Connection found";
+		$attr = $conn->attributes();
+		$tid = $attr["argTID"];
+		$type = $attr["type"];
+		$tnodeTID = $attr["targetnodeTID"];
+		//Get the real data for the DB
+		$query1 = "SELECT * FROM connection_types WHERE conn_name = \"$type\"";
+		$query2 = "SELECT * FROM nodes WHERE node_tid=$tnodeTID";
+		$resultID = mysql_query($query1, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$typeID = $row["type_id"];
+		$resultID = mysql_query($query2, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$nodeID = $row["node_id"];
+		//Insert the argument part into the DB (target node and info)
+		$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, created_date, modified_date) VALUES
+										($tid, $userID, $mapID, $nodeID, $typeID, NOW(), NOW())";
+		print "<BR>Insert Query is: $iquery";
+		mysql_query($iquery, $linkID);
+		$newID = getLastInsert($linkID);
+		print "<BR>New connection ID: $newID";
+		//Get the argument part (source nodes)
+		$children = $conn->children();
+		foreach ($children as $child)
+		{
+			sourceNodeToDB($child, $newID, $linkID, $userID);
+		}
+		
+		
+		
 	}
 	
 	function xmlToDB($xml, $mapID, $linkID, $userID)
