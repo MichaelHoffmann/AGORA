@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Canvas creationComplete="init()">
+		<mx:List id="mainSchemes"
+				 dataProvider="{_scheme}" 
+				 rollOverColor="#b2c4e7"
+				 textRollOverColor="#FFFFFF"
+				 selectionColor="#5577b8"  
+				 focusRoundedCorners="tr br tl bl"
+				 paddingLeft="8"
+				 labelField="name" />
+				 <!-- itemClick="changeTitle(event)" -->
+		
+		<mx:List id="typeSelector" 
+				 x="{mainSchemes.width}" 
+				 rollOverColor="#b2c4e7"
+				 textRollOverColor="#FFFFFF"
+				 selectionColor="#5577b8"  
+				 visible="false"
+				 focusRoundedCorners="tr br tl bl"
+				 paddingLeft="8"
+				 width="300"
+				 
+				 />
+	</mx:Canvas>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.ListEvent;
+			import classes.DisplayArgType;
+			import flash.events.Event;
+			import flash.events.MouseEvent;
+			import logic.*;
+			
+			private var _selectedScheme:String;
+			private var _selectedType:String;
+			private var _hover:Boolean;
+			private var _selectedLogic:String;
+
+			[Bindable]
+			private var _scheme:Array;	
+			[Bindable]
+			private var _languageTypeHolder:Object;
+			
+			public function init():void{
+				_scheme = [ModusPonens.myname,ModusTollens.myname,ConditionalSyllogism.myname,DisjunctiveSyllogism.myname,NotAllSyllogism.myname,ConstructiveDilemma.myname];
+			}
+			
+		]]>
+	</fx:Script>
+</s:Group>

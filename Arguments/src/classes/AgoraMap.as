@@ -23,7 +23,6 @@ package classes
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
 		}
 		
-		
 		override protected function createChildren():void
 		{
 			super.createChildren();
@@ -38,8 +37,9 @@ package classes
 		public function handleDrop(dragEvent:DragEvent):void
 		{	
 			try{
+				
 				var currentStage:Canvas = Canvas(dragEvent.currentTarget);
-				var akcdragInitiator:ArgumentPanel = ArgumentPanel(dragEvent.dragInitiator);
+				var akcdragInitiator1:GridPanel =  dragEvent.dragInitiator as GridPanel;
 				var dragSource:DragSource = dragEvent.dragSource;
 				var tmpx:int = int(dragSource.dataForFormat("x"));
 				var tmpy:int = int(dragSource.dataForFormat("y"));
@@ -52,54 +52,69 @@ package classes
 				var diffX:int = tmpGridX - int(dragSource.dataForFormat("gx"));
 				var diffY:int = tmpGridY - int(dragSource.dataForFormat("gy"));
 				
-				
-				if(akcdragInitiator is Inference)
+				if(akcdragInitiator1 is Inference)
 				{
+					var akcdragInitiator:ArgumentPanel = ArgumentPanel(dragEvent.dragInitiator);
 					//figure out if it's allowed
-					var lLimit:int = akcdragInitiator.claim.gridY + layoutManager.getGridSpan(akcdragInitiator.width);
-					var uLimit:int = akcdragInitiator.claim.reasons[0].gridY - layoutManager.getGridSpan(akcdragInitiator.claim.rule.width) - 1; 
+					var currInference:Inference = Inference(akcdragInitiator);
+					var lLimit:int = currInference.claim.gridY + layoutManager.getGridSpan(currInference.width);
+					var uLimit:int = currInference.reasons[0].gridY - layoutManager.getGridSpan(currInference.width) - 1; 
 					if(tmpGridY >= lLimit && tmpGridY <= uLimit)
 					{
-						akcdragInitiator.gridX = tmpGridX;
-						akcdragInitiator.gridY = tmpGridY;
-						if(akcdragInitiator.rule != null)
-						{
-							layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
-						}
-					}
-					
-				}
-				
-				else if(akcdragInitiator is ArgumentPanel)
-				{
-					if(akcdragInitiator.claim != null)
-					{
-						lLimit = akcdragInitiator.claim.rule.gridY + layoutManager.getGridSpan(akcdragInitiator.claim.rule.width);
-						if( tmpGridY >= lLimit)
-						{
-							akcdragInitiator.gridY = tmpGridY;
-							layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-							if(akcdragInitiator.rule != null)
-							{
-								layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
-							}
-						}
-					}
-					else if(akcdragInitiator.claim == null)
-					{
-						
-						akcdragInitiator.gridY = tmpGridY;
-						akcdragInitiator.gridX = tmpGridX;
-						//layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-						if(akcdragInitiator.rule != null)
-						{
-							layoutManager.moveConnectedPanels(akcdragInitiator, diffX, diffY);
-						}
-					}
-				}
-				
-				
+						currInference.gridX = tmpGridX;
+						//currInference.gridY = tmpGridY;
 	
+						//currInference.argType.gridX = currInference.argType.gridX + diffX;
+						//currInference.argType.gridY = currInference.argType.gridY + diffY;
+						if(currInference.rules.length > 0 )
+						{
+							layoutManager.moveConnectedPanels(currInference, diffX, 0);
+						}
+					}
+				}
+				
+				else if(akcdragInitiator1 is ArgumentPanel)
+				{
+					akcdragInitiator = akcdragInitiator1 as ArgumentPanel;
+					akcdragInitiator.gridY = tmpGridY;
+					if(akcdragInitiator.inference == null)
+					{
+						akcdragInitiator.gridX = tmpGridX;
+					}
+					else
+					{
+						layoutManager.alignReasons(akcdragInitiator,tmpGridY);
+					
+					}
+					for(var i:int=0; i < akcdragInitiator.rules.length; i++)
+					{
+
+						akcdragInitiator.rules[i].gridY = akcdragInitiator.rules[i].gridY + diffY;
+						
+						akcdragInitiator.rules[i].argType.gridY = akcdragInitiator.rules[i].argType.gridY + diffY;
+						if(akcdragInitiator.inference == null)
+						{
+							akcdragInitiator.rules[i].argType.gridX=akcdragInitiator.rules[i].argType.gridX + diffX;
+							akcdragInitiator.rules[i].gridX = akcdragInitiator.rules[i].gridX + diffX;
+							layoutManager.moveConnectedPanels(akcdragInitiator.rules[i],diffX,diffY);
+						}
+						else
+						{
+							layoutManager.moveConnectedPanels(akcdragInitiator.rules[i], 0, diffY);
+						}
+	
+					}
+				}
+				else if(akcdragInitiator1 is DisplayArgType)
+				{
+	
+					var argdisplay:DisplayArgType = akcdragInitiator1 as DisplayArgType;
+					if(argdisplay.inference != argdisplay.inference.claim.rules[0]){
+						argdisplay.gridX = argdisplay.gridX + diffX;
+						argdisplay.inference.gridX = argdisplay.inference.gridX + diffX;
+						layoutManager.moveConnectedPanels(argdisplay.inference,diffX,0);
+					}
+				}
 					
 			}catch(error:Error)
 			{
@@ -110,44 +125,52 @@ package classes
 		
 		public function connectRelatedPanels():void
 		{
-			var listOfPanels:Vector.<ArgumentPanel> = layoutManager.listOfPanels;
+			//var panelList:Vector.<ArgumentPanel> = layoutManager.panelList;
+			var panelList:Vector.<GridPanel> = layoutManager.panelList;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			
 			
-			for(var i:int=0; i<listOfPanels.length; i++)
+			for(var i:int=0; i<panelList.length; i++)
 			{
-				var tmp:ArgumentPanel = listOfPanels[i];
-				//connect claim to the left edge of the grid box before the one in which the first reason is placed
-				
-				//has reasons
-				if(tmp.rule != null)
-				{
-					var prevGrid:int = tmp.reasons[0].gridY - 1;
-					
-					//draw a line from the claim to the grid edge before the first reason
-					drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
-					drawUtility.graphics.lineTo( prevGrid * layoutManager.uwidth, tmp.y + 30);
-					
-					for(var it:int=0; it<tmp.reasons.length;it++)
+				var tmp1:GridPanel = panelList[i];
+				if(tmp1 is ArgumentPanel){
+					var tmp:ArgumentPanel = tmp1 as ArgumentPanel;
+					var m:int;
+					for(m = 0; m < tmp.rules.length; m++)
 					{
-						var currReason:ArgumentPanel = tmp.reasons[it];
-						drawUtility.graphics.moveTo(prevGrid * layoutManager.uwidth, currReason.gridX * layoutManager.uwidth + 30);
-						drawUtility.graphics.lineTo(currReason.gridY * layoutManager.uwidth, currReason.gridX * layoutManager.uwidth + 30);
-					
+						var gridy:int = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
+						drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[m].argType.y + 30);
+						drawUtility.graphics.lineTo(tmp.rules[m].argType.x, tmp.rules[m].argType.y + 30);
+						drawUtility.graphics.moveTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].argType.y + tmp.rules[m].argType.height);
+						drawUtility.graphics.lineTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].y);
+						//an inference always has reasons
+						var gridyreasons:int = tmp.rules[m].reasons[0].gridY - 1;
+						for(var n:int = 0; n < tmp.rules[m].reasons.length; n++){
+							//draw a line from the prev grid to the current reason
+							drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n].y + 30);
+							drawUtility.graphics.lineTo(tmp.rules[m].reasons[n].x, tmp.rules[m].reasons[n].y + 30);
+						}
+						
+						drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
+						drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n-1].y + 30);
+						
+						drawUtility.graphics.moveTo(tmp.rules[m].argType.x  + tmp.rules[m].argType.width, tmp.rules[m].argType.y + 30);
+						drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
+						
 					}
-					//draw vertical line
-					drawUtility.graphics.moveTo(prevGrid * layoutManager.uwidth,tmp.reasons[0].gridX * layoutManager.uwidth + 30);
-					drawUtility.graphics.lineTo(prevGrid * layoutManager.uwidth,tmp.reasons[tmp.reasons.length - 1].gridX * layoutManager.uwidth + 30);
-					
-					//draw inference
-					//assumes equal width for claim and inference rule
-					drawUtility.graphics.moveTo(tmp.rule.gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.y + 30);
-					drawUtility.graphics.lineTo(tmp.rule.gridY * layoutManager.uwidth + Math.floor(tmp.width/2), tmp.rule.gridX * layoutManager.uwidth);	
+					if(tmp.rules.length > 0){
+						gridy = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
+						//vert line
+						drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y+30);
+						drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[m-1].argType.y + 30);
+						
+						//first horizontal line
+						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
+						drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y + 30);
+					}
 					
 				}
-				
-				
 			}
 		}
 	}
