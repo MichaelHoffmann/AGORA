@@ -1,14 +1,11 @@
 package logic
 {
-	import mx.utils.ObjectUtil;
 	
-	public class ConditionalSyllogism
-	{
-		public static var myname:String = "Conditional Syllogism";
-		public var _langTypes:Array;
-		
+	public class ConditionalSyllogism extends ParentArg
+	{		
 		public function ConditionalSyllogism()
 		{
+			myname = "Conditional Syllogism";
 			_langTypes = ["If-then","Implies"];
 		}
 	}

@@ -1,14 +1,11 @@
 
 package logic
-{
-	import mx.utils.ObjectUtil;
-	
-	public class DisjunctiveSyllogism
+{	
+	public class DisjunctiveSyllogism extends ParentArg
 	{
-		public static var myname:String = "Disjunctive Syllogism";
-		public var _langTypes:Array;
 		public function DisjunctiveSyllogism()
 		{
+			myname = "Disjunctive Syllogism";
 			_langTypes = ["Either-or","Unless"];
 		}
 		

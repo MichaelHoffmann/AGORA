@@ -35,7 +35,6 @@ package classes
 			addElement(vgroup);
 			//vgroup.addElement(type);
 			//type.text = "modus_ponens";
-			title = "modus_ponens";
 			hgroup = new HGroup;
 			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
