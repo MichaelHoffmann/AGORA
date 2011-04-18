@@ -1,14 +1,12 @@
 
 package logic
 {
-	import mx.utils.ObjectUtil;
 	
-	public class NotAllSyllogism
+	public class NotAllSyllogism extends ParentArg
 	{
-		public static var myname:String = "Not-all Syllogism";
-		public var _langTypes:Array;
 		public function NotAllSyllogism()
 		{
+			myname = "Not-all Syllogism";
 			_langTypes = ["Not-all"];
 		}
 		
