@@ -7,12 +7,14 @@ package classes
 	import mx.controls.Alert;
 	import mx.controls.Label;
 	import mx.controls.List;
+	import mx.controls.listClasses.ListData;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
 	//import spark.components.List;
 	import spark.components.Button;
 	import spark.components.VGroup;
 	import components.ArgSelector;
+	import logic.*;
 	
 	public class Inference extends ArgumentPanel
 	{
@@ -26,6 +28,7 @@ package classes
 		public static const MODUS_PONENS:String = "modus_ponens";
 		public var argType:DisplayArgType;
 		public var myscheme:ArgSelector;
+		//private var _typeHolder:Object;
 		
 		public function Inference()
 		{
@@ -94,32 +97,60 @@ package classes
 		
 		public function changeType(e:MouseEvent):void
 		{
+			myscheme.visible=true;
 			myscheme.x = this.gridY*25 + this.width;
 			myscheme.y = this.gridX*25;
 			parentMap.addElement(myscheme);
 			var rootlist:List = myscheme.mainSchemes;
-			rootlist.addEventListener(ListEvent.ITEM_CLICK,displayTypes);
-			//myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
-			//myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+			rootlist.addEventListener(ListEvent.ITEM_CLICK,changeTypes);
+			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
+			myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
+			myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
 		}
 		
-		public function displayTypes(le:ListEvent):void
+		public function changeTypes(le:ListEvent):void
 		{
 			var myclass:String = le.itemRenderer.data.toString();
 			argType.title = myclass;
 		}
 		
-		/*public function bringForward(e:MouseEvent):void
+		public function displayTypes(le:ListEvent):void
 		{
+			var myclassindex:int = le.rowIndex;
+			var myclass:Object;
+			var sublist:List = myscheme.typeSelector;
+			sublist.visible=true;
+			switch(myclassindex)
+			{
+				case 0: myclass = new ModusPonens; break;
+				case 1: myclass = new ModusTollens; break;
+				case 2: myclass = new ConditionalSyllogism; break;
+				case 3: myclass = new DisjunctiveSyllogism; break;
+				case 4: myclass = new NotAllSyllogism; break;
+				case 5: myclass = new ConstructiveDilemma;
+				
+			}
+			sublist.dataProvider = myclass._langTypes;
+		}
 		
-			trace("btnHandler("+ e +") mona by "+e.currentTarget);
-			
+		public function closeTypes(le:ListEvent):void
+		{
+			var sublist:List = myscheme.typeSelector;
+			sublist.visible=false;
+		}
+		
+		public function bringForward(e:MouseEvent):void
+		{
+			myscheme.visible = true;
+			parentMap.setChildIndex(myscheme,parentMap.numChildren - 1);
 		}
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			trace("btnHandler("+ e +") mona by "+e.target);	
-		}*/
+			//parentMap.setChildIndex(myscheme,0);
+			myscheme.visible = false;
+		}
 		
 		override public function getString():String
 		{

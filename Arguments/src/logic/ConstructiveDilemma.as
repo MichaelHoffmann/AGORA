@@ -9,7 +9,7 @@ package logic
 		
 		public function ConstructiveDilemma()
 		{
-			_langTypes = ["ifThen","implies","whenever","onlyIf","providedThat","sufficientCondition","necessaryCondition"];
+			_langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
 		}
 	}
 }

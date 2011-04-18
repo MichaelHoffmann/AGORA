@@ -9,7 +9,7 @@ package logic
 		
 		public function ModusTollens()
 		{
-			_langTypes = ["ifThen","implies","whenever","onlyIf","providedThat","sufficientCondition","necessaryCondition"];
+			_langTypes = ["If-then","Implies","Whenever","Only-if","Provided-that","Sufficient-condition","Necessary-condition"];
 			
 		}
 		

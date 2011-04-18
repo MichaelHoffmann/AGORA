@@ -5,11 +5,12 @@ package logic
 	public class ModusPonens
 	{
 		public static var myname:String = "Modus Ponens";
-		public var _langTypes:Array;
+		public static var _langTypes:Array;
 		
 		public function ModusPonens()
 		{
-			_langTypes = ["ifThen","implies","whenever","onlyIf","providedThat","sufficientCondition","necessaryCondition"];
+			_langTypes = ["If-then","Implies","Whenever","Only-if","Provided-that","Sufficient-condition","Necessary-condition","If-and-only-if",
+			"Necessary-and-sufficient-condition","Equivalent"];
 		}
 	}
 }

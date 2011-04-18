@@ -9,7 +9,7 @@ package logic
 		public var _langTypes:Array;
 		public function DisjunctiveSyllogism()
 		{
-			_langTypes = ["notP","notQ","alternateP","alternateQ"];
+			_langTypes = ["Either-or","Unless"];
 		}
 		
 		

@@ -16,7 +16,7 @@
 				 labelField="name" />
 				 <!-- itemClick="changeTitle(event)" -->
 		
-		<mx:List id="argumentSelector" 
+		<mx:List id="typeSelector" 
 				 x="{mainSchemes.width}" 
 				 rollOverColor="#b2c4e7"
 				 textRollOverColor="#FFFFFF"
@@ -24,7 +24,7 @@
 				 visible="false"
 				 focusRoundedCorners="tr br tl bl"
 				 paddingLeft="8"
-				 width="450"
+				 width="300"
 				 
 				 />
 	</mx:Canvas>
@@ -52,23 +52,6 @@
 				_scheme = [ModusPonens.myname,ModusTollens.myname,ConditionalSyllogism.myname,DisjunctiveSyllogism.myname,NotAllSyllogism.myname,ConstructiveDilemma.myname];
 			}
 			
-			public function changeTitle(m:ListEvent):void
-			{
-				var da:DisplayArgType = DisplayArgType(m.target.parent.parent.parent);
-				trace("m "+m.target);
-				_selectedLogic = m.itemRenderer.data.toString();	
-				trace("tushar "+_selectedLogic);
-				//da.title = _selectedLogic;
-				//validateNow();
-
-			}
-			
-			/*public function bringForward(e:MouseEvent):void
-			{
-				var newDepth:Number = this.getNextHighestDepth();
-				//assuming curernew is on the root;
-				cursernew.swapDepths(newDepth);
-			}*/
 		]]>
 	</fx:Script>
 </s:Group>

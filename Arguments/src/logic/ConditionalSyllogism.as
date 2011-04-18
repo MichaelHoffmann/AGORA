@@ -9,7 +9,7 @@ package logic
 		
 		public function ConditionalSyllogism()
 		{
-			_langTypes = ["ifThen","implies","whenever","onlyIf","providedThat","sufficientCondition","necessaryCondition"];
+			_langTypes = ["If-then","Implies"];
 		}
 	}
 }

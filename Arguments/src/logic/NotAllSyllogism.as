@@ -9,7 +9,7 @@ package logic
 		public var _langTypes:Array;
 		public function NotAllSyllogism()
 		{
-			_langTypes = ["notP","notQ"];
+			_langTypes = ["Not-all"];
 		}
 		
 		
