@@ -6,8 +6,10 @@ package classes
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
 	import mx.controls.Label;
+	import mx.controls.List;
 	import mx.events.FlexEvent;
-	
+	import mx.events.ListEvent;
+	//import spark.components.List;
 	import spark.components.Button;
 	import spark.components.VGroup;
 	import components.ArgSelector;
@@ -36,6 +38,8 @@ package classes
 			argType.inference = this;
 			argType.width = 100;
 			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
+			myscheme = new ArgSelector();
+
 		}
 		
 		public function  addHandlers(fe:FlexEvent):void
@@ -90,12 +94,32 @@ package classes
 		
 		public function changeType(e:MouseEvent):void
 		{
-			
-			myscheme = new ArgSelector();
 			myscheme.x = this.gridY*25 + this.width;
 			myscheme.y = this.gridX*25;
 			parentMap.addElement(myscheme);
+			var rootlist:List = myscheme.mainSchemes;
+			rootlist.addEventListener(ListEvent.ITEM_CLICK,displayTypes);
+			//myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
+			//myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
 		}
+		
+		public function displayTypes(le:ListEvent):void
+		{
+			var myclass:String = le.itemRenderer.data.toString();
+			argType.title = myclass;
+		}
+		
+		/*public function bringForward(e:MouseEvent):void
+		{
+		
+			trace("btnHandler("+ e +") mona by "+e.currentTarget);
+			
+		}
+		
+		public function goBackward(e:MouseEvent):void
+		{
+			trace("btnHandler("+ e +") mona by "+e.target);	
+		}*/
 		
 		override public function getString():String
 		{
