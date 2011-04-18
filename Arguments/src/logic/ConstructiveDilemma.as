@@ -1,14 +1,12 @@
 package logic
 {
-	import mx.utils.ObjectUtil;
 	
-	public class ConstructiveDilemma
+	public class ConstructiveDilemma extends ParentArg
 	{
-		public static var myname:String = "Constructive Dilemma";
-		public var _langTypes:Array;
 		
 		public function ConstructiveDilemma()
 		{
+			myname = "Constructive Dilemma";
 			_langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
 		}
 	}

@@ -49,7 +49,7 @@
 			private var _languageTypeHolder:Object;
 			
 			public function init():void{
-				_scheme = [ModusPonens.myname,ModusTollens.myname,ConditionalSyllogism.myname,DisjunctiveSyllogism.myname,NotAllSyllogism.myname,ConstructiveDilemma.myname];
+				_scheme = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism","Constructive Dilemma"];
 			}
 			
 		]]>

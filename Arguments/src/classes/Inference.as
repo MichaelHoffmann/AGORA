@@ -25,10 +25,9 @@ package classes
 		public var addReason:Button;
 		public var vgroup:VGroup;
 		public var claim:ArgumentPanel;
-		public static const MODUS_PONENS:String = "modus_ponens";
 		public var argType:DisplayArgType;
 		public var myscheme:ArgSelector;
-		//private var _typeHolder:Object;
+		public var myArg:ParentArg;
 		
 		public function Inference()
 		{
@@ -42,7 +41,7 @@ package classes
 			argType.width = 100;
 			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
 			myscheme = new ArgSelector();
-
+			this.setStyle("cornerRadius",30);
 		}
 		
 		public function  addHandlers(fe:FlexEvent):void
@@ -50,7 +49,7 @@ package classes
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			//register it to the layout
 			//parentMap.layoutManager.registerPanel(argType);
-			argType.typeBtn.addEventListener(MouseEvent.CLICK,changeType);
+			argType.typeBtn.addEventListener(MouseEvent.CLICK,changeHandler);
 		}
 		
 		private function displayArgumentType(e: FlexEvent) : void
@@ -95,43 +94,52 @@ package classes
 			
 		}
 		
-		public function changeType(e:MouseEvent):void
+		public function changeHandler(e:MouseEvent):void
 		{
 			myscheme.visible=true;
 			myscheme.x = this.gridY*25 + this.width;
 			myscheme.y = this.gridX*25;
 			parentMap.addElement(myscheme);
 			var rootlist:List = myscheme.mainSchemes;
-			rootlist.addEventListener(ListEvent.ITEM_CLICK,changeTypes);
+			var sublist:List = myscheme.typeSelector;
+			rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
+			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
-			rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
+			//rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
 			myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
 		}
 		
-		public function changeTypes(le:ListEvent):void
+		public function setScheme(le:ListEvent):void
 		{
 			var myclass:String = le.itemRenderer.data.toString();
 			argType.title = myclass;
 		}
 		
+		public function setType(le:ListEvent):void
+		{
+			var temp:DynamicTextArea = new DynamicTextArea();
+			temp.text = le.itemRenderer.data.toString();
+			trace(temp.text);
+			input.push(temp);
+		}
+		
 		public function displayTypes(le:ListEvent):void
 		{
 			var myclassindex:int = le.rowIndex;
-			var myclass:Object;
 			var sublist:List = myscheme.typeSelector;
 			sublist.visible=true;
 			switch(myclassindex)
 			{
-				case 0: myclass = new ModusPonens; break;
-				case 1: myclass = new ModusTollens; break;
-				case 2: myclass = new ConditionalSyllogism; break;
-				case 3: myclass = new DisjunctiveSyllogism; break;
-				case 4: myclass = new NotAllSyllogism; break;
-				case 5: myclass = new ConstructiveDilemma;
+				case 0: myArg = new ModusPonens; break;
+				case 1: myArg = new ModusTollens; break;
+				case 2: myArg = new ConditionalSyllogism; break;
+				case 3: myArg = new DisjunctiveSyllogism; break;
+				case 4: myArg = new NotAllSyllogism; break;
+				case 5: myArg = new ConstructiveDilemma;
 				
 			}
-			sublist.dataProvider = myclass._langTypes;
+			sublist.dataProvider = myArg._langTypes;
 		}
 		
 		public function closeTypes(le:ListEvent):void

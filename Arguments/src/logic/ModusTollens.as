@@ -1,14 +1,12 @@
 package logic
 {
-	import mx.utils.ObjectUtil;
 	
-	public class ModusTollens
+	public class ModusTollens extends ParentArg
 	{
-		public static var myname:String = "Modus Tollens";
-		public var _langTypes:Array;
 		
 		public function ModusTollens()
 		{
+			myname = "Modus Tollens";
 			_langTypes = ["If-then","Implies","Whenever","Only-if","Provided-that","Sufficient-condition","Necessary-condition"];
 			
 		}
