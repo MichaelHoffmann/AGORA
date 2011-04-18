@@ -25,44 +25,137 @@
 		return $row['LAST_INSERT_ID()'];
 		print "New Textbox ID: $mapClause <BR>";
 	}
-	function textboxToDB($tb, $mapID, $linkID)
+
+	function textboxToDB($tb, $mapID, $linkID, $userID)
 	{
-		print "<BR>Textbox found";
+		print "<BR>---Textbox found";
 		$attr = $tb->attributes();
 		$tid = $attr["TID"];
 		$text = $attr["text"];
 		
-		$iquery = "INSERT INTO textboxes (textbox_tid, map_id, text, created_date, modified_date) VALUES
-									($tid, $mapID, \"$text\", NOW(), NOW())";
+
+		$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
+									($tid, $userID, $mapID, \"$text\", NOW(), NOW())";
 		print "<BR>Query: $iquery";
 		mysql_query($iquery, $linkID);
 		$newID = getLastInsert($linkID);
 		print "<BR>New textbox ID: $newID";
 	}
-	function nodeToDB($node, $mapID, $linkID)
+
+	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position)
 	{
-		print "<BR>Node found";
-	}
-	function connectionToDB($conn, $mapID, $linkID)
-	{
-		print "<BR>Connection found";
+		print "<BR>NodeText found";
+		$attr = $nt->attributes();
+		$tTID = $attr["textboxTID"];
+		$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$textID = $row['textbox_id'];
+		print "<BR>Textbox $textID found";
+		$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
+					($nodeID, $textID, $position, NOW(), NOW())";
+		print "<BR>Insert Query is: $iquery";
+		mysql_query($iquery, $linkID);
 	}
 	
-	function xmlToDB($xml, $mapID, $linkID)
+	function nodeToDB($node, $mapID, $linkID, $userID)
+	{
+		print "<BR>----Node found";
+		$attr = $node->attributes();
+		$tid = $attr["TID"];
+		$type = $attr["Type"];
+		$x = $attr["x"];
+		$y = $attr["y"];
+		$query = "SELECT * FROM node_types WHERE type=\"$type\"";
+		print "<BR>Query is: $query";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$typeID = $row['nodetype_id'];
+		print "<BR>Type ID is $typeID";
+		$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
+										($tid, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
+										
+		print "<BR>Insert Query is: $iquery";
+										
+		mysql_query($iquery, $linkID);
+		$newID = getLastInsert($linkID);
+		print "<BR>New node ID: $newID";
+		$children = $node->children();
+		$pos = 0;
+		foreach ($children as $child)
+		{
+			$pos++;
+			nodeTextToDB($child, $newID, $linkID, $userID, $pos);
+		}
+	}
+	function sourceNodeToDB($source, $argID, $linkID)
+	{
+		print "<BR>SourceNode found";
+		$attr = $source->attributes();
+		$nodeTID = $attr["nodeTID"];
+		$query = "SELECT * from nodes WHERE node_tid = $nodeTID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$nodeID = $row['node_id'];
+		
+		$iquery = "INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
+											($argID, $nodeID, NOW(), NOW())";
+		print "<BR>Insert Query is: $iquery";
+		mysql_query($iquery, $linkID);
+		
+	}
+	function connectionToDB($conn, $mapID, $linkID, $userID)
+	{
+		print "<BR>---Connection found";
+		$attr = $conn->attributes();
+		$tid = $attr["argTID"];
+		$type = $attr["type"];
+		$tnodeTID = $attr["targetnodeTID"];
+		//Get the real data for the DB
+		$query1 = "SELECT * FROM connection_types WHERE conn_name = \"$type\"";
+		$query2 = "SELECT * FROM nodes WHERE node_tid=$tnodeTID";
+		$resultID = mysql_query($query1, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$typeID = $row["type_id"];
+		$resultID = mysql_query($query2, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$nodeID = $row["node_id"];
+		//Insert the argument part into the DB (target node and info)
+		$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, created_date, modified_date) VALUES
+										($tid, $userID, $mapID, $nodeID, $typeID, NOW(), NOW())";
+		print "<BR>Insert Query is: $iquery";
+		mysql_query($iquery, $linkID);
+		$newID = getLastInsert($linkID);
+		print "<BR>New connection ID: $newID";
+		//Get the argument part (source nodes)
+		$children = $conn->children();
+		foreach ($children as $child)
+		{
+			sourceNodeToDB($child, $newID, $linkID);
+		}
+		
+		
+		
+	}
+	
+	function xmlToDB($xml, $mapID, $linkID, $userID)
 	{
 		print "Now in xml-to-DB function<BR>";
 		$children = $xml->children();
 		print count($children);
-		foreach ($children as $child){
-			switch($child->getName()){
+
+		foreach ($children as $child)
+		{
+			switch($child->getName())
+			{
 				case "textbox":
-					textboxToDB($child, $mapID, $linkID);
+					textboxToDB($child, $mapID, $linkID, $userID);
 					break;
 				case "node":
-					nodeToDB($child, $mapID, $linkID);
+					nodeToDB($child, $mapID, $linkID, $userID);
 					break;
 				case "connection":
-					connectionToDB($child, $mapID, $linkID);
+					connectionToDB($child, $mapID, $linkID, $userID);
 					break;
 			}
 		}
@@ -125,7 +218,8 @@
 		}
 		
 		mysql_query("START TRANSACTION");
-		$success = xmlToDB($xml, $mapClause, $linkID);
+
+		$success = xmlToDB($xml, $mapClause, $linkID, $userID);
 		if($success===true){
 			mysql_query("COMMIT");
 			print "<BR>Query committed!<BR>";
