@@ -1,10 +1,7 @@
 <?php
 
-	function checkLogin($userID, $pass_hash)
+	function checkLogin($userID, $pass_hash, $linkID)
 	{
-		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$userID");
 		$passclause = mysql_real_escape_string("$pass_hash");
 		$query = "SELECT * FROM users WHERE user_ID='$userID' AND password='$passclause'";
@@ -176,16 +173,17 @@
 	
 	function insert($xmlin, $userID, $pass_hash)
 	{
-		if(!checkLogin($userID, $pass_hash)){
-			print "Incorrect login!";
-			return;
-		}
-	
 		//Standard SQL connection stuff
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
 		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
-		
+
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			print "Incorrect login!";
+			return;
+		}
+	
+	
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
 		$mapID = $xml['id'];
