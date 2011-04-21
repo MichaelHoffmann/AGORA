@@ -1,6 +1,13 @@
 <?php
 	require 'checklogin.php';
 	
+	
+	function xmlToDB($xml, $mapID, $linkID, $userID)	
+	{
+		print "<BR>Now taking the XML and deleting things with it...";
+	
+	}
+	
 	function remove($xmlin, $userID, $pass_hash)
 	{
 	//Standard SQL connection stuff
@@ -25,11 +32,27 @@
 			print "This map does not exist, therefore you cannot remove things from this map.";
 		}else{
 			//the map exists, and now we operate on it
+			$author = $row['user_id'];
+			print "Author: $author  Map: $mapClause <BR>";
+			$ownMap = false;
+			if($author == $userID){
+				$ownMap=true;
+				//TODO: Use this to determine if the INSERTIONS (or UPDATES) are legal
+			}
 			
-		
-		
-		
-		
+			mysql_query("START TRANSACTION");
+
+			$success = xmlToDB($xml, $mapClause, $linkID, $userID);
+			if($success===true){
+				mysql_query("COMMIT");
+				print "<BR>Query committed!<BR>";
+			}else{
+				mysql_query("ROLLBACK");
+				print "<BR>Query rolled back!<BR>";
+			}
+			
+			//TODO: set up output XML here
+			
 		}		
 	}
 

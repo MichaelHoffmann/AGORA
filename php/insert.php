@@ -214,7 +214,7 @@
 		}
 
 		
-		//Set up the basics of the output XML.
+		//TODO: output XML here
 		/*
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
