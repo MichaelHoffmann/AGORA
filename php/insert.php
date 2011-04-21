@@ -51,7 +51,7 @@
 		$type = $attr["Type"];
 		$x = $attr["x"];
 		$y = $attr["y"];
-		$query = "SELECT * FROM node_types WHERE type=\"$type\"";
+		$query = "SELECT * FROM node_types WHERE type=\"$type\""; //TODO: Fix SQL Injection vuln on all of these
 		print "<BR>Query is: $query";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);

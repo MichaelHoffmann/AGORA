@@ -1,11 +1,49 @@
 <?php
 	require 'checklogin.php';
 	
+	function removeNode($node, $mapID, $linkID, $userID)
+	{
+		print "<BR>----Node found";
+		$attr = $node->attributes();
+		$nID = $attr["id"];
+		$query = "SELECT * FROM nodes WHERE node_id=$nID"; //TODO: sql inj vuln
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		if($userID == $row["user_id"]){
+			print "<BR>Now deleting....<BR>";
+			$dquery = "DELETE FROM nodes WHERE node_id=$nID";
+			print $dquery;
+			$resultID = mysql_query($query, $linkID);
+		}else{
+			print "<BR>You are attempting to delete someone else's work. This is not permissible.";
+			return false;
+		}
+	}
 	
 	function xmlToDB($xml, $mapID, $linkID, $userID)	
 	{
 		print "<BR>Now taking the XML and deleting things with it...";
-	
+		$children = $xml->children();
+		$retval = true;
+		foreach ($children as $child)
+		{
+			switch($child->getName())
+			{
+				case "textbox":
+					//textboxToDB($child, $mapID, $linkID, $userID);
+					break;
+				case "node":
+					$retval = removeNode($child, $mapID, $linkID, $userID);
+					break;
+				case "connection":
+					//connectionToDB($child, $mapID, $linkID, $userID);
+					break;
+			}
+			if($retval == false){  // We've already had one failure, no reason to continue
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	function remove($xmlin, $userID, $pass_hash)
