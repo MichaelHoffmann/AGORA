@@ -3,7 +3,7 @@
 	
 	function removeNode($node, $mapID, $linkID, $userID)
 	{
-		print "<BR>----Node found";
+		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["id"]);
 		$query = "SELECT * FROM nodes WHERE node_id=$nID";
@@ -15,7 +15,7 @@
 			print $dquery;
 			return mysql_query($query, $linkID);
 		}else{
-			print "<BR>You are attempting to delete someone else's work. This is not permissible.";
+			print "<BR>You are attempting to delete someone else's work or a nonexistent node. This is not permissible.";
 			return false;
 		}
 	}
