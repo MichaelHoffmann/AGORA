@@ -187,8 +187,6 @@
 			print "New map ID: $mapClause <BR>";
 		}
 
-		//$query = "SELECT * FROM maps NATURAL JOIN users WHERE map_id = $mapClause";
-
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
 		$row = mysql_fetch_assoc($resultID);
@@ -201,6 +199,7 @@
 		$ownMap = false;
 		if($author == $userID){
 			$ownMap=true;
+			//TODO: Use this to determine if the INSERTIONS (or UPDATES) are legal
 		}
 		
 		mysql_query("START TRANSACTION");
