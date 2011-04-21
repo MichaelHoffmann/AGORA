@@ -13,7 +13,7 @@
 			print "<BR>Now deleting....<BR>";
 			$dquery = "DELETE FROM nodes WHERE node_id=$nID";
 			print $dquery;
-			$resultID = mysql_query($query, $linkID);
+			return mysql_query($query, $linkID);
 		}else{
 			print "<BR>You are attempting to delete someone else's work. This is not permissible.";
 			return false;
