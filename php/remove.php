@@ -5,8 +5,8 @@
 	{
 		print "<BR>----Node found";
 		$attr = $node->attributes();
-		$nID = $attr["id"];
-		$query = "SELECT * FROM nodes WHERE node_id=$nID"; //TODO: sql inj vuln
+		$nID = mysql_real_escape_string($attr["id"]);
+		$query = "SELECT * FROM nodes WHERE node_id=$nID";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		if($userID == $row["user_id"]){
