@@ -53,6 +53,13 @@ class, and will be done soon.
 				agoraMap.addElement(argumentPanel);
 				agoraMap.layoutManager.registerPanel(argumentPanel);
 				
+				var urlLoader:URLLoader = new URLLoader;
+				var data:XML = new XML();
+				urlLoader.addEventListener(Event.COMPLETE,AgoraMap.load);
+				urlLoader.load(new URLRequest("http://localhost:8889/lam.xml"));
+					
+				
+				
 			}
 		]]>
 	</fx:Script>

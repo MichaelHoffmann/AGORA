@@ -2,6 +2,7 @@
 package classes
 {
 	import flash.display.Graphics;
+	import flash.events.Event;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
@@ -21,6 +22,11 @@ package classes
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
+		}
+		
+		public static function load( event:Event):void{
+			trace(event.target.data);
+			
 		}
 		
 		override protected function createChildren():void
@@ -172,6 +178,8 @@ package classes
 					
 				}
 			}
+			
+
 		}
 	}
 }
