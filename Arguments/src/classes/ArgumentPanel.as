@@ -115,7 +115,7 @@ package classes
 			//set the claim of the inference rule to this
 			currInference.claim = this;
 			//set the class of the reason
-			currInference.argumentClass = Inference.MODUS_PONENS;
+			//currInference.argumentClass = Inference.MODUS_PONENS;
 			
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();

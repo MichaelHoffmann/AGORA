@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS agora.connection_types;
 DROP TABLE IF EXISTS agora.nodetext;
 DROP TABLE IF EXISTS agora.textboxes;
 DROP TABLE IF EXISTS agora.nodes;
-DROP TABLE IF EXISTS agora.nodetypes;
+DROP TABLE IF EXISTS agora.node_types;
 DROP TABLE IF EXISTS agora.maps;
 DROP TABLE IF EXISTS agora.users;
 
@@ -47,8 +47,8 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
   INDEX user_id (user_id ASC),
   FOREIGN KEY (user_id)
     REFERENCES agora.users (user_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 -- -------------------------------------------------------
 -- Table agora.node_types
@@ -74,8 +74,6 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   modified_date DATETIME NOT NULL,
   x_coord INT NULL,
   y_coord INT NULL,
-  width INT NULL,
-  height INT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (node_id),
   INDEX user_id (user_id ASC),
@@ -83,16 +81,16 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   INDEX nodetype_id (nodetype_id ASC),
   FOREIGN KEY (user_id)
 	REFERENCES agora.users (user_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (map_id)
 	REFERENCES agora.maps (map_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY(nodetype_id)
     REFERENCES agora.node_types (nodetype_id)
-	ON DELETE NO ACTION
-	ON UPDATE NO ACTION);
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table agora.textboxes
@@ -100,24 +98,29 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
 CREATE TABLE IF NOT EXISTS agora.textboxes (
   textbox_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   textbox_tid INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NOT NULL,
   text TEXT,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (textbox_id),
+  INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
+  FOREIGN KEY (user_id)
+	REFERENCES agora.users (user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (map_id)
     REFERENCES agora.maps (map_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table agora.nodetext
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.nodetext (
   nodetext_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  nodetext_tid INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   textbox_id INT UNSIGNED NOT NULL,
   position INT UNSIGNED NOT NULL,
@@ -130,12 +133,12 @@ CREATE TABLE IF NOT EXISTS agora.nodetext (
   INDEX position (position ASC),
   FOREIGN KEY(node_id)
     REFERENCES agora.nodes (node_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY(textbox_id)
     REFERENCES agora.textboxes (textbox_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table agora.connection_types
@@ -158,28 +161,34 @@ INSERT INTO connection_types(conn_name, description) VALUES ("ConSyllogism", "Co
 CREATE  TABLE IF NOT EXISTS agora.arguments (
   argument_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   arg_tid INT UNSIGNED NOT NULL,
-  map_id INT UNSIGNED NULL,
-  node_id INT UNSIGNED NULL,
-  type_id INT UNSIGNED NULL,
+  user_id INT UNSIGNED NOT NULL,
+  map_id INT UNSIGNED NOT NULL,
+  node_id INT UNSIGNED NOT NULL,
+  type_id INT UNSIGNED NOT NULL,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
   PRIMARY KEY (argument_id),
+  INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
   INDEX node_id (node_id ASC),
   INDEX type_id (type_id ASC),
+  FOREIGN KEY (user_id)
+	REFERENCES agora.users (user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (map_id)
     REFERENCES agora.maps (map_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (node_id)
     REFERENCES agora.nodes (node_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (type_id)
     REFERENCES agora.connection_types (type_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 -- The node_id is the claim.
 
 -- -----------------------------------------------------
@@ -187,7 +196,6 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.connections (
   connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  conn_tid INT UNSIGNED NOT NULL,
   argument_id INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   created_date DATETIME NOT NULL,
@@ -198,9 +206,9 @@ CREATE TABLE IF NOT EXISTS agora.connections (
   INDEX node_id (node_id ASC),
   FOREIGN KEY (argument_id)
     REFERENCES agora.arguments (argument_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (node_id)
     REFERENCES agora.nodes (node_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);

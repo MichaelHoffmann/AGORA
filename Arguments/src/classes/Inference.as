@@ -6,11 +6,15 @@ package classes
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
 	import mx.controls.Label;
+	import mx.controls.List;
+	import mx.controls.listClasses.ListData;
 	import mx.events.FlexEvent;
-	
+	import mx.events.ListEvent;
+	//import spark.components.List;
 	import spark.components.Button;
 	import spark.components.VGroup;
 	import components.ArgSelector;
+	import logic.*;
 	
 	public class Inference extends ArgumentPanel
 	{
@@ -21,9 +25,9 @@ package classes
 		public var addReason:Button;
 		public var vgroup:VGroup;
 		public var claim:ArgumentPanel;
-		public static const MODUS_PONENS:String = "modus_ponens";
 		public var argType:DisplayArgType;
 		public var myscheme:ArgSelector;
+		public var myArg:ParentArg;
 		
 		public function Inference()
 		{
@@ -36,6 +40,8 @@ package classes
 			argType.inference = this;
 			argType.width = 100;
 			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
+			myscheme = new ArgSelector();
+			this.setStyle("cornerRadius",30);
 		}
 		
 		public function  addHandlers(fe:FlexEvent):void
@@ -43,7 +49,7 @@ package classes
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			//register it to the layout
 			//parentMap.layoutManager.registerPanel(argType);
-			argType.typeBtn.addEventListener(MouseEvent.CLICK,changeType);
+			argType.typeBtn.addEventListener(MouseEvent.CLICK,changeHandler);
 		}
 		
 		private function displayArgumentType(e: FlexEvent) : void
@@ -88,13 +94,70 @@ package classes
 			
 		}
 		
-		public function changeType(e:MouseEvent):void
+		public function changeHandler(e:MouseEvent):void
 		{
-			
-			myscheme = new ArgSelector();
+			myscheme.visible=true;
 			myscheme.x = this.gridY*25 + this.width;
 			myscheme.y = this.gridX*25;
 			parentMap.addElement(myscheme);
+			var rootlist:List = myscheme.mainSchemes;
+			var sublist:List = myscheme.typeSelector;
+			rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
+			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
+			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			//rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
+			myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
+			myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+		}
+		
+		public function setScheme(le:ListEvent):void
+		{
+			var myclass:String = le.itemRenderer.data.toString();
+			argType.title = myclass;
+		}
+		
+		public function setType(le:ListEvent):void
+		{
+			var temp:DynamicTextArea = new DynamicTextArea();
+			temp.text = le.itemRenderer.data.toString();
+			trace(temp.text);
+			input.push(temp);
+		}
+		
+		public function displayTypes(le:ListEvent):void
+		{
+			var myclassindex:int = le.rowIndex;
+			var sublist:List = myscheme.typeSelector;
+			sublist.visible=true;
+			switch(myclassindex)
+			{
+				case 0: myArg = new ModusPonens; break;
+				case 1: myArg = new ModusTollens; break;
+				case 2: myArg = new ConditionalSyllogism; break;
+				case 3: myArg = new DisjunctiveSyllogism; break;
+				case 4: myArg = new NotAllSyllogism; break;
+				case 5: myArg = new ConstructiveDilemma;
+				
+			}
+			sublist.dataProvider = myArg._langTypes;
+		}
+		
+		public function closeTypes(le:ListEvent):void
+		{
+			var sublist:List = myscheme.typeSelector;
+			sublist.visible=false;
+		}
+		
+		public function bringForward(e:MouseEvent):void
+		{
+			myscheme.visible = true;
+			parentMap.setChildIndex(myscheme,parentMap.numChildren - 1);
+		}
+		
+		public function goBackward(e:MouseEvent):void
+		{
+			//parentMap.setChildIndex(myscheme,0);
+			myscheme.visible = false;
 		}
 		
 		override public function getString():String
