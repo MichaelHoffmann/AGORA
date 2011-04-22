@@ -13,7 +13,7 @@
 				 selectionColor="#5577b8"  
 				 focusRoundedCorners="tr br tl bl"
 				 paddingLeft="8"
-				 labelField="name" />
+				 labelField="name"/>
 				 <!-- itemClick="changeTitle(event)" -->
 		
 		<mx:List id="typeSelector" 
@@ -24,9 +24,7 @@
 				 visible="false"
 				 focusRoundedCorners="tr br tl bl"
 				 paddingLeft="8"
-				 width="300"
-				 
-				 />
+				 width="300"/>
 	</mx:Canvas>
 	
 	<fx:Script>

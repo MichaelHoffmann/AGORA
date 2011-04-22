@@ -1,7 +1,11 @@
 package classes
 {
+	import components.ArgSelector;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
+	import logic.*;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
@@ -10,11 +14,10 @@ package classes
 	import mx.controls.listClasses.ListData;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
-	//import spark.components.List;
+	
 	import spark.components.Button;
+	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
-	import components.ArgSelector;
-	import logic.*;
 	
 	public class Inference extends ArgumentPanel
 	{
@@ -108,6 +111,8 @@ package classes
 			//rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
 			myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+			
+			//var sc:SkinnableContainer = new SkinnableContainer();
 		}
 		
 		public function setScheme(le:ListEvent):void
@@ -118,10 +123,10 @@ package classes
 		
 		public function setType(le:ListEvent):void
 		{
-			var temp:DynamicTextArea = new DynamicTextArea();
-			temp.text = le.itemRenderer.data.toString();
-			trace(temp.text);
-			input.push(temp);
+			var getInput:DynamicTextArea = this.input[0];
+			getInput.text = le.itemRenderer.data.toString();
+			//binding
+			//getInput.forwardList.push(this.input1);
 		}
 		
 		public function displayTypes(le:ListEvent):void
