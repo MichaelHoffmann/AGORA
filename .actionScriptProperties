@@ -19,6 +19,7 @@
   <applications>
     <application path="index.mxml"/>
     <application path="FlexUnitCompilerApplication.mxml"/>
+    <application path="PHPtest.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

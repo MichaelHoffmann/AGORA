@@ -1,0 +1,19 @@
+<map id="4" timestamp="0">
+	<textbox TID="1" text="FOO"/>
+	<textbox TID="2" text="BAR"/>
+
+	<node TID="1" Type="Standard" x="1" y="1">
+		<nodetext textboxTID="1" />
+	</node>
+	<node TID="2" Type="Standard" x="10" y="1">
+		<nodetext textboxTID="2"/>
+	</node>
+	<node TID="3" Type="Inference" x="5" y="5">
+		<nodetext textboxTID="1"/>
+		<nodetext textboxTID="2"/>
+	</node>
+	<connection argTID="1" type="MPtherefore" targetnodeTID="2">
+		<sourcenode nodeTID="1"/>
+		<sourcenode nodeTID="3"/>
+	</connection>
+</map>
