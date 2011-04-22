@@ -75,7 +75,6 @@ package classes
 		
 		public function adjustHeight(e:Event):void
 		{
-			
 			if(this is Inference)
 			{
 			}
@@ -248,8 +247,11 @@ package classes
 		public function toggle(m:MouseEvent):void
 		{
 			if(this.state==0) {
+				if(this.panelType!=INFERENCE){
 				Alert.show("Toggling to particular statement");
-				state = 1;
+				state = 1;}
+				else
+	 			Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
 			} 
 			else {
 				state = 0;

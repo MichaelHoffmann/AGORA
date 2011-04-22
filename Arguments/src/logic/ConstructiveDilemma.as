@@ -6,7 +6,7 @@ package logic
 		
 		public function ConstructiveDilemma()
 		{
-			myname = "Constructive Dilemma";
+			myname = CONST_DILEM;
 			_langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
 		}
 	}

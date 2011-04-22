@@ -36,6 +36,7 @@ package classes
 		{
 			super();
 			panelType = ArgumentPanel.INFERENCE;
+			state = 0; 		// Inference is always a Universal statement
 			addEventListener(FlexEvent.CREATION_COMPLETE, displayArgumentType);
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);

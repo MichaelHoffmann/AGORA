@@ -5,7 +5,7 @@ package logic
 	{
 		public function DisjunctiveSyllogism()
 		{
-			myname = "Disjunctive Syllogism";
+			myname = DIS_SYLL;
 			_langTypes = ["Either-or","Unless"];
 		}
 		

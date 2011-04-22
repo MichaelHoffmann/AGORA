@@ -5,7 +5,7 @@ package logic
 	{		
 		public function ConditionalSyllogism()
 		{
-			myname = "Conditional Syllogism";
+			myname = COND_SYLL;
 			_langTypes = ["If-then","Implies"];
 		}
 	}
