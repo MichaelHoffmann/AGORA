@@ -6,6 +6,7 @@ package logic
 		
 	public var myname:String;
 	public var _langTypes:Array;
+	public static var MODUS_PONENS:String = "Modus Ponens";
 	
 	}
 }

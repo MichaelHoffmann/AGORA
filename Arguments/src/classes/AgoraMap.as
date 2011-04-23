@@ -11,6 +11,7 @@ package classes
 	import mx.core.DragSource;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
+	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
 	
 	public class AgoraMap extends Canvas
@@ -24,8 +25,95 @@ package classes
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
 		}
 		
-		public static function load( event:Event):void{
-			trace(event.target.data);
+		public function panelCreated(event   : FlexEvent):void{
+			var panel:ArgumentPanel = event.target as ArgumentPanel;
+			panel.input1.text = panel.savedText;
+		}
+		
+		public function load( event:Event):void{
+			var xmlData:XML = new XML(event.target.data);
+			var textboxes:XMLList = xmlData.textbox;
+			var textbox_map:Object = new Object;
+			
+			for each (var xml:XML in textboxes)
+			{
+				textbox_map[xml.attribute("ID")] = xml.attribute("text");
+			}
+			
+			var nodes_map:Object = new Object;
+			var nodes:XMLList = xmlData.node;
+			
+			for each ( xml in nodes)
+			{
+				var argumentPanel:ArgumentPanel = null;
+				if(xml.attribute("Type") == "Inference")
+				{
+					argumentPanel = new Inference;
+					addElement(argumentPanel);
+				}
+				else{
+					argumentPanel = new ArgumentPanel;
+					addElement(argumentPanel);//createChildren called
+					argumentPanel.input1.text = textbox_map[xml.nodetext.attribute("ID")];
+				}
+				nodes_map[xml.attribute("ID")] = argumentPanel;
+				argumentPanel.gridX = xml.attribute("gridX");
+				argumentPanel.gridY = xml.attribute("gridY");				
+				layoutManager.panelList.push(argumentPanel);
+			}
+			
+			var connections_map:Object = new Object;
+			var connections:XMLList = xmlData.connection;
+			for each( xml in connections)
+			{
+				//find the target node - claim
+				var claim:ArgumentPanel = nodes_map[xml.attribute("targetnode")];
+				//find the inference node
+				var inference:Inference = null;
+				var sources:XMLList = xml.sourcenode;
+				var panel:ArgumentPanel;
+				for each ( var sourcenode:XML in sources )
+				{
+					panel = nodes_map[sourcenode.attribute("nodeID")];
+					if( panel is Inference){
+						inference = Inference(panel);
+						inference.argType.gridX = xml.attribute("gridX");
+						inference.argType.gridY = xml.attribute("gridY");
+						layoutManager.addSavedPanel(inference.argType);
+					}
+				}
+				claim.rules.push(inference);
+				inference.claim = claim;
+				var dta:DynamicTextArea = new DynamicTextArea;
+				addElement(dta);
+				dta.visible = false;
+				dta.panelReference = inference;
+				inference.input.push(dta);
+				dta.forwardList.push(inference.input1);
+				claim.input1.forwardList.push(dta);
+				//forward update should be called only after all links are created.
+				//That is, wait for the reasons to be added too.
+				//Not doing this might result in accessing illegal memory
+				
+				for each ( sourcenode in sources )
+				{
+					panel = nodes_map[sourcenode.attribute("nodeID")];
+					if(!(panel is Inference)){
+						inference.reasons.push(panel);
+						panel.inference = inference;
+						dta = new DynamicTextArea;
+						addElement(dta);
+						dta.visible=false;
+						dta.panelReference = inference;
+						inference.input.push(dta);
+						dta.forwardList.push(inference.input1);
+						panel.input1.forwardList.push(dta);
+						panel.input1.forwardUpdate();
+					}
+				}
+				claim.input1.forwardUpdate();
+			}
+			layoutManager.layoutComponents();
 			
 		}
 		
