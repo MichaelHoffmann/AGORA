@@ -95,6 +95,7 @@ package classes
 		public function forwardUpdate():void
 		{
 			var currInput:DynamicTextArea;
+			var flag:int = 0;
 			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE)
 			{
 					
@@ -102,15 +103,23 @@ package classes
 						//update the string
 					
 							var infPanel:Inference = Inference(panelReference);
-							var s:String = "If ";
+							var s:String;
 							//trace(infPanel.input.length);
+							if(infPanel.argType.schemeText!=null) { flag=1;
+							var typeChosen:String = infPanel.argType.schemeText;
+							var splits:Array = new Array;
+							splits = typeChosen.split("-");
+							s = splits[0] + " ";
+							if(splits[splits.length-1] == "Exp")
+							var expandor:String = infPanel.argType.connText;}
 							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
 							{
-								s = s + infPanel.input[ind].text + " and ";	
+								s = s + infPanel.input[ind].text + " " + expandor + " ";	
 								//trace(infPanel.input[ind]);
 							}
 							s = s + infPanel.input[ind].text;
-							s = s + ", " + infPanel.input[0].text + ".";
+							if(flag==1) s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
+							else s = s + ", " + infPanel.input[0].text + ".";
 							
 							currInput.text = s;
 							

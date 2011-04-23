@@ -1,6 +1,7 @@
 package logic
 {
 	import components.ArgSelector;
+	
 	import mx.utils.ObjectUtil;
 
 
@@ -14,6 +15,8 @@ package logic
 	public var DIS_SYLL:String = "Disjunctive Syllogism";
 	public var NOT_ALL_SYLL:String = "Not-All Syllogism";
 	public var CONST_DILEM:String = "Constructive Dilemma";
+	public static var EXP_AND:String = "and";
+	public static var EXP_OR:String = "or";
 	
 	public var mySelector:ArgSelector;	// reference to be moved from Inference to here - specific argscheme
 	

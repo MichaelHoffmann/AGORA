@@ -58,9 +58,6 @@ package classes
 		
 		private function displayArgumentType(e: FlexEvent) : void
 		{
-			//aLType = new Label();
-			//aLType.text=argumentClass;
-			//argType.vgroup.addElement(aLType);
 			parentMap.addElement(argType);
 		}
 		
@@ -106,9 +103,12 @@ package classes
 			parentMap.addElement(myscheme);
 			var rootlist:List = myscheme.mainSchemes;
 			var sublist:List = myscheme.typeSelector;
-			rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
-			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
+			var oplist:List = myscheme.andor;
 			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			//rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
+			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
+			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
+			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
 			//rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
 			myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
@@ -116,18 +116,17 @@ package classes
 			//var sc:SkinnableContainer = new SkinnableContainer();
 		}
 		
-		public function setScheme(le:ListEvent):void
+		/*public function setScheme(le:ListEvent):void
 		{
 			var myclass:String = le.itemRenderer.data.toString();
 			argType.title = myclass;
-		}
+		}*/
 		
 		public function setType(le:ListEvent):void
 		{
-			var getInput:DynamicTextArea = this.input[0];
-			getInput.text = le.itemRenderer.data.toString();
-			//binding
-			//getInput.forwardList.push(this.input1);
+			argType.schemeText = le.itemRenderer.data.toString();
+			if(myscheme.andor.visible==false)
+				myscheme.visible = false;
 		}
 		
 		public function displayTypes(le:ListEvent):void
@@ -146,13 +145,34 @@ package classes
 				
 			}
 			sublist.dataProvider = myArg._langTypes;
+			argType.title = myArg.myname;		//set scheme
 		}
 		
-		public function closeTypes(le:ListEvent):void
+		public function displayOption(le:ListEvent):void
+		{
+			var oplist:List = myscheme.andor;
+			var typeText:String=le.itemRenderer.data.toString();
+			argType.schemeText = typeText;
+			var splits:Array = new Array;
+			splits = typeText.split("-");
+			if(splits[splits.length-1] == "Exp")
+			oplist.visible=true;
+			else oplist.visible=false;
+		}
+		
+		public function setOption(le:ListEvent):void
+		{
+			var andor:String = le.itemRenderer.data.toString();
+			if(andor=="And") argType.connText = ParentArg.EXP_AND;
+			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
+			myscheme.visible = false;
+		}
+		
+		/*public function closeTypes(le:ListEvent):void
 		{
 			var sublist:List = myscheme.typeSelector;
 			sublist.visible=false;
-		}
+		}*/
 		
 		public function bringForward(e:MouseEvent):void
 		{
@@ -162,8 +182,8 @@ package classes
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			//parentMap.setChildIndex(myscheme,0);
-			myscheme.visible = false;
+			parentMap.setChildIndex(myscheme,0);
+			//myscheme.visible = false;
 		}
 		
 		override public function getString():String

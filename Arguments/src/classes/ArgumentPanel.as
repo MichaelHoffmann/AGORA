@@ -50,7 +50,7 @@ package classes
 		public static const ARGUMENT_PANEL:int = 0;
 		public static const INFERENCE:int = 1;
 		
-		
+		public var lab:Label;
 		public var panelType:int;
 		
 		public function ArgumentPanel()
@@ -70,6 +70,8 @@ package classes
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
 			inference = null;
 			rules = new Vector.<Inference>(0,false);
+			
+			lab = new Label;
 		}
 		
 		
@@ -230,6 +232,7 @@ package classes
 			useButton.addEventListener(MouseEvent.CLICK,toggle);
 			useButton.toolTip="Whether a statement is universal or particular determines what kind of objections are possible against it. A 'universal statement' is defined here as a statement that can be falsified by one counter-example. In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements. Anything else is treated as a particular statement, including statements about possibilities.";
 
+			addElement(lab);
 		}
 		
 		public function onArgumentPanelCreate( e:FlexEvent):void
@@ -248,16 +251,18 @@ package classes
 		{
 			if(this.state==0) {
 				if(this.panelType!=INFERENCE){
-				Alert.show("Toggling to particular statement");
-				state = 1;}
-				else
+				//Alert.show("Toggling to particular statement");
+				state = 1;
+				lab.text = "Particular Statement";}
+				else {
 	 			Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
+				lab.text = "Universal Statement"; }
 			} 
 			else {
 				state = 0;
-				Alert.show("Toggling to universal statement");
+				//Alert.show("Toggling to universal statement");
+				lab.text = "Universal Statement";
 			} 
-			
 		}
 	}
 }
