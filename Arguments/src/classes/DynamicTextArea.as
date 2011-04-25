@@ -98,27 +98,31 @@ package classes
 			var flag:int = 0;
 			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE)
 			{
-					
+					if(forwardList.length>0){
 						currInput= forwardList[0];
 						//update the string
 					
 							var infPanel:Inference = Inference(panelReference);
 							var s:String;
 							//trace(infPanel.input.length);
-							if(infPanel.argType.schemeText!=null) { flag=1;
+							if(infPanel.argType.schemeText!=null) { 
+								flag=1;
 							var typeChosen:String = infPanel.argType.schemeText;
 							var splits:Array = new Array;
 							splits = typeChosen.split("-");
 							s = splits[0] + " ";
 							if(splits[splits.length-1] == "Exp")
-							var expandor:String = infPanel.argType.connText;}
+							var expandor:String = infPanel.argType.connText;
+							this.panelReference.input1.visible=true; }
+							else this.panelReference.input1.visible=false;
 							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
 							{
 								s = s + infPanel.input[ind].text + " " + expandor + " ";	
 								//trace(infPanel.input[ind]);
 							}
 							s = s + infPanel.input[ind].text;
-							if(flag==1) s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
+							if(flag==1) 
+								s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
 							else s = s + ", " + infPanel.input[0].text + ".";
 							
 
@@ -133,8 +137,9 @@ package classes
 							s = s + infPanel.input[ind].text;
 							s = s + ", therefore " + infPanel.input[0].text + ".";*/
 
-							currInput.text = s;
+							currInput.text = s; 
 							currInput.forwardUpdate();
+					}
 			}else
 			{
 				if(forwardList.length == 0 )
@@ -147,8 +152,26 @@ package classes
 			}
 			}
 
+		}
+		
+		public function update():void{
+			var s:String;
+			var infPanel:Inference = Inference(panelReference);
+			var typeChosen:String = infPanel.argType.schemeText;
+			var splits:Array = new Array;
+			splits = typeChosen.split("-");
+			s = splits[0] + " ";
+			if(splits[splits.length-1] == "Exp")
+				var expandor:String = infPanel.argType.connText;
+			for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
+			{
+				s = s + infPanel.input[ind].text + " " + expandor + " ";	
 			}
-		 
+			s = s + infPanel.input[ind].text;
+			s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
+			
+			this.text = s;
+		}
 		
 		public function backwardUpdate():void
 		{

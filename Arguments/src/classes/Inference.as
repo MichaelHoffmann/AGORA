@@ -12,10 +12,12 @@ package classes
 	import mx.controls.Label;
 	import mx.controls.List;
 	import mx.controls.listClasses.ListData;
+	import mx.core.IVisualElement;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
 	
 	import spark.components.Button;
+	import spark.components.HGroup;
 	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
 	
@@ -25,7 +27,7 @@ package classes
 		public var input:Vector.<DynamicTextArea>;
 		public var argumentClass:String;
 		public var aLType:Label;
-		public var addReason:Button;
+		public var scheme:Button;
 		public var vgroup:VGroup;
 		public var claim:ArgumentPanel;
 		public var argType:DisplayArgType;
@@ -46,6 +48,11 @@ package classes
 			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
 			myscheme = new ArgSelector();
 			this.setStyle("cornerRadius",30);
+			scheme = new Button;
+			scheme.label = "Scheme...";
+			this.bottomH.addElement(scheme);
+			scheme.addEventListener(MouseEvent.CLICK,changeHandler);			
+			
 		}
 		
 		public function  addHandlers(fe:FlexEvent):void
@@ -53,7 +60,6 @@ package classes
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			//register it to the layout
 			//parentMap.layoutManager.registerPanel(argType);
-			argType.typeBtn.addEventListener(MouseEvent.CLICK,changeHandler);
 		}
 		
 		private function displayArgumentType(e: FlexEvent) : void
@@ -85,8 +91,8 @@ package classes
 					tmpInput.panelReference = inferenceRule;
 					inferenceRule.input.push(tmpInput);		
 					//binding
-					tmpInput.forwardList.push(inferenceRule.input1);
-					tmp.input1.forwardList.push(tmpInput);
+					tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
+					tmp.input1.forwardList.push(tmpInput);				//this new reason's input1 text forwards to that invisible box.
 					
 				}catch (e:Error)
 				{
@@ -127,6 +133,8 @@ package classes
 			argType.schemeText = le.itemRenderer.data.toString();
 			if(myscheme.andor.visible==false)
 				myscheme.visible = false;
+			input1.visible=true;
+			input1.update();
 		}
 		
 		public function displayTypes(le:ListEvent):void
@@ -166,6 +174,8 @@ package classes
 			if(andor=="And") argType.connText = ParentArg.EXP_AND;
 			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
 			myscheme.visible = false;
+			input1.visible=true;
+			input1.forwardUpdate();
 		}
 		
 		/*public function closeTypes(le:ListEvent):void

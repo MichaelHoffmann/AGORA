@@ -35,7 +35,6 @@ package classes
 	{
 		public var input1:DynamicTextArea;
 		public var topArea:UIComponent;
-		public var buttonArea:Panel;
 		public var panelSkin:PanelSkin;
 		public var panelSkin1:PanelSkin;
 		public var useButton:spark.components.Button;
@@ -43,7 +42,7 @@ package classes
 		public var savedText:String;
 		public static var parentMap:AgoraMap;
 		public var inference:Inference;
-		public var logicalContainer:HGroup;
+		public var bottomH:HGroup;
 		public var topH:HGroup;
 		public var rules:Vector.<Inference>;
 		public var binders:Vector.<Binder>;
@@ -72,7 +71,7 @@ package classes
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
 			inference = null;
 			rules = new Vector.<Inference>(0,false);
-			
+
 			lab = new Label;
 			// default setting
 			if(this is Inference) lab.text = "Universal Statement";
@@ -82,6 +81,8 @@ package classes
 				"In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements." +
 				" Anything else is treated as a particular statement, including statements about possibilities. CLICK TO CHANGE";
 			lab.addEventListener(MouseEvent.CLICK,toggle);
+			
+			bottomH = new HGroup();
 		}
 		
 		
@@ -118,7 +119,7 @@ package classes
 		public function addArgSchemeHandler(event:MouseEvent):void
 		{
 			//create an inference
-			var currInference:Inference = new Inference;
+			var currInference:Inference = new Inference();
 			//add the inference to map
 			parentMap.addElement(currInference);
 			//add inference to the list of inferences
@@ -151,7 +152,7 @@ package classes
 			currInference.input.push(tmpInput);		
 			//binding
 			tmpInput.forwardList.push(currInference.input1);
-			this.input1.forwardList.push(currInference.input[0]);
+			input1.forwardList.push(currInference.input[0]);
 			
 			for each (var dta:DynamicTextArea in input1.forwardList)
 			{
@@ -159,17 +160,19 @@ package classes
 			}
 			
 			//create an invisible box for the reason
-			tmpInput = new DynamicTextArea();
-			parentMap.addElement(tmpInput);
-			tmpInput.visible = false;
-			tmpInput.panelReference = currInference;
-			currInference.input.push(tmpInput);	
+			var tmpInput2:DynamicTextArea = new DynamicTextArea();
+			parentMap.addElement(tmpInput2);
+			tmpInput2.visible = false;
+			tmpInput2.panelReference = currInference;
+			currInference.input.push(tmpInput2);	
 			
-			tmpInput.forwardList.push(currInference.input1);
-			reason.input1.forwardList.push(tmpInput);
-				
-			input1.forwardUpdate();
-			reason.input1.forwardUpdate();
+			tmpInput2.forwardList.push(currInference.input1);
+			reason.input1.forwardList.push(tmpInput2);
+			
+			//if(input1.text!="")
+			input1.forwardUpdate();		//claim	
+			//if(reason.input1.text!="")
+			reason.input1.forwardUpdate();		//reason
 			
 			try{
 				
@@ -211,7 +214,6 @@ package classes
 			topH.addElement(topArea);
 			topH.addElement(lab);
 			
-			logicalContainer = new HGroup();
 			//Register event handlers
 			//Creation Complete event handlers
 			//this.input1.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
@@ -225,11 +227,11 @@ package classes
 			//addElement --> Spark
 			//addElement(topArea);
 			addElement(input1);	
-			addElement(logicalContainer);
+			addElement(bottomH);
 			
 			argschemeButton = new spark.components.Button;
-			argschemeButton.label = "+ Args";
-			logicalContainer.addElement(argschemeButton);
+			argschemeButton.label = "Add arg";
+			bottomH.addElement(argschemeButton);
 			argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
 			
 			/*useButton = new spark.components.Button;
