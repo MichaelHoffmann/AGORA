@@ -77,7 +77,10 @@ package classes
 			// default setting
 			if(this is Inference) lab.text = "Universal Statement";
 			else lab.text = "Particular Statement";
-			lab.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. A 'universal statement' is defined here as a statement that can be falsified by one counter-example. In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements. Anything else is treated as a particular statement, including statements about possibilities.";
+			lab.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
+				"A 'universal statement' is defined here as a statement that can be falsified by one counter-example. " +
+				"In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements." +
+				" Anything else is treated as a particular statement, including statements about possibilities. CLICK TO CHANGE";
 			lab.addEventListener(MouseEvent.CLICK,toggle);
 		}
 		
@@ -216,7 +219,6 @@ package classes
 			//this.topArea.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
 			
 			
-			
 			//add the elements to the display list
 			//of the application. 
 			//addChild --> Halo
@@ -256,7 +258,8 @@ package classes
 				if(this.panelType!=INFERENCE){
 				//Alert.show("Toggling to particular statement");
 				state = 1;
-				lab.text = "Particular Statement";}
+				lab.text = "Particular Statement";
+				this.setStyle("cornerRadius",0);}
 				else {
 	 			Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
 				lab.text = "Universal Statement"; }
@@ -265,6 +268,7 @@ package classes
 				state = 0;
 				//Alert.show("Toggling to universal statement");
 				lab.text = "Universal Statement";
+				this.setStyle("cornerRadius",30);
 			} 
 		}
 	}
