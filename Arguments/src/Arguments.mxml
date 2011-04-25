@@ -48,10 +48,15 @@ class, and will be done soon.
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;
 				var argumentPanel:ArgumentPanel = new ArgumentPanel();
-				argumentPanel.gridX = 2;
-				argumentPanel.gridY = 3;
-				agoraMap.addElement(argumentPanel);
-				agoraMap.layoutManager.registerPanel(argumentPanel);
+				//argumentPanel.gridX = 2;
+				//argumentPanel.gridY = 3;
+		//		agoraMap.addElement(argumentPanel);
+		//		agoraMap.layoutManager.registerPanel(argumentPanel);
+				
+				var urlLoader:URLLoader = new URLLoader;
+				var data:XML = new XML();
+				urlLoader.addEventListener(Event.COMPLETE,agoraMap.load);
+				urlLoader.load(new URLRequest("http://localhost:8888/exampleLAM.xml"));				
 				
 			}
 		]]>

@@ -40,6 +40,7 @@ package classes
 		public var panelSkin1:PanelSkin;
 		public var useButton:spark.components.Button;
 		public var argschemeButton:spark.components.Button;
+		public var savedText:String;
 		public static var parentMap:AgoraMap;
 		public var inference:Inference;
 		public var logicalContainer:HGroup;
@@ -142,6 +143,11 @@ package classes
 			tmpInput.forwardList.push(currInference.input1);
 			this.input1.forwardList.push(currInference.input[0]);
 			
+			for each (var dta:DynamicTextArea in input1.forwardList)
+			{
+				trace(dta);
+			}
+			
 			//create an invisible box for the reason
 			tmpInput = new DynamicTextArea();
 			parentMap.addElement(tmpInput);
@@ -164,22 +170,7 @@ package classes
 
 			parentMap.layoutManager.registerPanel(currInference);	
 		}	
-		/*
-		public function linkBoxes(a:ArgumentPanel,b:ArgumentPanel,g:Group):void
-		{
-			var drawUtility:UIComponent = new UIComponent;
-			g.addElement(drawUtility);
-			try{
-				drawUtility.graphics.clear();
-				drawUtility.graphics.lineStyle(2.0,0x000000,1.0);
-				drawUtility.graphics.moveTo(a.x + 100, a.y + 40);
-				drawUtility.graphics.lineTo(b.x, b.y + 40);
-			}catch(problem:Error)
-			{
-				Alert.show(problem.toString());
-			}
-		}
-		*/
+	
 		public function getString():String{
 			return input1.text;
 		}

@@ -7,6 +7,7 @@ package classes
 	import mx.controls.Text;
 	import mx.core.INavigatorContent;
 	import mx.core.UIComponent;
+	import mx.managers.LayoutManager;
 	import mx.messaging.messages.ErrorMessage;
 	
 	import spark.components.VGroup;
@@ -117,6 +118,11 @@ package classes
 			}
 
 			layoutComponents();
+		}
+		
+		public function addSavedPanel(panel:GridPanel):void
+		{
+			panelList.push(panel);
 		}
 		
 		public function getGridPositionX(tmpY :int):int
