@@ -9,7 +9,6 @@ package logic
 		
 	public var myname:String;
 	public var _langTypes:Array;
-<<<<<<< HEAD
 	public var MOD_PON:String = "Modus Ponens";
 	public var MOD_TOL:String = "Modus Tollens";
 	public var COND_SYLL:String = "Conditional Syllogism";
@@ -26,9 +25,7 @@ package logic
 		mySelector = new ArgSelector;
 	}
 	
-=======
 	public static var MODUS_PONENS:String = "Modus Ponens";
->>>>>>> 0298e1f76e24411ff3d09079b2dc859f66f70ca9
 	
 	}
 }

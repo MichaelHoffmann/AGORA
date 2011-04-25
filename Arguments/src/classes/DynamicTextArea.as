@@ -98,7 +98,6 @@ package classes
 			var flag:int = 0;
 			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE)
 			{
-<<<<<<< HEAD
 					
 						currInput= forwardList[0];
 						//update the string
@@ -122,8 +121,8 @@ package classes
 							if(flag==1) s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
 							else s = s + ", " + infPanel.input[0].text + ".";
 							
-=======
-							currInput = forwardList[0];//this is an invisible text box and it has only one dependent, the inference's text (input1)
+
+							/*currInput = forwardList[0];//this is an invisible text box and it has only one dependent, the inference's text (input1)
 							//update the string
 							var s:String = "If ";
 							var infPanel:Inference = Inference(panelReference);
@@ -132,8 +131,8 @@ package classes
 								s = s + infPanel.input[ind].text + " and ";
 							}
 							s = s + infPanel.input[ind].text;
-							s = s + ", therefore " + infPanel.input[0].text + ".";
->>>>>>> 0298e1f76e24411ff3d09079b2dc859f66f70ca9
+							s = s + ", therefore " + infPanel.input[0].text + ".";*/
+
 							currInput.text = s;
 							currInput.forwardUpdate();
 			}else
