@@ -1,7 +1,11 @@
 package classes
 {
+	import components.ArgSelector;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
+	import logic.*;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
@@ -10,11 +14,10 @@ package classes
 	import mx.controls.listClasses.ListData;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
-	//import spark.components.List;
+	
 	import spark.components.Button;
+	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
-	import components.ArgSelector;
-	import logic.*;
 	
 	public class Inference extends ArgumentPanel
 	{
@@ -33,6 +36,7 @@ package classes
 		{
 			super();
 			panelType = ArgumentPanel.INFERENCE;
+			state = 0; 		// Inference is always a Universal statement
 			addEventListener(FlexEvent.CREATION_COMPLETE, displayArgumentType);
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);
@@ -54,9 +58,6 @@ package classes
 		
 		private function displayArgumentType(e: FlexEvent) : void
 		{
-			//aLType = new Label();
-			//aLType.text=argumentClass;
-			//argType.vgroup.addElement(aLType);
 			parentMap.addElement(argType);
 		}
 		
@@ -102,26 +103,30 @@ package classes
 			parentMap.addElement(myscheme);
 			var rootlist:List = myscheme.mainSchemes;
 			var sublist:List = myscheme.typeSelector;
-			rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
-			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
+			var oplist:List = myscheme.andor;
 			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			//rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
+			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
+			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
+			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
 			//rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
 			myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+			
+			//var sc:SkinnableContainer = new SkinnableContainer();
 		}
 		
-		public function setScheme(le:ListEvent):void
+		/*public function setScheme(le:ListEvent):void
 		{
 			var myclass:String = le.itemRenderer.data.toString();
 			argType.title = myclass;
-		}
+		}*/
 		
 		public function setType(le:ListEvent):void
 		{
-			var temp:DynamicTextArea = new DynamicTextArea();
-			temp.text = le.itemRenderer.data.toString();
-			trace(temp.text);
-			input.push(temp);
+			argType.schemeText = le.itemRenderer.data.toString();
+			if(myscheme.andor.visible==false)
+				myscheme.visible = false;
 		}
 		
 		public function displayTypes(le:ListEvent):void
@@ -140,13 +145,34 @@ package classes
 				
 			}
 			sublist.dataProvider = myArg._langTypes;
+			argType.title = myArg.myname;		//set scheme
 		}
 		
-		public function closeTypes(le:ListEvent):void
+		public function displayOption(le:ListEvent):void
+		{
+			var oplist:List = myscheme.andor;
+			var typeText:String=le.itemRenderer.data.toString();
+			argType.schemeText = typeText;
+			var splits:Array = new Array;
+			splits = typeText.split("-");
+			if(splits[splits.length-1] == "Exp")
+			oplist.visible=true;
+			else oplist.visible=false;
+		}
+		
+		public function setOption(le:ListEvent):void
+		{
+			var andor:String = le.itemRenderer.data.toString();
+			if(andor=="And") argType.connText = ParentArg.EXP_AND;
+			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
+			myscheme.visible = false;
+		}
+		
+		/*public function closeTypes(le:ListEvent):void
 		{
 			var sublist:List = myscheme.typeSelector;
 			sublist.visible=false;
-		}
+		}*/
 		
 		public function bringForward(e:MouseEvent):void
 		{
@@ -156,8 +182,8 @@ package classes
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			//parentMap.setChildIndex(myscheme,0);
-			myscheme.visible = false;
+			parentMap.setChildIndex(myscheme,0);
+			//myscheme.visible = false;
 		}
 		
 		override public function getString():String

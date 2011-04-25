@@ -95,8 +95,34 @@ package classes
 		public function forwardUpdate():void
 		{
 			var currInput:DynamicTextArea;
+			var flag:int = 0;
 			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE)
 			{
+<<<<<<< HEAD
+					
+						currInput= forwardList[0];
+						//update the string
+					
+							var infPanel:Inference = Inference(panelReference);
+							var s:String;
+							//trace(infPanel.input.length);
+							if(infPanel.argType.schemeText!=null) { flag=1;
+							var typeChosen:String = infPanel.argType.schemeText;
+							var splits:Array = new Array;
+							splits = typeChosen.split("-");
+							s = splits[0] + " ";
+							if(splits[splits.length-1] == "Exp")
+							var expandor:String = infPanel.argType.connText;}
+							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
+							{
+								s = s + infPanel.input[ind].text + " " + expandor + " ";	
+								//trace(infPanel.input[ind]);
+							}
+							s = s + infPanel.input[ind].text;
+							if(flag==1) s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
+							else s = s + ", " + infPanel.input[0].text + ".";
+							
+=======
 							currInput = forwardList[0];//this is an invisible text box and it has only one dependent, the inference's text (input1)
 							//update the string
 							var s:String = "If ";
@@ -107,6 +133,7 @@ package classes
 							}
 							s = s + infPanel.input[ind].text;
 							s = s + ", therefore " + infPanel.input[0].text + ".";
+>>>>>>> 0298e1f76e24411ff3d09079b2dc859f66f70ca9
 							currInput.text = s;
 							currInput.forwardUpdate();
 			}else

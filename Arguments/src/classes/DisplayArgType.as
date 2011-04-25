@@ -20,7 +20,8 @@ package classes
 		public var addReasonBtn:Button;
 		public var typeBtn:Button;
 		public var inference:Inference;
-		//public var type:Label;
+		public var schemeText:String;
+		public var connText:String;
 		
 		public function DisplayArgType()
 		{

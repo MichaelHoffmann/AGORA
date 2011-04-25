@@ -6,8 +6,10 @@ package logic
 	{
 		public function NotAllSyllogism()
 		{
-			myname = "Not-all Syllogism";
-			_langTypes = ["Not-all"];
+			myname = NOT_ALL_SYLL;
+			//_langTypes = ["Not-all","Not-all-Exp-And"];
+			_langTypes = ["Not-all","Not-all-Exp"];
+
 		}
 		
 		
