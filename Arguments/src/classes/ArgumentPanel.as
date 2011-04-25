@@ -44,6 +44,7 @@ package classes
 		public static var parentMap:AgoraMap;
 		public var inference:Inference;
 		public var logicalContainer:HGroup;
+		public var topH:HGroup;
 		public var rules:Vector.<Inference>;
 		public var binders:Vector.<Binder>;
 		public var state:int;	//state=0 -> universal statement and state=1 -> particular statement
@@ -73,6 +74,11 @@ package classes
 			rules = new Vector.<Inference>(0,false);
 			
 			lab = new Label;
+			// default setting
+			if(this is Inference) lab.text = "Universal Statement";
+			else lab.text = "Particular Statement";
+			lab.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. A 'universal statement' is defined here as a statement that can be falsified by one counter-example. In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements. Anything else is treated as a particular statement, including statements about possibilities.";
+			lab.addEventListener(MouseEvent.CLICK,toggle);
 		}
 		
 		
@@ -189,6 +195,19 @@ package classes
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			
+			topH = new HGroup();
+			addElement(topH);
+			
+			//Draw on topArea UIComponent a rectangle
+			//to be used for clicking and dragging
+			topArea.graphics.beginFill(0xdddddd,1.0);
+			topArea.graphics.drawRect(0,0,40,20);
+			topArea.width = 40;
+			topArea.height = 20;
+			topArea.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+			topH.addElement(topArea);
+			topH.addElement(lab);
+			
 			logicalContainer = new HGroup();
 			//Register event handlers
 			//Creation Complete event handlers
@@ -196,19 +215,13 @@ package classes
 			//this.input2.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
 			//this.topArea.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
 			
-			//Draw on topArea UIComponent a rectangle
-			//to be used for clicking and dragging
-			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,160,20);
-			topArea.width = 160;
-			topArea.height = 20;
-			topArea.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+			
 			
 			//add the elements to the display list
 			//of the application. 
 			//addChild --> Halo
 			//addElement --> Spark
-			addElement(topArea);
+			//addElement(topArea);
 			addElement(input1);	
 			addElement(logicalContainer);
 			
@@ -217,13 +230,12 @@ package classes
 			logicalContainer.addElement(argschemeButton);
 			argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
 			
-			useButton = new spark.components.Button;
+			/*useButton = new spark.components.Button;
 			useButton.label = "use as..";
 			logicalContainer.addElement(useButton);
 			useButton.addEventListener(MouseEvent.CLICK,toggle);
 			useButton.toolTip="Whether a statement is universal or particular determines what kind of objections are possible against it. A 'universal statement' is defined here as a statement that can be falsified by one counter-example. In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements. Anything else is treated as a particular statement, including statements about possibilities.";
-
-			addElement(lab);
+			*/
 		}
 		
 		public function onArgumentPanelCreate( e:FlexEvent):void
