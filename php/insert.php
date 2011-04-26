@@ -15,16 +15,20 @@
 	{
 		print "<BR>---Textbox found";
 		$attr = $tb->attributes();
-		$tid = $attr["TID"];
 		$text = $attr["text"];
-		
-
-		$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
-									($tid, $userID, $mapID, \"$text\", NOW(), NOW())";
-		print "<BR>Query: $iquery";
-		mysql_query($iquery, $linkID);
-		$newID = getLastInsert($linkID);
-		print "<BR>New textbox ID: $newID";
+		$id = $attr["ID"];
+		if($id){
+			print "<BR>Textbox exists";
+			exit(0);
+		}else{	
+			$tid = $attr["TID"];
+			$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
+										($tid, $userID, $mapID, \"$text\", NOW(), NOW())";
+			print "<BR>Query: $iquery";
+			mysql_query($iquery, $linkID);
+			$newID = getLastInsert($linkID);
+			print "<BR>New textbox ID: $newID";
+		}
 	}
 
 	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position)
