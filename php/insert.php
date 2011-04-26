@@ -15,13 +15,15 @@
 	{
 		print "<BR>---Textbox found";
 		$attr = $tb->attributes();
-		$text = $attr["text"];
-		$id = $attr["ID"];
+		$text = mysql_real_escape_string($attr["text"]);
+		$id = mysql_real_escape_string($attr["ID"]);
 		if($id){
-			print "<BR>Textbox exists";
+			print "<BR>Textbox ID is $id";
+			$uquery = "UPDATE textboxes SET text=\"$text\" WHERE textbox_id=\"$id\"";
+			print "<BR>Update query: $uquery";
 			exit(0);
 		}else{	
-			$tid = $attr["TID"];
+			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
 										($tid, $userID, $mapID, \"$text\", NOW(), NOW())";
 			print "<BR>Query: $iquery";
@@ -35,7 +37,7 @@
 	{
 		print "<BR>NodeText found";
 		$attr = $nt->attributes();
-		$tTID = $attr["textboxTID"];
+		$tTID = mysql_real_escape_string($attr["textboxTID"]);
 		$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
@@ -51,10 +53,10 @@
 	{
 		print "<BR>----Node found";
 		$attr = $node->attributes();
-		$tid = $attr["TID"];
-		$type = $attr["Type"];
-		$x = $attr["x"];
-		$y = $attr["y"];
+		$tid = mysql_real_escape_string($attr["TID"]);
+		$type = mysql_real_escape_string($attr["Type"]);
+		$x = mysql_real_escape_string($attr["x"]);
+		$y = mysql_real_escape_string($attr["y"]);
 		$query = "SELECT * FROM node_types WHERE type=\"$type\""; //TODO: Fix SQL Injection vuln on all of these
 		print "<BR>Query is: $query";
 		$resultID = mysql_query($query, $linkID);
@@ -81,7 +83,7 @@
 	{
 		print "<BR>SourceNode found";
 		$attr = $source->attributes();
-		$nodeTID = $attr["nodeTID"];
+		$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
 		$query = "SELECT * from nodes WHERE node_tid = $nodeTID";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
@@ -97,9 +99,9 @@
 	{
 		print "<BR>---Connection found";
 		$attr = $conn->attributes();
-		$tid = $attr["argTID"];
-		$type = $attr["type"];
-		$tnodeTID = $attr["targetnodeTID"];
+		$tid = mysql_real_escape_string($attr["argTID"]);
+		$type = mysql_real_escape_string($attr["type"]);
+		$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
 		//Get the real data for the DB
 		$query1 = "SELECT * FROM connection_types WHERE conn_name = \"$type\"";
 		$query2 = "SELECT * FROM nodes WHERE node_tid=$tnodeTID";
