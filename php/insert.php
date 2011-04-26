@@ -21,6 +21,7 @@
 			print "<BR>Textbox ID is $id";
 			$uquery = "UPDATE textboxes SET text=\"$text\" WHERE textbox_id=\"$id\"";
 			print "<BR>Update query: $uquery";
+			mysql_query($uquery, $linkID);
 			exit(0);
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
