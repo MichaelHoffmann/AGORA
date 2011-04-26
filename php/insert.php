@@ -16,13 +16,14 @@
 		print "<BR>---Textbox found";
 		$attr = $tb->attributes();
 		$text = mysql_real_escape_string($attr["text"]);
-		$id = mysql_real_escape_string($attr["ID"]);
+		$id = $attr["ID"];
 		if($id){
+			//TODO: add author check
 			print "<BR>Textbox ID is $id";
-			$uquery = "UPDATE textboxes SET text=\"$text\" WHERE textbox_id=\"$id\"";
+			$uquery = "UPDATE textboxes SET text=\"$text\" WHERE textbox_id=$id";
 			print "<BR>Update query: $uquery";
-			mysql_query($uquery, $linkID);
-			exit(0);
+			$status = mysql_query($uquery, $linkID);
+			print "<BR>Query executed! Status: $status";
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
