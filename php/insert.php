@@ -39,16 +39,38 @@
 	{
 		print "<BR>NodeText found";
 		$attr = $nt->attributes();
-		$tTID = mysql_real_escape_string($attr["textboxTID"]);
-		$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
+		$textboxID = mysql_real_escape_string($attr["textboxID"]);
+		
+		$query = "SELECT * FROM nodetext WHERE node_id=$nodeID AND position=$position";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
-		$textID = $row['textbox_id'];
-		print "<BR>Textbox $textID found";
-		$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
-					($nodeID, $textID, $position, NOW(), NOW())";
-		print "<BR>Insert Query is: $iquery";
-		mysql_query($iquery, $linkID);
+		$ntID = $row['nodetext_id'];
+		
+		if($ntID){
+			//update should ALWAYS have a real textbox ID.
+			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
+		}else{
+			//insert
+				if($textboxID){
+				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
+							($nodeID, $textboxID, $position, NOW(), NOW())";
+				print "<BR>Insert Query is: $iquery";
+				mysql_query($iquery, $linkID);
+				
+			}else{
+				$tTID = mysql_real_escape_string($attr["textboxTID"]);
+				$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
+				$resultID = mysql_query($query, $linkID);
+				$row = mysql_fetch_assoc($resultID);
+				$textID = $row['textbox_id'];
+				print "<BR>Textbox $textID found";
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
+							($nodeID, $textID, $position, NOW(), NOW())";
+				print "<BR>Insert Query is: $iquery";
+				mysql_query($iquery, $linkID);
+			}
+		}
 	}
 	
 	function nodeToDB($node, $mapID, $linkID, $userID)
@@ -59,7 +81,7 @@
 		$type = mysql_real_escape_string($attr["Type"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
-		$query = "SELECT * FROM node_types WHERE type=\"$type\""; //TODO: Fix SQL Injection vuln on all of these
+		$query = "SELECT * FROM node_types WHERE type=\"$type\"";
 		print "<BR>Query is: $query";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
