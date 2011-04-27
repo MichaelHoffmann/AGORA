@@ -90,8 +90,10 @@
 		$typeID = $row['nodetype_id'];
 		print "<BR>Type ID is $typeID";
 		if($nodeID){
-			$iquery = "INSERT INTO nodes (node_id, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
-										($nodeID, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
+			//UPDATE
+			$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
+			print "<BR>Update Query is: $uquery";							
+			mysql_query($uquery, $linkID);
 		}else{
 			$tid = mysql_real_escape_string($attr["TID"]);		
 			$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
