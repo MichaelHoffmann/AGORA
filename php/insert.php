@@ -49,6 +49,8 @@
 		if($ntID){
 			//update should ALWAYS have a real textbox ID.
 			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
+			print "<BR>Update query is: $uquery";
+			mysql_query($uquery, $linkID);
 		}else{
 			//insert
 				if($textboxID){
@@ -77,7 +79,7 @@
 	{
 		print "<BR>----Node found";
 		$attr = $node->attributes();
-		$tid = mysql_real_escape_string($attr["TID"]);
+		$nodeID = mysql_real_escape_string($attr["ID"]);
 		$type = mysql_real_escape_string($attr["Type"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
@@ -87,20 +89,24 @@
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row['nodetype_id'];
 		print "<BR>Type ID is $typeID";
-		$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
+		if($nodeID){
+			$iquery = "INSERT INTO nodes (node_id, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
+										($nodeID, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
+		}else{
+			$tid = mysql_real_escape_string($attr["TID"]);		
+			$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
 										($tid, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
-										
-		print "<BR>Insert Query is: $iquery";
-										
-		mysql_query($iquery, $linkID);
-		$newID = getLastInsert($linkID);
-		print "<BR>New node ID: $newID";
+			print "<BR>Insert Query is: $iquery";							
+			mysql_query($iquery, $linkID);
+			$nodeID = getLastInsert($linkID);
+			print "<BR>New node ID: $nodeID";
+		}
 		$children = $node->children();
 		$pos = 0;
 		foreach ($children as $child)
 		{
 			$pos++;
-			nodeTextToDB($child, $newID, $linkID, $userID, $pos);
+			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos);
 		}
 	}
 	function sourceNodeToDB($source, $argID, $linkID)
