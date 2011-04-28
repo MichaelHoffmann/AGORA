@@ -110,6 +110,7 @@
 		{
 			$pos++;
 			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos);
+			//TODO: don't do this loop if owner check fails
 		}
 	}
 	function sourceNodeToDB($source, $argID, $linkID)
@@ -132,30 +133,44 @@
 	{
 		print "<BR>---Connection found";
 		$attr = $conn->attributes();
-		$tid = mysql_real_escape_string($attr["argTID"]);
+		$id = mysql_real_escape_string($attr["argID"]);
+		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
+		
+		//get Type ID since that's what we need
 		$type = mysql_real_escape_string($attr["type"]);
-		$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
-		//Get the real data for the DB
 		$query1 = "SELECT * FROM connection_types WHERE conn_name = \"$type\"";
-		$query2 = "SELECT * FROM nodes WHERE node_tid=$tnodeTID";
 		$resultID = mysql_query($query1, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row["type_id"];
-		$resultID = mysql_query($query2, $linkID);
-		$row = mysql_fetch_assoc($resultID);
-		$nodeID = $row["node_id"];
-		//Insert the argument part into the DB (target node and info)
-		$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, created_date, modified_date) VALUES
-										($tid, $userID, $mapID, $nodeID, $typeID, NOW(), NOW())";
-		print "<BR>Insert Query is: $iquery";
-		mysql_query($iquery, $linkID);
-		$newID = getLastInsert($linkID);
-		print "<BR>New connection ID: $newID";
+		
+		$tid = mysql_real_escape_string($attr["argTID"]);
+		
+		if(!$nodeID){
+			$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
+			//Get the real data for the DB
+			$query2 = "SELECT * FROM nodes WHERE node_tid=$tnodeTID";
+			$resultID = mysql_query($query2, $linkID);
+			$row = mysql_fetch_assoc($resultID);
+			$nodeID = $row["node_id"];
+		}
+		
+		if(!$id){
+			//Insert the argument part into the DB (target node and info)
+			$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, created_date, modified_date) VALUES
+											($tid, $userID, $mapID, $nodeID, $typeID, NOW(), NOW())";
+			print "<BR>Insert Query is: $iquery";
+			mysql_query($iquery, $linkID);
+			$id = getLastInsert($linkID);
+			print "<BR>New connection ID: $id";
+		}else{
+		
+		
+		}
 		//Get the argument part (source nodes)
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
-			sourceNodeToDB($child, $newID, $linkID);
+			sourceNodeToDB($child, $id, $linkID);
 		}
 		
 		
