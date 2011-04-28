@@ -48,6 +48,8 @@
 				$node->addAttribute("Type", $row['type']);
 				$node->addAttribute("Author", $row['user_id']);
 				$node->addAttribute("deleted", $row['is_deleted']);
+				$node->addAttribute("gridX", $row['x_coord']);
+				$node->addAttribute("gridY", $row['y_coord']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in nodetext lookup."); 
