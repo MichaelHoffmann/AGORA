@@ -163,7 +163,11 @@
 			$id = getLastInsert($linkID);
 			print "<BR>New connection ID: $id";
 		}else{
-		
+			//Update TYPE of the connection
+			//It's not legal to change what node the argument is supporting
+			$uquery = "UPDATE arguments SET type_id = $typeID, modified_date=NOW() WHERE argument_id=$id";
+			print "<BR>Update query: $uquery";
+			mysql_query($uquery, $linkID);
 		
 		}
 		//Get the argument part (source nodes)
