@@ -91,6 +91,7 @@
 		print "<BR>Type ID is $typeID";
 		if($nodeID){
 			//UPDATE
+			//TODO: add owner check
 			$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
 			print "<BR>Update Query is: $uquery";							
 			mysql_query($uquery, $linkID);
