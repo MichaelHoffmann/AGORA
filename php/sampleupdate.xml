@@ -12,8 +12,5 @@
 		<nodetext textboxID="5"/>
 		<nodetext textboxID="4"/>
 	</node>
-	<connection argID="3" type="MPtherefore" targetnodeID="7">
-		<sourcenode nodeID="6"/>
-		<sourcenode nodeID="8"/>
-	</connection>
+	<connection argID="3" type="MPtherefore" targetnodeID="7" />
 </map>

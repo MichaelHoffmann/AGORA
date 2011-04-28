@@ -115,8 +115,12 @@
 	}
 	function sourceNodeToDB($source, $argID, $linkID)
 	{
+		//Connections to Source Nodes don't have to worry about being updated.
+		//They can only be DELETED or INSERTED.
+		//They get DELETED automatically when the NODE they connect to is DELETED.
 		print "<BR>SourceNode found";
 		$attr = $source->attributes();
+	
 		$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
 		$query = "SELECT * from nodes WHERE node_tid = $nodeTID";
 		$resultID = mysql_query($query, $linkID);
