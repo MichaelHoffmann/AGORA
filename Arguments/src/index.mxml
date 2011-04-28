@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:classes="classes.*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900">
+	<mx:TextArea  id="claimStart"
+				  x="10" 
+				  y="67" 
+				  width="191" 
+				  height="45" 
+				  text="What is the main claim of your argument?" 
+				  toolTip="The easiest way to construct an argument"
+				  textAlign="center"
+				  click="startWithClaim()"/>
+	<mx:TextArea id="schemeStart"
+				 x="338" 
+				 y="67" 
+				 text="Click here if you want to use a specific argument scheme" 
+				 textAlign="center" 
+				 width="184"
+				 click="startWithScheme()"/>
+	
+	
+	<!-- <mx:RemoteObject id="loginService" destination="amfphp" source="loginmodelservice">
+		<mx:method name="verifyLogin" fault="onFault(event)" result="verifyLogin(event)" />
+	</mx:RemoteObject>	 					 
+	<components:PromptLabel id="taskPrompt"
+							x="10" 
+							y="10">
+	</components:PromptLabel> -->
+	<fx:Script>
+		<![CDATA[
+		public function startWithClaim():void {
+			navigateToURL(new URLRequest('Arguments.html'),'_self') 	
+		}
+			
+		public function startWithScheme():void {
+			navigateToURL(new URLRequest('startScheme.html'),'_self') 
+		}
+		]]>
+	</fx:Script>
+</s:Application>

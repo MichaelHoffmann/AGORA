@@ -273,5 +273,10 @@ package classes
 				this.setStyle("cornerRadius",30);
 			} 
 		}
+		
+		public function startWithClaim(m:MouseEvent):void
+		{
+			
+		}
 	}
 }

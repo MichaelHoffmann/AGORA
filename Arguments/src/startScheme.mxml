@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is an application to test the AgoraPanel class. It also 
+draws a line over the canvas. It has to be made a separate 
+class, and will be done soon.
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:classes="classes.*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="initApp()">
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	
+	<s:VGroup>			
+		<mx:Canvas id="agora" width="1400" height="650">
+			<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="5000" height="6000" >	
+			</classes:AgoraMap>
+		</mx:Canvas>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import classes.ALayoutManager;
+			import classes.ArgumentPanel;
+			
+			import flash.display.*;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.controls.Alert;
+			import mx.core.UIComponent;
+			
+			import spark.primitives.Graphic;
+			//public var drawUtility:UIComponent;
+			public var numComponentsX:int;
+			public var numComponentsY:int;
+			public var layoutManager:ALayoutManager;
+			
+			public function setWidth(event: Event):void
+			{
+				//agora.height = agoraMap.stage.width;
+				//agora.width = agoraMap.stage.height;
+			}
+			
+			public function initApp():void
+			{
+				
+				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
+				ArgumentPanel.parentMap = agoraMap;
+				var argumentPanel:ArgumentPanel = new ArgumentPanel();
+				//argumentPanel.gridX = 2;
+				//argumentPanel.gridY = 3;
+				agoraMap.addElement(argumentPanel);
+				agoraMap.layoutManager.registerPanel(argumentPanel);
+				
+				var simulatedClick:MouseEvent = new MouseEvent(MouseEvent.CLICK);
+				argumentPanel.argschemeButton.dispatchEvent(simulatedClick);
+				
+				//var urlLoader:URLLoader = new URLLoader;
+				//var data:XML = new XML();
+				//urlLoader.addEventListener(Event.COMPLETE,agoraMap.load);
+				//urlLoader.load(new URLRequest("http://localhost:8888/exampleLAM.xml"));				
+				
+			}
+		]]>
+	</fx:Script>
+	
+</s:Application>
