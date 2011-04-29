@@ -12,10 +12,12 @@ package classes
 	import mx.controls.Label;
 	import mx.controls.List;
 	import mx.controls.listClasses.ListData;
+	import mx.core.IVisualElement;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
 	
 	import spark.components.Button;
+	import spark.components.HGroup;
 	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
 	
@@ -24,13 +26,14 @@ package classes
 		public var reasons:Vector.<ArgumentPanel>;
 		public var input:Vector.<DynamicTextArea>;
 		public var argumentClass:String;
-		public var aLType:Label;
-		public var addReason:Button;
+		public var scheme:Button;
 		public var vgroup:VGroup;
 		public var claim:ArgumentPanel;
 		public var argType:DisplayArgType;
-		public var myscheme:ArgSelector;
-		public var myArg:ParentArg;
+		public var myschemeSel:ArgSelector;
+		public var myArg:ParentArg;		//argType.schemeText stores the language type
+		public var sentence:String;
+		public var isExp:Boolean;
 		
 		public function Inference()
 		{
@@ -44,16 +47,22 @@ package classes
 			argType.inference = this;
 			argType.width = 100;
 			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
-			myscheme = new ArgSelector();
+			myschemeSel = new ArgSelector();
 			this.setStyle("cornerRadius",30);
+			scheme = new Button;
+			scheme.label = "Scheme...";
+			this.bottomH.addElement(scheme);
+			this.bottomH.removeElement(this.doneButton);
+			scheme.addEventListener(MouseEvent.CLICK,changeHandler);	
+			sentence = "";
+			
 		}
 		
-		public function  addHandlers(fe:FlexEvent):void
+		public function addHandlers(fe:FlexEvent):void
 		{
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			//register it to the layout
 			//parentMap.layoutManager.registerPanel(argType);
-			argType.typeBtn.addEventListener(MouseEvent.CLICK,changeHandler);
 		}
 		
 		private function displayArgumentType(e: FlexEvent) : void
@@ -85,8 +94,8 @@ package classes
 					tmpInput.panelReference = inferenceRule;
 					inferenceRule.input.push(tmpInput);		
 					//binding
-					tmpInput.forwardList.push(inferenceRule.input1);
-					tmp.input1.forwardList.push(tmpInput);
+					tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
+					tmp.input1.forwardList.push(tmpInput);				//this new reason's input1 text forwards to that invisible box.
 					
 				}catch (e:Error)
 				{
@@ -97,42 +106,41 @@ package classes
 		
 		public function changeHandler(e:MouseEvent):void
 		{
-			myscheme.visible=true;
-			myscheme.x = this.gridY*25 + this.width;
-			myscheme.y = this.gridX*25;
-			parentMap.addElement(myscheme);
-			var rootlist:List = myscheme.mainSchemes;
-			var sublist:List = myscheme.typeSelector;
-			var oplist:List = myscheme.andor;
+			myschemeSel.visible=true;
+			myschemeSel.x = this.gridY*25 + this.width;
+			myschemeSel.y = this.gridX*25;
+			parentMap.addElement(myschemeSel);			
+			var rootlist:List = myschemeSel.mainSchemes;
+			if(myArg!=null) {
+			rootlist.dataProvider = myArg.myname;
+			scheme.toolTip = "Only change in language type is allowed"; }
+			var sublist:List = myschemeSel.typeSelector;
+			var oplist:List = myschemeSel.andor;
 			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
 			//rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
 			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
 			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
 			//rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
-			myscheme.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
-			myscheme.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
+			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
 			
 			//var sc:SkinnableContainer = new SkinnableContainer();
 		}
 		
-		/*public function setScheme(le:ListEvent):void
-		{
-			var myclass:String = le.itemRenderer.data.toString();
-			argType.title = myclass;
-		}*/
-		
 		public function setType(le:ListEvent):void
 		{
 			argType.schemeText = le.itemRenderer.data.toString();
-			if(myscheme.andor.visible==false)
-				myscheme.visible = false;
+			if(myschemeSel.andor.visible==false)
+				myschemeSel.visible = false;
+			input1.visible=true;
+			input1.update();
 		}
 		
 		public function displayTypes(le:ListEvent):void
 		{
 			var myclassindex:int = le.rowIndex;
-			var sublist:List = myscheme.typeSelector;
+			var sublist:List = myschemeSel.typeSelector;
 			sublist.visible=true;
 			switch(myclassindex)
 			{
@@ -150,14 +158,25 @@ package classes
 		
 		public function displayOption(le:ListEvent):void
 		{
-			var oplist:List = myscheme.andor;
+			var oplist:List = myschemeSel.andor;
 			var typeText:String=le.itemRenderer.data.toString();
 			argType.schemeText = typeText;
-			var splits:Array = new Array;
-			splits = typeText.split("-");
-			if(splits[splits.length-1] == "Exp")
-			oplist.visible=true;
-			else oplist.visible=false;
+			argType.schemeTextIndex = le.rowIndex;
+			//var splits:Array = new Array;
+			//splits = typeText.split("-");
+			//if(splits[splits.length-1] == "Exp")
+			if(myArg.myname == ParentArg.MOD_TOL)
+				if(typeText == "Only if") {
+					oplist.visible=true; isExp = true; }
+				else
+					oplist.visible=false;
+			else if(myArg.myname == ParentArg.MOD_PON)
+				for(var i:int;i<myArg._expLangTypes.length;i++)
+					if(myArg._expLangTypes[i] == typeText) {
+						argType.connText = ParentArg.EXP_AND;	// Modus Ponens expanded only with AND
+						isExp = true; }
+			
+			sentence = myArg.correctUsage(argType.schemeTextIndex,this.claim.input1.text,this.reasons,isExp);
 		}
 		
 		public function setOption(le:ListEvent):void
@@ -165,25 +184,31 @@ package classes
 			var andor:String = le.itemRenderer.data.toString();
 			if(andor=="And") argType.connText = ParentArg.EXP_AND;
 			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
-			myscheme.visible = false;
+			myschemeSel.visible = false;
+			input1.visible=true;
+			
+			// construct the argument with claim, reason(s), inference and conjunction
+			//sentence = myArg.correctUsage(argType.schemeTextIndex,this.claim.input1.text,this.reasons,isExp,argType.connText);
+			
+			input1.forwardUpdate();
 		}
 		
 		/*public function closeTypes(le:ListEvent):void
 		{
-			var sublist:List = myscheme.typeSelector;
+			var sublist:List = myschemeSel.typeSelector;
 			sublist.visible=false;
 		}*/
 		
 		public function bringForward(e:MouseEvent):void
 		{
-			myscheme.visible = true;
-			parentMap.setChildIndex(myscheme,parentMap.numChildren - 1);
+			myschemeSel.visible = true;
+			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
 		}
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			parentMap.setChildIndex(myscheme,0);
-			//myscheme.visible = false;
+			parentMap.setChildIndex(myschemeSel,0);
+			//myschemeSel.visible = false;
 		}
 		
 		override public function getString():String
@@ -200,5 +225,11 @@ package classes
 		{
 			
 		}
+		
+		public function makeVisible():void{
+			this.visible = true;
+			this.argType.visible = true;
+		}
+		
 	}
 }

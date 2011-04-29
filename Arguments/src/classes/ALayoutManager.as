@@ -135,6 +135,17 @@ package classes
 			return (Math.floor(tmpX/uwidth));
 		}
 		
+		public function tempArrange(panel1:ArgumentPanel):void {
+			var currReason:ArgumentPanel = panel1 as ArgumentPanel;
+			trace(currReason.input1.text);
+			var currClaim:ArgumentPanel = currReason.inference.claim;
+			trace(currClaim.input1.text);
+			currReason.gridY = currClaim.gridY + Math.ceil(currClaim.width / uwidth ) + 2;
+			trace(currReason.gridY);
+			currReason.gridX = currClaim.gridX;	
+			trace(currReason.gridX);
+		}
+		
 		public function registerPanel(panel1:GridPanel):void
 		{
 			try{
@@ -144,12 +155,12 @@ package classes
 					var claim:ArgumentPanel = currPanel.claim;
 					currPanel.gridX = claim.gridX;		
 					currPanel.gridY = claim.gridY;
-					if(currPanel.claim.rules[0] == currPanel){
+					if(currPanel.claim.rules[0] == currPanel){		//this is first inference for this claim
 						var plusGridWidth:int = Math.ceil(claim.width / uwidth ) + 2;
 						var plusGridHeight:int = Math.ceil(claim.height / uwidth ) + 2;
 						currPanel.gridY = currPanel.gridY + plusGridWidth;
 						currPanel.gridX = currPanel.gridX + plusGridHeight;
-						//fix the grid positins of the argument class
+						//fix the grid positions of the argument class
 						currPanel.argType.gridX = currPanel.claim.gridX;
 						currPanel.argType.gridY = currPanel.gridY;
 						registerPanel(currPanel.argType);
@@ -166,7 +177,7 @@ package classes
 							}	
 						}
 					}
-					else
+					else			//subsequent inference for the claim
 					{
 						var lastInference:Inference = currPanel.claim.rules[currPanel.claim.rules.length - 2];
 						var lastInferenceGridX:int  = lastInference.gridX + getGridSpan(lastInference.height);

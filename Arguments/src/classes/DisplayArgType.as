@@ -18,9 +18,10 @@ package classes
 		public var vgroup:VGroup;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
-		public var typeBtn:Button;
+		//public var typeBtn:Button;
 		public var inference:Inference;
 		public var schemeText:String;
+		public var schemeTextIndex:int;
 		public var connText:String;
 		
 		public function DisplayArgType()
@@ -41,9 +42,9 @@ package classes
 			addReasonBtn = new Button;
 			addReasonBtn.label = "+R";
 			hgroup.addElement(addReasonBtn);
-			typeBtn = new Button;
-			typeBtn.label = "change..";
-			hgroup.addElement(typeBtn);
+			//typeBtn = new Button;
+			//typeBtn.label = "change..";
+			//hgroup.addElement(typeBtn);
 			height = 20;
 			width = 150;
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);

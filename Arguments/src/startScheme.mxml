@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-This stage is where the user starts developing with just the claim
+This stage is where the user starts developing with an entire argument scheme
 -->
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
@@ -11,10 +11,10 @@ This stage is where the user starts developing with just the claim
 	</fx:Declarations>
 	
 	<s:VGroup>			
-	<mx:Canvas id="agora" width="1400" height="650">
-	<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="5000" height="6000" >	
-	</classes:AgoraMap>
-	</mx:Canvas>
+		<mx:Canvas id="agora" width="1400" height="650">
+			<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="5000" height="6000" >	
+			</classes:AgoraMap>
+		</mx:Canvas>
 	</s:VGroup>
 	
 	<fx:Script>
@@ -50,6 +50,10 @@ This stage is where the user starts developing with just the claim
 				//argumentPanel.gridY = 3;
 				agoraMap.addElement(argumentPanel);
 				agoraMap.layoutManager.registerPanel(argumentPanel);
+				
+				// Simulating a button click to make the Inference + reason appear directly alongwith the claim
+				var simulatedClick:MouseEvent = new MouseEvent(MouseEvent.CLICK);
+				argumentPanel.argschemeButton.dispatchEvent(simulatedClick);
 				
 				//var urlLoader:URLLoader = new URLLoader;
 				//var data:XML = new XML();
