@@ -1,7 +1,8 @@
 package logic
 {
-	import components.ArgSelector;
 	import classes.ArgumentPanel;
+	
+	import components.ArgSelector;
 	
 	import mx.utils.ObjectUtil;
 

@@ -33,6 +33,7 @@ package classes
 		public var myschemeSel:ArgSelector;
 		public var myArg:ParentArg;		//argType.schemeText stores the language type
 		public var sentence:String;
+		public var isExp:Boolean;
 		
 		public function Inference()
 		{
@@ -161,7 +162,6 @@ package classes
 			var typeText:String=le.itemRenderer.data.toString();
 			argType.schemeText = typeText;
 			argType.schemeTextIndex = le.rowIndex;
-			var isExp:Boolean = false;
 			//var splits:Array = new Array;
 			//splits = typeText.split("-");
 			//if(splits[splits.length-1] == "Exp")
@@ -176,7 +176,6 @@ package classes
 						argType.connText = ParentArg.EXP_AND;	// Modus Ponens expanded only with AND
 						isExp = true; }
 			
-			// construct the argument with claim, reason(s), inference and conjunction
 			sentence = myArg.correctUsage(argType.schemeTextIndex,this.claim.input1.text,this.reasons,isExp);
 		}
 		
@@ -187,6 +186,10 @@ package classes
 			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
 			myschemeSel.visible = false;
 			input1.visible=true;
+			
+			// construct the argument with claim, reason(s), inference and conjunction
+			//sentence = myArg.correctUsage(argType.schemeTextIndex,this.claim.input1.text,this.reasons,isExp,argType.connText);
+			
 			input1.forwardUpdate();
 		}
 		

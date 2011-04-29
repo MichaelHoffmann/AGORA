@@ -59,6 +59,7 @@ package classes
 		public var panelType:int;
 		public var thereforeLine:UIComponent;
 		public var thereforeText:Label;
+		public var negated:Boolean;		// negated = 0 means no - it is positive. negated = 1 means yes - it is negative. Useful for Modus Tollens and Disjunctive Syllogism
 		
 		public function ArgumentPanel()
 		{
@@ -210,7 +211,7 @@ package classes
 				thereforeText = new Label;
 				thereforeText.x = this.gridY*25+this.width + 10; thereforeText.y = this.gridX*25+50;
 				parentMap.addElement(thereforeText);
-				thereforeText.text = "<-- Therefore";
+				thereforeText.text = "<== Therefore";
 				
 				var currInference:Inference = new Inference();
 				parentMap.addElement(currInference);
