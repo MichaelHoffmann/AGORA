@@ -202,13 +202,15 @@ package classes
 				//add reason to the map
 				parentMap.addElement(reason);
 				
+				Alert.show("Select reason to be Universal or Particular statement, by clicking on its label on top");
+				
 				//line saying "therefore" joining claim and reason temporarily
 				thereforeLine.graphics.moveTo(this.width-10,this.height/2);
 				thereforeLine.graphics.lineTo(this.width+100,this.height/2);
 				thereforeText = new Label;
 				thereforeText.x = this.gridY*25+this.width + 10; thereforeText.y = this.gridX*25+50;
 				parentMap.addElement(thereforeText);
-				thereforeText.text = "THEREFORE";
+				thereforeText.text = "<-- Therefore";
 				
 				var currInference:Inference = new Inference();
 				parentMap.addElement(currInference);
@@ -216,8 +218,7 @@ package classes
 				currInference.claim = this;
 				currInference.reasons.push(reason);
 				reason.inference = currInference;
-				//parentMap.layoutManager.tempArrange(reason); // *********
-				//Alert("after tempArrange");
+	
 				//create an invisible box for the inference rule corresponding to the claim
 				var tmpInput:DynamicTextArea = new DynamicTextArea();
 				parentMap.addElement(tmpInput);

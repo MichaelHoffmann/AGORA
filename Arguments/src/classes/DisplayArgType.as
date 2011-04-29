@@ -21,6 +21,7 @@ package classes
 		//public var typeBtn:Button;
 		public var inference:Inference;
 		public var schemeText:String;
+		public var schemeTextIndex:int;
 		public var connText:String;
 		
 		public function DisplayArgType()
