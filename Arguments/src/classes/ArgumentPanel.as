@@ -114,7 +114,7 @@ package classes
 		{
 			try{
 				var	dinitiator:UIComponent = UIComponent(mouseEvent.currentTarget);
-				var dPInitiator:ArgumentPanel = ArgumentPanel(dinitiator.parent.parent.parent.parent.parent);
+				var dPInitiator:ArgumentPanel = ArgumentPanel(dinitiator.parent.parent.parent.parent.parent.parent);
 				var ds:DragSource = new DragSource();
 				var tmpx:int = int(dPInitiator.mouseX);
 				var tmpy:int = int(dPInitiator.mouseY);
