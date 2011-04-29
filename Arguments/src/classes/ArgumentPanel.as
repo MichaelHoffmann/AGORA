@@ -26,8 +26,8 @@ package classes
 	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.HGroup;
-	import spark.components.Label;
 	import spark.components.Panel;
+	import spark.components.TextArea;
 	import spark.components.VGroup;
 	import spark.layouts.HorizontalAlign;
 	import spark.layouts.HorizontalLayout;
@@ -58,6 +58,7 @@ package classes
 		public var lab:Label;
 		public var panelType:int;
 		public var thereforeLine:UIComponent;
+		public var thereforeText:Label;
 		
 		public function ArgumentPanel()
 		{
@@ -94,6 +95,7 @@ package classes
 			doneButton.addEventListener(MouseEvent.CLICK,doneHandler);
 			
 			thereforeLine = new UIComponent();
+			thereforeLine.graphics.clear();
 			thereforeLine.graphics.lineStyle(2,0,1);
 			addElement(thereforeLine);
 		}
@@ -201,11 +203,12 @@ package classes
 				parentMap.addElement(reason);
 				
 				//line saying "therefore" joining claim and reason temporarily
-				thereforeLine.graphics.moveTo(this.width,this.height/2);
-				thereforeLine.graphics.lineTo(100,this.height/2);
-				var thereforeLabel:spark.components.Label = new spark.components.Label();
-				thereforeLabel.x = this.width + 25; thereforeLabel.y = 25;
-				thereforeLabel.text = "therefore";
+				thereforeLine.graphics.moveTo(this.width-10,this.height/2);
+				thereforeLine.graphics.lineTo(this.width+100,this.height/2);
+				thereforeText = new Label;
+				thereforeText.x = this.width + 10; thereforeText.y = 50;
+				parentMap.addElement(thereforeText);
+				thereforeText.text = "THEREFORE";
 				
 				var currInference:Inference = new Inference();
 				parentMap.addElement(currInference);
@@ -254,6 +257,12 @@ package classes
 				parentMap.layoutManager.registerPanel(this);	
 				parentMap.layoutManager.registerPanel(this.inference);	
 				this.inference.makeVisible();
+				parentMap.removeElement(correspClaim.thereforeText);
+				correspClaim.thereforeLine.graphics.clear();
+				
+				Alert.show("Select Argument Scheme from the list");
+				var simulatedClick:MouseEvent = new MouseEvent(MouseEvent.CLICK);
+				this.inference.scheme.dispatchEvent(simulatedClick);
 
 			}
 			else { //this is also a claim. so "done" should not do anything special. here done should be equivalent to hitting 'enter'

@@ -122,8 +122,8 @@ package classes
 							}
 							s = s + infPanel.input[ind].text;
 							if(flag==1) 
-								s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
-							else s = s + ", " + infPanel.input[0].text + ".";
+								s = s + ", " + splits[1] + " " + infPanel.input[0].text;
+							else s = s + ", " + infPanel.input[0].text;
 							
 
 							/*currInput = forwardList[0];//this is an invisible text box and it has only one dependent, the inference's text (input1)
