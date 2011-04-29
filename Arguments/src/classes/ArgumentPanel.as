@@ -206,7 +206,7 @@ package classes
 				thereforeLine.graphics.moveTo(this.width-10,this.height/2);
 				thereforeLine.graphics.lineTo(this.width+100,this.height/2);
 				thereforeText = new Label;
-				thereforeText.x = this.width + 10; thereforeText.y = 50;
+				thereforeText.x = this.gridY*25+this.width + 10; thereforeText.y = this.gridX*25+50;
 				parentMap.addElement(thereforeText);
 				thereforeText.text = "THEREFORE";
 				
@@ -279,9 +279,8 @@ package classes
 		}
 			
 		public function textBoxClicked(event:MouseEvent):void{
-			if(event.target.text != ""){
+			if(this.inference==null)
 				event.target.text = "";
-			}
 		}
 
 		public function movedAway(event:MouseEvent):void{
