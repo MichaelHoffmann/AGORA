@@ -72,6 +72,7 @@ package classes
 		}
 		
 		override public function set text(value:String):void{
+			trace(value);
 			textField.text = value;
 			validateNow();
 			var paddingTop:String = this.getStyle("paddingTop");

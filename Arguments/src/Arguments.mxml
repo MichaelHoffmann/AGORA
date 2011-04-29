@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-This is an application to test the AgoraPanel class. It also 
-draws a line over the canvas. It has to be made a separate 
-class, and will be done soon.
+This stage is where the user starts developing with just the claim
 -->
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"

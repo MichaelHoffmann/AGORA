@@ -3,7 +3,9 @@ package classes
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Keyboard;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
@@ -37,19 +39,20 @@ package classes
 		public var topArea:UIComponent;
 		public var panelSkin:PanelSkin;
 		public var panelSkin1:PanelSkin;
-		public var useButton:spark.components.Button;
+		public var doneButton:spark.components.Button;
 		public var argschemeButton:spark.components.Button;
 		public var savedText:String;
 		public static var parentMap:AgoraMap;
-		public var inference:Inference;
+		public var inference:Inference;		//back reference
 		public var bottomH:HGroup;
 		public var topH:HGroup;
-		public var rules:Vector.<Inference>;
+		public var rules:Vector.<Inference>;	//forward reference
 		public var binders:Vector.<Binder>;
 		public var state:int;	//state=0 -> universal statement and state=1 -> particular statement
 		
 		public static const ARGUMENT_PANEL:int = 0;
 		public static const INFERENCE:int = 1;
+		public var MODE:int = 1;	// mode:0 means construct by reason, mode:1 means construct by argument scheme
 		
 		public var lab:Label;
 		public var panelType:int;
@@ -83,6 +86,10 @@ package classes
 			lab.addEventListener(MouseEvent.CLICK,toggle);
 			
 			bottomH = new HGroup();
+			doneButton = new spark.components.Button;
+			doneButton.label = "Done";
+			bottomH.addElement(doneButton);
+			doneButton.addEventListener(MouseEvent.CLICK,doneHandler);
 		}
 		
 		
@@ -128,6 +135,8 @@ package classes
 			currInference.claim = this;
 			//set the class of the reason
 			//currInference.argumentClass = Inference.MODUS_PONENS;
+			//if(MODE==0) { currInference.visible = false;
+			//	currInference.argType.visible = false; }
 			
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
@@ -169,9 +178,7 @@ package classes
 			tmpInput2.forwardList.push(currInference.input1);
 			reason.input1.forwardList.push(tmpInput2);
 			
-			//if(input1.text!="")
 			input1.forwardUpdate();		//claim	
-			//if(reason.input1.text!="")
 			reason.input1.forwardUpdate();		//reason
 			
 			try{
@@ -182,10 +189,89 @@ package classes
 			}
 
 			parentMap.layoutManager.registerPanel(currInference);	
-		}	
+		}
+		
+		public function checkForEnter(event:KeyboardEvent):void{
+			if(event.keyCode==Keyboard.ENTER){
+				MODE=0;
+				// add Reason only
+				var reason:ArgumentPanel = new ArgumentPanel();
+				//add reason to the map
+				parentMap.addElement(reason);
+				//push reason to the list of reasons belonging to this particular class. for this we require inference. but we dont add it to map
+				var currInference:Inference = new Inference();
+				parentMap.addElement(currInference);
+				currInference.visible = false; currInference.argType.visible = false;
+				//rules.push(currInference); ****************
+				currInference.claim = this;
+				currInference.reasons.push(reason);
+				reason.inference = currInference;
+				//parentMap.layoutManager.registerPanel(reason);	
+				parentMap.layoutManager.tempArrange(reason);
+				//create an invisible box for the inference rule corresponding to the claim
+				var tmpInput:DynamicTextArea = new DynamicTextArea();
+				parentMap.addElement(tmpInput);
+				//set the input box as invisible
+				tmpInput.visible = false;
+				//logical
+				//set the panel to which the input box belongs
+				tmpInput.panelReference = currInference;
+				//add a pointer to the input
+				currInference.input.push(tmpInput);		
+				//binding
+				tmpInput.forwardList.push(currInference.input1);
+				input1.forwardList.push(currInference.input[0]);
+				
+				//create an invisible box for the reason
+				var tmpInput2:DynamicTextArea = new DynamicTextArea();
+				parentMap.addElement(tmpInput2);
+				tmpInput2.visible = false;
+				tmpInput2.panelReference = currInference;
+				currInference.input.push(tmpInput2);	
+				
+				tmpInput2.forwardList.push(currInference.input1);
+				reason.input1.forwardList.push(tmpInput2);
+				input1.forwardUpdate();		//claim	
+				reason.input1.forwardUpdate();		//reason
+				
+				
+				// deactive the DONE button to avoid duplicate action
+				doneButton.removeEventListener(MouseEvent.CLICK,doneHandler);
+			}
+		}
+		
+		public function doneHandler(d:MouseEvent):void{
+			if(MODE==1){ //only reason has been added, inference is invisible and not pushed to claim.rules
+				var correspClaim:ArgumentPanel = this.inference.claim;
+				correspClaim.rules.push(this.inference);
+				parentMap.layoutManager.registerPanel(this);	
+				parentMap.layoutManager.registerPanel(this.inference);	
+				this.inference.makeVisible();
+
+			}
+			else { //this is also a claim. so "done" should not do anything special. here done should be equivalent to hitting 'enter'
+				if(this.rules.length==0) {//open ended claim. Enter has not been hit yet
+					var simulatedEnter:KeyboardEvent = new KeyboardEvent(KeyboardEvent.KEY_DOWN);
+					simulatedEnter.keyCode = Keyboard.ENTER;
+					input1.dispatchEvent(simulatedEnter);
+				}
+			}
+		}
 	
 		public function getString():String{
 			return input1.text;
+		}
+			
+		public function textBoxClicked(event:MouseEvent):void{
+			if(event.target.text != ""){
+				event.target.text = "";
+			}
+		}
+
+		public function movedAway(event:MouseEvent):void{
+			if(event.target.text == ""){
+				event.target.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
+			}
 		}
 		
 		//create children must be overriden to create dynamically allocated children
@@ -198,6 +284,11 @@ package classes
 			//input1 = new TextInput();
 			input1 = new DynamicTextArea();
 			input1.panelReference = this;
+			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (dont press enter too)";
+			if(this.panelType==ARGUMENT_PANEL) {
+			input1.addEventListener(MouseEvent.CLICK,textBoxClicked);
+			input1.addEventListener(MouseEvent.MOUSE_OUT,movedAway);
+			input1.addEventListener(KeyboardEvent.KEY_DOWN,checkForEnter); }
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			
@@ -234,15 +325,9 @@ package classes
 			bottomH.addElement(argschemeButton);
 			argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
 			
-			/*useButton = new spark.components.Button;
-			useButton.label = "use as..";
-			logicalContainer.addElement(useButton);
-			useButton.addEventListener(MouseEvent.CLICK,toggle);
-			useButton.toolTip="Whether a statement is universal or particular determines what kind of objections are possible against it. A 'universal statement' is defined here as a statement that can be falsified by one counter-example. In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements. Anything else is treated as a particular statement, including statements about possibilities.";
-			*/
 		}
 		
-		public function onArgumentPanelCreate( e:FlexEvent):void
+		public function onArgumentPanelCreate(e:FlexEvent):void
 		{
 			//remove the default title bar provided by mx
 			panelSkin = this.skin as PanelSkin;
@@ -252,6 +337,9 @@ package classes
 			//panelSkin1 = this.buttonArea.skin as PanelSkin;
 			//panelSkin1.topGroup.includeInLayout = false;
 			//panelSkin1.topGroup.visible = false;
+			if(this.panelType==ARGUMENT_PANEL)
+			input1.text = "[Enter your claim]. Pressing Enter after done will automatically prompt you for a reason";
+
 		}
 		
 		public function toggle(m:MouseEvent):void
@@ -274,9 +362,5 @@ package classes
 			} 
 		}
 		
-		public function startWithClaim(m:MouseEvent):void
-		{
-			
-		}
 	}
 }

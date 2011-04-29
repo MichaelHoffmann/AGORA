@@ -2,7 +2,14 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:classes="classes.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()">
+		
+	<s:Label text="Welcome to Agora! Please choose one of the following tasks to continue.."
+			 x="10" y="10"
+			 fontWeight="bold" 
+			 fontFamily="Verdana"  
+			 fontSize="14"/>
+	
 	<mx:TextArea  id="claimStart"
 				  x="10" 
 				  y="67" 
@@ -19,15 +26,20 @@
 				 textAlign="center" 
 				 width="184"
 				 click="startWithScheme()"/>
-	
+	<classes:DynamicTextArea id="conceptStart"
+							 x="658" 
+							 y="67" 
+							 minWidth="195"
+							 textAlign="center"/>
+	<classes:DynamicTextArea id="argumentPaste"
+							 x="1027" 
+							 y="67"  
+							 click="{argumentPaste.text=''}" 
+							 textAlign="center"/>
 	
 	<!-- <mx:RemoteObject id="loginService" destination="amfphp" source="loginmodelservice">
 		<mx:method name="verifyLogin" fault="onFault(event)" result="verifyLogin(event)" />
-	</mx:RemoteObject>	 					 
-	<components:PromptLabel id="taskPrompt"
-							x="10" 
-							y="10">
-	</components:PromptLabel> -->
+	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
 		public function startWithClaim():void {
@@ -36,6 +48,11 @@
 			
 		public function startWithScheme():void {
 			navigateToURL(new URLRequest('startScheme.html'),'_self') 
+		}
+			
+		public function init():void {
+			argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";
+			conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
 		}
 		]]>
 	</fx:Script>

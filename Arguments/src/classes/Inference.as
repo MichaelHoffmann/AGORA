@@ -51,11 +51,12 @@ package classes
 			scheme = new Button;
 			scheme.label = "Scheme...";
 			this.bottomH.addElement(scheme);
-			scheme.addEventListener(MouseEvent.CLICK,changeHandler);			
+			this.bottomH.removeElement(this.doneButton);
+			scheme.addEventListener(MouseEvent.CLICK,changeHandler);	
 			
 		}
 		
-		public function  addHandlers(fe:FlexEvent):void
+		public function addHandlers(fe:FlexEvent):void
 		{
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			//register it to the layout
@@ -210,5 +211,11 @@ package classes
 		{
 			
 		}
+		
+		public function makeVisible():void{
+			this.visible = true;
+			this.argType.visible = true;
+		}
+		
 	}
 }
