@@ -165,6 +165,8 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
   map_id INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   type_id INT UNSIGNED NOT NULL,
+  x_coord INT NULL,
+  y_coord INT NULL,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,

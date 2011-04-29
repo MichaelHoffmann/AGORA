@@ -2,7 +2,7 @@
 	<textbox ID="1" text="FOO" deleted="0"/>
 	<textbox ID="2" text="BAR" deleted="0"/>
 	<textbox ID="3" text="BAZ" deleted="0"/>
-	<node ID="1" Type="Standard" Author="1" deleted="0" gridX="1" gridY="20">
+	<node ID="1" Type="Standard" Author="1" deleted="0" gridX="20" gridY="1">
 		<nodetext ID="1"/>
 	</node>
 	<node ID="2" Type="Standard" Author="1" deleted="0" gridX="1" gridY="1">
@@ -12,7 +12,7 @@
 		<nodetext ID="1"/>
 		<nodetext ID="2"/>
 	</node>
-	<connection argID="1" type="MPtherefore" targetnode="2" deleted="0" gridX="1" gridY="12">
+	<connection argID="1" type="MPtherefore" targetnode="2" deleted="0" gridX="12" gridY="1">
 		<sourcenode nodeID="1"/>
 		<sourcenode nodeID="3"/>
 	</connection>
