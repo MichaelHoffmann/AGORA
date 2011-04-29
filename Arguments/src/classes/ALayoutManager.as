@@ -137,9 +137,13 @@ package classes
 		
 		public function tempArrange(panel1:ArgumentPanel):void {
 			var currReason:ArgumentPanel = panel1 as ArgumentPanel;
+			trace(currReason.input1.text);
 			var currClaim:ArgumentPanel = currReason.inference.claim;
-			currReason.gridY = currClaim.gridY + Math.ceil(currClaim.width / uwidth ) + 2;;
+			trace(currClaim.input1.text);
+			currReason.gridY = currClaim.gridY + Math.ceil(currClaim.width / uwidth ) + 2;
+			trace(currReason.gridY);
 			currReason.gridX = currClaim.gridX;	
+			trace(currReason.gridX);
 		}
 		
 		public function registerPanel(panel1:GridPanel):void

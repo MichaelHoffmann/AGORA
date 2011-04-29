@@ -26,6 +26,7 @@ package classes
 	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.HGroup;
+	import spark.components.Label;
 	import spark.components.Panel;
 	import spark.components.VGroup;
 	import spark.layouts.HorizontalAlign;
@@ -56,6 +57,7 @@ package classes
 		
 		public var lab:Label;
 		public var panelType:int;
+		public var thereforeLine:UIComponent;
 		
 		public function ArgumentPanel()
 		{
@@ -90,6 +92,10 @@ package classes
 			doneButton.label = "Done";
 			bottomH.addElement(doneButton);
 			doneButton.addEventListener(MouseEvent.CLICK,doneHandler);
+			
+			thereforeLine = new UIComponent();
+			thereforeLine.graphics.lineStyle(2,0,1);
+			addElement(thereforeLine);
 		}
 		
 		
@@ -180,13 +186,6 @@ package classes
 			
 			input1.forwardUpdate();		//claim	
 			reason.input1.forwardUpdate();		//reason
-			
-			try{
-				
-			}catch(e:Error)
-			{
-				Alert.show(e.toString());
-			}
 
 			parentMap.layoutManager.registerPanel(currInference);	
 		}
@@ -196,18 +195,26 @@ package classes
 				MODE=0;
 				// add Reason only
 				var reason:ArgumentPanel = new ArgumentPanel();
+				reason.x = this.gridY*25 + this.width + 100;
+				reason.y = this.gridX*25;	
 				//add reason to the map
 				parentMap.addElement(reason);
-				//push reason to the list of reasons belonging to this particular class. for this we require inference. but we dont add it to map
+				
+				//line saying "therefore" joining claim and reason temporarily
+				thereforeLine.graphics.moveTo(this.width,this.height/2);
+				thereforeLine.graphics.lineTo(100,this.height/2);
+				var thereforeLabel:spark.components.Label = new spark.components.Label();
+				thereforeLabel.x = this.width + 25; thereforeLabel.y = 25;
+				thereforeLabel.text = "therefore";
+				
 				var currInference:Inference = new Inference();
 				parentMap.addElement(currInference);
 				currInference.visible = false; currInference.argType.visible = false;
-				//rules.push(currInference); ****************
 				currInference.claim = this;
 				currInference.reasons.push(reason);
 				reason.inference = currInference;
-				//parentMap.layoutManager.registerPanel(reason);	
-				parentMap.layoutManager.tempArrange(reason);
+				//parentMap.layoutManager.tempArrange(reason); // *********
+				//Alert("after tempArrange");
 				//create an invisible box for the inference rule corresponding to the claim
 				var tmpInput:DynamicTextArea = new DynamicTextArea();
 				parentMap.addElement(tmpInput);
@@ -284,7 +291,7 @@ package classes
 			//input1 = new TextInput();
 			input1 = new DynamicTextArea();
 			input1.panelReference = this;
-			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (dont press enter too)";
+			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
 			if(this.panelType==ARGUMENT_PANEL) {
 			input1.addEventListener(MouseEvent.CLICK,textBoxClicked);
 			input1.addEventListener(MouseEvent.MOUSE_OUT,movedAway);
@@ -338,7 +345,7 @@ package classes
 			//panelSkin1.topGroup.includeInLayout = false;
 			//panelSkin1.topGroup.visible = false;
 			if(this.panelType==ARGUMENT_PANEL)
-			input1.text = "[Enter your claim]. Pressing Enter after done will automatically prompt you for a reason";
+			input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
 
 		}
 		
