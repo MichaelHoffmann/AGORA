@@ -73,6 +73,8 @@
 				$connection->addAttribute("type", $row['conn_name']);
 				$connection->addAttribute("targetnode", $row['node_id']);
 				$connection->addAttribute("deleted", $row['is_deleted']);
+				$connection->addAttribute("gridX", $row['x_coord']);
+				$connection->addAttribute("gridY", $row['y_coord']);
 				//Set up the inner query to find the source nodes
 				$innerQuery="SELECT * FROM connections WHERE argument_id=$arg_id";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in connection lookup");
