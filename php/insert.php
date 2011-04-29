@@ -139,6 +139,8 @@
 		$attr = $conn->attributes();
 		$id = mysql_real_escape_string($attr["argID"]);
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
+		$x = mysql_real_escape_string($attr["x"]);
+		$y = mysql_real_escape_string($attr["y"]);
 		
 		//get Type ID since that's what we need
 		$type = mysql_real_escape_string($attr["type"]);
@@ -160,8 +162,8 @@
 		
 		if(!$id){
 			//Insert the argument part into the DB (target node and info)
-			$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, created_date, modified_date) VALUES
-											($tid, $userID, $mapID, $nodeID, $typeID, NOW(), NOW())";
+			$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
+											($tid, $userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			print "<BR>Insert Query is: $iquery";
 			mysql_query($iquery, $linkID);
 			$id = getLastInsert($linkID);
@@ -169,7 +171,7 @@
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the argument is supporting
-			$uquery = "UPDATE arguments SET type_id = $typeID, modified_date=NOW() WHERE argument_id=$id";
+			$uquery = "UPDATE arguments SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE argument_id=$id";
 			print "<BR>Update query: $uquery";
 			mysql_query($uquery, $linkID);
 		
