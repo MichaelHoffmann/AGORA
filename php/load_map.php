@@ -1,5 +1,9 @@
 <?php
 
+	/**
+	*	Function that loads a map from the database.
+	*	Might be worth refactoring this somewhat.
+	*/
 	function get_map($mapID, $timestamp){
 		//Standard SQL connection stuff
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");

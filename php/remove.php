@@ -1,8 +1,12 @@
 <?php
 	require 'checklogin.php';
 	
+	/**
+	*	Function for removing a node from the database.
+	*/
 	function removeNode($node, $mapID, $linkID, $userID)
 	{
+		//TODO: this should be working on the "is_deleted" flag rather than outright removal
 		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["id"]);
@@ -19,7 +23,12 @@
 			return false;
 		}
 	}
-	
+	/**
+	*	Convenience function. Iterates throughout the database. Separated from main logic for clarity.
+	*	Doesn't delete anything but nodes directly.
+	*	The MySQL "ON DELETE CASCADE" takes care of the rest.
+	*	http://dev.mysql.com/doc/refman/5.5/en/innodb-foreign-key-constraints.html
+	*/
 	function xmlToDB($xml, $mapID, $linkID, $userID)	
 	{
 		print "<BR>Now taking the XML and deleting things with it...";
@@ -46,6 +55,9 @@
 		return true;
 	}
 	
+	/**
+	*	Highest level function. Handles SQL connection logic.
+	*/
 	function remove($xmlin, $userID, $pass_hash)
 	{
 	//Standard SQL connection stuff
@@ -70,16 +82,9 @@
 			print "This map does not exist, therefore you cannot remove things from this map.";
 		}else{
 			//the map exists, and now we operate on it
-			$author = $row['user_id'];
-			print "Author: $author  Map: $mapClause <BR>";
-			$ownMap = false;
-			if($author == $userID){
-				$ownMap=true;
-				//TODO: Use this to determine if the INSERTIONS (or UPDATES) are legal
-			}
-			
+						
+			//Transactions used for protecting maps from mass deletes that are partially illegal.
 			mysql_query("START TRANSACTION");
-
 			$success = xmlToDB($xml, $mapClause, $linkID, $userID);
 			if($success===true){
 				mysql_query("COMMIT");
@@ -98,5 +103,5 @@
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
 	$output = remove($xmlparam, $userID, $pass_hash); 
-	//print($output->asXML()); //TODO: turn this back on
+	//print($output->asXML()); //TODO: turn this back on when output XML is set up
 ?>
