@@ -1,5 +1,8 @@
 <?php
 
+	/**
+	*	Function for allowing a user to change his own information.
+	*/
 	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $newpass)
 	{
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
@@ -26,8 +29,6 @@
 			$xml->addAttribute("modified", false);
 		}else{
 			//update the database
-/*
-*/
 			if($npclause!="")
 			{
 				$iquery= "UPDATE users SET firstname='$fnclause', lastname='$lnclause',	password='$npclause',
@@ -38,7 +39,7 @@
 				$iquery = "UPDATE users SET firstname='$fnclause', lastname='$lnclause', email='$mailclause', 
 						url='$urlclause', last_login=NOW() WHERE user_id=$uid";
 			}
-			//$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
+
 			$insID = mysql_query($iquery, $linkID) or die("Update failed for some reason."); 
 			$xml->addAttribute("modified", true); // Successfully created the username.
 		}
