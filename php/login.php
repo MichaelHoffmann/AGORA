@@ -1,5 +1,8 @@
 <?php
-
+	/**
+	*	Function for allowing users to confirm their login information.
+	*	Returns XML containing the UID once the username and password hash are given.
+	*/
 	function login($username, $pass_hash)
 	{
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");

@@ -1,5 +1,7 @@
 <?php
-
+	/**
+	* Function allowing user to register a new account.
+	*/
 	function register($username, $pass_hash, $firstname, $lastname, $email, $url)
 	{
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
