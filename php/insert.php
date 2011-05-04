@@ -1,7 +1,14 @@
 <?php
 
+	//TODO: (Whole file) make this return a TID-ID XML so that we can stop storing TID in the DB
 	require 'checklogin.php';
 
+	/**
+	* Convenience function.
+	* Selects the last auto-generated ID (AUTO_INCREMENT) from the Database.
+	* See the following for the function that this uses:
+	* http://php.net/manual/en/function.mysql-insert-id.php
+	*/
 	function getLastInsert($linkID)
 	{
 		$query = "SELECT LAST_INSERT_ID()";
@@ -11,6 +18,9 @@
 		print "New Textbox ID: $mapClause <BR>";
 	}
 
+	/**
+	*	Takes a textbox and gets the necessary information from XML into the DB.
+	*/
 	function textboxToDB($tb, $mapID, $linkID, $userID)
 	{
 		print "<BR>---Textbox found";
@@ -35,6 +45,9 @@
 		}
 	}
 
+	/**
+	*	Takes a nodetext link and inserts it into the database.
+	*/
 	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position)
 	{
 		print "<BR>NodeText found";
@@ -61,6 +74,9 @@
 				mysql_query($iquery, $linkID);
 				
 			}else{
+				//We're inserting a completely new textbox.
+				//Notice how we have to figure out the real ID to correspond to the TID.
+				//Eventually this will be done more elegantly.
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
 				$resultID = mysql_query($query, $linkID);
@@ -74,7 +90,9 @@
 			}
 		}
 	}
-	
+	/**
+	*	Takes a node from XML and puts it in the database.
+	*/
 	function nodeToDB($node, $mapID, $linkID, $userID)
 	{
 		print "<BR>----Node found";
@@ -90,12 +108,13 @@
 		$typeID = $row['nodetype_id'];
 		print "<BR>Type ID is $typeID";
 		if($nodeID){
-			//UPDATE
+			//update
 			//TODO: add owner check
 			$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
 			print "<BR>Update Query is: $uquery";							
 			mysql_query($uquery, $linkID);
 		}else{
+			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);		
 			$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
 										($tid, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
@@ -113,6 +132,10 @@
 			//TODO: don't do this loop if owner check fails
 		}
 	}
+	
+	/**
+	*	Links an argument to a "source node" in the DB.
+	*/
 	function sourceNodeToDB($source, $argID, $linkID)
 	{
 		//Connections to Source Nodes don't have to worry about being updated.
@@ -133,6 +156,10 @@
 		mysql_query($iquery, $linkID);
 		
 	}
+	
+	/**
+	*	Defines the "argument" part of a connection in the DB.
+	*/
 	function connectionToDB($conn, $mapID, $linkID, $userID)
 	{
 		print "<BR>---Connection found";
@@ -180,11 +207,13 @@
 		{
 			sourceNodeToDB($child, $id, $linkID);
 		}
-		
-		
-		
 	}
 	
+	/**
+	*	Convenience function that iterates through the XML to find all the pieces.
+	*	Separated out for clarity.
+	*	Order doesn't matter, so long as there's nothing referencing things that don't exist yet.
+	*/
 	function xmlToDB($xml, $mapID, $linkID, $userID)
 	{
 		print "Now in xml-to-DB function<BR>";
@@ -205,22 +234,13 @@
 					connectionToDB($child, $mapID, $linkID, $userID);
 					break;
 			}
-		}
-		
-		//Validate and insert/update nodes
-		//Validate and insert/update textboxes
-		//Validate and insert/update nodetext
-		//Validate and insert/update arguments
-		//Validate and insert/update connections
-		
-		//If ANY of the above failed, we return false and let the rollback solve our problems for us.
-		
-		
-		
+		}		
 		return true;
 	}
 	
-	
+	/**
+	*	Highest-level function, that does the top level logic.
+	*/
 	function insert($xmlin, $userID, $pass_hash)
 	{
 		//Standard SQL connection stuff
@@ -261,11 +281,13 @@
 		$ownMap = false;
 		if($author == $userID){
 			$ownMap=true;
-			//TODO: Use this to determine if the INSERTIONS (or UPDATES) are legal
+			//TODO: Use this to determine if the INSERTIONS are legal
+			//(Note that UPDATES are checked against ownership of that individual thing)
 		}
 		
+		//This part neatly handles all possibilities of failure. All we have to do is chain back "false" returns.
 		mysql_query("START TRANSACTION");
-
+		
 		$success = xmlToDB($xml, $mapClause, $linkID, $userID);
 		if($success===true){
 			mysql_query("COMMIT");
@@ -275,7 +297,6 @@
 			print "<BR>Query rolled back!<BR>";
 		}
 
-		
 		//TODO: output XML here
 		/*
 		header("Content-type: text/xml");
