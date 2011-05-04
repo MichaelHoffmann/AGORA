@@ -10,6 +10,8 @@ package classes
 	import flash.events.Event;
 	import flash.events.TextEvent;
 	
+	import logic.ParentArg;
+	
 	import mx.controls.Alert;
 	import mx.controls.TextArea;
 	import mx.utils.NameUtil;
@@ -98,29 +100,48 @@ package classes
 			var flag:int = 0;
 			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE)
 			{
-					
+					if(forwardList.length>0){
 						currInput= forwardList[0];
 						//update the string
 					
 							var infPanel:Inference = Inference(panelReference);
 							var s:String;
 							//trace(infPanel.input.length);
-							if(infPanel.argType.schemeText!=null) { flag=1;
-							var typeChosen:String = infPanel.argType.schemeText;
+							if(infPanel.argType.schemeText!=null) { 
+								flag=1;
+							/*var typeChosen:String = infPanel.argType.schemeText;
 							var splits:Array = new Array;
 							splits = typeChosen.split("-");
 							s = splits[0] + " ";
 							if(splits[splits.length-1] == "Exp")
-							var expandor:String = infPanel.argType.connText;}
-							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
+							var expandor:String = infPanel.argType.connText;
+							this.panelReference.input1.visible=true;*/
+								}
+							else this.panelReference.input1.visible=false;
+							/*for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
 							{
 								s = s + infPanel.input[ind].text + " " + expandor + " ";	
 								//trace(infPanel.input[ind]);
 							}
 							s = s + infPanel.input[ind].text;
-							if(flag==1) s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";
-							else s = s + ", " + infPanel.input[0].text + ".";
+							if(flag==1) 
+								s = s + ", " + splits[1] + " " + infPanel.input[0].text;
+							else s = s + ", " + infPanel.input[0].text;
 							
+							var typeChosen:int = infPanel.argType.schemeTextIndex;
+							var currScheme:ParentArg;
+							var currSchemeName:String = infPanel.myArg.myname;
+							switch(currSchemeName)
+							{
+								case ParentArg.MOD_PON: currScheme = new ModusPonens(currScheme); break;
+								case ParentArg.MOD_TOL: currScheme = new ModusTollens; break;
+								case ParentArg.COND_SYLL: currScheme = new ConditionalSyllogism; break;
+								case ParentArg.DIS_SYLL: currScheme = new DisjunctiveSyllogism; break;
+								case ParentArg.NOT_ALL_SYLL: currScheme = new NotAllSyllogism; break;
+								case ParentArg.CONST_DILEM: currScheme = new ConstructiveDilemma;
+									
+							}*/
+							s = infPanel.sentence;
 
 							/*currInput = forwardList[0];//this is an invisible text box and it has only one dependent, the inference's text (input1)
 							//update the string
@@ -133,8 +154,9 @@ package classes
 							s = s + infPanel.input[ind].text;
 							s = s + ", therefore " + infPanel.input[0].text + ".";*/
 
-							currInput.text = s;
+							currInput.text = s; 
 							currInput.forwardUpdate();
+					}
 			}else
 			{
 				if(forwardList.length == 0 )
@@ -147,8 +169,26 @@ package classes
 			}
 			}
 
+		}
+		
+		public function update():void{
+			var s:String;
+			var infPanel:Inference = Inference(panelReference);
+			/*var typeChosen:String = infPanel.argType.schemeText;
+			var splits:Array = new Array;
+			splits = typeChosen.split("-");
+			s = splits[0] + " ";
+			if(splits[splits.length-1] == "Exp")
+				var expandor:String = infPanel.argType.connText;
+			for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
+			{
+				s = s + infPanel.input[ind].text + " " + expandor + " ";	
 			}
-		 
+			s = s + infPanel.input[ind].text;
+			s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";*/
+			
+			this.text = infPanel.sentence;
+		}
 		
 		public function backwardUpdate():void
 		{

@@ -1,5 +1,7 @@
 package logic
 {
+	import classes.ArgumentPanel;
+	
 	import components.ArgSelector;
 	
 	import mx.utils.ObjectUtil;
@@ -9,12 +11,13 @@ package logic
 		
 	public var myname:String;
 	public var _langTypes:Array;
-	public var MOD_PON:String = "Modus Ponens";
-	public var MOD_TOL:String = "Modus Tollens";
-	public var COND_SYLL:String = "Conditional Syllogism";
-	public var DIS_SYLL:String = "Disjunctive Syllogism";
-	public var NOT_ALL_SYLL:String = "Not-All Syllogism";
-	public var CONST_DILEM:String = "Constructive Dilemma";
+	public var _expLangTypes:Array;
+	public static var MOD_PON:String = "Modus Ponens";
+	public static var MOD_TOL:String = "Modus Tollens";
+	public static var COND_SYLL:String = "Conditional Syllogism";
+	public static var DIS_SYLL:String = "Disjunctive Syllogism";
+	public static var NOT_ALL_SYLL:String = "Not-All Syllogism";
+	public static var CONST_DILEM:String = "Constructive Dilemma";
 	public static var EXP_AND:String = "and";
 	public static var EXP_OR:String = "or";
 	
@@ -23,9 +26,8 @@ package logic
 	public function ParentArg()
 	{
 		mySelector = new ArgSelector;
-	}
+	}	
 	
-	public static var MODUS_PONENS:String = "Modus Ponens";
-	
+	virtual public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String { }
 	}
 }
