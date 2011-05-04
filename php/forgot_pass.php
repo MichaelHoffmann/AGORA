@@ -1,5 +1,7 @@
 <?php
-
+	/**
+	*	Function for emailing users who forget their password.
+	*/
 	function forgot_pass($username)
 	{
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
