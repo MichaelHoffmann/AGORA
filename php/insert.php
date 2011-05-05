@@ -158,7 +158,11 @@
 		{
 			$pos++;
 			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos);
-			//TODO: don't do this loop if owner check fails
+			//Note that this won't be done if the owner check failed on an UPDATE
+			//because the update will "return false"
+			//This behavior is correct:
+			//if someone can't update a node they shouldn't be able to change its nodetext information.
+			//Also, they should fail the textbox owner check as well.
 		}
 	}
 	
@@ -313,6 +317,10 @@
 		if($author == $userID){
 			$ownMap=true;
 			//TODO: Use this to determine if the INSERTIONS are legal
+			//We need to establish a clear policy on what insertions *are* legal, though.
+			//That will be done on the Node and Argument levels.
+			//It hinges on the TYPES of nodes and arguments, which haven't been fully established yet.
+			
 			//(Note that UPDATES are checked against ownership of that individual thing)
 		}
 		
