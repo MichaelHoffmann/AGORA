@@ -28,12 +28,21 @@
 		$text = mysql_real_escape_string($attr["text"]);
 		$id = $attr["ID"];
 		if($id){
-			//TODO: add author check
 			print "<BR>Textbox ID is $id";
-			$uquery = "UPDATE textboxes SET text=\"$text\", modified_date=NOW() WHERE textbox_id=$id";
-			print "<BR>Update query: $uquery";
-			$status = mysql_query($uquery, $linkID);
-			print "<BR>Query executed! Status: $status";
+			$query = "SELECT * FROM textboxes WHERE textbox_id=$id";
+			print "<BR>author check query: $query";
+			$resultID = mysql_query($query, $linkID);
+			if($userID == $row["user_id"]){
+				$uquery = "UPDATE textboxes SET text=\"$text\", modified_date=NOW() WHERE textbox_id=$id";
+				print "<BR>Update query: $uquery";
+				$status = mysql_query($uquery, $linkID);
+				print "<BR>Query executed! Status: $status";
+			}else{
+				print "<BR>You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.";
+				return false;
+			}
+			
+
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
