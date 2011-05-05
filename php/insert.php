@@ -32,7 +32,10 @@
 			$query = "SELECT * FROM textboxes WHERE textbox_id=$id";
 			print "<BR>author check query: $query";
 			$resultID = mysql_query($query, $linkID);
-			if($userID == $row["user_id"]){
+			$row = mysql_fetch_assoc($resultID);
+			$dbUID = $row["user_id"];
+			print "<BR>UID out of the database: $dbUID";
+			if($userID == $dbUID){
 				$uquery = "UPDATE textboxes SET text=\"$text\", modified_date=NOW() WHERE textbox_id=$id";
 				print "<BR>Update query: $uquery";
 				$status = mysql_query($uquery, $linkID);
@@ -116,9 +119,26 @@
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row['nodetype_id'];
 		print "<BR>Type ID is $typeID";
-		if($nodeID){
+		if($nodeID){		
 			//update
-			//TODO: add owner check
+			print "<BR>Node ID is $nodeID";
+			$query = "SELECT * FROM nodes WHERE node_id=$nodeID";
+			print "<BR>author check query: $query";
+			$resultID = mysql_query($query, $linkID);
+			$row = mysql_fetch_assoc($resultID);
+			$dbUID = $row["user_id"];
+			print "<BR>UID out of the database: $dbUID";
+			if($userID == $dbUID){
+				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
+				print "<BR>Update Query is: $uquery";							
+				$status=mysql_query($uquery, $linkID);
+				print "<BR>Query executed! Status: $status";
+			}else{
+				print "<BR>You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.";
+				return false;
+			}
+		
+		
 			$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
 			print "<BR>Update Query is: $uquery";							
 			mysql_query($uquery, $linkID);
