@@ -6,7 +6,6 @@
 	*/
 	function removeNode($node, $mapID, $linkID, $userID)
 	{
-		//TODO: this should be working on the "is_deleted" flag rather than outright removal
 		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["id"]);
@@ -15,9 +14,10 @@
 		$row = mysql_fetch_assoc($resultID);
 		if($userID == $row["user_id"]){
 			print "<BR>Now deleting....<BR>";
-			$dquery = "DELETE FROM nodes WHERE node_id=$nID";
-			print $dquery;
-			return mysql_query($dquery, $linkID);
+			$uquery = "UPDATE nodes SET modified_date=NOW(), is_deleted=1";
+			print $uquery;
+			return mysql_query($uquery, $linkID);
+			//TODO: manually cascade this stuff over
 		}else{
 			print "<BR>You are attempting to delete someone else's work or a nonexistent node. This is not permissible.";
 			return false;
