@@ -25,8 +25,13 @@
 			
 			public function submit_form():void
 			{
+				if(pass_hash.text != pass_hash_dup.text)
+				{
+					Alert.show("Passwords do not match");
+					return;
+				}
 				var requestVariables:URLVariables = new URLVariables("username="+username.text+"&pass_hash="+pass_hash.text+"&firstname="+firstname.text+"&lastname="+lastname.text+"&email="+email.text+"&url="+url.text);
-				trace(requestVariables);
+				//trace(requestVariables);
 				var request:URLRequest = new URLRequest;
 				request.url = "http://localhost:8888/php/register.php";
 				request.method = URLRequestMethod.GET;
