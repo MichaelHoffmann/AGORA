@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			
+			private function displayStatus(event:Event):void
+			{
+				var xml:XML = XML(event.target.data);
+				Alert.show(xml.toXMLString());
+
+			}
+			
+			public function clear_form():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function submit_form():void
+			{
+				if(pass_hash.text != pass_hash_dup.text)
+				{
+					Alert.show("Passwords do not match");
+					return;
+				}
+				var requestVariables:URLVariables = new URLVariables("username="+username.text+"&pass_hash="+pass_hash.text+"&firstname="+firstname.text+"&lastname="+lastname.text+"&email="+email.text+"&url="+url.text);
+				//trace(requestVariables);
+				var request:URLRequest = new URLRequest;
+				request.url = "http://localhost:8888/php/register.php";
+				request.method = URLRequestMethod.GET;
+				request.data = requestVariables;
+				var urlLoader:URLLoader = new URLLoader;
+				urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+				urlLoader.addEventListener(Event.COMPLETE,displayStatus);
+				urlLoader.load(request);
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:FormItem label="Username">
+		<s:TextInput id="username">
+		</s:TextInput>
+	</mx:FormItem>
+	
+	<mx:FormItem label="Password">
+		<s:TextInput id="pass_hash" displayAsPassword="true">
+		</s:TextInput>
+	</mx:FormItem>
+	<mx:FormItem label="Confirm Password" >
+		<s:TextInput id="pass_hash_dup"  displayAsPassword="true">
+		</s:TextInput>
+	</mx:FormItem>
+	<mx:FormItem label="First Name">
+		<s:TextInput id="firstname">
+		</s:TextInput>
+	</mx:FormItem>
+	<mx:FormItem label="Last Name">
+		<s:TextInput id="lastname">
+		</s:TextInput>
+	</mx:FormItem>
+	<mx:FormItem label="Email">
+		<s:TextInput id="email">
+		</s:TextInput>
+	</mx:FormItem>
+
+	<mx:FormItem label="URL">
+		<s:TextInput id="url">
+		</s:TextInput>
+	</mx:FormItem>
+	<mx:FormItem>
+		<s:HGroup>
+			<s:Button label="Submit" id="submit_btn" click="submit_form();">		
+			</s:Button>
+			<s:Button label="Back" id="back_btn" click="clear_form();">		
+			</s:Button>
+		</s:HGroup>		
+
+	</mx:FormItem>
+</mx:Form>
