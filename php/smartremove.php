@@ -27,7 +27,7 @@
 			$uquery = "UPDATE nodetext SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			print $uquery;
 			$retval = mysql_query($uquery, $linkID);
-			if(!retval){
+			if(!$retval){
 				return $retval;
 			}
 			//cascading over to TEXTBOXES will be troublesome since I have to stash all the nodetexts that are deleted...
@@ -38,7 +38,7 @@
 			$uquery = "UPDATE connections SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			print $uquery;
 			$retval = mysql_query($uquery, $linkID);
-			if(!retval){
+			if(!$retval){
 				return $retval;
 			}
 			//Nodes can be TARGETNODES of arguments
@@ -46,7 +46,7 @@
 			$uquery = "UPDATE arguments SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			print $uquery;
 			$retval = mysql_query($uquery, $linkID);
-			if(!retval){
+			if(!$retval){
 				return $retval;
 			}
 			
