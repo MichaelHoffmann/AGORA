@@ -27,7 +27,7 @@
 		$xml->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>$timeclause ORDER BY textbox_id";
+		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY textbox_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -41,7 +41,7 @@
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = $whereclause AND modified_date>$timeclause ORDER BY node_id";
+		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -66,7 +66,7 @@
 		}
 
 		// Connections will take a lot more work.
-		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_date>$timeclause";
+		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\"";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
