@@ -16,6 +16,7 @@
     <application path="Arguments.mxml"/>
     <application path="index.mxml"/>
     <application path="startScheme.mxml"/>
+    <application path="RegisterForm.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

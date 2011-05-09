@@ -46,8 +46,8 @@ This stage is where the user starts developing with just the claim
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;
 				var argumentPanel:ArgumentPanel = new ArgumentPanel();
-				//argumentPanel.gridX = 2;
-				//argumentPanel.gridY = 3;
+				argumentPanel.gridX = 2;
+				argumentPanel.gridY = 3;
 				agoraMap.addElement(argumentPanel);
 				agoraMap.layoutManager.registerPanel(argumentPanel);
 				
