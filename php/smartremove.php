@@ -23,8 +23,8 @@
 			//TODO: manually cascade this stuff over
 			
 			//Nodes can be NODES in Node-Text relationship
-			print "<BR>Now cascading over to Nodetext....<BR>"
-			$uquery = "UPDATE nodetext SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID"
+			print "<BR>Now cascading over to Nodetext....<BR>";
+			$uquery = "UPDATE nodetext SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			print $uquery;
 			$retval = mysql_query($uquery, $linkID);
 			if(!retval){
@@ -34,16 +34,16 @@
 			
 			
 			//Nodes can be SOURCENODES of connections
-			print "<BR>Now cascading over to Connections....<BR>"
-			$uquery = "UPDATE connections SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID"
+			print "<BR>Now cascading over to Connections....<BR>";
+			$uquery = "UPDATE connections SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			print $uquery;
 			$retval = mysql_query($uquery, $linkID);
 			if(!retval){
 				return $retval;
 			}
 			//Nodes can be TARGETNODES of arguments
-			print "<BR>Now cascading over to Arguments....<BR>"
-			$uquery = "UPDATE arguments SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID"
+			print "<BR>Now cascading over to Arguments....<BR>";
+			$uquery = "UPDATE arguments SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			print $uquery;
 			$retval = mysql_query($uquery, $linkID);
 			if(!retval){
