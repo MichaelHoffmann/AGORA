@@ -17,6 +17,7 @@
     <application path="startScheme.mxml"/>
     <application path="index.mxml"/>
     <application path="Arguments.mxml"/>
+    <application path="MapConstruction.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

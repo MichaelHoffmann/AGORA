@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:classes="classes.*" width="1440" height="680">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:VGroup>			
+		<mx:Canvas id="agora" width="1400" height="650">
+			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="5000" height="6000" >	
+			</classes:AgoraMap>
+		</mx:Canvas>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import classes.ALayoutManager;
+			import classes.ArgumentPanel;
+			
+			import flash.display.*;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.controls.Alert;
+			import mx.core.UIComponent;
+			
+			import spark.primitives.Graphic;
+			//public var drawUtility:UIComponent;
+			public var numComponentsX:int;
+			public var numComponentsY:int;
+			public var layoutManager:ALayoutManager;
+			
+			public function setWidth(event: Event):void
+			{
+				//agora.height = agoraMap.stage.width;
+				//agora.width = agoraMap.stage.height;
+			}
+			
+			public function initApp():void
+			{
+				
+				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
+				ArgumentPanel.parentMap = agoraMap;
+				var argumentPanel:ArgumentPanel = new ArgumentPanel();
+				argumentPanel.gridX = 2;
+				argumentPanel.gridY = 3;
+				agoraMap.addElement(argumentPanel);
+				agoraMap.layoutManager.registerPanel(argumentPanel);
+				
+				//var urlLoader:URLLoader = new URLLoader;
+				//var data:XML = new XML();
+				//urlLoader.addEventListener(Event.COMPLETE,agoraMap.load);
+				//urlLoader.load(new URLRequest("http://localhost:8888/exampleLAM.xml"));				
+				
+			}
+		]]>
+	</fx:Script>
+	
+</mx:Canvas>
