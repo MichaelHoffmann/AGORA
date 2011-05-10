@@ -13,10 +13,10 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="startScheme.mxml"/>
-    <application path="index.mxml"/>
     <application path="Arguments.mxml"/>
     <application path="RegisterForm.mxml"/>
+    <application path="index.mxml"/>
+    <application path="startScheme.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
