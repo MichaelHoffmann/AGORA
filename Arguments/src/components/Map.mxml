@@ -23,6 +23,7 @@
 		<![CDATA[
 			import classes.ALayoutManager;
 			import classes.ArgumentPanel;
+			import classes.GridPanel;
 			
 			import flash.display.*;
 			
@@ -52,6 +53,12 @@
 				//agora.width = agoraMap.stage.height;
 			}
 			
+			public function saveMap(event:MouseEvent):void
+			{
+				var xml:XML = new XML;
+				
+			}
+			
 			public function initApp():void
 			{
 				
@@ -60,11 +67,16 @@
 				var argumentPanel:ArgumentPanel = new ArgumentPanel();
 				argumentPanel.gridX = 2;
 				argumentPanel.gridY = 3;
+				
+				//
+				argumentPanel.aid = 1;
+				GridPanel.count = 1;
+				
 				agoraMap.addElement(argumentPanel);
 				agoraMap.layoutManager.registerPanel(argumentPanel);
 				
 				//register event handlers
-		//		gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
+				gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
 				discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);
 				
 				//var urlLoader:URLLoader = new URLLoader;

@@ -62,12 +62,14 @@
 				//data is in xml format
 				var xmlData:XML = XML(event.target.data);
 				var maps:XMLList = xmlData.map;
+				var xmls:Object = new Object;
 				for each (var map:XML in maps)
 				{
 						var mapButton:Button = new Button;
 						mapButton.width="190";
 						mapButton.label = map.attribute("title");
 						mapNameList.addElement(mapButton);
+						xmls[mapButton.label] = map;
 				}
 			}
 			

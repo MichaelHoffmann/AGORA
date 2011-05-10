@@ -291,13 +291,16 @@
 	
 	
 		//Dig the Map ID out of the XML
+		print "test<BR>";
 		$xml = new SimpleXMLElement($xmlin);
+		print "foo<BR>";
 		$mapID = $xml['id'];
+		print "bar<BR>";
 		$mapClause = mysql_real_escape_string("$mapID");
 		//Check to see if the map already exists
 		if($mapClause==0){
 			//If not, create it!
-			$iquery = "INSERT INTO MAPS (user_id, title, description, created_date, modified_date) VALUES
+			$iquery = "INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES
 										($userID, 'Example', 'Description', NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
 			
