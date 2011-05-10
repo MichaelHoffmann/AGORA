@@ -1,59 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   xmlns:classes="classes.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()">
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="loadData();" xmlns:components="components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Canvas id="agoraMenu" width="800" height="600">
+		<s:VGroup id="Agora">
+			<s:HGroup paddingLeft="25" paddingTop="25">
+				<s:Label text="Welcome to AGORA...">
+				</s:Label>	
+			</s:HGroup>
+			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
+				<s:Panel id="mapList" title="List of Maps" width="200" height="400" >
+					<s:VGroup id="mapNameList" gap="5" paddingTop="5" paddingLeft="5"> 
+					</s:VGroup>
+				</s:Panel>
+				<s:Panel id="myMaps" title="My Maps" width="200" height="400">
+				</s:Panel>
+				<s:Panel  id="projects" title="Projects" width="200" height="400">	
+				</s:Panel>
+			</s:HGroup>
+			<s:HGroup paddingLeft="25" paddingTop="25">
+				<s:Button id="createMapBtn" label="Create Map">
+				</s:Button >
+				<s:Button id="createProjectBtn" label="Create Project">
+				</s:Button>
+			</s:HGroup>
+		</s:VGroup>	
+	</mx:Canvas>
+	<!--
+	<components:LAMWorld visible="false">
+	</components:LAMWorld>
+	<components:Map visible="false">
 		
-	<s:Label text="Welcome to Agora! Please choose one of the following tasks to continue.."
-			 x="10" y="10"
-			 fontWeight="bold" 
-			 fontFamily="Verdana"  
-			 fontSize="14"/>
+	</components:Map>
+	-->
 	
-	<mx:TextArea  id="claimStart"
-				  x="10" 
-				  y="67" 
-				  width="191" 
-				  height="45" 
-				  text="What is the main claim of your argument?" 
-				  toolTip="The easiest way to construct an argument"
-				  textAlign="center"
-				  click="startWithClaim()"/>
-	<mx:TextArea id="schemeStart"
-				 x="338" 
-				 y="67" 
-				 text="Click here if you want to use a specific argument scheme" 
-				 textAlign="center" 
-				 width="184"
-				 click="startWithScheme()"/>
-	<classes:DynamicTextArea id="conceptStart"
-							 x="658" 
-							 y="67" 
-							 minWidth="195"
-							 textAlign="center"/>
-	<classes:DynamicTextArea id="argumentPaste"
-							 x="1027" 
-							 y="67"  
-							 click="{argumentPaste.text=''}" 
-							 textAlign="center"/>
-	
-	<!-- <mx:RemoteObject id="loginService" destination="amfphp" source="loginmodelservice">
-		<mx:method name="verifyLogin" fault="onFault(event)" result="verifyLogin(event)" />
-	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
-		public function startWithClaim():void {
-			navigateToURL(new URLRequest('Arguments.html'),'_self') 	
-		}
+			import components.LAMWorld;
+			public var username:String;
+			public var pass_hash:String;
 			
-		public function startWithScheme():void {
-			navigateToURL(new URLRequest('startScheme.html'),'_self') 
-		}
+			public function createMap(event:MouseEvent):void
+			{
+				var lamWorld:LAMWorld = new LAMWorld;
+				//hide the controls
+				agoraMenu.visible = false;
+				addElement(lamWorld);
+				
+			}
 			
-		public function init():void {
-			argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";
-			conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
-		}
+			public function displayMap(event: Event):void
+			{
+				//data is in xml format
+				var xmlData:XML = XML(event.target.data);
+				var maps:XMLList = xmlData.map;
+				for each (var map:XML in maps)
+				{
+						var mapButton:Button = new Button;
+						mapButton.width="190";
+						mapButton.label = map.attribute("title");
+						mapNameList.addElement(mapButton);
+						//trace(map.attribute("title"));
+				}
+			}
+			
+			public function loadMapList():void
+			{
+				//create a request object
+				var request:URLRequest = new URLRequest;
+				request.url="http://agora.gatech.edu/dev/list_maps.php";
+				request.method = URLRequestMethod.GET;
+				
+				//create a loader
+				var loader:URLLoader = new URLLoader;
+				//add a handler for handling the response
+				loader.addEventListener(Event.COMPLETE,displayMap);
+				
+				//load the request obect
+				loader.load(request);
+				
+				//registerEventHandler for createMap
+				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
+				//register Event Handler for create Project
+				
+			}
+			
+			public function loadProjectList():void
+			{
+			
+			}
+			
+			public function loadData():void
+			{
+				loadMapList();
+				loadProjectList();
+			}
+			
 		]]>
 	</fx:Script>
 </s:Application>

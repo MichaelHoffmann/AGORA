@@ -219,7 +219,6 @@ package classes
 		
 		public function connectRelatedPanels():void
 		{
-			//var panelList:Vector.<ArgumentPanel> = layoutManager.panelList;
 			var panelList:Vector.<GridPanel> = layoutManager.panelList;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
