@@ -29,13 +29,7 @@
 			</s:HGroup>
 		</s:VGroup>	
 	</mx:Canvas>
-	<!--
-	<components:LAMWorld visible="false">
-	</components:LAMWorld>
-	<components:Map visible="false">
-		
-	</components:Map>
-	-->
+
 	
 	<fx:Script>
 		<![CDATA[

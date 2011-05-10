@@ -3,6 +3,7 @@ package classes
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
@@ -12,6 +13,7 @@ package classes
 	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.controls.Label;
+	import mx.controls.Text;
 	import mx.controls.TextInput;
 	import mx.core.DragSource;
 	import mx.core.IUIComponent;
@@ -43,7 +45,10 @@ package classes
 		public var doneButton:spark.components.Button;
 		public var argschemeButton:spark.components.Button;
 		public var savedText:String;
+		//public var displayLbl:Label;
+		public var displayTxt:Text;
 		public static var parentMap:AgoraMap;
+		public var group:Group;
 		public var inference:Inference;		//back reference
 		public var bottomH:HGroup;
 		public var topH:HGroup;
@@ -61,6 +66,27 @@ package classes
 		public var thereforeText:Label;
 		public var negated:Boolean;		// negated = 0 means no - it is positive. negated = 1 means yes - it is negative. Useful for Modus Tollens and Disjunctive Syllogism
 		
+		
+		public function makeEditable(event:MouseEvent):void
+		{
+			//trace("should make it editable");
+			if( !( event.target is mx.controls.Button) )
+			{
+				input1.visible = true;
+				//displayLbl.visible = false;
+				displayTxt.visible = false;
+			}
+		}
+		
+		public function makeUnEditable(event: FocusEvent):void
+		{
+			displayTxt.width = input1.width;
+			displayTxt.height = input1.height;
+			displayTxt.text = input1.text;
+			displayTxt.visible = true;
+			input1.visible = false;
+		}
+		
 		public function ArgumentPanel()
 		{
 			super();
@@ -76,11 +102,13 @@ package classes
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
+			//this.addEventListener(MouseEvent.CLICK, makeEditable);
+			
 			inference = null;
 			rules = new Vector.<Inference>(0,false);
 
 			lab = new Label;
-			// default setting
+			// default setting    	
 			if(this is Inference) lab.text = "Universal Statement";
 			else lab.text = "Particular Statement";
 			lab.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
@@ -300,12 +328,18 @@ package classes
 			//create the Dynamic Text Area
 			//input1 = new TextInput();
 			input1 = new DynamicTextArea();
+			this.input1.addEventListener(FocusEvent.FOCUS_OUT, makeUnEditable);
 			input1.panelReference = this;
 			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
 			if(this.panelType==ARGUMENT_PANEL) {
-			input1.addEventListener(MouseEvent.CLICK,textBoxClicked);
-			input1.addEventListener(MouseEvent.MOUSE_OUT,movedAway);
+			//input1.addEventListener(MouseEvent.CLICK,textBoxClicked);
+			//input1.addEventListener(MouseEvent.MOUSE_OUT,movedAway);
 			input1.addEventListener(KeyboardEvent.KEY_DOWN,checkForEnter); }
+			
+			//Create the label for displaying the statement
+			//displayLbl = new Label;
+			displayTxt = new Text;
+			this.displayTxt.addEventListener(MouseEvent.CLICK, makeEditable);
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			
@@ -322,19 +356,12 @@ package classes
 			topH.addElement(topArea);
 			topH.addElement(lab);
 			
-			//Register event handlers
-			//Creation Complete event handlers
-			//this.input1.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
-			//this.input2.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
-			//this.topArea.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelChildrenCreate);
-			
-			
-			//add the elements to the display list
-			//of the application. 
-			//addChild --> Halo
-			//addElement --> Spark
-			//addElement(topArea);
-			addElement(input1);	
+			group = new Group;
+			addElement(group);
+			group.addElement(input1);
+			//displayLbl.width = 100;
+			group.addElement(displayTxt);
+			input1.visible=false;
 			addElement(bottomH);
 			
 			argschemeButton = new spark.components.Button;
@@ -355,8 +382,10 @@ package classes
 			//panelSkin1.topGroup.includeInLayout = false;
 			//panelSkin1.topGroup.visible = false;
 			if(this.panelType==ARGUMENT_PANEL)
-			input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
-
+				input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
+			displayTxt.text = input1.text;
+			displayTxt.width = input1.width;
+			displayTxt.height = input1.height;
 		}
 		
 		public function toggle(m:MouseEvent):void
