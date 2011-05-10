@@ -2,11 +2,17 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
-		   xmlns:classes="classes.*" width="1440" height="680">
+		   xmlns:classes="classes.*" width="1440" height="680" creationComplete="initApp();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:VGroup>			
+		<s:HGroup>
+			<s:Button id="gotoMenuBtn" label="Save and Exit">
+			</s:Button>
+			<s:Button id="discardChangesBtn" label="Home">
+			</s:Button>
+		</s:HGroup>
 		<mx:Canvas id="agora" width="1400" height="650">
 			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="5000" height="6000" >	
 			</classes:AgoraMap>
@@ -24,11 +30,21 @@
 			import mx.controls.Alert;
 			import mx.core.UIComponent;
 			
+			import spark.components.Group;
 			import spark.primitives.Graphic;
 			//public var drawUtility:UIComponent;
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
+			
+			
+			public function discardChanges(event:Event):void
+			{
+				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
+				canvas.visible = true;
+				Group(this.parent).removeElement(this);
+				
+			}
 			
 			public function setWidth(event: Event):void
 			{
@@ -46,6 +62,10 @@
 				argumentPanel.gridY = 3;
 				agoraMap.addElement(argumentPanel);
 				agoraMap.layoutManager.registerPanel(argumentPanel);
+				
+				//register event handlers
+		//		gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
+				discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);
 				
 				//var urlLoader:URLLoader = new URLLoader;
 				//var data:XML = new XML();

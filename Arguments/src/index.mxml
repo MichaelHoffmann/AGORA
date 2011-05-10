@@ -5,7 +5,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Canvas id="agoraMenu" width="800" height="600">
+	<mx:Canvas id="agoraMenu" width="800" height="600" name="agoraMenu">
 		<s:VGroup id="Agora">
 			<s:HGroup paddingLeft="25" paddingTop="25">
 				<s:Label text="Welcome to AGORA...">
@@ -52,6 +52,11 @@
 				
 			}
 			
+			public function showMenu():void
+			{
+				agoraMenu.visible = true;
+			}
+			
 			public function displayMap(event: Event):void
 			{
 				//data is in xml format
@@ -63,7 +68,6 @@
 						mapButton.width="190";
 						mapButton.label = map.attribute("title");
 						mapNameList.addElement(mapButton);
-						//trace(map.attribute("title"));
 				}
 			}
 			

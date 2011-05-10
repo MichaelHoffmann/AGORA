@@ -3,7 +3,7 @@
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
 		   xmlns:classes="classes.*"
-		   width="1440" height="700">
+		   width="1440" height="700" creationComplete="init();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -46,12 +46,16 @@
 	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
+			import spark.components.Group;
 			
 			public function startWithClaim():void {
-				navigateToURL(new URLRequest('Arguments.html'),'_self') 	
+				//navigateToURL(new URLRequest('Arguments.html'),'_self') 	
 				//trace(this.parent); 
-				//var map:Map = new Map;
-				//trace(this.parentApplication);
+				var map:Map = new Map;
+				//trace(this.parent);
+				var group:Group = Group(this.parent);
+				group.addElement(map);
+				group.removeElement(this);
 			}
 			
 			public function startWithScheme():void {
