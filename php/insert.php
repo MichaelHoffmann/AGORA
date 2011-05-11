@@ -4,7 +4,6 @@
 	require 'checklogin.php';
 	$tbTIDarray;
 	$nodeTIDarray;
-	$argTIDarray;
 	/**
 	* Convenience function.
 	* Selects the last auto-generated ID (AUTO_INCREMENT) from the Database.
@@ -95,19 +94,10 @@
 				mysql_query($iquery, $linkID);
 				
 			}else{
-				//We're inserting a completely new textbox.
-				//Notice how we have to figure out the real ID to correspond to the TID.
-				//Eventually this will be done more elegantly.
 				$tid = mysql_real_escape_string($attr["TID"]);
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
-				/*
-				$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
-				$resultID = mysql_query($query, $linkID);
-				$row = mysql_fetch_assoc($resultID);
-				$textID = $row['textbox_id'];
-				*/
 				$textID=$tbTIDarray[$tTID];
-				//print "<BR>Textbox $textID found";
+				
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES 
 							($nodeID, $textID, $position, NOW(), NOW())";
 				
@@ -125,6 +115,8 @@
 	*/
 	function nodeToDB($node, $mapID, $linkID, $userID, $output)
 	{
+		global $nodeTIDarray;
+		
 		//print "<BR>----Node found";
 		$attr = $node->attributes();
 		$nodeID = mysql_real_escape_string($attr["ID"]);
@@ -171,7 +163,9 @@
 			$nodeOut=$output->addChild("node");
 			$nodeOut->addAttribute("TID", $tid);
 			$nodeOut->addAttribute("ID", $nodeID);
-			//print "<BR>New node ID: $nodeID";
+			
+			$nodeTIDarray[$tid]=$nodeID; // Add the TID->ID mapping to the global lookup array
+			
 		}
 		$children = $node->children();
 		$pos = 0;
@@ -193,19 +187,16 @@
 	*	Links an argument to a "source node" in the DB.
 	*/
 	function sourceNodeToDB($source, $argID, $linkID, $output)
-	{
+	{	
+		global $nodeTIDarray;
 		//Connections to Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
 		//They get DELETED automatically when the NODE they connect to is DELETED.
 		//print "<BR>SourceNode found";
 		$attr = $source->attributes();
 		$tid =  mysql_real_escape_string($attr["TID"]);
-		
 		$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
-		$query = "SELECT * from nodes WHERE node_tid = $nodeTID";
-		$resultID = mysql_query($query, $linkID);
-		$row = mysql_fetch_assoc($resultID);
-		$nodeID = $row['node_id'];
+		$nodeID = $nodeTIDarray[$nodeTID];
 		
 		$iquery = "INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
 											($argID, $nodeID, NOW(), NOW())";
