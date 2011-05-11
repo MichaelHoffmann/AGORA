@@ -15,13 +15,12 @@
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		return $row['LAST_INSERT_ID()'];
-		//print "New Textbox ID: $mapClause <BR>";
 	}
 
 	/**
 	*	Takes a textbox and gets the necessary information from XML into the DB.
 	*/
-	function textboxToDB($tb, $mapID, $linkID, $userID)
+	function textboxToDB($tb, $mapID, $linkID, $userID, $output)
 	{
 		//print "<BR>---Textbox found";
 		$attr = $tb->attributes();
@@ -41,7 +40,8 @@
 				$status = mysql_query($uquery, $linkID);
 				//print "<BR>Query executed! Status: $status";
 			}else{
-				//print "<BR>You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.";
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
 				return false;
 			}
 			
@@ -53,14 +53,16 @@
 			//print "<BR>Query: $iquery";
 			mysql_query($iquery, $linkID);
 			$newID = getLastInsert($linkID);
-			//print "<BR>New textbox ID: $newID";
+			$textbox=$output->addChild("textbox");
+			$textbox->addAttribute("TID", $tid);
+			$textbox->addAttribute("ID", $newID);
 		}
 	}
 
 	/**
 	*	Takes a nodetext link and inserts it into the database.
 	*/
-	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position)
+	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $output)
 	{
 		//print "<BR>NodeText found";
 		$attr = $nt->attributes();
@@ -78,7 +80,7 @@
 			mysql_query($uquery, $linkID);
 		}else{
 			//insert
-				if($textboxID){
+			if($textboxID){
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
 							($nodeID, $textboxID, $position, NOW(), NOW())";
@@ -105,7 +107,7 @@
 	/**
 	*	Takes a node from XML and puts it in the database.
 	*/
-	function nodeToDB($node, $mapID, $linkID, $userID)
+	function nodeToDB($node, $mapID, $linkID, $userID, $output)
 	{
 		//print "<BR>----Node found";
 		$attr = $node->attributes();
@@ -157,7 +159,7 @@
 		foreach ($children as $child)
 		{
 			$pos++;
-			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos);
+			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $output);
 			//Note that this won't be done if the owner check failed on an UPDATE
 			//because the update will "return false"
 			//This behavior is correct:
@@ -169,7 +171,7 @@
 	/**
 	*	Links an argument to a "source node" in the DB.
 	*/
-	function sourceNodeToDB($source, $argID, $linkID)
+	function sourceNodeToDB($source, $argID, $linkID, $output)
 	{
 		//Connections to Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
@@ -193,7 +195,7 @@
 	/**
 	*	Defines the "argument" part of a connection in the DB.
 	*/
-	function connectionToDB($conn, $mapID, $linkID, $userID)
+	function connectionToDB($conn, $mapID, $linkID, $userID, $output)
 	{
 		//print "<BR>---Connection found";
 		$attr = $conn->attributes();
@@ -240,7 +242,7 @@
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
-			sourceNodeToDB($child, $id, $linkID);
+			sourceNodeToDB($child, $id, $linkID, $output);
 		}
 	}
 	
@@ -249,7 +251,7 @@
 	*	Separated out for clarity.
 	*	Order doesn't matter, so long as there's nothing referencing things that don't exist yet.
 	*/
-	function xmlToDB($xml, $mapID, $linkID, $userID)
+	function xmlToDB($xml, $mapID, $linkID, $userID, $output)
 	{
 		//print "Now in xml-to-DB function<BR>";
 		$children = $xml->children();
@@ -260,13 +262,13 @@
 			switch($child->getName())
 			{
 				case "textbox":
-					textboxToDB($child, $mapID, $linkID, $userID);
+					textboxToDB($child, $mapID, $linkID, $userID, $output);
 					break;
 				case "node":
-					nodeToDB($child, $mapID, $linkID, $userID);
+					nodeToDB($child, $mapID, $linkID, $userID, $output);
 					break;
 				case "connection":
-					connectionToDB($child, $mapID, $linkID, $userID);
+					connectionToDB($child, $mapID, $linkID, $userID, $output);
 					break;
 			}
 		}		
@@ -297,6 +299,7 @@
 		$xml = new SimpleXMLElement($xmlin);
 		$mapID = $xml['id'];
 		$mapClause = mysql_real_escape_string("$mapID");
+
 		//Check to see if the map already exists
 		if($mapClause==0){
 			//If not, create it!
@@ -305,7 +308,7 @@
 			mysql_query($iquery, $linkID);						
 			
 			$mapClause = getLastInsert($linkID);
-			print "New map ID: $mapClause <BR>";
+			$output->addAttribute("ID", $mapClause);
 		}
 
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
@@ -331,7 +334,7 @@
 		//This part neatly handles all possibilities of failure. All we have to do is chain back "false" returns.
 		mysql_query("START TRANSACTION");
 		
-		$success = xmlToDB($xml, $mapClause, $linkID, $userID);
+		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
 		if($success===true){
 			mysql_query("COMMIT");
 			//print "<BR>Query committed!<BR>";
@@ -346,5 +349,5 @@
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
 	$output = insert($xmlparam, $userID, $pass_hash); 
-	//print($output->asXML()); //TODO: turn this back on
+	print($output->asXML());
 ?>
