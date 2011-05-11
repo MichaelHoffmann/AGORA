@@ -2,7 +2,9 @@
 
 	//TODO: (Whole file) make this return a TID-ID XML so that we can stop storing TID in the DB
 	require 'checklogin.php';
-
+	$tbTIDarray;
+	$nodeTIDarray;
+	$argTIDarray;
 	/**
 	* Convenience function.
 	* Selects the last auto-generated ID (AUTO_INCREMENT) from the Database.
@@ -22,6 +24,7 @@
 	*/
 	function textboxToDB($tb, $mapID, $linkID, $userID, $output)
 	{
+		global $tbTIDarray;
 		//print "<BR>---Textbox found";
 		$attr = $tb->attributes();
 		$text = mysql_real_escape_string($attr["text"]);
@@ -48,14 +51,16 @@
 
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
-			$iquery = "INSERT INTO textboxes (textbox_tid, user_id, map_id, text, created_date, modified_date) VALUES
-										($tid, $userID, $mapID, \"$text\", NOW(), NOW())";
+			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES
+										($userID, $mapID, \"$text\", NOW(), NOW())";
 			//print "<BR>Query: $iquery";
 			mysql_query($iquery, $linkID);
 			$newID = getLastInsert($linkID);
 			$textbox=$output->addChild("textbox");
 			$textbox->addAttribute("TID", $tid);
 			$textbox->addAttribute("ID", $newID);
+			
+			$tbTIDarray[$tid]=$newID; // Add the TID->ID mapping to the global lookup array
 		}
 	}
 
@@ -64,6 +69,8 @@
 	*/
 	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $output)
 	{
+		global $tbTIDarray; //use the global variable
+		
 		//print "<BR>NodeText found";
 		$attr = $nt->attributes();
 		$textboxID = mysql_real_escape_string($attr["textboxID"]);
@@ -93,15 +100,19 @@
 				//Eventually this will be done more elegantly.
 				$tid = mysql_real_escape_string($attr["TID"]);
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
+				/*
 				$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
 				$resultID = mysql_query($query, $linkID);
 				$row = mysql_fetch_assoc($resultID);
 				$textID = $row['textbox_id'];
+				*/
+				$textID=$tbTIDarray[$tTID];
 				//print "<BR>Textbox $textID found";
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES 
 							($nodeID, $textID, $position, NOW(), NOW())";
-				//print "Insert Query is: $iquery";
+				
 				mysql_query($iquery, $linkID);
+				
 				$outID = getLastInsert($linkID);
 				$ntOut=$output->addChild("nodetext");
 				$ntOut->addAttribute("TID", $tid);
