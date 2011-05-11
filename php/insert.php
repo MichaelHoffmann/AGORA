@@ -91,6 +91,7 @@
 				//We're inserting a completely new textbox.
 				//Notice how we have to figure out the real ID to correspond to the TID.
 				//Eventually this will be done more elegantly.
+				$tid = mysql_real_escape_string($attr["TID"]);
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$query = "SELECT * from textboxes WHERE textbox_tid = $tTID";
 				$resultID = mysql_query($query, $linkID);
@@ -99,8 +100,12 @@
 				//print "<BR>Textbox $textID found";
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
 							($nodeID, $textID, $position, NOW(), NOW())";
-				//print "<BR>Insert Query is: $iquery";
+				//print "Insert Query is: $iquery";
 				mysql_query($iquery, $linkID);
+				$outID = getLastInsert($linkID);
+				$ntOut=$output->addChild("nodetext");
+				$ntOut->addAttribute("TID", $tid);
+				$ntOut->addAttribute("ID", $outID);
 			}
 		}
 	}
@@ -152,6 +157,9 @@
 			//print "<BR>Insert Query is: $iquery";							
 			mysql_query($iquery, $linkID);
 			$nodeID = getLastInsert($linkID);
+			$nodeOut=$output->addChild("node");
+			$nodeOut->addAttribute("TID", $tid);
+			$nodeOut->addAttribute("ID", $nodeID);
 			//print "<BR>New node ID: $nodeID";
 		}
 		$children = $node->children();
@@ -159,12 +167,14 @@
 		foreach ($children as $child)
 		{
 			$pos++;
-			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $output);
+			//$nodeOut is still in scope here because PHP's scoping rules are relaxed.
+			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $nodeOut);
+			
 			//Note that this won't be done if the owner check failed on an UPDATE
-			//because the update will "return false"
+			//because the update will return false.
 			//This behavior is correct:
 			//if someone can't update a node they shouldn't be able to change its nodetext information.
-			//Also, they should fail the textbox owner check as well.
+			//(Also, they should fail the textbox owner check as well.)
 		}
 	}
 	
@@ -178,7 +188,8 @@
 		//They get DELETED automatically when the NODE they connect to is DELETED.
 		//print "<BR>SourceNode found";
 		$attr = $source->attributes();
-	
+		$tid =  mysql_real_escape_string($attr["TID"]);
+		
 		$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
 		$query = "SELECT * from nodes WHERE node_tid = $nodeTID";
 		$resultID = mysql_query($query, $linkID);
@@ -189,6 +200,10 @@
 											($argID, $nodeID, NOW(), NOW())";
 		//print "<BR>Insert Query is: $iquery";
 		mysql_query($iquery, $linkID);
+		$outID = getLastInsert($linkID);
+		$sourcenode = $output->addChild("sourcenode");
+		$sourcenode->addAttribute("TID", $tid);
+		$sourcenode->addAttribute("ID", $outID);
 		
 	}
 	
@@ -229,7 +244,10 @@
 			//print "<BR>Insert Query is: $iquery";
 			mysql_query($iquery, $linkID);
 			$id = getLastInsert($linkID);
-			//print "<BR>New connection ID: $id";
+			$connection = $output->addChild("connection");
+			$connection->addAttribute("TID", $tid);
+			$connection->addAttribute("ID", $id);
+			
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the argument is supporting
@@ -242,7 +260,7 @@
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
-			sourceNodeToDB($child, $id, $linkID, $output);
+			sourceNodeToDB($child, $id, $linkID, $connection);
 		}
 	}
 	
