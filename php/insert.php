@@ -214,6 +214,7 @@
 	*/
 	function connectionToDB($conn, $mapID, $linkID, $userID, $output)
 	{
+		global $nodeTIDarray;
 		//print "<BR>---Connection found";
 		$attr = $conn->attributes();
 		$id = mysql_real_escape_string($attr["argID"]);
@@ -232,11 +233,7 @@
 		
 		if(!$nodeID){
 			$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
-			//Get the real data for the DB
-			$query2 = "SELECT * FROM nodes WHERE node_tid=$tnodeTID";
-			$resultID = mysql_query($query2, $linkID);
-			$row = mysql_fetch_assoc($resultID);
-			$nodeID = $row["node_id"];
+			$nodeID=$nodeTIDarray[$tnodeTID];
 		}
 		
 		if(!$id){
