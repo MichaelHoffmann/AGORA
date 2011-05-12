@@ -3,17 +3,17 @@
 	<textbox TID="2" text="BAR"/>
 
 	<node TID="1" Type="Standard" x="1" y="1">
-		<nodetext textboxTID="1" />
+		<nodetext TID="1" textboxTID="1" />
 	</node>
 	<node TID="2" Type="Standard" x="10" y="1">
-		<nodetext textboxTID="2"/>
+		<nodetext TID="2" textboxTID="2"/>
 	</node>
 	<node TID="3" Type="Inference" x="5" y="5">
-		<nodetext textboxTID="1"/>
-		<nodetext textboxTID="2"/>
+		<nodetext TID="3" textboxTID="1"/>
+		<nodetext TID="4" textboxTID="2"/>
 	</node>
 	<connection argTID="1" type="MPtherefore" targetnodeTID="2" x="5" y="1">
-		<sourcenode nodeTID="1"/>
-		<sourcenode nodeTID="3"/>
+		<sourcenode TID="1" nodeTID="1"/>
+		<sourcenode TID="2" nodeTID="3"/>
 	</connection>
 </map>
