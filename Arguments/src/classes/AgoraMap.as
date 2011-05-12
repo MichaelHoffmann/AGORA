@@ -30,6 +30,11 @@ package classes
 			panel.input1.text = panel.savedText;
 		}
 		
+		public function getMapXml():XML
+		{
+			
+		}
+		
 		public function load( event:Event):void{
 			var xmlData:XML = new XML(event.target.data);
 			var textboxes:XMLList = xmlData.textbox;

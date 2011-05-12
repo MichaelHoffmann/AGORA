@@ -21,10 +21,15 @@ package classes
 	
 	public class DynamicTextArea extends TextArea
 	{
+		
+		public static var count:int;
+		
 		private var topPadding:int;
 		private var bottomPadding:int;
 		private var h:int;
 		public var index:int;
+		
+		public var aid:int;
 		
 		public var forwardList:Vector.<DynamicTextArea>; //Arun Kumar chithanar
 		public var backwardList:Vector.<DynamicTextArea>;
@@ -35,6 +40,8 @@ package classes
 		public function DynamicTextArea()
 		{
 			super();
+			aid = 1;
+			count = count + 1;
 			super.horizontalScrollPolicy = "off";
 			super.verticalScrollPolicy = "off";
 			this.addEventListener(Event.CHANGE,adjustHeightHandler);

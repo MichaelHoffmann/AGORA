@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="loadData();" xmlns:components="components.*">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="loadData();" xmlns:components="components.*" >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -33,6 +33,8 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import classes.UserData;
+			
 			import components.LAMWorld;
 			public var username:String;
 			public var pass_hash:String;
@@ -85,6 +87,9 @@
 				//registerEventHandler for createMap
 				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
 				//register Event Handler for create Project
+				
+				UserData.validateUser("JoshJ","password");
+				
 				
 			}
 			
