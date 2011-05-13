@@ -3,6 +3,10 @@ package classes
 {
 	import flash.display.Graphics;
 	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
@@ -18,16 +22,123 @@ package classes
 	{
 		public var layoutManager:ALayoutManager = null;
 		public var drawUtility:UIComponent = null;
+		public var mapId:int;
 		public function AgoraMap()
 		{
+			id=29;
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
 		}
 		
-		public function panelCreated(event   : FlexEvent):void{
+		public function panelCreated(event:FlexEvent):void{
 			var panel:ArgumentPanel = event.target as ArgumentPanel;
 			panel.input1.text = panel.savedText;
+		}
+
+		public function pushToServer(xml:XML):void
+		{
+			var urlLoader:URLLoader = new URLLoader;
+			var request:URLRequest = new URLRequest;
+			request.url = "http://agora.gatech.edu/dev/insert.php";
+			request.data = new URLVariables("uid="+UserData.uid+"&pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
+			request.method = URLRequestMethod.GET;
+			//urlLoader.addEventListener(Event.COMPLETE,verifyUser);
+			urlLoader.load(request);	
+		}
+		
+		public function getMapXml():XML
+		{
+			trace("Inside the top of getMap()");
+			var xml:XML = new XML("<map id=\""+mapId+"\"></map>");
+			//xml = xml.insertChildAfter(null,<textbox></textbox>);
+			
+			//print the textboxes
+			for( var i:int=0; i<layoutManager.panelList.length; i++)
+			{
+				var panel:GridPanel = layoutManager.panelList[i] as GridPanel;
+				//The panel may be an inference a reason/claim  or displayArgType
+				if(panel is Inference)
+				{
+					//do nothing
+				}
+					//note an Inference is also an Argument Panel, because Inference is a more specific type. So
+					//it should come before in the else-if structure.
+				else if(panel is ArgumentPanel)
+				{
+					var argumentPanel:ArgumentPanel = ArgumentPanel(panel);
+					var currTextBox:DynamicTextArea = argumentPanel.input1;
+					var currXML:XML = <textbox></textbox>;
+					currXML.@ID = currTextBox.aid;
+					currXML.@text = currTextBox.text;
+					xml = xml.appendChild(currXML);
+				}	
+			}
+			
+			//print the nodes
+			for(i=0; i  < layoutManager.panelList.length; i++)
+			{
+				panel = layoutManager.panelList[i] as GridPanel;
+				if(!(panel is DisplayArgType)){
+					currXML= <node></node>;
+					currXML.@ID = panel.aid;
+					if(panel is Inference)
+					{
+						inferencePanel = Inference(panel);
+						currXML.@Type = "Inference";
+						for(var j:int=0; j < inferencePanel.input.length; j++)
+						{
+							var nodeText:XML = <nodetext></nodetext>;
+							nodeText.@textboxID = inferencePanel.input[j].aid;
+							currXML = currXML.appendChild(nodeText);
+						}
+					}
+					else if(panel is ArgumentPanel)
+					{
+						argumentPanel = ArgumentPanel(panel);
+						currXML.@Type = "Standard";	
+						nodeText = <nodetext></nodetext>;
+						nodeText.@textboxID = argumentPanel.input1.aid;
+						currXML = currXML.appendChild(nodeText);
+					}
+					currXML.@x = panel.gridX;
+					currXML.@y = panel.gridY;
+					xml = xml.appendChild(currXML);
+				}
+				
+				pushToServer(xml);
+				
+			}
+			
+			//print connections
+			for(i=0; i<layoutManager.panelList.length; i++)
+			{
+				panel = layoutManager.panelList[i] as GridPanel;
+				if(panel is DisplayArgType)
+				{
+					currXML = <connection></connection>;
+					var argType:DisplayArgType = DisplayArgType(panel);
+					currXML.@argID = argType.aid;
+					currXML.@type = argType.inference.myArg.dbName;
+					currXML.@targetnodeID = argType.inference.claim.aid;
+					currXML.@x = argType.gridX;
+					currXML.@y = argType.gridY;	
+					for(j = 0; j < argType.inference.reasons.length; j++)
+					{
+						nodeText=<sourcenode></sourcenode>;
+						nodeText.@ID = argType.inference.connectionIDs[j];
+						nodeText.@nodeTID = argType.inference.reasons[j].aid;
+						currXML = currXML.appendChild(nodeText);
+					}
+					nodeText=<sourcenode></sourcenode>;
+					nodeText.@ID = argType.inference.connectionID;
+					nodeText.@nodeTID = argType.inference.aid;
+					currXML = currXML.appendChild(nodeText);
+					xml = xml.appendChild(currXML);
+				}	
+			}
+			Alert.show(xml.toXMLString());
+			trace(xml.toXMLString());
 		}
 		
 		public function load( event:Event):void{
@@ -114,7 +225,6 @@ package classes
 				claim.input1.forwardUpdate();
 			}
 			layoutManager.layoutComponents();
-			
 		}
 		
 		override protected function createChildren():void
@@ -139,7 +249,7 @@ package classes
 				var tmpy:int = int(dragSource.dataForFormat("y"));
 				tmpx = currentStage.mouseX -  tmpx;
 				tmpy = currentStage.mouseY - tmpy;
-					
+				
 				var tmpGridX:int = layoutManager.getGridPositionX(tmpy);//In the logical co ordinates x and y are along different axes
 				var tmpGridY:int = layoutManager.getGridPositionY(tmpx);//Got to change this though ;-)
 				
@@ -156,17 +266,13 @@ package classes
 					if(tmpGridY >= lLimit && tmpGridY <= uLimit)
 					{
 						currInference.gridX = tmpGridX;
-						//currInference.gridY = tmpGridY;
-	
-						//currInference.argType.gridX = currInference.argType.gridX + diffX;
-						//currInference.argType.gridY = currInference.argType.gridY + diffY;
 						if(currInference.rules.length > 0 )
 						{
 							layoutManager.moveConnectedPanels(currInference, diffX, 0);
 						}
 					}
 				}
-				
+					
 				else if(akcdragInitiator1 is ArgumentPanel)
 				{
 					akcdragInitiator = akcdragInitiator1 as ArgumentPanel;
@@ -178,11 +284,10 @@ package classes
 					else
 					{
 						layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-					
 					}
 					for(var i:int=0; i < akcdragInitiator.rules.length; i++)
 					{
-
+						
 						akcdragInitiator.rules[i].gridY = akcdragInitiator.rules[i].gridY + diffY;
 						
 						akcdragInitiator.rules[i].argType.gridY = akcdragInitiator.rules[i].argType.gridY + diffY;
@@ -196,12 +301,11 @@ package classes
 						{
 							layoutManager.moveConnectedPanels(akcdragInitiator.rules[i], 0, diffY);
 						}
-	
+						
 					}
 				}
 				else if(akcdragInitiator1 is DisplayArgType)
 				{
-	
 					var argdisplay:DisplayArgType = akcdragInitiator1 as DisplayArgType;
 					if(argdisplay.inference != argdisplay.inference.claim.rules[0]){
 						argdisplay.gridX = argdisplay.gridX + diffX;
@@ -209,7 +313,7 @@ package classes
 						layoutManager.moveConnectedPanels(argdisplay.inference,diffX,0);
 					}
 				}
-					
+				
 			}catch(error:Error)
 			{
 				Alert.show(error.message.toString());
@@ -266,7 +370,7 @@ package classes
 				}
 			}
 			
-
+			
 		}
 	}
 }

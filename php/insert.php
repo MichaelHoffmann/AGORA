@@ -314,8 +314,11 @@
 	
 	
 		//Dig the Map ID out of the XML
+		print "test<BR>";
 		$xml = new SimpleXMLElement($xmlin);
+		print "foo<BR>";
 		$mapID = $xml['id'];
+		print "bar<BR>";
 		$mapClause = mysql_real_escape_string("$mapID");
 
 		//Check to see if the map already exists

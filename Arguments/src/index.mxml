@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="loadData();" xmlns:components="components.*">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="loadData();" xmlns:components="components.*" >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -29,16 +29,12 @@
 			</s:HGroup>
 		</s:VGroup>	
 	</mx:Canvas>
-	<!--
-	<components:LAMWorld visible="false">
-	</components:LAMWorld>
-	<components:Map visible="false">
-		
-	</components:Map>
-	-->
+
 	
 	<fx:Script>
 		<![CDATA[
+			import classes.UserData;
+			
 			import components.LAMWorld;
 			public var username:String;
 			public var pass_hash:String;
@@ -48,8 +44,7 @@
 				var lamWorld:LAMWorld = new LAMWorld;
 				//hide the controls
 				agoraMenu.visible = false;
-				addElement(lamWorld);
-				
+				addElement(lamWorld);	
 			}
 			
 			public function showMenu():void
@@ -62,12 +57,14 @@
 				//data is in xml format
 				var xmlData:XML = XML(event.target.data);
 				var maps:XMLList = xmlData.map;
+				var xmls:Object = new Object;
 				for each (var map:XML in maps)
 				{
 						var mapButton:Button = new Button;
 						mapButton.width="190";
 						mapButton.label = map.attribute("title");
 						mapNameList.addElement(mapButton);
+						xmls[mapButton.label] = map;
 				}
 			}
 			
@@ -89,6 +86,9 @@
 				//registerEventHandler for createMap
 				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
 				//register Event Handler for create Project
+				//UserData.validateUser("JoshJ","password");
+			
+				
 				
 			}
 			

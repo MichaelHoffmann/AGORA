@@ -23,6 +23,8 @@ package classes
 	
 	public class Inference extends ArgumentPanel
 	{
+		//
+		public static var connections:int;
 		public var reasons:Vector.<ArgumentPanel>;
 		public var input:Vector.<DynamicTextArea>;
 		public var argumentClass:String;
@@ -34,10 +36,18 @@ package classes
 		public var myArg:ParentArg;		//argType.schemeText stores the language type
 		public var sentence:String;
 		public var isExp:Boolean;
+		public var connectionID:int;
+		public var connectionIDs:Vector.<int>;
+		
 		
 		public function Inference()
 		{
 			super();
+			
+			connectionID = connections++;
+			
+			connectionIDs = new Vector.<int>(0,false);
+			
 			panelType = ArgumentPanel.INFERENCE;
 			state = 0; 		// Inference is always a Universal statement
 			addEventListener(FlexEvent.CREATION_COMPLETE, displayArgumentType);
@@ -76,6 +86,9 @@ package classes
 				parentMap.addElement(tmp);
 				try{
 					reasons.push(tmp);
+					
+					connectionIDs.push(connections++);
+					
 					//trace(this);
 					//trace(tmp);
 					tmp.inference = this;
@@ -93,6 +106,10 @@ package classes
 					var inferenceRule:Inference = this;
 					tmpInput.panelReference = inferenceRule;
 					inferenceRule.input.push(tmpInput);		
+					
+					//set the id
+					tmpInput.id = tmp.input1.id;
+					
 					//binding
 					tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
 					tmp.input1.forwardList.push(tmpInput);				//this new reason's input1 text forwards to that invisible box.
