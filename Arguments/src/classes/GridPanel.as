@@ -15,12 +15,10 @@ package classes
 			count = count + 1;
 			aid = count;
 			super();
-			
 		}
 		override protected function createChildren():void
 		{
 			super.createChildren();
 		}
-	
 	}
 }

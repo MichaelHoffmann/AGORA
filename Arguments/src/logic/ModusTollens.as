@@ -6,10 +6,12 @@ package logic
 		public function ModusTollens()
 		{
 			myname = MOD_TOL;
+			dbName = myname;
 			//_langTypes = ["If-then","Implies","Whenever","Only-if","Only-if-Exp-And","Only-if-Exp-Or","Provided-that","Sufficient-condition","Necessary-condition"];
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			_expLangTypes = ["Only if"];	// Expandable with both And and Or
 
+			
 		}
 		
 		override public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String {

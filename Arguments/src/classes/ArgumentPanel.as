@@ -181,6 +181,10 @@ package classes
 			parentMap.addElement(reason);
 			//push reason to the list of reasons belonging to this particular class
 			currInference.reasons.push(reason);
+			
+			
+			currInference.connectionIDs.push(Inference.connections++);
+			
 			//set the inference of the reason
 			reason.inference = currInference;
 			//register the reason
@@ -199,6 +203,7 @@ package classes
 			//binding
 			tmpInput.forwardList.push(currInference.input1);
 			input1.forwardList.push(currInference.input[0]);
+			tmpInput.aid = input1.aid;
 			
 			for each (var dta:DynamicTextArea in input1.forwardList)
 			{
@@ -207,6 +212,7 @@ package classes
 			
 			//create an invisible box for the reason
 			var tmpInput2:DynamicTextArea = new DynamicTextArea();
+			tmpInput2.aid = reason.input1.aid;
 			parentMap.addElement(tmpInput2);
 			tmpInput2.visible = false;
 			tmpInput2.panelReference = currInference;
@@ -246,6 +252,9 @@ package classes
 				currInference.visible = false; currInference.argType.visible = false;
 				currInference.claim = this;
 				currInference.reasons.push(reason);
+				
+				currInference.connectionIDs.push(Inference.connections++);
+				
 				reason.inference = currInference;
 	
 				//create an invisible box for the inference rule corresponding to the claim
@@ -258,12 +267,19 @@ package classes
 				tmpInput.panelReference = currInference;
 				//add a pointer to the input
 				currInference.input.push(tmpInput);		
+				
 				//binding
 				tmpInput.forwardList.push(currInference.input1);
 				input1.forwardList.push(currInference.input[0]);
 				
+				//set the id of the new text box to the id of the one in the reason
+				tmpInput.aid = input1.aid;
+				
+				
 				//create an invisible box for the reason
 				var tmpInput2:DynamicTextArea = new DynamicTextArea();
+				//set its id to the DTA's id present in the reason
+				tmpInput2.aid = reason.input1.aid;
 				parentMap.addElement(tmpInput2);
 				tmpInput2.visible = false;
 				tmpInput2.panelReference = currInference;

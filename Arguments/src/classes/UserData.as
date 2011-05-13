@@ -17,7 +17,6 @@ package classes
 		
 		public function UserData()
 		{
-			//valid = 0;
 		}
 		public static function set passHashStr(value:String):void
 		{
@@ -34,9 +33,8 @@ package classes
 		
 		private static function verifyUser(event:Event):void
 		{
-			trace("anything at all");
 			var xml:XML = XML(event.target.data);
-			Alert.show(xml.toXMLString());	
+			//Alert.show(xml.toXMLString());	
 
 		}
 		
@@ -46,10 +44,8 @@ package classes
 			var request:URLRequest = new URLRequest;
 			request.url = "http://agora.gatech.edu/dev/login.php";
 			request.data = new URLVariables("username="+userName+"&pass_hash="+passHash);
-			//trace(request.data.toString);
 			request.method = URLRequestMethod.GET;
 			urlLoader.addEventListener(Event.COMPLETE,verifyUser);
-			//trace(request.url);;
 			urlLoader.load(request);
 		}
 		

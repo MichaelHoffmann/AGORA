@@ -36,8 +36,7 @@ This stage is where the user starts developing with just the claim
 			
 			public function setWidth(event: Event):void
 			{
-				//agora.height = agoraMap.stage.width;
-				//agora.width = agoraMap.stage.height;
+				
 			}
 			
 			public function initApp():void
@@ -49,13 +48,7 @@ This stage is where the user starts developing with just the claim
 				argumentPanel.gridX = 2;
 				argumentPanel.gridY = 3;
 				agoraMap.addElement(argumentPanel);
-				agoraMap.layoutManager.registerPanel(argumentPanel);
-				
-				//var urlLoader:URLLoader = new URLLoader;
-				//var data:XML = new XML();
-				//urlLoader.addEventListener(Event.COMPLETE,agoraMap.load);
-				//urlLoader.load(new URLRequest("http://localhost:8888/exampleLAM.xml"));				
-				
+				agoraMap.layoutManager.registerPanel(argumentPanel);		
 			}
 		]]>
 	</fx:Script>

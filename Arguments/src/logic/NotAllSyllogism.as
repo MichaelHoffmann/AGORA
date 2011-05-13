@@ -7,6 +7,7 @@ package logic
 		public function NotAllSyllogism()
 		{
 			myname = NOT_ALL_SYLL;
+			dbName = myname;
 			_langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
 
 		}

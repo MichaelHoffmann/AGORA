@@ -56,7 +56,7 @@
 			public function saveMap(event:MouseEvent):void
 			{
 				var xml:XML = new XML;
-				
+				agoraMap.getMapXml();
 			}
 			
 			public function initApp():void
