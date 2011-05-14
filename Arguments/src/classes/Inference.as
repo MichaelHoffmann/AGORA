@@ -62,7 +62,7 @@ package classes
 			scheme = new Button;
 			scheme.label = "Scheme...";
 			this.bottomH.addElement(scheme);
-			this.bottomH.removeElement(this.doneButton);
+			this.bottomH.removeElement(this.doneBtn);
 			scheme.addEventListener(MouseEvent.CLICK,changeHandler);	
 			sentence = "";
 			

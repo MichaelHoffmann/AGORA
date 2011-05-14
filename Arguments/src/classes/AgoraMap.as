@@ -33,7 +33,7 @@ package classes
 		
 		public function panelCreated(event:FlexEvent):void{
 			var panel:ArgumentPanel = event.target as ArgumentPanel;
-			panel.input1.text = panel.savedText;
+			panel.input1.text = panel.savedTextStr;
 		}
 
 		public function pushToServer(xml:XML):void

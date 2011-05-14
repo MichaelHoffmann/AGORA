@@ -2,19 +2,19 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
-		   xmlns:classes="classes.*" width="1440" height="680" creationComplete="initApp();">
+		   xmlns:classes="classes.*"  creationComplete="initApp();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:VGroup>			
-		<s:HGroup>
+	<s:VGroup id="container">			
+		<s:HGroup id="topPanel">
 			<s:Button id="gotoMenuBtn" label="Save and Exit">
 			</s:Button>
 			<s:Button id="discardChangesBtn" label="Home">
 			</s:Button>
 		</s:HGroup>
-		<mx:Canvas id="agora" width="1400" height="650">
-			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="5000" height="6000" >	
+		<mx:Canvas id="agora" width="140" height="650">
+			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="500000" height="600000" >	
 			</classes:AgoraMap>
 		</mx:Canvas>
 	</s:VGroup>
@@ -51,6 +51,7 @@
 			{
 				//agora.height = agoraMap.stage.width;
 				//agora.width = agoraMap.stage.height;
+		
 			}
 			
 			public function saveMap(event:MouseEvent):void
@@ -59,8 +60,24 @@
 				agoraMap.getMapXml();
 			}
 			
+			public function updateSize(event:Event):void
+			{
+				//trace('works');
+				//trace(this.stage.stageWidth);
+				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+			}
+			
 			public function initApp():void
 			{
+				
+				trace(this.stage.height);
+				//set the height and width
+				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+				//this.stage.
+				this.stage.addEventListener(Event.RESIZE, updateSize);	
+			
 				
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;
