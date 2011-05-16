@@ -224,8 +224,6 @@ package classes
 			
 			tmpInput2.forwardList.push(currInference.input1);
 			reason.input1.forwardList.push(tmpInput2);
-			//input1.forwardUpdate();		//claim	
-			//reason.input1.forwardUpdate();		//reason
 			parentMap.layoutManager.registerPanel(currInference);	
 		}
 		
