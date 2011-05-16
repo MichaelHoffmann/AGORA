@@ -28,56 +28,51 @@ package classes
 		public var reasons:Vector.<ArgumentPanel>;
 		public var input:Vector.<DynamicTextArea>;
 		public var argumentClass:String;
-		public var scheme:Button;
+		//public var scheme:Button;
 		public var vgroup:VGroup;
 		public var claim:ArgumentPanel;
 		public var argType:DisplayArgType;
 		public var myschemeSel:ArgSelector;
-		public var myArg:ParentArg;		//argType.schemeText stores the language type
+		public var myArg:ParentArg;		
 		public var sentence:String;
 		public var isExp:Boolean;
 		public var connectionID:int;
 		public var connectionIDs:Vector.<int>;
-		
+		public var formedBool:Boolean;
 		
 		public function Inference()
 		{
 			super();
-			
 			connectionID = connections++;
-			
 			connectionIDs = new Vector.<int>(0,false);
-			
 			panelType = ArgumentPanel.INFERENCE;
-			state = 0; 		// Inference is always a Universal statement
+			state = 0; // Inference is always a Universal statement
 			addEventListener(FlexEvent.CREATION_COMPLETE, displayArgumentType);
+			
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			argType = new DisplayArgType();
 			argType.inference = this;
-			argType.width = 100;
 			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
 			myschemeSel = new ArgSelector();
-			this.setStyle("cornerRadius",30);
-			scheme = new Button;
-			scheme.label = "Scheme...";
-			this.bottomH.addElement(scheme);
-			this.bottomH.removeElement(this.doneBtn);
-			scheme.addEventListener(MouseEvent.CLICK,changeHandler);	
+			this.setStyle("cornerRadius",30);	
 			sentence = "";
-			
 		}
 		
 		public function addHandlers(fe:FlexEvent):void
 		{
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
-			//register it to the layout
-			//parentMap.layoutManager.registerPanel(argType);
+			argType.changeSchemeBtn.addEventListener(MouseEvent.CLICK,changeScheme);
+		}
+		
+		public function changeScheme(event:MouseEvent):void
+		{
+			
 		}
 		
 		private function displayArgumentType(e: FlexEvent) : void
 		{
-			parentMap.addElement(argType);
+			//parentMap.addElement(argType);
 		}
 		
 		public function addReasonHandler(event:MouseEvent):void
@@ -124,8 +119,8 @@ package classes
 		public function changeHandler(e:MouseEvent):void
 		{
 			myschemeSel.visible=true;
-			myschemeSel.x = this.gridY*25 + this.width;
-			myschemeSel.y = this.gridX*25;
+			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
+			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
 			parentMap.addElement(myschemeSel);			
 			var rootlist:List = myschemeSel.mainSchemes;
 			if(myArg!=null) {
@@ -210,11 +205,10 @@ package classes
 			input1.forwardUpdate();
 		}
 		
-		/*public function closeTypes(le:ListEvent):void
+		override protected function createChildren():void
 		{
-			var sublist:List = myschemeSel.typeSelector;
-			sublist.visible=false;
-		}*/
+			
+		}
 		
 		public function bringForward(e:MouseEvent):void
 		{

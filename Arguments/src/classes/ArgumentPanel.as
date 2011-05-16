@@ -6,13 +6,14 @@ package classes
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
-	import mx.controls.Button;
 	import mx.controls.Label;
+	import mx.controls.Menu;
 	import mx.controls.Text;
 	import mx.controls.TextInput;
 	import mx.core.DragSource;
@@ -48,8 +49,9 @@ package classes
 		//another skin
 		public var panelSkin1:PanelSkin;
 		//doneButton
-		public var doneBtn:spark.components.Button;
-		public var argschemeBtn:spark.components.Button;
+		public var doneBtn:Button;
+		public var addBtn:Button;
+		public var deleteBtn:Button;
 		public var savedTextStr:String;
 		//public var displayLbl:Label;
 		public var displayTxt:Text;
@@ -57,8 +59,11 @@ package classes
 		public var group:Group;
 		//The enabler which makes these statements support a claim
 		public var inference:Inference;		
-		public var bottomH:HGroup;
-		public var topH:HGroup;
+		public var bottomHG:HGroup;
+		public var topHG:HGroup;
+		public var stmtInfoVG:VGroup;
+		public var doneHG:HGroup;
+		public var btnG:Group;
 		//List of enablers which support this statement
 		public var rules:Vector.<Inference>;
 		public var binders:Vector.<Binder>;
@@ -66,39 +71,51 @@ package classes
 		
 		public static const ARGUMENT_PANEL:int = 0;
 		public static const INFERENCE:int = 1;
-		public var MODE:int = 1;	// mode:0 means construct by reason, mode:1 means construct by argument scheme
+		public var MODE:int = 0;	// mode:0 means construct by reason, mode:1 means construct by argument scheme
 		
-		public var lab:Label;
+		public var stmtTypeLbl:Label;
 		public var panelType:int;
 		public var thereforeLine:UIComponent;
 		public var thereforeText:Label;
 		public var negated:Boolean;		// negated = 0 means no - it is positive. negated = 1 means yes - it is negative. Useful for Modus Tollens and Disjunctive Syllogism
-		
+		public var userEntered:Boolean;
+		public var addMenuData:XML;
 		
 		public function makeEditable(event:MouseEvent):void
 		{
+			if(userEntered == false)
+			{
+					input1.text="";
+					userEntered = true;
+			}
 			//trace("should make it editable");
 			if( !( event.target is mx.controls.Button) )
 			{
 				input1.visible = true;
 				//displayLbl.visible = false;
 				displayTxt.visible = false;
+				doneHG.visible = true;
+				bottomHG.visible=false;
 			}
 		}
 		
-		public function makeUnEditable(event: FocusEvent):void
+		public function makeUnEditable():void
 		{
 			displayTxt.width = input1.width;
 			displayTxt.height = input1.height;
 			displayTxt.text = input1.text;
 			displayTxt.visible = true;
 			input1.visible = false;
+			bottomHG.visible = true;
+			doneHG.visible = false;
 		}
 		
 		public function ArgumentPanel()
 		{
 			super();
+			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
 			
+			userEntered = false;
 			var uLayout:VerticalLayout = new VerticalLayout;
 			uLayout.paddingBottom = 10;
 			uLayout.paddingLeft = 10;
@@ -107,28 +124,30 @@ package classes
 			width = 180;
 			minHeight = 100;
 			this.layout = uLayout;
+			
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
+			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-			//this.addEventListener(MouseEvent.CLICK, makeEditable);
 			
+			//will be set by the object that creates this
 			inference = null;
 			rules = new Vector.<Inference>(0,false);
-
-			lab = new Label;
+			stmtTypeLbl = new Label;
 			// default setting    	
-			if(this is Inference) lab.text = "Universal Statement";
-			else lab.text = "Particular Statement";
-			lab.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
+			if(this is Inference) stmtTypeLbl.text = "Universal Statement";
+			else stmtTypeLbl.text = "Particular Statement";
+			stmtTypeLbl.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
 				"A 'universal statement' is defined here as a statement that can be falsified by one counter-example. " +
 				"In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements." +
 				" Anything else is treated as a particular statement, including statements about possibilities. CLICK TO CHANGE";
-			lab.addEventListener(MouseEvent.CLICK,toggle);
+			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
 			
-			bottomH = new HGroup();
-			doneBtn = new spark.components.Button;
+			bottomHG = new HGroup();
+			doneHG = new HGroup;
+			doneBtn = new Button;
 			doneBtn.label = "Done";
-			bottomH.addElement(doneBtn);
+			doneHG.addElement(doneBtn);
 			doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
 			
 			thereforeLine = new UIComponent();
@@ -154,7 +173,7 @@ package classes
 		{
 			try{
 				var	dinitiator:UIComponent = UIComponent(mouseEvent.currentTarget);
-				var dPInitiator:ArgumentPanel = ArgumentPanel(dinitiator.parent.parent.parent.parent.parent.parent);
+				var dPInitiator:ArgumentPanel = this;
 				var ds:DragSource = new DragSource();
 				var tmpx:int = int(dPInitiator.mouseX);
 				var tmpy:int = int(dPInitiator.mouseY);
@@ -171,21 +190,22 @@ package classes
 		//reason must be registered before inference is
 		//user must not change the inference rule. He creates the inference rule
 		//through argument type, reasons and claim
-		public function addArgSchemeHandler(event:MouseEvent):void
+		public function addHandler(event:MouseEvent):void
 		{
+			var menu:Menu = Menu.createMenu(null,addMenuData,false);
+			menu.labelField = "@label";
+			var globalPosition:Point = localToGlobal(new Point(0,this.height));
+			menu.show(globalPosition.x,globalPosition.y);
 			//create an inference
 			var currInference:Inference = new Inference();
 			//add the inference to map
 			parentMap.addElement(currInference);
+			parentMap.addElement(currInference.argType);
+			trace(currInference.argType.width);
 			//add inference to the list of inferences
 			rules.push(currInference);
 			//set the claim of the inference rule to this
 			currInference.claim = this;
-			//set the class of the reason
-			//currInference.argumentClass = Inference.MODUS_PONENS;
-			//if(MODE==0) { currInference.visible = false;
-			//	currInference.argType.visible = false; }
-			
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
 			//add reason to the map
@@ -193,9 +213,8 @@ package classes
 			//push reason to the list of reasons belonging to this particular class
 			currInference.reasons.push(reason);
 			
-			
+			//temporary, should be replaced by TID
 			currInference.connectionIDs.push(Inference.connections++);
-			
 			//set the inference of the reason
 			reason.inference = currInference;
 			//register the reason
@@ -216,11 +235,6 @@ package classes
 			input1.forwardList.push(currInference.input[0]);
 			tmpInput.aid = input1.aid;
 			
-			for each (var dta:DynamicTextArea in input1.forwardList)
-			{
-				trace(dta);
-			}
-			
 			//create an invisible box for the reason
 			var tmpInput2:DynamicTextArea = new DynamicTextArea();
 			tmpInput2.aid = reason.input1.aid;
@@ -234,11 +248,12 @@ package classes
 			
 			input1.forwardUpdate();		//claim	
 			reason.input1.forwardUpdate();		//reason
-
 			parentMap.layoutManager.registerPanel(currInference);	
 		}
 		
+		
 		public function checkForEnter(event:KeyboardEvent):void{
+			/*
 			if(event.keyCode==Keyboard.ENTER){
 				MODE=0;
 				// add Reason only
@@ -304,10 +319,13 @@ package classes
 				
 				// deactive the DONE button to avoid duplicate action
 				doneBtn.removeEventListener(MouseEvent.CLICK,doneHandler);
+		
 			}
+			*/
 		}
 		
 		public function doneHandler(d:MouseEvent):void{
+			makeUnEditable();
 			if(MODE==1){ //only reason has been added, inference is invisible and not pushed to claim.rules
 				var correspClaim:ArgumentPanel = this.inference.claim;
 				correspClaim.rules.push(this.inference);
@@ -347,15 +365,13 @@ package classes
 		}
 		
 		//create children must be overriden to create dynamically allocated children
-		override protected function createChildren():void{
+		override protected function createChildren():void
+		{
 			//create the children of MX Panel
 			super.createChildren();		
 			
-			//create children of Agora Panel
-			//create the Dynamic Text Area
-			//input1 = new TextInput();
 			input1 = new DynamicTextArea();
-			this.input1.addEventListener(FocusEvent.FOCUS_OUT, makeUnEditable);
+			//this.input1.addEventListener(FocusEvent.FOCUS_OUT, makeUnEditable);
 			input1.panelReference = this;
 			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
 			if(this.panelType==ARGUMENT_PANEL) {
@@ -370,8 +386,8 @@ package classes
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			
-			topH = new HGroup();
-			addElement(topH);
+			topHG = new HGroup();
+			addElement(topHG);
 			
 			//Draw on topArea UIComponent a rectangle
 			//to be used for clicking and dragging
@@ -380,8 +396,11 @@ package classes
 			topArea.width = 40;
 			topArea.height = 20;
 			topArea.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
-			topH.addElement(topArea);
-			topH.addElement(lab);
+			topHG.addElement(topArea);
+			//add a vertical subgroup
+			stmtInfoVG = new VGroup;
+			topHG.addElement(stmtInfoVG);
+			stmtInfoVG.addElement(stmtTypeLbl);
 			
 			group = new Group;
 			addElement(group);
@@ -389,12 +408,23 @@ package classes
 			//displayLbl.width = 100;
 			group.addElement(displayTxt);
 			input1.visible=false;
-			addElement(bottomH);
 			
-			argschemeBtn = new spark.components.Button;
-			argschemeBtn.label = "Add arg";
-			bottomH.addElement(argschemeBtn);
-			argschemeBtn.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
+			btnG = new Group;
+			addElement(btnG);
+			btnG.addElement(bottomHG);
+			doneHG = new HGroup;
+			doneHG.addElement(doneBtn);
+			btnG.addElement(doneHG);
+			btnG.addElement(bottomHG);
+			addBtn = new Button;
+			addBtn.label = "add...";
+			
+			bottomHG.addElement(addBtn);
+			deleteBtn = new Button;
+			deleteBtn.label = "delete...";
+			bottomHG.addElement(deleteBtn);
+			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
+			bottomHG.visible = false;
 			
 		}
 		
@@ -405,9 +435,6 @@ package classes
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
 			
-			//panelSkin1 = this.buttonArea.skin as PanelSkin;
-			//panelSkin1.topGroup.includeInLayout = false;
-			//panelSkin1.topGroup.visible = false;
 			if(this.panelType==ARGUMENT_PANEL)
 				input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
 			displayTxt.text = input1.text;
@@ -418,19 +445,22 @@ package classes
 		public function toggle(m:MouseEvent):void
 		{
 			if(this.state==0) {
-				if(this.panelType!=INFERENCE){
-				//Alert.show("Toggling to particular statement");
-				state = 1;
-				lab.text = "Particular Statement";
-				this.setStyle("cornerRadius",0);}
+				if(this.panelType!=INFERENCE)
+				{
+					//Alert.show("Toggling to particular statement");
+					state = 1;
+					stmtTypeLbl.text = "Particular Statement";
+					this.setStyle("cornerRadius",0);
+				}
 				else {
-	 			Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
-				lab.text = "Universal Statement"; }
+					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
+					stmtTypeLbl.text = "Universal Statement";
+				}
 			} 
 			else {
 				state = 0;
 				//Alert.show("Toggling to universal statement");
-				lab.text = "Universal Statement";
+				stmtTypeLbl.text = "Universal Statement";
 				this.setStyle("cornerRadius",30);
 			} 
 		}
