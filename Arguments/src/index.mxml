@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="loadData();" xmlns:components="components.*" >
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" applicationComplete="loadData();" xmlns:components="components.*" >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -44,7 +44,10 @@
 				var lamWorld:LAMWorld = new LAMWorld;
 				//hide the controls
 				agoraMenu.visible = false;
-				addElement(lamWorld);	
+				addElement(lamWorld);
+				trace("in main app");
+				trace(this);
+				trace(lamWorld);
 			}
 			
 			public function showMenu():void
@@ -61,7 +64,7 @@
 				for each (var map:XML in maps)
 				{
 						var mapButton:Button = new Button;
-						mapButton.width="190";
+						mapButton.width=190;
 						mapButton.label = map.attribute("title");
 						mapNameList.addElement(mapButton);
 						xmls[mapButton.label] = map;
@@ -101,6 +104,9 @@
 			{
 				loadMapList();
 				loadProjectList();
+				//trace(this.stage.height);
+				//agoraMenu.height = stage.height;
+				//agoraMenu.width = stage.width;
 			}
 			
 		]]>

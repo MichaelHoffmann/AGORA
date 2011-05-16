@@ -36,23 +36,31 @@ package classes
 	import spark.layouts.VerticalLayout;
 	import spark.skins.spark.PanelSkin;
 	
+	
 	public class ArgumentPanel extends GridPanel
 	{
+		//The text box
 		public var input1:DynamicTextArea;
+		//the hit area for dragging the box
 		public var topArea:UIComponent;
+		//skin of the panel
 		public var panelSkin:PanelSkin;
+		//another skin
 		public var panelSkin1:PanelSkin;
-		public var doneButton:spark.components.Button;
-		public var argschemeButton:spark.components.Button;
-		public var savedText:String;
+		//doneButton
+		public var doneBtn:spark.components.Button;
+		public var argschemeBtn:spark.components.Button;
+		public var savedTextStr:String;
 		//public var displayLbl:Label;
 		public var displayTxt:Text;
 		public static var parentMap:AgoraMap;
 		public var group:Group;
-		public var inference:Inference;		//back reference
+		//The enabler which makes these statements support a claim
+		public var inference:Inference;		
 		public var bottomH:HGroup;
 		public var topH:HGroup;
-		public var rules:Vector.<Inference>;	//forward reference
+		//List of enablers which support this statement
+		public var rules:Vector.<Inference>;
 		public var binders:Vector.<Binder>;
 		public var state:int;	//state=0 -> universal statement and state=1 -> particular statement
 		
@@ -118,10 +126,10 @@ package classes
 			lab.addEventListener(MouseEvent.CLICK,toggle);
 			
 			bottomH = new HGroup();
-			doneButton = new spark.components.Button;
-			doneButton.label = "Done";
-			bottomH.addElement(doneButton);
-			doneButton.addEventListener(MouseEvent.CLICK,doneHandler);
+			doneBtn = new spark.components.Button;
+			doneBtn.label = "Done";
+			bottomH.addElement(doneBtn);
+			doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
 			
 			thereforeLine = new UIComponent();
 			thereforeLine.graphics.clear();
@@ -136,7 +144,10 @@ package classes
 			{
 			}
 			else if(this.inference != null)
+			{
 				parentMap.layoutManager.alignReasons(this, this.gridY);
+			}
+			return;
 		}
 		
 		public function beginDrag( mouseEvent: MouseEvent ):void
@@ -292,7 +303,7 @@ package classes
 				
 				
 				// deactive the DONE button to avoid duplicate action
-				doneButton.removeEventListener(MouseEvent.CLICK,doneHandler);
+				doneBtn.removeEventListener(MouseEvent.CLICK,doneHandler);
 			}
 		}
 		
@@ -380,10 +391,10 @@ package classes
 			input1.visible=false;
 			addElement(bottomH);
 			
-			argschemeButton = new spark.components.Button;
-			argschemeButton.label = "Add arg";
-			bottomH.addElement(argschemeButton);
-			argschemeButton.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
+			argschemeBtn = new spark.components.Button;
+			argschemeBtn.label = "Add arg";
+			bottomH.addElement(argschemeBtn);
+			argschemeBtn.addEventListener(MouseEvent.CLICK,addArgSchemeHandler);
 			
 		}
 		
