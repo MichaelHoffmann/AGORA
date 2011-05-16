@@ -50,7 +50,6 @@ package classes
 		//another skin
 		public var panelSkin1:PanelSkin;
 		//doneButton
-		
 		public var doneBtn:AButton;
 		public var addBtn:AButton;
 		public var deleteBtn:AButton;
@@ -89,10 +88,9 @@ package classes
 		{
 			if(userEntered == false)
 			{
-					input1.text="";
-					userEntered = true;
+				input1.text="";
+				userEntered = true;
 			}
-			//trace("should make it editable");
 			if( !( event.target is mx.controls.Button) )
 			{
 				input1.visible = true;
@@ -123,7 +121,8 @@ package classes
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-		
+			this.addEventListener(KeyboardEvent.KEY_DOWN,keyEntered);
+			
 			//will be set by the object that creates this
 			inference = null;
 			
@@ -151,6 +150,14 @@ package classes
 			return;
 		}
 		
+		public function keyEntered(event: KeyboardEvent):void
+		{
+			if(event.keyCode == Keyboard.ENTER)	
+			{
+				statementEntered();	
+			}
+		}
+		
 		public function beginDrag( mouseEvent: MouseEvent ):void
 		{
 			try{
@@ -164,7 +171,8 @@ package classes
 				ds.addData(dPInitiator.gridX,"gx");
 				ds.addData(dPInitiator.gridY,"gy");
 				DragManager.doDrag(dPInitiator,ds,mouseEvent,null);
-			}catch(error:Error)
+			}
+			catch(error:Error)
 			{
 				Alert.show(error.toString());
 			}
@@ -174,143 +182,144 @@ package classes
 		//through argument type, reasons and claim
 		public function addArgument(event:MenuEvent):void
 		{
-				if(event.label == "add an argument for this statement")
-				{
-					//create an inference
-					var currInference:Inference = new Inference();
-					//add the inference to map
-					parentMap.addElement(currInference);
-					currInference.visible=false;
-					//create the panel that displays connection information
-					var infoPanel:DisplayArgType = new DisplayArgType;
-					currInference.argType = infoPanel;
-					currInference.argType.inference = currInference;
-					parentMap.addElement(currInference.argType);
-					//add inference to the list of inferences
-					rules.push(currInference);
-					//set the claim of the inference rule to this
-					currInference.claim = this;
-					//create a reason node
-					var reason:ArgumentPanel = new ArgumentPanel();
-					//add reason to the map
-					parentMap.addElement(reason);
-					//push reason to the list of reasons belonging to this particular class
-					currInference.reasons.push(reason);
+			if(event.label == "add an argument for this statement")
+			{
 					
-					//temporary, should be replaced by TID
-					currInference.connectionIDs.push(Inference.connections++);
-					//set the inference of the reason
-					reason.inference = currInference;
-					//register the reason
-					parentMap.layoutManager.registerPanel(reason);
-					//create an invisible box for the inference rule corresponding to the claim
-					var tmpInput:DynamicTextArea = new DynamicTextArea();
-					//add it to the map
-					parentMap.addElement(tmpInput);
-					//set the input box as invisible
-					tmpInput.visible = false;
-					//logical
-					//set the panel to which the input box belongs
-					tmpInput.panelReference = currInference;
-					//add a pointer to the input
-					currInference.input.push(tmpInput);		
-					//binding
-					tmpInput.forwardList.push(currInference.input1);
-					input1.forwardList.push(currInference.input[0]);
-					tmpInput.aid = input1.aid;
-					
-					//create an invisible box for the reason
-					var tmpInput2:DynamicTextArea = new DynamicTextArea();
-					tmpInput2.aid = reason.input1.aid;
-					parentMap.addElement(tmpInput2);
-					tmpInput2.visible = false;
-					tmpInput2.panelReference = currInference;
-					currInference.input.push(tmpInput2);	
-					
-					tmpInput2.forwardList.push(currInference.input1);
-					reason.input1.forwardList.push(tmpInput2);
-					parentMap.layoutManager.registerPanel(currInference);	
-				}
+			}
 		}
 		
 		public function addHandler(event:MouseEvent):void
 		{
-			var menu:Menu = Menu.createMenu(null,addMenuData,false);
-			menu.labelField = "@label";
-			menu.addEventListener(MenuEvent.ITEM_CLICK, addArgument);
-			var globalPosition:Point = localToGlobal(new Point(0,this.height));
-			menu.show(globalPosition.x,globalPosition.y);		
+			//var menu:Menu = Menu.createMenu(null,addMenuData,false);
+			//menu.labelField = "@label";
+			//menu.addEventListener(MenuEvent.ITEM_CLICK, addArgument);
+			//var globalPosition:Point = localToGlobal(new Point(0,this.height));
+			//menu.show(globalPosition.x,globalPosition.y);		
+			//create an inference
+			var currInference:Inference = new Inference();
+			//add the inference to map
+			parentMap.addElement(currInference);
+			currInference.visible=false;
+			//create the panel that displays connection information
+			var infoPanel:DisplayArgType = new DisplayArgType;
+			currInference.argType = infoPanel;
+			currInference.argType.inference = currInference;
+			parentMap.addElement(currInference.argType);
+			//add inference to the list of inferences
+			rules.push(currInference);
+			//set the claim of the inference rule to this
+			currInference.claim = this;
+			//create a reason node
+			var reason:ArgumentPanel = new ArgumentPanel();
+			//add reason to the map
+			parentMap.addElement(reason);
+			//push reason to the list of reasons belonging to this particular class
+			currInference.reasons.push(reason);
+			
+			//temporary, should be replaced by TID
+			currInference.connectionIDs.push(Inference.connections++);
+			//set the inference of the reason
+			reason.inference = currInference;
+			//register the reason
+			parentMap.layoutManager.registerPanel(reason);
+			//create an invisible box for the inference rule corresponding to the claim
+			var tmpInput:DynamicTextArea = new DynamicTextArea();
+			//add it to the map
+			parentMap.addElement(tmpInput);
+			//set the input box as invisible
+			tmpInput.visible = false;
+			//logical
+			//set the panel to which the input box belongs
+			tmpInput.panelReference = currInference;
+			//add a pointer to the input
+			currInference.input.push(tmpInput);		
+			//binding
+			tmpInput.forwardList.push(currInference.input1);
+			input1.forwardList.push(currInference.input[0]);
+			tmpInput.aid = input1.aid;
+			
+			//create an invisible box for the reason
+			var tmpInput2:DynamicTextArea = new DynamicTextArea();
+			tmpInput2.aid = reason.input1.aid;
+			parentMap.addElement(tmpInput2);
+			tmpInput2.visible = false;
+			tmpInput2.panelReference = currInference;
+			currInference.input.push(tmpInput2);	
+			
+			tmpInput2.forwardList.push(currInference.input1);
+			reason.input1.forwardList.push(tmpInput2);
+			parentMap.layoutManager.registerPanel(currInference);
 		}
 		
 		
 		public function checkForEnter(event:KeyboardEvent):void{
 			/*
 			if(event.keyCode==Keyboard.ENTER){
-				MODE=0;
-				// add Reason only
-				var reason:ArgumentPanel = new ArgumentPanel();
-				reason.x = this.gridY*25 + this.width + 100;
-				reason.y = this.gridX*25;	
-				//add reason to the map
-				parentMap.addElement(reason);
-				
-				Alert.show("Select reason to be Universal or Particular statement, by clicking on its label on top");
-				
-				//line saying "therefore" joining claim and reason temporarily
-				thereforeLine.graphics.moveTo(this.width-10,this.height/2);
-				thereforeLine.graphics.lineTo(this.width+100,this.height/2);
-				thereforeText = new Label;
-				thereforeText.x = this.gridY*25+this.width + 10; thereforeText.y = this.gridX*25+50;
-				parentMap.addElement(thereforeText);
-				thereforeText.text = "<== Therefore";
-				
-				var currInference:Inference = new Inference();
-				parentMap.addElement(currInference);
-				currInference.visible = false; currInference.argType.visible = false;
-				currInference.claim = this;
-				currInference.reasons.push(reason);
-				
-				currInference.connectionIDs.push(Inference.connections++);
-				
-				reason.inference = currInference;
-	
-				//create an invisible box for the inference rule corresponding to the claim
-				var tmpInput:DynamicTextArea = new DynamicTextArea();
-				parentMap.addElement(tmpInput);
-				//set the input box as invisible
-				tmpInput.visible = false;
-				//logical
-				//set the panel to which the input box belongs
-				tmpInput.panelReference = currInference;
-				//add a pointer to the input
-				currInference.input.push(tmpInput);		
-				
-				//binding
-				tmpInput.forwardList.push(currInference.input1);
-				input1.forwardList.push(currInference.input[0]);
-				
-				//set the id of the new text box to the id of the one in the reason
-				tmpInput.aid = input1.aid;
-				
-				
-				//create an invisible box for the reason
-				var tmpInput2:DynamicTextArea = new DynamicTextArea();
-				//set its id to the DTA's id present in the reason
-				tmpInput2.aid = reason.input1.aid;
-				parentMap.addElement(tmpInput2);
-				tmpInput2.visible = false;
-				tmpInput2.panelReference = currInference;
-				currInference.input.push(tmpInput2);	
-				
-				tmpInput2.forwardList.push(currInference.input1);
-				reason.input1.forwardList.push(tmpInput2);
-				input1.forwardUpdate();		//claim	
-				reason.input1.forwardUpdate();		//reason
-				
-				
-				// deactive the DONE button to avoid duplicate action
-				doneBtn.removeEventListener(MouseEvent.CLICK,doneHandler);
-		
+			MODE=0;
+			// add Reason only
+			var reason:ArgumentPanel = new ArgumentPanel();
+			reason.x = this.gridY*25 + this.width + 100;
+			reason.y = this.gridX*25;	
+			//add reason to the map
+			parentMap.addElement(reason);
+			
+			Alert.show("Select reason to be Universal or Particular statement, by clicking on its label on top");
+			
+			//line saying "therefore" joining claim and reason temporarily
+			thereforeLine.graphics.moveTo(this.width-10,this.height/2);
+			thereforeLine.graphics.lineTo(this.width+100,this.height/2);
+			thereforeText = new Label;
+			thereforeText.x = this.gridY*25+this.width + 10; thereforeText.y = this.gridX*25+50;
+			parentMap.addElement(thereforeText);
+			thereforeText.text = "<== Therefore";
+			
+			var currInference:Inference = new Inference();
+			parentMap.addElement(currInference);
+			currInference.visible = false; currInference.argType.visible = false;
+			currInference.claim = this;
+			currInference.reasons.push(reason);
+			
+			currInference.connectionIDs.push(Inference.connections++);
+			
+			reason.inference = currInference;
+			
+			//create an invisible box for the inference rule corresponding to the claim
+			var tmpInput:DynamicTextArea = new DynamicTextArea();
+			parentMap.addElement(tmpInput);
+			//set the input box as invisible
+			tmpInput.visible = false;
+			//logical
+			//set the panel to which the input box belongs
+			tmpInput.panelReference = currInference;
+			//add a pointer to the input
+			currInference.input.push(tmpInput);		
+			
+			//binding
+			tmpInput.forwardList.push(currInference.input1);
+			input1.forwardList.push(currInference.input[0]);
+			
+			//set the id of the new text box to the id of the one in the reason
+			tmpInput.aid = input1.aid;
+			
+			
+			//create an invisible box for the reason
+			var tmpInput2:DynamicTextArea = new DynamicTextArea();
+			//set its id to the DTA's id present in the reason
+			tmpInput2.aid = reason.input1.aid;
+			parentMap.addElement(tmpInput2);
+			tmpInput2.visible = false;
+			tmpInput2.panelReference = currInference;
+			currInference.input.push(tmpInput2);	
+			
+			tmpInput2.forwardList.push(currInference.input1);
+			reason.input1.forwardList.push(tmpInput2);
+			input1.forwardUpdate();		//claim	
+			reason.input1.forwardUpdate();		//reason
+			
+			
+			// deactive the DONE button to avoid duplicate action
+			doneBtn.removeEventListener(MouseEvent.CLICK,doneHandler);
+			
 			}
 			*/
 		}
@@ -329,7 +338,8 @@ package classes
 			}
 		}
 		
-		public function doneHandler(d:MouseEvent):void{
+		public function statementEntered():void
+		{
 			makeUnEditable();
 			input1.forwardUpdate();
 			if(inference!=null && inference.formedBool == false)
@@ -340,40 +350,22 @@ package classes
 				var globalPosition:Point = localToGlobal(new Point(0,this.height));
 				menu.show(globalPosition.x,globalPosition.y);
 			}
-			/*
-			if(MODE==1){ //only reason has been added, inference is invisible and not pushed to claim.rules
-				var correspClaim:ArgumentPanel = this.inference.claim;
-				correspClaim.rules.push(this.inference);
-				parentMap.layoutManager.registerPanel(this);	
-				parentMap.layoutManager.registerPanel(this.inference);	
-				this.inference.makeVisible();
-				parentMap.removeElement(correspClaim.thereforeText);
-				correspClaim.thereforeLine.graphics.clear();
-				
-				Alert.show("Select Argument Scheme from the list");
-				var simulatedClick:MouseEvent = new MouseEvent(MouseEvent.CLICK);
-				this.inference.scheme.dispatchEvent(simulatedClick);
-
-			}
-			else { //this is also a claim. so "done" should not do anything special. here done should be equivalent to hitting 'enter'
-				if(this.rules.length==0) {//open ended claim. Enter has not been hit yet
-					var simulatedEnter:KeyboardEvent = new KeyboardEvent(KeyboardEvent.KEY_DOWN);
-					simulatedEnter.keyCode = Keyboard.ENTER;
-					input1.dispatchEvent(simulatedEnter);
-				}
-			}
-			*/
 		}
-	
+		
+		public function doneHandler(d:MouseEvent):void
+		{
+			statementEntered();
+		}
+		
 		public function getString():String{
 			return input1.text;
 		}
-			
+		
 		public function textBoxClicked(event:MouseEvent):void{
 			if(this.inference==null)
 				event.target.text = "";
 		}
-
+		
 		public function movedAway(event:MouseEvent):void{
 			if(event.target.text == ""){
 				event.target.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
@@ -415,9 +407,9 @@ package classes
 			input1.panelReference = this;
 			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
 			if(this.panelType==ARGUMENT_PANEL) {
-			//input1.addEventListener(MouseEvent.CLICK,textBoxClicked);
-			//input1.addEventListener(MouseEvent.MOUSE_OUT,movedAway);
-			input1.addEventListener(KeyboardEvent.KEY_DOWN,checkForEnter); }
+				//input1.addEventListener(MouseEvent.CLICK,textBoxClicked);
+				//input1.addEventListener(MouseEvent.MOUSE_OUT,movedAway);
+				input1.addEventListener(KeyboardEvent.KEY_DOWN,checkForEnter); }
 			
 			//Create the label for displaying the statement
 			//displayLbl = new Label;
@@ -466,8 +458,7 @@ package classes
 			deleteBtn.label = "delete...";
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
-			bottomHG.visible = false;
-			
+			bottomHG.visible = false;	
 		}
 		
 		public function onArgumentPanelCreate(e:FlexEvent):void
@@ -492,7 +483,7 @@ package classes
 			displayTxt.text = input1.text;
 			displayTxt.width = input1.width;
 			displayTxt.height = input1.height;
-	
+			
 		}
 		
 		public function toggle(m:MouseEvent):void
