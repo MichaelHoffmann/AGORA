@@ -174,17 +174,20 @@ INSERT INTO connection_types(conn_name, description) VALUES ("MTonlyifor",     "
 INSERT INTO connection_types(conn_name, description) VALUES ("MTprovidedthat", "Modus Tollens: provided-that phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MTsufficient",   "Modus Tollens: sufficient phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MTnecessary",    "Modus Tollens: necessary phrasing, in English.");
---Syllogisms
+--Miscellaneous Syllogisms
 INSERT INTO connection_types(conn_name, description) VALUES ("DisjSyl",        "Disjunctive Syllogism, in English");
 INSERT INTO connection_types(conn_name, description) VALUES ("NotAllSyl",      "Not-all Syllogism, in English");
---Equivalence
---Note that these can have negatives on both sides, they're not necessary on serverside
+--Equivalence (Note that while these can have negatives on both sides, the difference isn't necessary on the server)
 INSERT INTO connection_types(conn_name, description) VALUES ("EQiff",          "Equivalence: if-and-only-if phrasing, in English");
 INSERT INTO connection_types(conn_name, description) VALUES ("EQnecsuf",       "Equivalence: necessary-and-sufficient phrasing, in English");
 INSERT INTO connection_types(conn_name, description) VALUES ("EQ",             "Equivalence: equivalent phrasing, in English");
 --Conditional Syllogism
-INSERT INTO connection_types(conn_name, description) VALUES ("CSifthen",   "Constructive Syllogism: if-then phrasing, in English.");
-INSERT INTO connection_types(conn_name, description) VALUES ("CSifthen",   "Constructive Syllogism: if-then phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("CSifthen",       "Conditional Syllogism: if-then phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("CSimplies",      "Conditional Syllogism: implies phrasing, in English.");
+--Constructive Dilemma
+INSERT INTO connection_types(conn_name, description) VALUES ("CDaltclaim",     "Constructive Dilemma: alternate as claim, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("CDpropclaim",    "Constructive Dilemma: proposition as claim, in English.");
+
 
 
 
