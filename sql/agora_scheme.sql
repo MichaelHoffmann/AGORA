@@ -150,7 +150,7 @@ CREATE  TABLE IF NOT EXISTS agora.connection_types (
   PRIMARY KEY (type_id));
   
 INSERT INTO connection_types (conn_name, description) VALUES 
-	("Commentary", "A comment on another node"), ("Objection", "An objection to another node"), ("Refutation", "A refutation of another node"), ("Amendment", "Proposed amendment for another node");
+	("Unset", "A type of connection which has not yet been set."), ("Commentary", "A comment on another node"), ("Objection", "An objection to another node"), ("Refutation", "A refutation of another node"), ("Amendment", "Proposed amendment for another node");
 	
 -- NOTE: Argument types that only have one sort of expansion do not need disambiguation
 
