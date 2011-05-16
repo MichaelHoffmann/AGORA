@@ -1,6 +1,5 @@
 <?php
 
-	//TODO: (Whole file) make this return a TID-ID XML so that we can stop storing TID in the DB
 	require 'checklogin.php';
 	$tbTIDarray;
 	$nodeTIDarray;
