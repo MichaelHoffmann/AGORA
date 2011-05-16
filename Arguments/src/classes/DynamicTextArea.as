@@ -87,9 +87,6 @@ package classes
 			var paddingBottom:String= this.getStyle("paddingBottom");
 			topPadding= int(paddingTop);
 			bottomPadding= int(paddingBottom);
-			/*
-			Same comment above the padding in the previous function applies here as well
-			*/
 			if((textField.textHeight + topPadding + bottomPadding)>=super.minHeight){
 				height = textField.textHeight+topPadding+bottomPadding;
 			}
@@ -109,58 +106,13 @@ package classes
 			{
 					if(forwardList.length>0){
 						currInput= forwardList[0];
-						//update the string
-					
 							var infPanel:Inference = Inference(panelReference);
 							var s:String;
-							//trace(infPanel.input.length);
 							if(infPanel.argType.schemeText!=null) { 
 								flag=1;
-							/*var typeChosen:String = infPanel.argType.schemeText;
-							var splits:Array = new Array;
-							splits = typeChosen.split("-");
-							s = splits[0] + " ";
-							if(splits[splits.length-1] == "Exp")
-							var expandor:String = infPanel.argType.connText;
-							this.panelReference.input1.visible=true;*/
-								}
+							}
 							else this.panelReference.input1.visible=false;
-							/*for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
-							{
-								s = s + infPanel.input[ind].text + " " + expandor + " ";	
-								//trace(infPanel.input[ind]);
-							}
-							s = s + infPanel.input[ind].text;
-							if(flag==1) 
-								s = s + ", " + splits[1] + " " + infPanel.input[0].text;
-							else s = s + ", " + infPanel.input[0].text;
-							
-							var typeChosen:int = infPanel.argType.schemeTextIndex;
-							var currScheme:ParentArg;
-							var currSchemeName:String = infPanel.myArg.myname;
-							switch(currSchemeName)
-							{
-								case ParentArg.MOD_PON: currScheme = new ModusPonens(currScheme); break;
-								case ParentArg.MOD_TOL: currScheme = new ModusTollens; break;
-								case ParentArg.COND_SYLL: currScheme = new ConditionalSyllogism; break;
-								case ParentArg.DIS_SYLL: currScheme = new DisjunctiveSyllogism; break;
-								case ParentArg.NOT_ALL_SYLL: currScheme = new NotAllSyllogism; break;
-								case ParentArg.CONST_DILEM: currScheme = new ConstructiveDilemma;
-									
-							}*/
 							s = infPanel.sentence;
-
-							/*currInput = forwardList[0];//this is an invisible text box and it has only one dependent, the inference's text (input1)
-							//update the string
-							var s:String = "If ";
-							var infPanel:Inference = Inference(panelReference);
-							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
-							{
-								s = s + infPanel.input[ind].text + " and ";
-							}
-							s = s + infPanel.input[ind].text;
-							s = s + ", therefore " + infPanel.input[0].text + ".";*/
-
 							currInput.text = s; 
 							currInput.forwardUpdate();
 					}

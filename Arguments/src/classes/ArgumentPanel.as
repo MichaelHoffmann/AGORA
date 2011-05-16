@@ -114,41 +114,18 @@ package classes
 		{
 			super();
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
-			
 			userEntered = false;
-			var uLayout:VerticalLayout = new VerticalLayout;
-			uLayout.paddingBottom = 10;
-			uLayout.paddingLeft = 10;
-			uLayout.paddingRight = 10;
-			uLayout.paddingTop = 10;
-			width = 180;
-			minHeight = 100;
-			this.layout = uLayout;
-			
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
-			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-			
+		
 			//will be set by the object that creates this
 			inference = null;
-			rules = new Vector.<Inference>(0,false);
-			stmtTypeLbl = new Label;
-			// default setting    	
-			if(this is Inference) stmtTypeLbl.text = "Universal Statement";
-			else stmtTypeLbl.text = "Particular Statement";
-			stmtTypeLbl.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
-				"A 'universal statement' is defined here as a statement that can be falsified by one counter-example. " +
-				"In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements." +
-				" Anything else is treated as a particular statement, including statements about possibilities. CLICK TO CHANGE";
-			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
 			
-			bottomHG = new HGroup();
-			doneHG = new HGroup;
-			doneBtn = new Button;
-			doneBtn.label = "Done";
-			doneHG.addElement(doneBtn);
-			doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
+			rules = new Vector.<Inference>(0,false);
+			
+			width = 180;
+			minHeight = 100;
 			
 			thereforeLine = new UIComponent();
 			thereforeLine.graphics.clear();
@@ -200,8 +177,10 @@ package classes
 			var currInference:Inference = new Inference();
 			//add the inference to map
 			parentMap.addElement(currInference);
+			//create the panel that displays connection information
+			var infoPanel:DisplayArgType = new DisplayArgType;
+			currInference.argType = infoPanel;
 			parentMap.addElement(currInference.argType);
-			trace(currInference.argType.width);
 			//add inference to the list of inferences
 			rules.push(currInference);
 			//set the claim of the inference rule to this
@@ -245,9 +224,8 @@ package classes
 			
 			tmpInput2.forwardList.push(currInference.input1);
 			reason.input1.forwardList.push(tmpInput2);
-			
-			input1.forwardUpdate();		//claim	
-			reason.input1.forwardUpdate();		//reason
+			//input1.forwardUpdate();		//claim	
+			//reason.input1.forwardUpdate();		//reason
 			parentMap.layoutManager.registerPanel(currInference);	
 		}
 		
@@ -369,6 +347,30 @@ package classes
 		{
 			//create the children of MX Panel
 			super.createChildren();		
+			var uLayout:VerticalLayout = new VerticalLayout;
+			uLayout.paddingBottom = 10;
+			uLayout.paddingLeft = 10;
+			uLayout.paddingRight = 10;
+			uLayout.paddingTop = 10;
+			this.layout = uLayout;
+			
+			
+			stmtTypeLbl = new Label;
+			// default setting    	
+			if(this is Inference) stmtTypeLbl.text = "Universal Statement";
+			else stmtTypeLbl.text = "Particular Statement";
+			stmtTypeLbl.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
+				"A 'universal statement' is defined here as a statement that can be falsified by one counter-example. " +
+				"In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements." +
+				" Anything else is treated as a particular statement, including statements about possibilities. CLICK TO CHANGE";
+			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
+			
+			bottomHG = new HGroup();
+			doneHG = new HGroup;
+			doneBtn = new Button;
+			doneBtn.label = "Done";
+			doneHG.addElement(doneBtn);
+			doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
 			
 			input1 = new DynamicTextArea();
 			//this.input1.addEventListener(FocusEvent.FOCUS_OUT, makeUnEditable);
@@ -407,6 +409,8 @@ package classes
 			group.addElement(input1);
 			//displayLbl.width = 100;
 			group.addElement(displayTxt);
+			//set the text as soon as its created
+			displayTxt.addEventListener(FlexEvent.CREATION_COMPLETE,setGuidingText);
 			input1.visible=false;
 			
 			btnG = new Group;
@@ -435,11 +439,18 @@ package classes
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
 			
+		}
+		
+		protected function setGuidingText(event:FlexEvent):void
+		{
 			if(this.panelType==ARGUMENT_PANEL)
+			{
 				input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
+			}
 			displayTxt.text = input1.text;
 			displayTxt.width = input1.width;
 			displayTxt.height = input1.height;
+	
 		}
 		
 		public function toggle(m:MouseEvent):void

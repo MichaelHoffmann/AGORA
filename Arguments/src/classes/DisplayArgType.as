@@ -28,8 +28,6 @@ package classes
 		public function DisplayArgType()
 		{
 			super();
-			height = 20;
-			//width = 180;
 
 		}
 		override protected function createChildren():void

@@ -49,7 +49,6 @@ package classes
 		
 		public function getMapXml():XML
 		{
-			trace("Inside the top of getMap()");
 			var xml:XML = new XML("<map id=\""+mapId+"\"></map>");
 			//xml = xml.insertChildAfter(null,<textbox></textbox>);
 			
@@ -138,7 +137,6 @@ package classes
 				}	
 			}
 			Alert.show(xml.toXMLString());
-			trace(xml.toXMLString());
 		}
 		
 		public function load( event:Event):void{
@@ -319,6 +317,12 @@ package classes
 				Alert.show(error.message.toString());
 			}
 			layoutManager.layoutComponents();
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth,unscaledHeight);
+			connectRelatedPanels();
 		}
 		
 		public function connectRelatedPanels():void

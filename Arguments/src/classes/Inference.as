@@ -23,15 +23,13 @@ package classes
 	
 	public class Inference extends ArgumentPanel
 	{
-		//
 		public static var connections:int;
 		public var reasons:Vector.<ArgumentPanel>;
 		public var input:Vector.<DynamicTextArea>;
 		public var argumentClass:String;
-		//public var scheme:Button;
 		public var vgroup:VGroup;
 		public var claim:ArgumentPanel;
-		public var argType:DisplayArgType;
+		public var _argType:DisplayArgType;
 		public var myschemeSel:ArgSelector;
 		public var myArg:ParentArg;		
 		public var sentence:String;
@@ -48,18 +46,28 @@ package classes
 			panelType = ArgumentPanel.INFERENCE;
 			state = 0; // Inference is always a Universal statement
 			addEventListener(FlexEvent.CREATION_COMPLETE, displayArgumentType);
-			
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);
-			argType = new DisplayArgType();
-			argType.inference = this;
-			argType.addEventListener(FlexEvent.CREATION_COMPLETE,addHandlers);
+			//This is a place for overhead. Constructors are not JIT compiled,
+			//and therefore, the below creation of a child component must be
+			//moved to createChildren()
 			myschemeSel = new ArgSelector();
 			this.setStyle("cornerRadius",30);	
 			sentence = "";
 		}
 		
-		public function addHandlers(fe:FlexEvent):void
+		public function get argType():DisplayArgType
+		{
+			return _argType;
+		}
+		
+		public function set argType(value:DisplayArgType):void
+		{
+			_argType = value;
+			_argType.addEventListener(FlexEvent.CREATION_COMPLETE,addToMap);
+		}
+		
+		public function addToMap(fe:FlexEvent):void
 		{
 			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
 			argType.changeSchemeBtn.addEventListener(MouseEvent.CLICK,changeScheme);
@@ -83,17 +91,12 @@ package classes
 					reasons.push(tmp);
 					
 					connectionIDs.push(connections++);
-					
-					//trace(this);
-					//trace(tmp);
 					tmp.inference = this;
 					parentMap.layoutManager.registerPanel(tmp);
 					
 					//create an invisible box in the inference rule
 					var tmpInput:DynamicTextArea = new DynamicTextArea();
 					//visual
-					//inferenceRule.logicalContainer.addElement(tmpInput);
-					//inferenceRule.logicalContainer.removeElement(tmpInput);
 					parentMap.addElement(tmpInput);
 					tmpInput.visible = false;
 					
@@ -129,15 +132,12 @@ package classes
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
 			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
-			//rootlist.addEventListener(ListEvent.ITEM_CLICK,setScheme);
 			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
 			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
-			//rootlist.addEventListener(ListEvent.ITEM_ROLL_OUT,closeTypes);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
 			
-			//var sc:SkinnableContainer = new SkinnableContainer();
 		}
 		
 		public function setType(le:ListEvent):void
@@ -174,9 +174,6 @@ package classes
 			var typeText:String=le.itemRenderer.data.toString();
 			argType.schemeText = typeText;
 			argType.schemeTextIndex = le.rowIndex;
-			//var splits:Array = new Array;
-			//splits = typeText.split("-");
-			//if(splits[splits.length-1] == "Exp")
 			if(myArg.myname == ParentArg.MOD_TOL)
 				if(typeText == "Only if") {
 					oplist.visible=true; isExp = true; }
@@ -198,17 +195,10 @@ package classes
 			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
 			myschemeSel.visible = false;
 			input1.visible=true;
-			
-			// construct the argument with claim, reason(s), inference and conjunction
-			//sentence = myArg.correctUsage(argType.schemeTextIndex,this.claim.input1.text,this.reasons,isExp,argType.connText);
-			
 			input1.forwardUpdate();
 		}
 		
-		override protected function createChildren():void
-		{
-			
-		}
+
 		
 		public function bringForward(e:MouseEvent):void
 		{

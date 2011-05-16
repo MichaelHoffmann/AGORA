@@ -73,7 +73,7 @@ package classes
 				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
 				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
 			}
-			ArgumentPanel.parentMap.connectRelatedPanels();
+			//ArgumentPanel.parentMap.connectRelatedPanels();
 		}
 		
 		
@@ -228,24 +228,6 @@ package classes
 		public function getGridSpan(pixels:int):int
 		{
 			return Math.ceil(pixels/uwidth);
-		}
-		
-		public function buttonClicked(e:MouseEvent):void
-		{
-			var tmp:ArgumentPanel = new ArgumentPanel();
-			var tgridX:int;
-			var tgridY:int;
-			try{
-				tmp.gridX=2;
-				tmp.gridY=3;
-				ArgumentPanel.parentMap.addElement(tmp);
-				registerPanel(tmp);
-				layoutComponents();
-			}
-			catch(e:Error)
-			{
-				Alert.show(e.toString());
-			}		
 		}		
 	}	
 }
