@@ -387,8 +387,16 @@ package classes
 			
 			stmtTypeLbl = new Label;
 			// default setting    	
-			if(this is Inference) stmtTypeLbl.text = "Universal Statement";
-			else stmtTypeLbl.text = "Particular Statement";
+			if(this is Inference)
+			{
+				stmtTypeLbl.text = "";
+				state = 0;
+			}
+			else
+			{
+				stmtTypeLbl.text = "Particular Statement";
+				state = 1;
+			}
 			stmtTypeLbl.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
 				"A 'universal statement' is defined here as a statement that can be falsified by one counter-example. " +
 				"In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements." +
@@ -495,6 +503,7 @@ package classes
 					state = 1;
 					stmtTypeLbl.text = "Particular Statement";
 					this.setStyle("cornerRadius",0);
+			
 				}
 				else {
 					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
