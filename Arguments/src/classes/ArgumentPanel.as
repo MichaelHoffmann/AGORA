@@ -82,6 +82,8 @@ package classes
 		public var negated:Boolean;		// negated = 0 means no - it is positive. negated = 1 means yes - it is negative. Useful for Modus Tollens and Disjunctive Syllogism
 		public var userEntered:Boolean;
 		public var addMenuData:XML;
+		public var constructArgData:XML;
+		
 		
 		public function makeEditable(event:MouseEvent):void
 		{
@@ -116,6 +118,7 @@ package classes
 		{
 			super();
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
+			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
 			userEntered = false;
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
@@ -312,17 +315,31 @@ package classes
 			*/
 		}
 		
-		public function doneHandler(d:MouseEvent):void{
-			makeUnEditable();
-			input1.forwardUpdate();
-			if(inference!=null && inference.formedBool == false)
+		public function constructArgument(event:MenuEvent):void
+		{
+			if(event.label == "add another reason")
+			{
+				inference.addReason();
+			}
+			else if(event.label == "construct argument")
 			{
 				inference.buildInference();
 				inference.formedBool = true;
 				inference.visible = true;
 			}
-			if(inference!=null)
-				trace(inference.input);
+		}
+		
+		public function doneHandler(d:MouseEvent):void{
+			makeUnEditable();
+			input1.forwardUpdate();
+			if(inference!=null && inference.formedBool == false)
+			{
+				var menu:Menu = Menu.createMenu(null,constructArgData,false);
+				menu.labelField = "@label";
+				menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
+				var globalPosition:Point = localToGlobal(new Point(0,this.height));
+				menu.show(globalPosition.x,globalPosition.y);
+			}
 			/*
 			if(MODE==1){ //only reason has been added, inference is invisible and not pushed to claim.rules
 				var correspClaim:ArgumentPanel = this.inference.claim;
