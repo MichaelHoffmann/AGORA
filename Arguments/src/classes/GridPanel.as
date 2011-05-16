@@ -15,6 +15,10 @@ package classes
 			count = count + 1;
 			aid = count;
 			super();
+			this.setStyle("dropShadowVisible",false);
+			this.setStyle("cornerRadius",4);
+			this.setStyle("chromeColor",uint("0xffffff"));
+			this.setStyle("backgroundColor",uint("0x999966"));
 		}
 		override protected function createChildren():void
 		{

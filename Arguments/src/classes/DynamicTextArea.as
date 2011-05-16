@@ -1,7 +1,7 @@
 /*
 
-	@Author: Karthik Rangarajan
-	@Version: 0.1
+@Author: Karthik Rangarajan
+@Version: 0.1
 /*
 This class is derived from the TextArea component to provide text boxes that resize automatically on user input, without displaying scrollbars, or hiding text.
 */
@@ -87,9 +87,6 @@ package classes
 			var paddingBottom:String= this.getStyle("paddingBottom");
 			topPadding= int(paddingTop);
 			bottomPadding= int(paddingBottom);
-			/*
-			Same comment above the padding in the previous function applies here as well
-			*/
 			if((textField.textHeight + topPadding + bottomPadding)>=super.minHeight){
 				height = textField.textHeight+topPadding+bottomPadding;
 			}
@@ -104,97 +101,47 @@ package classes
 		public function forwardUpdate():void
 		{
 			var currInput:DynamicTextArea;
-			var flag:int = 0;
-			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE)
+			//var flag:int = 0;
+			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE && this != panelReference.input1)
 			{
-					if(forwardList.length>0){
-						currInput= forwardList[0];
-						//update the string
-					
-							var infPanel:Inference = Inference(panelReference);
-							var s:String;
-							//trace(infPanel.input.length);
-							if(infPanel.argType.schemeText!=null) { 
-								flag=1;
-							/*var typeChosen:String = infPanel.argType.schemeText;
-							var splits:Array = new Array;
-							splits = typeChosen.split("-");
-							s = splits[0] + " ";
-							if(splits[splits.length-1] == "Exp")
-							var expandor:String = infPanel.argType.connText;
-							this.panelReference.input1.visible=true;*/
-								}
-							else this.panelReference.input1.visible=false;
-							/*for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
-							{
-								s = s + infPanel.input[ind].text + " " + expandor + " ";	
-								//trace(infPanel.input[ind]);
-							}
-							s = s + infPanel.input[ind].text;
-							if(flag==1) 
-								s = s + ", " + splits[1] + " " + infPanel.input[0].text;
-							else s = s + ", " + infPanel.input[0].text;
-							
-							var typeChosen:int = infPanel.argType.schemeTextIndex;
-							var currScheme:ParentArg;
-							var currSchemeName:String = infPanel.myArg.myname;
-							switch(currSchemeName)
-							{
-								case ParentArg.MOD_PON: currScheme = new ModusPonens(currScheme); break;
-								case ParentArg.MOD_TOL: currScheme = new ModusTollens; break;
-								case ParentArg.COND_SYLL: currScheme = new ConditionalSyllogism; break;
-								case ParentArg.DIS_SYLL: currScheme = new DisjunctiveSyllogism; break;
-								case ParentArg.NOT_ALL_SYLL: currScheme = new NotAllSyllogism; break;
-								case ParentArg.CONST_DILEM: currScheme = new ConstructiveDilemma;
-									
-							}*/
-							s = infPanel.sentence;
-
-							/*currInput = forwardList[0];//this is an invisible text box and it has only one dependent, the inference's text (input1)
-							//update the string
-							var s:String = "If ";
-							var infPanel:Inference = Inference(panelReference);
-							for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
-							{
-								s = s + infPanel.input[ind].text + " and ";
-							}
-							s = s + infPanel.input[ind].text;
-							s = s + ", therefore " + infPanel.input[0].text + ".";*/
-
-							currInput.text = s; 
-							currInput.forwardUpdate();
+				if(forwardList.length>0){
+					currInput= forwardList[0];
+					var infPanel:Inference = Inference(panelReference);
+					var s:String;
+					if(infPanel.argType.schemeText!=null) { 
+			//			flag=1;
+						infPanel.displayStr = infPanel.myArg.correctUsage(infPanel.argType.schemeTextIndex,infPanel.claim.input1.text,infPanel.reasons,infPanel.isExp);
+						//trace(sentence);
+						//this.panelReference.input1.text = sentence;
 					}
+					//else visible=false;
+					//s = infPanel.sentence;
+					//currInput.text = s; 
+					currInput.forwardUpdate();
+				}
+				else
+				{
+					Alert.show(this);
+					Alert.show(forwardList.length);
+					Alert.show("Someting went wrong in statement propagation");
+				}
+				
 			}else
 			{
 				if(forwardList.length == 0 )
 					return;
 				for(var i:int = 0; i < forwardList.length; i++){
-				currInput = forwardList[i];
-				currInput.text = text;
-				//trace(currInput);
-				currInput.forwardUpdate();
+					currInput = forwardList[i];
+					currInput.text = text;
+					currInput.forwardUpdate();
+				}
 			}
-			}
-
 		}
 		
 		public function update():void{
 			var s:String;
 			var infPanel:Inference = Inference(panelReference);
-			/*var typeChosen:String = infPanel.argType.schemeText;
-			var splits:Array = new Array;
-			splits = typeChosen.split("-");
-			s = splits[0] + " ";
-			if(splits[splits.length-1] == "Exp")
-				var expandor:String = infPanel.argType.connText;
-			for(var ind:int = 1; ind < infPanel.input.length - 1; ind++)
-			{
-				s = s + infPanel.input[ind].text + " " + expandor + " ";	
-			}
-			s = s + infPanel.input[ind].text;
-			s = s + ", " + splits[1] + " " + infPanel.input[0].text + ".";*/
-			
-			this.text = infPanel.sentence;
+			this.text = infPanel.displayStr;
 		}
 		
 		public function backwardUpdate():void

@@ -49,7 +49,6 @@ package classes
 		
 		public function getMapXml():XML
 		{
-			trace("Inside the top of getMap()");
 			var xml:XML = new XML("<map id=\""+mapId+"\"></map>");
 			//xml = xml.insertChildAfter(null,<textbox></textbox>);
 			
@@ -138,7 +137,6 @@ package classes
 				}	
 			}
 			Alert.show(xml.toXMLString());
-			trace(xml.toXMLString());
 		}
 		
 		public function load( event:Event):void{
@@ -231,7 +229,7 @@ package classes
 		{
 			super.createChildren();
 			drawUtility = new UIComponent();
-			addElement(drawUtility);
+			this.parent.addElement(drawUtility);
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -321,9 +319,17 @@ package classes
 			layoutManager.layoutComponents();
 		}
 		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth,unscaledHeight);
+			connectRelatedPanels();
+		}
+		
 		public function connectRelatedPanels():void
 		{
+			
 			var panelList:Vector.<GridPanel> = layoutManager.panelList;
+			drawUtility.depth = this.numChildren;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			
@@ -336,11 +342,17 @@ package classes
 					var m:int;
 					for(m = 0; m < tmp.rules.length; m++)
 					{
+						//for each  rule
 						var gridy:int = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
+						//horizontal lines to argType box
 						drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[m].argType.y + 30);
 						drawUtility.graphics.lineTo(tmp.rules[m].argType.x, tmp.rules[m].argType.y + 30);
-						drawUtility.graphics.moveTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].argType.y + tmp.rules[m].argType.height);
-						drawUtility.graphics.lineTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].y);
+						//vertical line from argtype to inference box
+						if(tmp.rules[m].visible == true)
+						{
+							drawUtility.graphics.moveTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].argType.y + tmp.rules[m].argType.height);
+							drawUtility.graphics.lineTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].y);
+						}
 						//an inference always has reasons
 						var gridyreasons:int = tmp.rules[m].reasons[0].gridY - 1;
 						for(var n:int = 0; n < tmp.rules[m].reasons.length; n++){

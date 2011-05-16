@@ -75,10 +75,7 @@
 				//set the height and width
 				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
 				agora.width = this.stage.stageWidth;
-				//this.stage.
 				this.stage.addEventListener(Event.RESIZE, updateSize);	
-			
-				
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;
 				var argumentPanel:ArgumentPanel = new ArgumentPanel();
