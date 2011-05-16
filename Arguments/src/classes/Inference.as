@@ -148,7 +148,7 @@ package classes
 			bottomHG.visible = true;
 			doneHG.visible = false;
 			input1.visible = false;
-			this.visible = false;
+			//this.visible = false;
 		}
 		
 				
