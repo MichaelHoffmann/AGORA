@@ -12,7 +12,7 @@
 		<nodetext TID="3" textboxTID="1"/>
 		<nodetext TID="4" textboxTID="2"/>
 	</node>
-	<connection argTID="1" type="MPtherefore" targetnodeTID="2" x="5" y="1">
+	<connection argTID="1" type="MPifthen" targetnodeTID="2" x="5" y="1">
 		<sourcenode TID="1" nodeTID="1"/>
 		<sourcenode TID="2" nodeTID="3"/>
 	</connection>
