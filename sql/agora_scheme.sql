@@ -151,8 +151,42 @@ CREATE  TABLE IF NOT EXISTS agora.connection_types (
   
 INSERT INTO connection_types (conn_name, description) VALUES 
 	("Commentary", "A comment on another node"), ("Objection", "An objection to another node"), ("Refutation", "A refutation of another node"), ("Amendment", "Proposed amendment for another node");
-INSERT INTO connection_types(conn_name, description) VALUES ("MPifthen", "Modus Ponens: if-then phrasing, in English.");
-INSERT INTO connection_types(conn_name, description) VALUES ("ConSyllogism", "Constructive Syllogism - Therefore phrasing, in English.");
+	
+-- NOTE: Argument types that only have one sort of expansion do not need disambiguation
+
+--ENGLISH
+
+--Modus Ponens
+INSERT INTO connection_types(conn_name, description) VALUES ("MPifthen",       "Modus Ponens: if-then phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPifthen",       "Modus Ponens: implies phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPwhenever",     "Modus Ponens: whenever phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPonlyif",       "Modus Ponens: only-if phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPprovidedthat", "Modus Ponens: provided-that phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPsufficient",   "Modus Ponens: sufficient phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPnecessary",    "Modus Ponens: necessary phrasing, in English.");
+--Modus Tollens
+INSERT INTO connection_types(conn_name, description) VALUES ("MTifthen",       "Modus Tollens: if-then phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTimplies",      "Modus Tollens: implies phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTwhenever",     "Modus Tollens: whenever phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTonlyif",       "Modus Tollens: only-if phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTonlyifand",    "Modus Tollens: only-if phrasing, expanded with 'and', in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTonlyifor",     "Modus Tollens: only-if phrasing, expanded with 'or', in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTprovidedthat", "Modus Tollens: provided-that phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTsufficient",   "Modus Tollens: sufficient phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MTnecessary",    "Modus Tollens: necessary phrasing, in English.");
+--Syllogisms
+INSERT INTO connection_types(conn_name, description) VALUES ("DisjSyl",        "Disjunctive Syllogism, in English");
+INSERT INTO connection_types(conn_name, description) VALUES ("NotAllSyl",      "Not-all Syllogism, in English");
+--Equivalence
+--Note that these can have negatives on both sides, they're not necessary on serverside
+INSERT INTO connection_types(conn_name, description) VALUES ("EQiff",          "Equivalence: if-and-only-if phrasing, in English");
+INSERT INTO connection_types(conn_name, description) VALUES ("EQnecsuf",       "Equivalence: necessary-and-sufficient phrasing, in English");
+INSERT INTO connection_types(conn_name, description) VALUES ("EQ",             "Equivalence: equivalent phrasing, in English");
+--Conditional Syllogism
+INSERT INTO connection_types(conn_name, description) VALUES ("CSifthen",   "Constructive Syllogism: if-then phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("CSifthen",   "Constructive Syllogism: if-then phrasing, in English.");
+
+
 
 -- -----------------------------------------------------
 -- Table agora.arguments
