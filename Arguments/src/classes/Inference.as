@@ -152,7 +152,8 @@ package classes
 			myschemeSel.visible=true;
 			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
 			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-			parentMap.addElement(myschemeSel);			
+			parentMap.parent.addElement(myschemeSel);
+			myschemeSel.depth = parentMap.parent.numChildren;
 			var rootlist:List = myschemeSel.mainSchemes;
 			if(myArg!=null) 
 			{
@@ -178,7 +179,10 @@ package classes
 		{
 			argType.schemeText = le.itemRenderer.data.toString();
 			if(myschemeSel.andor.visible==false)
-				myschemeSel.visible = false;
+			{
+				//myschemeSel.visible = false;
+				parentMap.parent.removeChild(myschemeSel);
+			}
 			//input1.visible=true;
 			//input1.update();
 		}
@@ -228,7 +232,6 @@ package classes
 			if(andor=="And") argType.connText = ParentArg.EXP_AND;
 			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
 			myschemeSel.visible = false;
-			//input1.visible=true;
 			input1.forwardUpdate();
 		}
 		
@@ -236,13 +239,13 @@ package classes
 		
 		public function bringForward(e:MouseEvent):void
 		{
-			myschemeSel.visible = true;
-			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
+			//myschemeSel.visible = true;
+			//parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
 		}
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			parentMap.setChildIndex(myschemeSel,0);
+			//parentMap.setChildIndex(myschemeSel,0);
 			//myschemeSel.visible = false;
 		}
 		
