@@ -177,6 +177,7 @@ package classes
 					var currInference:Inference = new Inference();
 					//add the inference to map
 					parentMap.addElement(currInference);
+					currInference.visible=false;
 					//create the panel that displays connection information
 					var infoPanel:DisplayArgType = new DisplayArgType;
 					currInference.argType = infoPanel;
@@ -235,9 +236,7 @@ package classes
 			menu.labelField = "@label";
 			menu.addEventListener(MenuEvent.ITEM_CLICK, addArgument);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
-			menu.show(globalPosition.x,globalPosition.y);
-			
-				
+			menu.show(globalPosition.x,globalPosition.y);		
 		}
 		
 		
