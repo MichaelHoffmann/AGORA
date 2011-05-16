@@ -229,7 +229,7 @@ package classes
 		{
 			super.createChildren();
 			drawUtility = new UIComponent();
-			addElement(drawUtility);
+			this.parent.addElement(drawUtility);
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -327,7 +327,9 @@ package classes
 		
 		public function connectRelatedPanels():void
 		{
+			
 			var panelList:Vector.<GridPanel> = layoutManager.panelList;
+			drawUtility.depth = this.numChildren;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			

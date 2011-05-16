@@ -19,7 +19,6 @@ package classes
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
-		//public var typeBtn:Button;
 		public var inference:Inference;
 		public var schemeText:String;
 		public var schemeTextIndex:int;
@@ -28,7 +27,8 @@ package classes
 		public function DisplayArgType()
 		{
 			super();
-
+			minHeight = 20;
+			this.setStyle("chromeColor",uint("0xdddddd"));
 		}
 		override protected function createChildren():void
 		{
@@ -39,6 +39,7 @@ package classes
 			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
 			addReasonBtn.label = "+R";
+			hgroup.gap = 0;
 			hgroup.addElement(addReasonBtn);
 			changeSchemeBtn = new Button;
 			changeSchemeBtn.label = "Change Scheme";
@@ -54,7 +55,6 @@ package classes
 			ds.addData(dInitiator.mouseY,"y");
 			ds.addData(dInitiator.gridX,"gx");
 			ds.addData(dInitiator.gridY,"gy");
-			trace(dInitiator);
 			DragManager.doDrag(dInitiator,ds,mEvent,null);
 			}catch (e:Error){
 				trace(e);
