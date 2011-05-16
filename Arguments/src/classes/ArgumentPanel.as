@@ -320,6 +320,7 @@ package classes
 			{
 				inference.buildInference();
 				inference.formedBool = true;
+				inference.visible = true;
 			}
 			if(inference!=null)
 				trace(inference.input);

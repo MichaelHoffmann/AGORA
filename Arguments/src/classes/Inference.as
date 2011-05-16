@@ -99,7 +99,8 @@ package classes
 			//parentMap.addElement(argType);
 		}
 		
-		public function addReasonHandler(event:MouseEvent):void
+		
+		public function addReason():void
 		{
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(tmp);
@@ -131,7 +132,11 @@ package classes
 			{
 				Alert.show(e.toString());
 			}
-			
+		}
+		
+		public function addReasonHandler(event:MouseEvent):void
+		{
+			addReason();	
 		}
 		
 		override public function onArgumentPanelCreate(e:FlexEvent):void
@@ -143,6 +148,7 @@ package classes
 			bottomHG.visible = true;
 			doneHG.visible = false;
 			input1.visible = false;
+			this.visible = false;
 		}
 		
 				
