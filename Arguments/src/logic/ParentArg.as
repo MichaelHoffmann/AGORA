@@ -31,6 +31,6 @@ package logic
 		mySelector = new ArgSelector;
 	}	
 	
-	virtual public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String { }
+	public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String { return "";}
 	}
 }

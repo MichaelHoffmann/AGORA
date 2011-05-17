@@ -121,8 +121,8 @@ package classes
 				}
 				else
 				{
-					Alert.show(this);
-					Alert.show(forwardList.length);
+					Alert.show(this.text);
+					Alert.show(forwardList.length.toString());
 					Alert.show("Someting went wrong in statement propagation");
 				}
 				

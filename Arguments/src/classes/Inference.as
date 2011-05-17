@@ -158,7 +158,7 @@ package classes
 			myschemeSel.visible=true;
 			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
 			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-			parentMap.parent.addElement(myschemeSel);
+			parentMap.parent.addChild(myschemeSel);
 			myschemeSel.depth = parentMap.parent.numChildren;
 			var rootlist:List = myschemeSel.mainSchemes;
 			if(myArg!=null) 
@@ -245,8 +245,6 @@ package classes
 		
 		public function bringForward(e:MouseEvent):void
 		{
-			//myschemeSel.visible = true;
-			//parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
 		}
 		
 		public function goBackward(e:MouseEvent):void

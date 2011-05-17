@@ -25,7 +25,7 @@ package classes
 		public var mapId:int;
 		public function AgoraMap()
 		{
-			id=29;
+			id="29";
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
@@ -83,7 +83,7 @@ package classes
 					currXML.@ID = panel.aid;
 					if(panel is Inference)
 					{
-						inferencePanel = Inference(panel);
+						var inferencePanel:Inference = Inference(panel);
 						currXML.@Type = "Inference";
 						for(var j:int=0; j < inferencePanel.input.length; j++)
 						{
@@ -137,6 +137,7 @@ package classes
 				}	
 			}
 			Alert.show(xml.toXMLString());
+			return xml;
 		}
 		
 		public function load( event:Event):void{
@@ -229,7 +230,7 @@ package classes
 		{
 			super.createChildren();
 			drawUtility = new UIComponent();
-			this.parent.addElement(drawUtility);
+			this.parent.addChild(drawUtility);
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
