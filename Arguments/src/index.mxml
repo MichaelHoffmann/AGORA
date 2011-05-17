@@ -47,9 +47,9 @@
 			public function createmap():void
 			{
 				var lamWorld:LAMWorld = new LAMWorld;
-				//hide the controls
 				agoraMenu.visible = false;
-				addElement(lamWorld);				
+				addElement(lamWorld);
+				
 			}
 			
 			
@@ -70,8 +70,6 @@
 				else{
 					createmap();
 				}
-				
-
 			}
 			
 			public function showMenu():void
@@ -81,7 +79,6 @@
 			
 			public function displayMap(event: Event):void
 			{
-				//data is in xml format
 				var xmlData:XML = XML(event.target.data);
 				var maps:XMLList = xmlData.map;
 				var xmls:Object = new Object;
@@ -119,10 +116,7 @@
 				loader.load(request);
 				
 				//registerEventHandler for createMap
-				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
-				//register Event Handler for create Project
-				//UserData.validateUser("JoshJ","password");
-				
+				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);	
 			}
 			
 			public function loadProjectList():void
@@ -134,9 +128,6 @@
 			{
 				loadMapList();
 				loadProjectList();
-				//trace(this.stage.height);
-				//agoraMenu.height = stage.height;
-				//agoraMenu.width = stage.width;
 			}
 			
 		]]>

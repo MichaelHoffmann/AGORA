@@ -46,24 +46,31 @@
 	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
+			
 			import spark.components.Group;
 			
 			public function startWithClaim():void {
-				//navigateToURL(new URLRequest('Arguments.html'),'_self') 	
-				//trace(this.parent); 
 				var map:Map = new Map;
-				//trace(this.parent);
 				var group:Group = Group(this.parent);
 				group.addElement(map);
+				map.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{map.addClaim();});
 				group.removeElement(this);
 			}
 			
 			public function startWithScheme():void {
+			
+				var map:Map = new Map;
+				var group:Group = Group(this.parent);
+				group.addElement(map);
+				map.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{map.addEmptyArgument();});	
+				group.removeElement(this);
 			}
 			
 			public function init():void {
 				argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";
 				conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
+				
 			}
 		]]>
 	</fx:Script>

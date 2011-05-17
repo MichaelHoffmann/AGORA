@@ -139,7 +139,6 @@ package classes
 			addElement(thereforeLine);			
 		}
 		
-		
 		public function adjustHeight(e:Event):void
 		{
 			if(this is Inference)
@@ -186,71 +185,13 @@ package classes
 		{
 			if(event.label == "add an argument for this statement")
 			{
-					
+				
 			}
 		}
 		
 		public function addHandler(event:MouseEvent):void
 		{
-			//var menu:Menu = Menu.createMenu(null,addMenuData,false);
-			//menu.labelField = "@label";
-			//menu.addEventListener(MenuEvent.ITEM_CLICK, addArgument);
-			//var globalPosition:Point = localToGlobal(new Point(0,this.height));
-			//menu.show(globalPosition.x,globalPosition.y);		
-			//create an inference
-			var currInference:Inference = new Inference();
-			//add the inference to map
-			parentMap.addElement(currInference);
-			currInference.visible=false;
-			//create the panel that displays connection information
-			var infoPanel:DisplayArgType = new DisplayArgType;
-			currInference.argType = infoPanel;
-			currInference.argType.inference = currInference;
-			parentMap.addElement(currInference.argType);
-			//add inference to the list of inferences
-			rules.push(currInference);
-			//set the claim of the inference rule to this
-			currInference.claim = this;
-			//create a reason node
-			var reason:ArgumentPanel = new ArgumentPanel();
-			//add reason to the map
-			parentMap.addElement(reason);
-			//push reason to the list of reasons belonging to this particular class
-			currInference.reasons.push(reason);
-			
-			//temporary, should be replaced by TID
-			currInference.connectionIDs.push(Inference.connections++);
-			//set the inference of the reason
-			reason.inference = currInference;
-			//register the reason
-			parentMap.layoutManager.registerPanel(reason);
-			//create an invisible box for the inference rule corresponding to the claim
-			var tmpInput:DynamicTextArea = new DynamicTextArea();
-			//add it to the map
-			parentMap.addElement(tmpInput);
-			//set the input box as invisible
-			tmpInput.visible = false;
-			//logical
-			//set the panel to which the input box belongs
-			tmpInput.panelReference = currInference;
-			//add a pointer to the input
-			currInference.input.push(tmpInput);		
-			//binding
-			tmpInput.forwardList.push(currInference.input1);
-			input1.forwardList.push(currInference.input[0]);
-			tmpInput.aid = input1.aid;
-			
-			//create an invisible box for the reason
-			var tmpInput2:DynamicTextArea = new DynamicTextArea();
-			tmpInput2.aid = reason.input1.aid;
-			parentMap.addElement(tmpInput2);
-			tmpInput2.visible = false;
-			tmpInput2.panelReference = currInference;
-			currInference.input.push(tmpInput2);	
-			
-			tmpInput2.forwardList.push(currInference.input1);
-			reason.input1.forwardList.push(tmpInput2);
-			parentMap.layoutManager.registerPanel(currInference);
+			addStatement();
 		}
 		
 		
@@ -340,23 +281,88 @@ package classes
 			}
 		}
 		
+		public function showMenu():void
+		{
+			var menu:Menu = Menu.createMenu(null,constructArgData,false);
+			menu.labelField = "@label";
+			menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
+			var globalPosition:Point = localToGlobal(new Point(0,this.height));
+			menu.show(globalPosition.x,globalPosition.y);
+
+		}
+		
 		public function statementEntered():void
 		{
 			makeUnEditable();
 			input1.forwardUpdate();
 			if(inference!=null && inference.formedBool == false)
 			{
-				var menu:Menu = Menu.createMenu(null,constructArgData,false);
-				menu.labelField = "@label";
-				menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
-				var globalPosition:Point = localToGlobal(new Point(0,this.height));
-				menu.show(globalPosition.x,globalPosition.y);
+				showMenu();		
 			}
 		}
 		
 		public function doneHandler(d:MouseEvent):void
 		{
 			statementEntered();
+		}
+		
+		
+		public function addStatement():void
+		{
+			var currInference:Inference = new Inference();
+			//add the inference to map
+			//trace(parentMap);
+			parentMap.addElement(currInference);
+			currInference.visible=false;
+			//create the panel that displays connection information
+			var infoPanel:DisplayArgType = new DisplayArgType;
+			currInference.argType = infoPanel;
+			currInference.argType.inference = currInference;
+			parentMap.addElement(currInference.argType);
+			//add inference to the list of inferences
+			rules.push(currInference);
+			//set the claim of the inference rule to this
+			currInference.claim = this;
+			//create a reason node
+			var reason:ArgumentPanel = new ArgumentPanel();
+			//add reason to the map
+			parentMap.addElement(reason);
+			//push reason to the list of reasons belonging to this particular class
+			currInference.reasons.push(reason);
+			
+			//temporary, should be replaced by TID
+			currInference.connectionIDs.push(Inference.connections++);
+			//set the inference of the reason
+			reason.inference = currInference;
+			//register the reason
+			parentMap.layoutManager.registerPanel(reason);
+			//create an invisible box for the inference rule corresponding to the claim
+			var tmpInput:DynamicTextArea = new DynamicTextArea();
+			//add it to the map
+			parentMap.addElement(tmpInput);
+			//set the input box as invisible
+			tmpInput.visible = false;
+			//logical
+			//set the panel to which the input box belongs
+			tmpInput.panelReference = currInference;
+			//add a pointer to the input
+			currInference.input.push(tmpInput);		
+			//binding
+			tmpInput.forwardList.push(currInference.input1);
+			input1.forwardList.push(currInference.input[0]);
+			tmpInput.aid = input1.aid;
+			
+			//create an invisible box for the reason
+			var tmpInput2:DynamicTextArea = new DynamicTextArea();
+			tmpInput2.aid = reason.input1.aid;
+			parentMap.addElement(tmpInput2);
+			tmpInput2.visible = false;
+			tmpInput2.panelReference = currInference;
+			currInference.input.push(tmpInput2);	
+			
+			tmpInput2.forwardList.push(currInference.input1);
+			reason.input1.forwardList.push(tmpInput2);
+			parentMap.layoutManager.registerPanel(currInference);
 		}
 		
 		public function getString():String{
@@ -419,12 +425,8 @@ package classes
 			input1.panelReference = this;
 			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
 			if(this.panelType==ARGUMENT_PANEL) {
-				//input1.addEventListener(MouseEvent.CLICK,textBoxClicked);
-				//input1.addEventListener(MouseEvent.MOUSE_OUT,movedAway);
-				input1.addEventListener(KeyboardEvent.KEY_DOWN,checkForEnter); }
-			
-			//Create the label for displaying the statement
-			//displayLbl = new Label;
+				input1.addEventListener(KeyboardEvent.KEY_DOWN,checkForEnter);
+			}
 			displayTxt = new Text;
 			this.displayTxt.addEventListener(MouseEvent.CLICK, makeEditable);
 			//Create a UIComponent for clicking and dragging
@@ -525,7 +527,7 @@ package classes
 					state = 1;
 					stmtTypeLbl.text = "Particular Statement";
 					this.setStyle("cornerRadius",0);
-			
+					
 				}
 				else {
 					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");

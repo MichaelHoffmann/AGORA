@@ -30,6 +30,7 @@
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
 			
 			import spark.components.Group;
 			import spark.primitives.Graphic;
@@ -49,9 +50,6 @@
 			
 			public function setWidth(event: Event):void
 			{
-				//agora.height = agoraMap.stage.width;
-				//agora.width = agoraMap.stage.height;
-		
 			}
 			
 			public function saveMap(event:MouseEvent):void
@@ -62,42 +60,54 @@
 			
 			public function updateSize(event:Event):void
 			{
-				//trace('works');
-				//trace(this.stage.stageWidth);
 				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
 				agora.width = this.stage.stageWidth;
 			}
 			
+			public function configureReason(event:FlexEvent):void
+			{
+				var reason:ArgumentPanel = ArgumentPanel(event.target);
+				reason.input1.text = "Q";
+				reason.displayTxt.text = "Q";
+				reason.makeUnEditable();
+				
+			}
+			
+			public function addEmptyArgument():void
+			{
+				var argumentPanel:ArgumentPanel = addClaim();
+				argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
+					argumentPanel.addStatement();
+					argumentPanel.rules[0].visible = true; 
+					argumentPanel.rules[0].buildInference();
+					argumentPanel.input1.text="P";
+					argumentPanel.displayTxt.text = argumentPanel.input1.text;
+					argumentPanel.makeUnEditable();
+					argumentPanel.rules[0].reasons[0].addEventListener( FlexEvent.CREATION_COMPLETE, configureReason);
+				});
+			}
+			
+			public function addClaim():ArgumentPanel
+			{
+				var argumentPanel:ArgumentPanel = new ArgumentPanel();
+				argumentPanel.gridX = 2;
+				argumentPanel.gridY = 3;
+				argumentPanel.aid = 1;
+				GridPanel.count = 1;
+				agoraMap.addElement(argumentPanel);
+				agoraMap.layoutManager.registerPanel(argumentPanel);
+				return argumentPanel;
+			}
+			
 			public function initApp():void
 			{
-				
-				trace(this.stage.height);
-				//set the height and width
 				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
 				agora.width = this.stage.stageWidth;
 				this.stage.addEventListener(Event.RESIZE, updateSize);	
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;
-				var argumentPanel:ArgumentPanel = new ArgumentPanel();
-				argumentPanel.gridX = 2;
-				argumentPanel.gridY = 3;
-				
-				//
-				argumentPanel.aid = 1;
-				GridPanel.count = 1;
-				
-				agoraMap.addElement(argumentPanel);
-				agoraMap.layoutManager.registerPanel(argumentPanel);
-				
-				//register event handlers
 				gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
-				discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);
-				
-				//var urlLoader:URLLoader = new URLLoader;
-				//var data:XML = new XML();
-				//urlLoader.addEventListener(Event.COMPLETE,agoraMap.load);
-				//urlLoader.load(new URLRequest("http://localhost:8888/exampleLAM.xml"));				
-				
+				discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);			
 			}
 		]]>
 	</fx:Script>
