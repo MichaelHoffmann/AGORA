@@ -293,6 +293,10 @@ package classes
 		
 		public function statementEntered():void
 		{
+			if(this.inference == null)
+			{
+				dispatchEvent(new Event("UserInteractionBegan",true,false));
+			}
 			makeUnEditable();
 			input1.forwardUpdate();
 			if(inference!=null && inference.formedBool == false)

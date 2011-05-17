@@ -15,6 +15,10 @@
 		</s:HGroup>
 		<mx:Canvas id="agora" width="140" height="650">
 			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="500000" height="600000" >	
+				<mx:Canvas id="canvas" width="150" height="100" visible="false">
+					<mx:Text width="150" height="100" id="helpTxt" text='Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")'>
+					</mx:Text>
+				</mx:Canvas>
 			</classes:AgoraMap>
 		</mx:Canvas>
 	</s:VGroup>
@@ -29,6 +33,8 @@
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
+			import mx.controls.Label;
+			import mx.controls.Text;
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			
@@ -75,7 +81,7 @@
 			
 			public function addEmptyArgument():void
 			{
-				var argumentPanel:ArgumentPanel = addClaim();
+				var argumentPanel:ArgumentPanel=addPanel();
 				argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
 					argumentPanel.addStatement();
 					argumentPanel.rules[0].visible = true; 
@@ -87,16 +93,26 @@
 				});
 			}
 			
-			public function addClaim():ArgumentPanel
+			public function addPanel():ArgumentPanel
 			{
 				var argumentPanel:ArgumentPanel = new ArgumentPanel();
 				argumentPanel.gridX = 2;
 				argumentPanel.gridY = 3;
 				argumentPanel.aid = 1;
 				GridPanel.count = 1;
-				agoraMap.addElement(argumentPanel);
+					agoraMap.addChild(argumentPanel);
 				agoraMap.layoutManager.registerPanel(argumentPanel);
-				return argumentPanel;
+				return argumentPanel;				
+			}
+			
+			public function addClaim():void
+			{
+				canvas.visible = true;
+				var argumentPanel:ArgumentPanel = addPanel();
+				argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
+				canvas.setStyle("backgroundColor",uint("0x339900"));
+				canvas.x = 25 * 3 + 250;
+				canvas.y = 25 * 2;
 			}
 			
 			public function initApp():void

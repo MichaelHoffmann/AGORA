@@ -145,6 +145,7 @@ package classes
 			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
 			displayTxt.removeEventListener(MouseEvent.CLICK,makeEditable);
 			displayTxt.visible = true;
+			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
 			bottomHG.visible = true;
 			doneHG.visible = false;
 			input1.visible = false;
@@ -249,8 +250,6 @@ package classes
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			//parentMap.setChildIndex(myschemeSel,0);
-			//myschemeSel.visible = false;
 		}
 		
 		override public function getString():String

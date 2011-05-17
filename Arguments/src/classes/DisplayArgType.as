@@ -38,7 +38,7 @@ package classes
 			hgroup = new HGroup;
 			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
-			addReasonBtn.label = "+R";
+			addReasonBtn.label = "add..";
 			hgroup.gap = 0;
 			hgroup.addElement(addReasonBtn);
 			changeSchemeBtn = new Button;
