@@ -210,7 +210,8 @@ package classes
 					
 			}
 			sublist.dataProvider = myArg._langTypes;
-			argType.title = myArg.myname;		//set scheme
+			//argType.title = myArg.myname;
+			argType.changeSchemeBtn.label = myArg.myname;//set scheme
 		}
 		
 		public function displayOption(le:ListEvent):void

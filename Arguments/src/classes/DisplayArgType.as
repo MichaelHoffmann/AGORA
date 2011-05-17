@@ -28,23 +28,32 @@ package classes
 		{
 			super();
 			minHeight = 20;
+			width = 150;
 			this.setStyle("chromeColor",uint("0xdddddd"));
 		}
 		override protected function createChildren():void
 		{
 			super.createChildren();
 			vgroup = new VGroup;
+			vgroup.gap = 0;
 			addElement(vgroup);
 			hgroup = new HGroup;
 			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
 			addReasonBtn.label = "add..";
 			hgroup.gap = 0;
-			hgroup.addElement(addReasonBtn);
+			vgroup.percentWidth = 100;
+			addReasonBtn.percentWidth = 100;
+	
 			changeSchemeBtn = new Button;
-			changeSchemeBtn.label = "Change Scheme";
-			hgroup.addElement(changeSchemeBtn);
+			changeSchemeBtn.label = "Scheme";
+			changeSchemeBtn.percentWidth = 100;
+			titleDisplay.setStyle("textAlign","center");
+			title = "Therefore";
+			vgroup.addElement(changeSchemeBtn);
+			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+			
 		}
 		public function beginDrag( mEvent:MouseEvent):void
 		{
