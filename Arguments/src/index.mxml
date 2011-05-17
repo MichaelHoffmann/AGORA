@@ -36,18 +36,43 @@
 			import classes.UserData;
 			
 			import components.LAMWorld;
+			import components.LoginWindow;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
 			public var username:String;
 			public var pass_hash:String;
 			
-			public function createMap(event:MouseEvent):void
+			
+			public function createmap():void
 			{
 				var lamWorld:LAMWorld = new LAMWorld;
 				//hide the controls
 				agoraMenu.visible = false;
-				addElement(lamWorld);
-				trace("in main app");
-				trace(this);
-				trace(lamWorld);
+				addElement(lamWorld);				
+			}
+			
+			
+			public function onVerification(event:Event):void
+			{
+				trace("fired");
+				createmap();
+			}
+			
+			public function createMap(event:MouseEvent):void
+			{
+				if(!UserData.isValid())
+				{
+					var loginWindow:LoginWindow = new LoginWindow;
+					PopUpManager.addPopUp(loginWindow,this,true);
+					PopUpManager.centerPopUp(loginWindow);
+					loginWindow.addEventListener("verification",onVerification);
+				}
+				else{
+					createmap();
+				}
+				
+
 			}
 			
 			public function showMenu():void
@@ -90,8 +115,6 @@
 				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
 				//register Event Handler for create Project
 				//UserData.validateUser("JoshJ","password");
-			
-				
 				
 			}
 			

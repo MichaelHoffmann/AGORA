@@ -33,6 +33,7 @@ package classes
 	import spark.components.Panel;
 	import spark.components.TextArea;
 	import spark.components.VGroup;
+	import spark.effects.Resize;
 	import spark.layouts.HorizontalAlign;
 	import spark.layouts.HorizontalLayout;
 	import spark.layouts.VerticalLayout;
@@ -75,6 +76,7 @@ package classes
 		public var MODE:int = 0;	// mode:0 means construct by reason, mode:1 means construct by argument scheme
 		
 		public var stmtTypeLbl:Label;
+		public var userIdLbl:Label;
 		public var panelType:int;
 		public var thereforeLine:UIComponent;
 		public var thereforeText:Label;
@@ -385,6 +387,8 @@ package classes
 			this.layout = uLayout;
 			
 			
+			userIdLbl = new Label;
+			
 			stmtTypeLbl = new Label;
 			// default setting    	
 			if(this is Inference)
@@ -431,16 +435,22 @@ package classes
 			
 			//Draw on topArea UIComponent a rectangle
 			//to be used for clicking and dragging
-			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,40,20);
-			topArea.width = 40;
-			topArea.height = 20;
+			
 			topArea.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+			topArea.width = 40;
 			topHG.addElement(topArea);
 			//add a vertical subgroup
 			stmtInfoVG = new VGroup;
+			stmtInfoVG.gap = 0;
 			topHG.addElement(stmtInfoVG);
+			
+			
 			stmtInfoVG.addElement(stmtTypeLbl);
+			stmtInfoVG.addElement(userIdLbl);
+			
+			userIdLbl.text = "AU: " + UserData.userNameStr;
+			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
+			userIdLbl.toolTip = userInfoStr;
 			
 			group = new Group;
 			addElement(group);
@@ -469,6 +479,22 @@ package classes
 			bottomHG.visible = false;	
 		}
 		
+		override protected function commitProperties():void
+		{
+			super.commitProperties();
+			//topArea.setActualSize(40,stmtInfoVG.height);
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			//topArea.setActualSize(topArea.width, userIdLbl.y+userIdLbl.height - stmtTypeLbl.y);
+			topArea.graphics.beginFill(0xdddddd,1.0);
+			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
+			
+		}
+		
+		
 		public function onArgumentPanelCreate(e:FlexEvent):void
 		{
 			//remove the default title bar provided by mx
@@ -485,8 +511,6 @@ package classes
 			}
 			else if(this.panelType==INFERENCE)
 			{
-				//bottomHG.visible = true;
-				//doneHG.visible = false;
 			}
 			displayTxt.text = input1.text;
 			displayTxt.width = input1.width;

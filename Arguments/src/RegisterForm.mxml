@@ -5,14 +5,21 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	<mx:Canvas id="map" width="500" height="500">
+		
+	</mx:Canvas>
 	<fx:Script>
 		<![CDATA[
+			import components.LoginWindow;
 			import components.RegisterPanel;
+			
 			import mx.managers.PopUpManager;
 			public function initApp():void
 			{
-				var registerPanel:RegisterPanel = new RegisterPanel;
+				//var registerPanel:RegisterPanel = new RegisterPanel;
+				var registerPanel:LoginWindow = new LoginWindow;	
+				registerPanel.height=300;
+				registerPanel.width=300;
 				PopUpManager.addPopUp(registerPanel,this,true);
 				PopUpManager.centerPopUp(registerPanel);
 			}
