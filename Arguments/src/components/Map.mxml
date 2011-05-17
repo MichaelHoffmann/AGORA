@@ -108,6 +108,7 @@
 				ArgumentPanel.parentMap = agoraMap;
 				gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
 				discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);			
+				dispatchEvent(new Event("created",true,false));
 			}
 		]]>
 	</fx:Script>

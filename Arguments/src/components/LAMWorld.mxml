@@ -54,7 +54,7 @@
 				var map:Map = new Map;
 				var group:Group = Group(this.parent);
 				group.addElement(map);
-				map.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{map.addClaim();});
+				map.addEventListener("created",function(event:Event):void{map.addClaim();});
 				group.removeElement(this);
 			}
 			
@@ -63,7 +63,7 @@
 				var map:Map = new Map;
 				var group:Group = Group(this.parent);
 				group.addElement(map);
-				map.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{map.addEmptyArgument();});	
+				map.addEventListener("created",function(event:Event):void{map.addEmptyArgument();});	
 				group.removeElement(this);
 			}
 			

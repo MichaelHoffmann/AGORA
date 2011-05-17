@@ -50,9 +50,6 @@ package classes
 		public function getMapXml():XML
 		{
 			var xml:XML = new XML("<map id=\""+mapId+"\"></map>");
-			//xml = xml.insertChildAfter(null,<textbox></textbox>);
-			
-			//print the textboxes
 			for( var i:int=0; i<layoutManager.panelList.length; i++)
 			{
 				var panel:GridPanel = layoutManager.panelList[i] as GridPanel;
