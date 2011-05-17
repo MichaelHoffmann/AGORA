@@ -16,7 +16,7 @@ package classes
 		public static var userNameStr:String ="";
 		public static var _passHashStr:String="";
 		public static var valid:int = 0;;
-	    private static var _uid:int = 0;
+	    private static var _uid:int = 0; // read only outside the class
 		public static var timestamp:String="";
 		
 		public function UserData()

@@ -336,6 +336,7 @@ package classes
 			
 			for(var i:int=0; i<panelList.length; i++)
 			{
+				//Drawing an arrow. Arrows are always pointing towards the left on the claim.
 				var tmp1:GridPanel = panelList[i];
 				if(tmp1 is ArgumentPanel){
 					var tmp:ArgumentPanel = tmp1 as ArgumentPanel;
@@ -377,6 +378,11 @@ package classes
 						//first horizontal line
 						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
 						drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y + 30);
+						//draw an arrow
+						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
+						drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 - 5);
+						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
+						drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 + 5);
 					}
 					
 				}
