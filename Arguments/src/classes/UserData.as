@@ -3,6 +3,7 @@ package classes
 	import components.LoginWindow;
 	
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
@@ -60,6 +61,12 @@ package classes
 			}
 		}
 		
+		private static function errorHandler(event:IOErrorEvent, object:LoginWindow):void
+		{
+			Alert.show("Error occurred when trying to contact server");
+			object.verifyLogin();
+		}
+		
 		public static function validateUser(userName:String, passHash:String, object:LoginWindow):void
 		{
 			userNameStr = userName;
@@ -69,6 +76,7 @@ package classes
 			request.data = new URLVariables("username="+userName+"&pass_hash="+passHash);
 			request.method = URLRequestMethod.GET;
 			urlLoader.addEventListener(Event.COMPLETE,function(event:Event):void{verifyUser(event,object)});
+			urlLoader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{errorHandler(event,object)});
 			urlLoader.load(request);
 		}
 		

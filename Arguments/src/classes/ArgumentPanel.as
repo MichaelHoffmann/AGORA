@@ -452,12 +452,11 @@ package classes
 			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
 			userIdLbl.toolTip = userInfoStr;
 			
+			
 			group = new Group;
 			addElement(group);
 			group.addElement(input1);
-			//displayLbl.width = 100;
 			group.addElement(displayTxt);
-			//set the text as soon as its created
 			displayTxt.addEventListener(FlexEvent.CREATION_COMPLETE,setGuidingText);
 			input1.visible=false;
 			
@@ -476,22 +475,22 @@ package classes
 			deleteBtn.label = "delete...";
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
-			bottomHG.visible = false;	
+			bottomHG.visible = false;
+			invalidateProperties();
 		}
 		
 		override protected function commitProperties():void
 		{
 			super.commitProperties();
-			//topArea.setActualSize(40,stmtInfoVG.height);
+			
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			//topArea.setActualSize(topArea.width, userIdLbl.y+userIdLbl.height - stmtTypeLbl.y);
 			topArea.graphics.beginFill(0xdddddd,1.0);
 			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
-			
+			userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);		
 		}
 		
 		
@@ -523,7 +522,6 @@ package classes
 			if(this.state==0) {
 				if(this.panelType!=INFERENCE)
 				{
-					//Alert.show("Toggling to particular statement");
 					state = 1;
 					stmtTypeLbl.text = "Particular Statement";
 					this.setStyle("cornerRadius",0);
@@ -536,7 +534,6 @@ package classes
 			} 
 			else {
 				state = 0;
-				//Alert.show("Toggling to universal statement");
 				stmtTypeLbl.text = "Universal Statement";
 				this.setStyle("cornerRadius",30);
 			} 

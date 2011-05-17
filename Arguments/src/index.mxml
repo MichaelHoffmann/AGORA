@@ -55,7 +55,6 @@
 			
 			public function onVerification(event:Event):void
 			{
-				trace("fired");
 				createmap();
 			}
 			
@@ -95,6 +94,12 @@
 						xmls[mapButton.label] = map;
 				}
 			}
+
+			private function errorHandler(event:IOErrorEvent):void
+			{
+				Alert.show("A communication error occurred duing interaction with server");
+
+			}
 			
 			public function loadMapList():void
 			{
@@ -107,6 +112,8 @@
 				var loader:URLLoader = new URLLoader;
 				//add a handler for handling the response
 				loader.addEventListener(Event.COMPLETE,displayMap);
+				loader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
+				
 				
 				//load the request obect
 				loader.load(request);

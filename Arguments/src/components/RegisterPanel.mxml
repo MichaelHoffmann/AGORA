@@ -11,6 +11,8 @@
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			
+			import org.osmf.layout.AbsoluteLayoutFacet;
+			
 			
 			public function setProperties():void
 			{
@@ -30,6 +32,11 @@
 				}
 				PopUpManager.removePopUp(this);
 				
+			}
+			
+			public function errorHandler(event: IOErrorEvent):void
+			{
+				Alert.show("Error occurred  when contacting server");
 			}
 			
 			public function clear_form():void
@@ -52,6 +59,7 @@
 				var urlLoader:URLLoader = new URLLoader;
 				urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 				urlLoader.addEventListener(Event.COMPLETE,displayStatus);
+				urlLoader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
 				urlLoader.load(request);
 			}
 		]]>
