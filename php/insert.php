@@ -323,12 +323,17 @@
 		$xml = new SimpleXMLElement($xmlin);
 		$mapID = $xml['id'];
 		$mapClause = mysql_real_escape_string("$mapID");
+		
+		$lang = mysql_real_escape_string($xml['lang']);
+		if(!$lang){
+			$lang="EN-US"
+		}
 
 		//Check to see if the map already exists
 		if($mapClause==0){
 			//If not, create it!
-			$iquery = "INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES
-										($userID, 'Example', 'Description', NOW(), NOW())";
+			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
+										($userID, 'Example', 'Description', $lang, NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
 			
 			$mapClause = getLastInsert($linkID);

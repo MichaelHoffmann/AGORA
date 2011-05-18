@@ -4,10 +4,10 @@ INSERT INTO users (is_deleted, firstname, lastname, username, password, email, u
 	(FALSE, "Joshua", "Justice", "JoshJ", "password", "joshj777@gmail.com", "http://github.com/joshjgt", 9, NOW(), NOW()),
 	(FALSE, "George", "Burdell", "GeorgePBurdell", "YellowJackets", "GeorgeP@mailinator.com", "http://en.wikipedia.org/wiki/George_P_Burdell", 9, NOW(), NOW());
 
-INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES
-	((SELECT user_id FROM users WHERE userName="JoshJ"), "Generic", "A basic argument for testing the database layout.", NOW(), NOW()),
-	(1, "Second Map", "A pointless circular argument designed solely to fill space", NOW(), NOW()),
-	(1, "Babelfish", "Douglas Adams's proof by contradiction of the nonexistence of god.", NOW(), NOW());
+INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
+	((SELECT user_id FROM users WHERE userName="JoshJ"), "Generic", "A basic argument for testing the database layout.", "EN-US", NOW(), NOW()),
+	(1, "Second Map", "A pointless circular argument designed solely to fill space", "EN-US", NOW(), NOW()),
+	(1, "Babelfish", "Douglas Adams's proof by contradiction of the nonexistence of god.", "EN-US", NOW(), NOW());
 
 INSERT INTO nodes (user_id, map_id, nodetype_id, x_coord, y_coord, created_date, modified_date) VALUES 
 	(1,1,1,1,1,NOW(), NOW()), (1,1,1,20,1,NOW(), NOW()), (1,1,2,15,12,NOW(), NOW()), (1,1,1,25,12,NOW(), NOW()), (1,1,2,20,24,NOW(), NOW());

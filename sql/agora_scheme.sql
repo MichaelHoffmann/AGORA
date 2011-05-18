@@ -43,6 +43,7 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
   description VARCHAR(255) NULL,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
+  lang VARCHAR(10) NOT NULL,
   PRIMARY KEY (map_id),
   INDEX user_id (user_id ASC),
   FOREIGN KEY (user_id)
