@@ -285,4 +285,3 @@ CREATE TRIGGER argdel AFTER UPDATE ON arguments
 		END IF;
 	END;
 //
-DELIMITER ;
