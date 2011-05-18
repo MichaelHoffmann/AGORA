@@ -86,21 +86,24 @@ package classes
 		public var constructArgData:XML;
 		
 		
-		public function makeEditable(event:MouseEvent):void
+		public function makeEditable():void
 		{
 			if(userEntered == false)
 			{
 				input1.text="";
 				userEntered = true;
 			}
-			if( !( event.target is mx.controls.Button) )
-			{
+
+				focusManager.setFocus(input1);
 				input1.visible = true;
-				//displayLbl.visible = false;
 				displayTxt.visible = false;
 				doneHG.visible = true;
 				bottomHG.visible=false;
-			}
+		}
+		
+		protected function lblClicked(event:MouseEvent):void
+		{
+			makeEditable();
 		}
 		
 		public function makeUnEditable():void
@@ -194,79 +197,6 @@ package classes
 			addStatement();
 		}
 		
-		
-		public function checkForEnter(event:KeyboardEvent):void{
-			/*
-			if(event.keyCode==Keyboard.ENTER){
-			MODE=0;
-			// add Reason only
-			var reason:ArgumentPanel = new ArgumentPanel();
-			reason.x = this.gridY*25 + this.width + 100;
-			reason.y = this.gridX*25;	
-			//add reason to the map
-			parentMap.addElement(reason);
-			
-			Alert.show("Select reason to be Universal or Particular statement, by clicking on its label on top");
-			
-			//line saying "therefore" joining claim and reason temporarily
-			thereforeLine.graphics.moveTo(this.width-10,this.height/2);
-			thereforeLine.graphics.lineTo(this.width+100,this.height/2);
-			thereforeText = new Label;
-			thereforeText.x = this.gridY*25+this.width + 10; thereforeText.y = this.gridX*25+50;
-			parentMap.addElement(thereforeText);
-			thereforeText.text = "<== Therefore";
-			
-			var currInference:Inference = new Inference();
-			parentMap.addElement(currInference);
-			currInference.visible = false; currInference.argType.visible = false;
-			currInference.claim = this;
-			currInference.reasons.push(reason);
-			
-			currInference.connectionIDs.push(Inference.connections++);
-			
-			reason.inference = currInference;
-			
-			//create an invisible box for the inference rule corresponding to the claim
-			var tmpInput:DynamicTextArea = new DynamicTextArea();
-			parentMap.addElement(tmpInput);
-			//set the input box as invisible
-			tmpInput.visible = false;
-			//logical
-			//set the panel to which the input box belongs
-			tmpInput.panelReference = currInference;
-			//add a pointer to the input
-			currInference.input.push(tmpInput);		
-			
-			//binding
-			tmpInput.forwardList.push(currInference.input1);
-			input1.forwardList.push(currInference.input[0]);
-			
-			//set the id of the new text box to the id of the one in the reason
-			tmpInput.aid = input1.aid;
-			
-			
-			//create an invisible box for the reason
-			var tmpInput2:DynamicTextArea = new DynamicTextArea();
-			//set its id to the DTA's id present in the reason
-			tmpInput2.aid = reason.input1.aid;
-			parentMap.addElement(tmpInput2);
-			tmpInput2.visible = false;
-			tmpInput2.panelReference = currInference;
-			currInference.input.push(tmpInput2);	
-			
-			tmpInput2.forwardList.push(currInference.input1);
-			reason.input1.forwardList.push(tmpInput2);
-			input1.forwardUpdate();		//claim	
-			reason.input1.forwardUpdate();		//reason
-			
-			
-			// deactive the DONE button to avoid duplicate action
-			doneBtn.removeEventListener(MouseEvent.CLICK,doneHandler);
-			
-			}
-			*/
-		}
-		
 		public function constructArgument(event:MenuEvent):void
 		{
 			if(event.label == "add another reason")
@@ -296,6 +226,7 @@ package classes
 			if(this.inference == null)
 			{
 				dispatchEvent(new Event("UserInteractionBegan",true,false));
+				addStatement();
 			}
 			makeUnEditable();
 			input1.forwardUpdate();
@@ -428,11 +359,8 @@ package classes
 			//this.input1.addEventListener(FocusEvent.FOCUS_OUT, makeUnEditable);
 			input1.panelReference = this;
 			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
-			if(this.panelType==ARGUMENT_PANEL) {
-				input1.addEventListener(KeyboardEvent.KEY_DOWN,checkForEnter);
-			}
 			displayTxt = new Text;
-			this.displayTxt.addEventListener(MouseEvent.CLICK, makeEditable);
+			this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			

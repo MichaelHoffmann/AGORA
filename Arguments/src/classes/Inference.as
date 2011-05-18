@@ -96,14 +96,23 @@ package classes
 		
 		private function displayArgumentType(e: FlexEvent) : void
 		{
-			//parentMap.addElement(argType);
 		}
 		
+		
+		protected function goToReason(event:FlexEvent):void
+		{
+			var panel:ArgumentPanel = ArgumentPanel(event.target);
+			panel.makeEditable();
+		}
+
 		
 		public function addReason():void
 		{
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(tmp);
+			
+			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);
+
 			try{
 				reasons.push(tmp);
 				connectionIDs.push(connections++);
@@ -126,7 +135,10 @@ package classes
 				
 				//binding
 				tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
-				tmp.input1.forwardList.push(tmpInput);				//this new reason's input1 text forwards to that invisible box.
+				tmp.input1.forwardList.push(tmpInput);
+				//this new reason's input1 text forwards to that invisible box.
+				
+				
 				
 			}catch (e:Error)
 			{
@@ -143,7 +155,7 @@ package classes
 		{
 			super.onArgumentPanelCreate(e);
 			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
-			displayTxt.removeEventListener(MouseEvent.CLICK,makeEditable);
+			displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
 			displayTxt.visible = true;
 			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
 			bottomHG.visible = true;

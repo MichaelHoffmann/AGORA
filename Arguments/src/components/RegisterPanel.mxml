@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" preinitialize="setProperties();">
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" preinitialize="setProperties();" creationComplete="init();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -9,10 +9,15 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.controls.Alert;
+			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
 			
 			import org.osmf.layout.AbsoluteLayoutFacet;
 			
+			public function init():void
+			{
+				focusManager.setFocus(username);
+			}
 			
 			public function setProperties():void
 			{
@@ -65,41 +70,41 @@
 		]]>
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem label="Username">
+		<mx:FormItem tabIndex="1" label="Username">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
 		
 		<mx:FormItem label="Password">
-			<s:TextInput id="pass_hash" displayAsPassword="true">
+			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Confirm Password" >
-			<s:TextInput id="pass_hash_dup"  displayAsPassword="true">
+		<mx:FormItem  label="Confirm Password" >
+			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem label="First Name">
-			<s:TextInput id="firstname">
+			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem label="Last Name">
-			<s:TextInput id="lastname">
+			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Email">
-			<s:TextInput id="email">
+		<mx:FormItem  label="Email">
+			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>
 		
 		<mx:FormItem label="URL">
-			<s:TextInput id="url">
+			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem>
 			<s:HGroup>
-				<s:Button label="Submit" id="submit_btn" click="submit_form();">		
+				<s:Button label="Submit" tabIndex="7" id="submit_btn" click="submit_form();">		
 				</s:Button>
-				<s:Button label="Back" id="back_btn" click="clear_form();">		
+				<s:Button label="Back"  tabIndex="8" id="back_btn" click="clear_form();">		
 				</s:Button>
 			</s:HGroup>		
 			

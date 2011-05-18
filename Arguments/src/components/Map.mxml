@@ -16,7 +16,7 @@
 		<mx:Canvas id="agora" width="140" height="650">
 			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="500000" height="600000" >	
 				<mx:Canvas id="canvas" width="150" height="100" visible="false">
-					<mx:Text width="150" height="100" id="helpTxt" text='Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")'>
+					<mx:Text width="150" height="100" id="helpTxt" text='Help Text:	 Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")'>
 					</mx:Text>
 				</mx:Canvas>
 			</classes:AgoraMap>

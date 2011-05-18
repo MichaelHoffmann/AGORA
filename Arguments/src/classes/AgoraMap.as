@@ -43,7 +43,6 @@ package classes
 			request.url = "http://agora.gatech.edu/dev/insert.php";
 			request.data = new URLVariables("uid="+UserData.uid+"&pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
 			request.method = URLRequestMethod.GET;
-			//urlLoader.addEventListener(Event.COMPLETE,verifyUser);
 			urlLoader.load(request);	
 		}
 		

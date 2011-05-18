@@ -28,7 +28,8 @@ package classes
 		private var bottomPadding:int;
 		private var h:int;
 		public var index:int;
-		
+		private var modified:Boolean;
+		private var _text:String;
 		public var aid:int;
 		
 		public var forwardList:Vector.<DynamicTextArea>; //Arun Kumar chithanar
@@ -40,6 +41,7 @@ package classes
 		public function DynamicTextArea()
 		{
 			super();
+			modified=false;
 			aid = count;
 			count = count + 1;
 			super.horizontalScrollPolicy = "off";
@@ -49,9 +51,11 @@ package classes
 			backwardList = new Vector.<DynamicTextArea>(0,false);
 			minHeight = 20;
 		}
+		
+		
 		private function adjustHeightHandler(event:Event):void {
-			//Arun Kumar chithanar
-			
+			trace("change");
+			trace(text);
 			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
 			var paddingTop:String = this.getStyle("paddingTop");
 			var paddingBottom:String= this.getStyle("paddingBottom");
@@ -91,6 +95,8 @@ package classes
 				height = textField.textHeight+topPadding+bottomPadding;
 			}
 			validateNow();
+			
+			
 		}
 		
 		public function updateOthers():void
@@ -200,6 +206,11 @@ package classes
 		}
 		override public function toString():String{
 			return NameUtil.displayObjectToString(this);
+		}
+		override protected function commitProperties():void
+		{
+			super.commitProperties();
+			
 		}
 	}
 }
