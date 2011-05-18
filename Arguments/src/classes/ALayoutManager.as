@@ -73,7 +73,7 @@ package classes
 				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
 				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
 			}
-			ArgumentPanel.parentMap.connectRelatedPanels();
+			//ArgumentPanel.parentMap.connectRelatedPanels();
 		}
 		
 		
@@ -82,17 +82,7 @@ package classes
 			if(claim is Inference){
 				var inference:Inference = claim as Inference;
 				alignReasons(inference.reasons[0],inference.reasons[0].gridY + diffY);
-				/*
-				for(var n:int=0; n < inference.reasons.length; n++)
-				{
-					inference.reasons[n].gridX = inference.reasons[n].gridX + diffX;
-					inference.reasons[n].gridY = inference.reasons[n].gridY + diffY;
-					if(inference.reasons[n].rules.length > 0)
-					{
-						moveConnectedPanels(inference.reasons[n],diffX,diffY);
-					}
-				}
-				*/
+
 				for( var n:int =0; n < inference.rules.length; n++)
 				{
 					var currInference:Inference = inference.rules[n];
@@ -137,13 +127,13 @@ package classes
 		
 		public function tempArrange(panel1:ArgumentPanel):void {
 			var currReason:ArgumentPanel = panel1 as ArgumentPanel;
-			trace(currReason.input1.text);
+			
 			var currClaim:ArgumentPanel = currReason.inference.claim;
-			trace(currClaim.input1.text);
+			
 			currReason.gridY = currClaim.gridY + Math.ceil(currClaim.width / uwidth ) + 2;
-			trace(currReason.gridY);
+			
 			currReason.gridX = currClaim.gridX;	
-			trace(currReason.gridX);
+			
 		}
 		
 		public function registerPanel(panel1:GridPanel):void
@@ -155,7 +145,9 @@ package classes
 					var claim:ArgumentPanel = currPanel.claim;
 					currPanel.gridX = claim.gridX;		
 					currPanel.gridY = claim.gridY;
-					if(currPanel.claim.rules[0] == currPanel){		//this is first inference for this claim
+					if(currPanel.claim.rules[0] == currPanel)
+					{		
+						//this is first inference for this claim
 						var plusGridWidth:int = Math.ceil(claim.width / uwidth ) + 2;
 						var plusGridHeight:int = Math.ceil(claim.height / uwidth ) + 2;
 						currPanel.gridY = currPanel.gridY + plusGridWidth;
@@ -236,24 +228,6 @@ package classes
 		public function getGridSpan(pixels:int):int
 		{
 			return Math.ceil(pixels/uwidth);
-		}
-		
-		public function buttonClicked(e:MouseEvent):void
-		{
-			var tmp:ArgumentPanel = new ArgumentPanel();
-			var tgridX:int;
-			var tgridY:int;
-			try{
-				tmp.gridX=2;
-				tmp.gridY=3;
-				ArgumentPanel.parentMap.addElement(tmp);
-				registerPanel(tmp);
-				layoutComponents();
-			}
-			catch(e:Error)
-			{
-				Alert.show(e.toString());
-			}		
 		}		
 	}	
 }

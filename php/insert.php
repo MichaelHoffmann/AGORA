@@ -302,7 +302,8 @@
 		
 		//Standard SQL connection stuff
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
+		//$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
+		$linkID = mysql_connect("localhost", "root", "root") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
@@ -312,8 +313,11 @@
 	
 	
 		//Dig the Map ID out of the XML
+		print "test<BR>";
 		$xml = new SimpleXMLElement($xmlin);
+		print "foo<BR>";
 		$mapID = $xml['id'];
+		print "bar<BR>";
 		$mapClause = mysql_real_escape_string("$mapID");
 
 		//Check to see if the map already exists

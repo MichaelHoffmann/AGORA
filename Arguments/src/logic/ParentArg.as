@@ -10,6 +10,9 @@ package logic
 	public class ParentArg {
 		
 	public var myname:String;
+	//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
+	//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
+	public var dbName:String;
 	public var _langTypes:Array;
 	public var _expLangTypes:Array;
 	public static var MOD_PON:String = "Modus Ponens";
@@ -28,6 +31,6 @@ package logic
 		mySelector = new ArgSelector;
 	}	
 	
-	virtual public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String { }
+	public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String { return "";}
 	}
 }

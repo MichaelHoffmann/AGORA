@@ -7,6 +7,7 @@ package logic
 		public function DisjunctiveSyllogism()
 		{
 			myname = DIS_SYLL;
+			dbName = myname;
 			_langTypes = ["Either-or","Unless"];
 			_expLangTypes = ["Either-or"];
 		}

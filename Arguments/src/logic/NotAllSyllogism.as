@@ -7,6 +7,7 @@ package logic
 		public function NotAllSyllogism()
 		{
 			myname = NOT_ALL_SYLL;
+			dbName = myname;
 			_langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
 
 		}
@@ -15,7 +16,7 @@ package logic
 			var output:String = "";
 			output += "It cannot be the case, at the same time, that ";
 			if(exp==true)
-				for(i=0;i<reason.length;i++)
+				for(var i:int=0;i<reason.length;i++)
 					output += reason[i].input1.text + " and that ";
 			output += claim;
 			

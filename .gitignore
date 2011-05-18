@@ -6,3 +6,5 @@ bin-debug/
 html-template/
 libs/flexunit-*
 generated/
+#Ignore update script
+update.scr

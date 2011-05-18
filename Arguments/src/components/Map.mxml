@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:classes="classes.*"  creationComplete="initApp();">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:VGroup id="container">			
+		<s:HGroup id="topPanel">
+			<s:Button id="gotoMenuBtn" label="Save and Exit">
+			</s:Button>
+			<s:Button id="discardChangesBtn" label="Home">
+			</s:Button>
+		</s:HGroup>
+		<mx:Canvas id="agora" width="140" height="650">
+			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="500000" height="600000" >	
+				<mx:Canvas id="canvas" width="150" height="100" visible="false">
+					<mx:Text width="150" height="100" id="helpTxt" text='Help Text:	 Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")'>
+					</mx:Text>
+				</mx:Canvas>
+			</classes:AgoraMap>
+		</mx:Canvas>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import classes.ALayoutManager;
+			import classes.ArgumentPanel;
+			import classes.GridPanel;
+			
+			import flash.display.*;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.controls.Alert;
+			import mx.controls.Label;
+			import mx.controls.Text;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Group;
+			import spark.primitives.Graphic;
+			//public var drawUtility:UIComponent;
+			public var numComponentsX:int;
+			public var numComponentsY:int;
+			public var layoutManager:ALayoutManager;
+			
+			
+			public function discardChanges(event:Event):void
+			{
+				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
+				canvas.visible = true;
+				Group(this.parent).removeElement(this);
+				
+			}
+			
+			public function setWidth(event: Event):void
+			{
+			}
+			
+			public function saveMap(event:MouseEvent):void
+			{
+				var xml:XML = new XML;
+				agoraMap.getMapXml();
+			}
+			
+			public function updateSize(event:Event):void
+			{
+				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+			}
+			
+			public function configureReason(event:FlexEvent):void
+			{
+				var reason:ArgumentPanel = ArgumentPanel(event.target);
+				reason.input1.text = "Q";
+				reason.displayTxt.text = "Q";
+				reason.makeUnEditable();
+				
+			}
+			
+			public function addEmptyArgument():void
+			{
+				var argumentPanel:ArgumentPanel=addPanel();
+				argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
+					argumentPanel.addStatement();
+					argumentPanel.rules[0].visible = true; 
+					argumentPanel.rules[0].buildInference();
+					argumentPanel.input1.text="P";
+					argumentPanel.displayTxt.text = argumentPanel.input1.text;
+					argumentPanel.makeUnEditable();
+					argumentPanel.rules[0].reasons[0].addEventListener( FlexEvent.CREATION_COMPLETE, configureReason);
+				});
+			}
+			
+			public function addPanel():ArgumentPanel
+			{
+				var argumentPanel:ArgumentPanel = new ArgumentPanel();
+				argumentPanel.gridX = 2;
+				argumentPanel.gridY = 3;
+				argumentPanel.aid = 1;
+				GridPanel.count = 1;
+					agoraMap.addChild(argumentPanel);
+				agoraMap.layoutManager.registerPanel(argumentPanel);
+				return argumentPanel;				
+			}
+			
+			public function addClaim():void
+			{
+				canvas.visible = true;
+				var argumentPanel:ArgumentPanel = addPanel();
+				argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
+				canvas.setStyle("backgroundColor",uint("0x339900"));
+				canvas.x = 25 * 3 + 250;
+				canvas.y = 25 * 2;
+			}
+			
+			public function initApp():void
+			{
+				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+				this.stage.addEventListener(Event.RESIZE, updateSize);	
+				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
+				ArgumentPanel.parentMap = agoraMap;
+				gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
+				discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);			
+				dispatchEvent(new Event("created",true,false));
+			}
+		]]>
+	</fx:Script>
+	
+</mx:Canvas>

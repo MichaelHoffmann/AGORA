@@ -6,6 +6,7 @@ package logic
 		public function ConditionalSyllogism()
 		{
 			myname = COND_SYLL;
+			dbName = "ConSyllogism";
 			_langTypes = ["If-then","Implies"];		// Both types here are expandable. like a chain rule
 		}
 		
