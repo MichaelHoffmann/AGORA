@@ -159,7 +159,7 @@ INSERT INTO connection_types (conn_name, description) VALUES
 
 -- Modus Ponens
 INSERT INTO connection_types(conn_name, description) VALUES ("MPifthen",       "Modus Ponens: if-then phrasing, in English.");
-INSERT INTO connection_types(conn_name, description) VALUES ("MPifthen",       "Modus Ponens: implies phrasing, in English.");
+INSERT INTO connection_types(conn_name, description) VALUES ("MPimplies",       "Modus Ponens: implies phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MPwhenever",     "Modus Ponens: whenever phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MPonlyif",       "Modus Ponens: only-if phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MPprovidedthat", "Modus Ponens: provided-that phrasing, in English.");
