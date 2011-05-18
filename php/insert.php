@@ -194,8 +194,11 @@
 		//print "<BR>SourceNode found";
 		$attr = $source->attributes();
 		$tid =  mysql_real_escape_string($attr["TID"]);
-		$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
-		$nodeID = $nodeTIDarray[$nodeTID];
+		$nodeID = mysql_real_escape_string($attr["nodeID"]);
+		if(!$nodeID){
+			$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
+			$nodeID = $nodeTIDarray[$nodeTID];
+		}
 		
 		$iquery = "INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
 											($argID, $nodeID, NOW(), NOW())";
