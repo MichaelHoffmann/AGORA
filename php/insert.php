@@ -200,12 +200,16 @@
 		$iquery = "INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
 											($argID, $nodeID, NOW(), NOW())";
 		//print "<BR>Insert Query is: $iquery";
-		mysql_query($iquery, $linkID);
-		$outID = getLastInsert($linkID);
-		$sourcenode = $output->addChild("sourcenode");
-		$sourcenode->addAttribute("TID", $tid);
-		$sourcenode->addAttribute("ID", $outID);
-		
+		$success = mysql_query($iquery, $linkID);
+		if($success){
+			$outID = getLastInsert($linkID);
+			$sourcenode = $output->addChild("sourcenode");
+			$sourcenode->addAttribute("TID", $tid);
+			$sourcenode->addAttribute("ID", $outID);
+		}else{
+			$fail=$output->addChild("error");
+				$fail->addAttribute("text", "The source node is not being added properly.");
+		}
 	}
 	
 	/**
@@ -313,11 +317,8 @@
 	
 	
 		//Dig the Map ID out of the XML
-		print "test<BR>";
 		$xml = new SimpleXMLElement($xmlin);
-		print "foo<BR>";
 		$mapID = $xml['id'];
-		print "bar<BR>";
 		$mapClause = mysql_real_escape_string("$mapID");
 
 		//Check to see if the map already exists
