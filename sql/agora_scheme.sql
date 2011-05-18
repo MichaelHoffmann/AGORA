@@ -155,9 +155,9 @@ INSERT INTO connection_types (conn_name, description) VALUES
 	
 -- NOTE: Argument types that only have one sort of expansion do not need disambiguation
 
---ENGLISH
+-- ENGLISH
 
---Modus Ponens
+-- Modus Ponens
 INSERT INTO connection_types(conn_name, description) VALUES ("MPifthen",       "Modus Ponens: if-then phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MPifthen",       "Modus Ponens: implies phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MPwhenever",     "Modus Ponens: whenever phrasing, in English.");
@@ -165,7 +165,7 @@ INSERT INTO connection_types(conn_name, description) VALUES ("MPonlyif",       "
 INSERT INTO connection_types(conn_name, description) VALUES ("MPprovidedthat", "Modus Ponens: provided-that phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MPsufficient",   "Modus Ponens: sufficient phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MPnecessary",    "Modus Ponens: necessary phrasing, in English.");
---Modus Tollens
+-- Modus Tollens
 INSERT INTO connection_types(conn_name, description) VALUES ("MTifthen",       "Modus Tollens: if-then phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MTimplies",      "Modus Tollens: implies phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MTwhenever",     "Modus Tollens: whenever phrasing, in English.");
@@ -175,17 +175,17 @@ INSERT INTO connection_types(conn_name, description) VALUES ("MTonlyifor",     "
 INSERT INTO connection_types(conn_name, description) VALUES ("MTprovidedthat", "Modus Tollens: provided-that phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MTsufficient",   "Modus Tollens: sufficient phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("MTnecessary",    "Modus Tollens: necessary phrasing, in English.");
---Miscellaneous Syllogisms
+-- Miscellaneous Syllogisms
 INSERT INTO connection_types(conn_name, description) VALUES ("DisjSyl",        "Disjunctive Syllogism, in English");
 INSERT INTO connection_types(conn_name, description) VALUES ("NotAllSyl",      "Not-all Syllogism, in English");
---Equivalence (Note that while these can have negatives on both sides, the difference isn't necessary on the server)
+-- Equivalence (Note that while these can have negatives on both sides, the difference isn't necessary on the server)
 INSERT INTO connection_types(conn_name, description) VALUES ("EQiff",          "Equivalence: if-and-only-if phrasing, in English");
 INSERT INTO connection_types(conn_name, description) VALUES ("EQnecsuf",       "Equivalence: necessary-and-sufficient phrasing, in English");
 INSERT INTO connection_types(conn_name, description) VALUES ("EQ",             "Equivalence: equivalent phrasing, in English");
---Conditional Syllogism
+-- Conditional Syllogism
 INSERT INTO connection_types(conn_name, description) VALUES ("CSifthen",       "Conditional Syllogism: if-then phrasing, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("CSimplies",      "Conditional Syllogism: implies phrasing, in English.");
---Constructive Dilemma
+-- Constructive Dilemma
 INSERT INTO connection_types(conn_name, description) VALUES ("CDaltclaim",     "Constructive Dilemma: alternate as claim, in English.");
 INSERT INTO connection_types(conn_name, description) VALUES ("CDpropclaim",    "Constructive Dilemma: proposition as claim, in English.");
 
@@ -252,3 +252,37 @@ CREATE TABLE IF NOT EXISTS agora.connections (
     REFERENCES agora.nodes (node_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+	
+-- -----------------------------------------------------
+-- Triggers
+-- -----------------------------------------------------
+DELIMITER //
+CREATE TRIGGER nodedel AFTER UPDATE ON nodes
+	FOR EACH ROW
+	BEGIN
+		IF NEW.is_deleted = 1 THEN
+			UPDATE nodetext SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
+			UPDATE arguments SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
+			UPDATE connections SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
+		END IF;
+	END;
+//
+	
+CREATE TRIGGER ntdel AFTER UPDATE ON nodetext
+	FOR EACH ROW
+	BEGIN
+		IF NEW.is_deleted = 1 THEN
+			UPDATE textboxes SET is_deleted=1, modified_date=NOW() WHERE textbox_id=NEW.textbox_id;
+		END IF;
+	END;
+//
+
+CREATE TRIGGER argdel AFTER UPDATE ON arguments
+	FOR EACH ROW
+	BEGIN
+		IF NEW.is_deleted = 1 THEN
+			UPDATE connections SET is_deleted=1, modified_date=NOW() WHERE argument_id=NEW.argument_id;
+		END IF;
+	END;
+//
+DELIMITER ;
