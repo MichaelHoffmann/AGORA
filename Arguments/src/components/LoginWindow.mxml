@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="400" height="300" preinitialize="setProperties();" creationComplete="init();">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import classes.UserData;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			
+			public function setProperties():void
+			{
+				title="Login";
+			}
+			
+			private function displayStatus(event:Event):void
+			{
+				var xml:XML = XML(event.target.data);	
+			}
+			
+			public function verifyLogin():void
+			{
+				if(UserData.isValid()){
+					dispatchEvent(new Event("verification",true,false));				
+				}
+				else{
+					Alert.show("Login Failed");
+				}
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function init():void
+			{	
+				focusManager.setFocus(username);
+			}
+			
+			public function register_form():void
+			{
+				var registerForm:RegisterPanel = new RegisterPanel;
+				PopUpManager.addPopUp(registerForm,this.parent);
+				PopUpManager.centerPopUp(registerForm);
+			}
+			
+			
+			public function clear_form():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function submit_form():void
+			{
+				UserData.validateUser(username.text,pass_hash.text, this);
+				
+			}
+		]]>
+	</fx:Script>
+	<mx:Form id="form">
+		<mx:FormItem label="Username">
+			<s:TextInput id="username">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="Password">
+			<s:TextInput id="pass_hash" displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
+		
+		<mx:FormItem>
+			<s:HGroup>
+				<s:Button label="Submit" id="submit_btn" click="submit_form();">		
+				</s:Button>
+				<s:Button label="Back" id="back_btn" click="clear_form();">		
+				</s:Button>
+				<s:Button label="Register" id="register_btn" click="register_form();">		
+				</s:Button>
+			</s:HGroup>		
+		</mx:FormItem>
+		
+	</mx:Form>
+</mx:Panel>
