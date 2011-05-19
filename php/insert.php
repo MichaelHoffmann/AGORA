@@ -183,7 +183,7 @@
 	}
 	
 	/**
-	*	Links an argument to a "source node" in the DB.
+	*	Links between nodes and connections in the DB.
 	*/
 	function sourceNodeToDB($source, $connID, $linkID, $output)
 	{	
@@ -243,7 +243,7 @@
 		}
 		
 		if(!$id){
-			//Insert the argument part into the DB (target node and info)
+			//Insert the connection into the DB (target node and info)
 			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
 											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			//print "<BR>Insert Query is: $iquery";
@@ -255,13 +255,13 @@
 			
 		}else{
 			//Update TYPE of the connection
-			//It's not legal to change what node the argument is supporting
+			//It's not legal to change what node the connection is targeting.
 			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 			//print "<BR>Update query: $uquery";
 			mysql_query($uquery, $linkID);
 		
 		}
-		//Get the argument part (source nodes)
+		//Get the source nodes
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
@@ -354,7 +354,7 @@
 			$ownMap=true;
 			//TODO: Use this to determine if the INSERTIONS are legal
 			//We need to establish a clear policy on what insertions *are* legal, though.
-			//That will be done on the Node and Argument levels.
+			//That will be done on the Node and Connection levels.
 			//It hinges on the TYPES of nodes and connections, which haven't been fully established yet.
 			
 			//(Note that UPDATES are checked against ownership of that individual thing)
