@@ -185,10 +185,10 @@
 	/**
 	*	Links an argument to a "source node" in the DB.
 	*/
-	function sourceNodeToDB($source, $argID, $linkID, $output)
+	function sourceNodeToDB($source, $connID, $linkID, $output)
 	{	
 		global $nodeTIDarray;
-		//sourcenodes to Source Nodes don't have to worry about being updated.
+		//Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
 		//They get DELETED automatically when the NODE they connect to is DELETED.
 		//print "<BR>SourceNode found";
@@ -201,7 +201,7 @@
 		}
 		
 		$iquery = "INSERT INTO sourcenodes (connection_id, node_id, created_date, modified_date) VALUES
-											($argID, $nodeID, NOW(), NOW())";
+											($connID, $nodeID, NOW(), NOW())";
 		//print "<BR>Insert Query is: $iquery";
 		$success = mysql_query($iquery, $linkID);
 		if($success){
@@ -223,7 +223,7 @@
 		global $nodeTIDarray;
 		//print "<BR>---Connection found";
 		$attr = $conn->attributes();
-		$id = mysql_real_escape_string($attr["argID"]);
+		$id = mysql_real_escape_string($attr["ID"]);
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
@@ -235,7 +235,7 @@
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row["type_id"];
 		
-		$tid = mysql_real_escape_string($attr["argTID"]);
+		$tid = mysql_real_escape_string($attr["TID"]);
 		
 		if(!$nodeID){
 			$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
@@ -244,8 +244,8 @@
 		
 		if(!$id){
 			//Insert the argument part into the DB (target node and info)
-			$iquery = "INSERT INTO connections (arg_tid, user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
-											($tid, $userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
+			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
+											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			//print "<BR>Insert Query is: $iquery";
 			mysql_query($iquery, $linkID);
 			$id = getLastInsert($linkID);

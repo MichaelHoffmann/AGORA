@@ -72,16 +72,16 @@
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
-				$arg_id=$row['connection_id'];
+				$conn_id=$row['connection_id'];
 				$connection = $xml->addChild("connection");
-				$connection->addAttribute("argID", $arg_id);
+				$connection->addAttribute("connID", $conn_id);
 				$connection->addAttribute("type", $row['conn_name']);
 				$connection->addAttribute("targetnode", $row['node_id']);
 				$connection->addAttribute("deleted", $row['is_deleted']);
 				$connection->addAttribute("gridX", $row['x_coord']);
 				$connection->addAttribute("gridY", $row['y_coord']);
 				//Set up the inner query to find the source nodes
-				$innerQuery="SELECT * FROM sourcenodes WHERE connection_id=$arg_id";
+				$innerQuery="SELECT * FROM sourcenodes WHERE connection_id=$conn_id";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in connection lookup");
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$sourcenode = $connection->addChild("sourcenode");
