@@ -326,7 +326,7 @@
 		
 		$lang = mysql_real_escape_string($xml['lang']);
 		if(!$lang){
-			$lang="EN-US"
+			$lang="EN-US";
 		}
 
 		//Check to see if the map already exists
