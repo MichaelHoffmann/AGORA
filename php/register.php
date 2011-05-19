@@ -1,12 +1,11 @@
 <?php
+	require 'establish_link.php';
 	/**
 	* Function allowing user to register a new account.
 	*/
 	function register($username, $pass_hash, $firstname, $lastname, $email, $url)
 	{
-		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-		//$linkID = mysql_connect("localhost:8889", "root", "") or die ("Could not connect to database!");
-		$linkID = mysql_connect("localhost:8889", "root", "root") or die ("Could not connect to database!");
+		$linkID= establishLink();
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");

@@ -1,13 +1,12 @@
 <?php
+	require 'establish_link.php';
 	/**
 	*	Function for allowing users to confirm their login information.
 	*	Returns XML containing the UID once the username and password hash are given.
 	*/
 	function login($username, $pass_hash)
 	{
-		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-		//$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
-		$linkID = mysql_connect("localhost", "root", "root") or die ("Could not connect to database!");
+		$linkID= establishLink();
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
