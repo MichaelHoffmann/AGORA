@@ -333,10 +333,14 @@
 		if($mapClause==0){
 			//If not, create it!
 			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
-										($userID, 'Example', 'Description', $lang, NOW(), NOW())";
+										($userID, 'Example', 'Description', \"$lang\", NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
-			
 			$mapClause = getLastInsert($linkID);
+			if(!$mapClause){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "The map was not added properly. Query: $iquery");
+			}
+			
 			$output->addAttribute("ID", $mapClause);
 		}
 
