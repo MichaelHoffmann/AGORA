@@ -3,15 +3,6 @@ CREATE SCHEMA IF NOT EXISTS agora DEFAULT CHARACTER SET utf8 COLLATE utf8_genera
 USE agora;
 SET storage_engine=INNODB;
 
-DROP TABLE IF EXISTS agora.sourcenodes;
-DROP TABLE IF EXISTS agora.connections;
-DROP TABLE IF EXISTS agora.connection_types;
-DROP TABLE IF EXISTS agora.nodetext;
-DROP TABLE IF EXISTS agora.textboxes;
-DROP TABLE IF EXISTS agora.nodes;
-DROP TABLE IF EXISTS agora.node_types;
-DROP TABLE IF EXISTS agora.maps;
-DROP TABLE IF EXISTS agora.users;
 
 -- -----------------------------------------------------
 -- Table agora.users
