@@ -9,6 +9,8 @@ package classes
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
+	import logic.ParentArg;
+	
 	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
@@ -57,6 +59,7 @@ package classes
 		public var savedTextStr:String;
 		//public var displayLbl:Label;
 		public var displayTxt:Text;
+		//public var  iintctLbl:Label;
 		public static var parentMap:AgoraMap;
 		public var group:Group;
 		//The enabler which makes these statements support a claim
@@ -80,11 +83,21 @@ package classes
 		public var panelType:int;
 		public var thereforeLine:UIComponent;
 		public var thereforeText:Label;
-		public var negated:Boolean;		// negated = 0 means no - it is positive. negated = 1 means yes - it is negative. Useful for Modus Tollens and Disjunctive Syllogism
+		private var _statementNegated:Boolean;		// negated = 0 means no - it is positive. negated = 1 means yes - it is negative. Useful for Modus Tollens and Disjunctive Syllogism
 		public var userEntered:Boolean;
 		public var addMenuData:XML;
 		public var constructArgData:XML;
 		
+		public function get statementNegated():Boolean
+		{
+			return _statementNegated;
+		}
+		
+		public function set statementNegated(value:Boolean):void
+		{
+			_statementNegated = value;
+			makeUnEditable();
+		}
 		
 		public function makeEditable():void
 		{
@@ -93,12 +106,25 @@ package classes
 				input1.text="";
 				userEntered = true;
 			}
-
-				focusManager.setFocus(input1);
-				input1.visible = true;
-				displayTxt.visible = false;
-				doneHG.visible = true;
-				bottomHG.visible=false;
+			
+			focusManager.setFocus(input1);
+			input1.visible = true;
+			displayTxt.visible = false;
+			doneHG.visible = true;
+			bottomHG.visible=false;
+		}
+		
+		public function get stmt():String
+		{
+			
+			if(statementNegated == true)
+			{
+				return ("it is not the case that " + input1.text);
+			}
+			else
+			{
+				return input1.text;
+			}
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
@@ -110,11 +136,16 @@ package classes
 		{
 			displayTxt.width = input1.width;
 			displayTxt.height = input1.height;
-			displayTxt.text = input1.text;
+			displayTxt.text = stmt;
 			displayTxt.visible = true;
 			input1.visible = false;
 			bottomHG.visible = true;
 			doneHG.visible = false;
+		}
+		
+		public function get positiveStmt():String
+		{
+			return input1.text;
 		}
 		
 		public function ArgumentPanel()
@@ -130,6 +161,8 @@ package classes
 			
 			//will be set by the object that creates this
 			inference = null;
+			
+			_statementNegated = false;//this should not use the set method
 			
 			rules = new Vector.<Inference>(0,false);
 			
@@ -206,7 +239,6 @@ package classes
 			else if(event.label == "construct argument")
 			{
 				inference.buildInference();
-				inference.formedBool = true;
 				inference.visible = true;
 			}
 		}
@@ -218,7 +250,7 @@ package classes
 			menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
 			menu.show(globalPosition.x,globalPosition.y);
-
+			
 		}
 		
 		public function statementEntered():void
@@ -313,7 +345,77 @@ package classes
 				event.target.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
 			}
 		}
+		/*
+		public function negate():void
+		{
+			trace(statementNegated);
+			if(statementNegated == true)
+			{
+				statementNegated = false;
+				iintctLbl.text = "Negate this statement";
+				trace(iintctLbl.text);
+			}
+			else
+			{
+				statementNegated = true;
+				iintctLbl.text = "It is not the case that";
+			}
+		}
 		
+		
+		
+		public function invertStatement():void
+		{
+			//set the flag
+			if(statementNegated == true)
+			{
+				if(inference != null)
+				{
+					if(inference.formedBool)
+					{
+						if(inference.myArg.myname != ParentArg.MOD_TOL)
+						{
+							negate();
+						}
+						else
+						{
+							Alert.show("Modus Tollens requires the claim and the reasons to be negated statements");
+						}
+					}
+					else{
+						negate();
+					}
+				}
+				else
+				{
+					negate();
+				}
+			}
+			else if(statementNegated == false)
+			{
+				if(inference != null){
+					if(!inference.formedBool)
+					{
+						negate();
+					}
+					else
+					{
+						Alert.show("Inference rule has already been constructed");
+					}
+				}
+				else
+				{
+					negate();
+				}
+			}
+		}
+		
+		protected function toggleNegate(event:MouseEvent):void
+		{
+			invertStatement();
+		}
+		
+		*/
 		//create children must be overriden to create dynamically allocated children
 		override protected function createChildren():void
 		{
@@ -384,6 +486,11 @@ package classes
 			userIdLbl.text = "AU: " + UserData.userNameStr;
 			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
 			userIdLbl.toolTip = userInfoStr;
+			
+		//	iintctLbl = new Label;
+		//	iintctLbl.addEventListener(MouseEvent.CLICK, toggleNegate);
+		//	addElement(iintctLbl);
+		//	iintctLbl.text = "Negate the statement";
 			
 			
 			group = new Group;

@@ -37,6 +37,7 @@ package classes
 		public var connectionID:int;
 		public var connectionIDs:Vector.<int>;
 		public var formedBool:Boolean;
+		public var typed:Boolean;
 		
 		public function Inference()
 		{
@@ -55,6 +56,7 @@ package classes
 			this.setStyle("cornerRadius",30);	
 			//displayStr = "";
 			formedBool = false;
+			typed = false;
 		}
 		
 		
@@ -104,7 +106,7 @@ package classes
 			var panel:ArgumentPanel = ArgumentPanel(event.target);
 			panel.makeEditable();
 		}
-
+		
 		
 		public function addReason():void
 		{
@@ -112,7 +114,7 @@ package classes
 			parentMap.addElement(tmp);
 			
 			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);
-
+			
 			try{
 				reasons.push(tmp);
 				connectionIDs.push(connections++);
@@ -148,7 +150,15 @@ package classes
 		
 		public function addReasonHandler(event:MouseEvent):void
 		{
-			addReason();	
+			trace(formedBool);
+			if(formedBool == true && isExp == true)
+			{
+				addReason();
+			}
+			else
+			{
+				Alert.show("This language type cannot be expanded. Please change language type to one of the expandable ones before adding another reason");
+			}
 		}
 		
 		override public function onArgumentPanelCreate(e:FlexEvent):void
@@ -174,19 +184,29 @@ package classes
 			parentMap.parent.addChild(myschemeSel);
 			myschemeSel.depth = parentMap.parent.numChildren;
 			var rootlist:List = myschemeSel.mainSchemes;
+			var sublist:List = myschemeSel.typeSelector;
+			var oplist:List = myschemeSel.andor;
 			if(myArg!=null) 
 			{
 				rootlist.dataProvider = myArg.myname;	
 				argType.changeSchemeBtn.toolTip = "Only change in language type is allowed";
+				if(isExp)
+				{
+					sublist.dataProvider = myArg._expLangTypes;
+				}
+				else
+				{
+					sublist.dataProvider = myArg._langTypes;
+				}
 			}
-			var sublist:List = myschemeSel.typeSelector;
-			var oplist:List = myschemeSel.andor;
+			
 			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
 			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
 			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+			formedBool = true;
 		}
 		
 		public function changeHandler(e:MouseEvent):void
@@ -196,33 +216,53 @@ package classes
 		
 		public function setType(le:ListEvent):void
 		{
+			typed = true;
 			argType.schemeText = le.itemRenderer.data.toString();
 			if(myschemeSel.andor.visible==false)
 			{
-				//myschemeSel.visible = false;
 				parentMap.parent.removeChild(myschemeSel);
 			}
-			//input1.visible=true;
-			//input1.update();
 		}
 		
 		public function displayTypes(le:ListEvent):void
 		{
 			var myclassindex:int = le.rowIndex;
 			var sublist:List = myschemeSel.typeSelector;
-			sublist.visible=true;
-			switch(myclassindex)
+			if(!typed)
 			{
-				case 0: myArg = new ModusPonens; break;
-				case 1: myArg = new ModusTollens; break;
-				case 2: myArg = new ConditionalSyllogism; break;
-				case 3: myArg = new DisjunctiveSyllogism; break;
-				case 4: myArg = new NotAllSyllogism; break;
-				case 5: myArg = new ConstructiveDilemma;
-					
+				reasons[0].statementNegated = false;
+				if(claim.inference == null)
+				{
+					claim.statementNegated = false;
+				}
 			}
-			sublist.dataProvider = myArg._langTypes;
-			//argType.title = myArg.myname;
+			sublist.visible=true;
+			if(!typed)
+			{
+				switch(myclassindex)
+				{
+					case 0:
+						myArg = new ModusPonens;
+						break;
+					case 1: 
+						myArg = new ModusTollens; 
+						reasons[0].statementNegated = true;
+						claim.statementNegated = true;
+						break;
+					case 2: myArg = new ConditionalSyllogism; break;
+					case 3: myArg = new DisjunctiveSyllogism; break;
+					case 4: myArg = new NotAllSyllogism; break;
+					case 5: myArg = new ConstructiveDilemma;
+						
+				}
+			}
+			if(reasons.length == 1){
+				sublist.dataProvider = myArg._langTypes;	
+			}
+			else if(reasons.length > 1)
+			{
+				sublist.dataProvider = myArg._expLangTypes;
+			}
 			argType.changeSchemeBtn.label = myArg.myname;//set scheme
 		}
 		
@@ -230,32 +270,59 @@ package classes
 		{
 			var oplist:List = myschemeSel.andor;
 			var typeText:String=le.itemRenderer.data.toString();
+			isExp = false;
 			argType.schemeText = typeText;
 			argType.schemeTextIndex = le.rowIndex;
 			if(myArg.myname == ParentArg.MOD_TOL)
-				if(typeText == "Only if") {
-					oplist.visible=true; isExp = true; }
+			{
+				if(typeText == "Only if") 
+				{
+					oplist.visible=true; 
+					isExp = true;
+				}
 				else
 					oplist.visible=false;
-				else if(myArg.myname == ParentArg.MOD_PON)
-					for(var i:int;i<myArg._expLangTypes.length;i++)
-						if(myArg._expLangTypes[i] == typeText) {
-							argType.connText = ParentArg.EXP_AND;	// Modus Ponens expanded only with AND
-							isExp = true; }
-			
-			displayStr = myArg.correctUsage(argType.schemeTextIndex,this.claim.input1.text,this.reasons,isExp);
+			}
+			else if(myArg.myname == ParentArg.MOD_PON)
+			{
+				for(var i:int = 0 ;i<myArg._expLangTypes.length;i++)
+				{
+					if(myArg._expLangTypes[i] === typeText) 
+					{
+						argType.connText = ParentArg.EXP_AND;	// Modus Ponens expanded only with AND
+						isExp = true;
+					}
+				}
+			}
+			//trace(isExp);
+			displayStr = myArg.correctUsage(argType.schemeTextIndex,this.claim,this.reasons,isExp);
 		}
 		
 		public function setOption(le:ListEvent):void
 		{
+			typed = true;
 			var andor:String = le.itemRenderer.data.toString();
-			if(andor=="And") argType.connText = ParentArg.EXP_AND;
-			else if(andor=="Or") argType.connText = ParentArg.EXP_OR;
+			if(andor=="And")
+			{
+				argType.connText = ParentArg.EXP_AND;
+				if(myArg is ModusTollens)
+				{
+					var specificArg:ModusTollens = ModusTollens(myArg);
+					specificArg.andOr = ParentArg.EXP_AND;
+				}
+			}
+			else if(andor=="Or") 
+			{
+				argType.connText = ParentArg.EXP_OR;
+				if(myArg is ModusTollens)
+				{
+					specificArg = ModusTollens(myArg);
+					specificArg.andOr = ParentArg.EXP_OR;
+				}
+			}
 			myschemeSel.visible = false;
 			input1.forwardUpdate();
 		}
-		
-		
 		
 		public function bringForward(e:MouseEvent):void
 		{

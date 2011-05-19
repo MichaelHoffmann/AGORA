@@ -6,13 +6,14 @@ package logic
 	{
 		public function DisjunctiveSyllogism()
 		{
+			_langTypes = ["Either-or","Unless"];
+			_expLangTypes =  ["Either-or"];
 			myname = DIS_SYLL;
 			dbName = myname;
-			_langTypes = ["Either-or","Unless"];
-			_expLangTypes = ["Either-or"];
+			
 		}
 		
-		override public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
+		override public function correctUsage(index:int,claim: ArgumentPanel,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
 			var output:String = "";
 			var i:int;
 			switch(index) {

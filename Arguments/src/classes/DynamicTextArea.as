@@ -116,7 +116,7 @@ package classes
 					var s:String;
 					if(infPanel.argType.schemeText!=null) { 
 			//			flag=1;
-						infPanel.displayStr = infPanel.myArg.correctUsage(infPanel.argType.schemeTextIndex,infPanel.claim.input1.text,infPanel.reasons,infPanel.isExp);
+						infPanel.displayStr = infPanel.myArg.correctUsage(infPanel.argType.schemeTextIndex,infPanel.claim,infPanel.reasons,infPanel.isExp);
 						//trace(sentence);
 						//this.panelReference.input1.text = sentence;
 					}

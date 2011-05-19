@@ -6,12 +6,13 @@ package logic
 		
 		public function ConstructiveDilemma()
 		{
+			_langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
 			myname = CONST_DILEM;
 			dbName = myname;
-			_langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
+			
 		}
 		
-		override public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
+		override public function correctUsage(index:int,claim: ArgumentPanel,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
 			var output:String = "";
 			var i:int;
 			switch(index) {

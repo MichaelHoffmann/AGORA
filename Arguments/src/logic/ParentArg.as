@@ -14,6 +14,7 @@ package logic
 	//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
 	public var dbName:String;
 	public var _langTypes:Array;
+	public var multipleReasons:Boolean;
 	public var _expLangTypes:Array;
 	public static var MOD_PON:String = "Modus Ponens";
 	public static var MOD_TOL:String = "Modus Tollens";
@@ -28,9 +29,10 @@ package logic
 	
 	public function ParentArg()
 	{
+		multipleReasons = true;
 		mySelector = new ArgSelector;
 	}	
 	
-	public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String { return "";}
+	public function correctUsage(index:int,claim: ArgumentPanel,reason:Vector.<ArgumentPanel>,exp:Boolean):String { return "";}
 	}
 }

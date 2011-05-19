@@ -39,17 +39,22 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import mx.controls.Alert;
-			import mx.events.ListEvent;
 			import classes.DisplayArgType;
+			
 			import flash.events.Event;
 			import flash.events.MouseEvent;
+			
 			import logic.*;
+			
+			import mx.controls.Alert;
+			import mx.events.ListEvent;
 			
 			private var _selectedScheme:String;
 			private var _selectedType:String;
 			private var _hover:Boolean;
 			private var _selectedLogic:String;
+			
+			private var _myclassindex:int;
 
 			[Bindable]
 			private var _scheme:Array;	
@@ -57,6 +62,17 @@
 			private var _options:Array;
 			[Bindable]
 			private var _languageTypeHolder:Object;
+			
+			
+			public function get myclassindex():int
+			{
+				return _myclassindex;
+			}
+			
+			public function set myclassindex(value:int):void
+			{
+				_myclassindex = value;
+			}
 			
 			public function init():void{
 				_scheme = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism","Constructive Dilemma"];

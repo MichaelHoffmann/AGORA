@@ -3,14 +3,16 @@ package logic
 	import classes.ArgumentPanel;	
 	public class ConditionalSyllogism extends ParentArg
 	{		
+			
 		public function ConditionalSyllogism()
 		{
+			_langTypes = ["If-then","Implies"];
 			myname = COND_SYLL;
 			dbName = "ConSyllogism";
-			_langTypes = ["If-then","Implies"];		// Both types here are expandable. like a chain rule
+				// Both types here are expandable. like a chain rule
 		}
 		
-		override public function correctUsage(index:int,claim:String,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
+		override public function correctUsage(index:int,claim: ArgumentPanel,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
 			var output:String = "";
 			var i:int;
 			switch(index) {
