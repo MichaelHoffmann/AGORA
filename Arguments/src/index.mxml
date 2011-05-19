@@ -13,7 +13,7 @@
 			</s:HGroup>
 			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
 				<s:Panel id="mapList" title="List of Maps" width="200" height="400" >
-					<s:VGroup id="mapNameList" gap="5" paddingTop="5" paddingLeft="5"> 
+					<s:VGroup id="mapNameList" gap="5" paddingTop="5" paddingLeft="5" width="100%"> 
 					</s:VGroup>
 				</s:Panel>
 				<s:Panel id="myMaps" title="My Maps" width="200" height="400">
@@ -33,15 +33,19 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import classes.AgoraMap;
 			import classes.UserData;
 			
 			import components.LAMWorld;
 			import components.LoginWindow;
+			import components.Map;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			public var username:String;
 			public var pass_hash:String;
+			
+			public var maps_map:Dictionary;
 			
 			
 			public function createmap():void
@@ -49,7 +53,6 @@
 				var lamWorld:LAMWorld = new LAMWorld;
 				agoraMenu.visible = false;
 				addElement(lamWorld);
-				
 			}
 			
 			
@@ -77,18 +80,48 @@
 				agoraMenu.visible = true;
 			}
 			
-			public function displayMap(event: Event):void
+			protected function drawMap(event:Event):void
+			{
+				agoraMenu.visible = false;
+				var xml:XML = XML(event.target.data);
+				var map:Map = new Map;
+				addElement(map);
+				map.agoraMap.load(xml);
+				
+			}
+			
+			protected function loadMap(event:MouseEvent):void{
+				var button:Button = Button(event.target);
+				var mapId:int = int(button.name);
+				var request:URLRequest = new URLRequest;
+				request.url="http://agora.gatech.edu/dev/load_map.php";
+				request.method = URLRequestMethod.GET;
+				request.data = new URLVariables("timestamp=0&map_id="+mapId);
+				var loader:URLLoader = new URLLoader;
+				loader.addEventListener(Event.COMPLETE, drawMap);
+				loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
+				loader.load(request);
+			}
+
+			
+			public function displayMaps(event: Event):void
 			{
 				var xmlData:XML = XML(event.target.data);
 				var maps:XMLList = xmlData.map;
-				var xmls:Object = new Object;
+				//var xmls:Object = new Object;
 				for each (var map:XML in maps)
 				{
+						//trace(map.toXMLString());
+						var mapObject:Object = new Object;
+						mapObject.mapId = int(map.attribute("id"));
+						mapObject.title = map.attribute("title");
 						var mapButton:Button = new Button;
-						mapButton.width=190;
-						mapButton.label = map.attribute("title");
+						mapButton.width = 190;
+						mapButton.name = mapObject.mapId.toString();
+						mapButton.addEventListener(MouseEvent.CLICK, loadMap);
+						mapButton.label = mapObject.title;
 						mapNameList.addElement(mapButton);
-						xmls[mapButton.label] = map;
+						maps_map[mapObject.mapId] = mapObject;
 				}
 			}
 
@@ -108,9 +141,8 @@
 				//create a loader
 				var loader:URLLoader = new URLLoader;
 				//add a handler for handling the response
-				loader.addEventListener(Event.COMPLETE,displayMap);
+				loader.addEventListener(Event.COMPLETE,displayMaps);
 				loader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
-				
 				
 				//load the request obect
 				loader.load(request);
@@ -126,6 +158,7 @@
 			
 			public function loadData():void
 			{
+				maps_map = new Dictionary;
 				loadMapList();
 				loadProjectList();
 			}

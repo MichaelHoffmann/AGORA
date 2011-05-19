@@ -294,7 +294,6 @@ package classes
 			tmpInput2.visible = false;
 			tmpInput2.panelReference = currInference;
 			currInference.input.push(tmpInput2);	
-			
 			tmpInput2.forwardList.push(currInference.input1);
 			reason.input1.forwardList.push(tmpInput2);
 			parentMap.layoutManager.registerPanel(currInference);
