@@ -66,13 +66,13 @@
 			}
 		}
 
-		// Connections will take a lot more work.
-		$query = "SELECT * FROM arguments NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\"";
+		// sourcenodes will take a lot more work.
+		$query = "SELECT * FROM connections NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\"";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
-				$arg_id=$row['argument_id'];
+				$arg_id=$row['connection_id'];
 				$connection = $xml->addChild("connection");
 				$connection->addAttribute("argID", $arg_id);
 				$connection->addAttribute("type", $row['conn_name']);
@@ -81,7 +81,7 @@
 				$connection->addAttribute("gridX", $row['x_coord']);
 				$connection->addAttribute("gridY", $row['y_coord']);
 				//Set up the inner query to find the source nodes
-				$innerQuery="SELECT * FROM connections WHERE argument_id=$arg_id";
+				$innerQuery="SELECT * FROM sourcenodes WHERE connection_id=$arg_id";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in connection lookup");
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$sourcenode = $connection->addChild("sourcenode");

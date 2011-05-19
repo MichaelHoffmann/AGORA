@@ -188,7 +188,7 @@
 	function sourceNodeToDB($source, $argID, $linkID, $output)
 	{	
 		global $nodeTIDarray;
-		//Connections to Source Nodes don't have to worry about being updated.
+		//sourcenodes to Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
 		//They get DELETED automatically when the NODE they connect to is DELETED.
 		//print "<BR>SourceNode found";
@@ -200,7 +200,7 @@
 			$nodeID = $nodeTIDarray[$nodeTID];
 		}
 		
-		$iquery = "INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
+		$iquery = "INSERT INTO sourcenodes (connection_id, node_id, created_date, modified_date) VALUES
 											($argID, $nodeID, NOW(), NOW())";
 		//print "<BR>Insert Query is: $iquery";
 		$success = mysql_query($iquery, $linkID);
@@ -244,7 +244,7 @@
 		
 		if(!$id){
 			//Insert the argument part into the DB (target node and info)
-			$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
+			$iquery = "INSERT INTO connections (arg_tid, user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
 											($tid, $userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			//print "<BR>Insert Query is: $iquery";
 			mysql_query($iquery, $linkID);
@@ -256,7 +256,7 @@
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the argument is supporting
-			$uquery = "UPDATE arguments SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE argument_id=$id";
+			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 			//print "<BR>Update query: $uquery";
 			mysql_query($uquery, $linkID);
 		
@@ -355,7 +355,7 @@
 			//TODO: Use this to determine if the INSERTIONS are legal
 			//We need to establish a clear policy on what insertions *are* legal, though.
 			//That will be done on the Node and Argument levels.
-			//It hinges on the TYPES of nodes and arguments, which haven't been fully established yet.
+			//It hinges on the TYPES of nodes and connections, which haven't been fully established yet.
 			
 			//(Note that UPDATES are checked against ownership of that individual thing)
 		}

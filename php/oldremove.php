@@ -6,6 +6,7 @@
 	*/
 	function removeNode($node, $mapID, $linkID, $userID)
 	{
+		//TODO: this should be working on the "is_deleted" flag rather than outright removal
 		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["id"]);
@@ -14,43 +15,9 @@
 		$row = mysql_fetch_assoc($resultID);
 		if($userID == $row["user_id"]){
 			print "<BR>Now deleting....<BR>";
-			$uquery = "UPDATE nodes SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
-			$retval = mysql_query($uquery, $linkID);
-			if(!$retval){
-				return $retval;
-			}
-			//TODO: manually cascade this stuff over
-			
-			//Nodes can be NODES in Node-Text relationship
-			print "<BR>Now cascading over to Nodetext....<BR>";
-			$uquery = "UPDATE nodetext SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
-			$retval = mysql_query($uquery, $linkID);
-			if(!$retval){
-				return $retval;
-			}
-			//cascading over to TEXTBOXES will be troublesome since I have to stash all the nodetexts that are deleted...
-			
-			
-			//Nodes can be SOURCENODES of connections
-			print "<BR>Now cascading over to Connections....<BR>";
-			$uquery = "UPDATE connections SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
-			$retval = mysql_query($uquery, $linkID);
-			if(!$retval){
-				return $retval;
-			}
-			//Nodes can be TARGETNODES of arguments
-			print "<BR>Now cascading over to Arguments....<BR>";
-			$uquery = "UPDATE arguments SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
-			$retval = mysql_query($uquery, $linkID);
-			if(!$retval){
-				return $retval;
-			}
-			
-			return $retval;
+			$dquery = "DELETE FROM nodes WHERE node_id=$nID";
+			print $dquery;
+			return mysql_query($dquery, $linkID);
 		}else{
 			print "<BR>You are attempting to delete someone else's work or a nonexistent node. This is not permissible.";
 			return false;
@@ -58,6 +25,8 @@
 	}
 	/**
 	*	Convenience function. Iterates throughout the database. Separated from main logic for clarity.
+	*	Doesn't delete anything but nodes directly.
+	*	The MySQL "ON DELETE CASCADE" takes care of the rest.
 	*	http://dev.mysql.com/doc/refman/5.5/en/innodb-foreign-key-constraints.html
 	*/
 	function xmlToDB($xml, $mapID, $linkID, $userID)	
@@ -93,7 +62,8 @@
 	{
 	//Standard SQL connection stuff
 		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
+		//$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
+		$linkID = mysql_connect("localhost", "root", "root") or die ("Could not connect to database!");
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
