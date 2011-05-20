@@ -273,4 +273,3 @@ CREATE TRIGGER conndel AFTER UPDATE ON connections
 		END IF;
 	END;
 //
-DELIMITER ;
