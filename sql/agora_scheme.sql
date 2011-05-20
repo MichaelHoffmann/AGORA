@@ -3,15 +3,6 @@ CREATE SCHEMA IF NOT EXISTS agora DEFAULT CHARACTER SET utf8 COLLATE utf8_genera
 USE agora;
 SET storage_engine=INNODB;
 
-DROP TABLE IF EXISTS agora.connections;
-DROP TABLE IF EXISTS agora.arguments;
-DROP TABLE IF EXISTS agora.connection_types;
-DROP TABLE IF EXISTS agora.nodetext;
-DROP TABLE IF EXISTS agora.textboxes;
-DROP TABLE IF EXISTS agora.nodes;
-DROP TABLE IF EXISTS agora.node_types;
-DROP TABLE IF EXISTS agora.maps;
-DROP TABLE IF EXISTS agora.users;
 
 -- -----------------------------------------------------
 -- Table agora.users
@@ -67,7 +58,6 @@ INSERT INTO node_types (type) VALUES ("Standard"), ("Inference"), ("Objection"),
 -- -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.nodes (
   node_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  node_tid INT UNSIGNED NOT NULL,
   user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NULL, 
   nodetype_id INT UNSIGNED NOT NULL,
@@ -98,7 +88,6 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.textboxes (
   textbox_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  textbox_tid INT UNSIGNED NOT NULL,
   user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NOT NULL,
   text TEXT,
@@ -193,12 +182,11 @@ INSERT INTO connection_types(conn_name, description) VALUES ("CDpropclaim",    "
 
 
 -- -----------------------------------------------------
--- Table agora.arguments
+-- Table agora.connections
 -- -----------------------------------------------------
 
-CREATE  TABLE IF NOT EXISTS agora.arguments (
-  argument_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  arg_tid INT UNSIGNED NOT NULL,
+CREATE  TABLE IF NOT EXISTS agora.connections (
+  connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
@@ -208,7 +196,7 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
-  PRIMARY KEY (argument_id),
+  PRIMARY KEY (connection_id),
   INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
   INDEX node_id (node_id ASC),
@@ -232,20 +220,20 @@ CREATE  TABLE IF NOT EXISTS agora.arguments (
 -- The node_id is the claim.
 
 -- -----------------------------------------------------
--- Table agora.connections
+-- Table agora.sourcenodes
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS agora.connections (
-  connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  argument_id INT UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS agora.sourcenodes (
+  sn_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  connection_id INT UNSIGNED NOT NULL,
   node_id INT UNSIGNED NOT NULL,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
-  PRIMARY KEY (connection_id),
-  INDEX argument_id (argument_id ASC),
+  PRIMARY KEY (sn_id),
+  INDEX connection_id (connection_id ASC),
   INDEX node_id (node_id ASC),
-  FOREIGN KEY (argument_id)
-    REFERENCES agora.arguments (argument_id)
+  FOREIGN KEY (connection_id)
+    REFERENCES agora.connections (connection_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   FOREIGN KEY (node_id)
@@ -262,8 +250,8 @@ CREATE TRIGGER nodedel AFTER UPDATE ON nodes
 	BEGIN
 		IF NEW.is_deleted = 1 THEN
 			UPDATE nodetext SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
-			UPDATE arguments SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
 			UPDATE connections SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
+			UPDATE sourcenodes SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
 		END IF;
 	END;
 //
@@ -277,11 +265,11 @@ CREATE TRIGGER ntdel AFTER UPDATE ON nodetext
 	END;
 //
 
-CREATE TRIGGER argdel AFTER UPDATE ON arguments
+CREATE TRIGGER conndel AFTER UPDATE ON connections
 	FOR EACH ROW
 	BEGIN
 		IF NEW.is_deleted = 1 THEN
-			UPDATE connections SET is_deleted=1, modified_date=NOW() WHERE argument_id=NEW.argument_id;
+			UPDATE sourcenodes SET is_deleted=1, modified_date=NOW() WHERE connection_id=NEW.connection_id;
 		END IF;
 	END;
 //

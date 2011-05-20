@@ -1,6 +1,6 @@
 <?php
 	require 'checklogin.php';
-	
+	require 'establish_link.php';
 	/**
 	*	Function for removing a node from the database.
 	*/
@@ -15,7 +15,7 @@
 		$row = mysql_fetch_assoc($resultID);
 		if($userID == $row["user_id"]){
 			print "<BR>Now deleting....<BR>";
-			$dquery = "UPDATE nodes SET is_deleted=1, modified_date=NOW() WHERE node_id=$nID";
+			$dquery = "DELETE FROM nodes WHERE node_id=$nID";
 			print $dquery;
 			return mysql_query($dquery, $linkID);
 		}else{
@@ -61,9 +61,7 @@
 	function remove($xmlin, $userID, $pass_hash)
 	{
 	//Standard SQL connection stuff
-		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
-		//$linkID = mysql_connect("localhost", "root", "root") or die ("Could not connect to database!");
+		$linkID= establishLink();
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){

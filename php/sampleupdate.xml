@@ -12,5 +12,5 @@
 		<nodetext textboxID="5"/>
 		<nodetext textboxID="4"/>
 	</node>
-	<connection argID="3" type="MPifthen" targetnodeID="7" />
+	<connection ID="3" type="MPifthen" targetnodeID="7" />
 </map>
