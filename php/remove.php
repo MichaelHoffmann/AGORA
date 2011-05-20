@@ -19,39 +19,7 @@
 			$retval = mysql_query($uquery, $linkID);
 			if(!$retval){
 				return $retval;
-			}
-			
-			/*
-			//TODO: manually cascade this stuff over
-			
-			//Nodes can be NODES in Node-Text relationship
-			print "<BR>Now cascading over to Nodetext....<BR>";
-			$uquery = "UPDATE nodetext SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
-			$retval = mysql_query($uquery, $linkID);
-			if(!$retval){
-				return $retval;
-			}
-			//cascading over to TEXTBOXES will be troublesome since I have to stash all the nodetexts that are deleted...
-			
-			
-			//Nodes can be SOURCENODES of sourcenodes
-			print "<BR>Now cascading over to sourcenodes....<BR>";
-			$uquery = "UPDATE sourcenodes SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
-			$retval = mysql_query($uquery, $linkID);
-			if(!$retval){
-				return $retval;
-			}
-			//Nodes can be TARGETNODES of connections
-			print "<BR>Now cascading over to connections....<BR>";
-			$uquery = "UPDATE connections SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
-			$retval = mysql_query($uquery, $linkID);
-			if(!$retval){
-				return $retval;
-			}*/
-			
+			}			
 			return $retval;
 		}else{
 			print "<BR>You are attempting to delete someone else's work or a nonexistent node. This is not permissible.";
