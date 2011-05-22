@@ -75,17 +75,17 @@ package classes
 			schemeSelected = false;
 		}
 		///Getters and Setters
-
+		
 		public function get selectedBool():Boolean
 		{
 			return _selectedBool;
 		}
-
+		
 		public function set selectedBool(value:Boolean):void
 		{
 			_selectedBool = value;
 		}
-
+		
 		public function get schemeSelected():Boolean
 		{
 			return _schemeSelected;
@@ -156,7 +156,7 @@ package classes
 					typed = false;
 				}				
 			}
-
+			
 		}
 		
 		public function changePossibleSchemes():void
@@ -213,7 +213,7 @@ package classes
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
 		}
-
+		
 		public function get argType():MenuPanel
 		{
 			return _menuPanel;
@@ -276,7 +276,7 @@ package classes
 				
 				//set the id
 				tmpInput.id = tmp.input1.id;
-	
+				
 				//binding
 				tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
 				tmp.input1.forwardList.push(tmpInput);
@@ -297,203 +297,203 @@ package classes
 			}
 			if(myArg.isLanguageExp)
 			{
-					addReason();
+				addReason();
 			}
 			else
 			{
 				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
 			}
-	}
-	override public function onArgumentPanelCreate(e:FlexEvent):void
-	{
-		super.onArgumentPanelCreate(e);
-		doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
-		displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
-		displayTxt.visible = true;
-		displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
-		bottomHG.visible = true;
-		doneHG.visible = false;
-		input1.visible = false;
-		stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
-	}
-	public function chooseEnablerText():void
-	{
-		myschemeSel.visible=true;
-		myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
-		myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-		parentMap.parent.addChild(myschemeSel);
-		myschemeSel.depth = parentMap.parent.numChildren;
-		selectedBool = true;
-	}
-	
-	public function changeHandler(e:MouseEvent):void
-	{
-		chooseEnablerText();
-	}
-	
-	public function setType(le:ListEvent):void
-	{
-		if(myschemeSel.andor.visible==false)
-		{
-			parentMap.parent.removeChild(myschemeSel);
 		}
-		schemeSelected = true;
-	}
-	
-	public function displayRestricted(le:ListEvent):void
-	{
+		override public function onArgumentPanelCreate(e:FlexEvent):void
+		{
+			super.onArgumentPanelCreate(e);
+			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
+			displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
+			displayTxt.visible = true;
+			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
+			bottomHG.visible = true;
+			doneHG.visible = false;
+			input1.visible = false;
+			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
+		}
+		public function chooseEnablerText():void
+		{
+			myschemeSel.visible=true;
+			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
+			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
+			parentMap.parent.addChild(myschemeSel);
+			myschemeSel.depth = parentMap.parent.numChildren;
+			selectedBool = true;
+		}
 		
-	}
-	
-	public function displayTypes(le:ListEvent):void
-	{
-		myschemeSel.selectedScheme = le.itemRenderer.data.toString();
-		var sublist:List = myschemeSel.typeSelector;
-		sublist.visible=true;
+		public function changeHandler(e:MouseEvent):void
+		{
+			chooseEnablerText();
+		}
 		
-		switch(myschemeSel.selectedScheme)
+		public function setType(le:ListEvent):void
 		{
-			case ParentArg.MOD_PON:
-				myArg = new ModusPonens;
-				break;
-			case ParentArg.MOD_TOL:
-				myArg = new ModusTollens;
-				break;
-			case ParentArg.COND_SYLL:
-				myArg = new ConditionalSyllogism;
-				break;
-			case ParentArg.DIS_SYLL:
-				myArg = new DisjunctiveSyllogism;
-				break;
-			case ParentArg.NOT_ALL_SYLL:
-				myArg = new NotAllSyllogism;
-				break;
-			case ParentArg.CONST_DILEM:
-				myArg = new ConstructiveDilemma;
-				break;
-		}
-		myArg.inference = this;
-		if(hasMultipleReasons)
-		{
-			sublist.dataProvider = myArg._expLangTypes;	
-		}
-		else
-		{
-			sublist.dataProvider = myArg._langTypes;	
-		}
-		argType.changeSchemeBtn.label = myArg.myname;
-	}
-	
-	public function displayOption(le:ListEvent):void
-	{
-		var oplist:List = myschemeSel.andor;
-		oplist.visible = false;
-		var typeText:String=le.itemRenderer.data.toString();
-		myschemeSel.selectedType = typeText;
-		myArg.isLanguageExp = false;
-		if(myArg.myname == ParentArg.MOD_TOL)
-		{
-			if(typeText == "Only if") 
+			if(myschemeSel.andor.visible==false)
 			{
-				oplist.visible=true;
-				myArg.isLanguageExp = true;
+				parentMap.parent.removeChild(myschemeSel);
+			}
+			schemeSelected = true;
+		}
+		
+		public function displayRestricted(le:ListEvent):void
+		{
+			
+		}
+		
+		public function displayTypes(le:ListEvent):void
+		{
+			myschemeSel.selectedScheme = le.itemRenderer.data.toString();
+			var sublist:List = myschemeSel.typeSelector;
+			sublist.visible=true;
+			
+			switch(myschemeSel.selectedScheme)
+			{
+				case ParentArg.MOD_PON:
+					myArg = new ModusPonens;
+					break;
+				case ParentArg.MOD_TOL:
+					myArg = new ModusTollens;
+					break;
+				case ParentArg.COND_SYLL:
+					myArg = new ConditionalSyllogism;
+					break;
+				case ParentArg.DIS_SYLL:
+					myArg = new DisjunctiveSyllogism;
+					break;
+				case ParentArg.NOT_ALL_SYLL:
+					myArg = new NotAllSyllogism;
+					break;
+				case ParentArg.CONST_DILEM:
+					myArg = new ConstructiveDilemma;
+					break;
+			}
+			myArg.inference = this;
+			if(hasMultipleReasons)
+			{
+				sublist.dataProvider = myArg._expLangTypes;	
 			}
 			else
-				oplist.visible=false;
-		}	
-		else if(myArg.myname == ParentArg.MOD_PON)
-		{
-			for(var i:int = 0 ;i<myArg._expLangTypes.length;i++)
 			{
-				if(myArg._expLangTypes[i] == typeText) 
+				sublist.dataProvider = myArg._langTypes;	
+			}
+			argType.changeSchemeBtn.label = myArg.myname;
+		}
+		
+		public function displayOption(le:ListEvent):void
+		{
+			var oplist:List = myschemeSel.andor;
+			oplist.visible = false;
+			var typeText:String=le.itemRenderer.data.toString();
+			myschemeSel.selectedType = typeText;
+			myArg.isLanguageExp = false;
+			if(myArg.myname == ParentArg.MOD_TOL)
+			{
+				if(typeText == "Only if") 
 				{
+					oplist.visible=true;
 					myArg.isLanguageExp = true;
 				}
-			}
-		}
-		else if(myArg.myname == ParentArg.DIS_SYLL)
-		{
-			myArg.isLanguageExp = true;
-		}
-		else if(myArg.myname == ParentArg.NOT_ALL_SYLL)
-		{
-			myArg.isLanguageExp = true;
-		}
-		displayStr = myArg.correctUsage();
-	}
-	
-	public function setOption(le:ListEvent):void
-	{
-		var andor:String = le.itemRenderer.data.toString();
-		
-		if(reasons.length > 1)
-		{
-			typed = true;
-		}
-		
-		if(andor=="And")
-		{
-			myschemeSel.selectedOption = ParentArg.EXP_AND;
-			if(myArg is ModusTollens)
+				else
+					oplist.visible=false;
+			}	
+			else if(myArg.myname == ParentArg.MOD_PON)
 			{
-				var specificArg:ModusTollens = ModusTollens(myArg);
-				specificArg.andOr = ParentArg.EXP_AND;
+				for(var i:int = 0 ;i<myArg._expLangTypes.length;i++)
+				{
+					if(myArg._expLangTypes[i] == typeText) 
+					{
+						myArg.isLanguageExp = true;
+					}
+				}
 			}
-		}
-		else if(andor=="Or") 
-		{
-			myschemeSel.selectedOption = ParentArg.EXP_OR;
-			if(myArg is ModusTollens)
+			else if(myArg.myname == ParentArg.DIS_SYLL)
 			{
-				specificArg = ModusTollens(myArg);
-				specificArg.andOr = ParentArg.EXP_OR;
+				myArg.isLanguageExp = true;
 			}
+			else if(myArg.myname == ParentArg.NOT_ALL_SYLL)
+			{
+				myArg.isLanguageExp = true;
+			}
+			displayStr = myArg.correctUsage();
 		}
 		
-		myschemeSel.visible = false;
-		displayStr = myArg.correctUsage();
-		input1.forwardUpdate();
-		schemeSelected = true;
-	}
-	
-	
-	protected function statementOption(le:ListEvent):void
-	{
-		var andor:String = le.itemRenderer.data.toString();
-		if(andor=="And")
+		public function setOption(le:ListEvent):void
 		{
-			myschemeSel.selectedOption = ParentArg.EXP_AND;
-			if(myArg is ModusTollens)
+			var andor:String = le.itemRenderer.data.toString();
+			
+			if(reasons.length > 1)
 			{
-				var specificArg:ModusTollens = ModusTollens(myArg);
-				specificArg.andOr = ParentArg.EXP_AND;
+				typed = true;
 			}
+			
+			if(andor=="And")
+			{
+				myschemeSel.selectedOption = ParentArg.EXP_AND;
+				if(myArg is ModusTollens)
+				{
+					var specificArg:ModusTollens = ModusTollens(myArg);
+					specificArg.andOr = ParentArg.EXP_AND;
+				}
+			}
+			else if(andor=="Or") 
+			{
+				myschemeSel.selectedOption = ParentArg.EXP_OR;
+				if(myArg is ModusTollens)
+				{
+					specificArg = ModusTollens(myArg);
+					specificArg.andOr = ParentArg.EXP_OR;
+				}
+			}
+			
+			myschemeSel.visible = false;
+			displayStr = myArg.correctUsage();
+			input1.forwardUpdate();
+			schemeSelected = true;
 		}
-		else if(andor=="Or") 
+		
+		
+		protected function statementOption(le:ListEvent):void
 		{
-			myschemeSel.selectedOption = ParentArg.EXP_OR;
-			if(myArg is ModusTollens)
+			var andor:String = le.itemRenderer.data.toString();
+			if(andor=="And")
 			{
-				specificArg = ModusTollens(myArg);
-				specificArg.andOr = ParentArg.EXP_OR;
+				myschemeSel.selectedOption = ParentArg.EXP_AND;
+				if(myArg is ModusTollens)
+				{
+					var specificArg:ModusTollens = ModusTollens(myArg);
+					specificArg.andOr = ParentArg.EXP_AND;
+				}
 			}
+			else if(andor=="Or") 
+			{
+				myschemeSel.selectedOption = ParentArg.EXP_OR;
+				if(myArg is ModusTollens)
+				{
+					specificArg = ModusTollens(myArg);
+					specificArg.andOr = ParentArg.EXP_OR;
+				}
+			}
+			displayStr = myArg.correctUsage();
 		}
-		displayStr = myArg.correctUsage();
+		
+		public function bringForward(e:MouseEvent):void
+		{
+		}
+		
+		public function goBackward(e:MouseEvent):void
+		{
+			//Alert.show("Argument Panel");
+		}
+		
+		public function makeVisible():void{
+			this.visible = true;
+			this.argType.visible = true;
+		}
+		
 	}
-	
-	public function bringForward(e:MouseEvent):void
-	{
-	}
-	
-	public function goBackward(e:MouseEvent):void
-	{
-		//Alert.show("Argument Panel");
-	}
-	
-	public function makeVisible():void{
-		this.visible = true;
-		this.argType.visible = true;
-	}
-	
-}
 }

@@ -14,8 +14,7 @@ package logic
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			_expLangTypes = ["Only if"];	// Expandable with both And and Or
 			myname = MOD_TOL;
-			dbName = myname;
-			//_langTypes = ["If-then","Implies","Whenever","Only-if","Only-if-Exp-And","Only-if-Exp-Or","Provided-that","Sufficient-condition","Necessary-condition"];	
+			dbName = myname;	
 		}
 		
 		override public function correctUsage():String {

@@ -1,6 +1,7 @@
 package classes
 {
 	import components.ArgSelector;
+	import components.Option;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -135,7 +136,6 @@ package classes
 		{
 			if(inference != null)
 			{
-				trace("Argument Constructed");
 				inference.setRuleState();
 			}
 		}
@@ -267,6 +267,30 @@ package classes
 		public function addHandler(event:MouseEvent):void
 		{
 			addSupportingArgument();
+			var option:Option = new Option;
+			option.addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void{parentMap.removeChild(option); beginByArgument();});
+			parentMap.addChild(option);
+			option.x = rules[rules.length - 1].reasons[0].x + rules[rules.length - 1].reasons[0].width + 10;
+			option.y = rules[rules.length - 1].reasons[0].y;
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
+		}
+		
+		public function configureReason(event:FlexEvent):void
+		{
+			var reason:ArgumentPanel = ArgumentPanel(event.target);
+			reason.input1.text = "Q";
+			reason.displayTxt.text = "Q";
+			reason.makeUnEditable();
+		}
+		
+		public function beginByArgument():void{
+			rules[0].visible = true; 
+			rules[0].chooseEnablerText();
+			displayStr = "P";
+			makeUnEditable();
+			rules[0].reasons[0].addEventListener( FlexEvent.CREATION_COMPLETE, configureReason);
 		}
 		
 		public function constructArgument(event:MenuEvent):void
