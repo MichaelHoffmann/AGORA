@@ -1,6 +1,7 @@
 package logic
 {
 	import classes.ArgumentPanel;
+	import classes.Inference;
 	
 	import components.ArgSelector;
 	
@@ -9,7 +10,9 @@ package logic
 
 	public class ParentArg {
 		
+	private var _isLanguageExp:Boolean;
 	public var myname:String;
+	public var inference:Inference;
 	//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
 	//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
 	public var dbName:String;
@@ -25,14 +28,25 @@ package logic
 	public static var EXP_AND:String = "and";
 	public static var EXP_OR:String = "or";
 	
+	public function get isLanguageExp():Boolean
+	{
+		return _isLanguageExp;
+	}
+	public function set isLanguageExp(value:Boolean):void
+	{
+		_isLanguageExp = value;
+	}
+	
 	public var mySelector:ArgSelector;	// reference to be moved from Inference to here - specific argscheme
 	
 	public function ParentArg()
 	{
-		multipleReasons = true;
-		mySelector = new ArgSelector;
-	}	
+		//multipleReasons = true;
+		//mySelector = new ArgSelector;
+	}
 	
-	public function correctUsage(index:int,claim: ArgumentPanel,reason:Vector.<ArgumentPanel>,exp:Boolean):String { return "";}
+	
+	
+	public function correctUsage():String { return "";}
 	}
 }

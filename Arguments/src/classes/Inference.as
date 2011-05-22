@@ -4,9 +4,7 @@ package classes
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	
 	import logic.*;
-	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -15,6 +13,9 @@ package classes
 	import mx.core.IVisualElement;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
+	import mx.utils.ArrayUtil;
+	
+	import org.osmf.layout.AbsoluteLayoutFacet;
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
@@ -23,21 +24,38 @@ package classes
 	
 	public class Inference extends ArgumentPanel
 	{
+		//temporary variable for generating temporary permanent ids
 		public static var connections:int;
+		//list of reasons
 		public var reasons:Vector.<ArgumentPanel>;
+		//list of dynamic text areas that are made invisible
 		public var input:Vector.<DynamicTextArea>;
+		//what is this
 		public var argumentClass:String;
+		//vgroup
 		public var vgroup:VGroup;
+		//The statement that is enabled by this enabler and a set of reasons
 		public var claim:ArgumentPanel;
-		public var _argType:DisplayArgType;
+		//a reference to the panel that is directly above the Enabler (Inference)
+		public var _menuPanel:MenuPanel;
+		//The Menu
 		public var myschemeSel:ArgSelector;
+		//Reference to the specific argument scheme class
 		public var myArg:ParentArg;		
-		public var _displayStr:String;
-		public var isExp:Boolean;
+		//Is the scheme expandable
+		private var _hasMultipleReasons:Boolean;
 		public var connectionID:int;
 		public var connectionIDs:Vector.<int>;
-		public var formedBool:Boolean;
-		public var typed:Boolean;
+		//Used when constructing the argument beginning with reason
+		//Set to true if the user has begun to choose an argument scheme.
+		//happens when construct argument is chosen
+		private var _selectedBool:Boolean;
+		//A scheme has been chosen for this argument and cannot be changed
+		//until it becomes an open end
+		private var _typed:Boolean;
+		public static var REASON_ADDED:String  = "Reason Added";
+		//private var _schemeChangable:Boolean;
+		private var _schemeSelected:Boolean;
 		
 		public function Inference()
 		{
@@ -46,43 +64,164 @@ package classes
 			connectionIDs = new Vector.<int>(0,false);
 			panelType = ArgumentPanel.INFERENCE;
 			state = 0; // Inference is always a Universal statement
-			addEventListener(FlexEvent.CREATION_COMPLETE, displayArgumentType);
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);
-			//This is a place for overhead. Constructors are not JIT compiled,
-			//and therefore, the below creation of a child component must be
-			//moved to createChildren()
-			myschemeSel = new ArgSelector();
+			
+			this.addEventListener(REASON_ADDED,reasonAdded);
+			
 			this.setStyle("cornerRadius",30);	
-			//displayStr = "";
-			formedBool = false;
+			selectedBool = false;
 			typed = false;
+			schemeSelected = false;
+		}
+		///Getters and Setters
+
+		public function get selectedBool():Boolean
+		{
+			return _selectedBool;
+		}
+
+		public function set selectedBool(value:Boolean):void
+		{
+			_selectedBool = value;
+		}
+
+		public function get schemeSelected():Boolean
+		{
+			return _schemeSelected;
 		}
 		
-		
-		public function set displayStr(value:String):void
+		public function set schemeSelected(value:Boolean):void
 		{
-			//trace(input1);
-			_displayStr = value;
-			input1.text = _displayStr;
-			displayTxt.text = _displayStr;
-			displayTxt.height = input1.height;
+			_schemeSelected = value;
+			setRuleState();
 		}
 		
-		public function get displayStr():String
+		public function get hasMultipleReasons():Boolean
 		{
-			return _displayStr;
+			return _hasMultipleReasons;
 		}
 		
-		public function get argType():DisplayArgType
+		public function set hasMultipleReasons(value:Boolean):void
 		{
-			return _argType;
+			_hasMultipleReasons = value;
+			if(myArg != null)
+			{
+				if(hasMultipleReasons)	
+				{
+					myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
+				}
+				else
+				{
+					myschemeSel.typeSelector.dataProvider = myArg._langTypes;
+				}
+			}
+			setRuleState();
 		}
 		
-		public function set argType(value:DisplayArgType):void
+		public function get typed():Boolean
 		{
-			_argType = value;
-			_argType.addEventListener(FlexEvent.CREATION_COMPLETE,addToMap);
+			return _typed;
+		}
+		
+		public function set typed(value:Boolean):void
+		{
+			_typed = value;
+			changePossibleSchemes();
+		}
+		
+		protected function reasonAdded(event:Event):void
+		{
+			if(reasons.length > 1)
+			{
+				hasMultipleReasons = true;
+			}
+			else
+			{
+				hasMultipleReasons = false;
+			}
+		}
+		
+		public function setRuleState():void
+		{
+			//seting type makes sense only after a particular scheme has been chosen
+			//before this, reasons may be empty
+			if(schemeSelected){
+				if( (reasons.length > 1 || reasons[0].rules.length > 0) && schemeSelected)
+				{
+					typed = true;
+				}
+				else 
+				{
+					typed = false;
+				}				
+			}
+
+		}
+		
+		public function changePossibleSchemes():void
+		{
+			if(typed)
+			{
+				myschemeSel.mainSchemes.visible = false;
+				myschemeSel.typeSelector.x = 0;
+				myschemeSel.andor.x = myschemeSel.typeSelector.width;
+				if(myArg != null)
+				{
+					if(hasMultipleReasons)
+					{
+						myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
+					}
+					else
+					{
+						myschemeSel.typeSelector.dataProvider = myArg._langTypes;
+					}
+				}
+			}
+			if(!typed && myschemeSel != null)
+			{
+				myschemeSel.mainSchemes.visible = true;
+				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
+				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
+			}
+		}
+		
+		public function menuCreated(fe:FlexEvent):void
+		{ 
+			
+			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism","Constructive Dilemma"];
+			var optionsArr:Array = ["And","Or"];
+			if( (!claim.statementNegated) && claim.inference != null)
+			{
+				typeArr.splice(1,1);
+			}
+			else if(claim.statementNegated && claim.inference != null)
+			{
+				typeArr = ["Modus Tollens", "Not-All Syllogism"];
+			}
+			var rootlist:List = myschemeSel.mainSchemes;
+			rootlist.dataProvider = typeArr;
+			var sublist:List = myschemeSel.typeSelector;
+			var oplist:List = myschemeSel.andor;
+			oplist.dataProvider = optionsArr;
+			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
+			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
+			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
+			oplist.addEventListener(ListEvent.ITEM_ROLL_OVER,statementOption);
+			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
+			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+		}
+
+		public function get argType():MenuPanel
+		{
+			return _menuPanel;
+		}
+		
+		public function set argType(value:MenuPanel):void
+		{
+			_menuPanel = value;
+			_menuPanel.addEventListener(FlexEvent.CREATION_COMPLETE,addToMap);
 		}
 		
 		public function addToMap(fe:FlexEvent):void
@@ -96,15 +235,20 @@ package classes
 			changeHandler(event);
 		}
 		
-		private function displayArgumentType(e: FlexEvent) : void
-		{
-		}
-		
-		
 		protected function goToReason(event:FlexEvent):void
 		{
 			var panel:ArgumentPanel = ArgumentPanel(event.target);
 			panel.makeEditable();
+			if(reasons.length > 0)
+			{
+				if(typed)
+				{
+					if(myArg.myname == ParentArg.MOD_TOL)
+					{
+						panel.statementNegated = true;
+					}
+				}
+			}
 		}
 		
 		
@@ -112,15 +256,12 @@ package classes
 		{
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(tmp);
-			
-			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);
-			
+			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);		
 			try{
 				reasons.push(tmp);
 				connectionIDs.push(connections++);
 				tmp.inference = this;
 				parentMap.layoutManager.registerPanel(tmp);
-				
 				//create an invisible box in the inference rule
 				var tmpInput:DynamicTextArea = new DynamicTextArea();
 				//visual
@@ -138,10 +279,8 @@ package classes
 				//binding
 				tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
 				tmp.input1.forwardList.push(tmpInput);
-				//this new reason's input1 text forwards to that invisible box.
-				
-				
-				
+				//this new reason's input1 text forwards to that invisible box
+				dispatchEvent(new Event(REASON_ADDED,true,false));
 			}catch (e:Error)
 			{
 				Alert.show(e.toString());
@@ -150,207 +289,215 @@ package classes
 		
 		public function addReasonHandler(event:MouseEvent):void
 		{
-			trace(formedBool);
-			if(formedBool == true && isExp == true)
+			if(schemeSelected != true)
 			{
-				addReason();
+				Alert.show("Complete the enabler before adding further reasons");
+				return;
+			}
+			if(myArg.isLanguageExp)
+			{
+					addReason();
 			}
 			else
 			{
-				Alert.show("This language type cannot be expanded. Please change language type to one of the expandable ones before adding another reason");
+				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
 			}
-		}
-		
-		override public function onArgumentPanelCreate(e:FlexEvent):void
+	}
+	override public function onArgumentPanelCreate(e:FlexEvent):void
+	{
+		super.onArgumentPanelCreate(e);
+		doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
+		displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
+		displayTxt.visible = true;
+		displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
+		bottomHG.visible = true;
+		doneHG.visible = false;
+		input1.visible = false;
+		stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
+	}
+	public function chooseEnablerText():void
+	{
+		myschemeSel.visible=true;
+		myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
+		myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
+		parentMap.parent.addChild(myschemeSel);
+		myschemeSel.depth = parentMap.parent.numChildren;
+		selectedBool = true;
+	}
+	
+	public function changeHandler(e:MouseEvent):void
+	{
+		chooseEnablerText();
+	}
+	
+	public function setType(le:ListEvent):void
+	{
+		if(myschemeSel.andor.visible==false)
 		{
-			super.onArgumentPanelCreate(e);
-			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
-			displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
-			displayTxt.visible = true;
-			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
-			bottomHG.visible = true;
-			doneHG.visible = false;
-			input1.visible = false;
-			
-			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
+			parentMap.parent.removeChild(myschemeSel);
 		}
-		
-		public function buildInference():void
-		{
-			
-			myschemeSel.visible=true;
-			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
-			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-			parentMap.parent.addChild(myschemeSel);
-			myschemeSel.depth = parentMap.parent.numChildren;
-			var rootlist:List = myschemeSel.mainSchemes;
-			var sublist:List = myschemeSel.typeSelector;
-			var oplist:List = myschemeSel.andor;
-			if(myArg!=null) 
-			{
-				rootlist.dataProvider = myArg.myname;	
-				argType.changeSchemeBtn.toolTip = "Only change in language type is allowed";
-				if(isExp)
-				{
-					sublist.dataProvider = myArg._expLangTypes;
-				}
-				else
-				{
-					sublist.dataProvider = myArg._langTypes;
-				}
-			}
-			
-			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
-			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
-			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
-			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
-			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
-			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
-			formedBool = true;
-		}
-		
-		public function changeHandler(e:MouseEvent):void
-		{
-			buildInference();
-		}
-		
-		public function setType(le:ListEvent):void
-		{
-			typed = true;
-			argType.schemeText = le.itemRenderer.data.toString();
-			if(myschemeSel.andor.visible==false)
-			{
-				parentMap.parent.removeChild(myschemeSel);
-			}
-		}
-		
-		public function displayTypes(le:ListEvent):void
-		{
-			var myclassindex:int = le.rowIndex;
-			var sublist:List = myschemeSel.typeSelector;
-			if(!typed)
-			{
-				reasons[0].statementNegated = false;
-				if(claim.inference == null)
-				{
-					claim.statementNegated = false;
-				}
-			}
-			sublist.visible=true;
-			if(!typed)
-			{
-				switch(myclassindex)
-				{
-					case 0:
-						myArg = new ModusPonens;
-						break;
-					case 1: 
-						myArg = new ModusTollens; 
-						reasons[0].statementNegated = true;
-						claim.statementNegated = true;
-						break;
-					case 2: myArg = new ConditionalSyllogism; break;
-					case 3: myArg = new DisjunctiveSyllogism; break;
-					case 4: myArg = new NotAllSyllogism; break;
-					case 5: myArg = new ConstructiveDilemma;
-						
-				}
-			}
-			if(reasons.length == 1){
-				sublist.dataProvider = myArg._langTypes;	
-			}
-			else if(reasons.length > 1)
-			{
-				sublist.dataProvider = myArg._expLangTypes;
-			}
-			argType.changeSchemeBtn.label = myArg.myname;//set scheme
-		}
-		
-		public function displayOption(le:ListEvent):void
-		{
-			var oplist:List = myschemeSel.andor;
-			var typeText:String=le.itemRenderer.data.toString();
-			isExp = false;
-			argType.schemeText = typeText;
-			argType.schemeTextIndex = le.rowIndex;
-			if(myArg.myname == ParentArg.MOD_TOL)
-			{
-				if(typeText == "Only if") 
-				{
-					oplist.visible=true; 
-					isExp = true;
-				}
-				else
-					oplist.visible=false;
-			}
-			else if(myArg.myname == ParentArg.MOD_PON)
-			{
-				for(var i:int = 0 ;i<myArg._expLangTypes.length;i++)
-				{
-					if(myArg._expLangTypes[i] === typeText) 
-					{
-						argType.connText = ParentArg.EXP_AND;	// Modus Ponens expanded only with AND
-						isExp = true;
-					}
-				}
-			}
-			//trace(isExp);
-			displayStr = myArg.correctUsage(argType.schemeTextIndex,this.claim,this.reasons,isExp);
-		}
-		
-		public function setOption(le:ListEvent):void
-		{
-			typed = true;
-			var andor:String = le.itemRenderer.data.toString();
-			if(andor=="And")
-			{
-				argType.connText = ParentArg.EXP_AND;
-				if(myArg is ModusTollens)
-				{
-					var specificArg:ModusTollens = ModusTollens(myArg);
-					specificArg.andOr = ParentArg.EXP_AND;
-				}
-			}
-			else if(andor=="Or") 
-			{
-				argType.connText = ParentArg.EXP_OR;
-				if(myArg is ModusTollens)
-				{
-					specificArg = ModusTollens(myArg);
-					specificArg.andOr = ParentArg.EXP_OR;
-				}
-			}
-			myschemeSel.visible = false;
-			input1.forwardUpdate();
-		}
-		
-		public function bringForward(e:MouseEvent):void
-		{
-		}
-		
-		public function goBackward(e:MouseEvent):void
-		{
-		}
-		
-		override public function getString():String
-		{
-			var s:String;
-			for(var i:int = 0; i < input.length; i++)
-			{
-				s = s + input[i].text;
-			}
-			return s;
-		}
-		
-		public function formClaim ():void
-		{
-			
-		}
-		
-		public function makeVisible():void{
-			this.visible = true;
-			this.argType.visible = true;
-		}
+		schemeSelected = true;
+	}
+	
+	public function displayRestricted(le:ListEvent):void
+	{
 		
 	}
+	
+	public function displayTypes(le:ListEvent):void
+	{
+		myschemeSel.selectedScheme = le.itemRenderer.data.toString();
+		var sublist:List = myschemeSel.typeSelector;
+		sublist.visible=true;
+		
+		switch(myschemeSel.selectedScheme)
+		{
+			case ParentArg.MOD_PON:
+				myArg = new ModusPonens;
+				break;
+			case ParentArg.MOD_TOL:
+				myArg = new ModusTollens;
+				break;
+			case ParentArg.COND_SYLL:
+				myArg = new ConditionalSyllogism;
+				break;
+			case ParentArg.DIS_SYLL:
+				myArg = new DisjunctiveSyllogism;
+				break;
+			case ParentArg.NOT_ALL_SYLL:
+				myArg = new NotAllSyllogism;
+				break;
+			case ParentArg.CONST_DILEM:
+				myArg = new ConstructiveDilemma;
+				break;
+		}
+		myArg.inference = this;
+		if(hasMultipleReasons)
+		{
+			sublist.dataProvider = myArg._expLangTypes;	
+		}
+		else
+		{
+			sublist.dataProvider = myArg._langTypes;	
+		}
+		argType.changeSchemeBtn.label = myArg.myname;
+	}
+	
+	public function displayOption(le:ListEvent):void
+	{
+		var oplist:List = myschemeSel.andor;
+		oplist.visible = false;
+		var typeText:String=le.itemRenderer.data.toString();
+		myschemeSel.selectedType = typeText;
+		myArg.isLanguageExp = false;
+		if(myArg.myname == ParentArg.MOD_TOL)
+		{
+			if(typeText == "Only if") 
+			{
+				oplist.visible=true;
+				myArg.isLanguageExp = true;
+			}
+			else
+				oplist.visible=false;
+		}	
+		else if(myArg.myname == ParentArg.MOD_PON)
+		{
+			for(var i:int = 0 ;i<myArg._expLangTypes.length;i++)
+			{
+				if(myArg._expLangTypes[i] == typeText) 
+				{
+					myArg.isLanguageExp = true;
+				}
+			}
+		}
+		else if(myArg.myname == ParentArg.DIS_SYLL)
+		{
+			myArg.isLanguageExp = true;
+		}
+		displayStr = myArg.correctUsage();
+	}
+	
+	public function setOption(le:ListEvent):void
+	{
+		var andor:String = le.itemRenderer.data.toString();
+		
+		if(reasons.length > 1)
+		{
+			typed = true;
+		}
+		
+		if(andor=="And")
+		{
+			myschemeSel.selectedOption = ParentArg.EXP_AND;
+			if(myArg is ModusTollens)
+			{
+				var specificArg:ModusTollens = ModusTollens(myArg);
+				specificArg.andOr = ParentArg.EXP_AND;
+			}
+		}
+		else if(andor=="Or") 
+		{
+			myschemeSel.selectedOption = ParentArg.EXP_OR;
+			if(myArg is ModusTollens)
+			{
+				specificArg = ModusTollens(myArg);
+				specificArg.andOr = ParentArg.EXP_OR;
+			}
+		}
+		
+		myschemeSel.visible = false;
+		displayStr = myArg.correctUsage();
+		input1.forwardUpdate();
+		schemeSelected = true;
+	}
+	
+	
+	protected function statementOption(le:ListEvent):void
+	{
+		var andor:String = le.itemRenderer.data.toString();
+		if(andor=="And")
+		{
+			myschemeSel.selectedOption = ParentArg.EXP_AND;
+			if(myArg is ModusTollens)
+			{
+				var specificArg:ModusTollens = ModusTollens(myArg);
+				specificArg.andOr = ParentArg.EXP_AND;
+			}
+		}
+		else if(andor=="Or") 
+		{
+			myschemeSel.selectedOption = ParentArg.EXP_OR;
+			if(myArg is ModusTollens)
+			{
+				specificArg = ModusTollens(myArg);
+				specificArg.andOr = ParentArg.EXP_OR;
+			}
+		}
+		displayStr = myArg.correctUsage();
+	}
+	
+	public function bringForward(e:MouseEvent):void
+	{
+	}
+	
+	public function goBackward(e:MouseEvent):void
+	{
+	}
+	
+	override public function get stmt():String
+	{
+		var s:String;
+		for(var i:int = 0; i < input.length; i++)
+		{
+			s = s + input[i].text;
+		}
+		return s;
+	}
+	
+	public function makeVisible():void{
+		this.visible = true;
+		this.argType.visible = true;
+	}
+	
+}
 }

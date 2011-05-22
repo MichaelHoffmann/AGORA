@@ -83,9 +83,9 @@
 			{
 				var argumentPanel:ArgumentPanel=addPanel();
 				argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
-					argumentPanel.addStatement();
+					argumentPanel.addSupportingArgument();
 					argumentPanel.rules[0].visible = true; 
-					argumentPanel.rules[0].buildInference();
+					argumentPanel.rules[0].chooseEnablerText();
 					argumentPanel.input1.text="P";
 					argumentPanel.displayTxt.text = argumentPanel.input1.text;
 					argumentPanel.makeUnEditable();

@@ -12,14 +12,15 @@ package logic
 
 		}
 		
-		override public function correctUsage(index:int,claim: ArgumentPanel,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
+		override public function correctUsage():String {
 			var output:String = "";
+		/*
 			output += "It cannot be the case, at the same time, that ";
 			if(exp==true)
 				for(var i:int=0;i<reason.length;i++)
 					output += reason[i].input1.text + " and that ";
-			output += claim;
-			
+			output += claim.stmt;
+		*/	
 			return output;
 		}
 	}

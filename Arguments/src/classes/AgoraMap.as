@@ -33,7 +33,7 @@ package classes
 		
 		public function panelCreated(event:FlexEvent):void{
 			var panel:ArgumentPanel = event.target as ArgumentPanel;
-			panel.input1.text = panel.savedTextStr;
+			//panel.input1.text = panel.savedTextStr;
 		}
 
 		public function pushToServer(xml:XML):void
@@ -74,7 +74,7 @@ package classes
 			for(i=0; i  < layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;
-				if(!(panel is DisplayArgType)){
+				if(!(panel is MenuPanel)){
 					currXML= <node></node>;
 					currXML.@ID = panel.aid;
 					if(panel is Inference)
@@ -109,10 +109,10 @@ package classes
 			for(i=0; i<layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;
-				if(panel is DisplayArgType)
+				if(panel is MenuPanel)
 				{
 					currXML = <connection></connection>;
-					var argType:DisplayArgType = DisplayArgType(panel);
+					var argType:MenuPanel = MenuPanel(panel);
 					currXML.@argID = argType.aid;
 					currXML.@type = argType.inference.myArg.dbName;
 					currXML.@targetnodeID = argType.inference.claim.aid;
@@ -172,7 +172,7 @@ package classes
 				{
 					argumentPanel = new Inference;
 					var inferencePanel:Inference = Inference(argumentPanel);
-					inferencePanel.argType = new DisplayArgType;
+					inferencePanel.argType = new MenuPanel;
 					addElement(inferencePanel);
 					addElement(inferencePanel.argType);
 				}
@@ -320,9 +320,9 @@ package classes
 						
 					}
 				}
-				else if(akcdragInitiator1 is DisplayArgType)
+				else if(akcdragInitiator1 is MenuPanel)
 				{
-					var argdisplay:DisplayArgType = akcdragInitiator1 as DisplayArgType;
+					var argdisplay:MenuPanel = akcdragInitiator1 as MenuPanel;
 					if(argdisplay.inference != argdisplay.inference.claim.rules[0]){
 						argdisplay.gridX = argdisplay.gridX + diffX;
 						argdisplay.inference.gridX = argdisplay.inference.gridX + diffX;

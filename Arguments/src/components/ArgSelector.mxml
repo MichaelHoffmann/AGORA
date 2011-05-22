@@ -7,7 +7,7 @@
 	</fx:Declarations>
 	<mx:Canvas creationComplete="init()">
 		<mx:List id="mainSchemes"
-				 dataProvider="{_scheme}" 
+				 dataProvider="{scheme}" 
 				 rollOverColor="#b2c4e7"
 				 textRollOverColor="#FFFFFF"
 				 selectionColor="#5577b8"  
@@ -28,7 +28,7 @@
 		
 		<mx:List id="andor" 
 				 x="{mainSchemes.width+typeSelector.width}"
-				 dataProvider="{_options}"
+				 dataProvider="{options}"
 				 rollOverColor="#b2c4e7"
 				 textRollOverColor="#FFFFFF"
 				 selectionColor="#5577b8"  
@@ -39,7 +39,7 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import classes.DisplayArgType;
+			import classes.MenuPanel;
 			
 			import flash.events.Event;
 			import flash.events.MouseEvent;
@@ -51,18 +51,67 @@
 			
 			private var _selectedScheme:String;
 			private var _selectedType:String;
-			private var _hover:Boolean;
-			private var _selectedLogic:String;
+			private var _languageTypes:Array;
+			private var _selectedOption:String;
+			private var _scheme:Array;	
+			private var _options:Array;
 			
-			private var _myclassindex:int;
+			public function get selectedOption():String
+			{
+				return _selectedOption;
+			}
+
+			public function set selectedOption(value:String):void
+			{
+				_selectedOption = value;
+			}
 
 			[Bindable]
-			private var _scheme:Array;	
-			[Bindable]
-			private var _options:Array;
-			[Bindable]
-			private var _languageTypeHolder:Object;
+			public function set scheme(value:Array):void
+			{
+				_scheme = value;
+			}
 			
+			public function get scheme():Array
+			{
+				return _scheme;
+			}
+			
+			public function get options():Array
+			{
+				return _options;
+			}
+
+			[Bindable]
+			public function set options(value:Array):void
+			{
+				_options = value;
+			}
+
+			public function get selectedType():String
+			{
+				return _selectedType;
+			}
+
+			[Bindable]
+			public function set selectedType(value:String):void
+			{
+				_selectedType = value;
+			}
+
+
+			public function get selectedScheme():String
+			{
+				return _selectedScheme;
+			}
+			
+			[Bindable]
+			public function set selectedScheme(value:String):void
+			{
+				_selectedScheme = value;
+			}
+
+			private var _myclassindex:int;
 			
 			public function get myclassindex():int
 			{
@@ -75,10 +124,8 @@
 			}
 			
 			public function init():void{
-				_scheme = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism","Constructive Dilemma"];
-				_options = ["And","Or"];
+				
 			}
-			
 		]]>
 	</fx:Script>
 </s:Group>

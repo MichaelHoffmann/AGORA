@@ -13,18 +13,15 @@ package classes
 	import spark.components.HGroup;
 	import spark.components.VGroup;
 
-	public class DisplayArgType extends GridPanel
+	public class MenuPanel extends GridPanel
 	{
 		public var vgroup:VGroup;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
 		public var inference:Inference;
-		public var schemeText:String;
-		public var schemeTextIndex:int;
-		public var connText:String;
 		
-		public function DisplayArgType()
+		public function MenuPanel()
 		{
 			super();
 			minHeight = 20;
@@ -44,7 +41,7 @@ package classes
 			hgroup.gap = 0;
 			vgroup.percentWidth = 100;
 			addReasonBtn.percentWidth = 100;
-	
+			
 			changeSchemeBtn = new Button;
 			changeSchemeBtn.label = "Scheme";
 			changeSchemeBtn.percentWidth = 100;
@@ -52,13 +49,12 @@ package classes
 			title = "Therefore";
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
-			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
-			
+			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);	
 		}
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{
-			var dInitiator:DisplayArgType = mEvent.currentTarget.parent.parent.parent.parent.parent as DisplayArgType;
+			var dInitiator:MenuPanel = mEvent.currentTarget.parent.parent.parent.parent.parent as MenuPanel;
 			var ds:DragSource = new DragSource;
 			ds.addData(dInitiator.mouseX,"x");
 			ds.addData(dInitiator.mouseY,"y");

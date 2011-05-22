@@ -12,20 +12,23 @@ package logic
 			
 		}
 		
-		override public function correctUsage(index:int,claim: ArgumentPanel,reason:Vector.<ArgumentPanel>,exp:Boolean):String {
+		override public function correctUsage():String {
 			var output:String = "";
 			var i:int;
+			/*
 			switch(index) {
 				case 0: //Either-or with alternative as claim
 					output += "Either " + reason[0].input1.text;
 					if(exp==true)
 						for(i=1;i<reason.length;i++)
 							output += " then " + reason[i].input1.text + "; if " + reason[i].input1.text;
-					output += " then " + claim + "; therefore if " + reason[0].input1.text + ", then " + claim;
+					output += " then " + claim.stmt + "; therefore if " + reason[0].input1.text + ", then " + claim.stmt;
 					break;
 				case 1: //Either-or with one proposition as claim
 			}
+			*/
 			return output;
+			
 		}
 	}
 }
