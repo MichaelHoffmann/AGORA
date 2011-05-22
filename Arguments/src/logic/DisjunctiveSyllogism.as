@@ -22,12 +22,15 @@ package logic
 			{
 				Alert.show("Error: Statement cannot be negative");
 			}
-			
-			inference.claim.statementNegated = false;
+			if(inference.claim.statementNegated)
+				inference.claim.statementNegated = false;
 			
 			for(var i:int=0; i < inference.reasons.length; i++)
 			{
-				inference.reasons[i].statementNegated = true;	
+				if(!inference.reasons[i].statementNegated)
+				{
+					inference.reasons[i].statementNegated = true;
+				}
 			}
 			
 			

@@ -194,6 +194,7 @@ package classes
 			if( (!claim.statementNegated) && claim.inference != null)
 			{
 				typeArr.splice(1,1);
+				typeArr.splice(3,1);
 			}
 			else if(claim.statementNegated && claim.inference != null)
 			{
@@ -275,7 +276,7 @@ package classes
 				
 				//set the id
 				tmpInput.id = tmp.input1.id;
-				
+	
 				//binding
 				tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
 				tmp.input1.forwardList.push(tmpInput);
@@ -414,6 +415,10 @@ package classes
 		{
 			myArg.isLanguageExp = true;
 		}
+		else if(myArg.myname == ParentArg.NOT_ALL_SYLL)
+		{
+			myArg.isLanguageExp = true;
+		}
 		displayStr = myArg.correctUsage();
 	}
 	
@@ -482,16 +487,7 @@ package classes
 	
 	public function goBackward(e:MouseEvent):void
 	{
-	}
-	
-	override public function get stmt():String
-	{
-		var s:String;
-		for(var i:int = 0; i < input.length; i++)
-		{
-			s = s + input[i].text;
-		}
-		return s;
+		//Alert.show("Argument Panel");
 	}
 	
 	public function makeVisible():void{

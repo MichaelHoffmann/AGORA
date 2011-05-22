@@ -14,13 +14,7 @@ package logic
 				"Necessary-and-sufficient-condition","Equivalent"];
 			_expLangTypes = ["If-then","Whenever","Provided that"];	
 			myname = MOD_PON;
-			dbName = "MPtherefore";
-			
-			
-			
-			
-			
-			
+			dbName = "MPtherefore";			
 			/*_langTypes = ["If-then","If-then-Exp-And","Implies","Whenever","Whenever-Exp-And","Only-if","Provided-that","Provided-that-Exp-And","Sufficient-condition","Necessary-condition","If-and-only-if",
 			"Necessary-and-sufficient-condition","Equivalent"];*/
 			// Modus Ponens is expandable only with AND
@@ -32,7 +26,7 @@ package logic
 			var output:String = "";
 			var reason:Vector.<ArgumentPanel> = inference.reasons;
 			var claim:ArgumentPanel = inference.claim;
-		
+			
 			if(inference.claim.inference != null && inference.claim.statementNegated)
 			{
 				Alert.show("Error: Statement cannot be negative");
@@ -54,45 +48,46 @@ package logic
 			switch(inference.myschemeSel.selectedType) {
 				case _langTypes[0]: 
 					output += "If "
-					if(isLanguageExp==true)
-						for(i=0;i<reason.length-1;i++)
-							output += reason[i].input1.text + " and ";
-					output += reason[reason.length-1].input1.text + ", then "+claim.stmt;
+					for(i=0; i < reason.length - 1; i++)
+					{
+						output += reason[i].stmt + " and";
+					}
+					output += reason[i].stmt + ", then " + claim.stmt;
 					break;
 				case _langTypes[1]: // Implies
-					output += reason[0].input1.text + " implies " + claim.stmt;
+					output += reason[0].stmt + " implies " + claim.stmt;
 					break;
 				case _langTypes[2]: //Whenever
 					output += "Whenever "
 					if(isLanguageExp==true)
 						for(i=0;i<reason.length-1;i++)
-							output += reason[i].input1.text + " and ";
-					output += reason[reason.length-1].input1.text + ", "+claim.stmt;
+							output += reason[i].stmt + " and ";
+					output += reason[reason.length-1].stmt + ", "+ claim.stmt;
 					break;
 				case _langTypes[3]: // Only if
-					output += reason[0].input1.text + " only if " + claim.stmt;
+					output += reason[0].stmt + " only if " + claim.stmt;
 					break;
 				case _langTypes[4]: // Provided that
 					output += claim.stmt + " provided that ";
 					if(isLanguageExp==true)
 						for(i=0;i<reason.length-1;i++)
-							output += reason[i].input1.text + " and ";
-					output += reason[reason.length-1].input1.text;
+							output += reason[i].stmt + " and ";
+					output += reason[reason.length-1].stmt;
 					break;
 				case _langTypes[5]: // Sufficient condition
-					output += reason[0].input1.text + " is a sufficient condition for " + claim.stmt;
+					output += reason[0].stmt + " is a sufficient condition for " + claim.stmt;
 					break;
 				case _langTypes[6]: // Necessary condition
-					output += claim.stmt + " is a necessary condition for " + reason[0].input1.text;
+					output += claim.stmt + " is a necessary condition for " + reason[0].stmt;
 					break;
 				case _langTypes[7]: //If and only if
-					output += claim.stmt + " if and only if " + reason[0].input1.text; 	// IMP!! TODO: if-and-only-if2 : both claim and reason negated
+					output += claim.stmt + " if and only if " + reason[0].stmt; 	// IMP!! TODO: if-and-only-if2 : both claim and reason negated
 					break;
 				case _langTypes[8]: //Necessary and sufficient condition
-					output += claim.stmt + " is a necessary and sufficient condition for " + reason[0].input1.text; 	// TODO: Necessary-and-sufficient2 : both claim and reason negated
+					output += claim.stmt + " is a necessary and sufficient condition for " + reason[0].stmt; 	// TODO: Necessary-and-sufficient2 : both claim and reason negated
 					break;
 				case _langTypes[9]: //Equivalent
-					output += claim.stmt + " and " + reason[0].input1.text + " are equivalent"; 	// TODO: Equivalent2 : both claim and reason negated		
+					output += claim.stmt + " and " + reason[0].stmt + " are equivalent"; 	// TODO: Equivalent2 : both claim and reason negated		
 			}
 			return output;
 		}
