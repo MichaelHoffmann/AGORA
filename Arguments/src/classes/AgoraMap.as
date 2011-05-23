@@ -1,6 +1,8 @@
 //This class is the canvas on which everything will be drawn
 package classes
 {
+	import components.Option;
+	
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -23,6 +25,8 @@ package classes
 		public var layoutManager:ALayoutManager = null;
 		public var drawUtility:UIComponent = null;
 		public var mapId:int;
+		public var option:Option;
+		
 		public function AgoraMap()
 		{
 			//id="29";
@@ -248,6 +252,9 @@ package classes
 			super.createChildren();
 			drawUtility = new UIComponent();
 			this.parent.addChild(drawUtility);
+			option = new Option;
+			addChild(option);
+			option.visible = false;
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -341,6 +348,14 @@ package classes
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			connectRelatedPanels();
+		}
+		
+		public function addable():Boolean
+		{
+			if(option.visible == true)
+				return false;
+			else
+				return true;
 		}
 		
 		public function connectRelatedPanels():void

@@ -50,7 +50,7 @@ package logic
 					output += "If "
 					for(i=0; i < reason.length - 1; i++)
 					{
-						output += reason[i].stmt + " and";
+						output += reason[i].stmt + " and ";
 					}
 					output += reason[i].stmt + ", then " + claim.stmt;
 					break;

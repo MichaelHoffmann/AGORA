@@ -56,6 +56,8 @@ package classes
 		public static var REASON_ADDED:String  = "Reason Added";
 		//private var _schemeChangable:Boolean;
 		private var _schemeSelected:Boolean;
+		//The string that is displayed
+		public var _displayStr:String;
 		
 		public function Inference()
 		{
@@ -75,6 +77,22 @@ package classes
 			schemeSelected = false;
 		}
 		///Getters and Setters
+		
+		public function get displayStr():String
+		{
+			return _displayStr;
+		}
+		
+		public function set displayStr(value:String):void
+		{
+			_displayStr = value;
+			input1.text = _displayStr;
+			displayTxt.text = _displayStr;
+			displayTxt.height = input1.height;
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
+		}
 		
 		public function get selectedBool():Boolean
 		{

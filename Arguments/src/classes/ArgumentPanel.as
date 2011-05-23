@@ -28,6 +28,7 @@ package classes
 	import mx.events.FlexEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.DragManager;
+	import mx.rpc.http.Operation;
 	import mx.skins.Border;
 	
 	import org.osmf.events.GatewayChangeEvent;
@@ -49,7 +50,9 @@ package classes
 	{
 		//The text box in which the user enters the argument
 		public var input1:DynamicTextArea;
-		//the hit area for dragging the box
+		//Right now the requirement is for only two,
+		//but this is extensible
+		public var inputs:Vector.<DynamicTextArea>;
 		public var topArea:UIComponent;
 		//skin of the panel
 		public var panelSkin:PanelSkin;
@@ -100,8 +103,11 @@ package classes
 		public var addMenuData:XML;
 		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
-		//The string that is displayed
-		public var _displayStr:String;
+
+		//multiple textboxes
+		private var _multiStatement:Boolean;
+		
+		public var connectingStr:String;
 		
 		public static var ARGUMENT_CONSTRUCTED:String = "Argument Constructed";
 		public function ArgumentPanel()
@@ -126,12 +132,23 @@ package classes
 			_statementNegated = false;
 			
 			rules = new Vector.<Inference>(0,false);
+			inputs = new Vector.<DynamicTextArea>(0,false);
 			
 			width = 180;
 			minHeight = 100;
 			
 		}
 		
+		public function get multiStatement():Boolean
+		{
+			return _multiStatement;
+		}
+
+		public function set multiStatement(value:Boolean):void
+		{
+			_multiStatement = value;
+		}
+
 		protected function argumentConstructed(event:Event):void
 		{
 			if(inference != null)
@@ -140,21 +157,6 @@ package classes
 			}
 		}
 		
-		public function set displayStr(value:String):void
-		{
-			_displayStr = value;
-			input1.text = _displayStr;
-			displayTxt.text = _displayStr;
-			displayTxt.height = input1.height;
-			invalidateProperties();
-			invalidateSize();
-			invalidateDisplayList();
-		}
-		
-		public function get displayStr():String
-		{
-			return _displayStr;
-		}
 		public function get statementNegated():Boolean
 		{
 			return _statementNegated;
@@ -264,14 +266,27 @@ package classes
 			}
 		}
 		
+		protected function optionClicked(event:MouseEvent):void
+		{
+			beginByArgument();
+			parentMap.option.visible = false;
+			parentMap.option.removeEventListener(MouseEvent.CLICK,optionClicked);
+		}
+		
+		protected function hideOption(event:KeyboardEvent):void
+		{
+			parentMap.option.visible = false;
+			rules[rules.length - 1].reasons[0].input1.removeEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+		}
+		
 		public function addHandler(event:MouseEvent):void
 		{
 			addSupportingArgument();
-			var option:Option = new Option;
-			option.addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void{parentMap.removeChild(option); beginByArgument();});
-			parentMap.addChild(option);
-			option.x = rules[rules.length - 1].reasons[0].x + rules[rules.length - 1].reasons[0].width + 10;
-			option.y = rules[rules.length - 1].reasons[0].y;
+			parentMap.option.visible = true;
+			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
+			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+			parentMap.option.x = rules[rules.length - 1].reasons[0].x + rules[rules.length - 1].reasons[0].width + 10;
+			parentMap.option.y = rules[rules.length - 1].reasons[0].y;
 			invalidateProperties();
 			invalidateSize();
 			invalidateDisplayList();
@@ -288,9 +303,19 @@ package classes
 		public function beginByArgument():void{
 			rules[0].visible = true; 
 			rules[0].chooseEnablerText();
-			displayStr = "P";
+			input1.text = "P";
 			makeUnEditable();
-			rules[0].reasons[0].addEventListener( FlexEvent.CREATION_COMPLETE, configureReason);
+			//This is important if beginByArgument is called 
+			//immediately after an argument is constructed
+			//input1 of reason might not be created then.
+			rules[0].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
+			if(rules[0].reasons[0].input1 != null)
+			{
+				rules[0].reasons[0].input1.text = "Q";
+				rules[0].reasons[0].displayTxt.text = "Q";
+				rules[0].reasons[0].makeUnEditable();
+			}
+			parentMap.invalidateDisplayList();
 		}
 		
 		public function constructArgument(event:MenuEvent):void
@@ -303,6 +328,8 @@ package classes
 			{
 				inference.chooseEnablerText();
 				inference.visible = true;
+				
+				parentMap.invalidateDisplayList();
 			}
 		}
 		
@@ -312,8 +339,7 @@ package classes
 			menu.labelField = "@label";
 			menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
-			menu.show(globalPosition.x,globalPosition.y);
-			
+			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
 		public function statementEntered():void
@@ -400,16 +426,6 @@ package classes
 		}
 		
 		
-		public function textBoxClicked(event:MouseEvent):void{
-			if(this.inference==null)
-				event.target.text = "";
-		}
-		
-		public function movedAway(event:MouseEvent):void{
-			if(event.target.text == ""){
-				event.target.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
-			}
-		}
 		
 		//create children must be overriden to create dynamically allocated children
 		override protected function createChildren():void
@@ -507,13 +523,19 @@ package classes
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
 			bottomHG.visible = false;
+			
+			//presently, the requirement is only for two boxes
+			var dta:DynamicTextArea = new DynamicTextArea;
+			inputs.push(dta);
+			dta = new DynamicTextArea;
+			inputs.push(dta);
+			
 			invalidateProperties();
 		}
 		
 		override protected function commitProperties():void
 		{
-			super.commitProperties();
-			
+			super.commitProperties();	
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -523,7 +545,6 @@ package classes
 			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
 			userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);		
 		}
-		
 		
 		public function onArgumentPanelCreate(e:FlexEvent):void
 		{
@@ -545,7 +566,6 @@ package classes
 			displayTxt.text = input1.text;
 			displayTxt.width = input1.width;
 			displayTxt.height = input1.height;
-			
 		}
 		
 		public function toggle(m:MouseEvent):void
