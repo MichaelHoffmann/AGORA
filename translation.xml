@@ -33,5 +33,132 @@
 			<RUS text="ьзователя"/>
 			<GER text="Benutzername"/>
 		</Label>
+		
+		<Label name="Password">
+			<EN-US text="Password"/>
+			<RUS text="Пароль"/>
+			<GER text="Passwort"/>
+		</Label>
+		
+		<Label name="Login">
+			<EN-US text="Login"/>
+			<RUS text="Логин"/>
+			<GER text="Login"/>
+		</Label>
+		
+		<Label name="ForgotPass">
+			<EN-US text="Forgot your password?"/>
+			<RUS text="Забыл Ваш пароль?"/>
+			<GER text="Passwort vergessen?"/>
+		</Label>
+		
+		<Label name="GenPass">
+			<EN-US text="AGORA will generate a new password for you. This action is irreversible."/>
+			<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо."/>
+			<GER text="AGORA wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden."/>
+		</Label>
+		
+		<Label name="AGORAPass">
+			<EN-US text="AGORA password"/>
+			<RUS text="Пароль АГОРЫ"/>
+			<GER text="AGORA Passwort"/>
+		</Label>
+		
+		<Label name="NewPass">
+			<EN-US text="Your password on the AGORA server has been changed. Your new password is: "/>
+			<RUS text="Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: "/>
+			<GER text="Dein Passwort auf dem AGORA Server wurde geändert. Das neue Passwort ist: "/>
+			<!--Note that these must be followed by the password itself-->
+		</Label>
+		
+		<Label name="Register">
+			<EN-US text="Register as new user"/>
+			<RUS text="Регистровать как нового пользователя"/>
+			<GER text="Registriere dich als neuer Benutzer"/>
+		</Label>
+		
+		<Label name="NewUsername">
+			<EN-US text="Desired Username/>
+			<RUS text="Желаемое Имя пользователя"/>
+			<GER text="Erwünschter Benutzername"/>
+		</Label>
+		
+		<Label name="UsernameTaken">
+			<EN-US text="This username is already taken! Try another username."/>
+			<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
+			<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
 	</Text>
 </Translations>
