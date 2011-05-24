@@ -53,6 +53,7 @@ package classes
 		//Right now the requirement is for only two,
 		//but this is extensible
 		public var inputs:Vector.<DynamicTextArea>;
+		
 		public var topArea:UIComponent;
 		//skin of the panel
 		public var panelSkin:PanelSkin;
@@ -103,10 +104,9 @@ package classes
 		public var addMenuData:XML;
 		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
-
+		
 		//multiple textboxes
 		private var _multiStatement:Boolean;
-		
 		public var connectingStr:String;
 		
 		public static var ARGUMENT_CONSTRUCTED:String = "Argument Constructed";
@@ -143,12 +143,32 @@ package classes
 		{
 			return _multiStatement;
 		}
-
+		
 		public function set multiStatement(value:Boolean):void
 		{
-			_multiStatement = value;
+			var previous:Boolean = _multiStatement
+			if(_multiStatement != value)
+			{
+				if(value == true){
+					group.removeElement(input1);
+					for(var i:int=0; i < inputs.length; i++)
+					{
+						group.addElement(inputs[i]);
+					}
+					_multiStatement = value;
+				}
+				else
+				{
+					for(i=0; i < inputs.length; i++)
+					{
+						group.removeElement(inputs[i]);
+					}
+					group.addElement(input1);
+				}
+			}
+			
 		}
-
+		
 		protected function argumentConstructed(event:Event):void
 		{
 			if(inference != null)
@@ -167,7 +187,7 @@ package classes
 			_statementNegated = value;
 			makeUnEditable();
 		}
-	
+		
 		public function makeEditable():void
 		{
 			if(userEntered == false)
@@ -182,7 +202,7 @@ package classes
 			doneHG.visible = true;
 			bottomHG.visible=false;
 		}
-	
+		
 		public function makeUnEditable():void
 		{
 			displayTxt.width = input1.width;
@@ -257,7 +277,7 @@ package classes
 			}
 		}
 		
-	
+		
 		public function addArgument(event:MenuEvent):void
 		{
 			if(event.label == "add an argument for this statement")
@@ -499,7 +519,7 @@ package classes
 			userIdLbl.text = "AU: " + UserData.userNameStr;
 			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
 			userIdLbl.toolTip = userInfoStr;
-
+			
 			group = new Group;
 			addElement(group);
 			group.addElement(input1);

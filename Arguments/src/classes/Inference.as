@@ -65,7 +65,7 @@ package classes
 			connectionID = connections++;
 			connectionIDs = new Vector.<int>(0,false);
 			panelType = ArgumentPanel.INFERENCE;
-			state = 0; // Inference is always a Universal statement
+			state = 0; //Inference is always a Universal statement
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			
@@ -342,6 +342,9 @@ package classes
 			parentMap.parent.addChild(myschemeSel);
 			myschemeSel.depth = parentMap.parent.numChildren;
 			selectedBool = true;
+			parentMap.helpText.visible = true;
+			parentMap.helpText.x = myschemeSel.x + myschemeSel.width + 20;
+			parentMap.helpText.y = myschemeSel.y - 200;
 		}
 		
 		public function changeHandler(e:MouseEvent):void
@@ -356,11 +359,7 @@ package classes
 				parentMap.parent.removeChild(myschemeSel);
 			}
 			schemeSelected = true;
-		}
-		
-		public function displayRestricted(le:ListEvent):void
-		{
-			
+			parentMap.helpText.visible = false;
 		}
 		
 		public function displayTypes(le:ListEvent):void
@@ -472,6 +471,8 @@ package classes
 			displayStr = myArg.correctUsage();
 			input1.forwardUpdate();
 			schemeSelected = true;
+			
+			parentMap.helpText.visible = false;
 		}
 		
 		

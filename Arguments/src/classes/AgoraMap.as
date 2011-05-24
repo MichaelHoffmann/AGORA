@@ -1,6 +1,7 @@
 //This class is the canvas on which everything will be drawn
 package classes
 {
+	import components.HelpText;
 	import components.Option;
 	
 	import flash.display.Graphics;
@@ -26,6 +27,7 @@ package classes
 		public var drawUtility:UIComponent = null;
 		public var mapId:int;
 		public var option:Option;
+		public var helpText:HelpText;
 		
 		public function AgoraMap()
 		{
@@ -37,7 +39,6 @@ package classes
 		
 		public function panelCreated(event:FlexEvent):void{
 			var panel:ArgumentPanel = event.target as ArgumentPanel;
-			//panel.input1.text = panel.savedTextStr;
 		}
 
 		public function pushToServer(xml:XML):void
@@ -255,6 +256,10 @@ package classes
 			option = new Option;
 			addChild(option);
 			option.visible = false;
+			
+			helpText = new HelpText;
+			addChild(helpText);
+			helpText.visible = false;
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -419,8 +424,6 @@ package classes
 					}	
 				}
 			}
-			
-			
 		}
 	}
 }
