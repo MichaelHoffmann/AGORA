@@ -4,7 +4,7 @@ package logic
 	import classes.ArgumentPanel;
 	
 	import mx.controls.Alert;
-
+	
 	public class DisjunctiveSyllogism extends ParentArg
 	{
 		public function DisjunctiveSyllogism()
@@ -17,7 +17,7 @@ package logic
 		}
 		
 		override public function correctUsage():String {
-		
+			
 			if(inference.claim.inference != null && inference.claim.statementNegated)
 			{
 				Alert.show("Error: Statement cannot be negative");
@@ -33,21 +33,21 @@ package logic
 				}
 			}
 			
+			inference.implies = false;
 			
 			var output:String = "";
 			switch(inference.myschemeSel.selectedType) 
 			{
-				case _langTypes[0]: //Either-or. when both claim and reason are negated
+				case _langTypes[0]: 
 					output += "Either ";
-					if(isLanguageExp==true)
-						for(i=0;i<inference.reasons.length;i++)
-							output += inference.reasons[i].positiveStmt + " or ";
+					for(i=0;i<inference.reasons.length;i++)
+					{
+						output += inference.reasons[i].positiveStmt + " or ";
+						inference.inputs[i+1].text = inference.reasons[i].positiveStmt;
+					}
 					output += inference.claim.stmt;
+					inference.inputs[0].text = inference.claim.stmt;
 					break;
-				/*
-				case _langTypes[0]: // Unless
-					output +=  reason[0].input1.text + " Unless " + claim.stmt;
-				*/
 			}
 			return output;
 		}

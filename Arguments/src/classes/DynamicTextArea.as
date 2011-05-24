@@ -122,7 +122,8 @@ package classes
 					Alert.show("Someting went wrong in statement propagation");
 				}
 				
-			}else
+			}
+			else
 			{
 				if(forwardList.length == 0 )
 					return;

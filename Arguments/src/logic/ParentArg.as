@@ -12,6 +12,9 @@ package logic
 		
 	private var _isLanguageExp:Boolean;
 	public var myname:String;
+	//This is set by the Inference that creates it.
+	//Each object of ParentArg belongs only to 
+	//one Inference, and it holds a reference to the Inference object.
 	public var inference:Inference;
 	//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
 	//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
@@ -41,12 +44,23 @@ package logic
 	
 	public function ParentArg()
 	{
-		//multipleReasons = true;
-		//mySelector = new ArgSelector;
+		
 	}
 	
-	
-	
+	public function createLinks():void
+	{
+		var	claim:ArgumentPanel = inference.claim;
+		var reasons:Vector.<ArgumentPanel> = inference.reasons;
+		claim.input1.forwardList.push(inference.input[0]);
+		inference.input[0].forwardList.push(inference.inputs[0]);
+		for(var i:int=0; i < reasons.length; i++)
+		{
+			reasons[i].input1.forwardList.push(inference.input[i+1]);
+			inference.input[i+1].forwardList.push(inference.inputs[1]);
+		}
+		inference.implies = true;
+	}
 	public function correctUsage():String { return "";}
 	}
+	
 }

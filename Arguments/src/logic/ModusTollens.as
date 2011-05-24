@@ -39,6 +39,9 @@ package logic
 					inference.reasons[i].statementNegated = true;
 				}
 			}
+			
+			inference.implies = true;
+			
 			//Negate the reason. The reason will not be supported by other
 			//arguments. If it were, the argument woud have had 'typed' true,
 			//and myArg would not be pointing to a Modus Tollens Object
@@ -46,34 +49,47 @@ package logic
 			switch(inference.myschemeSel.selectedType) {
 				//negate reason				
 				case _langTypes[0]: //If-then. If both claim and reason negated
-					//output += "It is not the case that " + reason[0].input1.text + "; therefore, it is not the case that "+claim;
 					output += "If " + claim.positiveStmt + ", then "+ reason[0].positiveStmt;
-					// if not negated,
-					// output += "If " + claim + " then " + reason[0].input1.text
+					inference.inputs[1].text = reason[0].positiveStmt;
+					inference.inputs[0].text = claim.positiveStmt;
 					break;
 				case _langTypes[1]: // Implies
 					output +=  claim.positiveStmt + " implies " + reason[0].positiveStmt;
+					inference.inputs[1].text = reason[0].positiveStmt;
+					inference.inputs[0].text = claim.positiveStmt;
 					break;
 				case _langTypes[2]: //Whenever
 					output += "Whenever " + claim.positiveStmt + ", " + reason[0].positiveStmt;
+					inference.inputs[1].text = reason[0].positiveStmt;
+					inference.inputs[0].text = claim.positiveStmt;
 					break;
 				case _langTypes[3]: // Only if
+					var reasonStr:String = "";
 					output += claim.positiveStmt + " Only if ";
-					if(isLanguageExp==true)
+					for(i=0;i<reason.length-1;i++)
 					{
-						for(i=0;i<reason.length-1;i++)
-							output += reason[i].positiveStmt + " " + andOr + " ";	
+						output += reason[i].positiveStmt + " " + andOr + " ";
+						reasonStr = reasonStr + reason[i].positiveStmt + " " + andOr + " ";
 					}
+					reasonStr = reasonStr + reason[i].positiveStmt;
 					output += reason[reason.length-1].positiveStmt;
+					inference.inputs[1].text = reasonStr;
+					inference.inputs[0].text = claim.positiveStmt;
 					break;
 				case _langTypes[4]: // Provided that
 					output += reason[0].positiveStmt + " provided that " + claim.positiveStmt;
+					inference.inputs[1].text = reason[0].positiveStmt;
+					inference.inputs[0].text = claim.positiveStmt;
 					break;
 				case _langTypes[5]: // Sufficient condition
 					output += claim.positiveStmt + " is a sufficient condition for " + reason[0].positiveStmt;
+					inference.inputs[1].text = reason[0].positiveStmt;
+					inference.inputs[0].text = claim.positiveStmt;
 					break;
 				case _langTypes[6]: // Necessary condition
 					output += reason[0].positiveStmt + " is a necessary condition for " + claim.positiveStmt;
+					inference.inputs[1].text = reason[0].positiveStmt;
+					inference.inputs[0].text = claim.positiveStmt;
 					break;	
 			}
 			

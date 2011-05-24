@@ -4,7 +4,9 @@ package classes
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
 	import logic.*;
+	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -78,6 +80,11 @@ package classes
 		}
 		///Getters and Setters
 		
+		override public function get stmt():String
+		{
+			return _displayStr;
+		}
+		
 		public function get displayStr():String
 		{
 			return _displayStr;
@@ -86,8 +93,8 @@ package classes
 		public function set displayStr(value:String):void
 		{
 			_displayStr = value;
-			input1.text = _displayStr;
 			displayTxt.text = _displayStr;
+			input1.text = _displayStr;
 			displayTxt.height = input1.height;
 			invalidateProperties();
 			invalidateSize();
@@ -331,8 +338,11 @@ package classes
 			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
 			bottomHG.visible = true;
 			doneHG.visible = false;
-			input1.visible = false;
 			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
+			multiStatement = true;
+			group.removeElement(msVGroup);
+			//msVGroup.visible = false;
+			
 		}
 		public function chooseEnablerText():void
 		{
@@ -390,6 +400,7 @@ package classes
 					break;
 			}
 			myArg.inference = this;
+			myArg.createLinks();
 			if(hasMultipleReasons)
 			{
 				sublist.dataProvider = myArg._expLangTypes;	

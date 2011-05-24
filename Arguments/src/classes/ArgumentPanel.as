@@ -13,8 +13,6 @@ package classes
 	import flash.ui.Keyboard;
 	
 	import logic.ParentArg;
-	
-	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -22,13 +20,11 @@ package classes
 	import mx.controls.Text;
 	import mx.controls.TextInput;
 	import mx.core.DragSource;
-	import mx.core.IUIComponent;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.DragManager;
-	import mx.rpc.http.Operation;
 	import mx.skins.Border;
 	
 	import org.osmf.events.GatewayChangeEvent;
@@ -70,6 +66,8 @@ package classes
 		//The logical container that holds the text elements of the statement
 		//that is, input1 and displayTxt
 		public var group:Group;
+		//multistatement group
+		public var msVGroup:VGroup;
 		//The enabler which makes this statements support a claim
 		public var inference:Inference;
 		//contains the add and the delete button
@@ -108,6 +106,7 @@ package classes
 		//multiple textboxes
 		private var _multiStatement:Boolean;
 		public var connectingStr:String;
+		private var _implies:Boolean;
 		
 		public static var ARGUMENT_CONSTRUCTED:String = "Argument Constructed";
 		public function ArgumentPanel()
@@ -139,6 +138,19 @@ package classes
 			
 		}
 		
+		public function get implies():Boolean
+		{
+			return _implies;
+		}
+
+		public function set implies(value:Boolean):void
+		{
+			if(_implies != value)
+			{
+				_implies = value;
+			}
+		}
+
 		public function get multiStatement():Boolean
 		{
 			return _multiStatement;
@@ -151,18 +163,12 @@ package classes
 			{
 				if(value == true){
 					group.removeElement(input1);
-					for(var i:int=0; i < inputs.length; i++)
-					{
-						group.addElement(inputs[i]);
-					}
+					group.addElement(msVGroup);
 					_multiStatement = value;
 				}
 				else
 				{
-					for(i=0; i < inputs.length; i++)
-					{
-						group.removeElement(inputs[i]);
-					}
+					group.removeElement(msVGroup);
 					group.addElement(input1);
 				}
 			}
@@ -195,9 +201,14 @@ package classes
 				input1.text="";
 				userEntered = true;
 			}
-			
-			focusManager.setFocus(input1);
-			input1.visible = true;
+			if(multiStatement){
+				focusManager.setFocus(inputs[0]);
+				msVGroup.visible = true;
+			}
+			else{
+				focusManager.setFocus(input1);
+				input1.visible = true;
+			}
 			displayTxt.visible = false;
 			doneHG.visible = true;
 			bottomHG.visible=false;
@@ -205,25 +216,61 @@ package classes
 		
 		public function makeUnEditable():void
 		{
-			displayTxt.width = input1.width;
-			displayTxt.height = input1.height;
+			if(multiStatement){
+				//input1 is just used to calculate height
+				input1.text = stmt;
+				displayTxt.width = input1.width;
+				displayTxt.height = input1.height;
+			}
+			else{
+				displayTxt.width = input1.width;
+				displayTxt.height = input1.height;
+			}
 			displayTxt.text = stmt;
 			displayTxt.visible = true;
-			input1.visible = false;
+			
 			bottomHG.visible = true;
 			doneHG.visible = false;
+			if(multiStatement)
+			{
+				msVGroup.visible = false;
+			}
+			else
+			{
+				input1.visible = false;
+			}
 		}
 		
 		public function get stmt():String
 		{
 			
-			if(statementNegated == true)
+			var statement:String = "";
+			if(multiStatement)
 			{
-				return ("it is not the case that " + input1.text);
+				if(implies)
+				{
+					statement = "If " + inputs[1] + ", then " + inputs[0];
+				}
+				else
+				{
+					for(var i:int=0; i<inputs.length - 1; i++)
+					{
+						statement = statement + inputs[i].text + " and ";
+					}
+					statement = statement + inputs[i].text;
+				}
 			}
 			else
 			{
-				return input1.text;
+				statement = input1.text;
+			}
+			if(statementNegated == true)
+			{
+				return ("it is not the case that " + statement);
+			}
+			else
+			{
+				return statement;
 			}
 		}
 		
@@ -323,7 +370,16 @@ package classes
 		public function beginByArgument():void{
 			rules[0].visible = true; 
 			rules[0].chooseEnablerText();
-			input1.text = "P";
+			if(inference == null)
+			{
+				if(multiStatement){
+					inputs[0].text = "P1";
+					inputs[1].text = "P2";
+				}
+				else{
+					input1.text = "P";
+				}
+			}
 			makeUnEditable();
 			//This is important if beginByArgument is called 
 			//immediately after an argument is constructed
@@ -370,7 +426,6 @@ package classes
 				addSupportingArgument();
 			}
 			makeUnEditable();
-			input1.forwardUpdate();
 			if(inference!=null && inference.selectedBool == false)
 			{
 				showMenu();		
@@ -429,8 +484,8 @@ package classes
 			//add a pointer to the input
 			currInference.input.push(tmpInput);		
 			//binding
-			tmpInput.forwardList.push(currInference.input1);
-			input1.forwardList.push(currInference.input[0]);
+			//tmpInput.forwardList.push(currInference.input1);
+			//input1.forwardList.push(currInference.input[0]);
 			tmpInput.aid = input1.aid;
 			//create an invisible box for the reason
 			var tmpInput2:DynamicTextArea = new DynamicTextArea();
@@ -439,8 +494,8 @@ package classes
 			tmpInput2.visible = false;
 			tmpInput2.panelReference = currInference;
 			currInference.input.push(tmpInput2);	
-			tmpInput2.forwardList.push(currInference.input1);
-			reason.input1.forwardList.push(tmpInput2);
+			//tmpInput2.forwardList.push(currInference.input1);
+			//reason.input1.forwardList.push(tmpInput2);
 			parentMap.layoutManager.registerPanel(currInference);
 			dispatchEvent(new Event(ARGUMENT_CONSTRUCTED,true,false));
 		}
@@ -545,10 +600,18 @@ package classes
 			bottomHG.visible = false;
 			
 			//presently, the requirement is only for two boxes
+			msVGroup = new VGroup;
+			//group.addElement(msVGroup);
 			var dta:DynamicTextArea = new DynamicTextArea;
+			dta.panelReference = this;
 			inputs.push(dta);
 			dta = new DynamicTextArea;
+			dta.panelReference = this;
 			inputs.push(dta);
+			for(var i:int=0; i < inputs.length; i++)
+			{
+				msVGroup.addElement(inputs[i]);
+			}
 			
 			invalidateProperties();
 		}
