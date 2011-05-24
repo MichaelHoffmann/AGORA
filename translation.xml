@@ -89,6 +89,106 @@
 			<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
 		</Label>
 		
+		<Label name="PassRepeat">
+			<EN-US text="Repeat your password"/>
+			<RUS text="Повторите свой пароль"/>
+			<GER text="Wiederhole dein Passwort"/>
+		</Label>
+		
+		<Label name="Email">
+			<EN-US text="E-mail Address"/>
+			<RUS text="Адрес электронной почты"/>
+			<GER text="E-mail Adresse"/>
+		</Label>
+		
+		<Label name="FirstName">
+			<EN-US text="First Name"/>
+			<RUS text="Имя"/>
+			<GER text="Vorname"/>
+		</Label>
+		
+		<Label name="LastName">
+			<EN-US text="Last Name"/>
+			<RUS text="Фамилия"/>
+			<GER text="Nachname"/>
+		</Label>
+		<Label name="URL">
+			<EN-US text="URL (Optional)"/>
+			<RUS text="URL(опционально)"/>
+			<GER text="URL (optional)"/>
+		</Label>
+		
+		<Label name="Affiliation">
+			<EN-US text="Affiliation/Location (optional)"/>
+			<RUS text="Присоединение/Местоположение (опционально)"/>
+			<GER text="Institution/Ort (optional)"/>
+		</Label>
+		
+		<Label name="CAPTCHA">
+			<EN-US text="Enter CAPTCHA"/>
+			<RUS text="Введите  CAPTCHA"/>
+			<GER text="Gib die folgenden Zeichen ein"/>
+		</Label>
+		
+		<Label name="Submit">
+			<EN-US text="Submit"/>
+			<RUS text="Представить"/>
+			<GER text="Sende"/>
+		</Label>
+		
+		<Label name="ChangeInfo">
+			<EN-US text="Change Personal Information"/>
+			<RUS text="Измените Личную Информацию"/>
+			<GER text="Ändere deine persönlichen Daten"/>
+		</Label>
+		
+		<Label name="Incomplete Info">
+			<EN-US text="Incomplete. Please provide all necessary information"/>
+			<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
+			<GER text="Deine Angaben sind unvollständig. Bitte fülle alle notwendigen Felder aus."/>
+		</Label>
+		
+		<Label name="PasswordProtected">
+			<EN-US text="This project is password protected. Do you want to sign up for this project?"/>
+			<RUS text="Этот проект  защищен паролем. Вы хотите подписаться на этот проект?"/>
+			<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
+		</Label>
+		
+		<Label name="ProjName">
+			<EN-US text="Desired Project name"/>
+			<RUS text="Желаемое Название проекта"/>
+			<GER text="Erwünschter Projekt-Name"/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
