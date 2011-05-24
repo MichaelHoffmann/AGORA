@@ -482,7 +482,7 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<RUS text="необходимое условие"/>
 			<GER text="notwendige Bedingung"/>
 		</Label>
-		
+		<!--
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
@@ -524,6 +524,6 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<RUS text=""/>
 			<GER text=""/>
 		</Label>
-		
+		-->
 	</Text>
 </Translations>
