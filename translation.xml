@@ -142,7 +142,7 @@
 			<GER text="Ändere deine persönlichen Daten"/>
 		</Label>
 		
-		<Label name="Incomplete Info">
+		<Label name="IncompleteInfo">
 			<EN-US text="Incomplete. Please provide all necessary information"/>
 			<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
 			<GER text="Deine Angaben sind unvollständig. Bitte fülle alle notwendigen Felder aus."/>
@@ -158,6 +158,177 @@
 			<EN-US text="Desired Project name"/>
 			<RUS text="Желаемое Название проекта"/>
 			<GER text="Erwünschter Projekt-Name"/>
+		</Label>
+		
+		<Label name="ProjNameTaken">
+			<EN-US text="This Project name is already taken! Try another Project name."/>
+			<RUS text="Это Имя проекта уже взято! Попробуйте другое Имя проекта"/>
+			<GER text="Dieser Projekt-Name ist bereits vergeben! Versuche einen anderen."/>
+		</Label>
+		
+		<Label name="ProjPass">
+			<EN-US text="Project password "/>
+			<RUS text="Пароль  Проекта"/>
+			<GER text="Projekt-Passwort"/>
+		</Label>
+		
+		<Label name="UserList">
+			<EN-US text="Select users from the AGORA user list"/>
+			<RUS text="Выберите пользователей из пользовательского списка АГОРЫ"/>
+			<GER text="Wähle Benutzer von der AGORA Benutzer-Liste aus"/>
+		</Label>
+		
+		<!-- English is the same, other languages different-->
+		<Label name="IncompleteProjInfo">
+			<EN-US text="Incomplete. Please provide all necessary information."/>
+			<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
+			<GER text="Deine Angaben sind unvollständig. Bitte fülle alle Felder aus."/>
+		</Label>
+		
+		<Label name="WhatIsMainClaim">
+			<EN-US text="What is the main claim of your argument?"/>
+			<RUS text="Каково главное заявление Вашего аргумента?"/>
+			<GER text="Was ist die zentrale Behauptung deines Argumentes?"/>
+		</Label>
+		
+		<Label name="UseArgScheme">
+			<EN-US text="Click here if you want to use a specific argument scheme"/>
+			<RUS text="Щелкните здесь, если Вы хотите использовать определенную схему аргумента"/>
+			<GER text="Klicke hier wenn Du ein bestimmtes Argument-Schema verwenden willst"/>
+		</Label>
+		
+		<Label name="DivideToSubclaims">
+			<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case"/>
+			<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая"/>
+			<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können"/>
+		</Label>
+		
+		<Label name="PasteArgument">
+			<EN-US text="Paste an argumentation or parts of it from your clipboard [to this location]"/>
+			<RUS text="Присоедините аргументацию или ее части из Вашего клипборда [к этому местоположению]"/>
+			<GER text="Kopiere eine Argumentation oder Teile von ihr hier hin"/>
+		</Label>
+		
+		<Label name="Particular">
+			<EN-US text="particular statement"/>
+			<RUS text="особое утверждение"/>
+			<GER text="Einzelaussage"/>
+		</Label>
+		
+		<Label name="Universal">
+			<EN-US text="universal statement"/>
+			<RUS text="универсальное утверждение"/>
+			<GER text="universelle Aussage"/>
+		</Label>
+		
+		<Label name="Particular-UniversalClarification">
+			<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is &quot;defeated,&quot; then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only &quot;questioned&quot; or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof."/>
+			<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
+			<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches.
+Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern.
+"/>
+		</Label>
+		
+		<Label name="Enabler">
+			<EN-US text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."/>
+			<RUS text=" Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив."/>
+			<GER text="Der Satz in dieser Textbox wird „Garant“ gennant. Der „Garant“ ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der „Garant“ ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist."/>
+		</Label>
+		
+		<Label name="AU">
+			<EN-US text="AU [short for “author”]"/>
+			<RUS text="AU [сокращение для &quot;автора&quot;]"/>
+			<GER text="AU"/>
+		</Label>
+		
+		<Label name="add">
+			<EN-US text="add ..."/>
+			<RUS text="добавьте ..."/>
+			<GER text="füge hinzu ..."/>
+		</Label>
+		
+		<Label name="use">
+			<EN-US text="use as ..."/>
+			<RUS text="используйте в качестве ..."/>
+			<GER text="verwende als ..."/>
+		</Label>
+		
+		<Label name="AUInfo">
+			<EN-US text="Click to see author information"/>
+			<RUS text="Щелкните, чтобы видеть информацию об авторе"/>
+			<GER text="Klicke hier, um Informationen über den Autor zu sehen"/>
+		</Label>
+		
+		<Label name="apply">
+			<EN-US text="apply ..."/>
+			<RUS text="примените ..."/>
+			<GER text="wende an ..."/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
 		</Label>
 		<Label name="">
 			<EN-US text=""/>
