@@ -28,6 +28,70 @@
 		</Connection>
 	</ConnTypes>
 	<Text>
+	
+		<Label name="Intro">
+			<EN-US text="
+			Select a scheme and then a language form for this scheme. Then enter your reason and/or claim. You can change the argument scheme or the language form any time by clicking on the name of the argument scheme.\n
+			---\n
+			Your input will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true. The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.\n
+			---\n
+			The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated argument in AGORA is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances&quot; or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.\n
+			---\n
+			To make your argument as powerful, clear, and convincing as possible, try to get the structure and the formulations right, and select that argument scheme that fits best to what you want to argue.
+			"/>
+			<RUS text="
+			Выберите схему и затем языковую форму для этой схемы. Затем введите свою причину и/или заявление. Вы можете изменить схему аргументов, или язык формируют любое время, щелкая по названию схемы аргумента.\n
+			---\n
+			Ваш ввод создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки - истинны. Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает  Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы  не сможете принять истинность «гаранта» и всех Ваших причин.\n
+			---\n
+			Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может  быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.\n
+			---\n
+			Чтобы сделать Ваш аргумент столь же сильным, ясным, сколь и убедительным насколько возможно, попытайтесь разобраться в структуре и формулировках, и выбрать ту схему аргумента, которая подходит лучше всего к тому, что Вы хотите обсудить.
+			"/>
+			<GER text="
+			Wähle ein Schema aus und dann eine sprachliche Form für dieses Schema. Dann gib deinen Grund und/oder deine Behauptung ein. Du kannst das Argumentschema oder die sprachliche Form jederzeit wechseln, wenn Du auf den Namen des Schemas klickst.\n
+			Deine Texteingabe wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind. Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird „Garant“ genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.\n
+			Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten  zu unterstützen. Da  jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie „wahrscheinlich“, „gewöhnlich“, „unter normalen Umständen“ oder „möglicherweise“ abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen.\n
+			Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt.
+			"/>
+		</Label>
+		
+		<Label name="back">
+			<EN-US text="Back"/>
+			<RUS text="Назад"/>
+			<GER text="Zurück"/>
+		</Label>
+		
+		<Label name="Construct">
+			<EN-US text="construct argument"/>
+			<RUS text="конструктивный  аргумент"/>
+			<GER text="konstruiere das Argument"/>
+		</Label>
+		
+		<Label name="NewMap">
+			<EN-US text="Create a new argument map"/>
+			<RUS text="Создайте новую карту аргумента"/>
+			<GER text="Beginne eine neue Argumentation"/>
+		</Label>
+		
+		<Label name="MyMaps">
+			<EN-US text="My maps and those in which I participated"/>
+			<RUS text="Мои карты и те, в которых я участвовал(а)"/>
+			<GER text="Meine eigenen Argumente und solche, an denen ich mitgewirkt habe"/>
+		</Label>
+		
+		<Label name="CreateProject">
+			<EN-US text="Create a password-protected project space"/>
+			<RUS text="Создайте защищённое паролем проектное пространство"/>
+			<GER text="Eröffne einen Passwort-geschützten Projektbereich"/>
+		</Label>
+		
+		<Label name="MustRegister">
+			<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible"/>
+			<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой"/>
+			<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als „AU“ (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar"/>
+		</Label>
+		
 		<Label name="Username">
 			<EN-US text="Username"/>
 			<RUS text="ьзователя"/>
@@ -265,166 +329,196 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text="wende an ..."/>
 		</Label>
 		
+		<Label name="done">
+			<EN-US text="Done"/>
+			<RUS text="Сделанный"/>
+			<GER text="Fertig"/>
+		</Label>
+		
+		<Label name="NotTheCase">
+			<EN-US text="It is not the case that "/>
+			<RUS text="Не то, что "/>
+			<GER text="Es ist nicht der Fall, dass "/>
+		</Label>
+		
+		<Label name="Delete">
+			<EN-US text="Delete"/>
+			<RUS text="Удалить"/>
+			<GER text="Lösche"/>
+		</Label>
+		
+		<Label name="Subclaim1">
+			<EN-US text="Enter first sub-claim"/>
+			<RUS text="Введите  первое подзаявление"/>
+			<GER text="Gib die erste Teilbehauptung ein"/>
+		</Label>
+		
+		<Label name="Subclaim2">
+			<EN-US text="Enter second sub-claim"/>
+			<RUS text="Введите второе подзаявление"/>
+			<GER text="Gib die zweite Teilbehauptung ein"/>
+		</Label>
+		
+		<Label name="Subclaim">
+			<EN-US text="Enter sub-claim"/>
+			<RUS text="Введите подзаявление"/>
+			<GER text="Gib eine Teilbehauptung ein"/>
+		</Label>
+		
+		<Label name="MoreStatements">
+			<EN-US text="Enter more statements"/>
+			<RUS text="Введите большее количество заявлений"/>
+			<GER text="Gib weitere Teilbehauptungen ein"/>
+		</Label>
+		
+		<Label name="Statement1">
+			<EN-US text="Enter first statement"/>
+			<RUS text="Введите первое заявление"/>
+			<GER text="Gib die erste Behauptung ein"/>
+		</Label>
+		
+		<Label name="Statement2">
+			<EN-US text="Enter second statement"/>
+			<RUS text="Введите второе заявление"/>
+			<GER text="Gib die zweite Behauptung ein"/>
+		</Label>
+		
+		<Label name="Claim">
+			<EN-US text="What is your claim? "/>
+			<RUS text="Каково Ваше заявление? "/>
+			<GER text="Was ist Deine Behauptung? "/>
+		</Label>
+		<Label name="ClaimReminder">
+			<EN-US text="Keep in mind that a claim can be descriptive (&quot;it is the case that ...&quot;) or normative (e.g., &quot;we should do x&quot;)"/>
+			<RUS text="Имейте в виду, что заявление может быть описательным (&quot;оно имеет место, что ...&quot;) или нормативным (например, &quot;мы должны сделать x&quot;),"/>
+			<GER text="Vergiss nicht, dass es deskriptive („es ist der Fall, dass ...“) und normative (z.B. „wir sollten x tun“) Behauptungen gibt."/>
+		</Label>
+		
+		<Label name="EnterClaim">
+			<EN-US text="Enter your claim"/>
+			<RUS text="Введите свое заявление"/>
+			<GER text="Gib Deine Behauptung ein"/>
+		</Label>
+		
+		<Label name="Reason">
+			<EN-US text="What is your reason?"/>
+			<RUS text="Какова Ваша причина?"/>
+			<GER text="Was ist dein Grund?"/>
+		</Label>
+		
+		<Label name="EnterReason">
+			<EN-US text="Enter your reason"/>
+			<RUS text="Введите свою причину"/>
+			<GER text="Gib deinen Grund ein"/>
+		</Label>
+		
+		<Label name="FurtherReason">
+			<EN-US text="Enter a further reason"/>
+			<RUS text="Введите дальнейшую причину"/>
+			<GER text="Gib einen weiteren Grund ein"/>
+		</Label>
+		
+		<Label name="NewReason">
+			<EN-US text="Enter your new reason"/>
+			<RUS text="Введите свою новую причину"/>
+			<GER text="Gib deinen neuen Grund ein"/>
+		</Label>
+		<Label name="AnotherReason">
+			<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
+			<RUS text="другую причину для этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
+			<GER text="weiteren Grund für dieses Argument hinzufügen, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt"/>
+		</Label>
+		
+		<Label name="MP">
+			<EN-US text="Modus Ponens"/>
+			<RUS text="Modus Ponens"/>
+			<GER text="Modus Ponens"/>
+		</Label>
+		
+		<Label name="EQ">
+			<EN-US text="Equivalence"/>
+			<RUS text="эквивалентность"/>
+			<GER text="Äquivalenz"/>
+		</Label>
+		
+		<Label name="If-Then">
+			<EN-US text="if-then"/>
+			<RUS text="если, то"/>
+			<GER text="wenn-dann"/>
+		</Label>
+		
+		<Label name="Implies">
+			<EN-US text="implies"/>
+			<RUS text="подразумевает"/>
+			<GER text="impliziert"/>
+		</Label>
+		
+		<Label name="OnlyIf">
+			<EN-US text="only if"/>
+			<RUS text="только если"/>
+			<GER text="nur dann, wenn"/>
+		</Label>
+		
+		<Label name="Whenever">
+			<EN-US text="whenever"/>
+			<RUS text="всякий раз, когда"/>
+			<GER text="wann immer"/>
+		</Label>
+		
+		<Label name="ProvidedThat">
+			<EN-US text="provided that"/>
+			<RUS text="при условии, что"/>
+			<GER text="gegeben, dass"/>
+		</Label>
+		
+		<Label name="Sufficient">
+			<EN-US text="sufficient condition"/>
+			<RUS text="достаточное условие"/>
+			<GER text="hinreichende Bedingung"/>
+		</Label>
+		
+		<Label name="Necessary">
+			<EN-US text="Necessary condition"/>
+			<RUS text="необходимое условие"/>
+			<GER text="notwendige Bedingung"/>
+		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
 			<GER text=""/>
 		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
 			<GER text=""/>
 		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
 			<GER text=""/>
 		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
 			<GER text=""/>
 		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
 			<GER text=""/>
 		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
 			<GER text=""/>
 		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
