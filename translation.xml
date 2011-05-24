@@ -1,3 +1,37 @@
-<translations>
-	
-</translations>
+﻿<Translations>
+	<ConnTypes>
+		<Connection type="MPifthen">
+			<EN-US>
+				<string text="If "/>
+				<reason/>
+				<conjunction text=" and "/>
+				<add_reason/>
+				<string text=", then "/>
+				<claim/>
+			</EN-US>
+			<RUS>
+				<string text="Если "/>
+				<reason/>
+				<conjunction text=" и "/>
+				<add_reason/>
+				<string text=", то "/>
+				<claim/>
+			</RUS>		
+			<GER>
+				<string text="Wenn "/>
+				<reason/>
+				<conjunction text=" und "/>
+				<add_reason/>
+				<string text=", dann "/>
+				<claim/>
+			</GER>
+		</Connection>
+	</ConnTypes>
+	<Text>
+		<Label name="Username">
+			<EN-US text="Username"/>
+			<RUS text="ьзователя"/>
+			<GER text="Benutzername"/>
+		</Label>
+	</Text>
+</Translations>
