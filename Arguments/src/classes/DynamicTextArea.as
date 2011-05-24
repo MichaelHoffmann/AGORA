@@ -54,8 +54,6 @@ package classes
 		
 		
 		private function adjustHeightHandler(event:Event):void {
-			trace("change");
-			trace(text);
 			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
 			var paddingTop:String = this.getStyle("paddingTop");
 			var paddingBottom:String= this.getStyle("paddingBottom");
@@ -95,8 +93,6 @@ package classes
 				height = textField.textHeight+topPadding+bottomPadding;
 			}
 			validateNow();
-			
-			
 		}
 		
 		public function updateOthers():void
@@ -114,15 +110,9 @@ package classes
 					currInput= forwardList[0];
 					var infPanel:Inference = Inference(panelReference);
 					var s:String;
-					if(infPanel.argType.schemeText!=null) { 
-			//			flag=1;
-						infPanel.displayStr = infPanel.myArg.correctUsage(infPanel.argType.schemeTextIndex,infPanel.claim.input1.text,infPanel.reasons,infPanel.isExp);
-						//trace(sentence);
-						//this.panelReference.input1.text = sentence;
+					if(infPanel.selectedBool == true) { 
+						infPanel.displayStr = infPanel.myArg.correctUsage();
 					}
-					//else visible=false;
-					//s = infPanel.sentence;
-					//currInput.text = s; 
 					currInput.forwardUpdate();
 				}
 				else

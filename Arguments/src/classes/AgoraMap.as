@@ -1,6 +1,8 @@
 //This class is the canvas on which everything will be drawn
 package classes
 {
+	import components.Option;
+	
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -23,9 +25,11 @@ package classes
 		public var layoutManager:ALayoutManager = null;
 		public var drawUtility:UIComponent = null;
 		public var mapId:int;
+		public var option:Option;
+		
 		public function AgoraMap()
 		{
-			id="29";
+			//id="29";
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
@@ -33,7 +37,7 @@ package classes
 		
 		public function panelCreated(event:FlexEvent):void{
 			var panel:ArgumentPanel = event.target as ArgumentPanel;
-			panel.input1.text = panel.savedTextStr;
+			//panel.input1.text = panel.savedTextStr;
 		}
 
 		public function pushToServer(xml:XML):void
@@ -74,7 +78,7 @@ package classes
 			for(i=0; i  < layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;
-				if(!(panel is DisplayArgType)){
+				if(!(panel is MenuPanel)){
 					currXML= <node></node>;
 					currXML.@ID = panel.aid;
 					if(panel is Inference)
@@ -109,10 +113,10 @@ package classes
 			for(i=0; i<layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;
-				if(panel is DisplayArgType)
+				if(panel is MenuPanel)
 				{
 					currXML = <connection></connection>;
-					var argType:DisplayArgType = DisplayArgType(panel);
+					var argType:MenuPanel = MenuPanel(panel);
 					currXML.@argID = argType.aid;
 					currXML.@type = argType.inference.myArg.dbName;
 					currXML.@targetnodeID = argType.inference.claim.aid;
@@ -136,35 +140,56 @@ package classes
 			return xml;
 		}
 		
-		public function load( event:Event):void{
-			var xmlData:XML = new XML(event.target.data);
+		public function load(xmlData:XML):void{
+			trace(xmlData.toXMLString());
+			//var xmlData:XML = new XML(event.target.data);
+			
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
+			
+			//read all text boxes
 			for each (var xml:XML in textboxes)
 			{
 				textbox_map[xml.attribute("ID")] = xml.attribute("text");
 			}
 			
+			for(var obj:String in textbox_map)
+			{
+				trace(obj);
+			}
+			for each(var object:Object in textbox_map)
+			{
+				trace(String(object));
+			}
+			
 			var nodes_map:Object = new Object;
 			var nodes:XMLList = xmlData.node;
 			
+			
+			//read all nodes. This includes setting the text of the node
+			//by reading the text in the corresponding textbox node
 			for each ( xml in nodes)
 			{
 				var argumentPanel:ArgumentPanel = null;
 				if(xml.attribute("Type") == "Inference")
 				{
 					argumentPanel = new Inference;
-					addElement(argumentPanel);
+					var inferencePanel:Inference = Inference(argumentPanel);
+					inferencePanel.argType = new MenuPanel;
+					addElement(inferencePanel);
+					addElement(inferencePanel.argType);
 				}
 				else{
 					argumentPanel = new ArgumentPanel;
-					addElement(argumentPanel);//createChildren called
+					addElement(argumentPanel);// try moving addElements to one place so that to optimize code
 					argumentPanel.input1.text = textbox_map[xml.nodetext.attribute("ID")];
+					trace(argumentPanel.input1.text);
+					trace(xml.nodetext.attribute("ID"));
 				}
 				nodes_map[xml.attribute("ID")] = argumentPanel;
-				argumentPanel.gridX = xml.attribute("gridX");
-				argumentPanel.gridY = xml.attribute("gridY");				
+				argumentPanel.gridY = xml.attribute("y");
+				argumentPanel.gridX = xml.attribute("x");				
 				layoutManager.panelList.push(argumentPanel);
 			}
 			
@@ -183,8 +208,8 @@ package classes
 					panel = nodes_map[sourcenode.attribute("nodeID")];
 					if( panel is Inference){
 						inference = Inference(panel);
-						inference.argType.gridX = xml.attribute("gridX");
-						inference.argType.gridY = xml.attribute("gridY");
+						inference.argType.gridY = xml.attribute("y");
+						inference.argType.gridX = xml.attribute("x");
 						layoutManager.addSavedPanel(inference.argType);
 					}
 				}
@@ -227,6 +252,9 @@ package classes
 			super.createChildren();
 			drawUtility = new UIComponent();
 			this.parent.addChild(drawUtility);
+			option = new Option;
+			addChild(option);
+			option.visible = false;
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -299,9 +327,9 @@ package classes
 						
 					}
 				}
-				else if(akcdragInitiator1 is DisplayArgType)
+				else if(akcdragInitiator1 is MenuPanel)
 				{
-					var argdisplay:DisplayArgType = akcdragInitiator1 as DisplayArgType;
+					var argdisplay:MenuPanel = akcdragInitiator1 as MenuPanel;
 					if(argdisplay.inference != argdisplay.inference.claim.rules[0]){
 						argdisplay.gridX = argdisplay.gridX + diffX;
 						argdisplay.inference.gridX = argdisplay.inference.gridX + diffX;
@@ -320,6 +348,14 @@ package classes
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			connectRelatedPanels();
+		}
+		
+		public function addable():Boolean
+		{
+			if(option.visible == true)
+				return false;
+			else
+				return true;
 		}
 		
 		public function connectRelatedPanels():void
@@ -380,8 +416,7 @@ package classes
 						drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 - 5);
 						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
 						drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 + 5);
-					}
-					
+					}	
 				}
 			}
 			

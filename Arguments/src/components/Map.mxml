@@ -2,7 +2,7 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
-		   xmlns:classes="classes.*"  creationComplete="initApp();">
+		   xmlns:classes="classes.*"  creationComplete="initApp();" xmlns:components="components.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -70,26 +70,14 @@
 				agora.width = this.stage.stageWidth;
 			}
 			
-			public function configureReason(event:FlexEvent):void
-			{
-				var reason:ArgumentPanel = ArgumentPanel(event.target);
-				reason.input1.text = "Q";
-				reason.displayTxt.text = "Q";
-				reason.makeUnEditable();
-				
-			}
+			
 			
 			public function addEmptyArgument():void
 			{
 				var argumentPanel:ArgumentPanel=addPanel();
 				argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
-					argumentPanel.addStatement();
-					argumentPanel.rules[0].visible = true; 
-					argumentPanel.rules[0].buildInference();
-					argumentPanel.input1.text="P";
-					argumentPanel.displayTxt.text = argumentPanel.input1.text;
-					argumentPanel.makeUnEditable();
-					argumentPanel.rules[0].reasons[0].addEventListener( FlexEvent.CREATION_COMPLETE, configureReason);
+					argumentPanel.addSupportingArgument();
+					argumentPanel.beginByArgument();
 				});
 			}
 			

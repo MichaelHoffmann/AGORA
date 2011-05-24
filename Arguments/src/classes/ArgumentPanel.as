@@ -1,5 +1,8 @@
 package classes
 {
+	import components.ArgSelector;
+	import components.Option;
+	
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -8,6 +11,8 @@ package classes
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
+	
+	import logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
@@ -23,6 +28,7 @@ package classes
 	import mx.events.FlexEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.DragManager;
+	import mx.rpc.http.Operation;
 	import mx.skins.Border;
 	
 	import org.osmf.events.GatewayChangeEvent;
@@ -42,81 +48,68 @@ package classes
 	
 	public class ArgumentPanel extends GridPanel
 	{
-		//The text box
+		//The text box in which the user enters the argument
 		public var input1:DynamicTextArea;
-		//the hit area for dragging the box
+		//Right now the requirement is for only two,
+		//but this is extensible
+		public var inputs:Vector.<DynamicTextArea>;
 		public var topArea:UIComponent;
 		//skin of the panel
 		public var panelSkin:PanelSkin;
-		//another skin
-		public var panelSkin1:PanelSkin;
 		//doneButton
 		public var doneBtn:AButton;
 		public var addBtn:AButton;
 		public var deleteBtn:AButton;
-		public var savedTextStr:String;
-		//public var displayLbl:Label;
+		//A statment exists in two states: editable, and non-editable. When
+		//the user clicks the done button, it goes to the non-editable state.
+		//The input1 textbox is hidden and the below Text control is shown.
 		public var displayTxt:Text;
+		//A reference to the current map diplayed to the user
 		public static var parentMap:AgoraMap;
+		//The logical container that holds the text elements of the statement
+		//that is, input1 and displayTxt
 		public var group:Group;
-		//The enabler which makes these statements support a claim
-		public var inference:Inference;		
+		//The enabler which makes this statements support a claim
+		public var inference:Inference;
+		//contains the add and the delete button
 		public var bottomHG:HGroup;
+		//the logical container that contains everything above the group container
 		public var topHG:HGroup;
+		//Within the topHG. It holds the author information and the type of statement
 		public var stmtInfoVG:VGroup;
+		//Container that holds the done button
 		public var doneHG:HGroup;
+		//contains the doneHG and bottomHG
 		public var btnG:Group;
-		//List of enablers which support this statement
+		//List of enablers which makes other statements support this statement
 		public var rules:Vector.<Inference>;
-		public var binders:Vector.<Binder>;
-		public var state:int;	//state=0 -> universal statement and state=1 -> particular statement
-		
+		//state=0 -> universal statement and state=1 -> particular statement
+		public var state:int;	
+		//Type of Panel: this could be found by just using is operator
 		public static const ARGUMENT_PANEL:int = 0;
+		//Type of Panel
 		public static const INFERENCE:int = 1;
-		public var MODE:int = 0;	// mode:0 means construct by reason, mode:1 means construct by argument scheme
-		
+		//Displays the type of this statment
 		public var stmtTypeLbl:Label;
+		//Displays the user id
 		public var userIdLbl:Label;
+		//Takes either INFERENCE or ARGUMENT_PANEL
 		public var panelType:int;
-		public var thereforeLine:UIComponent;
-		public var thereforeText:Label;
-		public var negated:Boolean;		// negated = 0 means no - it is positive. negated = 1 means yes - it is negative. Useful for Modus Tollens and Disjunctive Syllogism
+		//Specifies whether the statement is negative or positive
+		private var _statementNegated:Boolean;		
+		//Before a user enters text into the statement, it is false
 		public var userEntered:Boolean;
+		//XML string holding the menu data for the add button
 		public var addMenuData:XML;
+		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
-		
-		
-		public function makeEditable():void
-		{
-			if(userEntered == false)
-			{
-				input1.text="";
-				userEntered = true;
-			}
 
-				focusManager.setFocus(input1);
-				input1.visible = true;
-				displayTxt.visible = false;
-				doneHG.visible = true;
-				bottomHG.visible=false;
-		}
+		//multiple textboxes
+		private var _multiStatement:Boolean;
 		
-		protected function lblClicked(event:MouseEvent):void
-		{
-			makeEditable();
-		}
+		public var connectingStr:String;
 		
-		public function makeUnEditable():void
-		{
-			displayTxt.width = input1.width;
-			displayTxt.height = input1.height;
-			displayTxt.text = input1.text;
-			displayTxt.visible = true;
-			input1.visible = false;
-			bottomHG.visible = true;
-			doneHG.visible = false;
-		}
-		
+		public static var ARGUMENT_CONSTRUCTED:String = "Argument Constructed";
 		public function ArgumentPanel()
 		{
 			super();
@@ -128,18 +121,100 @@ package classes
 			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
 			this.addEventListener(KeyboardEvent.KEY_DOWN,keyEntered);
 			
+			this.addEventListener(ARGUMENT_CONSTRUCTED, argumentConstructed);
+			
 			//will be set by the object that creates this
 			inference = null;
 			
+			//this should not use the set method
+			//because the set method triggers actions on child elements
+			//which are not created yet
+			_statementNegated = false;
+			
 			rules = new Vector.<Inference>(0,false);
+			inputs = new Vector.<DynamicTextArea>(0,false);
 			
 			width = 180;
 			minHeight = 100;
 			
-			thereforeLine = new UIComponent();
-			thereforeLine.graphics.clear();
-			thereforeLine.graphics.lineStyle(2,0,1);
-			addElement(thereforeLine);			
+		}
+		
+		public function get multiStatement():Boolean
+		{
+			return _multiStatement;
+		}
+
+		public function set multiStatement(value:Boolean):void
+		{
+			_multiStatement = value;
+		}
+
+		protected function argumentConstructed(event:Event):void
+		{
+			if(inference != null)
+			{
+				inference.setRuleState();
+			}
+		}
+		
+		public function get statementNegated():Boolean
+		{
+			return _statementNegated;
+		}
+		
+		public function set statementNegated(value:Boolean):void
+		{
+			_statementNegated = value;
+			makeUnEditable();
+		}
+	
+		public function makeEditable():void
+		{
+			if(userEntered == false)
+			{
+				input1.text="";
+				userEntered = true;
+			}
+			
+			focusManager.setFocus(input1);
+			input1.visible = true;
+			displayTxt.visible = false;
+			doneHG.visible = true;
+			bottomHG.visible=false;
+		}
+	
+		public function makeUnEditable():void
+		{
+			displayTxt.width = input1.width;
+			displayTxt.height = input1.height;
+			displayTxt.text = stmt;
+			displayTxt.visible = true;
+			input1.visible = false;
+			bottomHG.visible = true;
+			doneHG.visible = false;
+		}
+		
+		public function get stmt():String
+		{
+			
+			if(statementNegated == true)
+			{
+				return ("it is not the case that " + input1.text);
+			}
+			else
+			{
+				return input1.text;
+			}
+		}
+		
+		protected function lblClicked(event:MouseEvent):void
+		{
+			makeEditable();
+		}
+		
+		public function get positiveStmt():String
+		{
+			return input1.text;
 		}
 		
 		public function adjustHeight(e:Event):void
@@ -181,9 +256,8 @@ package classes
 				Alert.show(error.toString());
 			}
 		}
-		//reason must be registered before inference is
-		//user must not change the inference rule. He creates the inference rule
-		//through argument type, reasons and claim
+		
+	
 		public function addArgument(event:MenuEvent):void
 		{
 			if(event.label == "add an argument for this statement")
@@ -192,9 +266,56 @@ package classes
 			}
 		}
 		
+		protected function optionClicked(event:MouseEvent):void
+		{
+			beginByArgument();
+			parentMap.option.visible = false;
+			parentMap.option.removeEventListener(MouseEvent.CLICK,optionClicked);
+		}
+		
+		protected function hideOption(event:KeyboardEvent):void
+		{
+			parentMap.option.visible = false;
+			rules[rules.length - 1].reasons[0].input1.removeEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+		}
+		
 		public function addHandler(event:MouseEvent):void
 		{
-			addStatement();
+			addSupportingArgument();
+			parentMap.option.visible = true;
+			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
+			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+			parentMap.option.x = rules[rules.length - 1].reasons[0].x + rules[rules.length - 1].reasons[0].width + 10;
+			parentMap.option.y = rules[rules.length - 1].reasons[0].y;
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
+		}
+		
+		public function configureReason(event:FlexEvent):void
+		{
+			var reason:ArgumentPanel = ArgumentPanel(event.target);
+			reason.input1.text = "Q";
+			reason.displayTxt.text = "Q";
+			reason.makeUnEditable();
+		}
+		
+		public function beginByArgument():void{
+			rules[0].visible = true; 
+			rules[0].chooseEnablerText();
+			input1.text = "P";
+			makeUnEditable();
+			//This is important if beginByArgument is called 
+			//immediately after an argument is constructed
+			//input1 of reason might not be created then.
+			rules[0].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
+			if(rules[0].reasons[0].input1 != null)
+			{
+				rules[0].reasons[0].input1.text = "Q";
+				rules[0].reasons[0].displayTxt.text = "Q";
+				rules[0].reasons[0].makeUnEditable();
+			}
+			parentMap.invalidateDisplayList();
 		}
 		
 		public function constructArgument(event:MenuEvent):void
@@ -205,9 +326,10 @@ package classes
 			}
 			else if(event.label == "construct argument")
 			{
-				inference.buildInference();
-				inference.formedBool = true;
+				inference.chooseEnablerText();
 				inference.visible = true;
+				
+				parentMap.invalidateDisplayList();
 			}
 		}
 		
@@ -217,20 +339,19 @@ package classes
 			menu.labelField = "@label";
 			menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
-			menu.show(globalPosition.x,globalPosition.y);
-
+			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
 		public function statementEntered():void
 		{
-			if(this.inference == null)
+			if(this.inference == null && this.rules.length == 0)
 			{
 				dispatchEvent(new Event("UserInteractionBegan",true,false));
-				addStatement();
+				addSupportingArgument();
 			}
 			makeUnEditable();
 			input1.forwardUpdate();
-			if(inference!=null && inference.formedBool == false)
+			if(inference!=null && inference.selectedBool == false)
 			{
 				showMenu();		
 			}
@@ -241,30 +362,35 @@ package classes
 			statementEntered();
 		}
 		
-		
-		public function addStatement():void
+		//reason must be registered before inference is
+		//user must not change the inference rule. He creates the inference rule
+		//through argument type, reasons and claim
+		public function addSupportingArgument():void
 		{
 			var currInference:Inference = new Inference();
+			currInference.myschemeSel = new ArgSelector;
+			currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
 			//add the inference to map
 			//trace(parentMap);
 			parentMap.addElement(currInference);
 			currInference.visible=false;
 			//create the panel that displays connection information
-			var infoPanel:DisplayArgType = new DisplayArgType;
+			var infoPanel:MenuPanel = new MenuPanel;
 			currInference.argType = infoPanel;
 			currInference.argType.inference = currInference;
 			parentMap.addElement(currInference.argType);
+			
 			//add inference to the list of inferences
 			rules.push(currInference);
 			//set the claim of the inference rule to this
 			currInference.claim = this;
+			currInference.inference = currInference;
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
 			//add reason to the map
 			parentMap.addElement(reason);
 			//push reason to the list of reasons belonging to this particular class
 			currInference.reasons.push(reason);
-			
 			//temporary, should be replaced by TID
 			currInference.connectionIDs.push(Inference.connections++);
 			//set the inference of the reason
@@ -286,7 +412,6 @@ package classes
 			tmpInput.forwardList.push(currInference.input1);
 			input1.forwardList.push(currInference.input[0]);
 			tmpInput.aid = input1.aid;
-			
 			//create an invisible box for the reason
 			var tmpInput2:DynamicTextArea = new DynamicTextArea();
 			tmpInput2.aid = reason.input1.aid;
@@ -294,30 +419,19 @@ package classes
 			tmpInput2.visible = false;
 			tmpInput2.panelReference = currInference;
 			currInference.input.push(tmpInput2);	
-			
 			tmpInput2.forwardList.push(currInference.input1);
 			reason.input1.forwardList.push(tmpInput2);
 			parentMap.layoutManager.registerPanel(currInference);
+			dispatchEvent(new Event(ARGUMENT_CONSTRUCTED,true,false));
 		}
 		
-		public function getString():String{
-			return input1.text;
-		}
 		
-		public function textBoxClicked(event:MouseEvent):void{
-			if(this.inference==null)
-				event.target.text = "";
-		}
-		
-		public function movedAway(event:MouseEvent):void{
-			if(event.target.text == ""){
-				event.target.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
-			}
-		}
 		
 		//create children must be overriden to create dynamically allocated children
 		override protected function createChildren():void
 		{
+			
+			//Elements are constructed, initialized with properties, and attached to display list		
 			//create the children of MX Panel
 			super.createChildren();		
 			var uLayout:VerticalLayout = new VerticalLayout;
@@ -385,8 +499,7 @@ package classes
 			userIdLbl.text = "AU: " + UserData.userNameStr;
 			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
 			userIdLbl.toolTip = userInfoStr;
-			
-			
+
 			group = new Group;
 			addElement(group);
 			group.addElement(input1);
@@ -410,13 +523,19 @@ package classes
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
 			bottomHG.visible = false;
+			
+			//presently, the requirement is only for two boxes
+			var dta:DynamicTextArea = new DynamicTextArea;
+			inputs.push(dta);
+			dta = new DynamicTextArea;
+			inputs.push(dta);
+			
 			invalidateProperties();
 		}
 		
 		override protected function commitProperties():void
 		{
-			super.commitProperties();
-			
+			super.commitProperties();	
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -426,7 +545,6 @@ package classes
 			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
 			userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);		
 		}
-		
 		
 		public function onArgumentPanelCreate(e:FlexEvent):void
 		{
@@ -448,7 +566,6 @@ package classes
 			displayTxt.text = input1.text;
 			displayTxt.width = input1.width;
 			displayTxt.height = input1.height;
-			
 		}
 		
 		public function toggle(m:MouseEvent):void
