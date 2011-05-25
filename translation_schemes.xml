@@ -443,19 +443,40 @@
 		
 		<Connection type="EQnecsuf">
 			<EN-US>
+				<claim/>
+				<string text=" is a necessary and sufficient condition for "/>
+				<reason/>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=" - необходимое и достаточное условие для "/>
+				<reason/>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" ist eine notwendige und hinreichende Bedingung für "/>
+				<reason/>
 			</GER>
 		</Connection>
 		
 		<Connection type="EQ">
 			<EN-US>
+				<claim/>
+				<string text=" and "/>
+				<reason/>
+				<string text=" are equivalent"/>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=" и "/>
+				<reason/>
+				<string text=" эквивалентны"/>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" und "/>
+				<reason/>
+				<string text=" sind equivalent"/>
 			</GER>
 		</Connection>
 		
