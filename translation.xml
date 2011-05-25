@@ -711,64 +711,64 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text="Um einen disjunktiven Syllogismus zu konstruieren, starte mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“): „entweder p oder q“. Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ConsDilOneProp">
+			<EN-US text="... with one proposition as claim"/>
+			<RUS text="... с одним суждением как заявлением"/>
+			<GER text="... mit allein einem Satz als Folge"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ConsDilDisjClaim">
+			<EN-US text="... with a disjunctive statement as claim"/>
+			<RUS text="... с дизъюнктивым утверждением как заявлением"/>
+			<GER text="... mit einer disjunktiven Aussage als Folge"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="NotAllHelp">
+			<EN-US text="To construct a not-all syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;). If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false."/>
+			<RUS text="Чтобы создать не - весь силлогизм, начните с &quot;гаранта&quot; Вашего аргумента (то есть, поле под &quot;поэтому&quot;). Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
+			<GER text="Um einen nicht-alle Syllogismus zu konstruieren, beginner mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“). Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ArgComplete">
+			<EN-US text="Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on &quot;add ...&quot; You might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger. Additionally, you need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme by clicking on &quot;ArgScheme.&quot;"/>
+			<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+			<GER text="Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf „füge hinzu ...“. Du kannst auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen. Du musst außerdem bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf „ArgSchema“ klickst, kannst Du das Argumentations-Schema wechseln "/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="CannotChangeScheme">
+			<EN-US text="Sorry, this argument scheme cannot be changed [cannot be replaced by another scheme]"/>
+			<RUS text="Жаль, эта схема аргумента не может быть изменена [не может быть заменен другой схемой]"/>
+			<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="CannotChangeMultReasons">
+			<EN-US text="Sorry, the scheme of an argument with more than one reason cannot be changed"/>
+			<RUS text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена"/>
+			<GER text="Entschuldigung, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="CannotAddReason">
+			<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
+			<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens  аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
+			<GER text="Entschuldigung, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: „Wenn P, dann Q“; „Immer wenn P, Q“; „Q, gegeben dass P“. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form „P allein dann, wenn Q“ ersetzt."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ClaimInNewWithLink">
+			<EN-US text="... claim in a new map, and create a link between this map and the new one"/>
+			<RUS text="... заявление новой карты, и создает связь между этой картой и новой"/>
+			<GER text="... Behauptung in einer neu zu beginnenden Argumentation und knüpfe eine Verbindung zwischen dieser Argumentation und der neuen."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ClaimInNewWOLink">
+			<EN-US text="... claim in a new map without creating a link"/>
+			<RUS text="... заявление новой карты, не создавая связь"/>
+			<GER text="... Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="CopyToClip">
+			<EN-US text="or copy into the clipboard "/>
+			<RUS text="или скопировать в клипборд(буфер)"/>
+			<GER text="oder kopiere in den Zwischenspeicher"/>
 		</Label>
 		
 		<Label name="">
