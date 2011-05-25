@@ -6,7 +6,7 @@
 				<reason/>
 				<repeat>
 					<conjunction text=" and "/>
-					<add_reason/>
+					<reason/>
 				</repeat>
 				<string text=", then "/>
 				<claim/>
@@ -16,7 +16,7 @@
 				<reason/>
 				<repeat>
 					<conjunction text=" и "/>
-					<add_reason/>
+					<reason/>
 				</repeat>
 				<string text=", то "/>
 				<claim/>
@@ -26,7 +26,7 @@
 				<reason/>
 				<repeat>
 					<conjunction text=" und "/>
-					<add_reason/>
+					<reason/>
 				</repeat>
 				<string text=", dann "/>
 				<claim/>
@@ -57,7 +57,7 @@
 				<reason/>
 				<repeat>
 					<conjunction text=" and "/>
-					<add_reason/>
+					<reason/>
 				</repeat>
 				<string text=", "/>
 				<claim/>
@@ -67,7 +67,7 @@
 				<reason/>
 				<repeat>
 					<conjunction text=" и "/>
-					<add_reason/>
+					<reason/>
 				</repeat>
 				<string text=", "/>
 				<claim/>
@@ -75,30 +75,61 @@
 			<GER>
 				<string text="Immer wenn "/>
 				<reason/>
+				<reason/>
 				<repeat>
 					<conjunction text=" und "/>
-					<add_reason/>
+					<reason/>
 				</repeat>
 				<string text=", "/>
 				<claim/>
 			</GER>
 		</Connection>
 		
-		<Connection type="">
+		<Connection type="MPonlyif">
 			<EN-US>
+				<reason/>
+				<string text=" only if "/>
+				<claim/>
 			</EN-US>
 			<RUS>
+				<reason/>
+				<string text=", только если "/>
+				<claim/>
 			</RUS>
 			<GER>
+				<reason/>
+				<string text="allein dann, wenn "/>
+				<claim/>
 			</GER>
 		</Connection>
 		
-		<Connection type="">
+		<Connection type="MPprovidedthat">
 			<EN-US>
+				<claim/>
+				<string text=" provided that "/>
+				<reason/>
+				<repeat>
+					<string text=" and "/>
+					<reason/>
+				</repeat>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=" при условии, что "/>
+				<reason/>
+				<repeat>
+					<string text=" и "/>
+					<reason/>
+				</repeat>
 			</RUS>
 			<GER>
+			<claim/>
+				<string text=", gegeben dass "/>
+				<reason/>
+				<repeat>
+					<string text=" und "/>
+					<reason/>
+				</repeat>
 			</GER>
 		</Connection>
 		
