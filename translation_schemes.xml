@@ -1,4 +1,4 @@
-<Translations>
+﻿<Translations>
 	<ConnTypes>
 		<Connection type="MPifthen">
 			<EN-US>
@@ -10,11 +10,11 @@
 				<claim/>
 			</EN-US>
 			<RUS>
-				<string text="???? "/>
+				<string text="Если  "/>
 				<reason/>
-				<conjunction text=" ? "/>
+				<conjunction text=" и "/>
 				<add_reason/>
-				<string text=", ?? "/>
+				<string text=", то "/>
 				<claim/>
 			</RUS>		
 			<GER>
