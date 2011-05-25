@@ -927,329 +927,159 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text="Siehe auch ..."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AddURL">
+			<EN-US text="... add URL [webaddress]"/>
+			<RUS text="... добавьте URL [webaddress]"/>
+			<GER text="... füge URL hinzu"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="EnterURL">
+			<EN-US text="Enter URL"/>
+			<RUS text="Введите  URL"/>
+			<GER text="Gebe URL ein"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="UploadRes">
+			<EN-US text="... upload resources"/>
+			<RUS text="... ресурсы закачки"/>
+			<GER text="... lade Materialien hoch"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ChooseFile">
+			<EN-US text="choose file"/>
+			<RUS text="выберите файл"/>
+			<GER text="Wähle eine Datei aus"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Upload">
+			<EN-US text="upload!"/>
+			<RUS text="Закачка на сайт!"/>
+			<GER text="Lade hoch!"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Resource">
+			<EN-US text="Resource file: [Enter title of your uploaded resources]"/>
+			<RUS text="Файл ресурса: [Введите название своих загруженных ресурсов]"/>
+			<GER text="Datei: [Gib einen Titel für die hochgeladenen Materialien ein]"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Paste">
+			<EN-US text="How do you want to connect this pasted element? As ... [it follows the list of items listed under &quot;add ...&quot; above]"/>
+			<RUS text="Как Вы хотите присоединить этот вставленный элемент? Как... [это следует за списком пунктов перечисленных под &quot;добавить...&quot; выше]"/>
+			<GER text="Wie willst Du das zu kopierende Element mit dieser Textbox verknüpfen? Als ..."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AddAnotherReason">
+			<EN-US text="... another reason for this argument so that only the combination of all reasons justifies the claim"/>
+			<RUS text="... другая причина этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
+			<GER text="... einen weiteren Grund für dieses Argument, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt. "/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AddIntermediate">
+			<EN-US text="... an intermediate reason to the reason on the right [e.g.: instead of &quot;p, therefore q&quot;: &quot;p, therefore s, therefore q&quot;]"/>
+			<RUS text="... промежуточная причина для причины справа [например: вместо &quot;p, поэтому q&quot;: &quot;p, поэтому s, поэтому q&quot;]"/>
+			<GER text="... einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AddIntermediateToSecond">
+			<EN-US text="... an intermediate reason to the second reason on the right"/>
+			<RUS text="... промежуточная причина для второй причины справа"/>
+			<GER text="... einen dazwischen geschaltenen Grund zu dem zweiten Grund auf der rechten Seite"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AddIntermediateLater">
+			<EN-US text="... an intermediate reason to the third/fourth/fifth/ sixth/seventh reason on the right"/>
+			<RUS text="... промежуточная причина для third/fourth/fifth/шестой/седьмой причины справа"/>
+			<GER text="... einen dazwischen geschaltenen Grund zu dem dritten/vierten/fünften/sechsten/siebten Grund auf der rechten Seite"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ConnectionToReason">
+			<EN-US text="What kind of connection do you want to establish to the reason on the right?"/>
+			<RUS text="Какую связь Вы хотите установить к причине справа?"/>
+			<GER text="Welche Art von Verknüpfung willst Du zu dem Grund auf der rechten Seite erstellen? "/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Arg">
+			<EN-US text="argument"/>
+			<RUS text="аргумент"/>
+			<GER text="Argument"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Support">
+			<EN-US text="support"/>
+			<RUS text="поддержка"/>
+			<GER text="Unterstützung"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="SelfDefConn">
+			<EN-US text="self-defined connection"/>
+			<RUS text="самоопределенная связь"/>
+			<GER text="Selbst-definierte Verknüpfung "/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ConnectViaAndOr">
+			<EN-US text="Connect your reasons by &quot;and&quot; | &quot;or&quot;"/>
+			<RUS text="Соедините свои причины с помощью  &quot;и&quot; | &quot;или&quot;"/>
+			<GER text="Verküpfe deinen Grund durch &quot;und&quot; | &quot;oder&quot;"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="MTAndOrHelp">
+			<EN-US text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided."/>
+			<RUS text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин."/>
+			<GER text="Da es sich hier um ein modus tollens Argument handelt, musst Du entscheiden ob Du alle deine Gründe durch „und&quot; oder durch „oder&quot; verknüpfen willst. Wenn Du sie durch „und&quot; verknüpfst, dann ist dein Argument allein dann gültig wenn alle deine Gründe wahr sind. Das bedeutet, dass dein Argument durch die Widerlegung von allein einem deiner Gründe widerlegt werden kann. Wenn Du deine Gründe durch „oder&quot; verknüpfst, dann ist dein Argument logisch gültig so lange zumindest einer deiner Gründe wahr ist. Das bedeutet, dass dein Argument allein durch die Widerlegung aller Gründe widerlegt werden kann."/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="InterArgScheme">
+			<EN-US text="Select an argument scheme for the new argument on the right:"/>
+			<RUS text="Выберите схему аргумента для нового аргумента справа:"/>
+			<GER text="Wähle für dein neues Argument auf der rechten Seite ein Argument-Schema aus:"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AnotherCond">
+			<EN-US text="Do you want to insert another conditional statement that is dependent on"/>
+			<RUS text="Вы хотите вставить другое зависимое условное заявление "/>
+			<GER text="Willst Du einen weiteren konditionalen Syllogismus einfügen, der abhängig ist von "/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="FirstAlt">
+			<EN-US text="--the first alternative of the alternative statement on the right"/>
+			<RUS text="- первая альтернатива для альтернативного заявления справа"/>
+			<GER text="--der ersten Alternative der alternativen Behauptung auf der rechten Seite"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="SecondAlt">
+			<EN-US text="-- the second alternative [both alternatives refer to the alternative in a constructive dilemma]"/>
+			<RUS text="- вторая альтернатива [обе альтернативы обращаются к альтернативе в конструктивной дилемме]"/>
+			<GER text="--der zweiten Alternative"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Generalization">
+			<EN-US text="... generalization"/>
+			<RUS text="... обобщение"/>
+			<GER text="... Verallgemeinerung"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="FactInst">
+			<EN-US text="... factual instantiation "/>
+			<RUS text="... фактическое инстанцирование"/>
+			<GER text="... faktische Instantiierung"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AttiNormInst">
+			<EN-US text="... attitudinal-normative instantiation"/>
+			<RUS text="... установочно-нормативное инстанцирование"/>
+			<GER text="Instantiierung von Einstellungen und Normativität"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Qualification">
+			<EN-US text="... qualification [such as &quot;probably,&quot; &quot;generally&quot; in an argument]"/>
+			<RUS text=".... условие  [такое как, &quot;вероятно,&quot; &quot;вообще&quot; в аргументе]"/>
+			<GER text="... Qualifizierung"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-				
+		<Label name="FourOptions">
+			<EN-US text="Click to see four options to overwrite parts of the automatically created structure of your argument"/>
+			<RUS text="Щелкните, чтобы видеть четыре опции, чтобы перезаписать части автоматически создаваемой структуры Вашего аргумента"/>
+			<GER text="Klicke hier, um vier Möglichkeiten zu sehen, Teile der automatisch generierten Struktur eines Argumentes zu überschreiben "/>
 	</Text>
 </Translations>
