@@ -771,6 +771,186 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text="oder kopiere in den Zwischenspeicher"/>
 		</Label>
 		
+		<Label name="AddArg">
+			<EN-US text="... an argument for this statement"/>
+			<RUS text="... аргумент для этого  утверждения"/>
+			<GER text="... ein Argument für diese Aussage"/>
+		</Label>
+		
+		<Label name="AddSupport">
+			<EN-US text="... a supporting statement"/>
+			<RUS text="... утверждение поддержки"/>
+			<GER text="... eine unterstützende Bemerkung"/>
+		</Label>
+
+		<Label name="AddObjEx">
+			<EN-US text="... an objection that defeats this universal statement by a counter example"/>
+			<RUS text="... возражение, которое побеждает это универсальное утверждение встречным примером"/>
+			<GER text="... einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
+		</Label>
+		
+		<Label name="AddObjArg">
+			<EN-US text="... an objection that defeats this statement by a counter argument"/>
+			<RUS text="... возражение, которое побеждает это утверждение встречным аргументом"/>
+			<GER text="... einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
+		</Label>
+		
+		<Label name="AddObjQ">
+			<EN-US text="... an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
+			<RUS text="... возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
+			<GER text="... einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
+		</Label>
+		
+		<Label name="AddObjNeg">
+			<EN-US text="... an objection that negates this statement without providing reasons (implies a request for justification)"/>
+			<RUS text="... возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
+			<GER text="... einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
+		</Label>
+		
+		<Label name="AddFA">
+			<EN-US text="....a friendly amendment for a reformulation of this claim"/>
+			<RUS text=".... дружественная поправка для переформулировки этого заявления"/>
+			<GER text="... einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
+		</Label>
+		
+		<Label name="AddDist">
+			<EN-US text="... a distinction between different cases for this statement"/>
+			<RUS text="... различие между различными случаями для этого утверждения"/>
+			<GER text="... eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
+		</Label>
+		
+		<Label name="AddDef">
+			<EN-US text="... a definition of a term"/>
+			<RUS text="... определение термина"/>
+			<GER text="... eine Definition eines Begriffes"/>
+		</Label>
+		
+		<Label name="AddQ">
+			<EN-US text="... a question"/>
+			<RUS text="... вопрос"/>
+			<GER text="... eine Frage"/>
+		</Label>
+		
+		<Label name="AddUnspecConn">
+			<EN-US text="... an unspecified connection to another text box [user needs to specify the kind of connection]"/>
+			<RUS text="... неуказанная связь с другим текстовым окном [пользователь должна определить вид связи]"/>
+			<GER text="... eine nicht-vorgegebene Art der Verbindung"/>
+		</Label>
+		
+		<Label name="AddLinkToMap">
+			<EN-US text="... a link to another argument map"/>
+			<RUS text="... связь с другой картой аргумента"/>
+			<GER text="... eine Verknüpfung zu einer anderen Argumentation"/>
+		</Label>
+		
+		<Label name="AddLinkToResource">
+			<EN-US text="... a link to resources"/>
+			<RUS text="... связь с ресурсами"/>
+			<GER text="... eine Verknüpfung zu Materialien"/>
+		</Label>
+		
+		<Label name="AddPaste">
+			<EN-US text="... paste from clipboard"/>
+			<RUS text="... вставить из клипборда(буфера)"/>
+			<GER text="... kopiere aus dem Zwischenspeicher"/>
+		</Label>
+		
+		<Label name="ObjectionHelp">
+			<EN-US text="Since this claim is justified by a logically valid argument, you can add objections or distinction between different cases only at the &quot;open ends&quot; of this argumentation which are not justified by further arguments. If you click here, a new map will be created that will be linked to this claim. Nevertheless, you should also argue against the &quot;open ends&quot; of this argument if you do not agree."/>
+			<RUS text="Так как это заявление оправдано логически действительным аргументом, Вы можете добавить возражения или различие между различными случаями только в &quot;открытых концах&quot; этой аргументации, которые не оправданы дальнейшими аргументами. Если Вы щелкнете здесь, то новая карта будет создана, который будет связан с этим заявлением. Однако, Вы должны также привести доводы против &quot;открытых концов&quot; этого аргумента, если Вы не соглашаетесь."/>
+			<GER text="Da diese Behauptung durch ein logisch gültiges Argument gerechtfertig ist, kannst Du Einwände oder eine Unterscheidung verschiedener Fälle ausschließlich an die „offenen Enden&quot; dieser Argumentation anfügen, die nicht durch weitere Argumente gerechtfertigt sind. Wenn Du diese Option hier auswählst, dann wird eine neue Argumentation begonnen welche mit dieser Behauptung hier verknüpft wird. Du solltest aber auf jeden Fall die „offenen Enden&quot; dieser Argumentation kritisieren, wenn Du der Schlussfolgerung nicht zustimmst."/>
+		</Label>
+		
+		<Label name="OrStartWithScheme">
+			<EN-US text="... or do you want to start with a certain argument scheme?"/>
+			<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/>
+			<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen?"/>
+		</Label>
+		
+		<Label name="Objection">
+			<EN-US text="Enter your objection"/>
+			<RUS text="Введите  Ваше возражение"/>
+			<GER text="Gib deinen Einwand ein"/>
+		</Label>
+		
+		<Label name="CounterEx">
+			<EN-US text="[Enter your counterexample in form of a statement]"/>
+			<RUS text="[Введите Ваш контрпример в форме утверждения]"/>
+			<GER text="[Gib Deinen Einwand in Form einer Aussage ein]"/>
+		</Label>
+		
+		<Label name="Question">
+			<EN-US text="[Enter a statement that questions this statement]"/>
+			<RUS text="[Введите утверждение, которое оспаривает это утверждение]"/>
+			<GER text="[Gib eine Aussage ein, welche diese Aussage in Frage stellt]"/>
+		</Label>
+		
+		<Label name="FriendlyAmend">
+			<EN-US text="Enter a suggestion to improve the formulation of this statement"/>
+			<RUS text="Введите предложение, чтобы улучшить  формулировку этого заявления"/>
+			<GER text="Gib einen Vorschlag zur Verbesserung dieser Behauptung ein"/>
+		</Label>
+		
+		<Label name="EnterQ">
+			<EN-US text="Enter your question"/>
+			<RUS text="Введите свой вопрос"/>
+			<GER text="Gib deine Frage ein"/>
+		</Label>
+		
+		<Label name="LinkToMap">
+			<EN-US text="create a link to an existing map"/>
+			<RUS text="создайте связь с существующей картой"/>
+			<GER text="Erstelle eine Verknüpfung zu einer bestehenden Argumentation."/>
+		</Label>
+		
+		<Label name="ListMaps">
+			<EN-US text="list of existing maps"/>
+			<RUS text="список существующих карт"/>
+			<GER text="Liste von Argumentationen"/>
+		</Label>
+		
+		<Label name="ArgMapOn">
+			<EN-US text="... the argument map on"/>
+			<RUS text="... карта аргумента на"/>
+			<GER text="... die Argumentation zu"/>
+		</Label>
+		
+		<Label name="NewMap">
+			<EN-US text="create a new map"/>
+			<RUS text="создайте новую карту"/>
+			<GER text="Beginne eine neue Argumentation"/>
+		</Label>
+		
+		<Label name="SeeAlso">
+			<EN-US text="See also ... [continues with: .. the argument on [title]]"/>
+			<RUS text="См. также... [продолжается с:.. аргумент на [названии]]"/>
+			<GER text="Siehe auch ..."/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
@@ -801,6 +981,275 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text=""/>
 		</Label>
 		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
 		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+				
 	</Text>
 </Translations>
