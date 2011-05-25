@@ -507,7 +507,7 @@
 					<string text=", то "/>
 					<claim/> <!-- The following claim from that SPECIFIC reason, not the final claim-->
 				</repeat>
-				<string text=" поэтому, если "/>
+				<string text="; поэтому, если "/>
 				<reason/> <!-- initial reason-->
 				<string text=", то "/>
 				<claim/> <!--final claim-->
@@ -527,19 +527,100 @@
 		</Connection>		
 		<Connection type="CSimplies">
 			<EN-US>
+				<repeat>
+					<reason/> <!-- Either the initial reason or the previous claim-->
+					<string text=" implies "/>
+					<claim/> <!-- The following claim from that SPECIFIC reason, not the final claim-->
+				</repeat>
+				<string text="; therefore, "/>
+				<reason/> <!-- initial reason-->
+				<string text=" implies "/>
+				<claim/> <!--final claim-->
 			</EN-US>
 			<RUS>
+				<repeat>
+					<reason/> <!-- Either the initial reason or the previous claim-->
+					<string text=" подразумевает "/>
+					<claim/> <!-- The following claim from that SPECIFIC reason, not the final claim-->
+				</repeat>
+				<string text="; поэтому, "/>
+				<reason/> <!-- initial reason-->
+				<string text=" подразумевает "/>
+				<claim/> <!--final claim-->
 			</RUS>
 			<GER>
+				<repeat>
+					<reason/> <!-- Either the initial reason or the previous claim-->
+					<string text=" impliziert "/>
+					<claim/> <!-- The following claim from that SPECIFIC reason, not the final claim-->
+				</repeat>
+				<string text="; deshalb, "/>
+				<reason/> <!-- initial reason-->
+				<string text=" impliziert "/>
+				<claim/> <!--final claim-->
 			</GER>
 		</Connection>
 		
 		<Connection type="CDaltclaim">
 			<EN-US>
+				<string text="Either "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" or "/>
+					<reason/>
+				</repeat>
+				<repeat>
+					<string text="; if "/>
+					<reason/>
+					<string text=", then "/>
+					<claim/>
+				</repeat>
+				<string text="; therefore, either ">
+				<claim/>
+				<repeat>
+					<conjunction text=" or "/>
+					<claim/>
+				</repeat>
 			</EN-US>
 			<RUS>
+				<string text="Или "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" или "/>
+					<reason/>
+				</repeat>
+				<repeat>
+					<string text="; если "/>
+					<reason/>
+					<string text=", то "/>
+					<claim/>
+				</repeat>
+				<string text="; поэтому, или ">
+				<claim/>
+				<repeat>
+					<conjunction text=" или "/>
+					<claim/>
+				</repeat>
 			</RUS>
 			<GER>
+				<string text="Entweder "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" oder "/>
+					<reason/>
+				</repeat>
+				<repeat>
+					<string text="; wenn "/>
+					<reason/>
+					<string text=", dann "/>
+					<claim/>
+				</repeat>
+				<string text="; deshalb, entweder ">
+				<claim/>
+				<repeat>
+					<conjunction text=" oder "/>
+					<claim/>
+				</repeat>
 			</GER>
 		</Connection>
 		
