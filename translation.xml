@@ -610,6 +610,179 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text="bestimme die Art der Verbindung"/>
 		</Label>
 		
+		<Label name="ArrowDirChange">
+			<EN-US text="change the arrow direction"/>
+			<RUS text="измените направление стрелки"/>
+			<GER text="verändere die Richtung des Pfeils"/>
+		</Label>
+		
+		<Label name="ArgSchemeChange">
+			<EN-US text="Click to change your argument scheme"/>
+			<RUS text="Щелкните, чтобы изменить Вашу схему аргумента"/>
+			<GER text="Klicke hier, um das Argument-Schema zu wechseln"/>
+		</Label>
+		
+		<Label name="ArgSchemeSelect">
+			<EN-US text="Select an argument scheme:"/>
+			<RUS text="Выберите схему аргумента:"/>
+			<GER text="Wähle ein Argument-Schema aus:"/>
+		</Label>
+		
+		<Label name="ModusPonens">
+			<EN-US text="modus ponens"/>
+			<RUS text="modus ponens"/>
+			<GER text="modus ponens"/>
+		</Label>
+		
+		<Label name="ModusTollens">
+			<EN-US text="modus tollens"/>
+			<RUS text="modus tollens"/>
+			<GER text="modus tollens"/>
+		</Label>
+		
+		<Label name="DisjunctSyl">
+			<EN-US text="disjunctive syllogism"/>
+			<RUS text="дизъюнктивный силлогизм"/>
+			<GER text="Disjunktiver Syllogismus"/>
+		</Label>
+		
+		<Label name="NotAllSyl">
+			<EN-US text="not-all syllogism"/>
+			<RUS text="«не – весь» силлогизм"/>
+			<GER text="Nicht-alle Syllogism"/>
+		</Label>
+		
+		<Label name="Equivalence">
+			<EN-US text="equivalence"/>
+			<RUS text="эквивалентность"/>
+			<GER text="Equivalenz"/>
+		</Label>
+		
+		<Label name="ConSyl">
+			<EN-US text="conditional syllogism"/>
+			<RUS text="условный силлогизм"/>
+			<GER text="Hypothetischer Syllogismus"/>
+		</Label>
+		
+		<Label name="ConsDil">
+			<EN-US text="constructive dilemma"/>
+			<RUS text="конструктивная дилемма"/>
+			<GER text="Konstruktives Dilemma"/>
+		</Label>
+		
+		<!-- There is russian text after Constructive Dilemma. I do not know what it is.
+		эквивалентность с инвертированной причиной и заявлением [то есть, Вы могли бы сказать “p, и q эквивалентны.” Тогда Вы можете вывести не-p из не-q]
+		-->
+		
+		<Label name="EQnegated">
+			<EN-US text="with negated reason(s) and claim "/>
+			<RUS text="с инвертированной причиной (ами) и заявлением"/>
+			<GER text="mit Grund und Folge negiert"/>
+		</Label>
+		
+		<Label name="EQaffirmed">
+			<EN-US text="with affirmed reason(s) and claim"/>
+			<RUS text="с подтвержденной причиной (ами) и заявлением"/>
+			<GER text="mit affirmiertem Grund (Gründen) und Folge"/>
+		</Label>
+		
+		<Label name="EQinferring">
+			<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer\n
+			--p from q\n
+			--q from p\n
+			--not-p from not-q, or\n
+			--not-q from not-p"/>
+			<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести\n
+			- p от q\n
+			- q от p\n
+			- не-p от не-q, или\n
+			- не-q от не-p"/>
+			<GER text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder\n
+			-- p von q,\n
+			-- q von p,\n
+			--nicht-p von nicht-q, oder\n
+			-- nicht-q von nicht-p\n
+			erschließen"/>
+		</Label>
+		
+		<Label name="DisSylHelp">
+			<EN-US text="To construct a disjunctive syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;): &quot;either p or q.&quot; In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
+			<RUS text="Чтобы создать дизъюнктивый силлогизм, начните  с &quot;гаранта&quot; Вашего аргумента (то есть, поле под &quot;поэтому&quot;): &quot;или p или q.&quot; В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
+			<GER text="Um einen disjunktiven Syllogismus zu konstruieren, starte mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“): „entweder p oder q“. Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
+		<Label name="">
+			<EN-US text=""/>
+			<RUS text=""/>
+			<GER text=""/>
+		</Label>
+		
 		<Label name="">
 			<EN-US text=""/>
 			<RUS text=""/>
