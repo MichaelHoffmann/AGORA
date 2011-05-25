@@ -289,8 +289,7 @@
 			<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is &quot;defeated,&quot; then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only &quot;questioned&quot; or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof."/>
 			<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
 			<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches.
-Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern.
-"/>
+Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
 		</Label>
 		
 		<Label name="Enabler">
@@ -482,48 +481,605 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<RUS text="необходимое условие"/>
 			<GER text="notwendige Bedingung"/>
 		</Label>
-		<!--
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+
+		
+		<Label name="Iff">
+			<EN-US text="if-and-only-if"/>
+			<RUS text="если и только если"/>
+			<GER text="genau dann wenn"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Equivalent">
+			<EN-US text="equivalent"/>
+			<RUS text="эквивалентный"/>
+			<GER text="äquivalent"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="NecAndSuf">
+			<EN-US text="necessary and sufficient condition"/>
+			<RUS text="необходимое и достаточное условие"/>
+			<GER text="notwendige und hinreichende Bedingung"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="NegatedReasons">
+			<EN-US text="with negated reasons"/>
+			<RUS text="с инвертированными причинами"/>
+			<GER text="mit negierten Gründen"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="AffirmedReasons">
+			<EN-US text="with affirmed reasons"/>
+			<RUS text="с подтвержденными причинами"/>
+			<GER text="mit affirmatierten Gründen"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="ParticularOrUniversal">
+			<EN-US text="Determine whether this statement is a\n
+						--particular statement\n
+						--universal statement
+						"/>
+			<RUS text="Определите, является ли это утверждение\n
+						- особое утверждение
+						- универсальное утверждение"/>
+			<GER text="Bestimme ob diese Aussage eine\n
+						-- Einzelaussage oder\n
+						-- Allgemeine Aussage ist"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Includes">
+			<EN-US text="includes"/>
+			<RUS text="включает"/>
+			<GER text="enthält"/>
 		</Label>
+		
+		<Label name="Therefore">
+			<EN-US text="therefore"/>
+			<RUS text="поэтому"/>
+			<GER text="deshalb"/>
+		</Label>
+		
+		<Label name="ArgScheme">
+			<EN-US text="ArgScheme"/>
+			<RUS text="ArgScheme"/>
+			<GER text="ArgSchema"/>
+		</Label>
+		
+		<Label name="Supports">
+			<EN-US text="supports"/>
+			<RUS text="поддерживает"/>
+			<GER text="unterstützt"/>
+		</Label>
+		
+		<Label name="DefeatsByCounterEx">
+			<EN-US text="defeats by counter example"/>
+			<RUS text="опровергает встречным примером"/>
+			<GER text="widerlegt durch Gegenbeispiel"/>
+		</Label>
+		
+		<Label name="DefeatsByCounterArg">
+			<EN-US text="defeats by counter argument"/>
+			<RUS text="опровергает встречным аргументом"/>
+			<GER text="widerlegt durch Gegenargument"/>
+		</Label>
+		
+		<Label name="Questions">
+			<EN-US text="questions"/>
+			<RUS text="вопросы"/>
+			<GER text="kritisiert"/>
+		</Label>
+		
+		<Label name="SeeObjection">
+			<EN-US text="See the following objection against this claim in another argument map [opens another map in which this objection can be justified]"/>
+			<RUS text="См.  следующее возражение против этого заявления в другой карте аргумента [открывает другую карту, в которой это возражение может быть оправдано]"/>
+			<GER text="Siehe den folgenden Einwand, der in einem anderen Argument verteidigt wird"/>
+		</Label>
+		
+		<Label name="Negates">
+			<EN-US text="negates"/>
+			<RUS text="отрицает"/>
+			<GER text="negiert"/>
+		</Label>
+		
+		<Label name="FriendlyAmend">
+			<EN-US text="friendly amendment [a suggestion by a supporter to improve the formulation of a claim]"/>
+			<RUS text="дружественная поправка [предложение сторонником, чтобы улучшить формулировку заявления]"/>
+			<GER text="Verbesserungsvorschlag"/>
+		</Label>
+		
+		<Label name="Defines">
+			<EN-US text="defines"/>
+			<RUS text="определяет"/>
+			<GER text="definiert"/>
+		</Label>
+		
+		<Label name="Comments">
+			<EN-US text="comments"/>
+			<RUS text="комментарии"/>
+			<GER text="Kommentar zu"/>
+		</Label>
+		
+		<Label name="LeadsToQ">
+			<EN-US text="leads to the question"/>
+			<RUS text="приводит к вопросу"/>
+			<GER text="führt zu der Frage"/>
+		</Label>
+		
+		<Label name="SpecifyConn">
+			<EN-US text="specify the connection"/>
+			<RUS text="определите связь"/>
+			<GER text="bestimme die Art der Verbindung"/>
+		</Label>
+		
+		<Label name="ArrowDirChange">
+			<EN-US text="change the arrow direction"/>
+			<RUS text="измените направление стрелки"/>
+			<GER text="verändere die Richtung des Pfeils"/>
+		</Label>
+		
+		<Label name="ArgSchemeChange">
+			<EN-US text="Click to change your argument scheme"/>
+			<RUS text="Щелкните, чтобы изменить Вашу схему аргумента"/>
+			<GER text="Klicke hier, um das Argument-Schema zu wechseln"/>
+		</Label>
+		
+		<Label name="ArgSchemeSelect">
+			<EN-US text="Select an argument scheme:"/>
+			<RUS text="Выберите схему аргумента:"/>
+			<GER text="Wähle ein Argument-Schema aus:"/>
+		</Label>
+		
+		<Label name="ModusPonens">
+			<EN-US text="modus ponens"/>
+			<RUS text="modus ponens"/>
+			<GER text="modus ponens"/>
+		</Label>
+		
+		<Label name="ModusTollens">
+			<EN-US text="modus tollens"/>
+			<RUS text="modus tollens"/>
+			<GER text="modus tollens"/>
+		</Label>
+		
+		<Label name="DisjunctSyl">
+			<EN-US text="disjunctive syllogism"/>
+			<RUS text="дизъюнктивный силлогизм"/>
+			<GER text="Disjunktiver Syllogismus"/>
+		</Label>
+		
+		<Label name="NotAllSyl">
+			<EN-US text="not-all syllogism"/>
+			<RUS text="«не – весь» силлогизм"/>
+			<GER text="Nicht-alle Syllogism"/>
+		</Label>
+		
+		<Label name="Equivalence">
+			<EN-US text="equivalence"/>
+			<RUS text="эквивалентность"/>
+			<GER text="Equivalenz"/>
+		</Label>
+		
+		<Label name="ConSyl">
+			<EN-US text="conditional syllogism"/>
+			<RUS text="условный силлогизм"/>
+			<GER text="Hypothetischer Syllogismus"/>
+		</Label>
+		
+		<Label name="ConsDil">
+			<EN-US text="constructive dilemma"/>
+			<RUS text="конструктивная дилемма"/>
+			<GER text="Konstruktives Dilemma"/>
+		</Label>
+		
+		<!-- There is russian text after Constructive Dilemma. I do not know what it is.
+		эквивалентность с инвертированной причиной и заявлением [то есть, Вы могли бы сказать “p, и q эквивалентны.” Тогда Вы можете вывести не-p из не-q]
 		-->
+		
+		<Label name="EQnegated">
+			<EN-US text="with negated reason(s) and claim "/>
+			<RUS text="с инвертированной причиной (ами) и заявлением"/>
+			<GER text="mit Grund und Folge negiert"/>
+		</Label>
+		
+		<Label name="EQaffirmed">
+			<EN-US text="with affirmed reason(s) and claim"/>
+			<RUS text="с подтвержденной причиной (ами) и заявлением"/>
+			<GER text="mit affirmiertem Grund (Gründen) und Folge"/>
+		</Label>
+		
+		<Label name="EQinferring">
+			<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer\n
+			--p from q\n
+			--q from p\n
+			--not-p from not-q, or\n
+			--not-q from not-p"/>
+			<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести\n
+			- p от q\n
+			- q от p\n
+			- не-p от не-q, или\n
+			- не-q от не-p"/>
+			<GER text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder\n
+			-- p von q,\n
+			-- q von p,\n
+			--nicht-p von nicht-q, oder\n
+			-- nicht-q von nicht-p\n
+			erschließen"/>
+		</Label>
+		
+		<Label name="DisSylHelp">
+			<EN-US text="To construct a disjunctive syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;): &quot;either p or q.&quot; In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
+			<RUS text="Чтобы создать дизъюнктивый силлогизм, начните  с &quot;гаранта&quot; Вашего аргумента (то есть, поле под &quot;поэтому&quot;): &quot;или p или q.&quot; В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
+			<GER text="Um einen disjunktiven Syllogismus zu konstruieren, starte mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“): „entweder p oder q“. Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
+		</Label>
+		
+		<Label name="ConsDilOneProp">
+			<EN-US text="... with one proposition as claim"/>
+			<RUS text="... с одним суждением как заявлением"/>
+			<GER text="... mit allein einem Satz als Folge"/>
+		</Label>
+		
+		<Label name="ConsDilDisjClaim">
+			<EN-US text="... with a disjunctive statement as claim"/>
+			<RUS text="... с дизъюнктивым утверждением как заявлением"/>
+			<GER text="... mit einer disjunktiven Aussage als Folge"/>
+		</Label>
+		
+		<Label name="NotAllHelp">
+			<EN-US text="To construct a not-all syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;). If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false."/>
+			<RUS text="Чтобы создать не - весь силлогизм, начните с &quot;гаранта&quot; Вашего аргумента (то есть, поле под &quot;поэтому&quot;). Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
+			<GER text="Um einen nicht-alle Syllogismus zu konstruieren, beginner mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“). Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss."/>
+		</Label>
+		
+		<Label name="ArgComplete">
+			<EN-US text="Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on &quot;add ...&quot; You might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger. Additionally, you need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme by clicking on &quot;ArgScheme.&quot;"/>
+			<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+			<GER text="Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf „füge hinzu ...“. Du kannst auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen. Du musst außerdem bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf „ArgSchema“ klickst, kannst Du das Argumentations-Schema wechseln "/>
+		</Label>
+		
+		<Label name="CannotChangeScheme">
+			<EN-US text="Sorry, this argument scheme cannot be changed [cannot be replaced by another scheme]"/>
+			<RUS text="Жаль, эта схема аргумента не может быть изменена [не может быть заменен другой схемой]"/>
+			<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
+		</Label>
+		
+		<Label name="CannotChangeMultReasons">
+			<EN-US text="Sorry, the scheme of an argument with more than one reason cannot be changed"/>
+			<RUS text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена"/>
+			<GER text="Entschuldigung, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden."/>
+		</Label>
+		
+		<Label name="CannotAddReason">
+			<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
+			<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens  аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
+			<GER text="Entschuldigung, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: „Wenn P, dann Q“; „Immer wenn P, Q“; „Q, gegeben dass P“. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form „P allein dann, wenn Q“ ersetzt."/>
+		</Label>
+		
+		<Label name="ClaimInNewWithLink">
+			<EN-US text="... claim in a new map, and create a link between this map and the new one"/>
+			<RUS text="... заявление новой карты, и создает связь между этой картой и новой"/>
+			<GER text="... Behauptung in einer neu zu beginnenden Argumentation und knüpfe eine Verbindung zwischen dieser Argumentation und der neuen."/>
+		</Label>
+		
+		<Label name="ClaimInNewWOLink">
+			<EN-US text="... claim in a new map without creating a link"/>
+			<RUS text="... заявление новой карты, не создавая связь"/>
+			<GER text="... Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen"/>
+		</Label>
+		
+		<Label name="CopyToClip">
+			<EN-US text="or copy into the clipboard "/>
+			<RUS text="или скопировать в клипборд(буфер)"/>
+			<GER text="oder kopiere in den Zwischenspeicher"/>
+		</Label>
+		
+		<Label name="AddArg">
+			<EN-US text="... an argument for this statement"/>
+			<RUS text="... аргумент для этого  утверждения"/>
+			<GER text="... ein Argument für diese Aussage"/>
+		</Label>
+		
+		<Label name="AddSupport">
+			<EN-US text="... a supporting statement"/>
+			<RUS text="... утверждение поддержки"/>
+			<GER text="... eine unterstützende Bemerkung"/>
+		</Label>
+
+		<Label name="AddObjEx">
+			<EN-US text="... an objection that defeats this universal statement by a counter example"/>
+			<RUS text="... возражение, которое побеждает это универсальное утверждение встречным примером"/>
+			<GER text="... einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
+		</Label>
+		
+		<Label name="AddObjArg">
+			<EN-US text="... an objection that defeats this statement by a counter argument"/>
+			<RUS text="... возражение, которое побеждает это утверждение встречным аргументом"/>
+			<GER text="... einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
+		</Label>
+		
+		<Label name="AddObjQ">
+			<EN-US text="... an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
+			<RUS text="... возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
+			<GER text="... einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
+		</Label>
+		
+		<Label name="AddObjNeg">
+			<EN-US text="... an objection that negates this statement without providing reasons (implies a request for justification)"/>
+			<RUS text="... возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
+			<GER text="... einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
+		</Label>
+		
+		<Label name="AddFA">
+			<EN-US text="....a friendly amendment for a reformulation of this claim"/>
+			<RUS text=".... дружественная поправка для переформулировки этого заявления"/>
+			<GER text="... einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
+		</Label>
+		
+		<Label name="AddDist">
+			<EN-US text="... a distinction between different cases for this statement"/>
+			<RUS text="... различие между различными случаями для этого утверждения"/>
+			<GER text="... eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
+		</Label>
+		
+		<Label name="AddDef">
+			<EN-US text="... a definition of a term"/>
+			<RUS text="... определение термина"/>
+			<GER text="... eine Definition eines Begriffes"/>
+		</Label>
+		
+		<Label name="AddQ">
+			<EN-US text="... a question"/>
+			<RUS text="... вопрос"/>
+			<GER text="... eine Frage"/>
+		</Label>
+		
+		<Label name="AddUnspecConn">
+			<EN-US text="... an unspecified connection to another text box [user needs to specify the kind of connection]"/>
+			<RUS text="... неуказанная связь с другим текстовым окном [пользователь должна определить вид связи]"/>
+			<GER text="... eine nicht-vorgegebene Art der Verbindung"/>
+		</Label>
+		
+		<Label name="AddLinkToMap">
+			<EN-US text="... a link to another argument map"/>
+			<RUS text="... связь с другой картой аргумента"/>
+			<GER text="... eine Verknüpfung zu einer anderen Argumentation"/>
+		</Label>
+		
+		<Label name="AddLinkToResource">
+			<EN-US text="... a link to resources"/>
+			<RUS text="... связь с ресурсами"/>
+			<GER text="... eine Verknüpfung zu Materialien"/>
+		</Label>
+		
+		<Label name="AddPaste">
+			<EN-US text="... paste from clipboard"/>
+			<RUS text="... вставить из клипборда(буфера)"/>
+			<GER text="... kopiere aus dem Zwischenspeicher"/>
+		</Label>
+		
+		<Label name="ObjectionHelp">
+			<EN-US text="Since this claim is justified by a logically valid argument, you can add objections or distinction between different cases only at the &quot;open ends&quot; of this argumentation which are not justified by further arguments. If you click here, a new map will be created that will be linked to this claim. Nevertheless, you should also argue against the &quot;open ends&quot; of this argument if you do not agree."/>
+			<RUS text="Так как это заявление оправдано логически действительным аргументом, Вы можете добавить возражения или различие между различными случаями только в &quot;открытых концах&quot; этой аргументации, которые не оправданы дальнейшими аргументами. Если Вы щелкнете здесь, то новая карта будет создана, который будет связан с этим заявлением. Однако, Вы должны также привести доводы против &quot;открытых концов&quot; этого аргумента, если Вы не соглашаетесь."/>
+			<GER text="Da diese Behauptung durch ein logisch gültiges Argument gerechtfertig ist, kannst Du Einwände oder eine Unterscheidung verschiedener Fälle ausschließlich an die „offenen Enden&quot; dieser Argumentation anfügen, die nicht durch weitere Argumente gerechtfertigt sind. Wenn Du diese Option hier auswählst, dann wird eine neue Argumentation begonnen welche mit dieser Behauptung hier verknüpft wird. Du solltest aber auf jeden Fall die „offenen Enden&quot; dieser Argumentation kritisieren, wenn Du der Schlussfolgerung nicht zustimmst."/>
+		</Label>
+		
+		<Label name="OrStartWithScheme">
+			<EN-US text="... or do you want to start with a certain argument scheme?"/>
+			<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/>
+			<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen?"/>
+		</Label>
+		
+		<Label name="Objection">
+			<EN-US text="Enter your objection"/>
+			<RUS text="Введите  Ваше возражение"/>
+			<GER text="Gib deinen Einwand ein"/>
+		</Label>
+		
+		<Label name="CounterEx">
+			<EN-US text="[Enter your counterexample in form of a statement]"/>
+			<RUS text="[Введите Ваш контрпример в форме утверждения]"/>
+			<GER text="[Gib Deinen Einwand in Form einer Aussage ein]"/>
+		</Label>
+		
+		<Label name="Question">
+			<EN-US text="[Enter a statement that questions this statement]"/>
+			<RUS text="[Введите утверждение, которое оспаривает это утверждение]"/>
+			<GER text="[Gib eine Aussage ein, welche diese Aussage in Frage stellt]"/>
+		</Label>
+		
+		<Label name="FriendlyAmend">
+			<EN-US text="Enter a suggestion to improve the formulation of this statement"/>
+			<RUS text="Введите предложение, чтобы улучшить  формулировку этого заявления"/>
+			<GER text="Gib einen Vorschlag zur Verbesserung dieser Behauptung ein"/>
+		</Label>
+		
+		<Label name="EnterQ">
+			<EN-US text="Enter your question"/>
+			<RUS text="Введите свой вопрос"/>
+			<GER text="Gib deine Frage ein"/>
+		</Label>
+		
+		<Label name="LinkToMap">
+			<EN-US text="create a link to an existing map"/>
+			<RUS text="создайте связь с существующей картой"/>
+			<GER text="Erstelle eine Verknüpfung zu einer bestehenden Argumentation."/>
+		</Label>
+		
+		<Label name="ListMaps">
+			<EN-US text="list of existing maps"/>
+			<RUS text="список существующих карт"/>
+			<GER text="Liste von Argumentationen"/>
+		</Label>
+		
+		<Label name="ArgMapOn">
+			<EN-US text="... the argument map on"/>
+			<RUS text="... карта аргумента на"/>
+			<GER text="... die Argumentation zu"/>
+		</Label>
+		
+		<Label name="NewMap">
+			<EN-US text="create a new map"/>
+			<RUS text="создайте новую карту"/>
+			<GER text="Beginne eine neue Argumentation"/>
+		</Label>
+		
+		<Label name="SeeAlso">
+			<EN-US text="See also ... [continues with: .. the argument on [title]]"/>
+			<RUS text="См. также... [продолжается с:.. аргумент на [названии]]"/>
+			<GER text="Siehe auch ..."/>
+		</Label>
+		
+		<Label name="AddURL">
+			<EN-US text="... add URL [webaddress]"/>
+			<RUS text="... добавьте URL [webaddress]"/>
+			<GER text="... füge URL hinzu"/>
+		</Label>
+		
+		<Label name="EnterURL">
+			<EN-US text="Enter URL"/>
+			<RUS text="Введите  URL"/>
+			<GER text="Gebe URL ein"/>
+		</Label>
+		
+		<Label name="UploadRes">
+			<EN-US text="... upload resources"/>
+			<RUS text="... ресурсы закачки"/>
+			<GER text="... lade Materialien hoch"/>
+		</Label>
+		
+		<Label name="ChooseFile">
+			<EN-US text="choose file"/>
+			<RUS text="выберите файл"/>
+			<GER text="Wähle eine Datei aus"/>
+		</Label>
+		
+		<Label name="Upload">
+			<EN-US text="upload!"/>
+			<RUS text="Закачка на сайт!"/>
+			<GER text="Lade hoch!"/>
+		</Label>
+		
+		<Label name="Resource">
+			<EN-US text="Resource file: [Enter title of your uploaded resources]"/>
+			<RUS text="Файл ресурса: [Введите название своих загруженных ресурсов]"/>
+			<GER text="Datei: [Gib einen Titel für die hochgeladenen Materialien ein]"/>
+		</Label>
+		
+		<Label name="Paste">
+			<EN-US text="How do you want to connect this pasted element? As ... [it follows the list of items listed under &quot;add ...&quot; above]"/>
+			<RUS text="Как Вы хотите присоединить этот вставленный элемент? Как... [это следует за списком пунктов перечисленных под &quot;добавить...&quot; выше]"/>
+			<GER text="Wie willst Du das zu kopierende Element mit dieser Textbox verknüpfen? Als ..."/>
+		</Label>
+		
+		<Label name="AddAnotherReason">
+			<EN-US text="... another reason for this argument so that only the combination of all reasons justifies the claim"/>
+			<RUS text="... другая причина этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
+			<GER text="... einen weiteren Grund für dieses Argument, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt. "/>
+		</Label>
+		
+		<Label name="AddIntermediate">
+			<EN-US text="... an intermediate reason to the reason on the right [e.g.: instead of &quot;p, therefore q&quot;: &quot;p, therefore s, therefore q&quot;]"/>
+			<RUS text="... промежуточная причина для причины справа [например: вместо &quot;p, поэтому q&quot;: &quot;p, поэтому s, поэтому q&quot;]"/>
+			<GER text="... einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite"/>
+		</Label>
+		
+		<Label name="AddIntermediateToSecond">
+			<EN-US text="... an intermediate reason to the second reason on the right"/>
+			<RUS text="... промежуточная причина для второй причины справа"/>
+			<GER text="... einen dazwischen geschaltenen Grund zu dem zweiten Grund auf der rechten Seite"/>
+		</Label>
+		
+		<Label name="AddIntermediateLater">
+			<EN-US text="... an intermediate reason to the third/fourth/fifth/ sixth/seventh reason on the right"/>
+			<RUS text="... промежуточная причина для third/fourth/fifth/шестой/седьмой причины справа"/>
+			<GER text="... einen dazwischen geschaltenen Grund zu dem dritten/vierten/fünften/sechsten/siebten Grund auf der rechten Seite"/>
+		</Label>
+		
+		<Label name="ConnectionToReason">
+			<EN-US text="What kind of connection do you want to establish to the reason on the right?"/>
+			<RUS text="Какую связь Вы хотите установить к причине справа?"/>
+			<GER text="Welche Art von Verknüpfung willst Du zu dem Grund auf der rechten Seite erstellen? "/>
+		</Label>
+		
+		<Label name="Arg">
+			<EN-US text="argument"/>
+			<RUS text="аргумент"/>
+			<GER text="Argument"/>
+		</Label>
+		
+		<Label name="Support">
+			<EN-US text="support"/>
+			<RUS text="поддержка"/>
+			<GER text="Unterstützung"/>
+		</Label>
+		
+		<Label name="SelfDefConn">
+			<EN-US text="self-defined connection"/>
+			<RUS text="самоопределенная связь"/>
+			<GER text="Selbst-definierte Verknüpfung "/>
+		</Label>
+		
+		<Label name="ConnectViaAndOr">
+			<EN-US text="Connect your reasons by &quot;and&quot; | &quot;or&quot;"/>
+			<RUS text="Соедините свои причины с помощью  &quot;и&quot; | &quot;или&quot;"/>
+			<GER text="Verküpfe deinen Grund durch &quot;und&quot; | &quot;oder&quot;"/>
+		</Label>
+		
+		<Label name="MTAndOrHelp">
+			<EN-US text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided."/>
+			<RUS text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин."/>
+			<GER text="Da es sich hier um ein modus tollens Argument handelt, musst Du entscheiden ob Du alle deine Gründe durch „und&quot; oder durch „oder&quot; verknüpfen willst. Wenn Du sie durch „und&quot; verknüpfst, dann ist dein Argument allein dann gültig wenn alle deine Gründe wahr sind. Das bedeutet, dass dein Argument durch die Widerlegung von allein einem deiner Gründe widerlegt werden kann. Wenn Du deine Gründe durch „oder&quot; verknüpfst, dann ist dein Argument logisch gültig so lange zumindest einer deiner Gründe wahr ist. Das bedeutet, dass dein Argument allein durch die Widerlegung aller Gründe widerlegt werden kann."/>
+		</Label>
+		
+		<Label name="InterArgScheme">
+			<EN-US text="Select an argument scheme for the new argument on the right:"/>
+			<RUS text="Выберите схему аргумента для нового аргумента справа:"/>
+			<GER text="Wähle für dein neues Argument auf der rechten Seite ein Argument-Schema aus:"/>
+		</Label>
+		
+		<Label name="AnotherCond">
+			<EN-US text="Do you want to insert another conditional statement that is dependent on"/>
+			<RUS text="Вы хотите вставить другое зависимое условное заявление "/>
+			<GER text="Willst Du einen weiteren konditionalen Syllogismus einfügen, der abhängig ist von "/>
+		</Label>
+		
+		<Label name="FirstAlt">
+			<EN-US text="--the first alternative of the alternative statement on the right"/>
+			<RUS text="- первая альтернатива для альтернативного заявления справа"/>
+			<GER text="--der ersten Alternative der alternativen Behauptung auf der rechten Seite"/>
+		</Label>
+		
+		<Label name="SecondAlt">
+			<EN-US text="-- the second alternative [both alternatives refer to the alternative in a constructive dilemma]"/>
+			<RUS text="- вторая альтернатива [обе альтернативы обращаются к альтернативе в конструктивной дилемме]"/>
+			<GER text="--der zweiten Alternative"/>
+		</Label>
+		
+		<Label name="Generalization">
+			<EN-US text="... generalization"/>
+			<RUS text="... обобщение"/>
+			<GER text="... Verallgemeinerung"/>
+		</Label>
+		
+		<Label name="FactInst">
+			<EN-US text="... factual instantiation "/>
+			<RUS text="... фактическое инстанцирование"/>
+			<GER text="... faktische Instantiierung"/>
+		</Label>
+		
+		<Label name="AttiNormInst">
+			<EN-US text="... attitudinal-normative instantiation"/>
+			<RUS text="... установочно-нормативное инстанцирование"/>
+			<GER text="Instantiierung von Einstellungen und Normativität"/>
+		</Label>
+		
+		<Label name="Qualification">
+			<EN-US text="... qualification [such as &quot;probably,&quot; &quot;generally&quot; in an argument]"/>
+			<RUS text=".... условие  [такое как, &quot;вероятно,&quot; &quot;вообще&quot; в аргументе]"/>
+			<GER text="... Qualifizierung"/>
+		</Label>
+		
+		<Label name="FourOptions">
+			<EN-US text="Click to see four options to overwrite parts of the automatically created structure of your argument"/>
+			<RUS text="Щелкните, чтобы видеть четыре опции, чтобы перезаписать части автоматически создаваемой структуры Вашего аргумента"/>
+			<GER text="Klicke hier, um vier Möglichkeiten zu sehen, Teile der automatisch generierten Struktur eines Argumentes zu überschreiben "/>
 	</Text>
 </Translations>
