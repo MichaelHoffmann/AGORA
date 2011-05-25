@@ -1,0 +1,30 @@
+<Translations>
+	<ConnTypes>
+		<Connection type="MPifthen">
+			<EN-US>
+				<string text="If "/>
+				<reason/>
+				<conjunction text=" and "/>
+				<add_reason/>
+				<string text=", then "/>
+				<claim/>
+			</EN-US>
+			<RUS>
+				<string text="???? "/>
+				<reason/>
+				<conjunction text=" ? "/>
+				<add_reason/>
+				<string text=", ?? "/>
+				<claim/>
+			</RUS>		
+			<GER>
+				<string text="Wenn "/>
+				<reason/>
+				<conjunction text=" und "/>
+				<add_reason/>
+				<string text=", dann "/>
+				<claim/>
+			</GER>
+		</Connection>
+	</ConnTypes>
+</Translations>
