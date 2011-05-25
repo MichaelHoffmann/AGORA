@@ -483,10 +483,131 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text="notwendige Bedingung"/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
+		<Label name="Iff">
+			<EN-US text="if-and-only-if"/>
+			<RUS text="если и только если"/>
+			<GER text="genau dann wenn"/>
+		</Label>
+		
+		<Label name="Equivalent">
+			<EN-US text="equivalent"/>
+			<RUS text="эквивалентный"/>
+			<GER text="äquivalent"/>
+		</Label>
+		
+		<Label name="NecAndSuf">
+			<EN-US text="necessary and sufficient condition"/>
+			<RUS text="необходимое и достаточное условие"/>
+			<GER text="notwendige und hinreichende Bedingung"/>
+		</Label>
+		
+		<Label name="NegatedReasons">
+			<EN-US text="with negated reasons"/>
+			<RUS text="с инвертированными причинами"/>
+			<GER text="mit negierten Gründen"/>
+		</Label>
+		
+		<Label name="AffirmedReasons">
+			<EN-US text="with affirmed reasons"/>
+			<RUS text="с подтвержденными причинами"/>
+			<GER text="mit affirmatierten Gründen"/>
+		</Label>
+		
+		<Label name="ParticularOrUniversal">
+			<EN-US text="Determine whether this statement is a\n
+						--particular statement\n
+						--universal statement
+						"/>
+			<RUS text="Определите, является ли это утверждение\n
+						- особое утверждение
+						- универсальное утверждение"/>
+			<GER text="Bestimme ob diese Aussage eine\n
+						-- Einzelaussage oder\n
+						-- Allgemeine Aussage ist"/>
+		</Label>
+		
+		<Label name="Includes">
+			<EN-US text="includes"/>
+			<RUS text="включает"/>
+			<GER text="enthält"/>
+		</Label>
+		
+		<Label name="Therefore">
+			<EN-US text="therefore"/>
+			<RUS text="поэтому"/>
+			<GER text="deshalb"/>
+		</Label>
+		
+		<Label name="ArgScheme">
+			<EN-US text="ArgScheme"/>
+			<RUS text="ArgScheme"/>
+			<GER text="ArgSchema"/>
+		</Label>
+		
+		<Label name="Supports">
+			<EN-US text="supports"/>
+			<RUS text="поддерживает"/>
+			<GER text="unterstützt"/>
+		</Label>
+		
+		<Label name="DefeatsByCounterEx">
+			<EN-US text="defeats by counter example"/>
+			<RUS text="опровергает встречным примером"/>
+			<GER text="widerlegt durch Gegenbeispiel"/>
+		</Label>
+		
+		<Label name="DefeatsByCounterArg">
+			<EN-US text="defeats by counter argument"/>
+			<RUS text="опровергает встречным аргументом"/>
+			<GER text="widerlegt durch Gegenargument"/>
+		</Label>
+		
+		<Label name="Questions">
+			<EN-US text="questions"/>
+			<RUS text="вопросы"/>
+			<GER text="kritisiert"/>
+		</Label>
+		
+		<Label name="SeeObjection">
+			<EN-US text="See the following objection against this claim in another argument map [opens another map in which this objection can be justified]"/>
+			<RUS text="См.  следующее возражение против этого заявления в другой карте аргумента [открывает другую карту, в которой это возражение может быть оправдано]"/>
+			<GER text="Siehe den folgenden Einwand, der in einem anderen Argument verteidigt wird"/>
+		</Label>
+		
+		<Label name="Negates">
+			<EN-US text="negates"/>
+			<RUS text="отрицает"/>
+			<GER text="negiert"/>
+		</Label>
+		
+		<Label name="FriendlyAmend">
+			<EN-US text="friendly amendment [a suggestion by a supporter to improve the formulation of a claim]"/>
+			<RUS text="дружественная поправка [предложение сторонником, чтобы улучшить формулировку заявления]"/>
+			<GER text="Verbesserungsvorschlag"/>
+		</Label>
+		
+		<Label name="Defines">
+			<EN-US text="defines"/>
+			<RUS text="определяет"/>
+			<GER text="definiert"/>
+		</Label>
+		
+		<Label name="Comments">
+			<EN-US text="comments"/>
+			<RUS text="комментарии"/>
+			<GER text="Kommentar zu"/>
+		</Label>
+		
+		<Label name="LeadsToQ">
+			<EN-US text="leads to the question"/>
+			<RUS text="приводит к вопросу"/>
+			<GER text="führt zu der Frage"/>
+		</Label>
+		
+		<Label name="SpecifyConn">
+			<EN-US text="specify the connection"/>
+			<RUS text="определите связь"/>
+			<GER text="bestimme die Art der Verbindung"/>
 		</Label>
 		
 		<Label name="">
@@ -507,23 +628,6 @@ Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von ver
 			<GER text=""/>
 		</Label>
 		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
-		
-		<Label name="">
-			<EN-US text=""/>
-			<RUS text=""/>
-			<GER text=""/>
-		</Label>
 		
 	</Text>
 </Translations>
