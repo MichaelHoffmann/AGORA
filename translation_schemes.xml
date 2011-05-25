@@ -190,7 +190,7 @@
 			</GER>
 		</Connection>
 				
-		<Connection type="">
+		<Connection type="MTimplies">
 			<EN-US>
 			</EN-US>
 			<RUS>
@@ -199,7 +199,7 @@
 			</GER>
 		</Connection>
 				
-		<Connection type="">
+		<Connection type="MTwhenever">
 			<EN-US>
 			</EN-US>
 			<RUS>
@@ -208,7 +208,7 @@
 			</GER>
 		</Connection>
 				
-		<Connection type="">
+		<Connection type="MTonlyif">
 			<EN-US>
 			</EN-US>
 			<RUS>
@@ -217,7 +217,7 @@
 			</GER>
 		</Connection>
 				
-		<Connection type="">
+		<Connection type="MTonlyifand">
 			<EN-US>
 			</EN-US>
 			<RUS>
@@ -226,7 +226,7 @@
 			</GER>
 		</Connection>
 				
-		<Connection type="">
+		<Connection type="MTonlyifor">
 			<EN-US>
 			</EN-US>
 			<RUS>
@@ -235,7 +235,7 @@
 			</GER>
 		</Connection>
 				
-		<Connection type="">
+		<Connection type="MTprovidedthat">
 			<EN-US>
 			</EN-US>
 			<RUS>
@@ -244,7 +244,7 @@
 			</GER>
 		</Connection>
 				
-		<Connection type="">
+		<Connection type="MTsufficient">
 			<EN-US>
 			</EN-US>
 			<RUS>
@@ -253,5 +253,92 @@
 			</GER>
 		</Connection>
 		
+		<Connection type="MTnecessary">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+		
+		<Connection type="DisjSyl">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+		
+		<Connection type="NotAllSyl">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>		
+		<Connection type="EQiff">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+		
+		<Connection type="EQnecsuf">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+		
+		<Connection type="EQ">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+		
+		<Connection type="CSifthen">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>		
+		<Connection type="CSimplies">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+		
+		<Connection type="CDaltclaim">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+		
+		<Connection type="CDpropclaim">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
 	</ConnTypes>
 </Translations>
