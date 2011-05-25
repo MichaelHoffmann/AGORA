@@ -192,99 +192,252 @@
 				
 		<Connection type="MTimplies">
 			<EN-US>
+				<claim/>
+				<string text=" implies "/>
+				<reason/>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=" подразумевает "/>
+				<reason/>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" impliziert "/>
+				<reason/>
 			</GER>
 		</Connection>
 				
 		<Connection type="MTwhenever">
 			<EN-US>
+				<string text="Whenever "/>
+				<claim/>
+				<string text=", "/>
+				<reason/>
 			</EN-US>
 			<RUS>
+				<string text="Всякий раз, когда "/>
+				<claim/>
+				<string text=", "/>
+				<reason/>
 			</RUS>
 			<GER>
+				<string text="Immer wenn "/>
+				<claim/>
+				<string text=", dann"/>
+				<reason/>
 			</GER>
 		</Connection>
 				
 		<Connection type="MTonlyif">
 			<EN-US>
+				<claim/>
+				<string text=" only if "/>
+				<reason/>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=", только если "/>
+				<reason/>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" allein dann, wenn "/>
+				<reason/>
 			</GER>
 		</Connection>
 				
 		<Connection type="MTonlyifand">
 			<EN-US>
+				<claim/>
+				<string text=" only if "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" and "/>
+					<reason/>
+				</repeat>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=", только если "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" и "/>
+					<reason/>
+				</repeat>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" allein dann, wenn "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" und "/>
+					<reason/>
+				</repeat>
 			</GER>
 		</Connection>
 				
 		<Connection type="MTonlyifor">
 			<EN-US>
+				<claim/>
+				<string text=" only if "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" or "/>
+					<reason/>
+				</repeat>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=", только если "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" или "/>
+					<reason/>
+				</repeat>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" allein dann, wenn "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" oder "/>
+					<reason/>
+				</repeat>
 			</GER>
 		</Connection>
 				
 		<Connection type="MTprovidedthat">
 			<EN-US>
+				<reason/>
+				<string text=" provided that "/>
+				<claim/>
 			</EN-US>
 			<RUS>
+				<reason/>
+				<string text=" при условии, что "/>
+				<claim/>
 			</RUS>
 			<GER>
+				<reason/>
+				<string text=", gegeben dass "/>
+				<claim/>
 			</GER>
 		</Connection>
 				
 		<Connection type="MTsufficient">
 			<EN-US>
+				<claim/>
+				<string text=" is a sufficient condition for "/>
+				<reason/>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=" - достаточное условие для  "/>
+				<reason/>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" ist eine hinreichende Bedingung für "/>
+				<reason/>
 			</GER>
 		</Connection>
 		
 		<Connection type="MTnecessary">
 			<EN-US>
+				<reason/>
+				<string text=" is a necessary condition for "/>
+				<claim/>
 			</EN-US>
 			<RUS>
+				<reason/>
+				<string text=" - необходимое условие для "/>
+				<claim/>
 			</RUS>
 			<GER>
+				<reason/>
+				<string text=" ist eine notwendige Bedingung für "/>
+				<claim/>
 			</GER>
 		</Connection>
 		
 		<Connection type="DisjSyl">
 			<EN-US>
+				<string text="Either "/>
+				<repeat>
+					<conjunction text=" or "/>
+					<reason/>
+				</repeat>
+				<string text=" or "/>
+				</claim>
 			</EN-US>
 			<RUS>
+				<string text="Или "/>
+				<repeat>
+					<conjunction text=" или "/>
+					<reason/>
+				</repeat>
+				<string text=" или "/>
+				</claim>
 			</RUS>
 			<GER>
+				<string text="Entweder "/>
+				<repeat>
+					<conjunction text=" oder "/>
+					<reason/>
+				</repeat>
+				<string text=" oder "/>
+				</claim>
 			</GER>
 		</Connection>
 		
 		<Connection type="NotAllSyl">
 			<EN-US>
+				<string text="It cannot be the case, at the same time, that "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" and that "/>
+					<reason/>
+				</repeat>
+				<string text=" and that "/>
+				<claim/>
 			</EN-US>
 			<RUS>
+				<string text="Это не может иметь место, в то же самое время, что "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" и что "/>
+					<reason/>
+				</repeat>
+				<string text=" и что "/>
+				<claim/>
 			</RUS>
 			<GER>
+				<string text="Es kann nicht zugleich der Fall sein, dass "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" und dass "/>
+					<reason/>
+				</repeat>
+				<string text=" und dass "/>
+				<claim/>
 			</GER>
 		</Connection>		
 		<Connection type="EQiff">
 			<EN-US>
+				<claim/>
+				<string text=" if and only if "/>
+				<reason/>
 			</EN-US>
 			<RUS>
+				<claim/>
+				<string text=", если и только если "/>
+				<reason/>
 			</RUS>
 			<GER>
+				<claim/>
+				<string text=" genau dann, wenn "/>
+				<reason/>
 			</GER>
 		</Connection>
 		
