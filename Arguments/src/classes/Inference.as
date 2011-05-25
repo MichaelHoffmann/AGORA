@@ -165,6 +165,10 @@ package classes
 			{
 				hasMultipleReasons = false;
 			}
+			if(myArg != null)
+			{
+				myArg.createLinks();
+			}
 		}
 		
 		public function setRuleState():void
@@ -184,6 +188,32 @@ package classes
 			
 		}
 		
+		override public function addHandler(event:MouseEvent):void
+		{
+			if(implies)	
+			{
+				if(myschemeSel.selectedType!="If-then" && myschemeSel.selectedType != "Implies")
+				{
+					//TODO: translate
+					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
+					return;
+				}
+			}
+			else 
+			{
+				if(!implies && myschemeSel.selectedType != "Either-or")
+				{
+					//TODO: translate
+					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
+					return;
+				}
+			}
+			argType.changeSchemeBtn.enabled = false;
+			super.addHandler(event);
+		}
+		
+		//This happens when the argument
+		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
 			if(typed)
@@ -213,7 +243,9 @@ package classes
 		
 		public function menuCreated(fe:FlexEvent):void
 		{ 
-			
+			//Sometimes only one posisble scheme is possible.
+			//In those situations, they are created automatically, instead
+			//of giving the user a menu
 			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism","Constructive Dilemma"];
 			var optionsArr:Array = ["And","Or"];
 			if( (!claim.statementNegated) && claim.inference != null)
@@ -225,12 +257,44 @@ package classes
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
 			}
-			var rootlist:List = myschemeSel.mainSchemes;
-			rootlist.dataProvider = typeArr;
+			
+			
+			if(claim.multiStatement && claim.inference != null)
+			{
+				//claim is a multistatement and claim is of type P->Q
+				//Only one possible scheme - conditional syllogism
+				if(claim.implies)
+				{
+					typeArr = ["Conditional Syllogism"];
+					//the language type is already determined
+					//It is that of the enabler.
+					if(claim is Inference){
+						//feasibility of adding is already checked
+						myschemeSel.selectedScheme = ParentArg.COND_SYLL;
+						var infClaim:Inference = Inference(claim);
+						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+						myArg = new ConditionalSyllogism;
+						myArg.inference = this;
+						myArg.addInitialReasons();
+						myArg.createLinks();
+						selectedBool = true;
+						schemeSelected = true;
+						parentMap.option.visible = false;
+						this.visible = true;
+					}
+				}
+				else
+				{
+					typeArr = ["Constructive Dilemma"];
+				}
+				
+			}
+			
+			myschemeSel.scheme = typeArr;
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
 			oplist.dataProvider = optionsArr;
-			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
 			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
 			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
@@ -303,8 +367,8 @@ package classes
 				tmpInput.id = tmp.input1.id;
 				
 				//binding
-				tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
-				tmp.input1.forwardList.push(tmpInput);
+				//tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
+				//tmp.input1.forwardList.push(tmpInput);
 				//this new reason's input1 text forwards to that invisible box
 				dispatchEvent(new Event(REASON_ADDED,true,false));
 			}catch (e:Error)
@@ -329,6 +393,7 @@ package classes
 				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
 			}
 		}
+		
 		override public function onArgumentPanelCreate(e:FlexEvent):void
 		{
 			super.onArgumentPanelCreate(e);
@@ -346,10 +411,18 @@ package classes
 		}
 		public function chooseEnablerText():void
 		{
+			if(myschemeSel.scheme != null){
+				if(myschemeSel.scheme.length == 0)
+				{
+					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
+					return;
+				}
+			}
 			myschemeSel.visible=true;
 			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
 			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-			parentMap.parent.addChild(myschemeSel);
+			//parentMap.parent.addChild(myschemeSel);
+			myschemeSel.visible = true;
 			myschemeSel.depth = parentMap.parent.numChildren;
 			selectedBool = true;
 			parentMap.helpText.visible = true;
@@ -366,7 +439,8 @@ package classes
 		{
 			if(myschemeSel.andor.visible==false)
 			{
-				parentMap.parent.removeChild(myschemeSel);
+				//parentMap.parent.removeChild(myschemeSel);
+				myschemeSel.visible = false;
 			}
 			schemeSelected = true;
 			parentMap.helpText.visible = false;

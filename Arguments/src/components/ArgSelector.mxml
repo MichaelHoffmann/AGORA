@@ -53,7 +53,7 @@
 			private var _selectedType:String;
 			private var _languageTypes:Array;
 			private var _selectedOption:String;
-			private var _scheme:Array;	
+			private var _scheme:Array;
 			private var _options:Array;
 			
 			public function get selectedOption():String

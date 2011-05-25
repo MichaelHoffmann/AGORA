@@ -125,6 +125,7 @@ package classes
 			}
 			else
 			{
+				panelReference.displayTxt.text = panelReference.stmt;
 				if(forwardList.length == 0 )
 					return;
 				for(var i:int = 0; i < forwardList.length; i++){

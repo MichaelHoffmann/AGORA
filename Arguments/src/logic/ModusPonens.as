@@ -62,11 +62,15 @@ package logic
 					reasonStr = reasonStr + reason[i].stmt;
 					inference.inputs[1].text = reasonStr;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[1]: // Implies
 					output += reason[0].stmt + " implies " + claim.stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[2]: //Whenever
 					reasonStr = "";
@@ -80,11 +84,15 @@ package logic
 					reasonStr = reasonStr + reason[i].stmt;
 					inference.inputs[1].text = reasonStr;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[3]: // Only if
 					output += reason[0].stmt + " only if " + claim.stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[4]: // Provided that
 					reasonStr = "";
@@ -98,31 +106,43 @@ package logic
 					reasonStr = reasonStr + reason[i].stmt;
 					inference.inputs[1].text = reasonStr;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[5]: // Sufficient condition
 					output += reason[0].stmt + " is a sufficient condition for " + claim.stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[6]: // Necessary condition
 					output += claim.stmt + " is a necessary condition for " + reason[0].stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[7]: //If and only if
 					output += claim.stmt + " if and only if " + reason[0].stmt; 	// IMP!! TODO: if-and-only-if2 : both claim and reason negated
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[8]: //Necessary and sufficient condition
 					output += claim.stmt + " is a necessary and sufficient condition for " + reason[0].stmt; 	
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;// TODO: Necessary-and-sufficient2 : both claim and reason negated
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[9]: //Equivalent
 					output += claim.stmt + " and " + reason[0].stmt + " are equivalent"; 	// TODO: Equivalent2 : both claim and reason negated		
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 			}
 			return output;
 			

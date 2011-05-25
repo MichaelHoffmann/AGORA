@@ -13,6 +13,7 @@ package classes
 	import flash.ui.Keyboard;
 	
 	import logic.ParentArg;
+	
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -108,6 +109,9 @@ package classes
 		public var connectingStr:String;
 		private var _implies:Boolean;
 		
+		public static var IF_THEN:String = "If-then";
+		public static var IMPLIES:String = "Implies";
+		
 		public static var ARGUMENT_CONSTRUCTED:String = "Argument Constructed";
 		public function ArgumentPanel()
 		{
@@ -142,7 +146,7 @@ package classes
 		{
 			return _implies;
 		}
-
+		
 		public function set implies(value:Boolean):void
 		{
 			if(_implies != value)
@@ -150,7 +154,7 @@ package classes
 				_implies = value;
 			}
 		}
-
+		
 		public function get multiStatement():Boolean
 		{
 			return _multiStatement;
@@ -164,6 +168,11 @@ package classes
 				if(value == true){
 					group.removeElement(input1);
 					group.addElement(msVGroup);
+					if(!userEntered)
+					{
+						input1.text = "";
+					}
+					
 					_multiStatement = value;
 				}
 				else
@@ -171,6 +180,7 @@ package classes
 					group.removeElement(msVGroup);
 					group.addElement(input1);
 				}
+				msVGroup.visible = false;
 			}
 			
 		}
@@ -199,6 +209,7 @@ package classes
 			if(userEntered == false)
 			{
 				input1.text="";
+				displayTxt.text = "";
 				userEntered = true;
 			}
 			if(multiStatement){
@@ -228,7 +239,7 @@ package classes
 			}
 			displayTxt.text = stmt;
 			displayTxt.visible = true;
-			
+			//trace(displayTxt);
 			bottomHG.visible = true;
 			doneHG.visible = false;
 			if(multiStatement)
@@ -249,7 +260,10 @@ package classes
 			{
 				if(implies)
 				{
-					statement = "If " + inputs[1] + ", then " + inputs[0];
+					if(connectingStr == "If-then")
+						statement = "If " + inputs[1].text + ", then " + inputs[0].text;
+					else
+						statement = inputs[1].text + " implies " + inputs[0].text;					
 				}
 				else
 				{
@@ -442,6 +456,7 @@ package classes
 		//through argument type, reasons and claim
 		public function addSupportingArgument():void
 		{
+			
 			var currInference:Inference = new Inference();
 			currInference.myschemeSel = new ArgSelector;
 			currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
@@ -497,6 +512,11 @@ package classes
 			//tmpInput2.forwardList.push(currInference.input1);
 			//reason.input1.forwardList.push(tmpInput2);
 			parentMap.layoutManager.registerPanel(currInference);
+			//should be added towards the end
+			//if there is only one possible scheme,
+			//it is automatically selected
+			parentMap.addChild(currInference.myschemeSel);
+			currInference.myschemeSel.visible = false;
 			dispatchEvent(new Event(ARGUMENT_CONSTRUCTED,true,false));
 		}
 		

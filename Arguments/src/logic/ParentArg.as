@@ -1,9 +1,12 @@
 package logic
 {
 	import classes.ArgumentPanel;
+	import classes.DynamicTextArea;
 	import classes.Inference;
 	
 	import components.ArgSelector;
+	
+	import flashx.textLayout.operations.SplitParagraphOperation;
 	
 	import mx.utils.ObjectUtil;
 
@@ -46,6 +49,51 @@ package logic
 	{
 		
 	}
+	
+	public function deleteLinks():void
+	{
+		var dta:DynamicTextArea;
+		for(var i:int=0; i < inference.input.length; i++)
+		{
+			dta = inference.input[i];
+			dta.forwardList.splice(0,dta.forwardList.length);
+		}
+		for(i=0; i < inference.inputs.length; i++)
+		{
+			dta = inference.inputs[i];
+			dta.forwardList.splice(0,dta.forwardList.length);
+		}
+		for(i=0; i < inference.reasons.length; i++)
+		{
+			var reason:ArgumentPanel = inference.reasons[i];
+			reason.input1.forwardList.splice(0,reason.input1.forwardList.length);
+			for(var m:int=0; m < reason.inputs.length; m++)
+			{
+				dta = reason.inputs[m];
+				dta.forwardList.splice(0, dta.forwardList.length);
+			}
+		}
+		var claim:ArgumentPanel = inference.claim;
+		dta = claim.input1;
+		claim.input1.forwardList.splice(0,claim.input1.forwardList.length);
+		for(i=0; i<claim.inputs.length; i++)
+		{
+			dta = claim.inputs[i];
+			dta.forwardList.splice(0,dta.forwardList.length);
+		}
+	}
+	
+	public function link(dta:DynamicTextArea, box:DynamicTextArea):void
+	{
+		for(var i:int=0; i < dta.forwardList.length; i++)
+		{
+			if(dta.forwardList[i] == box)
+				return;
+		}
+		dta.forwardList.push(box);
+	}
+	
+	public function addInitialReasons():void{};
 	
 	public function createLinks():void
 	{
