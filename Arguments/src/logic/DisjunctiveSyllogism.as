@@ -12,8 +12,7 @@ package logic
 			_langTypes = ["Either-or"];
 			_expLangTypes =  ["Either-or"];
 			myname = DIS_SYLL;
-			dbName = myname;
-			
+			dbName = myname;	
 		}
 		
 		override public function correctUsage():String {
@@ -32,9 +31,7 @@ package logic
 					inference.reasons[i].statementNegated = true;
 				}
 			}
-			
 			inference.implies = false;
-			
 			var output:String = "";
 			switch(inference.myschemeSel.selectedType) 
 			{
@@ -44,9 +41,11 @@ package logic
 					{
 						output += inference.reasons[i].positiveStmt + " or ";
 						inference.inputs[i+1].text = inference.reasons[i].positiveStmt;
+						inference.inputs[i+1].forwardUpdate();
 					}
 					output += inference.claim.stmt;
 					inference.inputs[0].text = inference.claim.stmt;
+					inference.inputs[0].forwardUpdate();	
 					break;
 			}
 			return output;

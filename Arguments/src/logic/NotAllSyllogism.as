@@ -40,9 +40,11 @@ package logic
 			{
 					output += inference.reasons[i].stmt + " and that ";
 					inference.inputs[i+1].text = inference.reasons[i].stmt;
+					inference.inputs[i+1].forwardUpdate();
 			}
 			output += inference.claim.positiveStmt;
 			inference.inputs[0].text = inference.claim.positiveStmt;
+			inference.inputs[0].forwardUpdate();
 			return output;
 		}
 	}

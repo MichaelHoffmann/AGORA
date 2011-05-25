@@ -16,26 +16,30 @@ package logic
 			_expLangTypes = ["If-then","Whenever","Provided that"];	
 			myname = MOD_PON;
 			dbName = "MPtherefore";			
-			/*_langTypes = ["If-then","If-then-Exp-And","Implies","Whenever","Whenever-Exp-And","Only-if","Provided-that","Provided-that-Exp-And","Sufficient-condition","Necessary-condition","If-and-only-if",
-			"Necessary-and-sufficient-condition","Equivalent"];*/
-			// Modus Ponens is expandable only with AND
-			
 		}
-		
-		override public function correctUsage():String {
-			
-			var output:String = "";
-			var reason:Vector.<ArgumentPanel> = inference.reasons;
-			var claim:ArgumentPanel = inference.claim;
-			
+		override public function createLinks():void
+		{
 			if(inference.claim.inference != null && inference.claim.statementNegated)
 			{
 				Alert.show("Error: Statement cannot be negative");
 			}
 			
+			if(inference.claim.multiStatement)
+			{
+				inference.claim.multiStatement = false;
+			}
+			
 			if(inference.claim.statementNegated)
 			{
 				inference.claim.statementNegated = false;
+			}
+			
+			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
+			{
+				inference.claim.input1.text = "P";
+				inference.claim.displayTxt.text = "P";
+				inference.reasons[0].input1.text = "Q";
+				inference.reasons[0].displayTxt.text = "Q";
 			}
 			
 			for(var i:int=0; i < inference.reasons.length; i++)
@@ -44,10 +48,21 @@ package logic
 				{
 					inference.reasons[i].statementNegated = false;
 				}
+				if(inference.reasons[i].multiStatement)
+				{
+					inference.reasons[i].multiStatement = false;
+				}
 			}
-			
 			inference.implies = true;
+			super.createLinks();
 			
+		}
+		override public function correctUsage():String {
+			
+			var output:String = "";
+			var reason:Vector.<ArgumentPanel> = inference.reasons;
+			var claim:ArgumentPanel = inference.claim;
+			var i:int;
 			var reasonStr:String;
 			switch(inference.myschemeSel.selectedType) {
 				case _langTypes[0]:

@@ -246,7 +246,7 @@ package classes
 			//Sometimes only one posisble scheme is possible.
 			//In those situations, they are created automatically, instead
 			//of giving the user a menu
-			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism","Constructive Dilemma"];
+			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
 			var optionsArr:Array = ["And","Or"];
 			if( (!claim.statementNegated) && claim.inference != null)
 			{
@@ -273,6 +273,11 @@ package classes
 						myschemeSel.selectedScheme = ParentArg.COND_SYLL;
 						var infClaim:Inference = Inference(claim);
 						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+						//var array:Array = new Array;
+						//array.splice(0,0,infClaim,myschemeSel.selectedType);
+						//myschemeSel.typeSelector.dataProvider = array;
+						argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
+						argType.changeSchemeBtn.enabled = false;
 						myArg = new ConditionalSyllogism;
 						myArg.inference = this;
 						myArg.addInitialReasons();
@@ -419,10 +424,9 @@ package classes
 				}
 			}
 			myschemeSel.visible=true;
+			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
 			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
 			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-			//parentMap.parent.addChild(myschemeSel);
-			myschemeSel.visible = true;
 			myschemeSel.depth = parentMap.parent.numChildren;
 			selectedBool = true;
 			parentMap.helpText.visible = true;

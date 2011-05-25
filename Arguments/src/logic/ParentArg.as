@@ -110,5 +110,4 @@ package logic
 	}
 	public function correctUsage():String { return "";}
 	}
-	
 }

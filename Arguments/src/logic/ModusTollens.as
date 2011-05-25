@@ -19,23 +19,6 @@ package logic
 		
 		override public function createLinks():void
 		{
-			var	claim:ArgumentPanel = inference.claim;
-			var reasons:Vector.<ArgumentPanel> = inference.reasons;
-			claim.input1.forwardList.push(inference.input[0]);
-			inference.input[0].forwardList.push(inference.inputs[1]);
-			for(var i:int=0; i < reasons.length; i++)
-			{
-				reasons[i].input1.forwardList.push(inference.input[i+1]);
-				inference.input[i+1].forwardList.push(inference.inputs[0]);
-			}
-			inference.implies = true;
-		}
-		
-		override public function correctUsage():String {
-			var output:String = "";
-			var reason:Vector.<ArgumentPanel> = inference.reasons;
-			var claim:ArgumentPanel = inference.claim;
-			
 			//Negate the claim if it is the first claim of the argument
 			if(inference.claim.inference != null && !inference.claim.statementNegated)
 			{
@@ -52,9 +35,46 @@ package logic
 				{
 					inference.reasons[i].statementNegated = true;
 				}
+				if(inference.reasons[i].multiStatement)
+				{
+					inference.reasons[i].multiStatement = false;
+				}
 			}
 			
+			if(inference.claim.multiStatement)
+			{
+				inference.claim.multiStatement = false;
+			}
+			
+			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
+			{
+				inference.claim.input1.text = "P";
+				inference.claim.displayTxt.text = "P";
+				inference.reasons[0].input1.text = "Q";
+				inference.reasons[0].displayTxt.text = "Q";
+			}
+			
+			
 			inference.implies = true;
+			
+			var	claim:ArgumentPanel = inference.claim;
+			var reasons:Vector.<ArgumentPanel> = inference.reasons;
+			claim.input1.forwardList.push(inference.input[0]);
+			inference.input[0].forwardList.push(inference.inputs[1]);
+			for(i=0; i < reasons.length; i++)
+			{
+				reasons[i].input1.forwardList.push(inference.input[i+1]);
+				inference.input[i+1].forwardList.push(inference.inputs[0]);
+			}
+			inference.implies = true;
+		}
+		
+		override public function correctUsage():String {
+			var output:String = "";
+			var reason:Vector.<ArgumentPanel> = inference.reasons;
+			var claim:ArgumentPanel = inference.claim;
+			var i:int;
+			
 			
 			//Negate the reason. The reason will not be supported by other
 			//arguments. If it were, the argument woud have had 'typed' true,
@@ -108,6 +128,7 @@ package logic
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
+				
 				case _langTypes[5]: // Sufficient condition
 					output += claim.positiveStmt + " is a sufficient condition for " + reason[0].positiveStmt;
 					inference.inputs[0].text = reason[0].positiveStmt;

@@ -173,16 +173,20 @@ package classes
 						input1.text = "";
 					}
 					
-					_multiStatement = value;
 				}
 				else
 				{
-					group.removeElement(msVGroup);
+					try{
+						group.removeElement(msVGroup);
+					}catch(error:Error)
+					{
+						trace(error);
+					}
 					group.addElement(input1);
 				}
-				msVGroup.visible = false;
+				_multiStatement = value;
+				userEntered = false;
 			}
-			
 		}
 		
 		protected function argumentConstructed(event:Event):void
@@ -208,17 +212,19 @@ package classes
 		{
 			if(userEntered == false)
 			{
-				input1.text="";
-				displayTxt.text = "";
+				//input1.text="";
+				//displayTxt.text = "";
 				userEntered = true;
 			}
 			if(multiStatement){
 				focusManager.setFocus(inputs[0]);
 				msVGroup.visible = true;
+				trace(msVGroup);
 			}
 			else{
 				focusManager.setFocus(input1);
 				input1.visible = true;
+				trace(input1);
 			}
 			displayTxt.visible = false;
 			doneHG.visible = true;
@@ -227,7 +233,8 @@ package classes
 		
 		public function makeUnEditable():void
 		{
-			if(multiStatement){
+			if(multiStatement)
+			{
 				//input1 is just used to calculate height
 				input1.text = stmt;
 				displayTxt.width = input1.width;
@@ -239,7 +246,6 @@ package classes
 			}
 			displayTxt.text = stmt;
 			displayTxt.visible = true;
-			//trace(displayTxt);
 			bottomHG.visible = true;
 			doneHG.visible = false;
 			if(multiStatement)
@@ -376,34 +382,34 @@ package classes
 		public function configureReason(event:FlexEvent):void
 		{
 			var reason:ArgumentPanel = ArgumentPanel(event.target);
-			reason.input1.text = "Q";
-			reason.displayTxt.text = "Q";
+			//reason.input1.text = "Q";
+			//reason.displayTxt.text = "Q";
 			reason.makeUnEditable();
 		}
 		
 		public function beginByArgument():void{
-			rules[0].visible = true; 
-			rules[0].chooseEnablerText();
+			rules[rules.length-1].visible = true; 
+			rules[rules.length-1].chooseEnablerText();
 			if(inference == null)
 			{
 				if(multiStatement){
-					inputs[0].text = "P1";
-					inputs[1].text = "P2";
+					//inputs[0].text = "P1";
+					//inputs[1].text = "P2";
 				}
 				else{
-					input1.text = "P";
+					//input1.text = "P";
 				}
 			}
 			makeUnEditable();
 			//This is important if beginByArgument is called 
 			//immediately after an argument is constructed
 			//input1 of reason might not be created then.
-			rules[0].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
-			if(rules[0].reasons[0].input1 != null)
+			rules[rules.length-1].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
+			if(rules[rules.length-1].reasons[0].input1 != null)
 			{
-				rules[0].reasons[0].input1.text = "Q";
-				rules[0].reasons[0].displayTxt.text = "Q";
-				rules[0].reasons[0].makeUnEditable();
+				//rules[rules.length-1].reasons[0].input1.text = "Q";
+				//rules[rules.length-1].reasons[0].displayTxt.text = "Q";
+				rules[rules.length-1].reasons[0].makeUnEditable();
 			}
 			parentMap.invalidateDisplayList();
 		}
@@ -418,7 +424,6 @@ package classes
 			{
 				inference.chooseEnablerText();
 				inference.visible = true;
-				
 				parentMap.invalidateDisplayList();
 			}
 		}
@@ -661,7 +666,7 @@ package classes
 		{
 			if(this.panelType==ARGUMENT_PANEL)
 			{
-				input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
+				//input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
 			}
 			else if(this.panelType==INFERENCE)
 			{
@@ -679,7 +684,6 @@ package classes
 					state = 1;
 					stmtTypeLbl.text = "Particular Statement";
 					this.setStyle("cornerRadius",0);
-					
 				}
 				else {
 					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
