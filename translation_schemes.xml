@@ -480,12 +480,49 @@
 			</GER>
 		</Connection>
 		
+		<!-- Translation for russian appears awkward here. The document has:
+		Если R, то S; если S тогда C; поэтому, если R, то C
+		For expansion, it switches back to "то" again.
+		Если R, то S; если S тогда T; …; если …, то C; поэтому, если R, то C
+		However, the if-then relation between R and S and between S and C should be the same.
+		The modus ponens if-then uses "то" so I am going to copy that over here... hopefully that's not a mistake.
+		-->
 		<Connection type="CSifthen">
 			<EN-US>
+				<repeat>
+					<string text=" if "/>
+					<reason/> <!-- Either the initial reason or the previous claim-->
+					<string text=", then "/>
+					<claim/> <!-- The following claim from that SPECIFIC reason, not the final claim-->
+				</repeat>
+				<string text="; therefore, if "/>
+				<reason/> <!-- initial reason-->
+				<string text=", then "/>
+				<claim/> <!--final claim-->
 			</EN-US>
 			<RUS>
+				<repeat>
+					<string text=" если "/>
+					<reason/> <!-- Either the initial reason or the previous claim-->
+					<string text=", то "/>
+					<claim/> <!-- The following claim from that SPECIFIC reason, not the final claim-->
+				</repeat>
+				<string text=" поэтому, если "/>
+				<reason/> <!-- initial reason-->
+				<string text=", то "/>
+				<claim/> <!--final claim-->
 			</RUS>
 			<GER>
+				<repeat>
+					<string text=" wenn "/>
+					<reason/> <!-- Either the initial reason or the previous claim-->
+					<string text=", dann "/>
+					<claim/> <!-- The following claim from that SPECIFIC reason, not the final claim-->
+				</repeat>
+				<string text="; deshalb, wenn "/>
+				<reason/> <!-- initial reason-->
+				<string text=", dann "/>
+				<claim/> <!--final claim-->
 			</GER>
 		</Connection>		
 		<Connection type="CSimplies">
