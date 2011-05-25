@@ -884,12 +884,6 @@
 		<GER text="... die Argumentation zu"/>
 	</Label>
 	
-	<Label name="NewMap">
-		<EN-US text="create a new map"/>
-		<RUS text="создайте новую карту"/>
-		<GER text="Beginne eine neue Argumentation"/>
-	</Label>
-	
 	<Label name="SeeAlso">
 		<EN-US text="See also ... [continues with: .. the argument on [title]]"/>
 		<RUS text="См. также... [продолжается с:.. аргумент на [названии]]"/>
