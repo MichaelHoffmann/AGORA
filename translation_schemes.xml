@@ -55,18 +55,30 @@
 			<EN-US>
 				<string text="Whenever "/>
 				<reason/>
+				<repeat>
+					<conjunction text=" and "/>
+					<add_reason/>
+				</repeat>
 				<string text=", "/>
 				<claim/>
 			</EN-US>
 			<RUS>
 				<string text="Всякий раз, когда "/>
 				<reason/>
+				<repeat>
+					<conjunction text=" и "/>
+					<add_reason/>
+				</repeat>
 				<string text=", "/>
 				<claim/>
 			</RUS>
 			<GER>
 				<string text="Immer wenn "/>
 				<reason/>
+				<repeat>
+					<conjunction text=" und "/>
+					<add_reason/>
+				</repeat>
 				<string text=", "/>
 				<claim/>
 			</GER>
