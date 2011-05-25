@@ -123,7 +123,7 @@
 				</repeat>
 			</RUS>
 			<GER>
-			<claim/>
+				<claim/>
 				<string text=", gegeben dass "/>
 				<reason/>
 				<repeat>
@@ -133,6 +133,63 @@
 			</GER>
 		</Connection>
 		
+		<Connection type="MPsufficient">
+			<EN-US>
+				<reason/>
+				<string text=" is a sufficient condition for "/>
+				<claim/>
+			</EN-US>
+			<RUS>
+				<reason/>
+				<string text=" - достаточное условие для "/>
+				<claim/>
+			</RUS>
+			<GER>
+				<reason/>
+				<string text=" ist eine hinreichende Bedingung für "/>
+				<claim/>
+			</GER>
+		</Connection>
+		
+		<Connection type="MPnecessary">
+			<EN-US>
+				<claim/>
+				<string text=" is a necessary condition for "/>
+				<reason/>
+			</EN-US>
+			<RUS>
+				<claim/>
+				<string text=" - необходимое условие для "/>
+				<reason/>
+			</RUS>
+			<GER>
+				<claim/>
+				<string text=" ist eine notwendige Bedingung für "/>
+				<reason/>
+			</GER>
+		</Connection>
+				
+		<Connection type="MTifthen">
+			<EN-US>
+				<string text="If "/>
+				<claim/>
+				<string text=", then "/>
+				<reason/>
+			</EN-US>
+			<RUS>
+				<string text="Если "/>
+				<claim/>
+				<string text=", то "/>
+				<reason/>
+			</RUS>
+			<GER>
+				<string text="Wenn "/>
+				<claim/>
+				<string text=", dann "/>
+				<reason/>
+			</GER>
+		</Connection>
+				
 		<Connection type="">
 			<EN-US>
 			</EN-US>
@@ -141,7 +198,52 @@
 			<GER>
 			</GER>
 		</Connection>
-		
+				
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+				
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+				
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+				
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+				
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>
+		</Connection>
+				
 		<Connection type="">
 			<EN-US>
 			</EN-US>
