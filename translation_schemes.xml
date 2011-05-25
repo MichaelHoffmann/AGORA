@@ -32,5 +32,77 @@
 				<claim/>
 			</GER>
 		</Connection>
+		
+		<Connection type="MPimplies">
+			<EN-US>
+				<reason/>
+				<string text=" implies "/>
+				<claim/>
+			</EN-US>
+			<RUS>
+				<reason/>
+				<string text=" подразумевает "/>
+				<claim/>
+			</RUS>
+			<GER>
+				<reason/>
+				<string text=" impliziert "/>
+				<claim/>
+			</GER>		
+		</Connection>
+		
+		<Connection type="MPwhenever">
+			<EN-US>
+				<string text="Whenever "/>
+				<reason/>
+				<string text=", "/>
+				<claim/>
+			</EN-US>
+			<RUS>
+				<string text="Всякий раз, когда "/>
+				<reason/>
+				<string text=", "/>
+				<claim/>
+			</RUS>
+			<GER>
+				<string text="Immer wenn "/>
+				<reason/>
+				<string text=", "/>
+				<claim/>
+			</GER>		
+		</Connection>
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>		
+		</Connection>
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>		
+		</Connection>
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>		
+		</Connection>
+		<Connection type="">
+			<EN-US>
+			</EN-US>
+			<RUS>
+			</RUS>
+			<GER>
+			</GER>		
+		</Connection>
+		
 	</ConnTypes>
 </Translations>
