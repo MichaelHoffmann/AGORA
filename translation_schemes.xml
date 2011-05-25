@@ -48,7 +48,7 @@
 				<reason/>
 				<string text=" impliziert "/>
 				<claim/>
-			</GER>		
+			</GER>
 		</Connection>
 		
 		<Connection type="MPwhenever">
@@ -69,39 +69,43 @@
 				<reason/>
 				<string text=", "/>
 				<claim/>
-			</GER>		
+			</GER>
 		</Connection>
+		
 		<Connection type="">
 			<EN-US>
 			</EN-US>
 			<RUS>
 			</RUS>
 			<GER>
-			</GER>		
+			</GER>
 		</Connection>
+		
 		<Connection type="">
 			<EN-US>
 			</EN-US>
 			<RUS>
 			</RUS>
 			<GER>
-			</GER>		
+			</GER>
 		</Connection>
+		
 		<Connection type="">
 			<EN-US>
 			</EN-US>
 			<RUS>
 			</RUS>
 			<GER>
-			</GER>		
+			</GER>
 		</Connection>
+		
 		<Connection type="">
 			<EN-US>
 			</EN-US>
 			<RUS>
 			</RUS>
 			<GER>
-			</GER>		
+			</GER>
 		</Connection>
 		
 	</ConnTypes>
