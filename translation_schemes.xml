@@ -626,10 +626,52 @@
 		
 		<Connection type="CDpropclaim">
 			<EN-US>
+				<string text="Either "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" or "/>
+					<reason/>
+				</repeat>
+				<repeat>
+					<string text="; if "/>
+					<reason/> <!--Should use every reason from above through the repetitions-->
+					<string text=", then "/>
+					<claim/> <!--Same claim every time-->
+				</repeat>
+				<string text="; therefore, "/>
+				<claim/>				
 			</EN-US>
 			<RUS>
+				<string text="Или "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" или "/>
+					<reason/>
+				</repeat>
+				<repeat>
+					<string text="; если "/>
+					<reason/> <!--Should use every reason from above through the repetitions-->
+					<string text=", то "/>
+					<claim/> <!--Same claim every time-->
+				</repeat>
+				<string text="; поэтому, "/>
+				<claim/>			
 			</RUS>
 			<GER>
+				<string text="Entweder "/>
+				<reason/>
+				<repeat>
+					<conjunction text=" oder "/>
+					<reason/>
+				</repeat>
+				<repeat>
+					<string text="; wenn "/>
+					<reason/> <!--Should use every reason from above through the repetitions-->
+					<string text=", dann "/>
+					<claim/> <!--Same claim every time-->
+				</repeat>
+				<string text="; deshalb, "/>
+				<claim/>
 			</GER>
 		</Connection>
 	</ConnTypes>
