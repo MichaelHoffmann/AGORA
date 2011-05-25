@@ -4,24 +4,30 @@
 			<EN-US>
 				<string text="If "/>
 				<reason/>
-				<conjunction text=" and "/>
-				<add_reason/>
+				<repeat>
+					<conjunction text=" and "/>
+					<add_reason/>
+				</repeat>
 				<string text=", then "/>
 				<claim/>
 			</EN-US>
 			<RUS>
 				<string text="Если  "/>
 				<reason/>
-				<conjunction text=" и "/>
-				<add_reason/>
+				<repeat>
+					<conjunction text=" и "/>
+					<add_reason/>
+				</repeat>
 				<string text=", то "/>
 				<claim/>
 			</RUS>		
 			<GER>
 				<string text="Wenn "/>
 				<reason/>
-				<conjunction text=" und "/>
-				<add_reason/>
+				<repeat>
+					<conjunction text=" und "/>
+					<add_reason/>
+				</repeat>
 				<string text=", dann "/>
 				<claim/>
 			</GER>
