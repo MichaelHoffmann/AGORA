@@ -112,7 +112,7 @@
 	</Label>
 	
 	<Label name="NewUsername">
-		<EN-US text="Desired Username/>
+		<EN-US text="Desired Username"/>
 		<RUS text="Желаемое Имя пользователя"/>
 		<GER text="Erwünschter Benutzername"/>
 	</Label>
