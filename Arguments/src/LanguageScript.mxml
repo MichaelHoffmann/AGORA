@@ -12,6 +12,7 @@
 
 			
 			Language.lookup("ParticularUniversalClarification");
+			//Fails because it executes before the readXMLData() -> loadVariables() handler finishes.
 			
 		]]>
 	</fx:Script>
