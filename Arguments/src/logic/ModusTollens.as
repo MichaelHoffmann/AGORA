@@ -24,6 +24,30 @@ package logic
 			{
 				Alert.show("Error: The claim should not have been a non-negative statement");
 			}
+			
+			//change claim and reason from multistatement to normal
+			//statement type
+			if(inference.claim.multiStatement)
+			{
+				inference.claim.multiStatement = false;
+			}
+			for(var i:int=0; i < inference.reasons.length; i++)
+			{
+				if(inference.reasons[i].multiStatement)
+				{
+					inference.reasons[i].multiStatement = false;
+				}
+			}
+			
+			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
+			{
+				inference.claim.input1.text = "P";
+				inference.claim.displayTxt.text = "P";
+				inference.reasons[0].input1.text = "Q";
+				inference.reasons[0].displayTxt.text = "Q";
+			}
+			
+			
 			if(!inference.claim.statementNegated)
 			{
 				inference.claim.statementNegated = true;	
@@ -35,24 +59,9 @@ package logic
 				{
 					inference.reasons[i].statementNegated = true;
 				}
-				if(inference.reasons[i].multiStatement)
-				{
-					inference.reasons[i].multiStatement = false;
-				}
 			}
+		
 			
-			if(inference.claim.multiStatement)
-			{
-				inference.claim.multiStatement = false;
-			}
-			
-			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
-			{
-				inference.claim.input1.text = "P";
-				inference.claim.displayTxt.text = "P";
-				inference.reasons[0].input1.text = "Q";
-				inference.reasons[0].displayTxt.text = "Q";
-			}
 			
 			
 			inference.implies = true;
