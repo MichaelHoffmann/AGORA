@@ -23,6 +23,7 @@ package classes
 	import mx.core.DragSource;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
+	import mx.events.EventListenerRequest;
 	import mx.events.FlexEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.DragManager;
@@ -103,6 +104,8 @@ package classes
 		public var addMenuData:XML;
 		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
+		//claim added through start with claim
+		public var firstClaim:Boolean;
 		
 		//multiple textboxes
 		private var _multiStatement:Boolean;
@@ -116,6 +119,7 @@ package classes
 		public function ArgumentPanel()
 		{
 			super();
+			firstClaim = false;
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
 			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
 			userEntered = false;
@@ -412,8 +416,6 @@ package classes
 			rules[rules.length-1].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
 			if(rules[rules.length-1].reasons[0].input1 != null)
 			{
-				//rules[rules.length-1].reasons[0].input1.text = "Q";
-				//rules[rules.length-1].reasons[0].displayTxt.text = "Q";
 				rules[rules.length-1].reasons[0].makeUnEditable();
 			}
 			parentMap.invalidateDisplayList();
@@ -487,6 +489,7 @@ package classes
 			currInference.inference = currInference;
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
+			reason.addEventListener( FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
 			//add reason to the map
 			parentMap.addElement(reason);
 			//push reason to the list of reasons belonging to this particular class
@@ -666,6 +669,10 @@ package classes
 			panelSkin = this.skin as PanelSkin;
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
+			if(!userEntered)
+			{
+				//displayTxt.text = "[Enter the claim]";
+			}
 		}
 		
 		protected function setGuidingText(event:FlexEvent):void

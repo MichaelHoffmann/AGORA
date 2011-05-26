@@ -92,7 +92,7 @@
 				argumentPanel.gridY = 3;
 				argumentPanel.aid = 1;
 				GridPanel.count = 1;
-					agoraMap.addChild(argumentPanel);
+				agoraMap.addChild(argumentPanel);
 				agoraMap.layoutManager.registerPanel(argumentPanel);
 				return argumentPanel;				
 			}
@@ -101,6 +101,8 @@
 			{
 				canvas.visible = true;
 				var argumentPanel:ArgumentPanel = addPanel();
+				argumentPanel.firstClaim = true;
+				argumentPanel.addEventListener( FlexEvent.CREATION_COMPLETE, function(event:Event):void{argumentPanel.displayTxt.text = "[Enter your claim]";});
 				argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
 				canvas.setStyle("backgroundColor",uint("0x99FF99"));
 				canvas.x = 25 * 3 + 250;

@@ -75,7 +75,6 @@ package classes
 				}	
 			}
 			
-			//print the nodes
 			for(i=0; i  < layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;

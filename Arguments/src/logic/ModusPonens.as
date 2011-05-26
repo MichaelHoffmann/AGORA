@@ -9,6 +9,7 @@ package logic
 	
 	public class ModusPonens extends ParentArg
 	{
+		
 		public function ModusPonens()
 		{
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition","If and only if",
@@ -17,6 +18,7 @@ package logic
 			myname = MOD_PON;
 			dbName = "MPtherefore";			
 		}
+		
 		override public function createLinks():void
 		{
 			if(inference.claim.inference != null && inference.claim.statementNegated)
@@ -29,6 +31,7 @@ package logic
 			{
 				inference.claim.multiStatement = false;
 			}
+			
 			for(var i:int=0; i < inference.reasons.length; i++)
 			{
 				if(inference.reasons[i].multiStatement)
@@ -60,14 +63,11 @@ package logic
 					inference.reasons[i].statementNegated = false;
 				}
 			}
-			
-			
 			inference.implies = true;
-			super.createLinks();
-			
+			super.createLinks();	
 		}
-		override public function correctUsage():String {
-			
+		
+		override public function correctUsage():String {			
 			var output:String = "";
 			var reason:Vector.<ArgumentPanel> = inference.reasons;
 			var claim:ArgumentPanel = inference.claim;
@@ -168,9 +168,7 @@ package logic
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 			}
-			return output;
-			
-		}
-		
+			return output;		
+		}		
 	}
 }

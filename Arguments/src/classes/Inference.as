@@ -155,7 +155,7 @@ package classes
 			changePossibleSchemes();
 		}
 		
-		protected function reasonAdded(event:Event):void
+		public function reasonAdded(event:Event):void
 		{
 			if(reasons.length > 1)
 			{
@@ -168,6 +168,15 @@ package classes
 			if(myArg != null)
 			{
 				myArg.createLinks();
+			}
+			if(claim.firstClaim)
+			{
+				reasons[reasons.length - 1].makeUnEditable();
+				reasons[reasons.length - 1].displayTxt.text = "[Enter your reason]";
+			}
+			else
+			{
+				reasons[reasons.length - 1].makeEditable();
 			}
 		}
 		
@@ -269,8 +278,6 @@ package classes
 			if(!claim.multiStatement && (claim.inference != null || claim.userEntered == true) && !claim.statementNegated )
 			{
 				typeArr.splice(typeArr.indexOf(ParentArg.COND_SYLL,0),1);
-				trace("After splicing typeArray");
-				trace(typeArr);
 			}
 			else if(claim.multiStatement && claim.inference != null)
 			{
