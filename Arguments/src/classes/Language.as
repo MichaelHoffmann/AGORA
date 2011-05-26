@@ -8,11 +8,17 @@ package classes
 	
 	public class Language
 	{
+		//I will set the language to either GERMAN, RUSSIAN or ENGLISH
+		//based on this, you could read the values into the variables
+		//by default, the language is EN-US
+		
+		public static const GERMAN:String = "GR";
+		public static const EN_US:String = "EN-US";
+		public static const RUSSIAN:String = "RS";
+		public static var language:String = EN_US;
 		public function Language()
 		{
 		}
-		
-		
 		//Variables goes here
 		public static var intro:String;
 		
@@ -32,7 +38,5 @@ package classes
 			var xml:XML = new XML;
 			xml=XML(event.target.data);
 		}
-		
-		
 	}
 }
