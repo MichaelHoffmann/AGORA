@@ -254,14 +254,25 @@ package classes
 			var optionsArr:Array = ["And","Or"];
 			if( (!claim.statementNegated) && claim.inference != null)
 			{
-				typeArr.splice(1,1);
-				typeArr.splice(3,1);
+				//typeArr.splice(1,1);
+				//typeArr.splice(3,1);
+				typeArr.splice(typeArr.indexOf(ParentArg.MOD_TOL,0),1);
+				typeArr.splice(typeArr.indexOf(ParentArg.NOT_ALL_SYLL,0),1);
 			}
 			else if(claim.statementNegated && claim.inference != null)
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
 			}
 			
+			if(!claim.multiStatement)
+			{
+				typeArr.splice(typeArr.indexOf(ParentArg.COND_SYLL,0),1);
+			}
+			else
+			{
+				typeArr = [];
+				typeArr.splice(0,0,"Conditional Syllogism");
+			}
 			
 			if(claim.multiStatement && claim.inference != null)
 			{
