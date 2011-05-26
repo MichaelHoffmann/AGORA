@@ -42,6 +42,7 @@ package classes
 	import spark.layouts.VerticalLayout;
 	import spark.skins.spark.PanelSkin;
 	
+	import classes.Language;
 	
 	public class ArgumentPanel extends GridPanel
 	{
