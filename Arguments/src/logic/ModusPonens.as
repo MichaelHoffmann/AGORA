@@ -24,34 +24,41 @@ package logic
 				Alert.show("Error: Statement cannot be negative");
 			}
 			
+			//make claim and reason un-multiStatement
 			if(inference.claim.multiStatement)
 			{
 				inference.claim.multiStatement = false;
 			}
+			for(var i:int=0; i < inference.reasons.length; i++)
+			{
+				if(inference.reasons[i].multiStatement)
+				{
+					inference.reasons[i].multiStatement = false;
+				}
+			}
 			
+			//claim and reasons should not be negated
 			if(inference.claim.statementNegated)
 			{
 				inference.claim.statementNegated = false;
 			}
 			
-			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
-			{
-				inference.claim.input1.text = "P";
-				inference.claim.displayTxt.text = "P";
-				inference.reasons[0].input1.text = "Q";
-				inference.reasons[0].displayTxt.text = "Q";
-			}
-			
-			for(var i:int=0; i < inference.reasons.length; i++)
+			for(i=0; i < inference.reasons.length; i++)
 			{
 				if(inference.reasons[i].statementNegated)
 				{
 					inference.reasons[i].statementNegated = false;
 				}
-				if(inference.reasons[i].multiStatement)
-				{
-					inference.reasons[i].multiStatement = false;
-				}
+			}
+			
+			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
+			{
+				inference.claim.input1.text = "P";
+				inference.reasons[0].input1.text = "Q";
+				//make them uneditable. It automatically
+				//sets the displayTxt Text control
+				inference.claim.makeUnEditable();
+				inference.reasons[0].makeUnEditable();
 			}
 			inference.implies = true;
 			super.createLinks();
