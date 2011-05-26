@@ -232,6 +232,10 @@ package classes
 						myschemeSel.typeSelector.dataProvider = myArg._langTypes;
 					}
 				}
+				if(myArg is ConditionalSyllogism)
+				{
+					argType.changeSchemeBtn.enabled = false;
+				}
 			}
 			if(!typed && myschemeSel != null)
 			{
@@ -279,6 +283,7 @@ package classes
 						argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
 						argType.changeSchemeBtn.enabled = false;
 						myArg = new ConditionalSyllogism;
+						myArg.isLanguageExp = true;
 						myArg.inference = this;
 						myArg.addInitialReasons();
 						myArg.createLinks();
@@ -286,6 +291,7 @@ package classes
 						schemeSelected = true;
 						parentMap.option.visible = false;
 						this.visible = true;
+						reasons[0].makeEditable();
 					}
 				}
 				else
@@ -397,6 +403,15 @@ package classes
 			{
 				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
 			}
+		}
+		
+		override public function makeUnEditable():void
+		{
+			//enabler is never edited
+		}
+		override public function makeEditable():void
+		{
+			//enabler is never edited
 		}
 		
 		override public function onArgumentPanelCreate(e:FlexEvent):void
@@ -525,6 +540,12 @@ package classes
 			{
 				myArg.isLanguageExp = true;
 			}
+			else if(myArg.myname == ParentArg.COND_SYLL)
+			{
+				myArg.isLanguageExp = true;
+				myArg.createLinks();
+			}
+			
 			displayStr = myArg.correctUsage();
 		}
 		

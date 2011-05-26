@@ -37,6 +37,16 @@ package logic
 				}
 			}
 			
+			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
+			{
+				inference.claim.input1.text = "P";
+				inference.reasons[0].input1.text = "Q";
+				//make them uneditable. It automatically
+				//sets the displayTxt Text control
+				inference.claim.makeUnEditable();
+				inference.reasons[0].makeUnEditable();
+			}
+			
 			//claim and reasons should not be negated
 			if(inference.claim.statementNegated)
 			{
@@ -51,15 +61,7 @@ package logic
 				}
 			}
 			
-			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
-			{
-				inference.claim.input1.text = "P";
-				inference.reasons[0].input1.text = "Q";
-				//make them uneditable. It automatically
-				//sets the displayTxt Text control
-				inference.claim.makeUnEditable();
-				inference.reasons[0].makeUnEditable();
-			}
+			
 			inference.implies = true;
 			super.createLinks();
 			

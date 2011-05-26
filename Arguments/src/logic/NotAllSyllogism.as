@@ -21,37 +21,49 @@ package logic
 			{
 				Alert.show("Error: Statement cannot be positive");
 			}
+
 			
-			inference.claim.statementNegated = true;
+			if(inference.claim.multiStatement)
+			{
+				inference.claim.multiStatement = false;
+			}	
 			
 			for(var i:int=0; i < inference.reasons.length; i++)
+			{
+				if(inference.reasons[i].multiStatement)
+				{
+					inference.reasons[i].multiStatement = false;
+				}
+			}
+			
+			
+			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
+			{
+				inference.claim.input1.text = "P";
+				inference.claim.makeUnEditable();
+				inference.reasons[0].input1.text = "Q";
+				inference.reasons[0].makeUnEditable();
+			}
+			
+			if(!inference.claim.statementNegated)
+			{
+				inference.claim.statementNegated = true;
+			}
+			
+			
+			for(i=0; i < inference.reasons.length; i++)
 			{
 				if(inference.reasons[i].statementNegated)
 				{
 					inference.reasons[i].statementNegated = false;	
 				}
-				if(inference.reasons[i].multiStatement)
-				{
-					inference.reasons[i].multiStatement = false;
-				}
 			}	
-			
-			if(inference.claim.multiStatement)
-			{
-				inference.claim.multiStatement = false;
-			}
+		
 			
 			inference.implies = false;
 			
 			super.createLinks();
 			
-			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
-			{
-				inference.claim.input1.text = "P";
-				inference.claim.displayTxt.text = "P";
-				inference.reasons[0].input1.text = "Q";
-				inference.reasons[0].displayTxt.text = "Q";
-			}
 
 		}
 		

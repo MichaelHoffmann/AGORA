@@ -166,13 +166,13 @@ package classes
 			if(_multiStatement != value)
 			{
 				if(value == true){
-					group.removeElement(input1);
+					//group.removeElement(input1);
+					input1.visible = false;
 					group.addElement(msVGroup);
 					if(!userEntered)
 					{
 						input1.text = "";
-					}
-					
+					}		
 				}
 				else
 				{
@@ -182,7 +182,7 @@ package classes
 					{
 						trace(error);
 					}
-					group.addElement(input1);
+					//group.addElement(input1);
 				}
 				_multiStatement = value;
 				userEntered = false;
@@ -212,8 +212,6 @@ package classes
 		{
 			if(userEntered == false)
 			{
-				//input1.text="";
-				//displayTxt.text = "";
 				userEntered = true;
 			}
 			if(multiStatement){
@@ -237,14 +235,15 @@ package classes
 			{
 				//input1 is just used to calculate height
 				input1.text = stmt;
-				displayTxt.width = input1.width;
-				displayTxt.height = input1.height;
+				displayTxt.width = msVGroup.width;
+				displayTxt.height = msVGroup.height;
 			}
 			else{
 				displayTxt.width = input1.width;
 				displayTxt.height = input1.height;
 			}
 			displayTxt.text = stmt;
+			//trace(displayTxt.text);
 			displayTxt.visible = true;
 			bottomHG.visible = true;
 			doneHG.visible = false;
