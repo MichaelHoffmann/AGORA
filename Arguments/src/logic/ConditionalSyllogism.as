@@ -71,9 +71,9 @@ package logic
 				reason.inputs[1].text = "R";
 				reason.makeUnEditable();
 			}
-			inference.claim.connectingStr = inference.myschemeSel.selectedType;
 			
-				inference.claim.makeUnEditable();
+			inference.claim.connectingStr = inference.myschemeSel.selectedType;
+			inference.claim.makeUnEditable();
 			inference.reasons[0].connectingStr = inference.myschemeSel.selectedType;
 			inference.reasons[0].makeUnEditable();
 			

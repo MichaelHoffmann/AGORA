@@ -352,17 +352,23 @@ package classes
 			}
 		}
 		
+		protected function removeEventListeners():void
+		{
+			parentMap.option.removeEventListener(MouseEvent.CLICK,optionClicked);	
+			rules[rules.length - 1].reasons[0].input1.removeEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+		}
+		
 		protected function optionClicked(event:MouseEvent):void
 		{
 			beginByArgument();
 			parentMap.option.visible = false;
-			parentMap.option.removeEventListener(MouseEvent.CLICK,optionClicked);
+			removeEventListeners();
 		}
 		
 		protected function hideOption(event:KeyboardEvent):void
 		{
-			parentMap.option.visible = false;
-			rules[rules.length - 1].reasons[0].input1.removeEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+			parentMap.option.visible = false;	
+			removeEventListeners();
 		}
 		
 		public function addHandler(event:MouseEvent):void
@@ -489,6 +495,7 @@ package classes
 			currInference.connectionIDs.push(Inference.connections++);
 			//set the inference of the reason
 			reason.inference = currInference;
+			//type of reason
 			//register the reason
 			parentMap.layoutManager.registerPanel(reason);
 			//create an invisible box for the inference rule corresponding to the claim

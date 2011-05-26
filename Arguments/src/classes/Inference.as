@@ -262,13 +262,17 @@ package classes
 			else if(claim.statementNegated && claim.inference != null)
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
+				trace("setting type array");
+				trace(typeArr);
 			}
 			
-			if(!claim.multiStatement)
+			if(!claim.multiStatement && (claim.inference != null || claim.userEntered == true) && !claim.statementNegated )
 			{
 				typeArr.splice(typeArr.indexOf(ParentArg.COND_SYLL,0),1);
+				trace("After splicing typeArray");
+				trace(typeArr);
 			}
-			else
+			else if(claim.multiStatement && claim.inference != null)
 			{
 				typeArr = [];
 				typeArr.splice(0,0,"Conditional Syllogism");
@@ -283,7 +287,7 @@ package classes
 					typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
-					if(claim is Inference){
+					//if(claim is Inference){
 						//feasibility of adding is already checked
 						myschemeSel.selectedScheme = ParentArg.COND_SYLL;
 						var infClaim:Inference = Inference(claim);
@@ -303,7 +307,7 @@ package classes
 						parentMap.option.visible = false;
 						this.visible = true;
 						reasons[0].makeEditable();
-					}
+					//}
 				}
 				else
 				{
@@ -313,6 +317,7 @@ package classes
 			}
 			
 			myschemeSel.scheme = typeArr;
+			trace(typeArr);
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
 			oplist.dataProvider = optionsArr;
