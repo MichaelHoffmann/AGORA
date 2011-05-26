@@ -232,6 +232,10 @@ package classes
 						myschemeSel.typeSelector.dataProvider = myArg._langTypes;
 					}
 				}
+				if(myArg is ConditionalSyllogism)
+				{
+					argType.changeSchemeBtn.enabled = false;
+				}
 			}
 			if(!typed && myschemeSel != null)
 			{
@@ -250,14 +254,29 @@ package classes
 			var optionsArr:Array = ["And","Or"];
 			if( (!claim.statementNegated) && claim.inference != null)
 			{
-				typeArr.splice(1,1);
-				typeArr.splice(3,1);
+				//typeArr.splice(1,1);
+				//typeArr.splice(3,1);
+				typeArr.splice(typeArr.indexOf(ParentArg.MOD_TOL,0),1);
+				typeArr.splice(typeArr.indexOf(ParentArg.NOT_ALL_SYLL,0),1);
 			}
 			else if(claim.statementNegated && claim.inference != null)
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
+				trace("setting type array");
+				trace(typeArr);
 			}
 			
+			if(!claim.multiStatement && (claim.inference != null || claim.userEntered == true) && !claim.statementNegated )
+			{
+				typeArr.splice(typeArr.indexOf(ParentArg.COND_SYLL,0),1);
+				trace("After splicing typeArray");
+				trace(typeArr);
+			}
+			else if(claim.multiStatement && claim.inference != null)
+			{
+				typeArr = [];
+				typeArr.splice(0,0,"Conditional Syllogism");
+			}
 			
 			if(claim.multiStatement && claim.inference != null)
 			{
@@ -268,7 +287,7 @@ package classes
 					typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
-					if(claim is Inference){
+					//if(claim is Inference){
 						//feasibility of adding is already checked
 						myschemeSel.selectedScheme = ParentArg.COND_SYLL;
 						var infClaim:Inference = Inference(claim);
@@ -279,6 +298,7 @@ package classes
 						argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
 						argType.changeSchemeBtn.enabled = false;
 						myArg = new ConditionalSyllogism;
+						myArg.isLanguageExp = true;
 						myArg.inference = this;
 						myArg.addInitialReasons();
 						myArg.createLinks();
@@ -286,7 +306,8 @@ package classes
 						schemeSelected = true;
 						parentMap.option.visible = false;
 						this.visible = true;
-					}
+						reasons[0].makeEditable();
+					//}
 				}
 				else
 				{
@@ -296,6 +317,7 @@ package classes
 			}
 			
 			myschemeSel.scheme = typeArr;
+			trace(typeArr);
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
 			oplist.dataProvider = optionsArr;
@@ -397,6 +419,15 @@ package classes
 			{
 				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
 			}
+		}
+		
+		override public function makeUnEditable():void
+		{
+			//enabler is never edited
+		}
+		override public function makeEditable():void
+		{
+			//enabler is never edited
 		}
 		
 		override public function onArgumentPanelCreate(e:FlexEvent):void
@@ -525,6 +556,12 @@ package classes
 			{
 				myArg.isLanguageExp = true;
 			}
+			else if(myArg.myname == ParentArg.COND_SYLL)
+			{
+				myArg.isLanguageExp = true;
+				myArg.createLinks();
+			}
+			
 			displayStr = myArg.correctUsage();
 		}
 		

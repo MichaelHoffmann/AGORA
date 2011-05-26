@@ -42,9 +42,9 @@ package logic
 			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
 			{
 				inference.claim.input1.text = "P";
-				inference.claim.displayTxt.text = "P";
+				inference.claim.makeUnEditable();
 				inference.reasons[0].input1.text = "Q";
-				inference.reasons[0].displayTxt.text = "Q";
+				inference.reasons[0].makeUnEditable();
 			}
 			
 			
@@ -53,7 +53,7 @@ package logic
 				inference.claim.statementNegated = true;	
 			}
 			
-			for(var i:int = 0; i < inference.reasons.length; i++)
+			for(i = 0; i < inference.reasons.length; i++)
 			{
 				if(!inference.reasons[i].statementNegated)
 				{
@@ -61,9 +61,6 @@ package logic
 				}
 			}
 		
-			
-			
-			
 			inference.implies = true;
 			
 			var	claim:ArgumentPanel = inference.claim;

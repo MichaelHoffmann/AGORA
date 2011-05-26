@@ -15,8 +15,12 @@
 		</s:HGroup>
 		<mx:Canvas id="agora" width="140" height="650">
 			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="500000" height="600000" >	
-				<mx:Canvas id="canvas" width="150" height="100" visible="false">
-					<mx:Text width="150" height="100" id="helpTxt" text='Help Text:	 Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")'>
+				<mx:Canvas id="canvas" width="150" visible="false">
+					<mx:Text width="150" height="140" id="helpTxt">
+						<mx:htmlText>
+							<![CDATA[<u>Support:</u><br /> <br />Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")
+							]]>
+						</mx:htmlText>
 					</mx:Text>
 				</mx:Canvas>
 			</classes:AgoraMap>
@@ -98,7 +102,7 @@
 				canvas.visible = true;
 				var argumentPanel:ArgumentPanel = addPanel();
 				argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
-				canvas.setStyle("backgroundColor",uint("0x339900"));
+				canvas.setStyle("backgroundColor",uint("0x99FF99"));
 				canvas.x = 25 * 3 + 250;
 				canvas.y = 25 * 2;
 			}
