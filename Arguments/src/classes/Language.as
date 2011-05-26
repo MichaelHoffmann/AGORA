@@ -16,9 +16,9 @@ package classes
 		//by default, the language is EN-US
 		
 		public static const GERMAN:String = "GER";
-		public static const EN_US:String = "EN-US";
+		public static const ENGLISH:String = "EN-US";
 		public static const RUSSIAN:String = "RUS";
-		public static var language:String = EN_US;
+		public static var language:String = ENGLISH;
 		
 		
 		public function Language()
@@ -45,12 +45,15 @@ package classes
 		{
 			xml=XML(event.target.data);
 			trace("XML loaded.");
-			lookup("Label");
 		}
 		
-		public static function lookup(label:String):void{
+		public static function lookup(label:String):String{
 			trace("Now looking up:" + label);
-			trace(xml.descendants(label));
+			var lbl:XMLList = xml.descendants(label);
+			var lang:XMLList = lbl.descendants(language);
+			var output:String = lang.attribute("text");
+			trace("Output is: " + output);
+			return output;
 		}
 		
 	}
