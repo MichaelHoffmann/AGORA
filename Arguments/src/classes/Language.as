@@ -41,7 +41,10 @@ package classes
 		{
 			var xml:XML = new XML;
 			xml=XML(event.target.data);
-			Alert.show(xml);
+			
+			
+			
+			
 		}
 	}
 }
