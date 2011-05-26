@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" width="75" creationComplete="init()" backgroundColor="0xFFFF00">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Text text="... Or do you want to start with a certain argument scheme? click here!" width="75" >
+	</mx:Text>
+	<fx:Script>	
+		<![CDATA[
+
+			public function init():void
+			{
+				//this.addEventListener(MouseEvent.CLICK, claim.buildByArgument);
+			}
+		]]>
+	</fx:Script>
+	
+</mx:Canvas>

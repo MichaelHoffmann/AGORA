@@ -4,7 +4,9 @@ package classes
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
 	import logic.*;
+	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -65,7 +67,7 @@ package classes
 			connectionID = connections++;
 			connectionIDs = new Vector.<int>(0,false);
 			panelType = ArgumentPanel.INFERENCE;
-			state = 0; // Inference is always a Universal statement
+			state = 0; //Inference is always a Universal statement
 			input = new Vector.<DynamicTextArea>(0,false);
 			reasons = new Vector.<ArgumentPanel>(0,false);
 			
@@ -78,6 +80,11 @@ package classes
 		}
 		///Getters and Setters
 		
+		override public function get stmt():String
+		{
+			return _displayStr;
+		}
+		
 		public function get displayStr():String
 		{
 			return _displayStr;
@@ -86,8 +93,8 @@ package classes
 		public function set displayStr(value:String):void
 		{
 			_displayStr = value;
-			input1.text = _displayStr;
 			displayTxt.text = _displayStr;
+			input1.text = _displayStr;
 			displayTxt.height = input1.height;
 			invalidateProperties();
 			invalidateSize();
@@ -158,6 +165,10 @@ package classes
 			{
 				hasMultipleReasons = false;
 			}
+			if(myArg != null)
+			{
+				myArg.createLinks();
+			}
 		}
 		
 		public function setRuleState():void
@@ -177,6 +188,32 @@ package classes
 			
 		}
 		
+		override public function addHandler(event:MouseEvent):void
+		{
+			if(implies)	
+			{
+				if(myschemeSel.selectedType!="If-then" && myschemeSel.selectedType != "Implies")
+				{
+					//TODO: translate
+					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
+					return;
+				}
+			}
+			else 
+			{
+				if(!implies && myschemeSel.selectedType != "Either-or")
+				{
+					//TODO: translate
+					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
+					return;
+				}
+			}
+			argType.changeSchemeBtn.enabled = false;
+			super.addHandler(event);
+		}
+		
+		//This happens when the argument
+		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
 			if(typed)
@@ -206,8 +243,10 @@ package classes
 		
 		public function menuCreated(fe:FlexEvent):void
 		{ 
-			
-			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism","Constructive Dilemma"];
+			//Sometimes only one posisble scheme is possible.
+			//In those situations, they are created automatically, instead
+			//of giving the user a menu
+			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
 			var optionsArr:Array = ["And","Or"];
 			if( (!claim.statementNegated) && claim.inference != null)
 			{
@@ -218,12 +257,49 @@ package classes
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
 			}
-			var rootlist:List = myschemeSel.mainSchemes;
-			rootlist.dataProvider = typeArr;
+			
+			
+			if(claim.multiStatement && claim.inference != null)
+			{
+				//claim is a multistatement and claim is of type P->Q
+				//Only one possible scheme - conditional syllogism
+				if(claim.implies)
+				{
+					typeArr = ["Conditional Syllogism"];
+					//the language type is already determined
+					//It is that of the enabler.
+					if(claim is Inference){
+						//feasibility of adding is already checked
+						myschemeSel.selectedScheme = ParentArg.COND_SYLL;
+						var infClaim:Inference = Inference(claim);
+						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+						//var array:Array = new Array;
+						//array.splice(0,0,infClaim,myschemeSel.selectedType);
+						//myschemeSel.typeSelector.dataProvider = array;
+						argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
+						argType.changeSchemeBtn.enabled = false;
+						myArg = new ConditionalSyllogism;
+						myArg.inference = this;
+						myArg.addInitialReasons();
+						myArg.createLinks();
+						selectedBool = true;
+						schemeSelected = true;
+						parentMap.option.visible = false;
+						this.visible = true;
+					}
+				}
+				else
+				{
+					typeArr = ["Constructive Dilemma"];
+				}
+				
+			}
+			
+			myschemeSel.scheme = typeArr;
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
 			oplist.dataProvider = optionsArr;
-			rootlist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
 			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
 			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
@@ -296,8 +372,8 @@ package classes
 				tmpInput.id = tmp.input1.id;
 				
 				//binding
-				tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
-				tmp.input1.forwardList.push(tmpInput);
+				//tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
+				//tmp.input1.forwardList.push(tmpInput);
 				//this new reason's input1 text forwards to that invisible box
 				dispatchEvent(new Event(REASON_ADDED,true,false));
 			}catch (e:Error)
@@ -322,6 +398,7 @@ package classes
 				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
 			}
 		}
+		
 		override public function onArgumentPanelCreate(e:FlexEvent):void
 		{
 			super.onArgumentPanelCreate(e);
@@ -331,17 +408,30 @@ package classes
 			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
 			bottomHG.visible = true;
 			doneHG.visible = false;
-			input1.visible = false;
 			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
+			multiStatement = true;
+			group.removeElement(msVGroup);
+			//msVGroup.visible = false;
+			
 		}
 		public function chooseEnablerText():void
 		{
+			if(myschemeSel.scheme != null){
+				if(myschemeSel.scheme.length == 0)
+				{
+					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
+					return;
+				}
+			}
 			myschemeSel.visible=true;
+			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
 			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
 			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-			parentMap.parent.addChild(myschemeSel);
 			myschemeSel.depth = parentMap.parent.numChildren;
 			selectedBool = true;
+			parentMap.helpText.visible = true;
+			parentMap.helpText.x = myschemeSel.x + myschemeSel.width + 20;
+			parentMap.helpText.y = myschemeSel.y - 200;
 		}
 		
 		public function changeHandler(e:MouseEvent):void
@@ -353,14 +443,11 @@ package classes
 		{
 			if(myschemeSel.andor.visible==false)
 			{
-				parentMap.parent.removeChild(myschemeSel);
+				//parentMap.parent.removeChild(myschemeSel);
+				myschemeSel.visible = false;
 			}
 			schemeSelected = true;
-		}
-		
-		public function displayRestricted(le:ListEvent):void
-		{
-			
+			parentMap.helpText.visible = false;
 		}
 		
 		public function displayTypes(le:ListEvent):void
@@ -391,6 +478,7 @@ package classes
 					break;
 			}
 			myArg.inference = this;
+			myArg.createLinks();
 			if(hasMultipleReasons)
 			{
 				sublist.dataProvider = myArg._expLangTypes;	
@@ -472,6 +560,8 @@ package classes
 			displayStr = myArg.correctUsage();
 			input1.forwardUpdate();
 			schemeSelected = true;
+			
+			parentMap.helpText.visible = false;
 		}
 		
 		

@@ -17,11 +17,8 @@ package logic
 			dbName = myname;	
 		}
 		
-		override public function correctUsage():String {
-			var output:String = "";
-			var reason:Vector.<ArgumentPanel> = inference.reasons;
-			var claim:ArgumentPanel = inference.claim;
-			
+		override public function createLinks():void
+		{
 			//Negate the claim if it is the first claim of the argument
 			if(inference.claim.inference != null && !inference.claim.statementNegated)
 			{
@@ -38,7 +35,47 @@ package logic
 				{
 					inference.reasons[i].statementNegated = true;
 				}
+				if(inference.reasons[i].multiStatement)
+				{
+					inference.reasons[i].multiStatement = false;
+				}
 			}
+			
+			if(inference.claim.multiStatement)
+			{
+				inference.claim.multiStatement = false;
+			}
+			
+			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
+			{
+				inference.claim.input1.text = "P";
+				inference.claim.displayTxt.text = "P";
+				inference.reasons[0].input1.text = "Q";
+				inference.reasons[0].displayTxt.text = "Q";
+			}
+			
+			
+			inference.implies = true;
+			
+			var	claim:ArgumentPanel = inference.claim;
+			var reasons:Vector.<ArgumentPanel> = inference.reasons;
+			claim.input1.forwardList.push(inference.input[0]);
+			inference.input[0].forwardList.push(inference.inputs[1]);
+			for(i=0; i < reasons.length; i++)
+			{
+				reasons[i].input1.forwardList.push(inference.input[i+1]);
+				inference.input[i+1].forwardList.push(inference.inputs[0]);
+			}
+			inference.implies = true;
+		}
+		
+		override public function correctUsage():String {
+			var output:String = "";
+			var reason:Vector.<ArgumentPanel> = inference.reasons;
+			var claim:ArgumentPanel = inference.claim;
+			var i:int;
+			
+			
 			//Negate the reason. The reason will not be supported by other
 			//arguments. If it were, the argument woud have had 'typed' true,
 			//and myArg would not be pointing to a Modus Tollens Object
@@ -46,34 +83,65 @@ package logic
 			switch(inference.myschemeSel.selectedType) {
 				//negate reason				
 				case _langTypes[0]: //If-then. If both claim and reason negated
-					//output += "It is not the case that " + reason[0].input1.text + "; therefore, it is not the case that "+claim;
-					output += "If " + claim.positiveStmt + ", then "+ reason[0].positiveStmt;
-					// if not negated,
-					// output += "If " + claim + " then " + reason[0].input1.text
+					//output += "If " + claim.positiveStmt + ", then "+ reason[0].positiveStmt;
+					inference.inputs[0].text = reason[0].positiveStmt;
+					
+					inference.inputs[1].text = claim.positiveStmt;
+					
+					output = "If " + inference.inputs[1].text + ", then " + inference.inputs[0].text;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[1]: // Implies
 					output +=  claim.positiveStmt + " implies " + reason[0].positiveStmt;
+					inference.inputs[0].text = reason[0].positiveStmt;
+					inference.inputs[1].text = claim.positiveStmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[2]: //Whenever
 					output += "Whenever " + claim.positiveStmt + ", " + reason[0].positiveStmt;
+					inference.inputs[0].text = reason[0].positiveStmt;
+					inference.inputs[1].text = claim.positiveStmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[3]: // Only if
+					var reasonStr:String = "";
 					output += claim.positiveStmt + " Only if ";
-					if(isLanguageExp==true)
+					for(i=0;i<reason.length-1;i++)
 					{
-						for(i=0;i<reason.length-1;i++)
-							output += reason[i].positiveStmt + " " + andOr + " ";	
+						output += reason[i].positiveStmt + " " + andOr + " ";
+						reasonStr = reasonStr + reason[i].positiveStmt + " " + andOr + " ";
 					}
+					reasonStr = reasonStr + reason[i].positiveStmt;
 					output += reason[reason.length-1].positiveStmt;
+					inference.inputs[0].text = reasonStr;
+					inference.inputs[1].text = claim.positiveStmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[4]: // Provided that
 					output += reason[0].positiveStmt + " provided that " + claim.positiveStmt;
+					inference.inputs[0].text = reason[0].positiveStmt;
+					inference.inputs[1].text = claim.positiveStmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
+				
 				case _langTypes[5]: // Sufficient condition
 					output += claim.positiveStmt + " is a sufficient condition for " + reason[0].positiveStmt;
+					inference.inputs[0].text = reason[0].positiveStmt;
+					inference.inputs[1].text = claim.positiveStmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[6]: // Necessary condition
 					output += reason[0].positiveStmt + " is a necessary condition for " + claim.positiveStmt;
+					inference.inputs[0].text = reason[0].positiveStmt;
+					inference.inputs[1].text = claim.positiveStmt;
+					inference.inputs[0].forwardUpdate();
+					inference.inputs[1].forwardUpdate();
 					break;	
 			}
 			
