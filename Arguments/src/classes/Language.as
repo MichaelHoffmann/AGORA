@@ -27,6 +27,9 @@ package classes
 		//Variables goes here
 		public static var intro:String;
 		private static var xml:XML=new XML;
+		/*
+			XML is a global variable so that it only has to be loaded once. This will save speed and bandwidth.
+		*/
 		
 		public static function readXMLData():void
 		{
@@ -47,6 +50,7 @@ package classes
 			trace("XML loaded.");
 		}
 		
+		/**The key function. Use this to look up a label from the translation document according to the set language.*/
 		public static function lookup(label:String):String{
 			trace("Now looking up:" + label);
 			var lbl:XMLList = xml.descendants(label);
