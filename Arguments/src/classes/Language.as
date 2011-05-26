@@ -25,7 +25,7 @@ package classes
 		{
 		}
 		//Variables goes here
-		public static var intro:String;
+		public static var ready:Boolean=false;
 		private static var xml:XML=new XML;
 		/*
 			XML is a global variable so that it only has to be loaded once. This will save speed and bandwidth.
@@ -33,7 +33,7 @@ package classes
 		
 		public static function readXMLData():void
 		{
-			
+			trace("Now reading XML data...");
 			var rq:URLRequest = new URLRequest("http://agora.gatech.edu/dev/translation.xml");
 			var urlLoader:URLLoader = new URLLoader;
 			//check the path and name of the file
@@ -48,6 +48,7 @@ package classes
 		{
 			xml=XML(event.target.data);
 			trace("XML loaded.");
+			ready=true;
 		}
 		
 		/**The key function. Use this to look up a label from the translation document according to the set language.*/

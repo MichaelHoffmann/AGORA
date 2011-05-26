@@ -9,6 +9,10 @@
 		<![CDATA[
 			import classes.Language;
 			Language.readXMLData();
+
+			
+			Language.lookup("ParticularUniversalClarification");
+			
 		]]>
 	</fx:Script>
 </s:Application>
