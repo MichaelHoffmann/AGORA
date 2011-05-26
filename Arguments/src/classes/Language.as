@@ -4,6 +4,7 @@ package classes
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.utils.ByteArray;
 	
 	import mx.controls.Alert;
 	
@@ -20,39 +21,21 @@ package classes
 		public static const RUSSIAN:String = "RUS";
 		public static var language:String = ENGLISH;
 		
+		public var xml:XML;
 		
-		public function Language()
+		public function Language(lang:String)
 		{
+			language=lang;
+			[Embed(source="translation.xml", mimeType="application/octet-stream")]
+			const MyData:Class;
+			var byteArray:ByteArray = new MyData() as ByteArray;
+			var x:XML = new XML(byteArray.readUTFBytes(byteArray.length));
+			this.xml = x;
 		}
-		//Variables goes here
-		public static var ready:Boolean=false;
-		private static var xml:XML=new XML;
-		/*
-			XML is a global variable so that it only has to be loaded once. This will save speed and bandwidth.
-		*/
-		
-		public static function readXMLData():void
-		{
-			trace("Now reading XML data...");
-			var rq:URLRequest = new URLRequest("http://agora.gatech.edu/dev/translation.xml");
-			var urlLoader:URLLoader = new URLLoader;
-			//check the path and name of the file
-			urlLoader.load(rq);
-			urlLoader.addEventListener(Event.COMPLETE, loadVariables);
-			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, function(event:IOErrorEvent):void{
-				Alert.show("Communication Error");
-			});
-		}
-		
-		public static function loadVariables(event:Event):void
-		{
-			xml=XML(event.target.data);
-			trace("XML loaded.");
-			ready=true;
-		}
+
 		
 		/**The key function. Use this to look up a label from the translation document according to the set language.*/
-		public static function lookup(label:String):String{
+		public function lookup(label:String):String{
 			trace("Now looking up:" + label);
 			var lbl:XMLList = xml.descendants(label);
 			var lang:XMLList = lbl.descendants(language);
