@@ -4,6 +4,7 @@ package classes
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	
 	import mx.controls.Alert;
 	
 	import org.osmf.layout.AbsoluteLayoutFacet;
@@ -18,11 +19,14 @@ package classes
 		public static const EN_US:String = "EN-US";
 		public static const RUSSIAN:String = "RUS";
 		public static var language:String = EN_US;
+		
+		
 		public function Language()
 		{
 		}
 		//Variables goes here
 		public static var intro:String;
+		private static var xml:XML=new XML;
 		
 		public static function readXMLData():void
 		{
@@ -39,12 +43,15 @@ package classes
 		
 		public static function loadVariables(event:Event):void
 		{
-			var xml:XML = new XML;
 			xml=XML(event.target.data);
-			
-			
-			
-			
+			trace("XML loaded.");
+			lookup("Label");
 		}
+		
+		public static function lookup(label:String):void{
+			trace("Now looking up:" + label);
+			trace(xml.descendants(label));
+		}
+		
 	}
 }
