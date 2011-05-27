@@ -21,21 +21,25 @@ package classes
 		public static const RUSSIAN:String = "RUS";
 		public static var language:String = ENGLISH;
 		
-		public var xml:XML;
+		public static var xml:XML;
+		private static var ready:Boolean=false;
 		
-		public function Language(lang:String)
+		public static function init():void
 		{
-			language=lang;
 			[Embed(source="translation.xml", mimeType="application/octet-stream")]
 			const MyData:Class;
 			var byteArray:ByteArray = new MyData() as ByteArray;
 			var x:XML = new XML(byteArray.readUTFBytes(byteArray.length));
-			this.xml = x;
+			xml = x;
+			ready=true;
 		}
 
 		
 		/**The key function. Use this to look up a label from the translation document according to the set language.*/
-		public function lookup(label:String):String{
+		public static function lookup(label:String):String{
+			if(!ready){
+				init();				
+			}
 			trace("Now looking up:" + label);
 			var lbl:XMLList = xml.descendants(label);
 			var lang:XMLList = lbl.descendants(language);
