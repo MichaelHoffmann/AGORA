@@ -1,6 +1,7 @@
 package classes
 {
 	import components.ArgSelector;
+	import components.HelpText;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -324,17 +325,27 @@ package classes
 			}
 			
 			myschemeSel.scheme = typeArr;
-			trace(typeArr);
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
 			oplist.dataProvider = optionsArr;
 			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_CLICK,setArgScheme);
 			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
 			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
 			oplist.addEventListener(ListEvent.ITEM_ROLL_OVER,statementOption);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+		}
+		
+		public function setArgScheme(event:ListEvent):void
+		{
+			var scheme:String = event.itemRenderer.data.toString();
+			if(scheme == ParentArg.DIS_SYLL || scheme == ParentArg.NOT_ALL_SYLL)
+			{
+				myschemeSel.visible = false;
+			}
+			parentMap.helpText.visible = false;
 		}
 		
 		public function get argType():MenuPanel
@@ -492,7 +503,13 @@ package classes
 		{
 			myschemeSel.selectedScheme = le.itemRenderer.data.toString();
 			var sublist:List = myschemeSel.typeSelector;
-			sublist.visible=true;
+			sublist.visible = false;
+			if(myschemeSel.selectedScheme != ParentArg.DIS_SYLL && myschemeSel.selectedScheme != ParentArg.NOT_ALL_SYLL)
+			{
+				sublist.visible=true;
+			}
+			
+			displayStr = "";
 			
 			switch(myschemeSel.selectedScheme)
 			{
@@ -507,9 +524,19 @@ package classes
 					break;
 				case ParentArg.DIS_SYLL:
 					myArg = new DisjunctiveSyllogism;
+					myArg.inference = this;
+					myArg.createLinks();
+					myArg.isLanguageExp = true;
+					myschemeSel.selectedType = myArg._langTypes[0];
+					displayStr = myArg.correctUsage();
 					break;
 				case ParentArg.NOT_ALL_SYLL:
 					myArg = new NotAllSyllogism;
+					myArg.inference = this;
+					myArg.createLinks();
+					myArg.isLanguageExp = true;
+					myschemeSel.selectedType = myArg._langTypes[0];
+					displayStr = myArg.correctUsage();
 					break;
 				case ParentArg.CONST_DILEM:
 					myArg = new ConstructiveDilemma;
@@ -517,6 +544,7 @@ package classes
 			}
 			myArg.inference = this;
 			myArg.createLinks();
+			
 			if(hasMultipleReasons)
 			{
 				sublist.dataProvider = myArg._expLangTypes;	

@@ -12,8 +12,7 @@ package logic
 		
 		public function ModusPonens()
 		{
-			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition","If and only if",
-				"Necessary-and-sufficient-condition","Equivalent"];
+			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			_expLangTypes = ["If-then","Whenever","Provided that"];	
 			myname = MOD_PON;
 			dbName = "MPtherefore";			

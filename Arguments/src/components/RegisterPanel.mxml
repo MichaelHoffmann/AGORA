@@ -70,36 +70,38 @@
 		]]>
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="Username">
+		<mx:FormItem tabIndex="1" label="Username*">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
 		
-		<mx:FormItem label="Password">
+		<mx:FormItem label="Password*">
 			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Confirm Password" >
+		<mx:FormItem  label="Confirm Password*" >
 			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="First Name">
+		<mx:FormItem label="First Name*">
 			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Last Name">
+		<mx:FormItem label="Last Name*">
 			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Email">
+		<mx:FormItem  label="Email*">
 			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>
-		
 		<mx:FormItem label="URL">
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
+		<mx:FormItem label="Entries with an * are mandatory">
+		</mx:FormItem>
+
 		<mx:FormItem>
 			<s:HGroup>
 				<s:Button label="Submit" tabIndex="7" id="submit_btn" click="submit_form();">		
