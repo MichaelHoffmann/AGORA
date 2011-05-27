@@ -63,6 +63,9 @@ package classes
 		//the user clicks the done button, it goes to the non-editable state.
 		//The input1 textbox is hidden and the below Text control is shown.
 		public var displayTxt:Text;
+		//label for displaying 'It is not the case that' for netaged
+		//statements
+		public var negatedLbl:Label;
 		//A reference to the current map diplayed to the user
 		public static var parentMap:AgoraMap;
 		//The logical container that holds the text elements of the statement
@@ -208,7 +211,18 @@ package classes
 		
 		public function set statementNegated(value:Boolean):void
 		{
-			_statementNegated = value;
+			if(_statementNegated != value)
+			{
+				_statementNegated = value;
+				if(value == true)
+				{
+					negatedLbl.visible = true;
+				}
+				else
+				{
+					negatedLbl.visible = false;
+				}
+			}
 			makeUnEditable();
 		}
 		
@@ -221,12 +235,10 @@ package classes
 			if(multiStatement){
 				focusManager.setFocus(inputs[0]);
 				msVGroup.visible = true;
-				trace(msVGroup);
 			}
 			else{
 				focusManager.setFocus(input1);
 				input1.visible = true;
-				trace(input1);
 			}
 			displayTxt.visible = false;
 			doneHG.visible = true;
@@ -246,7 +258,9 @@ package classes
 				displayTxt.width = input1.width;
 				displayTxt.height = input1.height;
 			}
-			displayTxt.text = stmt;
+			
+			displayTxt.text = positiveStmt;
+			
 			//trace(displayTxt.text);
 			displayTxt.visible = true;
 			bottomHG.visible = true;
@@ -391,8 +405,6 @@ package classes
 		public function configureReason(event:FlexEvent):void
 		{
 			var reason:ArgumentPanel = ArgumentPanel(event.target);
-			//reason.input1.text = "Q";
-			//reason.displayTxt.text = "Q";
 			reason.makeUnEditable();
 		}
 		
@@ -402,11 +414,8 @@ package classes
 			if(inference == null)
 			{
 				if(multiStatement){
-					//inputs[0].text = "P1";
-					//inputs[1].text = "P2";
 				}
 				else{
-					//input1.text = "P";
 				}
 			}
 			makeUnEditable();
@@ -608,6 +617,12 @@ package classes
 			userIdLbl.text = "AU: " + UserData.userNameStr;
 			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
 			userIdLbl.toolTip = userInfoStr;
+			
+			negatedLbl = new Label;
+			negatedLbl.text = "It is not the case that";
+			negatedLbl.visible = false;
+			addElement(negatedLbl);
+			
 			
 			group = new Group;
 			addElement(group);

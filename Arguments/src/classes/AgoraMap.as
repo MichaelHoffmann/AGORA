@@ -6,6 +6,7 @@ package classes
 	
 	import flash.display.Graphics;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
@@ -49,6 +50,11 @@ package classes
 			request.data = new URLVariables("uid="+UserData.uid+"&pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
 			request.method = URLRequestMethod.GET;
 			urlLoader.load(request);	
+		}
+		
+		public function getGlobalCoordinates(point:Point):Point
+		{
+			return localToGlobal(point);
 		}
 		
 		public function getMapXml():XML

@@ -5,6 +5,7 @@ package classes
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import logic.*;
 	
@@ -12,10 +13,12 @@ package classes
 	import mx.controls.Alert;
 	import mx.controls.Label;
 	import mx.controls.List;
+	import mx.controls.Menu;
 	import mx.controls.listClasses.ListData;
 	import mx.core.IVisualElement;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
+	import mx.events.MenuEvent;
 	import mx.utils.ArrayUtil;
 	
 	import org.osmf.layout.AbsoluteLayoutFacet;
@@ -61,10 +64,15 @@ package classes
 		private var _schemeSelected:Boolean;
 		//The string that is displayed
 		public var _displayStr:String;
+		//if adding multiple reasons are allowed
+		public var reasonAddable:Boolean;
+		
+		private var addReasonMenuData:XML;
 		
 		public function Inference()
 		{
 			super();
+			addReasonMenuData = <root><menuitem   label = "... another reason for this argument so that only the combination of all reasons justifies the claim" /></root>;
 			connectionID = connections++;
 			connectionIDs = new Vector.<int>(0,false);
 			panelType = ArgumentPanel.INFERENCE;
@@ -78,6 +86,7 @@ package classes
 			selectedBool = false;
 			typed = false;
 			schemeSelected = false;
+			reasonAddable = false;
 		}
 		///Getters and Setters
 		
@@ -272,8 +281,6 @@ package classes
 			else if(claim.statementNegated && claim.inference != null)
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
-				trace("setting type array");
-				trace(typeArr);
 			}
 			
 			if(!claim.multiStatement && (claim.inference != null || claim.userEntered == true) && !claim.statementNegated )
@@ -295,27 +302,25 @@ package classes
 					typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
-					//if(claim is Inference){
-						//feasibility of adding is already checked
-						myschemeSel.selectedScheme = ParentArg.COND_SYLL;
-						var infClaim:Inference = Inference(claim);
-						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
-						//var array:Array = new Array;
-						//array.splice(0,0,infClaim,myschemeSel.selectedType);
-						//myschemeSel.typeSelector.dataProvider = array;
-						argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
-						argType.changeSchemeBtn.enabled = false;
-						myArg = new ConditionalSyllogism;
-						myArg.isLanguageExp = true;
-						myArg.inference = this;
-						myArg.addInitialReasons();
-						myArg.createLinks();
-						selectedBool = true;
-						schemeSelected = true;
-						parentMap.option.visible = false;
-						this.visible = true;
-						reasons[0].makeEditable();
-					//}
+					//feasibility of adding is already checked
+					myschemeSel.selectedScheme = ParentArg.COND_SYLL;
+					var infClaim:Inference = Inference(claim);
+					myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+					//var array:Array = new Array;
+					//array.splice(0,0,infClaim,myschemeSel.selectedType);
+					//myschemeSel.typeSelector.dataProvider = array;
+					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
+					argType.changeSchemeBtn.enabled = false;
+					myArg = new ConditionalSyllogism;
+					myArg.isLanguageExp = true;
+					myArg.inference = this;
+					myArg.addInitialReasons();
+					myArg.createLinks();
+					selectedBool = true;
+					schemeSelected = true;
+					parentMap.option.visible = false;
+					this.visible = true;
+					reasons[0].makeEditable();
 				}
 				else
 				{
@@ -323,7 +328,6 @@ package classes
 				}
 				
 			}
-			
 			myschemeSel.scheme = typeArr;
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
@@ -424,19 +428,34 @@ package classes
 		
 		public function addReasonHandler(event:MouseEvent):void
 		{
-			if(schemeSelected != true)
-			{
-				Alert.show("Complete the enabler before adding further reasons");
-				return;
-			}
-			if(myArg.isLanguageExp)
-			{
-				addReason();
-			}
-			else
-			{
-				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
-			}
+			
+			var menu:Menu = Menu.createMenu(null, addReasonMenuData,false);
+			menu.labelField = "@label";
+			menu.addEventListener(MenuEvent.ITEM_CLICK, function (event:MenuEvent):void {
+				if(schemeSelected != true)
+				{
+					Alert.show("Complete the enabler before adding further reasons");
+					return;
+				}
+				if(myArg.isLanguageExp || (myArg is ModusTollens && reasonAddable == true && myschemeSel.selectedType == myArg._expLangTypes[0]))
+				{
+					addReason();
+				}
+				else
+				{	
+					if(myArg is ModusTollens && myschemeSel.selectedType == myArg._expLangTypes[0])
+					{
+						Alert.show("Select the language type that determines how the reasons are combined: 'or' or 'and'");
+						reasonAddable = true;	
+					}
+					else
+					{
+						Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
+					}
+				}
+			});
+			var globalPosition:Point = parentMap.getGlobalCoordinates(new Point(argType.x,argType.y + argType.height));
+			menu.show(globalPosition.x,globalPosition.y);
 		}
 		
 		override public function makeUnEditable():void
@@ -460,9 +479,8 @@ package classes
 			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
 			multiStatement = true;
 			group.removeElement(msVGroup);
-			//msVGroup.visible = false;
-			
 		}
+		
 		public function chooseEnablerText():void
 		{
 			if(myschemeSel.scheme != null){
@@ -490,6 +508,13 @@ package classes
 		
 		public function setType(le:ListEvent):void
 		{
+			if(myArg is ModusTollens)
+			{
+				if(myschemeSel.selectedType != myArg._expLangTypes[0])
+				{
+					reasonAddable = false;
+				}
+			}
 			if(myschemeSel.andor.visible==false)
 			{
 				//parentMap.parent.removeChild(myschemeSel);
@@ -567,11 +592,16 @@ package classes
 			{
 				if(typeText == "Only if") 
 				{
-					oplist.visible=true;
-					myArg.isLanguageExp = true;
+					var modusTollens:ModusTollens = ModusTollens(myArg);
+					if(hasMultipleReasons || reasonAddable == true)
+					{
+						oplist.visible=true;
+					}
+					else
+					{
+						oplist.visible=false;
+					}
 				}
-				else
-					oplist.visible=false;
 			}	
 			else if(myArg.myname == ParentArg.MOD_PON)
 			{
@@ -596,19 +626,16 @@ package classes
 				myArg.isLanguageExp = true;
 				myArg.createLinks();
 			}
-			
 			displayStr = myArg.correctUsage();
 		}
 		
 		public function setOption(le:ListEvent):void
 		{
 			var andor:String = le.itemRenderer.data.toString();
-			
 			if(reasons.length > 1)
 			{
 				typed = true;
 			}
-			
 			if(andor=="And")
 			{
 				myschemeSel.selectedOption = ParentArg.EXP_AND;

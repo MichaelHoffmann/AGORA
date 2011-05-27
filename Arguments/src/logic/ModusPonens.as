@@ -78,8 +78,8 @@ package logic
 					output += "If "
 					for(i=0; i < reason.length - 1; i++)
 					{
-						output += reason[i].stmt + " and ";
-						reasonStr = reasonStr + reason[i].stmt + " and ";
+						output += reason[i].stmt + " and if ";
+						reasonStr = reasonStr + reason[i].stmt + " and if ";
 					}
 					output += reason[i].stmt + ", then " + claim.stmt;
 					reasonStr = reasonStr + reason[i].stmt;
