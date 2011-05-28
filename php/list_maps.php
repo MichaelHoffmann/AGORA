@@ -13,6 +13,10 @@
 	$xml = new SimpleXMLElement($xmlstr);
 	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 		$row = mysql_fetch_assoc($resultID);
+		if($row['is_deleted']){
+			$fail = $xml->addChild("error");
+			$fail->addAttribute("Map has been deleted.");
+		}
 		$map = $xml->addChild("map");
 		$map->addAttribute("id", $row['map_id']);
 		$map->addAttribute("title", $row['title']);
