@@ -1,10 +1,9 @@
 <?php
+	require 'establish_link.php';
 	/**
-	*	File for getting the map list. Quick script!
+	*	File for getting the map list.
 	*/
-	//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-	//$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
-	$linkID = mysql_connect("localhost", "root", "root") or die ("Could not connect to database!");
+	$linkID= establishLink();
 	mysql_select_db("agora", $linkID) or die ("Could not find database");
 	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id";
 	$resultID = mysql_query($query, $linkID) or die("Data not found."); 

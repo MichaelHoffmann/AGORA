@@ -1,19 +1,31 @@
-<map id="1" username="JoshJ" timestamp="2011-04-15 12:04:34">
+<map id="1" username="JoshJ" timestamp="2011-05-19 15:00:19">
 	<textbox ID="1" text="FOO" deleted="0"/>
 	<textbox ID="2" text="BAR" deleted="0"/>
 	<textbox ID="3" text="BAZ" deleted="0"/>
-	<node ID="1" Type="Standard" Author="1" deleted="0" gridX="20" gridY="1">
+	<node ID="1" Type="Standard" Author="1" deleted="0" gridX="1" gridY="1">
 		<nodetext ID="1"/>
 	</node>
-	<node ID="2" Type="Standard" Author="1" deleted="0" gridX="1" gridY="1">
+	<node ID="2" Type="Standard" Author="1" deleted="0" gridX="20" gridY="1">
 		<nodetext ID="2"/>
 	</node>
 	<node ID="3" Type="Inference" Author="1" deleted="0" gridX="15" gridY="12">
 		<nodetext ID="1"/>
 		<nodetext ID="2"/>
 	</node>
-	<connection argID="1" type="MPtherefore" targetnode="2" deleted="0" gridX="12" gridY="1">
+	<node ID="4" Type="Standard" Author="1" deleted="0" gridX="25" gridY="12">
+		<nodetext ID="1"/>
+		<nodetext ID="3"/>
+	</node>
+	<node ID="5" Type="Inference" Author="1" deleted="0" gridX="20" gridY="24">
+		<nodetext ID="3"/>
+		<nodetext ID="2"/>
+	</node>
+	<connection connID="1" type="MPifthen" targetnode="2" deleted="0" gridX="12" gridY="1">
 		<sourcenode nodeID="1"/>
 		<sourcenode nodeID="3"/>
+	</connection>
+	<connection connID="2" type="CSifthen" targetnode="3" deleted="0" gridX="20" gridY="12">
+		<sourcenode nodeID="4"/>
+		<sourcenode nodeID="5"/>
 	</connection>
 </map>

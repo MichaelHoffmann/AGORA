@@ -1,7 +1,7 @@
 <?php
 
-	//TODO: (Whole file) make this return a TID-ID XML so that we can stop storing TID in the DB
 	require 'checklogin.php';
+	require 'establish_link.php';
 	$tbTIDarray;
 	$nodeTIDarray;
 	/**
@@ -184,29 +184,36 @@
 	}
 	
 	/**
-	*	Links an argument to a "source node" in the DB.
+	*	Links between nodes and connections in the DB.
 	*/
-	function sourceNodeToDB($source, $argID, $linkID, $output)
+	function sourceNodeToDB($source, $connID, $linkID, $output)
 	{	
 		global $nodeTIDarray;
-		//Connections to Source Nodes don't have to worry about being updated.
+		//Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
 		//They get DELETED automatically when the NODE they connect to is DELETED.
 		//print "<BR>SourceNode found";
 		$attr = $source->attributes();
 		$tid =  mysql_real_escape_string($attr["TID"]);
-		$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
-		$nodeID = $nodeTIDarray[$nodeTID];
+		$nodeID = mysql_real_escape_string($attr["nodeID"]);
+		if(!$nodeID){
+			$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
+			$nodeID = $nodeTIDarray[$nodeTID];
+		}
 		
-		$iquery = "INSERT INTO connections (argument_id, node_id, created_date, modified_date) VALUES
-											($argID, $nodeID, NOW(), NOW())";
+		$iquery = "INSERT INTO sourcenodes (connection_id, node_id, created_date, modified_date) VALUES
+											($connID, $nodeID, NOW(), NOW())";
 		//print "<BR>Insert Query is: $iquery";
-		mysql_query($iquery, $linkID);
-		$outID = getLastInsert($linkID);
-		$sourcenode = $output->addChild("sourcenode");
-		$sourcenode->addAttribute("TID", $tid);
-		$sourcenode->addAttribute("ID", $outID);
-		
+		$success = mysql_query($iquery, $linkID);
+		if($success){
+			$outID = getLastInsert($linkID);
+			$sourcenode = $output->addChild("sourcenode");
+			$sourcenode->addAttribute("TID", $tid);
+			$sourcenode->addAttribute("ID", $outID);
+		}else{
+			$fail=$output->addChild("error");
+				$fail->addAttribute("text", "The source node is not being added properly. Query was: $iquery");
+		}
 	}
 	
 	/**
@@ -217,7 +224,7 @@
 		global $nodeTIDarray;
 		//print "<BR>---Connection found";
 		$attr = $conn->attributes();
-		$id = mysql_real_escape_string($attr["argID"]);
+		$id = mysql_real_escape_string($attr["ID"]);
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
@@ -229,7 +236,7 @@
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row["type_id"];
 		
-		$tid = mysql_real_escape_string($attr["argTID"]);
+		$tid = mysql_real_escape_string($attr["TID"]);
 		
 		if(!$nodeID){
 			$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
@@ -237,9 +244,9 @@
 		}
 		
 		if(!$id){
-			//Insert the argument part into the DB (target node and info)
-			$iquery = "INSERT INTO arguments (arg_tid, user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
-											($tid, $userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
+			//Insert the connection into the DB (target node and info)
+			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
+											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			//print "<BR>Insert Query is: $iquery";
 			mysql_query($iquery, $linkID);
 			$id = getLastInsert($linkID);
@@ -249,13 +256,13 @@
 			
 		}else{
 			//Update TYPE of the connection
-			//It's not legal to change what node the argument is supporting
-			$uquery = "UPDATE arguments SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE argument_id=$id";
+			//It's not legal to change what node the connection is targeting.
+			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 			//print "<BR>Update query: $uquery";
 			mysql_query($uquery, $linkID);
 		
 		}
-		//Get the argument part (source nodes)
+		//Get the source nodes
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
@@ -301,10 +308,7 @@
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$output = new SimpleXMLElement($xmlstr);
 		
-		//Standard SQL connection stuff
-		//$linkID = mysql_connect("localhost", "root", "s3s@me123") or die ("Could not connect to database!");
-		//$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
-		$linkID = mysql_connect("localhost", "root", "root") or die ("Could not connect to database!");
+		$linkID= establishLink();
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
@@ -314,21 +318,27 @@
 	
 	
 		//Dig the Map ID out of the XML
-		print "test<BR>";
 		$xml = new SimpleXMLElement($xmlin);
-		print "foo<BR>";
 		$mapID = $xml['id'];
-		print "bar<BR>";
 		$mapClause = mysql_real_escape_string("$mapID");
+		
+		$lang = mysql_real_escape_string($xml['lang']);
+		if(!$lang){
+			$lang="EN-US";
+		}
 
 		//Check to see if the map already exists
 		if($mapClause==0){
 			//If not, create it!
-			$iquery = "INSERT INTO maps (user_id, title, description, created_date, modified_date) VALUES
-										($userID, 'Example', 'Description', NOW(), NOW())";
+			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
+										($userID, 'Example', 'Description', \"$lang\", NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
-			
 			$mapClause = getLastInsert($linkID);
+			if(!$mapClause){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "The map was not added properly. Query: $iquery");
+			}
+			
 			$output->addAttribute("ID", $mapClause);
 		}
 
@@ -346,8 +356,8 @@
 			$ownMap=true;
 			//TODO: Use this to determine if the INSERTIONS are legal
 			//We need to establish a clear policy on what insertions *are* legal, though.
-			//That will be done on the Node and Argument levels.
-			//It hinges on the TYPES of nodes and arguments, which haven't been fully established yet.
+			//That will be done on the Node and Connection levels.
+			//It hinges on the TYPES of nodes and connections, which haven't been fully established yet.
 			
 			//(Note that UPDATES are checked against ownership of that individual thing)
 		}

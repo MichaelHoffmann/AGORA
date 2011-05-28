@@ -1,5 +1,7 @@
 package classes
 {
+	import classes.Language;
+	
 	import components.ArgSelector;
 	import components.Option;
 	
@@ -42,7 +44,6 @@ package classes
 	import spark.layouts.HorizontalLayout;
 	import spark.layouts.VerticalLayout;
 	import spark.skins.spark.PanelSkin;
-	
 	
 	public class ArgumentPanel extends GridPanel
 	{
@@ -125,6 +126,11 @@ package classes
 			firstClaim = false;
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
 			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
+			//addMenuData = new XML("<root><menuitem label=\"" + Language.lookup("add") + 
+			//					Language.lookup("AddArg") + "\" type=\"TopLevel\" /></root>");
+			//constructArgData = new XML("<root><menuitem label=\"" + Language.lookup("add") +
+			//					Language.lookup("AddAnotherReason") + 
+			//					"\" type=\"TopLevel\"/><menuitem label=\"construct argument\" type=\"TopLevel\"/></root>");
 			userEntered = false;
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
@@ -571,13 +577,10 @@ package classes
 			}
 			else
 			{
-				stmtTypeLbl.text = "Particular Statement";
+				stmtTypeLbl.text = Language.lookup("Particular");
 				state = 1;
 			}
-			stmtTypeLbl.toolTip = "Whether a statement is universal or particular determines what kind of objections are possible against it. " +
-				"A 'universal statement' is defined here as a statement that can be falsified by one counter-example. " +
-				"In this sense, laws, rules, and all statements that include 'ought' or 'should,' etc., are universal statements." +
-				" Anything else is treated as a particular statement, including statements about possibilities. CLICK TO CHANGE";
+			stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
 			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
 			
 			bottomHG = new HGroup();
@@ -591,6 +594,7 @@ package classes
 			//this.input1.addEventListener(FocusEvent.FOCUS_OUT, makeUnEditable);
 			input1.panelReference = this;
 			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
+			//TODO: Translate
 			displayTxt = new Text;
 			this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
 			//Create a UIComponent for clicking and dragging
