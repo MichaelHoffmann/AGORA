@@ -155,8 +155,8 @@
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);		
-			$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
-										($tid, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
+			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
+										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
 			//print "<BR>Insert Query is: $iquery";							
 			mysql_query($iquery, $linkID);
 			$nodeID = getLastInsert($linkID);
