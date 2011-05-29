@@ -36,6 +36,7 @@ package classes
 
 		
 		/**The key function. Use this to look up a label from the translation document according to the set language.*/
+		/*
 		public static function lookup(label:String):String{
 			if(!ready){
 				init();				
@@ -47,6 +48,7 @@ package classes
 			trace("Output is: " + output);
 			return output;
 		}
+		*/
 		
 	}
 }

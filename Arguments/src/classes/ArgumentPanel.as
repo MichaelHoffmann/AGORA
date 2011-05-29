@@ -577,10 +577,12 @@ package classes
 			}
 			else
 			{
-				stmtTypeLbl.text = Language.lookup("Particular");
+				//stmtTypeLbl.text = Language.lookup("Particular");
+				stmtTypeLbl.text = "Particular";
 				state = 1;
 			}
-			stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			stmtTypeLbl.toolTip = "Please change it before commiting";
 			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
 			
 			bottomHG = new HGroup();
