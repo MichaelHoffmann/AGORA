@@ -702,5 +702,31 @@ package classes
 			this.argType.visible = true;
 		}
 		
+		override protected function deleteThis(event:MouseEvent):void
+		{
+			this.selfDestroy();
+		}
+		
+		override public function selfDestroy():void
+		{
+			//it may also be supported by further arguments
+			for(var i:int=rules.length-1; i >= 0; i--)
+			{
+				//delete(rules[i]);
+				rules[i].selfDestroy();
+			}
+			for(i = reasons.length-1; i >= 0; i--)
+			{
+				//delete(reasons[i]);
+				reasons[i].selfDestroy();
+			}
+			claim.rules.splice(claim.rules.indexOf(this),1);
+			//remove menu panel
+			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(argType),1);
+			parentMap.removeChild(argType);
+			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this),1);
+			parentMap.removeChild(this);
+			trace(this + ' destroyed');
+		}
 	}
 }
