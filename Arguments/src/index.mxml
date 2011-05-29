@@ -5,20 +5,20 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Canvas id="agoraMenu" width="800" height="600" name="agoraMenu">
+	<mx:Canvas id="agoraMenu" width="800" minHeight="600" name="agoraMenu">
 		<s:VGroup id="Agora">
 			<s:HGroup paddingLeft="25" paddingTop="25">
 				<s:Label text="Welcome to AGORA...">
 				</s:Label>	
 			</s:HGroup>
 			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
-				<s:Panel id="mapList" title="List of Maps" width="200" height="400" >
+				<s:Panel id="mapList" title="List of Maps" width="200" minHeight="400">
 					<s:VGroup id="mapNameList" gap="5" paddingTop="5" paddingLeft="5" width="100%"> 
 					</s:VGroup>
 				</s:Panel>
-				<s:Panel id="myMaps" title="My Maps" width="200" height="400">
+				<s:Panel id="myMaps" title="My Maps" width="200" minHeight="400">
 				</s:Panel>
-				<s:Panel  id="projects" title="Projects" width="200" height="400">	
+				<s:Panel  id="projects" title="Projects" width="200" minHeight="400">	
 				</s:Panel>
 			</s:HGroup>
 			<s:HGroup paddingLeft="25" paddingTop="25">

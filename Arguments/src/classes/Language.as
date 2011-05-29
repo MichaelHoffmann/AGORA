@@ -26,7 +26,7 @@ package classes
 		
 		public static function init():void
 		{
-			[Embed(source="translation.xml", mimeType="application/octet-stream")]
+			//[Embed(source="translation.xml", mimeType="application/octet-stream")]
 			const MyData:Class;
 			var byteArray:ByteArray = new MyData() as ByteArray;
 			var x:XML = new XML(byteArray.readUTFBytes(byteArray.length));

@@ -153,7 +153,7 @@ package classes
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
-			
+			trace(xmlData);
 			//read all text boxes
 			for each (var xml:XML in textboxes)
 			{
