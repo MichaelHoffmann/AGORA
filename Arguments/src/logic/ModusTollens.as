@@ -14,7 +14,7 @@ package logic
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			_expLangTypes = ["Only if"];	// Expandable with both And and Or
 			myname = MOD_TOL;
-			dbName = myname;	
+			dbName = myname;
 		}
 		
 		override public function createLinks():void
@@ -114,7 +114,7 @@ package logic
 					break;
 				case _langTypes[3]: // Only if
 					var reasonStr:String = "";
-					output += claim.positiveStmt + " Only if ";
+					output += claim.positiveStmt + " only if ";
 					for(i=0;i<reason.length-1;i++)
 					{
 						output += reason[i].positiveStmt + " " + andOr + " ";

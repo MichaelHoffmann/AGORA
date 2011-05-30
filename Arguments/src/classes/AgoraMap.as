@@ -6,6 +6,7 @@ package classes
 	
 	import flash.display.Graphics;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
@@ -51,6 +52,11 @@ package classes
 			urlLoader.load(request);	
 		}
 		
+		public function getGlobalCoordinates(point:Point):Point
+		{
+			return localToGlobal(point);
+		}
+		
 		public function getMapXml():XML
 		{
 			var xml:XML = new XML("<map id=\""+mapId+"\"></map>");
@@ -75,7 +81,6 @@ package classes
 				}	
 			}
 			
-			//print the nodes
 			for(i=0; i  < layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;
@@ -148,7 +153,7 @@ package classes
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
-			
+			trace(xmlData);
 			//read all text boxes
 			for each (var xml:XML in textboxes)
 			{

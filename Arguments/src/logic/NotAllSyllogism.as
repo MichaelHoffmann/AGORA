@@ -58,8 +58,6 @@ package logic
 					inference.reasons[i].statementNegated = false;	
 				}
 			}	
-		
-			
 			inference.implies = false;
 			
 			super.createLinks();

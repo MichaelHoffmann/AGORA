@@ -24,7 +24,6 @@ package logic
 				Alert.show("Error: Statement cannot be negative");
 			}
 			
-			
 			if(inference.claim.multiStatement)
 			{
 				inference.claim.multiStatement = false;

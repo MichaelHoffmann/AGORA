@@ -25,6 +25,7 @@ package classes
 	import mx.core.DragSource;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
+	import mx.events.EventListenerRequest;
 	import mx.events.FlexEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.DragManager;
@@ -63,6 +64,9 @@ package classes
 		//the user clicks the done button, it goes to the non-editable state.
 		//The input1 textbox is hidden and the below Text control is shown.
 		public var displayTxt:Text;
+		//label for displaying 'It is not the case that' for netaged
+		//statements
+		public var negatedLbl:Label;
 		//A reference to the current map diplayed to the user
 		public static var parentMap:AgoraMap;
 		//The logical container that holds the text elements of the statement
@@ -104,6 +108,8 @@ package classes
 		public var addMenuData:XML;
 		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
+		//claim added through start with claim
+		public var firstClaim:Boolean;
 		
 		//multiple textboxes
 		private var _multiStatement:Boolean;
@@ -117,11 +123,14 @@ package classes
 		public function ArgumentPanel()
 		{
 			super();
-			addMenuData = new XML("<root><menuitem label=\"" + Language.lookup("add") + 
-								Language.lookup("AddArg") + "\" type=\"TopLevel\" /></root>");
-			constructArgData = new XML("<root><menuitem label=\"" + Language.lookup("add") +
-								Language.lookup("AddAnotherReason") + 
-								"\" type=\"TopLevel\"/><menuitem label=\"construct argument\" type=\"TopLevel\"/></root>");
+			firstClaim = false;
+			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
+			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
+			//addMenuData = new XML("<root><menuitem label=\"" + Language.lookup("add") + 
+			//					Language.lookup("AddArg") + "\" type=\"TopLevel\" /></root>");
+			//constructArgData = new XML("<root><menuitem label=\"" + Language.lookup("add") +
+			//					Language.lookup("AddAnotherReason") + 
+			//					"\" type=\"TopLevel\"/><menuitem label=\"construct argument\" type=\"TopLevel\"/></root>");
 			userEntered = false;
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
@@ -208,7 +217,18 @@ package classes
 		
 		public function set statementNegated(value:Boolean):void
 		{
-			_statementNegated = value;
+			if(_statementNegated != value)
+			{
+				_statementNegated = value;
+				if(value == true)
+				{
+					negatedLbl.visible = true;
+				}
+				else
+				{
+					negatedLbl.visible = false;
+				}
+			}
 			makeUnEditable();
 		}
 		
@@ -221,12 +241,10 @@ package classes
 			if(multiStatement){
 				focusManager.setFocus(inputs[0]);
 				msVGroup.visible = true;
-				trace(msVGroup);
 			}
 			else{
 				focusManager.setFocus(input1);
 				input1.visible = true;
-				trace(input1);
 			}
 			displayTxt.visible = false;
 			doneHG.visible = true;
@@ -246,7 +264,9 @@ package classes
 				displayTxt.width = input1.width;
 				displayTxt.height = input1.height;
 			}
-			displayTxt.text = stmt;
+			
+			displayTxt.text = positiveStmt;
+			
 			//trace(displayTxt.text);
 			displayTxt.visible = true;
 			bottomHG.visible = true;
@@ -391,8 +411,6 @@ package classes
 		public function configureReason(event:FlexEvent):void
 		{
 			var reason:ArgumentPanel = ArgumentPanel(event.target);
-			//reason.input1.text = "Q";
-			//reason.displayTxt.text = "Q";
 			reason.makeUnEditable();
 		}
 		
@@ -402,11 +420,8 @@ package classes
 			if(inference == null)
 			{
 				if(multiStatement){
-					//inputs[0].text = "P1";
-					//inputs[1].text = "P2";
 				}
 				else{
-					//input1.text = "P";
 				}
 			}
 			makeUnEditable();
@@ -416,8 +431,6 @@ package classes
 			rules[rules.length-1].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
 			if(rules[rules.length-1].reasons[0].input1 != null)
 			{
-				//rules[rules.length-1].reasons[0].input1.text = "Q";
-				//rules[rules.length-1].reasons[0].displayTxt.text = "Q";
 				rules[rules.length-1].reasons[0].makeUnEditable();
 			}
 			parentMap.invalidateDisplayList();
@@ -491,6 +504,7 @@ package classes
 			currInference.inference = currInference;
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
+			reason.addEventListener( FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
 			//add reason to the map
 			parentMap.addElement(reason);
 			//push reason to the list of reasons belonging to this particular class
@@ -563,10 +577,13 @@ package classes
 			}
 			else
 			{
-				stmtTypeLbl.text = Language.lookup("Particular");
+				//stmtTypeLbl.text = Language.lookup("Particular");
+				stmtTypeLbl.text = "Particular";
 				state = 1;
 			}
-			stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			//stmtTypeLbl.toolTip = "Please change it before commiting";
+			stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
 			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
 			
 			bottomHG = new HGroup();
@@ -608,6 +625,12 @@ package classes
 			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
 			userIdLbl.toolTip = userInfoStr;
 			
+			negatedLbl = new Label;
+			negatedLbl.text = "It is not the case that";
+			negatedLbl.visible = false;
+			addElement(negatedLbl);
+			
+			
 			group = new Group;
 			addElement(group);
 			group.addElement(input1);
@@ -628,6 +651,7 @@ package classes
 			bottomHG.addElement(addBtn);
 			deleteBtn = new AButton;
 			deleteBtn.label = "delete...";
+			deleteBtn.addEventListener(MouseEvent.CLICK,deleteThis);
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
 			bottomHG.visible = false;
@@ -668,6 +692,10 @@ package classes
 			panelSkin = this.skin as PanelSkin;
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
+			if(!userEntered)
+			{
+				//displayTxt.text = "[Enter the claim]";
+			}
 		}
 		
 		protected function setGuidingText(event:FlexEvent):void
@@ -705,5 +733,41 @@ package classes
 			} 
 		}
 		
+		protected function deleteThis(event:MouseEvent):void
+		{
+			this.selfDestroy();
+			if(inference != null)
+			{
+				if(inference.reasons.length == 0)
+				{
+					trace('No of reasons is zero, therefore deleting the inference panel');
+					inference.selfDestroy();
+				}
+			}
+		}
+		
+		public function selfDestroy():void
+		{
+			for(var i:int=rules.length-1; i >= 0; i--)
+			{
+				rules[i].selfDestroy();
+			}
+			if(inference != null)
+			{
+				inference.reasons.splice(inference.reasons.indexOf(this,0),1);
+			}
+			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this,0),1);
+			parentMap.removeChild(this);
+			trace(this + ' destroyed');
+			if(inference != null)
+			{
+				if(inference.reasons.length > 0)
+				{
+					parentMap.layoutManager.alignReasons(this,this.gridY);
+					inference.displayStr = inference.myArg.correctUsage();
+				}
+			}
+		}
 	}
+	
 }
