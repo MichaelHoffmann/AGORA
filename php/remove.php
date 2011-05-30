@@ -79,9 +79,19 @@
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
 		$row = mysql_fetch_assoc($resultID);
+		$UID = $row['maps.user_id'];
 		if($delMap && $mapClause!=0){
+			if($UID!=$userID){
+				print "You cannot delete someone else's map!";
+				return;
+			}		
 			$query = "UPDATE maps SET is_deleted=1, modified_date=NOW() WHERE map_id=$mapClause";
-			mysql_query($query, $linkID);
+			$success = mysql_query($query, $linkID);
+			if($success){
+				print "Successfully deleted the map!";
+			}else{
+				print "Could not delete the map!";
+			}
 		}else if($mapClause==0 or mysql_num_rows($resultID)==0){
 			print "This map does not exist, therefore you cannot remove things from this map.";
 		}else{
