@@ -9,7 +9,7 @@ SET storage_engine=INNODB;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS agora.users (
   user_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  is_deleted TINYINT(1)  NULL DEFAULT 0,
+  is_deleted TINYINT(1) NULL DEFAULT 0,
   firstname VARCHAR(30) NULL,
   lastname VARCHAR(30) NULL,
   username VARCHAR(32) NOT NULL,
@@ -32,6 +32,7 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
   user_id INT UNSIGNED NULL,
   title VARCHAR(100) NULL,
   description VARCHAR(255) NULL,
+  is_deleted TINYINT(1) NULL DEFAULT 0,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   lang VARCHAR(10) NOT NULL,
