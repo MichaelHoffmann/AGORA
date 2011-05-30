@@ -348,9 +348,12 @@ package classes
 			if(scheme == ParentArg.DIS_SYLL || scheme == ParentArg.NOT_ALL_SYLL)
 			{
 				myschemeSel.visible = false;
+				schemeSelected = true;
+				parentMap.helpText.visible = false;
 			}
-			parentMap.helpText.visible = false;
-			schemeSelected = true;
+			
+			
+			
 		}
 		
 		public function get argType():MenuPanel
