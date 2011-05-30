@@ -350,6 +350,7 @@ package classes
 				myschemeSel.visible = false;
 			}
 			parentMap.helpText.visible = false;
+			schemeSelected = true;
 		}
 		
 		public function get argType():MenuPanel

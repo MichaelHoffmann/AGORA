@@ -14,6 +14,7 @@ package classes
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
+	import logic.ConditionalSyllogism;
 	import logic.ParentArg;
 	
 	import mx.containers.Canvas;
@@ -735,6 +736,11 @@ package classes
 		
 		protected function deleteThis(event:MouseEvent):void
 		{
+			if(inference != null && inference.myArg is ConditionalSyllogism)
+			{
+				Alert.show("You cannot delete a reason of a conditional syllogism argument separately. To delete this argument, delete the enabler");
+				return;
+			}
 			this.selfDestroy();
 			if(inference != null)
 			{
