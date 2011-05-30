@@ -790,6 +790,17 @@ package classes
 			//There will be no incoming links from inference
 		}
 		
+		public function inferenceDeleted():void
+		{
+			if(rules.length == 0)
+			{
+				if(this.inference != null)
+				{
+					inference.setRuleState();
+				}
+			}
+		}
+		
 		public function selfDestroy():void
 		{
 			for(var i:int=rules.length-1; i >= 0; i--)
@@ -810,6 +821,7 @@ package classes
 				{
 					parentMap.layoutManager.alignReasons(this,this.gridY);
 					inference.displayStr = inference.myArg.correctUsage();
+					inference.reasonDeleted();
 				}
 			}
 		}

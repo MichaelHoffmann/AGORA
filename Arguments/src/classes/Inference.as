@@ -60,6 +60,7 @@ package classes
 		//until it becomes an open end
 		private var _typed:Boolean;
 		public static var REASON_ADDED:String  = "Reason Added";
+		public static var REASON_DELETED:String = "Reason Deleted";
 		//private var _schemeChangable:Boolean;
 		private var _schemeSelected:Boolean;
 		//The string that is displayed
@@ -165,7 +166,7 @@ package classes
 			changePossibleSchemes();
 		}
 		
-		public function reasonDeleted(event:Event):void
+		public function reasonDeleted():void
 		{
 			if(reasons.length > 1)
 			{
@@ -218,7 +219,10 @@ package classes
 				else 
 				{
 					typed = false;
-				}				
+					
+				}	
+				trace('blah');
+				trace(typed);
 			}
 			
 		}
@@ -251,6 +255,9 @@ package classes
 		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
+			trace('In change possible schemes');
+			trace(typed);
+			trace(myschemeSel);
 			if(typed)
 			{
 				myschemeSel.mainSchemes.visible = false;
@@ -275,8 +282,14 @@ package classes
 			if(!typed && myschemeSel != null)
 			{
 				myschemeSel.mainSchemes.visible = true;
+				trace('vidhisha');
+				trace(myschemeSel.mainSchemes);
 				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
 				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
+				if(myArg!=null)
+				{
+					argType.changeSchemeBtn.enabled = true;
+				}
 			}
 		}
 		
@@ -309,24 +322,38 @@ package classes
 				typeArr.splice(0,0,"Conditional Syllogism");
 			}
 			
-			if(claim.multiStatement && claim.inference != null)
+			trace('type array');
+			trace(typeArr);
+			
+			//the first claim is not set to multistatement by default
+			if(claim.multiStatement)
 			{
 				//claim is a multistatement and claim is of type P->Q
 				//Only one possible scheme - conditional syllogism
 				if(claim.implies)
 				{
-					typeArr = ["Conditional Syllogism"];
+					
+					//typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
 					//feasibility of adding is already checked
 					myschemeSel.selectedScheme = ParentArg.COND_SYLL;
-					var infClaim:Inference = Inference(claim);
-					myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+					if(claim is Inference){
+						var infClaim:Inference = Inference(claim);
+						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+					}
+					else
+					{
+						myschemeSel.selectedType = claim.connectingStr;
+					}
 					//var array:Array = new Array;
 					//array.splice(0,0,infClaim,myschemeSel.selectedType);
 					//myschemeSel.typeSelector.dataProvider = array;
-					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
-					argType.changeSchemeBtn.enabled = false;
+					trace(claim.inference);
+					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;
+					if(claim.inference != null){
+						argType.changeSchemeBtn.enabled = false;
+					}
 					myArg = new ConditionalSyllogism;
 					myArg.isLanguageExp = true;
 					myArg.inference = this;
@@ -502,6 +529,8 @@ package classes
 		
 		public function chooseEnablerText():void
 		{
+			trace('In choose enabler text');
+			trace(typed);
 			if(myschemeSel.scheme != null){
 				if(myschemeSel.scheme.length == 0)
 				{
@@ -514,7 +543,6 @@ package classes
 			{
 					return;
 			}
-			
 			myschemeSel.visible=true;
 			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
 			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
@@ -749,6 +777,16 @@ package classes
 			}
 		}
 		
+		override public function inferenceDeleted():void
+		{
+			if(this.rules.length == 0)
+			{
+				if(!argType.changeSchemeBtn.enabled){
+					argType.changeSchemeBtn.enabled = true;
+				}
+			}
+		}
+		
 		override public function selfDestroy():void
 		{
 			//it may also be supported by further arguments
@@ -770,6 +808,7 @@ package classes
 			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this),1);
 			parentMap.removeChild(this);
 			trace(this + ' destroyed');
+			claim.inferenceDeleted();
 		}
 	}
 }
