@@ -106,11 +106,13 @@ package classes
 			//var flag:int = 0;
 			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE && this != panelReference.input1)
 			{
-				if(forwardList.length>0){
+				if(forwardList.length>0)
+				{
 					currInput= forwardList[0];
 					var infPanel:Inference = Inference(panelReference);
 					var s:String;
-					if(infPanel.selectedBool == true) { 
+					if(infPanel.selectedBool == true) 
+					{ 
 						infPanel.displayStr = infPanel.myArg.correctUsage();
 					}
 					currInput.forwardUpdate();
@@ -121,7 +123,6 @@ package classes
 					//Alert.show(forwardList.length.toString());
 					//Alert.show("Someting went wrong in statement propagation");
 				}
-				
 			}
 			else
 			{

@@ -165,6 +165,22 @@ package classes
 			changePossibleSchemes();
 		}
 		
+		public function reasonDeleted(event:Event):void
+		{
+			if(reasons.length > 1)
+			{
+				hasMultipleReasons = true;
+			}
+			else
+			{
+				hasMultipleReasons = false;
+			}
+			if(myArg != null)
+			{
+				myArg.createLinks();
+			}
+		}
+		
 		public function reasonAdded(event:Event):void
 		{
 			if(reasons.length > 1)
@@ -319,6 +335,7 @@ package classes
 					selectedBool = true;
 					schemeSelected = true;
 					parentMap.option.visible = false;
+					claim.removeEventListeners();
 					this.visible = true;
 					reasons[0].makeEditable();
 				}
@@ -351,8 +368,6 @@ package classes
 				schemeSelected = true;
 				parentMap.helpText.visible = false;
 			}
-			
-			
 			
 		}
 		
@@ -494,6 +509,12 @@ package classes
 					return;
 				}
 			}
+			
+			if((myArg is DisjunctiveSyllogism || myArg is NotAllSyllogism) && typed)
+			{
+					return;
+			}
+			
 			myschemeSel.visible=true;
 			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
 			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
@@ -711,6 +732,23 @@ package classes
 			this.selfDestroy();
 		}
 		
+		override public function deleteLinks():void
+		{
+			//Need not worry about incoming links from reason.
+			//Reasons are deleted before deleting hte inference
+			//This function cleans up links to a deleted node
+			//from ndoes on the map
+			deleteLinkFromArgumentPanel(input1,claim);
+			for(var i:int = 0; i < inputs.length; i++)
+			{
+				deleteLinkFromArgumentPanel(inputs[i],claim);
+			}
+			for(i=0; i<input.length; i++)
+			{
+				deleteLinkFromArgumentPanel(input[i],claim);
+			}
+		}
+		
 		override public function selfDestroy():void
 		{
 			//it may also be supported by further arguments
@@ -727,6 +765,7 @@ package classes
 			claim.rules.splice(claim.rules.indexOf(this),1);
 			//remove menu panel
 			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(argType),1);
+			deleteLinks();
 			parentMap.removeChild(argType);
 			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this),1);
 			parentMap.removeChild(this);
