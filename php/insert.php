@@ -312,15 +312,22 @@
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
-			//print "Incorrect login!";
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Incorrect Login!");
 			return;
 		}
 	
 	
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
-		$mapID = $xml['id'];
+		$mapID = $xml['ID']; 
 		$mapClause = mysql_real_escape_string("$mapID");
+		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:
+		$mapID = $xml['id'];
+		if($mapID && !$mapClause){
+			$mapClause=$mapID;
+		}
+		
 		
 		$lang = mysql_real_escape_string($xml['lang']);
 		if(!$lang){
