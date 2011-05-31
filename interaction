@@ -26,3 +26,12 @@ http://agora.gatech.edu/dev/insert.php?uid=3&pass_hash=arunkumar&xml=
 #connection id 3
 #sourcenode id 5
 #sourcenode id 6
+
+#adding another reason
+<map id="6"><textbox TID="1" text="BAR Another"/><node TID="1" Type="Standard" x="7" y="15"><nodetext TID="1" textboxTID="1" /></node><node ID="8" Type="Inference"><nodetext TID="5" textboxTID="1" /></node><connection TID="1" type="MPifthen" targetnodeID="6"><sourcenode TID="10" nodeTID="1" /></connection></map>
+#Error because of connection having TID
+#Text id 6
+#node id 9
+
+#adding reason, trial
+<map id="6"><connection ID="3" type="MPifthen" x="7" y="7"><sourcenode TID="12" nodeID="9" /></connection></map>
