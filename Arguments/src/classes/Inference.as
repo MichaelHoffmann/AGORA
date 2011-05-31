@@ -221,8 +221,6 @@ package classes
 					typed = false;
 					
 				}	
-				trace('blah');
-				trace(typed);
 			}
 			
 		}
@@ -282,8 +280,6 @@ package classes
 			if(!typed && myschemeSel != null)
 			{
 				myschemeSel.mainSchemes.visible = true;
-				trace('vidhisha');
-				trace(myschemeSel.mainSchemes);
 				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
 				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
 				if(myArg!=null)
@@ -298,16 +294,19 @@ package classes
 			//Sometimes only one posisble scheme is possible.
 			//In those situations, they are created automatically, instead
 			//of giving the user a menu
+			trace("in menuCreated()");
+			trace(claim.userEntered);
+			
 			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
 			var optionsArr:Array = ["And","Or"];
-			if( (!claim.statementNegated) && claim.inference != null)
+			if( (!claim.statementNegated) && (claim.inference != null || claim.userEntered))
 			{
 				//typeArr.splice(1,1);
 				//typeArr.splice(3,1);
 				typeArr.splice(typeArr.indexOf(ParentArg.MOD_TOL,0),1);
 				typeArr.splice(typeArr.indexOf(ParentArg.NOT_ALL_SYLL,0),1);
 			}
-			else if(claim.statementNegated && claim.inference != null)
+			else if(claim.statementNegated && (claim.inference != null || claim.userEntered) )
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
 			}
@@ -321,9 +320,6 @@ package classes
 				typeArr = [];
 				typeArr.splice(0,0,"Conditional Syllogism");
 			}
-			
-			trace('type array');
-			trace(typeArr);
 			
 			//the first claim is not set to multistatement by default
 			if(claim.multiStatement)
