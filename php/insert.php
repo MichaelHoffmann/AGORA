@@ -86,6 +86,7 @@
 			mysql_query($uquery, $linkID);
 		}else{
 			//insert
+			$tid = mysql_real_escape_string($attr["TID"]);
 			if($textboxID){
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
@@ -97,7 +98,6 @@
 					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
 				}
 			}else{
-				$tid = mysql_real_escape_string($attr["TID"]);
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
 				
@@ -109,11 +109,11 @@
 					$fail=$output->addChild("error");
 					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
 				}
-				$outID = getLastInsert($linkID);
-				$ntOut=$output->addChild("nodetext");
-				$ntOut->addAttribute("TID", $tid);
-				$ntOut->addAttribute("ID", $outID);
 			}
+			$outID = getLastInsert($linkID);
+			$ntOut=$output->addChild("nodetext");
+			$ntOut->addAttribute("TID", $tid);
+			$ntOut->addAttribute("ID", $outID);
 		}
 	}
 	/**
