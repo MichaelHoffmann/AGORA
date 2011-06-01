@@ -9,7 +9,7 @@
 		//TODO: this should be working on the "is_deleted" flag rather than outright removal
 		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
-		$nID = mysql_real_escape_string($attr["id"]);
+		$nID = mysql_real_escape_string($attr["ID"]);
 		$query = "SELECT * FROM nodes WHERE node_id=$nID";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
@@ -71,7 +71,7 @@
 		
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
-		$mapID = $xml['id'];
+		$mapID = $xml['ID'];
 		$mapClause = mysql_real_escape_string("$mapID");
 		//Check to see if the map already exists
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";

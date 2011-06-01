@@ -8,7 +8,7 @@
 	{
 		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
-		$nID = mysql_real_escape_string($attr["id"]);
+		$nID = mysql_real_escape_string($attr["ID"]);
 		$query = "SELECT * FROM nodes WHERE node_id=$nID";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
@@ -72,7 +72,7 @@
 		
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
-		$mapID = $xml['id'];
+		$mapID = $xml['ID'];
 		$mapClause = mysql_real_escape_string("$mapID");
 		$delMap = mysql_real_escape_string($xml['remove']);
 		//Check to see if the map already exists

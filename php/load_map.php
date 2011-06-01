@@ -17,7 +17,7 @@
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$xml = new SimpleXMLElement($xmlstr);
 		$row = mysql_fetch_assoc($resultID);
-		$xml->addAttribute("id", $row['map_id']);
+		$xml->addAttribute("ID", $row['map_id']);
 		$xml->addAttribute("username", $row['username']);
 		
 		$timeID = mysql_query("SELECT NOW()", $linkID) or die ("Could not get timestamp from server.");

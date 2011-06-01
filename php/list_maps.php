@@ -18,7 +18,7 @@
 			$fail->addAttribute("Map has been deleted.");
 		}
 		$map = $xml->addChild("map");
-		$map->addAttribute("id", $row['map_id']);
+		$map->addAttribute("ID", $row['map_id']);
 		$map->addAttribute("title", $row['title']);
 		$map->addAttribute("creator", $row['username']);
 	}
