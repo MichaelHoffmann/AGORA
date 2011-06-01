@@ -140,7 +140,6 @@ package logic
 					output = inference.inputs[1].text + " implies " + inference.inputs[0].text;
 					inference.inputs[1].forwardUpdate();
 					inference.inputs[0].forwardUpdate();
-					
 			}
 			return output;
 		}

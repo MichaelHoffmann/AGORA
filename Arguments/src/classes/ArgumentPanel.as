@@ -14,6 +14,7 @@ package classes
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
+	import logic.ConditionalSyllogism;
 	import logic.ParentArg;
 	
 	import mx.containers.Canvas;
@@ -376,7 +377,7 @@ package classes
 			}
 		}
 		
-		protected function removeEventListeners():void
+		public function removeEventListeners():void
 		{
 			parentMap.option.removeEventListener(MouseEvent.CLICK,optionClicked);	
 			rules[rules.length - 1].reasons[0].input1.removeEventListener(KeyboardEvent.KEY_DOWN,hideOption);
@@ -398,6 +399,9 @@ package classes
 		public function addHandler(event:MouseEvent):void
 		{
 			addSupportingArgument();
+			trace("In add handler");
+			trace(rules.length);
+			trace(this);
 			parentMap.option.visible = true;
 			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
 			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
@@ -415,6 +419,10 @@ package classes
 		}
 		
 		public function beginByArgument():void{
+			trace(this);
+			trace(rules.length);
+			trace(rules[0]);
+			
 			rules[rules.length-1].visible = true; 
 			rules[rules.length-1].chooseEnablerText();
 			if(inference == null)
@@ -735,6 +743,11 @@ package classes
 		
 		protected function deleteThis(event:MouseEvent):void
 		{
+			if(inference != null && inference.myArg is ConditionalSyllogism)
+			{
+				Alert.show("You cannot delete a reason of a conditional syllogism argument separately. To delete this argument, delete the enabler");
+				return;
+			}
 			this.selfDestroy();
 			if(inference != null)
 			{
@@ -742,6 +755,48 @@ package classes
 				{
 					trace('No of reasons is zero, therefore deleting the inference panel');
 					inference.selfDestroy();
+				}
+			}
+		}
+		
+		public function deleteLinkFromArgumentPanel(inputBox:DynamicTextArea, claim:ArgumentPanel):void
+		{
+			//for input1.
+			if(claim.input1.forwardList.indexOf(inputBox) != -1)
+			{
+				claim.input1.forwardList.splice(claim.input1.forwardList.indexOf(inputBox),1);
+			}
+			//for inputs
+			for(var i:int=0; i< claim.inputs.length; i++)
+			{
+				var currInput:DynamicTextArea = claim.inputs[i];
+				if(currInput.forwardList.indexOf(inputBox) != -1)
+				{
+					currInput.forwardList.splice(currInput.forwardList.indexOf(inputBox),1);
+				}
+			}
+		}
+		
+		public function deleteLinks():void
+		{
+			if(inference == null)
+				return;
+			var claim:ArgumentPanel = inference.claim;
+			deleteLinkFromArgumentPanel(input1,claim);
+			for(var i:int = 0; i < inputs.length; i++)
+			{
+				deleteLinkFromArgumentPanel(inputs[i],claim);
+			}
+			//There will be no incoming links from inference
+		}
+		
+		public function inferenceDeleted():void
+		{
+			if(rules.length == 0)
+			{
+				if(this.inference != null)
+				{
+					inference.setRuleState();
 				}
 			}
 		}
@@ -757,6 +812,7 @@ package classes
 				inference.reasons.splice(inference.reasons.indexOf(this,0),1);
 			}
 			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this,0),1);
+			deleteLinks();
 			parentMap.removeChild(this);
 			trace(this + ' destroyed');
 			if(inference != null)
@@ -765,6 +821,7 @@ package classes
 				{
 					parentMap.layoutManager.alignReasons(this,this.gridY);
 					inference.displayStr = inference.myArg.correctUsage();
+					inference.reasonDeleted();
 				}
 			}
 		}

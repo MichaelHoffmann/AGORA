@@ -60,6 +60,7 @@ package classes
 		//until it becomes an open end
 		private var _typed:Boolean;
 		public static var REASON_ADDED:String  = "Reason Added";
+		public static var REASON_DELETED:String = "Reason Deleted";
 		//private var _schemeChangable:Boolean;
 		private var _schemeSelected:Boolean;
 		//The string that is displayed
@@ -165,6 +166,22 @@ package classes
 			changePossibleSchemes();
 		}
 		
+		public function reasonDeleted():void
+		{
+			if(reasons.length > 1)
+			{
+				hasMultipleReasons = true;
+			}
+			else
+			{
+				hasMultipleReasons = false;
+			}
+			if(myArg != null)
+			{
+				myArg.createLinks();
+			}
+		}
+		
 		public function reasonAdded(event:Event):void
 		{
 			if(reasons.length > 1)
@@ -202,7 +219,8 @@ package classes
 				else 
 				{
 					typed = false;
-				}				
+					
+				}	
 			}
 			
 		}
@@ -235,6 +253,9 @@ package classes
 		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
+			trace('In change possible schemes');
+			trace(typed);
+			trace(myschemeSel);
 			if(typed)
 			{
 				myschemeSel.mainSchemes.visible = false;
@@ -261,6 +282,10 @@ package classes
 				myschemeSel.mainSchemes.visible = true;
 				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
 				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
+				if(myArg!=null)
+				{
+					argType.changeSchemeBtn.enabled = true;
+				}
 			}
 		}
 		
@@ -269,16 +294,19 @@ package classes
 			//Sometimes only one posisble scheme is possible.
 			//In those situations, they are created automatically, instead
 			//of giving the user a menu
+			trace("in menuCreated()");
+			trace(claim.userEntered);
+			
 			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
 			var optionsArr:Array = ["And","Or"];
-			if( (!claim.statementNegated) && claim.inference != null)
+			if( (!claim.statementNegated) && (claim.inference != null || claim.userEntered))
 			{
 				//typeArr.splice(1,1);
 				//typeArr.splice(3,1);
 				typeArr.splice(typeArr.indexOf(ParentArg.MOD_TOL,0),1);
 				typeArr.splice(typeArr.indexOf(ParentArg.NOT_ALL_SYLL,0),1);
 			}
-			else if(claim.statementNegated && claim.inference != null)
+			else if(claim.statementNegated && (claim.inference != null || claim.userEntered) )
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
 			}
@@ -293,24 +321,35 @@ package classes
 				typeArr.splice(0,0,"Conditional Syllogism");
 			}
 			
-			if(claim.multiStatement && claim.inference != null)
+			//the first claim is not set to multistatement by default
+			if(claim.multiStatement)
 			{
 				//claim is a multistatement and claim is of type P->Q
 				//Only one possible scheme - conditional syllogism
 				if(claim.implies)
 				{
-					typeArr = ["Conditional Syllogism"];
+					
+					//typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
 					//feasibility of adding is already checked
 					myschemeSel.selectedScheme = ParentArg.COND_SYLL;
-					var infClaim:Inference = Inference(claim);
-					myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+					if(claim is Inference){
+						var infClaim:Inference = Inference(claim);
+						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
+					}
+					else
+					{
+						myschemeSel.selectedType = claim.connectingStr;
+					}
 					//var array:Array = new Array;
 					//array.splice(0,0,infClaim,myschemeSel.selectedType);
 					//myschemeSel.typeSelector.dataProvider = array;
-					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
-					argType.changeSchemeBtn.enabled = false;
+					trace(claim.inference);
+					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;
+					if(claim.inference != null){
+						argType.changeSchemeBtn.enabled = false;
+					}
 					myArg = new ConditionalSyllogism;
 					myArg.isLanguageExp = true;
 					myArg.inference = this;
@@ -319,6 +358,7 @@ package classes
 					selectedBool = true;
 					schemeSelected = true;
 					parentMap.option.visible = false;
+					claim.removeEventListeners();
 					this.visible = true;
 					reasons[0].makeEditable();
 				}
@@ -348,8 +388,10 @@ package classes
 			if(scheme == ParentArg.DIS_SYLL || scheme == ParentArg.NOT_ALL_SYLL)
 			{
 				myschemeSel.visible = false;
+				schemeSelected = true;
+				parentMap.helpText.visible = false;
 			}
-			parentMap.helpText.visible = false;
+			
 		}
 		
 		public function get argType():MenuPanel
@@ -483,12 +525,19 @@ package classes
 		
 		public function chooseEnablerText():void
 		{
+			trace('In choose enabler text');
+			trace(typed);
 			if(myschemeSel.scheme != null){
 				if(myschemeSel.scheme.length == 0)
 				{
 					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
 					return;
 				}
+			}
+			
+			if((myArg is DisjunctiveSyllogism || myArg is NotAllSyllogism) && typed)
+			{
+					return;
 			}
 			myschemeSel.visible=true;
 			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
@@ -707,6 +756,33 @@ package classes
 			this.selfDestroy();
 		}
 		
+		override public function deleteLinks():void
+		{
+			//Need not worry about incoming links from reason.
+			//Reasons are deleted before deleting hte inference
+			//This function cleans up links to a deleted node
+			//from ndoes on the map
+			deleteLinkFromArgumentPanel(input1,claim);
+			for(var i:int = 0; i < inputs.length; i++)
+			{
+				deleteLinkFromArgumentPanel(inputs[i],claim);
+			}
+			for(i=0; i<input.length; i++)
+			{
+				deleteLinkFromArgumentPanel(input[i],claim);
+			}
+		}
+		
+		override public function inferenceDeleted():void
+		{
+			if(this.rules.length == 0)
+			{
+				if(!argType.changeSchemeBtn.enabled){
+					argType.changeSchemeBtn.enabled = true;
+				}
+			}
+		}
+		
 		override public function selfDestroy():void
 		{
 			//it may also be supported by further arguments
@@ -723,10 +799,12 @@ package classes
 			claim.rules.splice(claim.rules.indexOf(this),1);
 			//remove menu panel
 			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(argType),1);
+			deleteLinks();
 			parentMap.removeChild(argType);
 			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this),1);
 			parentMap.removeChild(this);
 			trace(this + ' destroyed');
+			claim.inferenceDeleted();
 		}
 	}
 }

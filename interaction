@@ -1,0 +1,37 @@
+#url
+http://agora.gatech.edu/dev/insert.php?uid=3&pass_hash=arunkumar&xml=
+
+#xml for creating a map
+
+#creating an empty map
+<map id="0"></map>
+#created a new map with id 6
+
+#creating a textbox
+<map id="6"><textbox TID="1" text="FOO"/><node TID="1" Type="Standard" x="2" y="3"><nodetext TID="1" textboxTID="1" /></node></map>
+#text id 4
+#node id 6
+#nodetext id 9
+
+#creating a supporting argument
+<map id="6"><textbox TID="1" text="BAR"/><node TID="1" Type="Standard" x="2" y="15"><nodetext TID="1" textboxTID="1" /></node><node TID="3" Type="Inference" x="10" y="7"><nodetext TID="3" textboxTID="1"/><nodetext TID="4" textboxID="4"/></node></map>
+#text id 5
+#node id 7
+#nodetext id 10
+#node id 8(inference)
+#nodetext id 11
+
+#creating a connection
+<map id="6"><connection TID="1" type="MPifthen" targetnodeID="6" x="7" y="7"><sourcenode TID="1" nodeID="7"/><sourcenode TID="2" nodeID="8"/></connection></map>
+#connection id 3
+#sourcenode id 5
+#sourcenode id 6
+
+#adding another reason
+<map id="6"><textbox TID="1" text="BAR Another"/><node TID="1" Type="Standard" x="7" y="15"><nodetext TID="1" textboxTID="1" /></node><node ID="8" Type="Inference"><nodetext TID="5" textboxTID="1" /></node><connection TID="1" type="MPifthen" targetnodeID="6"><sourcenode TID="10" nodeTID="1" /></connection></map>
+#Error because of connection having TID
+#Text id 6
+#node id 9
+
+#adding reason, trial
+<map id="6"><connection ID="3" type="MPifthen" x="7" y="7"><sourcenode TID="12" nodeID="9" /></connection></map>
