@@ -333,7 +333,14 @@
 		if($mapID && !$mapClause){
 			$mapClause=$mapID;
 		}
-		
+		$title = mysql_real_escape_string($xml['title']);
+		if(!$title){
+			$title = "Untitled Map";
+		}
+		$desc = mysql_real_escape_string($xml['desc']);
+		if(!$desc){
+			$desc = "No description";
+		}
 		
 		$lang = mysql_real_escape_string($xml['lang']);
 		if(!$lang){
@@ -344,7 +351,7 @@
 		if($mapClause==0){
 			//If not, create it!
 			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
-										($userID, 'Example', 'Description', \"$lang\", NOW(), NOW())";
+										($userID, \"$title\", \"$desc\", \"$lang\", NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
 			$mapClause = getLastInsert($linkID);
 			if(!$mapClause){
