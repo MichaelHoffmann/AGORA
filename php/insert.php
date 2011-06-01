@@ -78,21 +78,16 @@
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$ntID = $row['nodetext_id'];
-		$debug = $output->addChild("debug");
-		$debug->addAttribute("text", "NodeTextToDB initialized");
 		if($ntID){
 			//update should ALWAYS have a real textbox ID.
 			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
 			//print "<BR>Update query is: $uquery";
 			mysql_query($uquery, $linkID);
-			$debug->addAttribute("text", "Real NT ID ran");
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);
 			//insert with real textbox ID
-			$debug->addAttribute("text", "Now running: NT TID");
 			if($textboxID){
-				$debug->addAttribute("text", "Now running: Textbox real ID variant");
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
 							($nodeID, $textboxID, $position, NOW(), NOW())";
@@ -100,13 +95,10 @@
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("queryout");
-					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
-				}else{
-					$debug->addAttribute("text", "Query succeeded: $iquery");
+					$fail->addAttribute("text5", "Unable to insert the NODETEXT. Query was: $iquery");
 				}
 			//insert with textbox TID
 			}else{
-				$debug->addAttribute("text", "Textbox TID variant");
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
 				
@@ -117,8 +109,6 @@
 				if(!$success){
 					$fail=$output->addChild("error");
 					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
-				}else{
-					$debug->addAttribute("text", "Query succeeded: $iquery");
 				}
 			}
 			//shared actions for ntTID logic
