@@ -158,14 +158,18 @@
 			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
 										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
 			//print "<BR>Insert Query is: $iquery";							
-			mysql_query($iquery, $linkID);
-			$nodeID = getLastInsert($linkID);
-			$nodeOut=$output->addChild("node");
-			$nodeOut->addAttribute("TID", $tid);
-			$nodeOut->addAttribute("ID", $nodeID);
-			
-			$nodeTIDarray[$tid]=$nodeID; // Add the TID->ID mapping to the global lookup array
-			
+			$success=mysql_query($iquery, $linkID);
+			if(!$success){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+			}else{
+				$nodeID = getLastInsert($linkID);
+				$nodeOut=$output->addChild("node");
+				$nodeOut->addAttribute("TID", $tid);
+				$nodeOut->addAttribute("ID", $nodeID);
+				
+				$nodeTIDarray[$tid]=$nodeID; // Add the TID->ID mapping to the global lookup array
+			}
 		}
 		$children = $node->children();
 		$pos = 0;
@@ -248,12 +252,16 @@
 			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
 											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			//print "<BR>Insert Query is: $iquery";
-			mysql_query($iquery, $linkID);
-			$id = getLastInsert($linkID);
-			$connection = $output->addChild("connection");
-			$connection->addAttribute("TID", $tid);
-			$connection->addAttribute("ID", $id);
-			
+			$success = mysql_query($iquery, $linkID);
+			if(!$success){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+			}else{
+				$id = getLastInsert($linkID);
+				$connection = $output->addChild("connection");
+				$connection->addAttribute("TID", $tid);
+				$connection->addAttribute("ID", $id);
+			}
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the connection is targeting.
