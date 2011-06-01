@@ -74,11 +74,25 @@
 		$xml = new SimpleXMLElement($xmlin);
 		$mapID = $xml['id'];
 		$mapClause = mysql_real_escape_string("$mapID");
+		$delMap = mysql_real_escape_string($xml['remove']);
 		//Check to see if the map already exists
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
 		$row = mysql_fetch_assoc($resultID);
-		if($mapClause==0 or mysql_num_rows($resultID)==0){
+		$UID = $row['maps.user_id'];
+		if($delMap && $mapClause!=0){
+			if($UID!=$userID){
+				print "You cannot delete someone else's map!";
+				return;
+			}		
+			$query = "UPDATE maps SET is_deleted=1, modified_date=NOW() WHERE map_id=$mapClause";
+			$success = mysql_query($query, $linkID);
+			if($success){
+				print "Successfully deleted the map!";
+			}else{
+				print "Could not delete the map!";
+			}
+		}else if($mapClause==0 or mysql_num_rows($resultID)==0){
 			print "This map does not exist, therefore you cannot remove things from this map.";
 		}else{
 			//the map exists, and now we operate on it

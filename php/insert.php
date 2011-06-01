@@ -118,6 +118,7 @@
 		global $nodeTIDarray;
 		
 		//print "<BR>----Node found";
+		$nodeOut = null; // Done for later scoping
 		$attr = $node->attributes();
 		$nodeID = mysql_real_escape_string($attr["ID"]);
 		$type = mysql_real_escape_string($attr["Type"]);
@@ -155,17 +156,21 @@
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);		
-			$iquery = "INSERT INTO nodes (node_tid, user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
-										($tid, $userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
+			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
+										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
 			//print "<BR>Insert Query is: $iquery";							
-			mysql_query($iquery, $linkID);
-			$nodeID = getLastInsert($linkID);
-			$nodeOut=$output->addChild("node");
-			$nodeOut->addAttribute("TID", $tid);
-			$nodeOut->addAttribute("ID", $nodeID);
-			
-			$nodeTIDarray[$tid]=$nodeID; // Add the TID->ID mapping to the global lookup array
-			
+			$success=mysql_query($iquery, $linkID);
+			if(!$success){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+			}else{
+				$nodeID = getLastInsert($linkID);
+				$nodeOut=$output->addChild("node");
+				$nodeOut->addAttribute("TID", $tid);
+				$nodeOut->addAttribute("ID", $nodeID);
+				
+				$nodeTIDarray[$tid]=$nodeID; // Add the TID->ID mapping to the global lookup array
+			}
 		}
 		$children = $node->children();
 		$pos = 0;
@@ -223,6 +228,7 @@
 	{
 		global $nodeTIDarray;
 		//print "<BR>---Connection found";
+		$connection = $output->addChild("connection");
 		$attr = $conn->attributes();
 		$id = mysql_real_escape_string($attr["ID"]);
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
@@ -248,19 +254,22 @@
 			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
 											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			//print "<BR>Insert Query is: $iquery";
-			mysql_query($iquery, $linkID);
-			$id = getLastInsert($linkID);
-			$connection = $output->addChild("connection");
-			$connection->addAttribute("TID", $tid);
-			$connection->addAttribute("ID", $id);
-			
+			$success = mysql_query($iquery, $linkID);
+			if(!$success){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+			}else{
+				$id = getLastInsert($linkID);
+				$connection->addAttribute("TID", $tid);
+				$connection->addAttribute("ID", $id);
+			}
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the connection is targeting.
 			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 			//print "<BR>Update query: $uquery";
 			mysql_query($uquery, $linkID);
-		
+			$connection->addAttribute("ID", $id);
 		}
 		//Get the source nodes
 		$children = $conn->children();
@@ -312,15 +321,22 @@
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
-			//print "Incorrect login!";
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Incorrect Login!");
 			return;
 		}
 	
 	
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
-		$mapID = $xml['id'];
+		$mapID = $xml['ID']; 
 		$mapClause = mysql_real_escape_string("$mapID");
+		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:
+		$mapID = $xml['id'];
+		if($mapID && !$mapClause){
+			$mapClause=$mapID;
+		}
+		
 		
 		$lang = mysql_real_escape_string($xml['lang']);
 		if(!$lang){
