@@ -79,7 +79,7 @@
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
 		$row = mysql_fetch_assoc($resultID);
-		$UID = $row['maps.user_id'];
+		$UID = $row['user_id'];
 		if($delMap && $mapClause!=0){
 			if($UID!=$userID){
 				print "You cannot delete someone else's map!";
