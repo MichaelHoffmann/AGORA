@@ -144,7 +144,7 @@
 				$success=mysql_query($uquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("error");
-					$fail->addAttribute("text", "Unable to update the NODE. Query was: $iquery");
+					$fail->addAttribute("text", "Unable to update the NODE. Query was: $uquery");
 				}
 			}else{
 				$fail=$output->addChild("error");
