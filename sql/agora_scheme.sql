@@ -261,7 +261,8 @@ CREATE TRIGGER ntdel AFTER UPDATE ON nodetext
 	FOR EACH ROW
 	BEGIN
 		IF NEW.is_deleted = 1 THEN
-			UPDATE textboxes SET is_deleted=1, modified_date=NOW() WHERE textbox_id=NEW.textbox_id;
+			--TODO: fix this to check if there are undeleted nodetexts pointing at the same textbox
+			--UPDATE textboxes SET is_deleted=1, modified_date=NOW() WHERE textbox_id=NEW.textbox_id;
 		END IF;
 	END;
 //
