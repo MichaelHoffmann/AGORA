@@ -50,16 +50,18 @@
 				$node->addAttribute("ID", $node_id);
 				$node->addAttribute("Type", $row['type']);
 				$node->addAttribute("Author", $row['user_id']);
-				$node->addAttribute("deleted", $row['is_deleted']);
 				$node->addAttribute("x", $row['x_coord']);
 				$node->addAttribute("y", $row['y_coord']);
+				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in nodetext lookup."); 
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$nodetext = $node->addChild("nodetext");
 					$innerRow=mysql_fetch_assoc($resultID2);
-					$nodetext->addAttribute("ID", $innerRow['textbox_id']);
+					$nodetext->addAttribute("ID", $innerRow['nodetext_id']);
+					$nodetext->addAttribute("textboxID", $innerRow['textbox_id']);
+					$nodetext->addAttribute("deleted", $innerRow['is_deleted']);
 				}			
 			}
 		}
@@ -75,16 +77,18 @@
 				$connection->addAttribute("connID", $conn_id);
 				$connection->addAttribute("type", $row['conn_name']);
 				$connection->addAttribute("targetnode", $row['node_id']);
-				$connection->addAttribute("deleted", $row['is_deleted']);
 				$connection->addAttribute("x", $row['x_coord']);
 				$connection->addAttribute("y", $row['y_coord']);
+				$connection->addAttribute("deleted", $row['is_deleted']);
 				//Set up the inner query to find the source nodes
 				$innerQuery="SELECT * FROM sourcenodes WHERE connection_id=$conn_id";
 				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in connection lookup");
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$sourcenode = $connection->addChild("sourcenode");
 					$innerRow=mysql_fetch_assoc($resultID2);
+					$sourcenode->addAttribute("ID", $innerRow['sn_id']);
 					$sourcenode->addAttribute("nodeID", $innerRow['node_id']);
+					$sourcenode->addAttribute("deleted", $innerRow['is_deleted']);
 				}	
 			}
 		}
