@@ -147,13 +147,11 @@ package classes
 		}
 		
 		public function load(xmlData:XML):void{
-			trace(xmlData.toXMLString());
 			//var xmlData:XML = new XML(event.target.data);
 			
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
-			trace(xmlData);
 			//read all text boxes
 			for each (var xml:XML in textboxes)
 			{
@@ -162,11 +160,11 @@ package classes
 			
 			for(var obj:String in textbox_map)
 			{
-				trace(obj);
+				//trace(obj);
 			}
 			for each(var object:Object in textbox_map)
 			{
-				trace(String(object));
+				//trace(String(object));
 			}
 			
 			var nodes_map:Object = new Object;
@@ -190,8 +188,6 @@ package classes
 					argumentPanel = new ArgumentPanel;
 					addElement(argumentPanel);// try moving addElements to one place so that to optimize code
 					argumentPanel.input1.text = textbox_map[xml.nodetext.attribute("ID")];
-					trace(argumentPanel.input1.text);
-					trace(xml.nodetext.attribute("ID"));
 				}
 				nodes_map[xml.attribute("ID")] = argumentPanel;
 				argumentPanel.gridY = xml.attribute("y");

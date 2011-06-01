@@ -48,30 +48,76 @@ package classes
 	
 	public class ArgumentPanel extends GridPanel
 	{
+		//Input boxes
 		//The text box in which the user enters the argument
 		public var input1:DynamicTextArea;
 		//Right now the requirement is for only two,
 		//but this is extensible
 		public var inputs:Vector.<DynamicTextArea>;
+		//dragging handle	
 		
-		public var topArea:UIComponent;
-		//skin of the panel
-		public var panelSkin:PanelSkin;
-		//doneButton
-		public var doneBtn:AButton;
-		public var addBtn:AButton;
-		public var deleteBtn:AButton;
+		//Text display elements
 		//A statment exists in two states: editable, and non-editable. When
 		//the user clicks the done button, it goes to the non-editable state.
-		//The input1 textbox is hidden and the below Text control is shown.
+		//The input textboxes are hidden and the below Text control is shown.
 		public var displayTxt:Text;
 		//label for displaying 'It is not the case that' for netaged
 		//statements
 		public var negatedLbl:Label;
+		//Displays the type of this statment
+		public var stmtTypeLbl:Label;
+		//Displays the user id
+		public var userIdLbl:Label;
+		
+		//control elements
+		public var topArea:UIComponent;
+		//doneButton
+		public var doneBtn:AButton;
+		//add button
+		public var addBtn:AButton;
+		//delete button
+		public var deleteBtn:AButton;
+		
+		//appearance
+		//skin of the panel
+		public var panelSkin:PanelSkin;
+		
+		//State Variables
+		//state=0 -> universal statement and state=1 -> particular statement
+		public var state:int;	
+		//Takes either INFERENCE or ARGUMENT_PANEL
+		public var panelType:int;
+		//Specifies whether the statement is negative or positive
+		private var _statementNegated:Boolean;		
+		//Before a user enters text into the statement, it is false
+		public var userEntered:Boolean;
+		//claim added through start with claim
+		public var firstClaim:Boolean;
+		//multiple textboxes
+		private var _multiStatement:Boolean;
+		//type of multistatement
+		private var _implies:Boolean;
+		
+		//constants
+		//Type of Panel: this could be found by just using is operator
+		public static const ARGUMENT_PANEL:int = 0;
+		//Type of Panel
+		public static const INFERENCE:int = 1;
+		//connecting string constants required for multistatements
+		public static var IF_THEN:String = "If-then";
+		public static var IMPLIES:String = "Implies";
+		//Event
+		public static var ARGUMENT_CONSTRUCTED:String = "Argument Constructed";
+		
+		//References to other objects
 		//A reference to the current map diplayed to the user
 		public static var parentMap:AgoraMap;
+		//List of enablers which makes other statements support this statement
+		public var rules:Vector.<Inference>;
+		
+		//Containers
 		//The logical container that holds the text elements of the statement
-		//that is, input1 and displayTxt
+		//that is, input boxes and displayTxt
 		public var group:Group;
 		//multistatement group
 		public var msVGroup:VGroup;
@@ -87,40 +133,17 @@ package classes
 		public var doneHG:HGroup;
 		//contains the doneHG and bottomHG
 		public var btnG:Group;
-		//List of enablers which makes other statements support this statement
-		public var rules:Vector.<Inference>;
-		//state=0 -> universal statement and state=1 -> particular statement
-		public var state:int;	
-		//Type of Panel: this could be found by just using is operator
-		public static const ARGUMENT_PANEL:int = 0;
-		//Type of Panel
-		public static const INFERENCE:int = 1;
-		//Displays the type of this statment
-		public var stmtTypeLbl:Label;
-		//Displays the user id
-		public var userIdLbl:Label;
-		//Takes either INFERENCE or ARGUMENT_PANEL
-		public var panelType:int;
-		//Specifies whether the statement is negative or positive
-		private var _statementNegated:Boolean;		
-		//Before a user enters text into the statement, it is false
-		public var userEntered:Boolean;
+		
+		//Menu data
 		//XML string holding the menu data for the add button
 		public var addMenuData:XML;
 		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
-		//claim added through start with claim
-		public var firstClaim:Boolean;
-		
-		//multiple textboxes
-		private var _multiStatement:Boolean;
+	
+		//other instance variables
 		public var connectingStr:String;
-		private var _implies:Boolean;
+	
 		
-		public static var IF_THEN:String = "If-then";
-		public static var IMPLIES:String = "Implies";
-		
-		public static var ARGUMENT_CONSTRUCTED:String = "Argument Constructed";
 		public function ArgumentPanel()
 		{
 			super();
@@ -180,7 +203,6 @@ package classes
 			if(_multiStatement != value)
 			{
 				if(value == true){
-					//group.removeElement(input1);
 					input1.visible = false;
 					group.addElement(msVGroup);
 					if(!userEntered)
@@ -196,7 +218,6 @@ package classes
 					{
 						trace(error);
 					}
-					//group.addElement(input1);
 				}
 				_multiStatement = value;
 				userEntered = false;
@@ -268,7 +289,6 @@ package classes
 			
 			displayTxt.text = positiveStmt;
 			
-			//trace(displayTxt.text);
 			displayTxt.visible = true;
 			bottomHG.visible = true;
 			doneHG.visible = false;
@@ -399,9 +419,6 @@ package classes
 		public function addHandler(event:MouseEvent):void
 		{
 			addSupportingArgument();
-			trace("In add handler");
-			trace(rules.length);
-			trace(this);
 			parentMap.option.visible = true;
 			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
 			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
@@ -419,10 +436,6 @@ package classes
 		}
 		
 		public function beginByArgument():void{
-			trace(this);
-			trace(rules.length);
-			trace(rules[0]);
-			
 			rules[rules.length-1].visible = true; 
 			rules[rules.length-1].chooseEnablerText();
 			if(inference == null)
@@ -496,7 +509,6 @@ package classes
 			currInference.myschemeSel = new ArgSelector;
 			currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
 			//add the inference to map
-			//trace(parentMap);
 			parentMap.addElement(currInference);
 			currInference.visible=false;
 			//create the panel that displays connection information

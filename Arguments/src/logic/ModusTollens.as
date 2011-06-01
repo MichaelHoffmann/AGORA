@@ -58,7 +58,7 @@ package logic
 				if(!inference.reasons[i].statementNegated)
 				{
 					inference.reasons[i].statementNegated = true;
-				}
+				}	
 			}
 		
 			inference.implies = true;
@@ -150,7 +150,6 @@ package logic
 					inference.inputs[1].forwardUpdate();
 					break;	
 			}
-			
 			return output;
 		}
 	}

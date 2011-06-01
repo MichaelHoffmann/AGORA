@@ -254,8 +254,6 @@ package classes
 		public function changePossibleSchemes():void
 		{
 			trace('In change possible schemes');
-			trace(typed);
-			trace(myschemeSel);
 			if(typed)
 			{
 				myschemeSel.mainSchemes.visible = false;
@@ -294,8 +292,6 @@ package classes
 			//Sometimes only one posisble scheme is possible.
 			//In those situations, they are created automatically, instead
 			//of giving the user a menu
-			trace("in menuCreated()");
-			trace(claim.userEntered);
 			
 			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
 			var optionsArr:Array = ["And","Or"];
@@ -345,7 +341,6 @@ package classes
 					//var array:Array = new Array;
 					//array.splice(0,0,infClaim,myschemeSel.selectedType);
 					//myschemeSel.typeSelector.dataProvider = array;
-					trace(claim.inference);
 					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;
 					if(claim.inference != null){
 						argType.changeSchemeBtn.enabled = false;
@@ -526,7 +521,6 @@ package classes
 		public function chooseEnablerText():void
 		{
 			trace('In choose enabler text');
-			trace(typed);
 			if(myschemeSel.scheme != null){
 				if(myschemeSel.scheme.length == 0)
 				{
