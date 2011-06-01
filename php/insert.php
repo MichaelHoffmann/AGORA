@@ -141,24 +141,21 @@
 			//print "<BR>UID out of the database: $dbUID";
 			if($userID == $dbUID){
 				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
-				//print "<BR>Update Query is: $uquery";							
-				$status=mysql_query($uquery, $linkID);
-				//print "<BR>Query executed! Status: $status";
+				$success=mysql_query($uquery, $linkID);
+				if(!$success){
+					$fail=$output->addChild("error");
+					$fail->addAttribute("text", "Unable to update the NODE. Query was: $iquery");
+				}
 			}else{
-				//print "<BR>You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.";
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
 				return false;
 			}
-		
-		
-			$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
-			//print "<BR>Update Query is: $uquery";							
-			mysql_query($uquery, $linkID);
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);		
 			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
 										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
-			//print "<BR>Insert Query is: $iquery";							
 			$success=mysql_query($iquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
