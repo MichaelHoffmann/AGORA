@@ -91,8 +91,11 @@
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
 							($nodeID, $textboxID, $position, NOW(), NOW())";
 				//print "<BR>Insert Query is: $iquery";
-				mysql_query($iquery, $linkID);
-				
+				$success=mysql_query($iquery, $linkID);
+				if(!$success){
+					$fail=$output->addChild("error");
+					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
+				}
 			}else{
 				$tid = mysql_real_escape_string($attr["TID"]);
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
@@ -101,8 +104,11 @@
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES 
 							($nodeID, $textID, $position, NOW(), NOW())";
 				
-				mysql_query($iquery, $linkID);
-				
+				$success = mysql_query($iquery, $linkID);
+				if(!$success){
+					$fail=$output->addChild("error");
+					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
+				}
 				$outID = getLastInsert($linkID);
 				$ntOut=$output->addChild("nodetext");
 				$ntOut->addAttribute("TID", $tid);
@@ -145,6 +151,9 @@
 				if(!$success){
 					$fail=$output->addChild("error");
 					$fail->addAttribute("text", "Unable to update the NODE. Query was: $uquery");
+				}else{
+					$nodeOut=$output->addChild("node");
+					$nodeOut->addAttribute("ID", $nodeID);
 				}
 			}else{
 				$fail=$output->addChild("error");
