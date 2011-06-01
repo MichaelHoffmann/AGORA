@@ -269,7 +269,7 @@
 			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 			//print "<BR>Update query: $uquery";
 			mysql_query($uquery, $linkID);
-		
+			$connection->addAttribute("ID", $id);
 		}
 		//Get the source nodes
 		$children = $conn->children();
