@@ -118,6 +118,7 @@
 		global $nodeTIDarray;
 		
 		//print "<BR>----Node found";
+		$nodeOut = null; // Done for later scoping
 		$attr = $node->attributes();
 		$nodeID = mysql_real_escape_string($attr["ID"]);
 		$type = mysql_real_escape_string($attr["Type"]);
@@ -227,6 +228,7 @@
 	{
 		global $nodeTIDarray;
 		//print "<BR>---Connection found";
+		$connection = $output->addChild("connection");
 		$attr = $conn->attributes();
 		$id = mysql_real_escape_string($attr["ID"]);
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
@@ -258,7 +260,6 @@
 				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
 			}else{
 				$id = getLastInsert($linkID);
-				$connection = $output->addChild("connection");
 				$connection->addAttribute("TID", $tid);
 				$connection->addAttribute("ID", $id);
 			}
