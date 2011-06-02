@@ -12,7 +12,12 @@ package logic
 			_langTypes = ["Either-or"];
 			_expLangTypes =  ["Either-or"];
 			myname = DIS_SYLL;
-			dbName = myname;	
+			_dbType = "DisjSyl";
+		}
+		
+		override public function   get dbType():String
+		{
+			return _dbType;
 		}
 		
 		override public function createLinks():void

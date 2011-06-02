@@ -12,9 +12,30 @@ package logic
 		public function ModusTollens()
 		{
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
+			dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			_expLangTypes = ["Only if"];	// Expandable with both And and Or
 			myname = MOD_TOL;
-			dbName = myname;
+			_dbType = "MT";
+		}
+		
+		override public function get dbType():String
+		{
+			
+			for(var i:int=0; i<_langTypes.length; i++)
+			{
+				if(inference.myschemeSel.selectedType == _langTypes[i]){
+					if(_langTypes[i] == "Only if" && inference.hasMultipleReasons){
+						
+						return _dbType+dbLangTypeNames[i]+andOr;
+					}
+					else 
+					{
+						return _dbType+dbLangTypeNames[i];
+						
+					}
+				}
+			}
+			return "Unset";
 		}
 		
 		override public function createLinks():void
@@ -60,7 +81,7 @@ package logic
 					inference.reasons[i].statementNegated = true;
 				}	
 			}
-		
+			
 			inference.implies = true;
 			
 			var	claim:ArgumentPanel = inference.claim;

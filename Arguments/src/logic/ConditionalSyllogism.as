@@ -13,9 +13,10 @@ package logic
 		public function ConditionalSyllogism()
 		{
 			_langTypes = ["If-then","Implies"];
+			dbLangTypeNames = ["ifthen","implies"];
 			_expLangTypes = ["If-then", "Implies"];
 			myname = COND_SYLL;
-			dbName = "ConSyllogism";
+			_dbType = "CS";
 			built = false;
 			// Both types here are expandable. like a chain rule
 		}

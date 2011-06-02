@@ -21,8 +21,9 @@ package logic
 	public var inference:Inference;
 	//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
 	//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
-	public var dbName:String;
+	//public var dbName:String;
 	public var _langTypes:Array;
+	public var dbLangTypeNames:Array;
 	public var multipleReasons:Boolean;
 	public var _expLangTypes:Array;
 	public static var MOD_PON:String = "Modus Ponens";
@@ -37,7 +38,14 @@ package logic
 	
 	public function get dbType():String
 	{
-		return _dbType;
+		for(var i:int=0; i<_langTypes.length; i++)
+		{
+			if(inference.myschemeSel.selectedType == _langTypes[i])
+			{
+				return _dbType+dbLangTypeNames[i];
+			}
+		}
+		return "Unset";
 	}
 	
 	public function get isLanguageExp():Boolean

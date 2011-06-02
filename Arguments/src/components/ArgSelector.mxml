@@ -50,7 +50,7 @@
 			import mx.events.ListEvent;
 			
 			private var _selectedScheme:String;
-			private var _selectedType:String;
+			private var _selectedType:String = "";
 			private var _languageTypes:Array;
 			private var _selectedOption:String;
 			private var _scheme:Array;
