@@ -148,9 +148,10 @@ package classes
 	
 		//other instance variables
 		public var connectingStr:String;
+		public var _initXML:XML;
 		public var ID:int;
 		public var TID:int;
-		//IDs for 
+		//IDs for nodetext
 		public var input1NTTID:int;
 		public var input1NTID:int;
 		public var inputsNTTID:Vector.<int>;
@@ -709,7 +710,7 @@ package classes
 			
 			invalidateProperties();
 		}
-		
+
 		override protected function commitProperties():void
 		{
 			super.commitProperties();	
@@ -853,6 +854,11 @@ package classes
 					inference.reasonDeleted();
 				}
 			}
+		}
+		
+		public function setIDs(xml:XML):void
+		{
+			
 		}
 	}
 	

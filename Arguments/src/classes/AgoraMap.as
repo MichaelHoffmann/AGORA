@@ -198,7 +198,7 @@ package classes
 					currXML = <connection></connection>;
 					var argType:MenuPanel = MenuPanel(panel);
 					currXML.@argID = argType.aid;
-					currXML.@type = argType.inference.myArg.dbName;
+					currXML.@type = argType.inference.myArg.dbType;
 					currXML.@targetnodeID = argType.inference.claim.aid;
 					currXML.@x = argType.gridX;
 					currXML.@y = argType.gridY;	

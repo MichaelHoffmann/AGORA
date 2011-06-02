@@ -15,7 +15,7 @@ package logic
 			_dbType = "DisjSyl";
 		}
 		
-		override public function   get dbType():String
+		override public function get dbType():String
 		{
 			return _dbType;
 		}
