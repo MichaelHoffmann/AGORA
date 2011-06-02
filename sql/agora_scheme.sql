@@ -245,6 +245,9 @@ CREATE TABLE IF NOT EXISTS agora.sourcenodes (
 -- -----------------------------------------------------
 -- Triggers
 -- -----------------------------------------------------
+-- TODO: fix ntdel to check if there are undeleted nodetexts pointing at the same textbox
+-- UPDATE textboxes SET is_deleted=1, modified_date=NOW() WHERE textbox_id=NEW.textbox_id;
+
 DELIMITER //
 CREATE TRIGGER nodedel AFTER UPDATE ON nodes
 	FOR EACH ROW
@@ -256,13 +259,13 @@ CREATE TRIGGER nodedel AFTER UPDATE ON nodes
 		END IF;
 	END;
 //
-	
 CREATE TRIGGER ntdel AFTER UPDATE ON nodetext
 	FOR EACH ROW
 	BEGIN
 		IF NEW.is_deleted = 1 THEN
-			--TODO: fix this to check if there are undeleted nodetexts pointing at the same textbox
-			--UPDATE textboxes SET is_deleted=1, modified_date=NOW() WHERE textbox_id=NEW.textbox_id;
+				IF (SELECT COUNT(*) FROM nodetext WHERE is_deleted=0 AND textbox_id=NEW.textbox_id) = 0 THEN
+					UPDATE textboxes SET is_deleted=1, modified_date=NOW() WHERE textbox_id=NEW.textbox_id;
+				END IF;
 		END IF;
 	END;
 //
