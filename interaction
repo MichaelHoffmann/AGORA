@@ -34,6 +34,3 @@ http://agora.gatech.edu/dev/insert.php?uid=3&pass_hash=arunkumar&xml=
 #node id 15
 #nodetext id 24
 #
-
-#adding reason, trial
-<map id="4"><connection ID="4" type="MPifthen" x="7" y="7"><sourcenode TID="12" nodeID="15" /></connection></map>

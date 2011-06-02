@@ -68,6 +68,11 @@ package classes
 		//if adding multiple reasons are allowed
 		public var reasonAddable:Boolean;
 		
+		public var connID:int;
+		public var connTID:int;
+		
+		public var hasConnID:Boolean;
+		
 		private var addReasonMenuData:XML;
 		
 		public function Inference()
@@ -88,6 +93,7 @@ package classes
 			typed = false;
 			schemeSelected = false;
 			reasonAddable = false;
+			hasConnID = false;
 		}
 		///Getters and Setters
 		

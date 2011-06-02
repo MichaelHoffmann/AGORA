@@ -29,13 +29,21 @@ package classes
 		public var mapId:int;
 		public var option:Option;
 		public var helpText:HelpText;
+		private static var _tempID:int;
 		
 		public function AgoraMap()
 		{
 			//id="29";
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
-			addEventListener(DragEvent.DRAG_DROP,handleDrop );	
+			addEventListener(DragEvent.DRAG_DROP,handleDrop );
+			_tempID = 0;
+		}
+		
+		public static function get tempID():int
+		{
+			_tempID = _tempID + 1;
+			return 	_tempID - 1;
 		}
 		
 		public function panelCreated(event:FlexEvent):void{

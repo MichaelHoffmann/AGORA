@@ -31,6 +31,9 @@ package classes
 		private var modified:Boolean;
 		private var _text:String;
 		public var aid:int;
+		public var ID:int;
+		public var TID:int;
+		public var hasID:Boolean;
 		
 		public var forwardList:Vector.<DynamicTextArea>; //Arun Kumar chithanar
 		public var backwardList:Vector.<DynamicTextArea>;
@@ -50,6 +53,7 @@ package classes
 			forwardList = new Vector.<DynamicTextArea>(0,false);
 			backwardList = new Vector.<DynamicTextArea>(0,false);
 			minHeight = 20;
+			hasID = false;
 		}
 		
 		
