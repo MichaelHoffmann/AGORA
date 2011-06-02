@@ -118,6 +118,13 @@ package classes
 			invalidateDisplayList();
 		}
 		
+		public function get connectionType():String
+		{
+			if(myArg == null)
+				return "";
+			return myArg.dbType;
+		}
+		
 		public function get selectedBool():Boolean
 		{
 			return _selectedBool;

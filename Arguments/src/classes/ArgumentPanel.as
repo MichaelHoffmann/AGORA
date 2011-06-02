@@ -193,8 +193,7 @@ package classes
 			inputsNTHasID = new Vector.<Boolean>(0,false);
 			
 			width = 180;
-			minHeight = 100;
-			
+			minHeight = 100;	
 		}
 		
 		public function get implies():Boolean

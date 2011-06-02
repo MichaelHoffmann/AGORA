@@ -26,7 +26,7 @@ package classes
 	{
 		public var layoutManager:ALayoutManager = null;
 		public var drawUtility:UIComponent = null;
-		public var mapId:int;
+		public var ID:int;
 		public var option:Option;
 		public var helpText:HelpText;
 		private static var _tempID:int;
@@ -38,6 +38,72 @@ package classes
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
 			_tempID = 0;
+		}
+		
+		public function getAP():XML
+		{
+			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node TID="1" Type="Standard" x="2" y="3"><nodetext/><nodetext /><nodetext /></node></map>
+			xml.@ID = ID;
+			var textboxesList:XMLList = xml.textbox;
+			for each(var textbox:XML in textboxesList)
+			{
+				textbox.@TID = tempID;
+			}
+			xml.node.@TID = tempID;
+			var nodetextlist:XMLList = xml.node.nodetext;
+			for each(var nodetext:XML in nodetextlist)
+			{
+				nodetext.@TID = tempID;
+			}
+			for(var i:int = 0; i < nodetextlist.length(); i++)
+			{
+				nodetextlist[i].@textboxTID = textboxesList[i].@TID;
+			}
+			//trace(xml);
+			return xml;
+		}
+		
+		public function getConnection( claim:ArgumentPanel):XML
+		{
+			var xml:XML = <map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><node Type="Inference" x="0" y="0"></node><connection type="Unset" x="0" y="0" /></map>
+			//setting the ID of the map
+			xml.@ID = ID;
+			//temporary IDs for the three new textboxes
+			var textboxesList:XMLList = xml.textbox;
+			for each(var textbox:XML in textboxesList)
+			{
+				textbox.@TID = tempID;
+			}
+			var nodeList:XMLList = xml.node;
+			for each(var node:XML in nodeList)
+			{
+				node.@TID = tempID;
+			}
+			//set the node text for the reason box (standard)
+			var reasonNode:XML = nodeList[0];
+			var nodetextList:XMLList = reasonNode.nodetext;
+			for each(var nodetext:XML in nodetextList)
+			{
+				nodetext.@TID = tempID;
+			}
+			for(var i:int = 0; i < nodetextList.length(); i++)
+			{
+				nodetextList[i].@textboxTID = textboxesList[i].@TID;
+			}
+			
+			//add a connection
+			var newConnXML:XML = xml.connection[0];
+			newConnXML.@TID = tempID;
+			newConnXML.@targetnodeID = claim.ID;
+			for(i=0; i<nodeList.length(); i++)
+			{
+				var sourcenodeXML:XML = <sourcenode />;
+				sourcenodeXML.@TID = tempID;
+				sourcenodeXML.@nodeTID = nodeList[i].@TID;
+				newConnXML.appendChild(sourcenodeXML);
+			}
+			//trace(xml);
+			return xml;
 		}
 		
 		public static function get tempID():int
@@ -67,7 +133,7 @@ package classes
 		
 		public function getMapXml():XML
 		{
-			var xml:XML = new XML("<map id=\""+mapId+"\"></map>");
+			var xml:XML = new XML("<map id=\""+ID+"\"></map>");
 			for( var i:int=0; i<layoutManager.panelList.length; i++)
 			{
 				var panel:GridPanel = layoutManager.panelList[i] as GridPanel;

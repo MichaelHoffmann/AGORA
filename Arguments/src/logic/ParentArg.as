@@ -33,6 +33,12 @@ package logic
 	public static var CONST_DILEM:String = "Constructive Dilemma";
 	public static var EXP_AND:String = "and";
 	public static var EXP_OR:String = "or";
+	public var _dbType:String;
+	
+	public function get dbType():String
+	{
+		return _dbType;
+	}
 	
 	public function get isLanguageExp():Boolean
 	{
@@ -47,7 +53,7 @@ package logic
 	
 	public function ParentArg()
 	{
-		
+		_dbType = "Unset";	
 	}
 	
 	public function deleteLinks():void
