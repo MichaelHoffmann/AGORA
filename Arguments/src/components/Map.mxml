@@ -66,8 +66,21 @@
 			
 			public function saveMap(event:MouseEvent):void
 			{
-				var xml:XML = new XML;
-				agoraMap.getMapXml();
+				var xml:XML;
+				xml = agoraMap.getMapXml();
+				trace(xml.toXMLString());
+				var urlRequestMap:URLRequest = new URLRequest;
+				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
+				urlRequestMap.data = urlRequestVarsMap;
+				urlRequestMap.method = URLRequestMethod.GET;
+				var urlLoaderMap:URLLoader = new URLLoader;
+				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
+					var retXMLMap:XML =  XML(eventMap.target.data);
+					//agoraMap.ID = retXMLMap.@ID;
+					trace(retXMLMap.toXMLString());
+				});
+				urlLoaderMap.load(urlRequestMap);
 			}
 			
 			public function updateSize(event:Event):void

@@ -527,11 +527,9 @@ package classes
 		
 		override public function makeUnEditable():void
 		{
-			//enabler is never edited
 		}
 		override public function makeEditable():void
 		{
-			//enabler is never edited
 		}
 		
 		override public function onArgumentPanelCreate(e:FlexEvent):void

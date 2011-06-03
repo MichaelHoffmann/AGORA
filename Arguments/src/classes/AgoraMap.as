@@ -176,6 +176,9 @@ package classes
 		public function getMapXml():XML
 		{
 			var xml:XML = new XML("<map id=\""+ID+"\"></map>");
+			var argumentPanel:ArgumentPanel;
+			var inferencePanel:Inference;
+			//form textboxes
 			for( var i:int=0; i<layoutManager.panelList.length; i++)
 			{
 				var panel:GridPanel = layoutManager.panelList[i] as GridPanel;
@@ -188,46 +191,62 @@ package classes
 					//it should come before in the else-if structure.
 				else if(panel is ArgumentPanel)
 				{
-					var argumentPanel:ArgumentPanel = ArgumentPanel(panel);
+					argumentPanel = ArgumentPanel(panel);
+					//add input1
 					var currTextBox:DynamicTextArea = argumentPanel.input1;
 					var currXML:XML = <textbox></textbox>;
-					currXML.@ID = currTextBox.aid;
+					currXML.@ID = currTextBox.ID;
 					currXML.@text = currTextBox.text;
 					xml = xml.appendChild(currXML);
+					//add inputs
+					for(var j:int=0; j<argumentPanel.inputs.length; j++)
+					{
+						currXML = <textbox></textbox>;
+						currXML.@ID = argumentPanel.inputs[j].ID;
+						currXML.@text = argumentPanel.inputs[j].text;
+						xml = xml.appendChild(currXML);
+					}
 				}	
 			}
-			
+			//nodes
 			for(i=0; i  < layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;
 				if(!(panel is MenuPanel)){
 					currXML= <node></node>;
-					currXML.@ID = panel.aid;
 					if(panel is Inference)
 					{
-						var inferencePanel:Inference = Inference(panel);
+						
+						inferencePanel = Inference(panel);
+						currXML.@ID = inferencePanel.ID;
 						currXML.@Type = "Inference";
-						for(var j:int=0; j < inferencePanel.input.length; j++)
-						{
-							var nodeText:XML = <nodetext></nodetext>;
-							nodeText.@textboxID = inferencePanel.input[j].aid;
-							currXML = currXML.appendChild(nodeText);
-						}
+						//currXML.@x = inferencePanel.gridX;
+						//currXML.@y = inferencePanel.gridY;
 					}
 					else if(panel is ArgumentPanel)
 					{
 						argumentPanel = ArgumentPanel(panel);
+						currXML.@ID = argumentPanel.ID;
 						currXML.@Type = "Standard";	
-						nodeText = <nodetext></nodetext>;
-						nodeText.@textboxID = argumentPanel.input1.aid;
+						//currXML.@x = inferencePanel.gridX;
+						//currXML.@y = inferencePanel.gridY;
+						var nodeText:XML = <nodetext></nodetext>;
+						nodeText.@ID = argumentPanel.input1NTID;
+						nodeText.@textboxID = argumentPanel.input1.ID;
 						currXML = currXML.appendChild(nodeText);
+						for(j=0; j<argumentPanel.inputsNTID.length; j++)
+						{
+							nodeText = <nodetext></nodetext>;
+							nodeText.@ID = argumentPanel.inputsNTID[j];
+							nodeText.@textboxID = argumentPanel.inputs[j].ID;
+							currXML = currXML.appendChild(nodeText);
+						}
 					}
 					currXML.@x = panel.gridX;
 					currXML.@y = panel.gridY;
 					xml = xml.appendChild(currXML);
 				}
-				
-				pushToServer(xml);
+				//pushToServer(xml);
 				
 			}
 			
@@ -235,30 +254,37 @@ package classes
 			for(i=0; i<layoutManager.panelList.length; i++)
 			{
 				panel = layoutManager.panelList[i] as GridPanel;
-				if(panel is MenuPanel)
+				if(panel is Inference)
 				{
+					inferencePanel = Inference(panel);
 					currXML = <connection></connection>;
-					var argType:MenuPanel = MenuPanel(panel);
-					currXML.@argID = argType.aid;
-					currXML.@type = argType.inference.myArg.dbType;
-					currXML.@targetnodeID = argType.inference.claim.aid;
-					currXML.@x = argType.gridX;
-					currXML.@y = argType.gridY;	
-					for(j = 0; j < argType.inference.reasons.length; j++)
-					{
-						nodeText=<sourcenode></sourcenode>;
+					currXML.@connID = inferencePanel.connID;
+					currXML.@type = inferencePanel.myArg.dbType;
+					//currXML.@targetnode = inferencePanel.claim.ID;
+					currXML.@x = inferencePanel.argType.gridX;
+					currXML.@y = inferencePanel.argType.gridY;
+					
+					//var argType:MenuPanel = MenuPanel(panel);
+					//currXML.@argID = argType.aid;
+					//currXML.@type = argType.inference.myArg.dbType;
+					//currXML.@targetnodeID = argType.inference.claim.aid;
+					//currXML.@x = argType.gridX;
+					//currXML.@y = argType.gridY;	
+					//for(j = 0; j < argType.inference.reasons.length; j++)
+					//{
+					//	nodeText=<sourcenode></sourcenode>;
 					//	nodeText.@ID = argType.inference.connectionIDs[j];
-						nodeText.@nodeTID = argType.inference.reasons[j].aid;
-						currXML = currXML.appendChild(nodeText);
-					}
-					nodeText=<sourcenode></sourcenode>;
+					//	nodeText.@nodeTID = argType.inference.reasons[j].aid;
+					//	currXML = currXML.appendChild(nodeText);
+					//}
+					//nodeText=<sourcenode></sourcenode>;
 					//nodeText.@ID = argType.inference.connectionID;
-					nodeText.@nodeTID = argType.inference.aid;
-					currXML = currXML.appendChild(nodeText);
+					//nodeText.@nodeTID = argType.inference.aid;
+					//currXML = currXML.appendChild(nodeText);
 					xml = xml.appendChild(currXML);
 				}	
 			}
-			Alert.show(xml.toXMLString());
+	
 			return xml;
 		}
 		
