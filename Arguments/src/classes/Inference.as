@@ -6,6 +6,10 @@ package classes
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	
 	import logic.*;
 	
@@ -50,8 +54,8 @@ package classes
 		public var myArg:ParentArg;		
 		//Is the scheme expandable
 		private var _hasMultipleReasons:Boolean;
-		public var connectionID:int;
-		public var connectionIDs:Vector.<int>;
+		//public var connectionID:int;
+		//public var connectionIDs:Vector.<int>;
 		//Used when constructing the argument beginning with reason
 		//Set to true if the user has begun to choose an argument scheme.
 		//happens when construct argument is chosen
@@ -79,8 +83,8 @@ package classes
 		{
 			super();
 			addReasonMenuData = <root><menuitem   label = "... another reason for this argument so that only the combination of all reasons justifies the claim" /></root>;
-			connectionID = connections++;
-			connectionIDs = new Vector.<int>(0,false);
+			//connectionID = connections++;
+			//connectionIDs = new Vector.<int>(0,false);
 			panelType = ArgumentPanel.INFERENCE;
 			state = 0; //Inference is always a Universal statement
 			input = new Vector.<DynamicTextArea>(0,false);
@@ -440,16 +444,15 @@ package classes
 			}
 		}
 		
-		
-		public function addReason():void
-		{
-			
+		public function addReasonToMap(event:Event):void{
+			var responseXML:XML = XML(event.target.data);
+			trace(responseXML.toXMLString());
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(tmp);
 			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);		
 			try{
 				reasons.push(tmp);
-				connectionIDs.push(connections++);
+				//connectionIDs.push(connections++);
 				tmp.inference = this;
 				parentMap.layoutManager.registerPanel(tmp);
 				//create an invisible box in the inference rule
@@ -475,6 +478,19 @@ package classes
 			{
 				Alert.show(e.toString());
 			}
+		}
+		
+		public function addReason():void
+		{
+			var xml:XML = parentMap.getAddReason(this);
+			var urlRequest:URLRequest = new URLRequest;
+			urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
+			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml);
+			urlRequest.data = urlRequestVars;
+			urlRequest.method = URLRequestMethod.GET;
+			var urlLoader:URLLoader = new URLLoader;
+			urlLoader.addEventListener(Event.COMPLETE, addReasonToMap);
+			urlLoader.load(urlRequest);
 		}
 		
 		public function addReasonHandler(event:MouseEvent):void
@@ -575,7 +591,6 @@ package classes
 			}
 			if(myschemeSel.andor.visible==false)
 			{
-				//parentMap.parent.removeChild(myschemeSel);
 				myschemeSel.visible = false;
 			}
 			schemeSelected = true;
@@ -717,7 +732,6 @@ package classes
 			displayStr = myArg.correctUsage();
 			input1.forwardUpdate();
 			schemeSelected = true;
-			
 			parentMap.helpText.visible = false;
 		}
 		
@@ -752,7 +766,7 @@ package classes
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			//Alert.show("Argument Panel");
+			
 		}
 		
 		public function makeVisible():void{

@@ -438,9 +438,8 @@ package classes
 			removeEventListeners();
 		}
 		
-		public function addHandler(event:MouseEvent):void
+		public function onArgumentAddition(event:Event):void
 		{
-			addSupportingArgument();
 			parentMap.option.visible = true;
 			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
 			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
@@ -449,6 +448,12 @@ package classes
 			invalidateProperties();
 			invalidateSize();
 			invalidateDisplayList();
+		}
+		
+		public function addHandler(event:MouseEvent):void
+		{
+			addSupportingArgument();
+			this.addEventListener(ARGUMENT_CONSTRUCTED,onArgumentAddition);	
 		}
 		
 		public function configureReason(event:FlexEvent):void
@@ -586,7 +591,7 @@ package classes
 			//push reason to the list of reasons belonging to this particular class
 			currInference.reasons.push(reason);
 			//temporary, should be replaced by TID
-			currInference.connectionIDs.push(Inference.connections++);
+			//currInference.connectionIDs.push(Inference.connections++);
 			//set the inference of the reason
 			reason.inference = currInference;
 			//type of reason

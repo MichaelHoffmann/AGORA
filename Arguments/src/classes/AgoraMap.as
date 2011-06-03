@@ -114,8 +114,38 @@ package classes
 		
 		public function getAddReason(inference:Inference):XML
 		{
-			var requestXML:XML=<map><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/></node><node Type="Inference"><nodetext/></node><connection><sourcenode/></connection></map>;
-			return <xml />;
+			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><connection></connection></map>;
+			xml.@ID = ID;
+			var textboxesList:XMLList = xml.textbox;
+			for each(var textbox:XML in textboxesList)
+			{
+				textbox.@TID = tempID;
+			}
+			var nodeList:XMLList = xml.node;
+			
+			for each(var node:XML in nodeList)
+			{
+				node.@TID = tempID;
+			}
+			var reasonNode:XML = nodeList[0];
+			var nodetextList:XMLList = reasonNode.nodetext;
+			for(var i:int = 0; i < nodetextList.length(); i++)
+			{
+				nodetextList[i].@textboxTID = textboxesList[i].@TID;
+			}
+			//add connection
+			var connection:XML = xml.connection[0];
+			connection.@ID = inference.connID;
+			connection.@type = inference.myArg.dbType;
+			connection.@x = inference.argType.gridX;
+			connection.@y = inference.argType.gridY;
+			connection.@targetnode = inference.claim.ID;
+			//add a sourcenode to the connection
+			var sourcenode:XML = <sourcenode />;
+			sourcenode.@TID = tempID;
+			sourcenode.@nodeTID = reasonNode.@TID;
+			connection.appendChild(sourcenode);
+			return xml;
 		}
 		
 		public static function get tempID():int
@@ -217,12 +247,12 @@ package classes
 					for(j = 0; j < argType.inference.reasons.length; j++)
 					{
 						nodeText=<sourcenode></sourcenode>;
-						nodeText.@ID = argType.inference.connectionIDs[j];
+					//	nodeText.@ID = argType.inference.connectionIDs[j];
 						nodeText.@nodeTID = argType.inference.reasons[j].aid;
 						currXML = currXML.appendChild(nodeText);
 					}
 					nodeText=<sourcenode></sourcenode>;
-					nodeText.@ID = argType.inference.connectionID;
+					//nodeText.@ID = argType.inference.connectionID;
 					nodeText.@nodeTID = argType.inference.aid;
 					currXML = currXML.appendChild(nodeText);
 					xml = xml.appendChild(currXML);
