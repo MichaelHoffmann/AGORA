@@ -258,7 +258,7 @@ package classes
 				{
 					inferencePanel = Inference(panel);
 					currXML = <connection></connection>;
-					currXML.@connID = inferencePanel.connID;
+					currXML.@ID = inferencePanel.connID;
 					currXML.@type = inferencePanel.myArg.dbType;
 					//currXML.@targetnode = inferencePanel.claim.ID;
 					currXML.@x = inferencePanel.argType.gridX;
