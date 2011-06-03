@@ -30,19 +30,24 @@ package classes
 		public var option:Option;
 		public var helpText:HelpText;
 		private static var _tempID:int;
-		
+		public var initXML:XML;
 		public function AgoraMap()
 		{
-			//id="29";
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
+			addEventListener(FlexEvent.CREATION_COMPLETE, mapCreated);
 			_tempID = 0;
+		}
+		
+		private function mapCreated(event:FlexEvent):void
+		{
+			//setMapID();
 		}
 		
 		public function getAP():XML
 		{
-			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node TID="1" Type="Standard" x="2" y="3"><nodetext/><nodetext /><nodetext /></node></map>
+			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node TID="1" Type="Standard" x="2" y="3"><nodetext/><nodetext /><nodetext /></node></map>;
 			xml.@ID = ID;
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -59,7 +64,6 @@ package classes
 			{
 				nodetextlist[i].@textboxTID = textboxesList[i].@TID;
 			}
-			//trace(xml);
 			return xml;
 		}
 		
@@ -68,6 +72,8 @@ package classes
 			var xml:XML = <map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><node Type="Inference" x="0" y="0"></node><connection type="Unset" x="0" y="0" /></map>
 			//setting the ID of the map
 			xml.@ID = ID;
+			trace('in get connection');
+			trace(xml.@ID);
 			//temporary IDs for the three new textboxes
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -104,6 +110,12 @@ package classes
 			}
 			//trace(xml);
 			return xml;
+		}
+		
+		public function getAddReason(inference:Inference):XML
+		{
+			var requestXML:XML=<map><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/></node><node Type="Inference"><nodetext/></node><connection><sourcenode/></connection></map>;
+			return <xml />;
 		}
 		
 		public static function get tempID():int

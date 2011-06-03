@@ -443,6 +443,7 @@ package classes
 		
 		public function addReason():void
 		{
+			
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			parentMap.addElement(tmp);
 			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);		
@@ -529,6 +530,7 @@ package classes
 			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
 			multiStatement = true;
 			group.removeElement(msVGroup);
+			setIDs();
 		}
 		
 		public function chooseEnablerText():void
@@ -812,6 +814,12 @@ package classes
 			parentMap.removeChild(this);
 			trace(this + ' destroyed');
 			claim.inferenceDeleted();
+		}
+		
+		override public function setIDs():void
+		{
+			ID = _initXML.node[0].@ID;
+			connID = _initXML.connection.@ID;
 		}
 	}
 }

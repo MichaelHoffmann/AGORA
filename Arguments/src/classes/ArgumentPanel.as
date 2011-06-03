@@ -12,6 +12,10 @@ package classes
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import flash.ui.Keyboard;
 	
 	import logic.ConditionalSyllogism;
@@ -520,10 +524,43 @@ package classes
 		//reason must be registered before inference is
 		//user must not change the inference rule. He creates the inference rule
 		//through argument type, reasons and claim
-		public function addSupportingArgument():void
+		
+		protected function createArgument(event:Event):void
 		{
+			var responseXML:XML = XML(event.target.data);
+			/*A typical response
+			<map ID="20">
+			<textbox TID="7" ID="50"/>
+			<textbox TID="8" ID="51"/>
+			<textbox TID="9" ID="52"/>
+			<node TID="10" ID="39">
+				<nodetext TID="12" ID="63"/>
+				<nodetext TID="13" ID="64"/>
+				<nodetext TID="14" ID="65"/>
+			</node>
+			<node TID="11" ID="40"/>
+			<connection TID="15" ID="10">
+				<sourcenode TID="16" ID="29"/>
+				<sourcenode TID="17" ID="30"/>
+			</connection>
+			</map>
+			*/
+			//separate xml data for inference and for argument panel
+			//reason
+			var reasonXML:XML = new XML("<map></map>");
+			var textboxList:XMLList = responseXML.textbox;
+			reasonXML.appendChild(textboxList);
+			var firstNodeText:XML = responseXML.node[0];
+			reasonXML.appendChild(firstNodeText);
+			//inference
+			var inferenceXML:XML = new XML("<map></map>");
+			var inferenceNode:XML =  responseXML.node[1];
+			inferenceXML.appendChild(inferenceNode);
+			var connectionXML:XML = responseXML.connection[0];
+			inferenceXML.appendChild(connectionXML);
 			
 			var currInference:Inference = new Inference();
+			currInference._initXML = inferenceXML;
 			currInference.myschemeSel = new ArgSelector;
 			currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
 			//add the inference to map
@@ -542,6 +579,7 @@ package classes
 			currInference.inference = currInference;
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
+			reason._initXML = reasonXML;
 			reason.addEventListener( FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
 			//add reason to the map
 			parentMap.addElement(reason);
@@ -568,10 +606,8 @@ package classes
 			//binding
 			//tmpInput.forwardList.push(currInference.input1);
 			//input1.forwardList.push(currInference.input[0]);
-			tmpInput.aid = input1.aid;
 			//create an invisible box for the reason
 			var tmpInput2:DynamicTextArea = new DynamicTextArea();
-			tmpInput2.aid = reason.input1.aid;
 			parentMap.addElement(tmpInput2);
 			tmpInput2.visible = false;
 			tmpInput2.panelReference = currInference;
@@ -584,7 +620,21 @@ package classes
 			//it is automatically selected
 			parentMap.addChild(currInference.myschemeSel);
 			currInference.myschemeSel.visible = false;
-			dispatchEvent(new Event(ARGUMENT_CONSTRUCTED,true,false));
+			dispatchEvent(new Event(ARGUMENT_CONSTRUCTED,true,false));	
+		}
+		
+		public function addSupportingArgument():void
+		{
+			var requestXML:XML = parentMap.getConnection(this);
+			var urlRequest:URLRequest = new URLRequest;
+			urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
+			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ requestXML);
+			urlRequest.data = urlRequestVars;
+			urlRequest.method = URLRequestMethod.GET;
+			var urlLoader:URLLoader = new URLLoader;
+			urlLoader.addEventListener(Event.COMPLETE, createArgument);
+			urlLoader.load(urlRequest);
+			
 		}
 		
 		
@@ -734,6 +784,7 @@ package classes
 			{
 				//displayTxt.text = "[Enter the claim]";
 			}
+			setIDs();
 		}
 		
 		protected function setGuidingText(event:FlexEvent):void
@@ -856,9 +907,21 @@ package classes
 			}
 		}
 		
-		public function setIDs(xml:XML):void
+		public function setIDs():void
 		{
-			
+			trace("In reason's set ID");
+			trace(_initXML);
+			//By default there are only three textboxes
+			if(_initXML == null)
+				return;
+			input1.ID = _initXML.textbox[0].@ID;
+			inputs[0].ID = _initXML.textbox[1].@ID;
+			inputs[1].ID = _initXML.textbox[2].@ID;
+			//only one node is returned
+			ID = _initXML.node.@ID;
+			input1NTID = _initXML.node.nodetext[0].@ID;
+			inputsNTID.push(_initXML.node.nodetext[1].@ID);
+			inputsNTID.push(_initXML.node.nodetext[2].@ID);
 		}
 	}
 	

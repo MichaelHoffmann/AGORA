@@ -80,39 +80,52 @@
 			
 			public function addEmptyArgument():void
 			{
-				//var argumentPanel:ArgumentPanel=addPanel();
 				addPanelToMap();
 				this.addEventListener(ClaimAddedEvent.CLAIM_ADDED,function (event:ClaimAddedEvent):void{
 					var argumentPanel:ArgumentPanel = event.argumentPanel;
 					argumentPanel.addSupportingArgument();
-					argumentPanel.beginByArgument();
+					argumentPanel.addEventListener(ArgumentPanel.ARGUMENT_CONSTRUCTED,function (event:Event):void{
+						argumentPanel.beginByArgument();
+					});
 				});
 			}
 			
 			public function addPanelToMap():void
 			{
-				var urlRequest:URLRequest = new URLRequest;
-				urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
-				var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+agoraMap.getAP());
-				trace(agoraMap.getAP());
-				urlRequest.data = urlRequestVars;
-				urlRequest.method = URLRequestMethod.GET;
-				var urlLoader:URLLoader = new URLLoader;
-				urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
-					var xml:XML = XML(event.target.data);
-					trace(xml);
-					var argumentPanel:ArgumentPanel = new ArgumentPanel;
-					argumentPanel._initXML = xml;
-					argumentPanel.gridX = 2;
-					argumentPanel.gridY = 3;
-					argumentPanel.firstClaim = true;
-					agoraMap.addChild(argumentPanel);
-					agoraMap.layoutManager.registerPanel(argumentPanel);
-					argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
-						dispatchEvent(new ClaimAddedEvent(ClaimAddedEvent.CLAIM_ADDED,argumentPanel,true,false));
+				//map is given an id
+				var xmlMap:XML = <map id="0"></map>;
+				var urlRequestMap:URLRequest = new URLRequest;
+				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xmlMap.toXMLString());
+				urlRequestMap.data = urlRequestVarsMap;
+				urlRequestMap.method = URLRequestMethod.GET;
+				var urlLoaderMap:URLLoader = new URLLoader;
+				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
+					var retXMLMap:XML =  XML(eventMap.target.data);
+					agoraMap.ID = retXMLMap.@ID;
+					
+					var urlRequest:URLRequest = new URLRequest;
+					urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
+					var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+agoraMap.getAP());
+					urlRequest.data = urlRequestVars;
+					urlRequest.method = URLRequestMethod.GET;
+					var urlLoader:URLLoader = new URLLoader;
+					urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
+						var xml:XML = XML(event.target.data);
+						var argumentPanel:ArgumentPanel = new ArgumentPanel;
+						argumentPanel._initXML = xml;
+						argumentPanel.gridX = 2;
+						argumentPanel.gridY = 3;
+						argumentPanel.firstClaim = true;
+						agoraMap.addChild(argumentPanel);
+						agoraMap.layoutManager.registerPanel(argumentPanel);
+						argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
+							dispatchEvent(new ClaimAddedEvent(ClaimAddedEvent.CLAIM_ADDED,argumentPanel,true,false));
+						});
 					});
+					urlLoader.load(urlRequest);
 				});
-				urlLoader.load(urlRequest);
+				urlLoaderMap.load(urlRequestMap);
 			}
 			
 			
@@ -122,7 +135,6 @@
 				this.addEventListener(ClaimAddedEvent.CLAIM_ADDED,function (event:ClaimAddedEvent):void{
 					canvas.visible = true;
 					var argumentPanel:ArgumentPanel = event.argumentPanel;
-					//argumentPanel.addEventListener( FlexEvent.CREATION_COMPLETE, function(event:Event):void{argumentPanel.displayTxt.text = "[Enter your claim]";});
 					argumentPanel.displayTxt.text  = "[Enter your claim]";
 					argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
 					canvas.setStyle("backgroundColor",uint("0x99FF99"));
