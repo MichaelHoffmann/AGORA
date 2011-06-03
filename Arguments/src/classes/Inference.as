@@ -830,6 +830,8 @@ package classes
 		
 		override public function setIDs():void
 		{
+			if(_initXML == null)
+				return;
 			ID = _initXML.node[0].@ID;
 			connID = _initXML.connection.@ID;
 		}

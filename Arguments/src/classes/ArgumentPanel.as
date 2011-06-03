@@ -914,8 +914,6 @@ package classes
 		
 		public function setIDs():void
 		{
-			trace("In reason's set ID");
-			trace(_initXML);
 			//By default there are only three textboxes
 			if(_initXML == null)
 				return;

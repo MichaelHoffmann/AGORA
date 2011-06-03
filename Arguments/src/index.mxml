@@ -88,17 +88,19 @@
 			
 			protected function drawMap(event:Event):void
 			{
+				trace("In draw map");
 				agoraMenu.visible = false;
 				var xml:XML = XML(event.target.data);
 				var map:Map = new Map;
 				addElement(map);
+				trace(xml.toXMLString());
 				map.agoraMap.load(xml);
-				
 			}
 			
 			protected function loadMap(event:MouseEvent):void{
 				var button:Button = Button(event.target);
 				var mapId:int = int(button.name);
+				trace(mapId);
 				var request:URLRequest = new URLRequest;
 				request.url="http://agora.gatech.edu/dev/load_map.php";
 				request.method = URLRequestMethod.GET;
@@ -118,11 +120,12 @@
 				{
 						//trace(map.toXMLString());
 						var mapObject:Object = new Object;
-						mapObject.mapId = int(map.attribute("id"));
+						mapObject.mapId = int(map.attribute("ID"));
 						mapObject.title = map.attribute("title");
 						var mapButton:Button = new Button;
 						mapButton.width = 170;
 						mapButton.name = mapObject.mapId.toString();
+						trace(mapButton.name);
 						mapButton.addEventListener(MouseEvent.CLICK, loadMap);
 						mapButton.label = mapObject.title;
 						mapNameList.addElement(mapButton);

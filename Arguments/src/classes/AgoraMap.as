@@ -196,7 +196,13 @@ package classes
 					var currTextBox:DynamicTextArea = argumentPanel.input1;
 					var currXML:XML = <textbox></textbox>;
 					currXML.@ID = currTextBox.ID;
-					currXML.@text = currTextBox.text;
+					if(argumentPanel.statementNegated)
+					{
+						currXML.@text = "#$#$#$"+currTextBox.text;
+					}
+					else{
+						currXML.@text = currTextBox.text;
+					}
 					xml = xml.appendChild(currXML);
 					//add inputs
 					for(var j:int=0; j<argumentPanel.inputs.length; j++)
@@ -260,31 +266,11 @@ package classes
 					currXML = <connection></connection>;
 					currXML.@ID = inferencePanel.connID;
 					currXML.@type = inferencePanel.myArg.dbType;
-					//currXML.@targetnode = inferencePanel.claim.ID;
 					currXML.@x = inferencePanel.argType.gridX;
 					currXML.@y = inferencePanel.argType.gridY;
-					
-					//var argType:MenuPanel = MenuPanel(panel);
-					//currXML.@argID = argType.aid;
-					//currXML.@type = argType.inference.myArg.dbType;
-					//currXML.@targetnodeID = argType.inference.claim.aid;
-					//currXML.@x = argType.gridX;
-					//currXML.@y = argType.gridY;	
-					//for(j = 0; j < argType.inference.reasons.length; j++)
-					//{
-					//	nodeText=<sourcenode></sourcenode>;
-					//	nodeText.@ID = argType.inference.connectionIDs[j];
-					//	nodeText.@nodeTID = argType.inference.reasons[j].aid;
-					//	currXML = currXML.appendChild(nodeText);
-					//}
-					//nodeText=<sourcenode></sourcenode>;
-					//nodeText.@ID = argType.inference.connectionID;
-					//nodeText.@nodeTID = argType.inference.aid;
-					//currXML = currXML.appendChild(nodeText);
 					xml = xml.appendChild(currXML);
 				}	
 			}
-	
 			return xml;
 		}
 		
@@ -299,20 +285,8 @@ package classes
 			{
 				textbox_map[xml.attribute("ID")] = xml.attribute("text");
 			}
-			
-			for(var obj:String in textbox_map)
-			{
-				//trace(obj);
-			}
-			for each(var object:Object in textbox_map)
-			{
-				//trace(String(object));
-			}
-			
-			var nodes_map:Object = new Object;
 			var nodes:XMLList = xmlData.node;
-			
-			
+			var nodes_map:Object = new Object;
 			//read all nodes. This includes setting the text of the node
 			//by reading the text in the corresponding textbox node
 			for each ( xml in nodes)
@@ -329,9 +303,9 @@ package classes
 				else{
 					argumentPanel = new ArgumentPanel;
 					addElement(argumentPanel);// try moving addElements to one place so that to optimize code
-					argumentPanel.input1.text = textbox_map[xml.nodetext.attribute("ID")];
 				}
 				nodes_map[xml.attribute("ID")] = argumentPanel;
+				argumentPanel.ID = xml.@ID;
 				argumentPanel.gridY = xml.attribute("y");
 				argumentPanel.gridX = xml.attribute("x");				
 				layoutManager.panelList.push(argumentPanel);
@@ -364,8 +338,9 @@ package classes
 				dta.visible = false;
 				dta.panelReference = inference;
 				inference.input.push(dta);
-				dta.forwardList.push(inference.input1);
-				claim.input1.forwardList.push(dta);
+				//dta.forwardList.push(inference.input1);
+				//claim.input1.forwardList.push(dta);
+				
 				//forward update should be called only after all links are created.
 				//That is, wait for the reasons to be added too.
 				//Not doing this might result in accessing illegal memory
@@ -381,12 +356,8 @@ package classes
 						dta.visible=false;
 						dta.panelReference = inference;
 						inference.input.push(dta);
-						dta.forwardList.push(inference.input1);
-						panel.input1.forwardList.push(dta);
-						panel.input1.forwardUpdate();
 					}
 				}
-				claim.input1.forwardUpdate();
 			}
 			layoutManager.layoutComponents();
 		}
