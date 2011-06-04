@@ -18,6 +18,21 @@ package logic
 			_dbType = "MT";
 		}
 		
+		override public function getOption(dbString:String):String{
+			if(dbString.indexOf("or") >= 0)
+			{
+				return "or";
+			}
+			else if(dbString.indexOf("and") >= 0)
+			{
+				return "and"  ;
+			}
+			else
+			{
+				return "";
+			}
+		}
+		
 		override public function get dbType():String
 		{
 			

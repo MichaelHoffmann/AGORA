@@ -19,6 +19,19 @@ package logic
 			_dbType = "MP";
 		}
 		
+		override public function getLanguageType(dbString:String):String
+		{
+			for(var i:int=0;i<dbLangTypeNames.length;i++)
+			{
+				if(dbString.indexOf(dbLangTypeNames[i]) >= 0)
+				{
+					return _langTypes[i];
+				}
+					
+			}
+			return "";
+		}
+		
 		override public function createLinks():void
 		{
 			if(inference.claim.inference != null && inference.claim.statementNegated)

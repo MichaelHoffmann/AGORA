@@ -1,6 +1,7 @@
 //This class is the canvas on which everything will be drawn
 package classes
 {
+	import components.ArgSelector;
 	import components.HelpText;
 	import components.Option;
 	
@@ -13,6 +14,13 @@ package classes
 	import flash.net.URLVariables;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
+	
+	import logic.ConditionalSyllogism;
+	import logic.DisjunctiveSyllogism;
+	import logic.ModusPonens;
+	import logic.ModusTollens;
+	import logic.NotAllSyllogism;
+	import logic.ParentArg;
 	
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
@@ -31,6 +39,7 @@ package classes
 		public var helpText:HelpText;
 		private static var _tempID:int;
 		public var initXML:XML;
+		public static var dbTypes:Array = ["MP","MT","DisjSyl","NotAllSyl","CS", "CD"];
 		public function AgoraMap()
 		{
 			layoutManager = new ALayoutManager;	
@@ -38,6 +47,33 @@ package classes
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
 			addEventListener(FlexEvent.CREATION_COMPLETE, mapCreated);
 			_tempID = 0;
+		}
+	
+		public function getMyArg(type:String):ParentArg
+		{
+			for(var i:int=0; i<dbTypes.length;i++)
+			{
+				if(type.indexOf(dbTypes[i],0) == 0)
+				{
+					//use a switch case
+					switch (dbTypes[i]){
+						case "MP":
+							return new ModusPonens;
+						case "MT":
+							return new ModusTollens;
+						case "DisjSyl":
+							return new DisjunctiveSyllogism;
+						case "NotALLSyl":
+							return new NotAllSyllogism;
+						case "CS":
+							return new ConditionalSyllogism;
+						case "CD":
+							//return new ParentArg;
+					}
+				}
+				
+			}
+			return null;
 		}
 		
 		private function mapCreated(event:FlexEvent):void
@@ -72,8 +108,6 @@ package classes
 			var xml:XML = <map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><node Type="Inference" x="0" y="0"></node><connection type="Unset" x="0" y="0" /></map>
 			//setting the ID of the map
 			xml.@ID = ID;
-			trace('in get connection');
-			trace(xml.@ID);
 			//temporary IDs for the three new textboxes
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -157,7 +191,7 @@ package classes
 		public function panelCreated(event:FlexEvent):void{
 			var panel:ArgumentPanel = event.target as ArgumentPanel;
 		}
-
+		
 		public function pushToServer(xml:XML):void
 		{
 			var urlLoader:URLLoader = new URLLoader;
@@ -233,6 +267,7 @@ package classes
 					{
 						argumentPanel = ArgumentPanel(panel);
 						currXML.@ID = argumentPanel.ID;
+						Alert.show(currXML.@ID.toString());
 						currXML.@Type = "Standard";	
 						//currXML.@x = inferencePanel.gridX;
 						//currXML.@y = inferencePanel.gridY;
@@ -249,7 +284,7 @@ package classes
 						}
 					}
 					currXML.@x = panel.gridX;
-					currXML.@y = panel.gridY;
+					currXML.@y = panel.gridY; 
 					xml = xml.appendChild(currXML);
 				}
 				//pushToServer(xml);
@@ -285,6 +320,7 @@ package classes
 			{
 				textbox_map[xml.attribute("ID")] = xml.attribute("text");
 			}
+			
 			var nodes:XMLList = xmlData.node;
 			var nodes_map:Object = new Object;
 			//read all nodes. This includes setting the text of the node
@@ -329,6 +365,7 @@ package classes
 						inference.argType.gridY = xml.attribute("y");
 						inference.argType.gridX = xml.attribute("x");
 						layoutManager.addSavedPanel(inference.argType);
+						connections_map[xml.@ID] = inference;
 					}
 				}
 				claim.rules.push(inference);
@@ -344,7 +381,6 @@ package classes
 				//forward update should be called only after all links are created.
 				//That is, wait for the reasons to be added too.
 				//Not doing this might result in accessing illegal memory
-				
 				for each ( sourcenode in sources )
 				{
 					panel = nodes_map[sourcenode.attribute("nodeID")];
@@ -358,7 +394,76 @@ package classes
 						inference.input.push(dta);
 					}
 				}
+				//basic links established
 			}
+			//set states
+			//select myArg
+			for each(xml in connections)
+			{
+				sources = xml.sourcenode;
+				inference = null;
+				for each(var source:XML in sources)
+				{
+					panel = nodes_map[source.@nodeID];
+					if(panel is Inference)
+					{
+						inference = Inference(panel);
+					}
+				}
+				
+				if(inference.reasons.length > 1)
+				{
+					inference.hasMultipleReasons = true;
+				}
+				
+				var type:String = xml.@type;
+				trace("look for this");
+				trace(type);
+				if(type != "Unset"){
+					inference.myArg =  getMyArg(type);
+					inference.myArg.inference = inference;
+					inference.myschemeSel = new ArgSelector;	
+					inference.myschemeSel.visible = false;
+					inference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE,inference.menuCreated);	
+					addChild(inference.myschemeSel);
+					inference.myschemeSel.selectedScheme = inference.myArg.myname;
+					inference.myschemeSel.selectedType = inference.myArg.getLanguageType(type);
+					inference.myschemeSel.selectedOption = inference.myArg.getOption(type);
+					if(inference.hasMultipleReasons)
+					{
+						inference.myschemeSel.typeSelector.dataProvider = inference.myArg._expLangTypes;
+					}
+					else
+					{
+						inference.myschemeSel.typeSelector.dataProvider = inference.myArg._langTypes;
+					}
+					inference.setRuleState();
+					inference.myschemeSel.typeSelector.visible = true;
+					inference.myArg.createLinks();
+					inference.argType.changeSchemeBtn.label = inference.myschemeSel.selectedScheme;
+					inference.selectedBool = true;
+					inference.schemeSelected = true;
+				}
+				else
+				{
+					inference.selectedBool = false;
+					inference.schemeSelected = false;
+				}
+				
+				if(inference.myArg is ConditionalSyllogism)
+				{
+					claim.multiStatement = true;
+					claim.implies = true;
+					
+					for each(var reason:ArgumentPanel in inference.reasons)
+					{
+						reason.multiStatement = true;
+						reason.implies = true;
+					}
+				}
+				
+			}
+			
 			layoutManager.layoutComponents();
 		}
 		
@@ -539,5 +644,7 @@ package classes
 				}
 			}
 		}
+		
+		
 	}
 }

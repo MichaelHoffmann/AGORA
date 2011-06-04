@@ -48,6 +48,24 @@ package logic
 		return "Unset";
 	}
 	
+	public function getOption(dbString:String):String
+	{
+		return "";
+	}
+	
+	public function getLanguageType(dbString:String):String
+	{
+		for(var i:int=0;i<dbLangTypeNames.length;i++)
+		{
+			if(dbString.indexOf(dbLangTypeNames[i]) >= 0)
+			{
+				return _langTypes[i];
+			}
+
+		}
+		return "";
+	}
+	
 	public function get isLanguageExp():Boolean
 	{
 		return _isLanguageExp;

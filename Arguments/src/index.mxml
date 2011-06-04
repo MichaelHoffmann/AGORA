@@ -40,6 +40,7 @@
 	<fx:Script>
 		<![CDATA[
 			import classes.AgoraMap;
+			import classes.ArgumentPanel;
 			import classes.UserData;
 			
 			import components.LAMWorld;
@@ -93,14 +94,14 @@
 				var xml:XML = XML(event.target.data);
 				var map:Map = new Map;
 				addElement(map);
-				trace(xml.toXMLString());
+				//trace(xml.toXMLString());
+				ArgumentPanel.parentMap = map.agoraMap;
 				map.agoraMap.load(xml);
 			}
 			
 			protected function loadMap(event:MouseEvent):void{
 				var button:Button = Button(event.target);
 				var mapId:int = int(button.name);
-				trace(mapId);
 				var request:URLRequest = new URLRequest;
 				request.url="http://agora.gatech.edu/dev/load_map.php";
 				request.method = URLRequestMethod.GET;
@@ -118,7 +119,6 @@
 				var maps:XMLList = xmlData.map;
 				for each (var map:XML in maps)
 				{
-						//trace(map.toXMLString());
 						var mapObject:Object = new Object;
 						mapObject.mapId = int(map.attribute("ID"));
 						mapObject.title = map.attribute("title");

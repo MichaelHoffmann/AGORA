@@ -270,7 +270,7 @@ package classes
 		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
-			trace('In change possible schemes');
+			if(myschemeSel != null)
 			if(typed)
 			{
 				myschemeSel.mainSchemes.visible = false;
@@ -302,6 +302,9 @@ package classes
 					argType.changeSchemeBtn.enabled = true;
 				}
 			}
+			parentMap.invalidateProperties();
+			parentMap.invalidateSize();
+			parentMap.invalidateDisplayList();
 		}
 		
 		public function menuCreated(fe:FlexEvent):void
@@ -446,8 +449,14 @@ package classes
 		
 		public function addReasonToMap(event:Event):void{
 			var responseXML:XML = XML(event.target.data);
-			trace(responseXML.toXMLString());
+			//separate XML for Argument Panel
+			var reasonXML:XML = new XML("<map></map>");
+			var textboxList:XMLList = responseXML.textbox;
+			reasonXML.appendChild(textboxList);
+			var firstNodeText:XML = responseXML.node[0];
+			reasonXML.appendChild(firstNodeText);
 			var tmp:ArgumentPanel = new ArgumentPanel();
+			tmp._initXML = reasonXML;
 			parentMap.addElement(tmp);
 			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);		
 			try{
@@ -832,8 +841,14 @@ package classes
 		{
 			if(_initXML == null)
 				return;
+			try{
 			ID = _initXML.node[0].@ID;
 			connID = _initXML.connection.@ID;
+			}
+			catch(e:Error)
+			{
+				trace(e);
+			}
 		}
 	}
 }
