@@ -58,14 +58,14 @@
 				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
 				canvas.visible = true;
 				Group(this.parent).removeElement(this);
-				
+				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
+				FlexGlobals.topLevelApplication.loadMapList();
 			}
 			
 			public function discardChanges(event:Event):void
 			{
 				hideMap();
-				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
-				FlexGlobals.topLevelApplication.loadMapList();
+				
 			}
 			
 			public function setWidth(event: Event):void
@@ -76,7 +76,6 @@
 			{
 				var xml:XML;
 				xml = agoraMap.getMapXml();
-				trace(xml.toXMLString());
 				var urlRequestMap:URLRequest = new URLRequest;
 				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
 				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
@@ -85,8 +84,6 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
-					//agoraMap.ID = retXMLMap.@ID;
-					trace(retXMLMap.toXMLString());
 				});
 				urlLoaderMap.load(urlRequestMap);
 				hideMap();
@@ -115,7 +112,7 @@
 			public function addPanelToMap():void
 			{
 				//map is given an id
-				var xmlMap:XML = <map id="0"></map>;
+				var xmlMap:XML = new XML("<map id=\"0\" title=\"" + FlexGlobals.topLevelApplication.presetMapName + "\" ></map>");
 				var urlRequestMap:URLRequest = new URLRequest;
 				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
 				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xmlMap.toXMLString());

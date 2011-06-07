@@ -46,6 +46,7 @@
 			import components.LAMWorld;
 			import components.LoginWindow;
 			import components.Map;
+			import components.MapName;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
@@ -54,9 +55,14 @@
 			
 			public var maps_map:Dictionary;
 			
+			public var presetMapName:String;
+			
 			
 			public function createmap():void
 			{
+				var mapNameDialog:MapName = new MapName;
+				PopUpManager.addPopUp(mapNameDialog,this,true);
+				PopUpManager.centerPopUp(mapNameDialog);
 				var lamWorld:LAMWorld = new LAMWorld;
 				agoraMenu.visible = false;
 				addElement(lamWorld);

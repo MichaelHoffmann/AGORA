@@ -495,6 +495,7 @@ package classes
 				
 				if(aPanel.inference != null)
 				{
+					if(aPanel.inference.myArg != null)
 					aPanel.inference.displayStr = aPanel.inference.myArg.correctUsage();
 				}
 				aPanel.makeUnEditable();
