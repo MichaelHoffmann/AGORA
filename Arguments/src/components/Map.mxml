@@ -10,7 +10,7 @@
 		<s:HGroup id="topPanel">
 			<s:Button id="gotoMenuBtn" label="Save and Exit">
 			</s:Button>
-			<s:Button id="discardChangesBtn" label="Home">
+			<s:Button id="discardChangesBtn" label="Home" visible="false">
 			</s:Button>
 		</s:HGroup>
 		<mx:Canvas id="agora" width="140" height="650">
