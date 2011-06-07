@@ -219,10 +219,10 @@ package classes
 				//The panel may be an inference a reason/claim  or displayArgType
 				if(panel is Inference)
 				{
-					//do nothing
+					
 				}
-					//note an Inference is also an Argument Panel, because Inference is a more specific type. So
-					//it should come before in the else-if structure.
+				//note an Inference is also an Argument Panel, because Inference is a more specific type. So
+				//it should come before in the else-if structure.
 				else if(panel is ArgumentPanel)
 				{
 					argumentPanel = ArgumentPanel(panel);
@@ -260,14 +260,11 @@ package classes
 						inferencePanel = Inference(panel);
 						currXML.@ID = inferencePanel.ID;
 						currXML.@Type = "Inference";
-						//currXML.@x = inferencePanel.gridX;
-						//currXML.@y = inferencePanel.gridY;
 					}
 					else if(panel is ArgumentPanel)
 					{
 						argumentPanel = ArgumentPanel(panel);
 						currXML.@ID = argumentPanel.ID;
-						Alert.show(currXML.@ID.toString());
 						currXML.@Type = "Standard";	
 						//currXML.@x = inferencePanel.gridX;
 						//currXML.@y = inferencePanel.gridY;
@@ -288,7 +285,6 @@ package classes
 					xml = xml.appendChild(currXML);
 				}
 				//pushToServer(xml);
-				
 			}
 			
 			//print connections
@@ -306,12 +302,17 @@ package classes
 					xml = xml.appendChild(currXML);
 				}	
 			}
+			trace('printing save data');
+			trace(xml);
 			return xml;
 		}
 		
 		public function load(xmlData:XML):void{
 			//var xmlData:XML = new XML(event.target.data);
 			
+			ID = xmlData.@ID;
+			trace('In load');
+			trace(ID);
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
@@ -408,6 +409,7 @@ package classes
 					if(panel is Inference)
 					{
 						inference = Inference(panel);
+						inference.connID = xml.@connID;
 					}
 				}
 				
@@ -417,8 +419,6 @@ package classes
 				}
 				
 				var type:String = xml.@type;
-				trace("look for this");
-				trace(type);
 				if(type != "Unset"){
 					inference.myArg =  getMyArg(type);
 					inference.myArg.inference = inference;
@@ -437,12 +437,12 @@ package classes
 					{
 						inference.myschemeSel.typeSelector.dataProvider = inference.myArg._langTypes;
 					}
-					inference.setRuleState();
 					inference.myschemeSel.typeSelector.visible = true;
 					inference.myArg.createLinks();
 					inference.argType.changeSchemeBtn.label = inference.myschemeSel.selectedScheme;
 					inference.selectedBool = true;
 					inference.schemeSelected = true;
+					
 				}
 				else
 				{
@@ -461,8 +461,40 @@ package classes
 						reason.implies = true;
 					}
 				}
-				
 			}
+			//fill out text
+
+			for each(var node:XML in nodes)
+			{
+				var aPanel:ArgumentPanel = nodes_map[node.@ID];
+				aPanel.ID = node.@ID;
+				var nodetextList:XMLList = node.nodetext;
+				var i:int = 0;
+				for each(var nodetext:XML in nodetextList)
+				{
+					
+					var string:String = textbox_map[nodetext.@textboxID];
+					
+					if(i == 0){
+						aPanel.input1.text = string;
+						aPanel.input1NTID = nodetext.@ID;
+						aPanel.input1.ID = nodetext.@textboxID;
+					}
+					else{
+						aPanel.inputs[i-1].text = string;
+						aPanel.inputsNTID.push(nodetext.@ID);
+						aPanel.inputs[i-1].ID = nodetext.@textboxID;
+					}
+					i++;
+				}
+				aPanel.makeUnEditable();
+				if(aPanel.inference != null)
+				{
+					aPanel.inference.displayStr = aPanel.inference.myArg.correctUsage();
+				}
+			}
+			
+			//set ids for connection.
 			
 			layoutManager.layoutComponents();
 		}
@@ -643,8 +675,6 @@ package classes
 					}	
 				}
 			}
-		}
-		
-		
+		}		
 	}
 }

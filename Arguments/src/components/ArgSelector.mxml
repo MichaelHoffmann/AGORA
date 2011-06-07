@@ -5,9 +5,9 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Canvas creationComplete="init()">
+	<mx:Canvas>
 		<mx:List id="mainSchemes"
-				 dataProvider="{scheme}" 
+				 dataProvider="{scheme}"
 				 rollOverColor="#b2c4e7"
 				 textRollOverColor="#FFFFFF"
 				 selectionColor="#5577b8"  
@@ -17,7 +17,7 @@
 				 <!-- itemClick="changeTitle(event)" -->
 		
 		<mx:List id="typeSelector" 
-				 x="{mainSchemes.width}" 
+				 x="{mainSchemes.width}"
 				 rollOverColor="#b2c4e7"
 				 textRollOverColor="#FFFFFF"
 				 selectionColor="#5577b8"  
@@ -39,6 +39,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import classes.Inference;
 			import classes.MenuPanel;
 			
 			import flash.events.Event;
@@ -55,6 +56,13 @@
 			private var _selectedOption:String;
 			private var _scheme:Array;
 			private var _options:Array;
+			
+			
+			override protected function commitProperties():void
+			{
+					super.commitProperties();
+			}
+			
 			
 			public function get selectedOption():String
 			{

@@ -411,14 +411,6 @@ package classes
 		}
 		
 		
-		public function addArgument(event:MenuEvent):void
-		{
-			if(event.label == "add an argument for this statement")
-			{
-				
-			}
-		}
-		
 		public function removeEventListeners():void
 		{
 			parentMap.option.removeEventListener(MouseEvent.CLICK,optionClicked);	
@@ -440,6 +432,7 @@ package classes
 		
 		public function onArgumentAddition(event:Event):void
 		{
+			trace('on argument addition');
 			parentMap.option.visible = true;
 			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
 			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
@@ -917,6 +910,8 @@ package classes
 			//By default there are only three textboxes
 			if(_initXML == null)
 				return;
+			trace("in Set ID");
+			trace(_initXML.toXMLString());
 			input1.ID = _initXML.textbox[0].@ID;
 			inputs[0].ID = _initXML.textbox[1].@ID;
 			inputs[1].ID = _initXML.textbox[2].@ID;

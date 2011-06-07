@@ -270,41 +270,49 @@ package classes
 		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
-			if(myschemeSel != null)
-			if(typed)
-			{
-				myschemeSel.mainSchemes.visible = false;
-				myschemeSel.typeSelector.x = 0;
-				myschemeSel.andor.x = myschemeSel.typeSelector.width;
-				if(myArg != null)
+			if(myschemeSel != null){
+				if(typed)
 				{
-					if(hasMultipleReasons)
+					myschemeSel.mainSchemes.visible = false;
+					myschemeSel.typeSelector.x = 0;
+					myschemeSel.andor.x = myschemeSel.typeSelector.width;
+					if(myArg != null)
 					{
-						myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
+						if(hasMultipleReasons)
+						{
+							myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
+						}
+						else
+						{
+							myschemeSel.typeSelector.dataProvider = myArg._langTypes;
+						}
 					}
-					else
+					if(myArg is ConditionalSyllogism)
 					{
-						myschemeSel.typeSelector.dataProvider = myArg._langTypes;
+						argType.changeSchemeBtn.enabled = false;
 					}
 				}
-				if(myArg is ConditionalSyllogism)
-				{
-					argType.changeSchemeBtn.enabled = false;
-				}
+				trace('in change possible schemes');
+				trace(myschemeSel.typeSelector.x);
 			}
 			if(!typed && myschemeSel != null)
 			{
+				trace('In this place');
 				myschemeSel.mainSchemes.visible = true;
 				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
+				trace(myschemeSel.typeSelector.x);
 				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
 				if(myArg!=null)
 				{
 					argType.changeSchemeBtn.enabled = true;
 				}
+				
 			}
-			parentMap.invalidateProperties();
-			parentMap.invalidateSize();
-			parentMap.invalidateDisplayList();
+			if(myschemeSel != null){
+			myschemeSel.invalidateProperties();
+			myschemeSel.invalidateSize();
+			myschemeSel.invalidateDisplayList();
+			}
 		}
 		
 		public function menuCreated(fe:FlexEvent):void
@@ -395,6 +403,8 @@ package classes
 			oplist.addEventListener(ListEvent.ITEM_ROLL_OVER,statementOption);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+			setRuleState();
+			changePossibleSchemes();
 		}
 		
 		public function setArgScheme(event:ListEvent):void
@@ -558,8 +568,8 @@ package classes
 		
 		public function chooseEnablerText():void
 		{
-			trace('In choose enabler text');
 			if(myschemeSel.scheme != null){
+				setRuleState();
 				if(myschemeSel.scheme.length == 0)
 				{
 					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
@@ -569,7 +579,7 @@ package classes
 			
 			if((myArg is DisjunctiveSyllogism || myArg is NotAllSyllogism) && typed)
 			{
-					return;
+				return;
 			}
 			myschemeSel.visible=true;
 			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
@@ -606,6 +616,7 @@ package classes
 		
 		public function displayTypes(le:ListEvent):void
 		{
+			setRuleState();
 			myschemeSel.selectedScheme = le.itemRenderer.data.toString();
 			var sublist:List = myschemeSel.typeSelector;
 			sublist.visible = false;
@@ -842,11 +853,14 @@ package classes
 			if(_initXML == null)
 				return;
 			try{
-			ID = _initXML.node[0].@ID;
-			connID = _initXML.connection.@ID;
+				trace(_initXML.toXMLString());
+				ID = _initXML.node[0].@ID;
+				trace(_initXML.node[0].@ID);
+				connID = _initXML.connection.@ID;
 			}
 			catch(e:Error)
 			{
+				trace('sdfasdf');
 				trace(e);
 			}
 		}

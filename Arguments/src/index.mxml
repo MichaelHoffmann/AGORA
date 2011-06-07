@@ -125,7 +125,6 @@
 						var mapButton:Button = new Button;
 						mapButton.width = 170;
 						mapButton.name = mapObject.mapId.toString();
-						trace(mapButton.name);
 						mapButton.addEventListener(MouseEvent.CLICK, loadMap);
 						mapButton.label = mapObject.title;
 						mapNameList.addElement(mapButton);
