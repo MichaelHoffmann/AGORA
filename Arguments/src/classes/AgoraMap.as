@@ -474,6 +474,11 @@ package classes
 				{
 					
 					var string:String = textbox_map[nodetext.@textboxID];
+					var ind:int = string.indexOf("#$#$#$",0);
+					if(ind != -1)
+					{
+						string = string.substr(6,string.length -1);
+					}
 					
 					if(i == 0){
 						aPanel.input1.text = string;

@@ -89,7 +89,7 @@
 					trace(retXMLMap.toXMLString());
 				});
 				urlLoaderMap.load(urlRequestMap);
-				//hideMap();
+				hideMap();
 			}
 			
 			public function updateSize(event:Event):void
