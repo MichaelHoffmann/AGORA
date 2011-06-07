@@ -487,11 +487,12 @@ package classes
 					}
 					i++;
 				}
-				aPanel.makeUnEditable();
+				
 				if(aPanel.inference != null)
 				{
 					aPanel.inference.displayStr = aPanel.inference.myArg.correctUsage();
 				}
+				aPanel.makeUnEditable();
 			}
 			
 			//set ids for connection.
