@@ -99,25 +99,32 @@
 				map.agoraMap.load(xml);
 			}
 			
+			public function displayMap(button:Button):void
+			{
+				//var button:Button = Button(event.target);
+				var mapId:int = int(button.name);
+				var request:URLRequest = new URLRequest;
+				request.url="http://agora.gatech.edu/dev/load_map.php";
+				request.method = URLRequestMethod.GET;
+				request.data = new URLVariables("timestamp=0&map_id="+mapId);
+				var loader:URLLoader = new URLLoader;
+				loader.addEventListener(Event.COMPLETE, drawMap);
+				loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
+				loader.load(request);
+			}
+			
+			
 			protected function loadMap(event:MouseEvent):void{
 				if(!UserData.isValid())
 				{
 					var loginWindow:LoginWindow = new LoginWindow;
 					PopUpManager.addPopUp(loginWindow,this,true);
 					PopUpManager.centerPopUp(loginWindow);
-					loginWindow.addEventListener("verification",onVerification);
+					loginWindow.addEventListener("verification", function ( e:Event):void{ displayMap(Button(event.target)) });
 				}
-				else{
-					var button:Button = Button(event.target);
-					var mapId:int = int(button.name);
-					var request:URLRequest = new URLRequest;
-					request.url="http://agora.gatech.edu/dev/load_map.php";
-					request.method = URLRequestMethod.GET;
-					request.data = new URLVariables("timestamp=0&map_id="+mapId);
-					var loader:URLLoader = new URLLoader;
-					loader.addEventListener(Event.COMPLETE, drawMap);
-					loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
-					loader.load(request);
+				else
+				{
+					displayMap(Button(event.target));
 				}
 				
 			}

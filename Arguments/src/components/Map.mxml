@@ -58,14 +58,14 @@
 				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
 				canvas.visible = true;
 				Group(this.parent).removeElement(this);
-				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
-				FlexGlobals.topLevelApplication.loadMapList();
+				
 			}
 			
 			public function discardChanges(event:Event):void
 			{
 				hideMap();
-				
+				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
+				FlexGlobals.topLevelApplication.loadMapList();
 			}
 			
 			public function setWidth(event: Event):void
@@ -89,7 +89,7 @@
 					trace(retXMLMap.toXMLString());
 				});
 				urlLoaderMap.load(urlRequestMap);
-				hideMap();
+				//hideMap();
 			}
 			
 			public function updateSize(event:Event):void
