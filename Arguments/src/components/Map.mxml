@@ -53,14 +53,18 @@
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
 			
-			
-			public function discardChanges(event:Event):void
+			public function hideMap():void
 			{
 				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
 				canvas.visible = true;
 				Group(this.parent).removeElement(this);
 				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
 				FlexGlobals.topLevelApplication.loadMapList();
+			}
+			
+			public function discardChanges(event:Event):void
+			{
+				hideMap();
 				
 			}
 			
@@ -85,6 +89,7 @@
 					trace(retXMLMap.toXMLString());
 				});
 				urlLoaderMap.load(urlRequestMap);
+				hideMap();
 			}
 			
 			public function updateSize(event:Event):void
