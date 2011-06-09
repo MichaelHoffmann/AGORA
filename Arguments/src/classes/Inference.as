@@ -23,6 +23,7 @@ package classes
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
 	import mx.events.MenuEvent;
+	import mx.managers.FocusManager;
 	import mx.utils.ArrayUtil;
 	
 	import org.osmf.layout.AbsoluteLayoutFacet;
@@ -213,8 +214,9 @@ package classes
 			{
 				myArg.createLinks();
 			}
-			if(claim.firstClaim)
+			if(claim.inference == null)
 			{
+				//trace('calim:'+claim);
 				reasons[reasons.length - 1].makeUnEditable();
 				reasons[reasons.length - 1].displayTxt.text = "[Enter your reason]";
 			}
@@ -222,6 +224,7 @@ package classes
 			{
 				reasons[reasons.length - 1].makeEditable();
 			}
+			claim.removeEventListener(Inference.REASON_ADDED, reasonAdded);
 		}
 		
 		public function setRuleState():void
@@ -297,10 +300,8 @@ package classes
 			}
 			if(!typed && myschemeSel != null)
 			{
-				trace('In this place');
 				myschemeSel.mainSchemes.visible = true;
 				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
-				trace(myschemeSel.typeSelector.x);
 				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
 				if(myArg!=null)
 				{
@@ -325,8 +326,6 @@ package classes
 			var optionsArr:Array = ["And","Or"];
 			if( (!claim.statementNegated) && (claim.inference != null || claim.userEntered))
 			{
-				//typeArr.splice(1,1);
-				//typeArr.splice(3,1);
 				typeArr.splice(typeArr.indexOf(ParentArg.MOD_TOL,0),1);
 				typeArr.splice(typeArr.indexOf(ParentArg.NOT_ALL_SYLL,0),1);
 			}
@@ -346,7 +345,7 @@ package classes
 			}
 			
 			//the first claim is not set to multistatement by default
-			if(claim.multiStatement)
+			if(claim.multiStatement && !schemeSelected)
 			{
 				//claim is a multistatement and claim is of type P->Q
 				//Only one possible scheme - conditional syllogism
@@ -384,6 +383,7 @@ package classes
 					claim.removeEventListeners();
 					this.visible = true;
 					reasons[0].makeEditable();
+					//dispatchEvent(new Event(REASON_ADDED));
 				}
 				else
 				{
@@ -850,8 +850,10 @@ package classes
 		
 		override public function setIDs():void
 		{
+			trace('in set ID');
 			if(_initXML == null)
 				return;
+			
 			try{
 				trace(_initXML.toXMLString());
 				ID = _initXML.node[0].@ID;
@@ -860,7 +862,6 @@ package classes
 			}
 			catch(e:Error)
 			{
-				trace('sdfasdf');
 				trace(e);
 			}
 		}

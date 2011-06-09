@@ -78,7 +78,6 @@ package classes
 		
 		private function mapCreated(event:FlexEvent):void
 		{
-			//setMapID();
 		}
 		
 		public function getAP():XML
@@ -142,7 +141,6 @@ package classes
 				sourcenodeXML.@nodeTID = nodeList[i].@TID;
 				newConnXML.appendChild(sourcenodeXML);
 			}
-			//trace(xml);
 			return xml;
 		}
 		
@@ -218,8 +216,7 @@ package classes
 				var panel:GridPanel = layoutManager.panelList[i] as GridPanel;
 				//The panel may be an inference a reason/claim  or displayArgType
 				if(panel is Inference)
-				{
-					
+				{	
 				}
 				//note an Inference is also an Argument Panel, because Inference is a more specific type. So
 				//it should come before in the else-if structure.
@@ -256,7 +253,6 @@ package classes
 					currXML= <node></node>;
 					if(panel is Inference)
 					{
-						
 						inferencePanel = Inference(panel);
 						currXML.@ID = inferencePanel.ID;
 						currXML.@Type = "Inference";
@@ -266,8 +262,6 @@ package classes
 						argumentPanel = ArgumentPanel(panel);
 						currXML.@ID = argumentPanel.ID;
 						currXML.@Type = "Standard";	
-						//currXML.@x = inferencePanel.gridX;
-						//currXML.@y = inferencePanel.gridY;
 						var nodeText:XML = <nodetext></nodetext>;
 						nodeText.@ID = argumentPanel.input1NTID;
 						nodeText.@textboxID = argumentPanel.input1.ID;
@@ -284,7 +278,6 @@ package classes
 					currXML.@y = panel.gridY; 
 					xml = xml.appendChild(currXML);
 				}
-				//pushToServer(xml);
 			}
 			
 			//print connections
@@ -302,8 +295,6 @@ package classes
 					xml = xml.appendChild(currXML);
 				}	
 			}
-			trace('printing save data');
-			trace(xml);
 			return xml;
 		}
 		
@@ -311,8 +302,6 @@ package classes
 			//var xmlData:XML = new XML(event.target.data);
 			
 			ID = xmlData.@ID;
-			trace('In load');
-			trace(ID);
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
@@ -326,7 +315,7 @@ package classes
 			var nodes_map:Object = new Object;
 			//read all nodes. This includes setting the text of the node
 			//by reading the text in the corresponding textbox node
-			for each ( xml in nodes)
+			for each ( var xml:XML in nodes)
 			{
 				var argumentPanel:ArgumentPanel = null;
 				if(xml.attribute("Type") == "Inference")
@@ -340,6 +329,7 @@ package classes
 				else{
 					argumentPanel = new ArgumentPanel;
 					addElement(argumentPanel);// try moving addElements to one place so that to optimize code
+					argumentPanel.userEntered = false;
 				}
 				nodes_map[xml.attribute("ID")] = argumentPanel;
 				argumentPanel.ID = xml.@ID;
@@ -376,8 +366,6 @@ package classes
 				dta.visible = false;
 				dta.panelReference = inference;
 				inference.input.push(dta);
-				//dta.forwardList.push(inference.input1);
-				//claim.input1.forwardList.push(dta);
 				
 				//forward update should be called only after all links are created.
 				//That is, wait for the reasons to be added too.
@@ -395,7 +383,6 @@ package classes
 						inference.input.push(dta);
 					}
 				}
-				//basic links established
 			}
 			//set states
 			//select myArg
@@ -412,12 +399,10 @@ package classes
 						inference.connID = xml.@connID;
 					}
 				}
-				
 				if(inference.reasons.length > 1)
 				{
 					inference.hasMultipleReasons = true;
 				}
-				
 				var type:String = xml.@type;
 				if(type != "Unset"){
 					inference.myArg =  getMyArg(type);
@@ -442,7 +427,6 @@ package classes
 					inference.argType.changeSchemeBtn.label = inference.myschemeSel.selectedScheme;
 					inference.selectedBool = true;
 					inference.schemeSelected = true;
-					
 				}
 				else
 				{
@@ -463,7 +447,6 @@ package classes
 				}
 			}
 			//fill out text
-
 			for each(var node:XML in nodes)
 			{
 				var aPanel:ArgumentPanel = nodes_map[node.@ID];
@@ -472,37 +455,45 @@ package classes
 				var i:int = 0;
 				for each(var nodetext:XML in nodetextList)
 				{
-					
 					var string:String = textbox_map[nodetext.@textboxID];
 					var ind:int = string.indexOf("#$#$#$",0);
 					if(ind != -1)
 					{
 						string = string.substr(6,string.length -1);
 					}
-					
 					if(i == 0){
 						aPanel.input1.text = string;
 						aPanel.input1NTID = nodetext.@ID;
 						aPanel.input1.ID = nodetext.@textboxID;
+						aPanel.input1.invalidateProperties();
+						aPanel.input1.invalidateSize();
+						aPanel.input1.invalidateDisplayList();
 					}
 					else{
 						aPanel.inputs[i-1].text = string;
 						aPanel.inputsNTID.push(nodetext.@ID);
 						aPanel.inputs[i-1].ID = nodetext.@textboxID;
+						aPanel.inputs[i-1].invalidateProperties();
+						aPanel.inputs[i-1].invalidateSize();
+						aPanel.inputs[i-1].invalidateDisplayList();
 					}
+
 					i++;
 				}
-				
 				if(aPanel.inference != null)
 				{
 					if(aPanel.inference.myArg != null)
 					aPanel.inference.displayStr = aPanel.inference.myArg.correctUsage();
 				}
-				aPanel.makeUnEditable();
+				//trace('Look here');
+				for each(var argPanel:ArgumentPanel in nodes_map)
+				{
+					argPanel.makeUnEditable();	
+				}
+				//aPanel.makeUnEditable();
+				//make all of the boxes uneditable
+				
 			}
-			
-			//set ids for connection.
-			
 			layoutManager.layoutComponents();
 		}
 		
@@ -573,7 +564,6 @@ package classes
 					}
 					for(var i:int=0; i < akcdragInitiator.rules.length; i++)
 					{
-						
 						akcdragInitiator.rules[i].gridY = akcdragInitiator.rules[i].gridY + diffY;
 						
 						akcdragInitiator.rules[i].argType.gridY = akcdragInitiator.rules[i].argType.gridY + diffY;

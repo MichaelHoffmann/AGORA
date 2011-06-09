@@ -278,6 +278,8 @@ package classes
 		
 		public function makeEditable():void
 		{
+			trace('In editable');
+			trace(this);
 			if(userEntered == false)
 			{
 				userEntered = true;
@@ -297,6 +299,9 @@ package classes
 		
 		public function makeUnEditable():void
 		{
+			trace("in Make uneditable");
+			trace(multiStatement);
+			trace(this);
 			if(multiStatement)
 			{
 				//input1 is just used to calculate height
@@ -310,7 +315,6 @@ package classes
 			}
 			
 			displayTxt.text = positiveStmt;
-			
 			displayTxt.visible = true;
 			bottomHG.visible = true;
 			doneHG.visible = false;
@@ -322,6 +326,7 @@ package classes
 			{
 				input1.visible = false;
 			}
+			trace(doneHG.visible);
 		}
 		
 		public function get stmt():String
@@ -452,6 +457,7 @@ package classes
 		public function configureReason(event:FlexEvent):void
 		{
 			var reason:ArgumentPanel = ArgumentPanel(event.target);
+			trace('In configure reason');
 			reason.makeUnEditable();
 		}
 		
@@ -556,7 +562,6 @@ package classes
 			inferenceXML.appendChild(inferenceNode);
 			var connectionXML:XML = responseXML.connection[0];
 			inferenceXML.appendChild(connectionXML);
-			
 			var currInference:Inference = new Inference();
 			currInference._initXML = inferenceXML;
 			currInference.myschemeSel = new ArgSelector;
@@ -578,11 +583,14 @@ package classes
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
 			reason._initXML = reasonXML;
-			reason.addEventListener( FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
+			reason.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
+			//addEventListener(Inference.REASON_ADDED,currInference.reasonAdded);
 			//add reason to the map
 			parentMap.addElement(reason);
+			//dispatchEvent(new Event(Inference.REASON_ADDED));
 			//push reason to the list of reasons belonging to this particular class
 			currInference.reasons.push(reason);
+			//dispatchEvent(new Event(Inference.REASON_ADDED));
 			//temporary, should be replaced by TID
 			//currInference.connectionIDs.push(Inference.connections++);
 			//set the inference of the reason
@@ -778,10 +786,6 @@ package classes
 			panelSkin = this.skin as PanelSkin;
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
-			if(!userEntered)
-			{
-				//displayTxt.text = "[Enter the claim]";
-			}
 			setIDs();
 		}
 		

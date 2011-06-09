@@ -95,8 +95,6 @@
 				agora.width = this.stage.stageWidth;
 			}
 			
-			
-			
 			public function addEmptyArgument():void
 			{
 				addPanelToMap();

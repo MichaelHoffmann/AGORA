@@ -1,6 +1,4 @@
 /*
-
-@Author: Karthik Rangarajan
 @Version: 0.1
 /*
 This class is derived from the TextArea component to provide text boxes that resize automatically on user input, without displaying scrollbars, or hiding text.
@@ -9,21 +7,16 @@ package classes
 {
 	import flash.events.Event;
 	import flash.events.TextEvent;
-	
 	import logic.ParentArg;
-	
 	import mx.controls.Alert;
 	import mx.controls.TextArea;
+	import mx.core.mx_internal;
 	import mx.utils.NameUtil;
-	
 	import org.osmf.layout.AbsoluteLayoutFacet;
-	
 	
 	public class DynamicTextArea extends TextArea
 	{
-		
 		public static var count:int;
-		
 		private var topPadding:int;
 		private var bottomPadding:int;
 		private var h:int;
@@ -34,19 +27,14 @@ package classes
 		public var ID:int;
 		public var TID:int;
 		public var hasID:Boolean;
-		
-		public var forwardList:Vector.<DynamicTextArea>; //Arun Kumar chithanar
+		public var forwardList:Vector.<DynamicTextArea>;
 		public var backwardList:Vector.<DynamicTextArea>;
-		
-		
 		public var panelReference:ArgumentPanel;
 		
 		public function DynamicTextArea()
 		{
 			super();
 			modified=false;
-			aid = count;
-			count = count + 1;
 			super.horizontalScrollPolicy = "off";
 			super.verticalScrollPolicy = "off";
 			this.addEventListener(Event.CHANGE,adjustHeightHandler);
@@ -56,28 +44,11 @@ package classes
 			hasID = false;
 		}
 		
-		
-		private function adjustHeightHandler(event:Event):void {
+		private function adjustHeightHandler(event:Event):void
+		{
 			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
-			var paddingTop:String = this.getStyle("paddingTop");
-			var paddingBottom:String= this.getStyle("paddingBottom");
-			topPadding= int(paddingTop);
-			bottomPadding= int(paddingBottom);
-			/*
-			The padding parameters are required, because text is hidden because of the padding, inspite of the text area being large enough to accomodate the entire text
-			*/		
-			if(height <= textField.textHeight + textField.getLineMetrics(0).height + topPadding + bottomPadding){
-				h = topPadding+bottomPadding+textField.textHeight;
-				height = h;
-				validateNow();
-			}
-			if(height >= textField.textHeight + textField.getLineMetrics(0).height+topPadding+bottomPadding){
-				if(height>super.minHeight){
-					h = topPadding+bottomPadding+textField.textHeight;
-					height = h;
-				}	
-				validateNow();
-			}
+			invalidateSize();
+			invalidateDisplayList();
 			updateOthers();
 		}
 		
@@ -86,22 +57,18 @@ package classes
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
-		override public function set text(value:String):void{
-			textField.text = value;
-			validateNow();
-			var paddingTop:String = this.getStyle("paddingTop");
-			var paddingBottom:String= this.getStyle("paddingBottom");
-			topPadding= int(paddingTop);
-			bottomPadding= int(paddingBottom);
-			if((textField.textHeight + topPadding + bottomPadding)>=super.minHeight){
-				height = textField.textHeight+topPadding+bottomPadding;
-			}
-			validateNow();
-		}
-		
 		public function updateOthers():void
 		{
 			forwardUpdate();
+		}
+		
+		
+		override public function set text(value:String):void
+		{
+			super.text = value;
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
 		}
 		
 		public function forwardUpdate():void
@@ -123,9 +90,6 @@ package classes
 				}
 				else
 				{
-					//Alert.show(this.text);
-					//Alert.show(forwardList.length.toString());
-					//Alert.show("Someting went wrong in statement propagation");
 				}
 			}
 			else
@@ -140,6 +104,7 @@ package classes
 				}
 			}
 		}
+		
 		
 		public function update():void{
 			var s:String;
@@ -160,38 +125,19 @@ package classes
 		/*
 		Not bothering with adding padding parameters in the below function, since I make the assumption that HTML text is almost never inside the text area that I use
 		*/
+		
 		override public function set htmlText(value:String):void{
 			textField.htmlText = value;
 			validateNow();
 			height = textField.textHeight;
 			validateNow();
 		}
-		override public function set height(value:Number):void{
-			if(textField == null){
-				if(height <= value){
-					super.height = value;
-				}
-			}
-			else{
-				var paddingTop:String = this.getStyle("paddingTop");
-				var paddingBottom:String= this.getStyle("paddingBottom");
-				topPadding= int(paddingTop);
-				bottomPadding= int(paddingBottom);
-				h = topPadding+bottomPadding+textField.textHeight+textField.getLineMetrics(0).height;
-				var currentHeight:uint = h;
-				if(currentHeight <= super.maxHeight){
-					if(textField.textHeight!= textField.getLineMetrics(0).height){
-						super.height = currentHeight;
-					}
-				}
-				else{
-					super.height = super.maxHeight;
-				}
-			}
-		}
+		
+		/*
 		override public function get text():String{
 			return textField.text;
 		}
+		*/
 		override public function get htmlText():String{
 			return textField.htmlText;
 		}
@@ -204,10 +150,22 @@ package classes
 		override public function toString():String{
 			return NameUtil.displayObjectToString(this);
 		}
+		
+		override protected function measure():void{
+			super.measure();
+			var lineHeight:uint = 10;
+			this.measuredMinHeight = 100;
+			for(var i:int = 0; i < this.mx_internal::getTextField().numLines; i++)
+			{
+				lineHeight = lineHeight + this.mx_internal::getTextField().getLineMetrics(i).height;
+			}
+			this.measuredHeight = lineHeight;
+			this.verticalScrollPolicy = "off";
+		}
+		
 		override protected function commitProperties():void
 		{
-			super.commitProperties();
-			
+			super.commitProperties();	
 		}
 	}
 }
