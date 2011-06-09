@@ -345,13 +345,17 @@ package classes
 			}
 			
 			//the first claim is not set to multistatement by default
-			if(claim.multiStatement && !schemeSelected)
+			if(claim.multiStatement)
 			{
 				//claim is a multistatement and claim is of type P->Q
 				//Only one possible scheme - conditional syllogism
 				if(claim.implies)
 				{
-					
+				
+					if(!schemeSelected)
+					{
+						reasons[0].makeEditable();
+					}
 					//typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
@@ -382,7 +386,8 @@ package classes
 					parentMap.option.visible = false;
 					claim.removeEventListeners();
 					this.visible = true;
-					reasons[0].makeEditable();
+					
+					
 					//dispatchEvent(new Event(REASON_ADDED));
 				}
 				else
