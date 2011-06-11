@@ -335,7 +335,7 @@ package classes
 				else{
 					argumentPanel = new ArgumentPanel;
 					addElement(argumentPanel);// try moving addElements to one place so that to optimize code
-					argumentPanel.userEntered = false;
+					argumentPanel.userEntered = true;
 				}
 				nodes_map[xml.attribute("ID")] = argumentPanel;
 				argumentPanel.ID = xml.@ID;
