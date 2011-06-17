@@ -284,7 +284,11 @@
 			//It's not legal to change what node the connection is targeting.
 			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 			//print "<BR>Update query: $uquery";
-			mysql_query($uquery, $linkID);
+			$success=mysql_query($uquery, $linkID);
+			if(!$success){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Unable to update the CONNECTION. Query was: $uquery");
+			}
 			$connection->addAttribute("ID", $id);
 		}
 		//Get the source nodes
