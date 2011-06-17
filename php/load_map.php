@@ -52,6 +52,8 @@
 				$node->addAttribute("Author", $row['user_id']);
 				$node->addAttribute("x", $row['x_coord']);
 				$node->addAttribute("y", $row['y_coord']);
+				$node->addAttribute("typed", $row['typed']);
+				$node->addAttribute("positive", $row['is_positive']);				
 				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
