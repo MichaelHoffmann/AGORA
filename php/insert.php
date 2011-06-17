@@ -146,9 +146,13 @@
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
+			$typed = $row["typed"];
+			$positivity = $row["is_positive"];
+			
 			//print "<BR>UID out of the database: $dbUID";
 			if($userID == $dbUID){
-				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
+				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y, typed=$typed, is_positive=$positivity
+							WHERE node_id=$nodeID";
 				$success=mysql_query($uquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("error");
@@ -165,8 +169,8 @@
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);		
-			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
-										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
+			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord, typed, is_positive) VALUES
+										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y, $typed, $positivity)";
 			$success=mysql_query($iquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
