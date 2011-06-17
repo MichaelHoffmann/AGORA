@@ -82,7 +82,11 @@
 			//update should ALWAYS have a real textbox ID.
 			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
 			//print "<BR>Update query is: $uquery";
-			mysql_query($uquery, $linkID);
+			$success = mysql_query($uquery, $linkID);
+			if(!$success){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Unable to update the NODETEXT link. Query was: $uquery");
+			}
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);
