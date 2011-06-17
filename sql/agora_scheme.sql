@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   x_coord INT NULL,
   y_coord INT NULL,
   typed TINYINT(1) NOT NULL DEFAULT 0,
-  positive TINYINT(1) NOT NULL DEFAULT 1,
+  is_positive TINYINT(1) NOT NULL DEFAULT 1,
   is_deleted TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (node_id),
   INDEX user_id (user_id ASC),
