@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS agora.node_types (
   type VARCHAR(30) NOT NULL,
   PRIMARY KEY (nodetype_id));
 
-INSERT INTO node_types (type) VALUES ("Standard"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment");
--- A standard node is a claim/reason.
+INSERT INTO node_types (type) VALUES ("Particular"), ("Universal"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment");
+-- All inferences are universal statements, but not all universal statements are inferences. As such, these are being separated.
 
 -- -------------------------------------------------------
 -- Table agora.nodes
@@ -66,7 +66,9 @@ CREATE TABLE IF NOT EXISTS agora.nodes (
   modified_date DATETIME NOT NULL,
   x_coord INT NULL,
   y_coord INT NULL,
-  is_deleted TINYINT(1)  NULL DEFAULT 0,
+  typed TINYINT(1) NOT NULL DEFAULT 0,
+  positive TINYINT(1) NOT NULL DEFAULT 1,
+  is_deleted TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (node_id),
   INDEX user_id (user_id ASC),
   INDEX map_id (map_id ASC),
