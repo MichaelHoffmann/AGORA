@@ -21,27 +21,18 @@ This stage is where the user starts developing with just the claim
 		<![CDATA[
 			import classes.ALayoutManager;
 			import classes.ArgumentPanel;
-			
 			import flash.display.*;
-			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.core.UIComponent;
-			
 			import spark.primitives.Graphic;
-			//public var drawUtility:UIComponent;
+			
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
 			
-			public function setWidth(event: Event):void
-			{
-				
-			}
-			
 			public function initApp():void
 			{
-				
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;
 				var argumentPanel:ArgumentPanel = new ArgumentPanel();

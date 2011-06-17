@@ -21,8 +21,9 @@ package logic
 	public var inference:Inference;
 	//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
 	//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
-	public var dbName:String;
+	//public var dbName:String;
 	public var _langTypes:Array;
+	public var dbLangTypeNames:Array;
 	public var multipleReasons:Boolean;
 	public var _expLangTypes:Array;
 	public static var MOD_PON:String = "Modus Ponens";
@@ -33,6 +34,37 @@ package logic
 	public static var CONST_DILEM:String = "Constructive Dilemma";
 	public static var EXP_AND:String = "and";
 	public static var EXP_OR:String = "or";
+	public var _dbType:String;
+	
+	public function get dbType():String
+	{
+		for(var i:int=0; i<_langTypes.length; i++)
+		{
+			if(inference.myschemeSel.selectedType == _langTypes[i])
+			{
+				return _dbType+dbLangTypeNames[i];
+			}
+		}
+		return "Unset";
+	}
+	
+	public function getOption(dbString:String):String
+	{
+		return "";
+	}
+	
+	public function getLanguageType(dbString:String):String
+	{
+		for(var i:int=0;i<dbLangTypeNames.length;i++)
+		{
+			if(dbString.indexOf(dbLangTypeNames[i]) >= 0)
+			{
+				return _langTypes[i];
+			}
+
+		}
+		return "";
+	}
 	
 	public function get isLanguageExp():Boolean
 	{
@@ -47,7 +79,7 @@ package logic
 	
 	public function ParentArg()
 	{
-		
+		_dbType = "Unset";	
 	}
 	
 	public function deleteLinks():void

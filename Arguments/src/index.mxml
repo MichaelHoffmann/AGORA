@@ -40,11 +40,13 @@
 	<fx:Script>
 		<![CDATA[
 			import classes.AgoraMap;
+			import classes.ArgumentPanel;
 			import classes.UserData;
 			
 			import components.LAMWorld;
 			import components.LoginWindow;
 			import components.Map;
+			import components.MapName;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
@@ -53,9 +55,14 @@
 			
 			public var maps_map:Dictionary;
 			
+			public var presetMapName:String;
+			
 			
 			public function createmap():void
 			{
+				var mapNameDialog:MapName = new MapName;
+				PopUpManager.addPopUp(mapNameDialog,this,true);
+				PopUpManager.centerPopUp(mapNameDialog);
 				var lamWorld:LAMWorld = new LAMWorld;
 				agoraMenu.visible = false;
 				addElement(lamWorld);
@@ -88,16 +95,19 @@
 			
 			protected function drawMap(event:Event):void
 			{
+				trace("In draw map");
 				agoraMenu.visible = false;
 				var xml:XML = XML(event.target.data);
 				var map:Map = new Map;
 				addElement(map);
+				//trace(xml.toXMLString());
+				ArgumentPanel.parentMap = map.agoraMap;
 				map.agoraMap.load(xml);
-				
 			}
 			
-			protected function loadMap(event:MouseEvent):void{
-				var button:Button = Button(event.target);
+			public function displayMap(button:Button):void
+			{
+				//var button:Button = Button(event.target);
 				var mapId:int = int(button.name);
 				var request:URLRequest = new URLRequest;
 				request.url="http://agora.gatech.edu/dev/load_map.php";
@@ -108,6 +118,22 @@
 				loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
 				loader.load(request);
 			}
+			
+			
+			protected function loadMap(event:MouseEvent):void{
+				if(!UserData.isValid())
+				{
+					var loginWindow:LoginWindow = new LoginWindow;
+					PopUpManager.addPopUp(loginWindow,this,true);
+					PopUpManager.centerPopUp(loginWindow);
+					loginWindow.addEventListener("verification", function ( e:Event):void{ displayMap(Button(event.target)) });
+				}
+				else
+				{
+					displayMap(Button(event.target));
+				}
+				
+			}
 
 			
 			public function displayMaps(event: Event):void
@@ -116,9 +142,8 @@
 				var maps:XMLList = xmlData.map;
 				for each (var map:XML in maps)
 				{
-						//trace(map.toXMLString());
 						var mapObject:Object = new Object;
-						mapObject.mapId = int(map.attribute("id"));
+						mapObject.mapId = int(map.attribute("ID"));
 						mapObject.title = map.attribute("title");
 						var mapButton:Button = new Button;
 						mapButton.width = 170;

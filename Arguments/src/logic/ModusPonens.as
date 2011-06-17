@@ -13,9 +13,23 @@ package logic
 		public function ModusPonens()
 		{
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
+			dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			_expLangTypes = ["If-then","Whenever","Provided that"];	
 			myname = MOD_PON;
-			dbName = "MPtherefore";			
+			_dbType = "MP";
+		}
+		
+		override public function getLanguageType(dbString:String):String
+		{
+			for(var i:int=0;i<dbLangTypeNames.length;i++)
+			{
+				if(dbString.indexOf(dbLangTypeNames[i]) >= 0)
+				{
+					return _langTypes[i];
+				}
+					
+			}
+			return "";
 		}
 		
 		override public function createLinks():void

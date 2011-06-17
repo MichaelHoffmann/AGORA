@@ -10,7 +10,7 @@
 		<s:HGroup id="topPanel">
 			<s:Button id="gotoMenuBtn" label="Save and Exit">
 			</s:Button>
-			<s:Button id="discardChangesBtn" label="Home">
+			<s:Button id="discardChangesBtn" label="Home" visible="false">
 			</s:Button>
 		</s:HGroup>
 		<mx:Canvas id="agora" width="140" height="650">
@@ -31,7 +31,9 @@
 		<![CDATA[
 			import classes.ALayoutManager;
 			import classes.ArgumentPanel;
+			import classes.ClaimAddedEvent;
 			import classes.GridPanel;
+			import classes.UserData;
 			
 			import flash.display.*;
 			
@@ -39,6 +41,8 @@
 			import mx.controls.Alert;
 			import mx.controls.Label;
 			import mx.controls.Text;
+			import mx.core.Application;
+			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			
@@ -49,12 +53,18 @@
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
 			
-			
-			public function discardChanges(event:Event):void
+			public function hideMap():void
 			{
 				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
 				canvas.visible = true;
 				Group(this.parent).removeElement(this);
+				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
+				FlexGlobals.topLevelApplication.loadMapList();
+			}
+			
+			public function discardChanges(event:Event):void
+			{
+				hideMap();
 				
 			}
 			
@@ -64,8 +74,19 @@
 			
 			public function saveMap(event:MouseEvent):void
 			{
-				var xml:XML = new XML;
-				agoraMap.getMapXml();
+				var xml:XML;
+				xml = agoraMap.getMapXml();
+				var urlRequestMap:URLRequest = new URLRequest;
+				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
+				urlRequestMap.data = urlRequestVarsMap;
+				urlRequestMap.method = URLRequestMethod.GET;
+				var urlLoaderMap:URLLoader = new URLLoader;
+				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
+					var retXMLMap:XML =  XML(eventMap.target.data);
+				});
+				urlLoaderMap.load(urlRequestMap);
+				hideMap();
 			}
 			
 			public function updateSize(event:Event):void
@@ -74,39 +95,70 @@
 				agora.width = this.stage.stageWidth;
 			}
 			
-			
-			
 			public function addEmptyArgument():void
 			{
-				var argumentPanel:ArgumentPanel=addPanel();
-				argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
+				addPanelToMap();
+				this.addEventListener(ClaimAddedEvent.CLAIM_ADDED,function (event:ClaimAddedEvent):void{
+					var argumentPanel:ArgumentPanel = event.argumentPanel;
 					argumentPanel.addSupportingArgument();
-					argumentPanel.beginByArgument();
+					argumentPanel.addEventListener(ArgumentPanel.ARGUMENT_CONSTRUCTED,function (event:Event):void{
+						argumentPanel.beginByArgument();
+					});
 				});
 			}
 			
-			public function addPanel():ArgumentPanel
+			public function addPanelToMap():void
 			{
-				var argumentPanel:ArgumentPanel = new ArgumentPanel();
-				argumentPanel.gridX = 2;
-				argumentPanel.gridY = 3;
-				argumentPanel.aid = 1;
-				GridPanel.count = 1;
-				agoraMap.addChild(argumentPanel);
-				agoraMap.layoutManager.registerPanel(argumentPanel);
-				return argumentPanel;				
+				//map is given an id
+				var xmlMap:XML = new XML("<map id=\"0\" title=\"" + FlexGlobals.topLevelApplication.presetMapName + "\" ></map>");
+				var urlRequestMap:URLRequest = new URLRequest;
+				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xmlMap.toXMLString());
+				urlRequestMap.data = urlRequestVarsMap;
+				urlRequestMap.method = URLRequestMethod.GET;
+				var urlLoaderMap:URLLoader = new URLLoader;
+				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
+					var retXMLMap:XML =  XML(eventMap.target.data);
+					agoraMap.ID = retXMLMap.@ID;
+					
+					var urlRequest:URLRequest = new URLRequest;
+					urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
+					var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+agoraMap.getAP());
+					urlRequest.data = urlRequestVars;
+					urlRequest.method = URLRequestMethod.GET;
+					var urlLoader:URLLoader = new URLLoader;
+					urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
+						var xml:XML = XML(event.target.data);
+						var argumentPanel:ArgumentPanel = new ArgumentPanel;
+						argumentPanel._initXML = xml;
+						argumentPanel.gridX = 2;
+						argumentPanel.gridY = 3;
+						argumentPanel.firstClaim = true;
+						agoraMap.addChild(argumentPanel);
+						agoraMap.layoutManager.registerPanel(argumentPanel);
+						argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
+							dispatchEvent(new ClaimAddedEvent(ClaimAddedEvent.CLAIM_ADDED,argumentPanel,true,false));
+						});
+					});
+					urlLoader.load(urlRequest);
+				});
+				urlLoaderMap.load(urlRequestMap);
 			}
 			
-			public function addClaim():void
+			
+			public function addClaim():void 
 			{
-				canvas.visible = true;
-				var argumentPanel:ArgumentPanel = addPanel();
-				argumentPanel.firstClaim = true;
-				argumentPanel.addEventListener( FlexEvent.CREATION_COMPLETE, function(event:Event):void{argumentPanel.displayTxt.text = "[Enter your claim]";});
-				argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
-				canvas.setStyle("backgroundColor",uint("0x99FF99"));
-				canvas.x = 25 * 3 + 250;
-				canvas.y = 25 * 2;
+				addPanelToMap();
+				this.addEventListener(ClaimAddedEvent.CLAIM_ADDED,function (event:ClaimAddedEvent):void{
+					canvas.visible = true;
+					var argumentPanel:ArgumentPanel = event.argumentPanel;
+					argumentPanel.displayTxt.text  = "[Enter your claim]";
+					argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
+					canvas.setStyle("backgroundColor",uint("0x99FF99"));
+					canvas.x = 25 * 3 + 250;
+					canvas.y = 25 * 2;
+					
+				});
 			}
 			
 			public function initApp():void
