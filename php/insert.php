@@ -233,7 +233,7 @@
 			$sourcenode->addAttribute("ID", $outID);
 		}else{
 			$fail=$output->addChild("error");
-				$fail->addAttribute("text", "The source node is not being added properly. Query was: $iquery");
+			$fail->addAttribute("text", "The source node is not being added properly. Query was: $iquery");
 		}
 	}
 	
