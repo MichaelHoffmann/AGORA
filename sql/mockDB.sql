@@ -10,7 +10,7 @@ INSERT INTO maps (user_id, title, description, lang, created_date, modified_date
 	(1, "Babelfish", "Douglas Adams's proof by contradiction of the nonexistence of god.", "EN-US", NOW(), NOW());
 
 INSERT INTO nodes (user_id, map_id, nodetype_id, x_coord, y_coord, created_date, modified_date) VALUES 
-	(1,1,1,1,1,NOW(), NOW()), (1,1,1,20,1,NOW(), NOW()), (1,1,2,15,12,NOW(), NOW()), (1,1,1,25,12,NOW(), NOW()), (1,1,2,20,24,NOW(), NOW());
+	(1,1,1,1,1,NOW(), NOW()), (1,1,1,20,1,NOW(), NOW()), (1,1,3,15,12,NOW(), NOW()), (1,1,1,25,12,NOW(), NOW()), (1,1,3,20,24,NOW(), NOW());
 
 INSERT INTO textboxes (text, user_id, map_id, created_date, modified_date) VALUES 
 					("FOO", 1, 1, NOW(), NOW()), ("BAR", 1, 1, NOW(), NOW()), ("BAZ", 1, 1, NOW(), NOW());
