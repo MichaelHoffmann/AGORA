@@ -152,7 +152,7 @@ package classes
 	
 		//other instance variables
 		public var connectingStr:String;
-		public var _initXML:XML;
+		public var _initXML:XML = null;
 		public var ID:int;
 		public var TID:int;
 		//IDs for nodetext
@@ -906,8 +906,6 @@ package classes
 			//By default there are only three textboxes
 			if(_initXML == null)
 				return;
-			trace('This is to be looked into');
-			trace(_initXML);
 			input1.ID = _initXML.textbox[0].@ID;
 			inputs[0].ID = _initXML.textbox[1].@ID;
 			inputs[1].ID = _initXML.textbox[2].@ID;
