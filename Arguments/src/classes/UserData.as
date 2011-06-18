@@ -82,8 +82,6 @@ package classes
 			urlLoader.addEventListener(Event.COMPLETE,function(event:Event):void{verifyUser(event,object)});
 			urlLoader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{errorHandler(event,object)});
 			urlLoader.load(request);
-		}
-		
-		
+		}	
 	}
 }
