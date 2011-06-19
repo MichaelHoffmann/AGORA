@@ -152,7 +152,7 @@ package classes
 	
 		//other instance variables
 		public var connectingStr:String;
-		public var _initXML:XML;
+		public var _initXML:XML = null;
 		public var ID:int;
 		public var TID:int;
 		//IDs for nodetext
@@ -278,8 +278,6 @@ package classes
 		
 		public function makeEditable():void
 		{
-			trace('In editable');
-			trace(this);
 			if(userEntered == false)
 			{
 				userEntered = true;
@@ -299,9 +297,6 @@ package classes
 		
 		public function makeUnEditable():void
 		{
-			trace("in Make uneditable");
-			trace(multiStatement);
-			trace(this);
 			if(multiStatement)
 			{
 				//input1 is just used to calculate height
@@ -326,7 +321,6 @@ package classes
 			{
 				input1.visible = false;
 			}
-			trace(doneHG.visible);
 		}
 		
 		public function get stmt():String
@@ -437,7 +431,6 @@ package classes
 		
 		public function onArgumentAddition(event:Event):void
 		{
-			trace('on argument addition');
 			parentMap.option.visible = true;
 			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
 			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
@@ -457,7 +450,6 @@ package classes
 		public function configureReason(event:FlexEvent):void
 		{
 			var reason:ArgumentPanel = ArgumentPanel(event.target);
-			trace('In configure reason');
 			reason.makeUnEditable();
 		}
 		
@@ -914,8 +906,6 @@ package classes
 			//By default there are only three textboxes
 			if(_initXML == null)
 				return;
-			trace("in Set ID");
-			trace(_initXML.toXMLString());
 			input1.ID = _initXML.textbox[0].@ID;
 			inputs[0].ID = _initXML.textbox[1].@ID;
 			inputs[1].ID = _initXML.textbox[2].@ID;

@@ -1,6 +1,9 @@
 package classes
 {
+	import com.adobe.crypto.MD5;
+	
 	import components.LoginWindow;
+	import components.RegisterPanel;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -73,14 +76,12 @@ package classes
 			var urlLoader:URLLoader = new URLLoader;
 			var request:URLRequest = new URLRequest;
 			request.url = "http://agora.gatech.edu/dev/login.php";
-			request.data = new URLVariables("username="+userName+"&pass_hash="+passHash);
-			passHashStr = passHash;
+			request.data = new URLVariables("username="+userName+"&pass_hash="+ com.adobe.crypto.MD5.hash(passHash + RegisterPanel.salt));
+			passHashStr = MD5.hash(passHash + RegisterPanel.salt);
 			request.method = URLRequestMethod.GET;
 			urlLoader.addEventListener(Event.COMPLETE,function(event:Event):void{verifyUser(event,object)});
 			urlLoader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{errorHandler(event,object)});
 			urlLoader.load(request);
-		}
-		
-		
+		}	
 	}
 }
