@@ -40,7 +40,8 @@
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+		$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
+			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -49,7 +50,7 @@
 				$node = $xml->addChild("node");
 				$node->addAttribute("ID", $node_id);
 				$node->addAttribute("Type", $row['type']);
-				$node->addAttribute("Author", $row['user_id']);
+				$node->addAttribute("Author", $row['username']);
 				$node->addAttribute("x", $row['x_coord']);
 				$node->addAttribute("y", $row['y_coord']);
 				$node->addAttribute("typed", $row['typed']);
