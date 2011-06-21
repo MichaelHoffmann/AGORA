@@ -100,7 +100,12 @@ List of variables for insertion:
 			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES
 										($userID, $mapID, \"$text\", NOW(), NOW())";
 			//print "<BR>Query: $iquery";
-			mysql_query($iquery, $linkID);
+			$success = mysql_query($iquery, $linkID);
+			if(!$success){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "The textbox insert failed: $iquery");
+				return false;
+			}
 			$newID = getLastInsert($linkID);
 			$textbox=$output->addChild("textbox");
 			$textbox->addAttribute("TID", $tid);
@@ -108,6 +113,7 @@ List of variables for insertion:
 			
 			$tbTIDarray[$tid]=$newID; // Add the TID->ID mapping to the global lookup array
 		}
+		return true;
 	}
 
 	/**
@@ -133,6 +139,7 @@ List of variables for insertion:
 			if(!$success){
 				$fail=$output->addChild("error");
 				$fail->addAttribute("text", "Unable to update the NODETEXT link. Query was: $uquery");
+				return false;
 			}
 		}else{
 			//insert
@@ -147,6 +154,7 @@ List of variables for insertion:
 				if(!$success){
 					$fail=$output->addChild("queryout");
 					$fail->addAttribute("text5", "Unable to insert the NODETEXT. Query was: $iquery");
+					return false;
 				}
 			//insert with textbox TID
 			}else{
@@ -160,6 +168,7 @@ List of variables for insertion:
 				if(!$success){
 					$fail=$output->addChild("error");
 					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
+					return false;
 				}
 			}
 			//shared actions for ntTID logic
@@ -168,6 +177,7 @@ List of variables for insertion:
 			$ntOut->addAttribute("TID", $tid);
 			$ntOut->addAttribute("ID", $outID);
 		}
+		return true;
 	}
 	/**
 	*	Takes a node from XML and puts it in the database.
@@ -208,6 +218,7 @@ List of variables for insertion:
 				if(!$success){
 					$fail=$output->addChild("error");
 					$fail->addAttribute("text", "Unable to update the NODE. Query was: $uquery");
+					return false;
 				}else{
 					$nodeOut=$output->addChild("node");
 					$nodeOut->addAttribute("ID", $nodeID);
@@ -249,6 +260,7 @@ List of variables for insertion:
 			//if someone can't update a node they shouldn't be able to change its nodetext information.
 			//(Also, they should fail the textbox owner check as well.)
 		}
+		return true;
 	}
 	
 	/**
@@ -281,7 +293,9 @@ List of variables for insertion:
 		}else{
 			$fail=$output->addChild("error");
 			$fail->addAttribute("text", "The source node is not being added properly. Query was: $iquery");
+			return false;
 		}
+		return true;
 	}
 	
 	/**
@@ -320,6 +334,7 @@ List of variables for insertion:
 			if(!$success){
 				$fail=$output->addChild("error");
 				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+				return false;
 			}else{
 				$id = getLastInsert($linkID);
 				$connection->addAttribute("TID", $tid);
@@ -334,6 +349,7 @@ List of variables for insertion:
 			if(!$success){
 				$fail=$output->addChild("error");
 				$fail->addAttribute("text", "Unable to update the CONNECTION. Query was: $uquery");
+				return false;
 			}
 			$connection->addAttribute("ID", $id);
 		}
@@ -343,6 +359,7 @@ List of variables for insertion:
 		{
 			sourceNodeToDB($child, $id, $linkID, $connection);
 		}
+		return true;
 	}
 	
 	/**
