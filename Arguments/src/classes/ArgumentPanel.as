@@ -524,6 +524,7 @@ package classes
 		protected function createArgument(event:Event):void
 		{
 			var responseXML:XML = XML(event.target.data);
+			trace(responseXML.toXMLString());
 			/*A typical response
 			<map ID="20">
 			<textbox TID="7" ID="50"/>
@@ -906,6 +907,7 @@ package classes
 			//By default there are only three textboxes
 			if(_initXML == null)
 				return;
+			try{
 			input1.ID = _initXML.textbox[0].@ID;
 			inputs[0].ID = _initXML.textbox[1].@ID;
 			inputs[1].ID = _initXML.textbox[2].@ID;
@@ -914,6 +916,12 @@ package classes
 			input1NTID = _initXML.node.nodetext[0].@ID;
 			inputsNTID.push(_initXML.node.nodetext[1].@ID);
 			inputsNTID.push(_initXML.node.nodetext[2].@ID);
+			}
+			catch(error:Error)
+			{
+				trace(error);
+				trace(_initXML.toXMLString());
+			}
 		}
 	}
 	
