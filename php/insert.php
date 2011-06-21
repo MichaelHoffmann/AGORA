@@ -1,5 +1,52 @@
 <?php
 
+/**
+List of variables for insertion:
+	* HTTP Query variables:
+	xml: The XML of map data to insert
+	uid: User ID of the user inserting the data
+	pass_hash: the hashed password of the user inserting the data
+	
+	* XML data:
+		MAP level:
+			id or ID: the ID of the map to be modified. 0 or nonexistent creates a new map and ignores everything else.
+			title: Title of the map (for new maps only)
+			desc: Description of the map (for new maps only)
+			lang: Language of the map (for new maps only)
+		
+		IN-MAP level:
+			textbox: insert or modify a textbox
+				text: The text the user typed into the box (or default text)
+				ID: ID of an existing textbox
+				TID: temporary (client) ID of a new textbox, will get an ID in the db and returned to the client
+			node: insert or modify a node
+				ID: ID of an existing node
+				TID: temporary (client) ID of a new node, will get an ID in the db and returned to the client
+				Type: Type of a node. See nodetypes table in database for a listing. Use the name.
+				x: x-coordinate of a node on the map
+				y: y-coordinate of a node on the map
+				typed: Whether the node has been typed or still contains default text
+				is_positive: Whether the argument is positive or not (logically speaking).
+				
+				* nodetext: link between a node and textbox. Due to hierarchy, it only needs one variable.
+					textboxID: ID of the textbox.
+					(NOTE: Position comes from ordering of the nodetexts. As a result, if ANY nodetext relationship is updated, 
+							ALL nodetexts must be included- even without change.)
+			connection: insert or modify a connection (arguments, objections, etc.)
+				ID: ID of an existing connection
+				TID: temporary (client) ID of a new connection, will get an ID in the db and returned to the client
+				targetnodeID: ID of the node the argument is supporting. This is the SINGLE node that has an arrow pointing to it.
+				targetnodeTID: Temporary ID of the same (for when a new node and connection go in simultaneously)
+				x: x-coordinate of the argument's position on the map
+				y: y-coordinate of the argument's position on the map
+
+				* sourcenode: link between supporting nodes and the argument. There can be as many of these as needed.
+					TID: Temporary (client) ID. No real ID is ever allowed, since modifying a relationship is nonsensical.
+							Delete the old one and add a new one instead, or modify the text in the node.
+					nodeID: ID of the node, if you're connecting an existing node to the argument (two-step process)
+					nodeTID: Temporary ID of the node, for when you're doing it all in one step.
+
+*/
 	require 'checklogin.php';
 	require 'establish_link.php';
 	$tbTIDarray;
@@ -178,7 +225,7 @@
 			$success=mysql_query($iquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+				$fail->addAttribute("text", "Unable to add the NODE. Query was: $iquery");
 			}else{
 				$nodeID = getLastInsert($linkID);
 				$nodeOut=$output->addChild("node");
@@ -247,6 +294,7 @@
 		$connection = $output->addChild("connection");
 		$attr = $conn->attributes();
 		$id = mysql_real_escape_string($attr["ID"]);
+		$tid = mysql_real_escape_string($attr["TID"]);
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
@@ -257,8 +305,6 @@
 		$resultID = mysql_query($query1, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row["type_id"];
-		
-		$tid = mysql_real_escape_string($attr["TID"]);
 		
 		if(!$nodeID){
 			$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
