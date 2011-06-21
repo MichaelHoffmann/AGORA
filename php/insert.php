@@ -183,8 +183,8 @@ List of variables for insertion:
 		$type = mysql_real_escape_string($attr["Type"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
-		$typed = mysql_real_escape_string($row["typed"]);
-		$positivity = mysql_real_escape_string($row["is_positive"]);
+		$typed = mysql_real_escape_string($attr["typed"]);
+		$positivity = mysql_real_escape_string($attr["is_positive"]);
 		$query = "SELECT * FROM node_types WHERE type=\"$type\"";
 		//print "<BR>Query is: $query";
 		$resultID = mysql_query($query, $linkID);
