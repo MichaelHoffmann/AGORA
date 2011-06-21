@@ -226,12 +226,12 @@ List of variables for insertion:
 			if(!$success){
 				$fail=$output->addChild("error");
 				$fail->addAttribute("text", "Unable to add the NODE. Query was: $iquery");
+				return false;
 			}else{
 				$nodeID = getLastInsert($linkID);
 				$nodeOut=$output->addChild("node");
 				$nodeOut->addAttribute("TID", $tid);
 				$nodeOut->addAttribute("ID", $nodeID);
-				
 				$nodeTIDarray[$tid]=$nodeID; // Add the TID->ID mapping to the global lookup array
 			}
 		}
@@ -361,13 +361,25 @@ List of variables for insertion:
 			switch($child->getName())
 			{
 				case "textbox":
-					textboxToDB($child, $mapID, $linkID, $userID, $output);
+					//print "textbox";
+					$success = textboxToDB($child, $mapID, $linkID, $userID, $output);
+					if(!$success){
+						return false;
+					}
 					break;
 				case "node":
-					nodeToDB($child, $mapID, $linkID, $userID, $output);
+					//print "node";
+					$success = nodeToDB($child, $mapID, $linkID, $userID, $output);
+					if(!$success){
+						return false;
+					}
 					break;
 				case "connection":
-					connectionToDB($child, $mapID, $linkID, $userID, $output);
+					//print "conn";
+					$success = connectionToDB($child, $mapID, $linkID, $userID, $output);
+					if(!$success){
+						return false;
+					}
 					break;
 			}
 		}		
@@ -382,16 +394,14 @@ List of variables for insertion:
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$output = new SimpleXMLElement($xmlstr);
-		
 		$linkID= establishLink();
 		mysql_select_db("agora", $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
 			$fail=$output->addChild("error");
 			$fail->addAttribute("text", "Incorrect Login!");
-			return;
+			return $output;
 		}
-	
 	
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
@@ -460,7 +470,8 @@ List of variables for insertion:
 			//print "<BR>Query committed!<BR>";
 		}else{
 			mysql_query("ROLLBACK");
-			//print "<BR>Query rolled back!<BR>";
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "The queries have been rolled back!");
 		}
 		return $output;
 		
