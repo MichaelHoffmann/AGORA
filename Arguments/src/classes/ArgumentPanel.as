@@ -796,7 +796,7 @@ package classes
 			displayTxt.height = input1.height;
 		}
 		
-		public function toggle(m:MouseEvent):void
+		public function toggleType():void
 		{
 			if(this.state==0) {
 				if(this.panelType!=INFERENCE)
@@ -815,6 +815,11 @@ package classes
 				stmtTypeLbl.text = "Universal Statement";
 				this.setStyle("cornerRadius",30);
 			} 
+		}
+		
+		public function toggle(m:MouseEvent):void
+		{
+			toggleType();	
 		}
 		
 		protected function deleteThis(event:MouseEvent):void
@@ -919,8 +924,7 @@ package classes
 			}
 			catch(error:Error)
 			{
-				trace(error);
-				trace(_initXML.toXMLString());
+				Alert.show(error.toString());
 			}
 		}
 	}

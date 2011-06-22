@@ -5,7 +5,7 @@ package classes
 	import components.HelpText;
 	import components.Option;
 	
-	import flash.display.Graphics;
+	import flash.display.Graphics; 
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.net.URLLoader;
@@ -82,7 +82,7 @@ package classes
 		
 		public function getAP():XML
 		{
-			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node TID="1" Type="Standard" x="2" y="3"  ><nodetext/><nodetext /><nodetext /></node></map>;
+			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node TID="1" Type="Standard" typed="0" is_positive="1"  x="2" y="3"  ><nodetext/><nodetext /><nodetext /></node></map>;
 			xml.@ID = ID;
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -104,7 +104,7 @@ package classes
 		
 		public function getConnection( claim:ArgumentPanel):XML
 		{
-			var xml:XML = <map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><node Type="Inference" x="0" y="0"></node><connection type="Unset" x="0" y="0" /></map>
+			var xml:XML = <map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" typed="0" is_positive="1" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><node Type="Inference" typed="0" is_positive="1" x="0" y="0"></node><connection type="Unset" x="0" y="0" /></map>
 			//setting the ID of the map
 			xml.@ID = ID;
 			//temporary IDs for the three new textboxes
@@ -146,7 +146,7 @@ package classes
 		
 		public function getAddReason(inference:Inference):XML
 		{
-			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><connection></connection></map>;
+			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" typed="0" is_positive="1" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><connection></connection></map>;
 			xml.@ID = ID;
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -257,12 +257,19 @@ package classes
 							inferencePanel = Inference(panel);
 							currXML.@ID = inferencePanel.ID;
 							currXML.@Type = "Inference";
+							currXML.@is_positive = 1;
 						}
 						else if(panel is ArgumentPanel)
 						{
 							argumentPanel = ArgumentPanel(panel);
 							currXML.@ID = argumentPanel.ID;
-							currXML.@Type = "Standard";	
+							if(argumentPanel.state == 0){
+								currXML.@Type="Universal";		
+							}
+							else{
+								currXML.@Type = "Particular";
+							}
+							
 							var nodeText:XML = <nodetext></nodetext>;
 							nodeText.@ID = argumentPanel.input1NTID;
 							nodeText.@textboxID = argumentPanel.input1.ID;
@@ -274,9 +281,18 @@ package classes
 								nodeText.@textboxID = argumentPanel.inputs[j].ID;
 								currXML = currXML.appendChild(nodeText);
 							}
+							if(argumentPanel.statementNegated){
+								currXML.@is_positive = 0;
+							}
+							else{
+								currXML.@is_positive = 1;
+							}
+						
 						}
+						currXML.@typed = 0;
 						currXML.@x = panel.gridX;
-						currXML.@y = panel.gridY; 
+						currXML.@y = panel.gridY;
+						trace(currXML.toXMLString());
 						xml = xml.appendChild(currXML);
 					}
 				}
@@ -301,6 +317,7 @@ package classes
 				trace(error);
 				return <map><error></error></map>;
 			}
+			//Alert.show(xml.toXMLString());
 			return xml;
 		}
 		
@@ -457,6 +474,16 @@ package classes
 			{
 				var aPanel:ArgumentPanel = nodes_map[node.@ID];
 				aPanel.ID = node.@ID;
+				aPanel.userIdLbl.text = "AU: " +  node.@Author;
+				if(node.@Type == "Universal" || aPanel is Inference){
+					aPanel.state = 1;
+					aPanel.toggleType();
+				}
+				else
+				{
+					aPanel.state = 0;
+					aPanel.toggleType();
+				}
 				var nodetextList:XMLList = node.nodetext;
 				var i:int = 0;
 				for each(var nodetext:XML in nodetextList)

@@ -94,6 +94,7 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
+					//Alert.show(retXMLMap.toXMLString());
 					Alert.show("Map saved");
 					hideMap();
 					
@@ -132,7 +133,7 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
-					Alert.show(retXMLMap.toXMLString());
+					//Alert.show(retXMLMap.toXMLString());
 					agoraMap.ID = retXMLMap.@ID;
 					
 					var urlRequest:URLRequest = new URLRequest;
