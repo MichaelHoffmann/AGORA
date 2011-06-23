@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="400">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="normal" />
+		<s:State name ="disabled" />
+		<s:State name="notLoggedIn" />
+		<s:State name="loggedIn" />
+	</s:states>
+	
+	<fx:Metadata>
+		[HostComponent("components.MyMapsPanel")]
+	</fx:Metadata>
+	
+	<s:BorderContainer color="0xaaaaaa"
+					   width="100%" height="100%">
+		
+		<s:Rect width="100%" height="30" 
+				top="0" x="0">
+			<s:fill>
+				<s:SolidColor color="0xffffff">
+				</s:SolidColor>
+			</s:fill>
+		</s:Rect>
+
+		<s:Rect width="100%" height="100%" 
+				top="60">
+			<s:fill>
+				<s:SolidColor color="0xffffff">
+				</s:SolidColor>
+			</s:fill>
+		</s:Rect>
+		
+		<s:Rect width="100%" height="60"
+			 	bottom="0">
+			<s:fill>
+				<s:SolidColor color="0xffffff">
+				</s:SolidColor>
+			</s:fill>
+		</s:Rect>
+	</s:BorderContainer>
+	
+	<s:Label id="titleDisplay" 
+			 paddingLeft="15" paddingRight="15" paddingTop="15"
+			 />
+	
+	<s:Scroller width="100%" top="30" height="300">
+		<s:Group id="contentGroup" bottom="30">
+			<s:Group id="mapsGroup" 
+					visible.notLoggedIn="false"
+					width="160">
+				<s:layout>
+					<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0"/>
+				</s:layout>	
+			</s:Group>
+			<s:Group id="labelGroup" visible.loggedIn="false" visible.notLoggedIn= "true">
+				<mx:Text id="userInfoTxt" text="Sign in to view your maps"   x="28" y="118" visible.loggedIn="false" visible.notLoggedIn= "true" >
+				</mx:Text>
+			</s:Group>
+		</s:Group>
+	</s:Scroller>
+	
+	<s:Group id="controlBarGroup" bottom="10" visible.loggedIn="true" visible.notLoggedIn="false">
+		<s:layout>
+			<s:HorizontalLayout paddingLeft="5" paddingRight="5"/>
+		</s:layout>
+		<s:Button label="Delete" click="hostComponent.deleteMaps(event)">
+		</s:Button>
+		<s:Button label="Delete All">
+		</s:Button>
+	</s:Group>
+</s:SparkSkin>

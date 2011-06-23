@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="components.MyMapsSkin">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[SkinState("disabled")]
+		[SkinState("normal")]
+		[SkinState("notLoggedIn")]
+		[SkinState("loggedIn")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import classes.UserData;
+			
+			import flash.net.URLLoader;
+			import flash.net.URLRequest;
+			import flash.net.URLRequestMethod;
+			import flash.net.URLVariables;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.Text;
+			
+			import spark.components.Group;
+			import spark.components.Label;
+			
+			//for future
+			[Bindable]
+			public var mapListXML:XML;
+			
+			[SkinPart(required="true")]
+			public var mapsGroup:Group;
+			
+			[SkinPart(required="true")]
+			public var labelGroup:Group;
+			
+			[SkinPart(required="true")]
+			public var userInfoTxt:Text;
+
+			
+			public function set skinState(value:Boolean):void{
+				invalidateSkinState();
+			}
+			
+			override protected function getCurrentSkinState():String{
+				if(UserData.isValid()){
+					
+					return "loggedIn";
+				}
+				else{
+					return "notLoggedIn";	
+				}
+			}
+			
+			override protected function commitProperties():void{
+				super.commitProperties();
+				trace(" In MyMapsPanel: commitProperties" + skin.currentState);
+				if( skin.currentState == "loggedIn")
+				{ 
+					titleDisplay.text = UserData.userNameStr + "'s" + " maps";
+					if(mapsGroup.numElements > 0){
+						mapsGroup.removeAllElements();
+					}	
+					var maps:XMLList = mapListXML.map;
+					
+					for each(var map:XML in maps)
+					{
+						var myMapName:MyMapName = new MyMapName;
+						myMapName.mapId = map.@ID;
+						myMapName.mapName = map.@title;
+						mapsGroup.addElement(myMapName);
+					}
+				}
+			}
+			
+			override protected function partAdded(partName:String, instance:Object):void{
+			}
+			
+			public function deleteMaps(event:MouseEvent):void{
+				for(var i:int=0; i < mapsGroup.numElements; i++)
+				{
+					var myMapName:MyMapName = MyMapName(mapsGroup.getElementAt(i));
+					trace(myMapName.mapId);
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+</s:Panel>

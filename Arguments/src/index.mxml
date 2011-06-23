@@ -22,8 +22,9 @@
 							
 					</s:Scroller>
 				</s:Panel>
-				<s:Panel id="myMaps" title="My Maps" width="200" minHeight="400">
-				</s:Panel>
+				
+				<components:MyMapsPanel id="myMaps" title="My Maps" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
+				
 				<s:Panel  id="projects" title="Projects" width="200" minHeight="400">	
 				</s:Panel>
 			</s:HGroup>
@@ -74,6 +75,7 @@
 				createmap();
 			}
 			
+			
 			public function createMap(event:MouseEvent):void
 			{
 				if(!UserData.isValid())
@@ -82,6 +84,7 @@
 					PopUpManager.addPopUp(loginWindow,this,true);
 					PopUpManager.centerPopUp(loginWindow);
 					loginWindow.addEventListener("verification",onVerification);
+					loginWindow.addEventListener("verification",function (event:Event):void{loadMyMapList();});
 				}
 				else{
 					createmap();
@@ -117,8 +120,26 @@
 				loader.addEventListener(Event.COMPLETE, drawMap);
 				loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
 				loader.load(request);
+				
 			}
 			
+			private function loadMyMapList():void
+			{
+				if(UserData.isValid())
+				{
+					var request:URLRequest = new URLRequest;
+					request.url="http://agora.gatech.edu/dev/my_maps.php";
+					request.method = URLRequestMethod.GET;
+					request.data = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr);
+					var loader:URLLoader = new URLLoader;
+					loader.addEventListener(Event.COMPLETE, function(event:Event):void{
+						myMaps.mapListXML = XML(event.target.data);
+						myMaps.skinState = true;
+					});
+					loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
+					loader.load(request);
+				}
+			}
 			
 			protected function loadMap(event:MouseEvent):void{
 				if(!UserData.isValid())
@@ -126,7 +147,8 @@
 					var loginWindow:LoginWindow = new LoginWindow;
 					PopUpManager.addPopUp(loginWindow,this,true);
 					PopUpManager.centerPopUp(loginWindow);
-					loginWindow.addEventListener("verification", function ( e:Event):void{ displayMap(Button(event.target)) });
+					loginWindow.addEventListener("verification", function ( e:Event):void{ displayMap(Button(event.target)); });
+					//loginWindow.addEventListener("verification", loadMyMapList);
 				}
 				else
 				{
@@ -178,7 +200,11 @@
 				loader.load(request);
 				
 				//registerEventHandler for createMap
-				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);	
+				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
+				//myMaps.invalidateSkinState();
+				//myMaps.invalidateProperties();
+				
+				
 			}
 			
 			public function loadProjectList():void
