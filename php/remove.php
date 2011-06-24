@@ -79,7 +79,6 @@
 		if($mapID && !$mapClause){
 			$mapClause=$mapID;
 		}
-		$mapClause = mysql_real_escape_string("$mapID");
 		$delMap = mysql_real_escape_string($xml['remove']);
 		//Check to see if the map already exists
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
