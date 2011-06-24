@@ -17,7 +17,7 @@
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$xml = new SimpleXMLElement($xmlstr);
 		if(mysql_num_rows($resultID)==0){
-			$fail=$output->addChild("error");
+			$fail=$xml->addChild("error");
 			$fail->addAttribute("text", "The map either does not exist or has been deleted. Query was: $uquery");
 			return false;
 		}

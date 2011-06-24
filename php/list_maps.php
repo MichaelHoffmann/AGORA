@@ -11,11 +11,11 @@
 	$xmlstr = "<?xml version='1.0' ?>\n<list></list>";
 	$xml = new SimpleXMLElement($xmlstr);
 	if(mysql_num_rows($resultID)==0){
-		$fail=$output->addChild("error");
+		$fail=$xml->addChild("error");
 		$fail->addAttribute("text", "There are no maps in the list! Query was: $uquery");
 		return false;
 	}
-	
+
 	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 		$row = mysql_fetch_assoc($resultID);
 		if($row['is_deleted']){
