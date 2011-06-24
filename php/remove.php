@@ -93,7 +93,12 @@
 		//Dig the Map ID out of the XML
 		$xml = new SimpleXMLElement($xmlin);
 		$mapID = $xml['ID'];
-		$mapClause = mysql_real_escape_string("$mapID");	
+		$mapClause = mysql_real_escape_string("$mapID");
+		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:
+		$mapID = $xml['id'];
+		if($mapID && !$mapClause){
+			$mapClause=$mapID;
+		}
 		$delMap = mysql_real_escape_string($xml['remove']);
 		//Check to see if the map already exists
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
