@@ -21,7 +21,7 @@
 		return;
 	}
 	
-	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.user_id=$userID";
+	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.user_id=$userID AND maps.is_deleted=0";
 	$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 
 
