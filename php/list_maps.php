@@ -7,7 +7,11 @@
 	mysql_select_db("agora", $linkID) or die ("Could not find database");
 	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0";
 	$resultID = mysql_query($query, $linkID) or die("Data not found."); 
-
+	if(mysql_num_rows($resultID)==0){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "There are no maps in the list! Query was: $uquery");
+		return false;
+	}
 	header("Content-type: text/xml");
 	$xmlstr = "<?xml version='1.0' ?>\n<list></list>";
 	$xml = new SimpleXMLElement($xmlstr);
