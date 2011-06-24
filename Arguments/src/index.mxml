@@ -123,7 +123,7 @@
 				
 			}
 			
-			private function loadMyMapList():void
+			public function loadMyMapList():void
 			{
 				if(UserData.isValid())
 				{
@@ -164,6 +164,13 @@
 				var maps:XMLList = xmlData.map;
 				for each (var map:XML in maps)
 				{
+					    try{
+							if(map.@is_deleted == "1"){
+								continue;
+							}
+						}catch(error:Error){
+							trace("is_deleted not available yet");
+						}
 						var mapObject:Object = new Object;
 						mapObject.mapId = int(map.attribute("ID"));
 						mapObject.title = map.attribute("title");

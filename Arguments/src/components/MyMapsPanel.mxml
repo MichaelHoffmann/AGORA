@@ -16,7 +16,7 @@
 	<fx:Script>
 		<![CDATA[
 			import classes.UserData;
-			
+			import mx.managers.CursorManager;
 			import flash.net.URLLoader;
 			import flash.net.URLRequest;
 			import flash.net.URLRequestMethod;
@@ -25,6 +25,7 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.controls.Text;
+			import mx.core.FlexGlobals;
 			
 			import spark.components.Group;
 			import spark.components.Label;
@@ -70,6 +71,14 @@
 					
 					for each(var map:XML in maps)
 					{
+						try{
+							if(map.@is_deleted == "1")
+							{
+								continue;
+							}
+						}catch(error:Error){
+							trace("is_deleted not available yet...");
+						}
 						var myMapName:MyMapName = new MyMapName;
 						myMapName.mapId = map.@ID;
 						myMapName.mapName = map.@title;
@@ -82,11 +91,53 @@
 			}
 			
 			public function deleteMaps(event:MouseEvent):void{
+				
+				
+				CursorManager.setBusyCursor();
+				
+				var mapsMarked:Vector.<MyMapName> = new Vector.<MyMapName>(0,false);
 				for(var i:int=0; i < mapsGroup.numElements; i++)
 				{
 					var myMapName:MyMapName = MyMapName(mapsGroup.getElementAt(i));
-					trace(myMapName.mapId);
+					if(myMapName.thisMap.selected){
+						mapsMarked.push(myMapName);
+					}
 				}
+				
+				if(mapsMarked.length > 0){
+					var map:MyMapName = mapsMarked.pop();
+					deleteMap(map,mapsMarked);
+				}
+				else{
+					Alert.show("Please use the checkbox to select maps for deletion");
+				}
+				
+			}
+			
+			private function deleteMap(map:MyMapName, mapsMarked:Vector.<MyMapName>):void{
+				var xml:XML = new XML("<map id=\""+ map.mapId +"\" remove=\"1\" />");
+				var urlRequest:URLRequest = new URLRequest;
+				urlRequest.url = "http://agora.gatech.edu/dev/remove.php";
+				var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml.toXMLString());
+				urlRequest.data = urlRequestVars;
+				urlRequest.method = URLRequestMethod.GET;
+				var urlLoader:URLLoader = new URLLoader;
+				urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
+					if(mapsMarked.length > 0){
+						var tmpMap:MyMapName = mapsMarked.pop();
+						deleteMap(tmpMap,mapsMarked);
+					}
+					else
+					{
+						CursorManager.removeBusyCursor();
+						Alert.show("maps deleted ...");
+						FlexGlobals.topLevelApplication.loadMyMapList();
+						FlexGlobals.topLevelApplication.myMaps.invalidateProperties();
+						FlexGlobals.topLevelApplication.myMaps.invalidateDisplayList();
+					}
+				});
+				urlLoader.addEventListener( IOErrorEvent.IO_ERROR, function (event:IOErrorEvent):void{Alert.show("Deleting " + map.mapName + " failed ...");});
+				urlLoader.load(urlRequest);
 			}
 			
 			
