@@ -16,7 +16,7 @@
 	<fx:Script>
 		<![CDATA[
 			import classes.UserData;
-			import mx.managers.CursorManager;
+			
 			import flash.net.URLLoader;
 			import flash.net.URLRequest;
 			import flash.net.URLRequestMethod;
@@ -26,6 +26,7 @@
 			import mx.controls.Alert;
 			import mx.controls.Text;
 			import mx.core.FlexGlobals;
+			import mx.managers.CursorManager;
 			
 			import spark.components.Group;
 			import spark.components.Label;
@@ -42,7 +43,7 @@
 			
 			[SkinPart(required="true")]
 			public var userInfoTxt:Text;
-
+			
 			
 			public function set skinState(value:Boolean):void{
 				invalidateSkinState();
@@ -90,11 +91,34 @@
 			override protected function partAdded(partName:String, instance:Object):void{
 			}
 			
-			public function deleteMaps(event:MouseEvent):void{
-				
+			
+			  public function deleteAllMaps(event:MouseEvent):void{
 				
 				CursorManager.setBusyCursor();
 				
+				var mapsMarked:Vector.<MyMapName> = new Vector.<MyMapName>(0,false);
+				for(var i:int=0; i < mapsGroup.numElements; i++)
+				{
+					var myMapName:MyMapName = MyMapName(mapsGroup.getElementAt(i));
+					mapsMarked.push(myMapName);	
+				}
+				
+				if(mapsMarked.length > 0 ){
+					var map:MyMapName = mapsMarked.pop();
+					deleteMap(map,mapsMarked);
+				}else{
+					Alert.show("You do not own any maps yet. Click on 'Create Map' button to create a map");
+					CursorManager.removeBusyCursor();
+				}
+				
+				
+				
+			}
+			
+			public function deleteMaps(event:MouseEvent):void{
+				CursorManager.setBusyCursor();
+				//FlexGlobals.topLevelApplication.loadMapList();
+				FlexGlobals.topLevelApplication
 				var mapsMarked:Vector.<MyMapName> = new Vector.<MyMapName>(0,false);
 				for(var i:int=0; i < mapsGroup.numElements; i++)
 				{
@@ -110,6 +134,7 @@
 				}
 				else{
 					Alert.show("Please use the checkbox to select maps for deletion");
+					CursorManager.removeBusyCursor();
 				}
 				
 			}
@@ -130,10 +155,10 @@
 					else
 					{
 						CursorManager.removeBusyCursor();
-						Alert.show("maps deleted ...");
 						FlexGlobals.topLevelApplication.loadMyMapList();
-						FlexGlobals.topLevelApplication.myMaps.invalidateProperties();
-						FlexGlobals.topLevelApplication.myMaps.invalidateDisplayList();
+						FlexGlobals.topLevelApplication.loadMapList();
+						Alert.show("maps deleted ...");
+							
 					}
 				});
 				urlLoader.addEventListener( IOErrorEvent.IO_ERROR, function (event:IOErrorEvent):void{Alert.show("Deleting " + map.mapName + " failed ...");});

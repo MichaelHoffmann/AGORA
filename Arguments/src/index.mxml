@@ -13,15 +13,7 @@
 			</s:HGroup>
 			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
 				
-				<s:Panel id="mapList" title="List of Maps" width="200" height="400">
-					<s:Scroller height="100%" width="100%">
-						<s:Group>
-							<s:VGroup id="mapNameList" gap="5" paddingTop="5" paddingLeft="5" width="90%"> 
-							</s:VGroup>	
-						</s:Group>
-							
-					</s:Scroller>
-				</s:Panel>
+				 <components:MapListPanel id="mapList" title="List of Maps" width="200" height="400"></components:MapListPanel>
 				
 				<components:MyMapsPanel id="myMaps" title="My Maps" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
 				
@@ -36,7 +28,7 @@
 			</s:HGroup>
 		</s:VGroup>	
 	</mx:Canvas>
-
+	
 	
 	<fx:Script>
 		<![CDATA[
@@ -134,6 +126,9 @@
 					var loader:URLLoader = new URLLoader;
 					loader.addEventListener(Event.COMPLETE, function(event:Event):void{
 						myMaps.mapListXML = XML(event.target.data);
+						myMaps.invalidateProperties();
+						myMaps.invalidateDisplayList();
+						loadMapList();
 						myMaps.skinState = true;
 					});
 					loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
@@ -141,7 +136,7 @@
 				}
 			}
 			
-			protected function loadMap(event:MouseEvent):void{
+			public function loadMap(event:MouseEvent):void{
 				if(!UserData.isValid())
 				{
 					var loginWindow:LoginWindow = new LoginWindow;
@@ -156,38 +151,13 @@
 				}
 				
 			}
-
 			
-			public function displayMaps(event: Event):void
-			{
-				var xmlData:XML = XML(event.target.data);
-				var maps:XMLList = xmlData.map;
-				for each (var map:XML in maps)
-				{
-					    try{
-							if(map.@is_deleted == "1"){
-								continue;
-							}
-						}catch(error:Error){
-							trace("is_deleted not available yet");
-						}
-						var mapObject:Object = new Object;
-						mapObject.mapId = int(map.attribute("ID"));
-						mapObject.title = map.attribute("title");
-						var mapButton:Button = new Button;
-						mapButton.width = 170;
-						mapButton.name = mapObject.mapId.toString();
-						mapButton.addEventListener(MouseEvent.CLICK, loadMap);
-						mapButton.label = mapObject.title;
-						mapNameList.addElement(mapButton);
-						maps_map[mapObject.mapId] = mapObject;
-				}
-			}
-
+			
+			
 			private function errorHandler(event:IOErrorEvent):void
 			{
 				Alert.show("A communication error occurred duing interaction with server");
-
+				
 			}
 			
 			public function loadMapList():void
@@ -199,30 +169,28 @@
 				
 				//create a loader
 				var loader:URLLoader = new URLLoader;
-				//add a handler for handling the response
-				loader.addEventListener(Event.COMPLETE,displayMaps);
+				
+				//loader.addEventListener(Event.COMPLETE,displayMaps);
+				loader.addEventListener(Event.COMPLETE, function (event: Event):void{
+					mapList.mapList = XML(event.target.data);
+					mapList.invalidateProperties();
+					mapList.invalidateDisplayList();
+				});
+				
 				loader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
-				
-				//load the request obect
 				loader.load(request);
-				
-				//registerEventHandler for createMap
-				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
-				//myMaps.invalidateSkinState();
-				//myMaps.invalidateProperties();
-				
-				
 			}
 			
 			public function loadProjectList():void
 			{
-			
+				
 			}
 			
 			public function loadData():void
 			{
 				maps_map = new Dictionary;
 				loadMapList();
+				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
 				loadProjectList();
 			}
 			

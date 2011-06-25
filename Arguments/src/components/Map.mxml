@@ -63,8 +63,8 @@
 				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
 				canvas.visible = true;
 				Group(this.parent).removeElement(this);
-				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
 				FlexGlobals.topLevelApplication.loadMapList();
+				FlexGlobals.topLevelApplication.loadMyMapList();
 			}
 			
 			public function discardChanges(event:Event):void

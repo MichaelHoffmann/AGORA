@@ -56,7 +56,7 @@
 			 text.notLoggedIn="My Maps"
 			 />
 	
-	<s:Scroller width="100%" top="30" height="300">
+	<s:Scroller width="100%" top="40" height="300">
 		<s:Group id="contentGroup" bottom="30">
 			<s:Group id="mapsGroup" 
 					visible.notLoggedIn="false"
@@ -78,7 +78,7 @@
 		</s:layout>
 		<s:Button label="Delete" click="hostComponent.deleteMaps(event)">
 		</s:Button>
-		<s:Button label="Delete All">
+		<s:Button label="Delete All" click="hostComponent.deleteAllMaps(event)">
 		</s:Button>
 	</s:Group>
 </s:SparkSkin>
