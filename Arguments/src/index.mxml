@@ -23,7 +23,7 @@
 			<s:HGroup paddingLeft="25" paddingTop="25">
 				<s:Button id="createMapBtn" label="Create Map">
 				</s:Button >
-				<s:Button id="createProjectBtn" label="Create Project">
+				<s:Button id="createProjectBtn" label="Create Project" click="Alert.show('This feature is not yet functional and is in the development process ...');">
 				</s:Button>
 			</s:HGroup>
 		</s:VGroup>	
