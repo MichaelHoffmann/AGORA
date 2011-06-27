@@ -19,6 +19,29 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
+	
+	
+/**
+List of variables for insertion:
+	* HTTP Query variables:
+	xml: The XML of map data to remove (or remove things from)
+	uid: User ID of the user removing the data
+	pass_hash: the hashed password of the user removing the data
+	
+	* XML data:
+		MAP level:
+			id or ID: the ID of the map to be modified. 0 or nonexistent creates a new map and ignores everything else.
+			remove: If this is a string PHP recognizes as true ("1", "true", etc), delete the map.
+		
+		IN-MAP level:
+			node: remove a node
+				ID: ID of an existing node
+			
+			Other things do not need to be deleted explicitly because the database code contains logic for "chaining" deletes.
+			Since we are not TRULY deleting it, but setting a flag, this does not use ON DELETE CASCADE.
+			For details, look at agora.sql and examine the ON UPDATE triggers.
+
+*/
 	require 'checklogin.php';
 	require 'establish_link.php';
 	/**
