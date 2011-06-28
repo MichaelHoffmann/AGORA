@@ -25,7 +25,7 @@
 	*/
 	$linkID= establishLink();
 	mysql_select_db("agora", $linkID) or die ("Could not find database");
-	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0";
+	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0 ORDER BY maps.title";
 	$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 
 	if(mysql_num_rows($resultID)==0){
