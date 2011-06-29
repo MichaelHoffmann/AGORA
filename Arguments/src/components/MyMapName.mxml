@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="components.MyMapNameSkin">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Metadata>
+		[SkinState("normal")]
+		[SkinState("disabled")]
+		[SkinState("checked")]
+		[SkinState("unchecked")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			
+			import spark.components.Button;
+			import spark.components.CheckBox;
+			
+			
+			[SkinPart(required="true")]
+			public var thisMap:CheckBox;
+			[SkinPart(required="true")]
+			public var thisMapButton:Button;
+			
+			public var mapId:int;
+			public var mapName:String;
+			
+			override protected function getCurrentSkinState():String{
+				if(thisMap.selected)
+				{
+					return "checked";
+				}
+				else
+				{
+					return "unchecked";
+				}
+			}
+			
+			override protected function partAdded(partName:String, instance:Object):void{
+				if(instance == thisMap){
+					//thisMap.label = mapName;	
+				}
+				else if(instance == thisMapButton)
+				{
+					thisMapButton.label = mapName;
+					thisMapButton.name = mapId.toString();
+					thisMapButton.addEventListener(MouseEvent.CLICK, function (event:Event):void{ FlexGlobals.topLevelApplication.displayMap(thisMapButton)});
+				}
+			}
+			
+		]]>
+	</fx:Script>
+</s:Panel>

@@ -236,7 +236,6 @@ package classes
 			}
 			if(claim.inference == null)
 			{
-				//trace('calim:'+claim);
 				reasons[reasons.length - 1].makeUnEditable();
 				reasons[reasons.length - 1].displayTxt.text = "[Enter your reason]";
 			}
@@ -315,8 +314,6 @@ package classes
 						argType.changeSchemeBtn.enabled = false;
 					}
 				}
-				trace('in change possible schemes');
-				trace(myschemeSel.typeSelector.x);
 			}
 			if(!typed && myschemeSel != null)
 			{
@@ -341,7 +338,6 @@ package classes
 			//Sometimes only one posisble scheme is possible.
 			//In those situations, they are created automatically, instead
 			//of giving the user a menu
-			
 			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
 			var optionsArr:Array = ["And","Or"];
 			if( (!claim.statementNegated) && (claim.inference != null || claim.userEntered))
@@ -353,7 +349,6 @@ package classes
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
 			}
-			
 			if(!claim.multiStatement && (claim.inference != null || claim.userEntered == true) && !claim.statementNegated )
 			{
 				typeArr.splice(typeArr.indexOf(ParentArg.COND_SYLL,0),1);
@@ -365,13 +360,17 @@ package classes
 			}
 			
 			//the first claim is not set to multistatement by default
-			if(claim.multiStatement && !schemeSelected)
+			if(claim.multiStatement)
 			{
 				//claim is a multistatement and claim is of type P->Q
 				//Only one possible scheme - conditional syllogism
 				if(claim.implies)
 				{
-					
+				
+					if(!schemeSelected)
+					{
+						reasons[0].makeEditable();
+					}
 					//typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
@@ -402,7 +401,8 @@ package classes
 					parentMap.option.visible = false;
 					claim.removeEventListeners();
 					this.visible = true;
-					reasons[0].makeEditable();
+					
+					
 					//dispatchEvent(new Event(REASON_ADDED));
 				}
 				else
@@ -870,14 +870,11 @@ package classes
 		
 		override public function setIDs():void
 		{
-			trace('in set ID');
 			if(_initXML == null)
 				return;
 			
 			try{
-				trace(_initXML.toXMLString());
 				ID = _initXML.node[0].@ID;
-				trace(_initXML.node[0].@ID);
 				connID = _initXML.connection.@ID;
 			}
 			catch(e:Error)

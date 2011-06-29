@@ -32,18 +32,24 @@
 			<s:Button id="discardChangesBtn" label="Home" visible="false">
 			</s:Button>
 		</s:HGroup>
-		<mx:Canvas id="agora" width="140" height="650">
-			<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" width="500000" height="600000" >	
-				<mx:Canvas id="canvas" width="150" visible="false">
-					<mx:Text width="150" height="140" id="helpTxt">
-						<mx:htmlText>
-							<![CDATA[<u>Support:</u><br /> <br />Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")
-							]]>
-						</mx:htmlText>
-					</mx:Text>
+		<s:Scroller id="agora">	
+			<s:Group>
+			  
+				<mx:Canvas>
+					<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" minWidth="1400" minHeight="800">	
+						<mx:Canvas id="canvas" width="150" visible="false">
+							<mx:Text width="150" height="140" id="helpTxt">
+								<mx:htmlText>
+									<![CDATA[<u>Support:</u><br /> <br />Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")
+									]]>
+								</mx:htmlText>
+							</mx:Text>
+						</mx:Canvas>
+					</classes:AgoraMap>	
 				</mx:Canvas>
-			</classes:AgoraMap>
-		</mx:Canvas>
+				
+			</s:Group>
+		</s:Scroller>
 	</s:VGroup>
 	
 	<fx:Script>
@@ -67,7 +73,6 @@
 			
 			import spark.components.Group;
 			import spark.primitives.Graphic;
-			//public var drawUtility:UIComponent;
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
@@ -77,14 +82,13 @@
 				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
 				canvas.visible = true;
 				Group(this.parent).removeElement(this);
-				FlexGlobals.topLevelApplication.mapNameList.removeAllElements();
 				FlexGlobals.topLevelApplication.loadMapList();
+				FlexGlobals.topLevelApplication.loadMyMapList();
 			}
 			
 			public function discardChanges(event:Event):void
 			{
-				hideMap();
-				
+				hideMap();	
 			}
 			
 			public function setWidth(event: Event):void
@@ -95,6 +99,12 @@
 			{
 				var xml:XML;
 				xml = agoraMap.getMapXml();
+				if(xml.error.length > 0)
+				{
+					Alert.show("Error occurred in saving map");
+					return;
+				}	
+				
 				var urlRequestMap:URLRequest = new URLRequest;
 				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
 				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
@@ -103,9 +113,13 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
+					//Alert.show(retXMLMap.toXMLString());
+					Alert.show("Map saved");
+					hideMap();
+					
 				});
 				urlLoaderMap.load(urlRequestMap);
-				hideMap();
+				
 			}
 			
 			public function updateSize(event:Event):void
@@ -138,6 +152,7 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
+					//Alert.show(retXMLMap.toXMLString());
 					agoraMap.ID = retXMLMap.@ID;
 					
 					var urlRequest:URLRequest = new URLRequest;
@@ -193,5 +208,4 @@
 			}
 		]]>
 	</fx:Script>
-	
 </mx:Canvas>

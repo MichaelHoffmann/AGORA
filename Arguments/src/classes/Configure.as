@@ -50,7 +50,7 @@ package classes
 		
 		public static function lookup(label:String):String{
 		if(!ready){
-		init();				
+			init();				
 		}
 		trace("Now looking up:" + label);
 		var lbl:XMLList = xml.descendants(label);

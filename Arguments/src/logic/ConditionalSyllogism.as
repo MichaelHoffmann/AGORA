@@ -81,7 +81,7 @@ package logic
 			
 			if(claim.inference == null && claim.rules.length == 1 && claim.userEntered == false && reason.userEntered == false && !(claim is Inference))
 			{
-				trace(claim.inference);
+				trace('user entered:' + claim.userEntered);
 				claim.multiStatement = true;
 				claim.implies = true;
 				addInitialReasons();
