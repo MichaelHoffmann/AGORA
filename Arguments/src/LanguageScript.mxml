@@ -30,7 +30,7 @@
 			import classes.Language;
 			
 			public function test():void{
-				Language.lookup("ParticularUniversalClarification");
+				//Language.lookup("ParticularUniversalClarification");
 			}
 			
 		]]>
