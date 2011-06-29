@@ -13,8 +13,9 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="index.mxml"/>
     <application path="LanguageScript.mxml"/>
+    <application path="index.mxml"/>
+    <application path="ConfigureScript.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

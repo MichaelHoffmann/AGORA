@@ -26,13 +26,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			
+			//Note that this file should not be used in the project.
+			//It is merely for testing whether configure.as works properly,
+			//and to make it easy to test that your syntax is correct when you add to the XML file
 			import classes.Configure;
-			
-			public function test():void{
-				trace("Beginning the test...");
-				Configure.lookup("mainURL");
-			}
+			trace("Beginning the test...");
+			Configure.lookup("mainURL");
 			
 		]]>
 	</fx:Script>
