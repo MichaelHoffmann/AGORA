@@ -1,3 +1,4 @@
 ﻿<Configuration>
 	<mainURL text="http://www.agora.gatech.edu"/>
+	<version text="11.7.1"/>
 </Configuration>
