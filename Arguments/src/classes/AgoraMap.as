@@ -50,6 +50,8 @@ package classes
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
 	
+	import classes.Configure;
+	
 	public class AgoraMap extends Canvas
 	{
 		public var layoutManager:ALayoutManager = null;
@@ -214,7 +216,7 @@ package classes
 		{
 			var urlLoader:URLLoader = new URLLoader;
 			var request:URLRequest = new URLRequest;
-			request.url = "http://agora.gatech.edu/dev/insert.php";
+			request.url = Configure.lookup("baseURL") + "insert.php";
 			request.data = new URLVariables("uid="+UserData.uid+"&pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
 			request.method = URLRequestMethod.GET;
 			urlLoader.load(request);	
