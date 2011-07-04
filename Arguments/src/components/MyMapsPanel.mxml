@@ -31,6 +31,8 @@
 			import spark.components.Group;
 			import spark.components.Label;
 			
+			import classes.Configure;
+			
 			//for future
 			[Bindable]
 			public var mapListXML:XML;
@@ -142,7 +144,7 @@
 			private function deleteMap(map:MyMapName, mapsMarked:Vector.<MyMapName>):void{
 				var xml:XML = new XML("<map id=\""+ map.mapId +"\" remove=\"1\" />");
 				var urlRequest:URLRequest = new URLRequest;
-				urlRequest.url = "http://agora.gatech.edu/dev/remove.php";
+				urlRequest.url = Configure.lookup("baseURL") + "remove.php";
 				var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml.toXMLString());
 				urlRequest.data = urlRequestVars;
 				urlRequest.method = URLRequestMethod.GET;

@@ -35,6 +35,8 @@
 			
 			import org.osmf.layout.AbsoluteLayoutFacet;
 			
+			import classes.Configure;
+			
 			private static var _salt:String = "AGORA";
 			
 			public static function get salt():String{
@@ -85,7 +87,7 @@
 				}
 				var requestVariables:URLVariables = new URLVariables("username="+username.text+"&pass_hash="+ MD5.hash(pass_hash.text+salt)+"&firstname="+firstname.text+"&lastname="+lastname.text+"&email="+email.text+"&url="+url.text);
 				var request:URLRequest = new URLRequest;
-				request.url = "http://agora.gatech.edu/dev/register.php";
+				request.url = Configure.lookup("baseURL") + "register.php";
 				request.method = URLRequestMethod.GET;
 				request.data = requestVariables;
 				var urlLoader:URLLoader = new URLLoader;

@@ -73,6 +73,9 @@
 			
 			import spark.components.Group;
 			import spark.primitives.Graphic;
+			
+			import classes.Configure;
+			
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:ALayoutManager;
@@ -106,7 +109,7 @@
 				}	
 				
 				var urlRequestMap:URLRequest = new URLRequest;
-				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				urlRequestMap.url = Configure.lookup("baseURL") + "insert.php";
 				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
 				urlRequestMap.data = urlRequestVarsMap;
 				urlRequestMap.method = URLRequestMethod.GET;
@@ -145,7 +148,7 @@
 				//map is given an id
 				var xmlMap:XML = new XML("<map id=\"0\" title=\"" + FlexGlobals.topLevelApplication.presetMapName + "\" ></map>");
 				var urlRequestMap:URLRequest = new URLRequest;
-				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				urlRequestMap.url = Configure.lookup("baseURL") + "insert.php";
 				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xmlMap.toXMLString());
 				urlRequestMap.data = urlRequestVarsMap;
 				urlRequestMap.method = URLRequestMethod.GET;
@@ -156,7 +159,7 @@
 					agoraMap.ID = retXMLMap.@ID;
 					
 					var urlRequest:URLRequest = new URLRequest;
-					urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
+					urlRequest.url = Configure.lookup("baseURL") + "insert.php";
 					var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+agoraMap.getAP());
 					urlRequest.data = urlRequestVars;
 					urlRequest.method = URLRequestMethod.GET;

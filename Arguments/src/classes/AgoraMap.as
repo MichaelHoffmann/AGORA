@@ -252,7 +252,7 @@ package classes
 						currXML.@ID = currTextBox.ID;
 						if(argumentPanel.statementNegated)
 						{
-							currXML.@text = "#$#$#$"+currTextBox.text;
+							currXML.@text = "#$#$#$"+currTextBox.text; //TODO: Remove this since it is now a serverside attribute
 						}
 						else{
 							currXML.@text = currTextBox.text;

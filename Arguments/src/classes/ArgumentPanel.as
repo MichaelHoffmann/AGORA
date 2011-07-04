@@ -646,7 +646,7 @@ package classes
 		{
 			var requestXML:XML = parentMap.getConnection(this);
 			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
+			urlRequest.url = Configure.lookup("baseURL") + "insert.php";
 			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ requestXML);
 			urlRequest.data = urlRequestVars;
 			urlRequest.method = URLRequestMethod.GET;
