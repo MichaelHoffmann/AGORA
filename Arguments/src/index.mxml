@@ -62,6 +62,7 @@
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
+			import classes.Configure;
 			public var username:String;
 			public var pass_hash:String;
 			
@@ -124,7 +125,7 @@
 				//var button:Button = Button(event.target);
 				var mapId:int = int(button.name);
 				var request:URLRequest = new URLRequest;
-				request.url="http://agora.gatech.edu/dev/load_map.php";
+				request.url=Configure.lookup("baseURL") + "load_map.php";
 				request.method = URLRequestMethod.GET;
 				request.data = new URLVariables("timestamp=0&map_id="+mapId);
 				var loader:URLLoader = new URLLoader;
@@ -139,7 +140,7 @@
 				if(UserData.isValid())
 				{
 					var request:URLRequest = new URLRequest;
-					request.url="http://agora.gatech.edu/dev/my_maps.php";
+					request.url=Configure.lookup("baseURL") + "my_maps.php";
 					request.method = URLRequestMethod.GET;
 					request.data = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr);
 					var loader:URLLoader = new URLLoader;
@@ -183,7 +184,7 @@
 			{
 				//create a request object
 				var request:URLRequest = new URLRequest;
-				request.url="http://agora.gatech.edu/dev/list_maps.php";
+				request.url=Configure.lookup("baseURL") + "list_maps.php";
 				request.method = URLRequestMethod.GET;
 				
 				//create a loader

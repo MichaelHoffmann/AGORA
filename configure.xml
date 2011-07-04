@@ -1,4 +1,5 @@
 ﻿<Configuration>
-	<mainURL text="http://www.agora.gatech.edu"/>
-	<version text="11.7.1"/>
+	<mainURL text="http://www.agora.gatech.edu/" />
+	<version text="11.7.4" />
+	<baseURL text="http://agora.gatech.edu/dev/" />
 </Configuration>
