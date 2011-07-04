@@ -358,7 +358,7 @@ package classes
 			var nodes_map:Object = new Object;
 			//read all nodes. This includes setting the text of the node
 			//by reading the text in the corresponding textbox node
-			for each ( var xml:XML in nodes)
+			for each (xml:XML in nodes)
 			{
 				var argumentPanel:ArgumentPanel = null;
 				if(xml.attribute("Type") == "Inference")
