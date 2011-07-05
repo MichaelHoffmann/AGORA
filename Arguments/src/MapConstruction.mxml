@@ -70,8 +70,9 @@
 		}
 			
 		public function init():void {
-			argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";
-			conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
+			argumentPaste.text=Language.lookup("PasteArgument") + "(under construction)"; 
+			//TODO: construct this and/or get translation for "Under construction" 
+			conceptStart.text=Language.lookup("DivideToSubclaims");
 		}
 		]]>
 	</fx:Script>

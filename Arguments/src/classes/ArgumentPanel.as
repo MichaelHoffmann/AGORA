@@ -172,7 +172,7 @@ package classes
 	
 		//other instance variables
 		public var connectingStr:String;
-		public var _initXML:XML;
+		public var _initXML:XML = null;
 		public var ID:int;
 		public var TID:int;
 		//IDs for nodetext
@@ -298,8 +298,6 @@ package classes
 		
 		public function makeEditable():void
 		{
-			trace('In editable');
-			trace(this);
 			if(userEntered == false)
 			{
 				userEntered = true;
@@ -319,9 +317,6 @@ package classes
 		
 		public function makeUnEditable():void
 		{
-			trace("in Make uneditable");
-			trace(multiStatement);
-			trace(this);
 			if(multiStatement)
 			{
 				//input1 is just used to calculate height
@@ -346,7 +341,6 @@ package classes
 			{
 				input1.visible = false;
 			}
-			trace(doneHG.visible);
 		}
 		
 		public function get stmt():String
@@ -457,7 +451,6 @@ package classes
 		
 		public function onArgumentAddition(event:Event):void
 		{
-			trace('on argument addition');
 			parentMap.option.visible = true;
 			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
 			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
@@ -477,7 +470,6 @@ package classes
 		public function configureReason(event:FlexEvent):void
 		{
 			var reason:ArgumentPanel = ArgumentPanel(event.target);
-			trace('In configure reason');
 			reason.makeUnEditable();
 		}
 		
@@ -552,6 +544,7 @@ package classes
 		protected function createArgument(event:Event):void
 		{
 			var responseXML:XML = XML(event.target.data);
+			trace(responseXML.toXMLString());
 			/*A typical response
 			<map ID="20">
 			<textbox TID="7" ID="50"/>
@@ -653,7 +646,7 @@ package classes
 		{
 			var requestXML:XML = parentMap.getConnection(this);
 			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
+			urlRequest.url = Configure.lookup("baseURL") + "insert.php";
 			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ requestXML);
 			urlRequest.data = urlRequestVars;
 			urlRequest.method = URLRequestMethod.GET;
@@ -823,7 +816,7 @@ package classes
 			displayTxt.height = input1.height;
 		}
 		
-		public function toggle(m:MouseEvent):void
+		public function toggleType():void
 		{
 			if(this.state==0) {
 				if(this.panelType!=INFERENCE)
@@ -842,6 +835,11 @@ package classes
 				stmtTypeLbl.text = "Universal Statement";
 				this.setStyle("cornerRadius",30);
 			} 
+		}
+		
+		public function toggle(m:MouseEvent):void
+		{
+			toggleType();	
 		}
 		
 		protected function deleteThis(event:MouseEvent):void
@@ -934,8 +932,7 @@ package classes
 			//By default there are only three textboxes
 			if(_initXML == null)
 				return;
-			trace("in Set ID");
-			trace(_initXML.toXMLString());
+			try{
 			input1.ID = _initXML.textbox[0].@ID;
 			inputs[0].ID = _initXML.textbox[1].@ID;
 			inputs[1].ID = _initXML.textbox[2].@ID;
@@ -944,6 +941,11 @@ package classes
 			input1NTID = _initXML.node.nodetext[0].@ID;
 			inputsNTID.push(_initXML.node.nodetext[1].@ID);
 			inputsNTID.push(_initXML.node.nodetext[2].@ID);
+			}
+			catch(error:Error)
+			{
+				Alert.show(error.toString());
+			}
 		}
 	}
 	

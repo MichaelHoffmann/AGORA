@@ -73,6 +73,7 @@ package logic
 				}
 			}
 			
+			trace('claim user entered value:'+inference.claim.userEntered);
 			if(inference.claim.userEntered == false && inference.claim.inference == null && inference.claim.rules.length < 2)
 			{
 				inference.claim.input1.text = "P";
