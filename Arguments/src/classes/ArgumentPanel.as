@@ -153,6 +153,7 @@ package classes
 		//other instance variables
 		public var connectingStr:String;
 		public var _initXML:XML = null;
+		public var _properties:XML = null;
 		public var ID:int;
 		public var TID:int;
 		//IDs for nodetext
@@ -517,14 +518,43 @@ package classes
 			statementEntered();
 		}
 		
+		protected function inserted(event:Event):void{
+			var responseXML:XML = XML(event.target.data);
+			var xml:XML = <insert></insert>;
+			xml.appendChild(responseXML);
+		
+			var urlRequest:URLRequest = new URLRequest;
+			urlRequest.url = "http://agora.gatech.edu/dev/load_map.php";
+			var timestamp:String;
+			if(parentMap.timestamp == null){
+				timestamp = "0";
+			}else{
+				timestamp = parentMap.timestamp;
+			}
+			var urlRequestVars:URLVariables = new URLVariables("map_id="+parentMap.ID + "&" + "timestamp=" + timestamp);
+			urlRequest.data = urlRequestVars;
+			urlRequest.method = URLRequestMethod.GET;
+			var urlLoader:URLLoader = new URLLoader;
+			urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
+				var loadResponseVariables:XML = XML(event.target.data);
+				var loadXML:XML = <load></load>;
+				loadXML.appendChild(loadResponseVariables);
+				var insertLoad:XML = <xmldata></xmldata>;
+				insertLoad.appendChild(xml);
+				insertLoad.appendChild(loadXML);
+				createArgument(insertLoad);
+			});
+			urlLoader.load(urlRequest);
+		}
+		
 		//reason must be registered before inference is
 		//user must not change the inference rule. He creates the inference rule
 		//through argument type, reasons and claim
-		
-		protected function createArgument(event:Event):void
+		protected function createArgument(responseXML:XML):void
 		{
-			var responseXML:XML = XML(event.target.data);
-			trace(responseXML.toXMLString());
+			//var responseXML:XML = XML(event.target.data);
+			//Alert.show(responseXML.toXMLString());
+			
 			/*A typical response
 			<map ID="20">
 			<textbox TID="7" ID="50"/>
@@ -544,28 +574,74 @@ package classes
 			*/
 			//separate xml data for inference and for argument panel
 			//reason
-			var reasonXML:XML = new XML("<map></map>");
-			var textboxList:XMLList = responseXML.textbox;
+			
+			///###### updates by other users not handled yet
+			
+				//reason's textboxes
+			var reasonXML:XML = new XML("<map></map>");                                                                     
+			var textboxList:XMLList = responseXML.insert.map.textbox;
 			reasonXML.appendChild(textboxList);
-			var firstNodeText:XML = responseXML.node[0];
+				//reason's node
+			var firstNodeText:XML = responseXML.insert.map.node[0];
 			reasonXML.appendChild(firstNodeText);
+			
+			//no collaboration
+			var reasonAXML:XML = <map></map>;
+			//reasonAXML.appendChild(responseXML.load.map.node[0]);
+			for each(var iXML:XML in responseXML.load.map.node){
+				if(iXML.@ID == responseXML.insert.map.node[0].@ID){
+					reasonAXML.appendChild(iXML);
+				}
+			}
+
+			var coordinate:Coordinate = new Coordinate;
+			coordinate.gridX = reasonAXML.node[0].@x;
+			coordinate.gridY = reasonAXML.node[0].@y;
+			
 			//inference
 			var inferenceXML:XML = new XML("<map></map>");
-			var inferenceNode:XML =  responseXML.node[1];
+			var inferenceNode:XML =  responseXML.insert.map.node[1];
 			inferenceXML.appendChild(inferenceNode);
-			var connectionXML:XML = responseXML.connection[0];
+			var inferenceCoordinate:Coordinate = new Coordinate;
+			for each(iXML in responseXML.load.map.node){
+				if(iXML.@ID == responseXML.insert.map.node[1].@ID){
+					//reasonAXML.appendChild(iXML);
+					inferenceCoordinate.gridX = iXML.@x;
+					inferenceCoordinate.gridY = iXML.@y;
+				}
+			}
+			
+			
+			//connection
+			var connectionXML:XML = responseXML.insert.map.connection[0];
 			inferenceXML.appendChild(connectionXML);
+			var connectionCoordinate:Coordinate = new Coordinate;
+			
+			for each(iXML in responseXML.load.map.connection){
+				trace("connection loaded");
+				trace(responseXML.load.map.connection);
+				if(iXML.@connID == responseXML.insert.map.connection[0].@ID){
+					connectionCoordinate.gridX = iXML.@x;
+					connectionCoordinate.gridY = iXML.@y;
+				}
+			}
 			var currInference:Inference = new Inference();
 			currInference._initXML = inferenceXML;
+			currInference.gridX = inferenceCoordinate.gridX;
+			currInference.gridY = inferenceCoordinate.gridY;
 			currInference.myschemeSel = new ArgSelector;
 			currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
+			
 			//add the inference to map
 			parentMap.addElement(currInference);
 			currInference.visible=false;
+			
 			//create the panel that displays connection information
 			var infoPanel:MenuPanel = new MenuPanel;
 			currInference.argType = infoPanel;
 			currInference.argType.inference = currInference;
+			currInference.argType.gridX = connectionCoordinate.gridX;
+			currInference.argType.gridY = connectionCoordinate.gridY;
 			parentMap.addElement(currInference.argType);
 			
 			//add inference to the list of inferences
@@ -576,6 +652,10 @@ package classes
 			//create a reason node
 			var reason:ArgumentPanel = new ArgumentPanel();
 			reason._initXML = reasonXML;
+			
+			reason.gridX = coordinate.gridX;
+			reason.gridY = coordinate.gridY;
+			
 			reason.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
 			//addEventListener(Inference.REASON_ADDED,currInference.reasonAdded);
 			//add reason to the map
@@ -631,7 +711,7 @@ package classes
 			urlRequest.data = urlRequestVars;
 			urlRequest.method = URLRequestMethod.GET;
 			var urlLoader:URLLoader = new URLLoader;
-			urlLoader.addEventListener(Event.COMPLETE, createArgument);
+			urlLoader.addEventListener(Event.COMPLETE, inserted);
 			urlLoader.load(urlRequest);
 			
 		}

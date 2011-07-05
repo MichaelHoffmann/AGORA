@@ -5,7 +5,7 @@ package classes
 	import components.HelpText;
 	import components.Option;
 	
-	import flash.display.Graphics; 
+	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.net.URLLoader;
@@ -40,6 +40,9 @@ package classes
 		private static var _tempID:int;
 		public var initXML:XML;
 		public static var dbTypes:Array = ["MP","MT","DisjSyl","NotAllSyl","CS", "CD"];
+		public var timestamp:String;
+		
+		
 		public function AgoraMap()
 		{
 			layoutManager = new ALayoutManager;	
@@ -104,9 +107,65 @@ package classes
 		
 		public function getConnection( claim:ArgumentPanel):XML
 		{
-			var xml:XML = <map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" typed="0" is_positive="1" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><node Type="Inference" typed="0" is_positive="1" x="0" y="0"></node><connection type="Unset" x="0" y="0" /></map>
+			var coordinate:Coordinate = new Coordinate;
+			var argTypeCoordinate:Coordinate = new Coordinate;
+			var reasonCoordinate:Coordinate = new Coordinate;
+			
+			coordinate.gridX = claim.gridX;
+			coordinate.gridY = claim.gridY;
+			
+			//First rule
+			if(claim.rules.length == 0)
+			{
+				coordinate.gridX += Math.ceil(claim.height / layoutManager.uwidth ) + 2;
+				coordinate.gridY +=  Math.ceil(claim.width / layoutManager.uwidth ) + 2;
+			}
+				//Not First Rule
+			else{
+				var lastInference:Inference = claim.rules[claim.rules.length - 1];
+				var lastInferenceGridX:int  = lastInference.gridX + layoutManager.getGridSpan(lastInference.height);
+				var lastReason:ArgumentPanel = lastInference.reasons[lastInference.reasons.length - 1];
+				var lastReasonGridX:int = lastReason.gridX + layoutManager.getGridSpan(lastReason.height);
+				var max:int;
+				
+				if(lastInferenceGridX <= lastReasonGridX){
+					max = lastReasonGridX;
+				}
+				else{
+					max = lastInferenceGridX;
+				}
+				max = max + layoutManager.yArgDistances;
+				coordinate.gridY = coordinate.gridY + layoutManager.getGridSpan(claim.width) + 2;
+				coordinate.gridX = max;
+			}
+			
+			if(claim.rules.length == 0){
+				argTypeCoordinate.gridX = claim.gridX;
+				argTypeCoordinate.gridY = coordinate.gridY;
+			}
+			else{
+				argTypeCoordinate.gridX = coordinate.gridX - layoutManager.yArgDisplay;
+				argTypeCoordinate.gridY = coordinate.gridY;
+			}
+			
+			reasonCoordinate.gridX = argTypeCoordinate.gridX;
+			reasonCoordinate.gridY = coordinate.gridY + Math.ceil(claim.width/layoutManager.uwidth) + 1;
+			
+			var xml:XML = <map>
+							<textbox text=""/>
+							<textbox text=""/>
+							<textbox text=""/>
+							<node Type="Standard" typed="0" is_positive="1" x={reasonCoordinate.gridX} y={reasonCoordinate.gridY}>
+								<nodetext/><nodetext/><nodetext/>
+							</node>
+							<node Type="Inference" typed="0" is_positive="1" x={coordinate.gridX} y={coordinate.gridY}>
+							</node>
+							<connection type="Unset" x={argTypeCoordinate.gridX} y={argTypeCoordinate.gridY} />
+						 </map>
+			
 			//setting the ID of the map
 			xml.@ID = ID;
+			
 			//temporary IDs for the three new textboxes
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -146,7 +205,24 @@ package classes
 		
 		public function getAddReason(inference:Inference):XML
 		{
-			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" typed="0" is_positive="1" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><connection></connection></map>;
+			//cannot be the first reason
+			//get the recently added reason
+			var reason:ArgumentPanel = inference.reasons[inference.reasons.length - 1];
+			var coordinate:Coordinate = new Coordinate;
+			coordinate.gridX = reason.gridX + layoutManager.getGridSpan(reason.height) + 1;
+			coordinate.gridY = reason.gridY;
+			
+			var xml:XML=<map>
+						<textbox text=""/>
+						<textbox text=""/>
+						<textbox text=""/>
+						<node Type="Standard" typed="0" is_positive="1" x={coordinate.gridX} y={coordinate.gridY}>
+							<nodetext/>
+							<nodetext/>
+							<nodetext/>
+						</node>
+						<connection></connection>
+						</map>;
 			xml.@ID = ID;
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -287,12 +363,11 @@ package classes
 							else{
 								currXML.@is_positive = 1;
 							}
-						
+							
 						}
 						currXML.@typed = 0;
 						currXML.@x = panel.gridX;
 						currXML.@y = panel.gridY;
-						trace(currXML.toXMLString());
 						xml = xml.appendChild(currXML);
 					}
 				}

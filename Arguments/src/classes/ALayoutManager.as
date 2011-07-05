@@ -1,10 +1,13 @@
 package classes
 {
+	import components.Map;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Text;
+	import mx.core.FlexGlobals;
 	import mx.core.INavigatorContent;
 	import mx.core.UIComponent;
 	import mx.managers.LayoutManager;
@@ -136,85 +139,18 @@ package classes
 			
 		}
 		
+		
 		public function registerPanel(panel1:GridPanel):void
 		{
 			try{
 				if(panel1 is Inference)
 				{
-					var currPanel:Inference = panel1 as Inference;
-					var claim:ArgumentPanel = currPanel.claim;
-					currPanel.gridX = claim.gridX;		
-					currPanel.gridY = claim.gridY;
-					if(currPanel.claim.rules[0] == currPanel)
-					{		
-						//this is first inference for this claim
-						var plusGridWidth:int = Math.ceil(claim.width / uwidth ) + 2;
-						var plusGridHeight:int = Math.ceil(claim.height / uwidth ) + 2;
-						currPanel.gridY = currPanel.gridY + plusGridWidth;
-						currPanel.gridX = currPanel.gridX + plusGridHeight;
-						//fix the grid positions of the argument class
-						currPanel.argType.gridX = currPanel.claim.gridX;
-						currPanel.argType.gridY = currPanel.gridY;
-						registerPanel(currPanel.argType);
-						//fix the gird positions of the reasons that use this inference rule to lead to the claim.
-						if(currPanel.reasons.length > 0)
-						{
-							var currX:int = claim.gridX;
-							var currY:int = currPanel.gridY+Math.ceil(claim.width/uwidth) + 1;
-							for(var i:int = 0; i < currPanel.reasons.length; i++)
-							{
-								currPanel.reasons[i].gridX = currX;
-								currPanel.reasons[i].gridY = currY;
-								currX = currX + Math.ceil(currPanel.reasons[i].height/uwidth) + 1;
-							}	
-						}
-					}
-					else			//subsequent inference for the claim
-					{
-						var lastInference:Inference = currPanel.claim.rules[currPanel.claim.rules.length - 2];
-						var lastInferenceGridX:int  = lastInference.gridX + getGridSpan(lastInference.height);
-						var lastReason:ArgumentPanel = lastInference.reasons[lastInference.reasons.length - 1];
-						var lastReasonGridX:int = lastReason.gridX + getGridSpan(lastReason.height);
-						var max:int;
-						if(lastInferenceGridX <= lastReasonGridX){
-							max = lastReasonGridX;
-						}
-						else{
-							max = lastInferenceGridX;
-						}
-						max = max + yArgDistances;
-						plusGridWidth = getGridSpan(claim.width) + 2;
-						currPanel.gridY = currPanel.gridY + plusGridWidth;
-						currPanel.gridX = max;
-						currPanel.argType.gridX = currPanel.gridX - yArgDisplay;
-						currPanel.argType.gridY = currPanel.gridY;
-						registerPanel(currPanel.argType);
-						
-						currX = currPanel.argType.gridX;
-						currY = currPanel.gridY + getGridSpan(claim.width) + 1;
-						
-						for(i = 0; i < currPanel.reasons.length; i++)
-						{
-							currPanel.reasons[i].gridX = currX;
-							currPanel.reasons[i].gridY = currY;
-							currX = currX + getGridSpan(currPanel.reasons[i].height);
-						}
-					}
+					registerPanel(Inference(panel1).argType);
 				}
 			//This module is for a reason added to an existing argument
 				else if(panel1 is ArgumentPanel)
 				{
-					var panelArg:ArgumentPanel = panel1 as ArgumentPanel;
-					//establish it's a reason and not the first claim in the map
-					if(panelArg.inference != null)//will be null for the first claim added
-					{
-						//will not hold for argument classes, and must be modified by a function isFirstReasons()
-						if(panelArg.inference.reasons.length > 1)
-							var lastReasonInd:int = panelArg.inference.reasons.length - 2;//last reason that was laid out
-							var lReason:ArgumentPanel = panelArg.inference.reasons[lastReasonInd];
-							panelArg.gridY = lReason.gridY;
-							panelArg.gridX = lReason.gridX + Math.ceil(lReason.height/uwidth) + 1;		
-					}
+					
 				}
 			}
 			catch(e:Error)
@@ -223,6 +159,7 @@ package classes
 			}
 			panelList.push(panel1);
 			layoutComponents();
+			//components.Map(ArgumentPanel.parentMap.parent.parent.parent.parent.parent).update();
 		}
 		
 		public function getGridSpan(pixels:int):int

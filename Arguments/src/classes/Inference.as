@@ -307,9 +307,9 @@ package classes
 				
 			}
 			if(myschemeSel != null){
-			myschemeSel.invalidateProperties();
-			myschemeSel.invalidateSize();
-			myschemeSel.invalidateDisplayList();
+				myschemeSel.invalidateProperties();
+				myschemeSel.invalidateSize();
+				myschemeSel.invalidateDisplayList();
 			}
 		}
 		
@@ -346,7 +346,7 @@ package classes
 				//Only one possible scheme - conditional syllogism
 				if(claim.implies)
 				{
-				
+					
 					if(!schemeSelected)
 					{
 						reasons[0].makeEditable();
@@ -381,9 +381,6 @@ package classes
 					parentMap.option.visible = false;
 					claim.removeEventListeners();
 					this.visible = true;
-					
-					
-					//dispatchEvent(new Event(REASON_ADDED));
 				}
 				else
 				{
@@ -457,23 +454,68 @@ package classes
 			}
 		}
 		
-		public function addReasonToMap(event:Event):void{
+		protected function reasonInserted(event:Event):void{
+			//getting response XML from insert.php
 			var responseXML:XML = XML(event.target.data);
+			//adding it to insert node
+			var xml:XML = <insert></insert>;
+			xml.appendChild(responseXML);
+			
+			//requesting load_map.php with new timestamp
+			var urlRequest:URLRequest = new URLRequest;
+			urlRequest.url = "http://agora.gatech.edu/dev/load_map.php";
+			var timestamp:String;
+			
+			if(parentMap.timestamp == null){
+				timestamp = "0";
+			}else{
+				timestamp = parentMap.timestamp;
+			}
+			
+			var urlRequestVars:URLVariables = new URLVariables("map_id="+parentMap.ID + "&" + "timestamp=" + timestamp);
+			urlRequest.data = urlRequestVars;
+			urlRequest.method = URLRequestMethod.GET;
+			var urlLoader:URLLoader = new URLLoader;
+			urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
+				var loadResponseVariables:XML = XML(event.target.data);
+				var loadXML:XML = <load></load>;
+				loadXML.appendChild(loadResponseVariables);
+				var insertLoad:XML = <xmldata></xmldata>;
+				insertLoad.appendChild(xml);
+				insertLoad.appendChild(loadXML);
+				addReasonToMap(insertLoad);
+			});
+			urlLoader.load(urlRequest);
+		}
+		
+		public function addReasonToMap(responseXML:XML):void{
+			//var responseXML:XML = XML(event.target.data);
+			//trace(responseXML);
 			//separate XML for Argument Panel
 			var reasonXML:XML = new XML("<map></map>");
-			var textboxList:XMLList = responseXML.textbox;
+			var textboxList:XMLList = responseXML.insert.map.textbox;
 			reasonXML.appendChild(textboxList);
-			var firstNodeText:XML = responseXML.node[0];
+			var firstNodeText:XML = responseXML.insert.map.node[0];
 			reasonXML.appendChild(firstNodeText);
+			
+			
 			var tmp:ArgumentPanel = new ArgumentPanel();
 			tmp._initXML = reasonXML;
+			for each( var lXML:XML in responseXML.load.map.node){
+				if( lXML.@ID == responseXML.insert.map.node[0].@ID){
+					tmp.gridX = lXML.@x;
+					tmp.gridY = lXML.@y;
+				}
+			}
+			
+			parentMap.layoutManager.registerPanel(tmp);
 			parentMap.addElement(tmp);
-			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);		
+			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);
+			
 			try{
 				reasons.push(tmp);
 				//connectionIDs.push(connections++);
 				tmp.inference = this;
-				parentMap.layoutManager.registerPanel(tmp);
 				//create an invisible box in the inference rule
 				var tmpInput:DynamicTextArea = new DynamicTextArea();
 				//visual
@@ -493,6 +535,7 @@ package classes
 				//tmp.input1.forwardList.push(tmpInput);
 				//this new reason's input1 text forwards to that invisible box
 				dispatchEvent(new Event(REASON_ADDED,true,false));
+				
 			}catch (e:Error)
 			{
 				Alert.show(e.toString());
@@ -508,7 +551,7 @@ package classes
 			urlRequest.data = urlRequestVars;
 			urlRequest.method = URLRequestMethod.GET;
 			var urlLoader:URLLoader = new URLLoader;
-			urlLoader.addEventListener(Event.COMPLETE, addReasonToMap);
+			urlLoader.addEventListener(Event.COMPLETE, reasonInserted);
 			urlLoader.load(urlRequest);
 		}
 		

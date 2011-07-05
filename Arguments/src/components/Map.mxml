@@ -15,7 +15,6 @@
 		</s:HGroup>
 		<s:Scroller id="agora">	
 			<s:Group>
-			  
 				<mx:Canvas>
 					<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" minWidth="1400" minHeight="800">	
 						<mx:Canvas id="canvas" width="150" visible="false">
@@ -28,7 +27,6 @@
 						</mx:Canvas>
 					</classes:AgoraMap>	
 				</mx:Canvas>
-				
 			</s:Group>
 		</s:Scroller>
 	</s:VGroup>
@@ -76,6 +74,30 @@
 			{
 			}
 			
+			
+			public function update():void{
+				//agoraMap.enabled = false;
+				var xml:XML;
+				xml = agoraMap.getMapXml();
+				if(xml.error.length > 0)
+				{
+					Alert.show("Error occurred in saving map");
+					return;
+				}	
+				
+				var urlRequestMap:URLRequest = new URLRequest;
+				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
+				urlRequestMap.data = urlRequestVarsMap;
+				urlRequestMap.method = URLRequestMethod.GET;
+				var urlLoaderMap:URLLoader = new URLLoader;
+				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
+					//agoraMap.enabled = true;
+				});
+				urlLoaderMap.load(urlRequestMap);
+			}
+			
+			
 			public function saveMap(event:MouseEvent):void
 			{
 				var xml:XML;
@@ -94,13 +116,9 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
-					//Alert.show(retXMLMap.toXMLString());
-					Alert.show("Map saved");
 					hideMap();
-					
 				});
-				urlLoaderMap.load(urlRequestMap);
-				
+				urlLoaderMap.load(urlRequestMap);	
 			}
 			
 			public function updateSize(event:Event):void

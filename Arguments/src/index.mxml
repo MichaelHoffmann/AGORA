@@ -68,6 +68,16 @@
 			}
 			
 			
+			public function signIn(event:MouseEvent):void{
+				var loginWindow:LoginWindow = new LoginWindow;
+				PopUpManager.addPopUp(loginWindow,this,true);
+				PopUpManager.centerPopUp(loginWindow);
+				loginWindow.addEventListener("verification", function(event:Event):void{
+					loadMyMapList();
+				});
+			}
+			
+			
 			public function createMap(event:MouseEvent):void
 			{
 				if(!UserData.isValid())

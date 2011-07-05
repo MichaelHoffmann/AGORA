@@ -14,6 +14,8 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import classes.MapMetaData;
+			
 			import mx.core.FlexGlobals;
 			
 			import spark.components.Button;
@@ -27,6 +29,7 @@
 			
 			protected override function commitProperties():void{
 				super.commitProperties();
+				var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
 				if(mapList != null){
 					if(mapsGroup.numElements > 0){
 						mapsGroup.removeAllElements();
@@ -40,22 +43,27 @@
 						}catch(error:Error){
 							trace("is_deleted not available yet");
 						}
-						trace(mapList.toXMLString());
-						var mapObject:Object = new Object;
-						mapObject.mapId = int(map.attribute("ID"));
-						mapObject.title = map.attribute("title");
+						//var mapObject:Object = new Object;
+						var mapMetaData:MapMetaData = new MapMetaData;
+						mapMetaData.mapID = int(map.attribute("ID")); 
+						mapMetaData.mapName = map.attribute("title"); 
+						mapMetaDataVector.push(mapMetaData);
+						
+						
+						
+					}
+					mapMetaDataVector.sort(MapMetaData.isGreater);
+					for each(var mapMetaData:MapMetaData in mapMetaDataVector){
 						var mapButton:Button = new Button;
 						mapButton.width = 170;
-						mapButton.name = mapObject.mapId.toString();
+						mapButton.name = mapMetaData.mapID.toString();
 						mapButton.addEventListener(MouseEvent.CLICK, FlexGlobals.topLevelApplication.loadMap);
-						mapButton.label = mapObject.title;
+						mapButton.label = mapMetaData.mapName;
 						mapsGroup.addElement(mapButton);
-						FlexGlobals.topLevelApplication.maps_map[mapObject.mapId] = mapObject;
+						//FlexGlobals.topLevelApplication.maps_map[mapObject.mapId] = mapObject;
 					}
 				}
 			}
-			
-			
 		]]>
 	</fx:Script>
 </s:Panel>
