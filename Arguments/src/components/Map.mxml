@@ -105,6 +105,7 @@
 				if(xml.error.length > 0)
 				{
 					Alert.show("Error occurred in saving map");
+					hideMap();
 					return;
 				}	
 				
@@ -116,8 +117,9 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
-					trace("Map Saved");
-					trace(retXMLMap.toXMLString());
+					if( XMLList(retXMLMap.error).length() > 0){
+						Alert.show(retXMLMap.error[0].@text);
+					}
 					hideMap();
 				});
 				urlLoaderMap.load(urlRequestMap);	

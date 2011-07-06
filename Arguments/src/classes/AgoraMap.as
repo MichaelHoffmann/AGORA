@@ -395,6 +395,8 @@ package classes
 		}
 		
 		public function load(xmlData:XML):void{
+			
+			try{
 			//var xmlData:XML = new XML(event.target.data);
 			
 			ID = xmlData.@ID;
@@ -599,6 +601,9 @@ package classes
 				//aPanel.makeUnEditable();
 				//make all of the boxes uneditable
 				
+			}
+			}catch(error:Error){
+				Alert.show("There was an error in loading the map. The map is corrupted, and may not be correct ...");
 			}
 			layoutManager.layoutComponents();
 		}
