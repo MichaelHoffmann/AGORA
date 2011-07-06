@@ -116,6 +116,8 @@
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
 					var retXMLMap:XML =  XML(eventMap.target.data);
+					trace("Map Saved");
+					trace(retXMLMap.toXMLString());
 					hideMap();
 				});
 				urlLoaderMap.load(urlRequestMap);	

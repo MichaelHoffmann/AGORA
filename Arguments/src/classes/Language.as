@@ -35,20 +35,6 @@ package classes
 		}
 
 		
-		/**The key function. Use this to look up a label from the translation document according to the set language.*/
-		/*
-		public static function lookup(label:String):String{
-			if(!ready){
-				init();				
-			}
-			trace("Now looking up:" + label);
-			var lbl:XMLList = xml.descendants(label);
-			var lang:XMLList = lbl.descendants(language);
-			var output:String = lang.attribute("text");
-			trace("Output is: " + output);
-			return output;
-		}
-		*/
-		
+		/**The key function. Use this to look up a label from the translation document according to the set language.*/		
 	}
 }
