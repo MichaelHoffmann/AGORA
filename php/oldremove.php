@@ -19,6 +19,29 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
+	
+	
+/**
+List of variables for insertion:
+	* HTTP Query variables:
+	xml: The XML of map data to remove (or remove things from)
+	uid: User ID of the user removing the data
+	pass_hash: the hashed password of the user removing the data
+	
+	* XML data:
+		MAP level:
+			id or ID: the ID of the map to be modified. 0 or nonexistent creates a new map and ignores everything else.
+			remove: If this is a string PHP recognizes as true ("1", "true", etc), delete the map.
+		
+		IN-MAP level:
+			node: remove a node
+				ID: ID of an existing node
+			
+			Other things do not need to be deleted explicitly because the database code contains logic for "chaining" deletes.
+			Since we are not TRULY deleting it, but setting a flag, this does not use ON DELETE CASCADE.
+			For details, look at agora.sql and examine the ON UPDATE triggers.
+
+*/
 	require 'checklogin.php';
 	require 'establish_link.php';
 	/**
@@ -26,7 +49,6 @@
 	*/
 	function removeNode($node, $mapID, $linkID, $userID)
 	{
-		//TODO: this should be working on the "is_deleted" flag rather than outright removal
 		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["ID"]);
@@ -35,9 +57,13 @@
 		$row = mysql_fetch_assoc($resultID);
 		if($userID == $row["user_id"]){
 			print "<BR>Now deleting....<BR>";
-			$dquery = "DELETE FROM nodes WHERE node_id=$nID";
-			print $dquery;
-			return mysql_query($dquery, $linkID);
+			$uquery = "UPDATE nodes SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
+			print $uquery;
+			$retval = mysql_query($uquery, $linkID);
+			if(!$retval){
+				return $retval;
+			}			
+			return $retval;
 		}else{
 			print "<BR>You are attempting to delete someone else's work or a nonexistent node. This is not permissible.";
 			return false;
@@ -45,8 +71,6 @@
 	}
 	/**
 	*	Convenience function. Iterates throughout the database. Separated from main logic for clarity.
-	*	Doesn't delete anything but nodes directly.
-	*	The MySQL "ON DELETE CASCADE" takes care of the rest.
 	*	http://dev.mysql.com/doc/refman/5.5/en/innodb-foreign-key-constraints.html
 	*/
 	function xmlToDB($xml, $mapID, $linkID, $userID)	
@@ -93,11 +117,30 @@
 		$xml = new SimpleXMLElement($xmlin);
 		$mapID = $xml['ID'];
 		$mapClause = mysql_real_escape_string("$mapID");
+		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:
+		$mapID = $xml['id'];
+		if($mapID && !$mapClause){
+			$mapClause=$mapID;
+		}
+		$delMap = mysql_real_escape_string($xml['remove']);
 		//Check to see if the map already exists
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
-		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
+		$resultID = mysql_query($query, $linkID) or die ("Cannot get map! Query was: $query"); 
 		$row = mysql_fetch_assoc($resultID);
-		if($mapClause==0 or mysql_num_rows($resultID)==0){
+		$UID = $row['user_id'];
+		if($delMap && $mapClause!=0){
+			if($UID!=$userID){
+				print "You cannot delete someone else's map!";
+				return;
+			}		
+			$query = "UPDATE maps SET is_deleted=1, modified_date=NOW() WHERE map_id=$mapClause";
+			$success = mysql_query($query, $linkID);
+			if($success){
+				print "Successfully deleted the map!";
+			}else{
+				print "Could not delete the map!";
+			}
+		}else if($mapClause==0 or mysql_num_rows($resultID)==0){
 			print "This map does not exist, therefore you cannot remove things from this map.";
 		}else{
 			//the map exists, and now we operate on it
@@ -123,4 +166,5 @@
 	$pass_hash = $_REQUEST['pass_hash'];
 	$output = remove($xmlparam, $userID, $pass_hash); 
 	//print($output->asXML()); //TODO: turn this back on when output XML is set up
+>>>>>>> dev
 ?>
