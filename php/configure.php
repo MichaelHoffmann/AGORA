@@ -23,7 +23,7 @@
 	/** dbName: name of the database to use */
 	$dbName = "agoraDev";
 	/** dirName: name of the current directory */
-	$dirName = "release";
+	$dirName = "dev";
 	/** version: current version number */
 	$version = "11.7.8"
 ?>
