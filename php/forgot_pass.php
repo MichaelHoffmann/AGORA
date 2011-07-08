@@ -19,6 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
+	require 'configure.php';
 	require 'establish_link.php';
 	/**
 	*	Function for emailing users who forget their password.
@@ -26,7 +27,7 @@
 	function forgot_pass($username)
 	{
 		$linkID= establishLink();
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
+		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");
 		$query = "SELECT * FROM users WHERE username='$userclause'";
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 

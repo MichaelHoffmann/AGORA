@@ -19,6 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
+	require 'configure.php';
 	require 'establish_link.php';
 	/**
 	*	Function that loads a map from the database.
@@ -27,7 +28,7 @@
 	function get_map($mapID, $timestamp){
 		//Standard SQL connection stuff
 		$linkID= establishLink();
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
+		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 		$whereclause = mysql_real_escape_string("$mapID");
 		$timeclause = mysql_real_escape_string("$timestamp");
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause AND maps.is_deleted = 0";

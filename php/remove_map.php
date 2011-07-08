@@ -34,6 +34,7 @@ List of variables for insertion:
 				id: the ID of the map to be modified. 0 or nonexistent creates a new map and ignores everything else.
 */
 
+	require 'configure.php';
 	require 'checklogin.php';
 	require 'establish_link.php';
 
@@ -88,7 +89,7 @@ function remove($xmlin, $userID, $pass_hash)
 {
 	//Standard SQL connection stuff
 	$linkID= establishLink();
-	mysql_select_db("agora", $linkID) or die ("Could not find database");
+	mysql_select_db($dbName, $linkID) or die ("Could not find database");
 
 	if(!checkLogin($userID, $pass_hash, $linkID)){
 		print "Incorrect login!";

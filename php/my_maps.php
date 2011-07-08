@@ -19,6 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
+	require 'configure.php';
 	require 'checklogin.php';
 	require 'establish_link.php';
 	
@@ -31,7 +32,7 @@
 	
 	
 	$linkID= establishLink();
-	mysql_select_db("agora", $linkID) or die ("Could not find database");
+	mysql_select_db($dbName, $linkID) or die ("Could not find database");
 	if(!checkLogin($userID, $pass_hash, $linkID)){
 		print "Login failed!";
 		return;

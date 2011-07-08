@@ -19,15 +19,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
-	
+	require 'configure.php';
 	require 'establish_link.php';
+	
 	/**
 	*	Function for allowing a user to change his own information.
 	*/
 	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $newpass)
 	{
 		$linkID= establishLink();
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
+		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
 		$fnclause = mysql_real_escape_string("$firstname");

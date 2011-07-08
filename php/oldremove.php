@@ -42,6 +42,7 @@ List of variables for insertion:
 			For details, look at agora.sql and examine the ON UPDATE triggers.
 
 */
+	require 'configure.php';
 	require 'checklogin.php';
 	require 'establish_link.php';
 	/**
@@ -106,7 +107,7 @@ List of variables for insertion:
 	{
 	//Standard SQL connection stuff
 		$linkID= establishLink();
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
+		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
 			print "Incorrect login!";

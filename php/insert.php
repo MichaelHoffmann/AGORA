@@ -67,8 +67,11 @@ List of variables for insertion:
 					nodeTID: Temporary ID of the node, for when you're doing it all in one step.
 
 */
+	require 'configure.php';
 	require 'checklogin.php';
 	require 'establish_link.php';
+	
+	
 	$tbTIDarray;
 	$nodeTIDarray;
 	/**
@@ -432,7 +435,7 @@ List of variables for insertion:
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
+		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
 			$fail=$output->addChild("error");
