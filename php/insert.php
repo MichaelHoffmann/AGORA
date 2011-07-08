@@ -248,7 +248,7 @@ List of variables for insertion:
 				}
 			}else{
 				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
+				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent node. This is not permissible.");
 				return false;
 			}
 		}else{
