@@ -1043,4 +1043,36 @@
 		<RUS text="Щелкните, чтобы видеть четыре опции, чтобы перезаписать части автоматически создаваемой структуры Вашего аргумента"/>
 		<GER text="Klicke hier, um vier Möglichkeiten zu sehen, Teile der automatisch generierten Struktur eines Argumentes zu überschreiben "/>
 	</FourOptions>
+	
+	<!-- 
+		These translations can be used in arguments so long as the language allows similar phrase structure.
+		A more robust system (see translation_schemes for an idea) would be needed if a language had greatly different argumentation layout.
+	-->
+	<ArgIf>
+		<EN-US text="If "/>
+		<RUS text="Если "/>
+		<GER text="Wenn "/>
+	</ArgIf>
+	<ArgAnd>
+		<EN-US text=" and "/>
+		<RUS text=" и "/>
+		<GER text=" und "/>
+	</ArgAnd>
+	<ArgImplies>
+		<EN-US text=" implies "/>
+		<RUS text=" подразумевает "/>
+		<GER text=" impliziert "/>
+	</ArgImplies>	
+	<ArgThen>
+		<EN-US text=", then "/>
+		<RUS text=", то "/>
+		<GER  text=", dann "/>
+	</ArgThen>
+	
+	
+	
+	
+	
+	
+	
 </Translations>
