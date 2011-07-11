@@ -27,6 +27,8 @@ package logic
 	import mx.controls.Alert;
 	import mx.messaging.channels.StreamingAMFChannel;
 	
+	import classes.Language;
+	
 	public class ModusPonens extends ParentArg
 	{
 		
@@ -110,13 +112,13 @@ package logic
 			switch(inference.myschemeSel.selectedType) {
 				case _langTypes[0]:
 					reasonStr = "";
-					output += "If ";
+					output += Language.lookup("ArgIfCap");
 					for(i=0; i < reason.length - 1; i++)
 					{
-						output += reason[i].stmt + " and if ";
-						reasonStr = reasonStr + reason[i].stmt + " and if ";
+						output += reason[i].stmt + Language.lookup("ArgAnd") + Language.lookup("ArgIf");
+						reasonStr = reasonStr + reason[i].stmt + Language.lookup("ArgAnd") + Language.lookup("ArgIf");
 					}
-					output += reason[i].stmt + ", then " + claim.stmt;
+					output += reason[i].stmt + Language.lookup("ArgThenComma") + claim.stmt;
 					reasonStr = reasonStr + reason[i].stmt;
 					inference.inputs[1].text = reasonStr;
 					inference.inputs[0].text = claim.stmt;
@@ -124,7 +126,7 @@ package logic
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[1]: // Implies
-					output += reason[0].stmt + " implies " + claim.stmt;
+					output += reason[0].stmt + Language.lookup("ArgImplies") + claim.stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
 					inference.inputs[0].forwardUpdate();
