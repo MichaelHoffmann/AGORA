@@ -134,7 +134,7 @@ package logic
 					break;
 				case _langTypes[2]: //Whenever
 					reasonStr = "";
-					output += "Whenever "
+					output += Language.lookup("ArgWhenever");
 					for(i=0;i<reason.length-1;i++)
 					{
 						output += reason[i].stmt + " and ";

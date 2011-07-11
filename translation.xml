@@ -1048,7 +1048,16 @@
 		These translations can be used in arguments so long as the language allows similar phrase structure.
 		A more robust system (see translation_schemes for an idea) would be needed if a language had greatly different argumentation layout.
 	-->
-	
+	<ArgAnd>
+		<EN-US text=" and "/>
+		<RUS text=" и "/>
+		<GER text=" und "/>
+	</ArgAnd>
+	<ArgAndIf>
+		<EN-US text=" and if"/>
+		<RUS text=" и если "/>
+		<GER text=" und wenn "/>
+	</ArgAndIf>
 	<ArgIf>
 		<EN-US text="if "/>
 		<RUS text="если "/>
@@ -1059,11 +1068,6 @@
 		<RUS text="Если "/>
 		<GER text="Wenn "/>
 	</ArgIfCap>
-	<ArgAnd>
-		<EN-US text=" and "/>
-		<RUS text=" и "/>
-		<GER text=" und "/>
-	</ArgAnd>
 	<ArgImplies>
 		<EN-US text=" implies "/>
 		<RUS text=" подразумевает "/>
@@ -1079,7 +1083,11 @@
 		<RUS text=", то "/>
 		<GER  text=", dann "/>
 	</ArgThenComma>
-	
+	<ArgWhenever>
+		<EN-US text="Whenever "/>
+		<RUS text="Всякий раз, когда "/>
+		<GER text="Immer wenn "/>
+	</ArgWhenever>
 	
 	
 	
