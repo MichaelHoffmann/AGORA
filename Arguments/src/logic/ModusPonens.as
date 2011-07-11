@@ -110,7 +110,7 @@ package logic
 			switch(inference.myschemeSel.selectedType) {
 				case _langTypes[0]:
 					reasonStr = "";
-					output += "If "
+					output += "If ";
 					for(i=0; i < reason.length - 1; i++)
 					{
 						output += reason[i].stmt + " and if ";
