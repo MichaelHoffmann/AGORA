@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" applicationComplete="loadData();" xmlns:components="components.*" >
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600"
+			   xmlns:components="components.*"
+			   xmlns:Skins ="Skins.*"
+			   preinitialize="application_preinitializeHandler(event)"
+			   >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Canvas id="agoraMenu" width="800" minHeight="600" name="agoraMenu">
-		<s:VGroup id="Agora">
-			<s:HGroup paddingLeft="25" paddingTop="25">
-				<s:Label text="Welcome to AGORA...">
-				</s:Label>	
-			</s:HGroup>
-			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
-				
-				 <components:MapListPanel id="mapList" title="List of Maps" width="200" height="400"></components:MapListPanel>
-				
-				<components:MyMapsPanel id="myMaps" title="My Maps" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
-				
-				<s:Panel  id="projects" title="Projects" width="200" minHeight="400">	
-				</s:Panel>
-			</s:HGroup>
-			<s:HGroup paddingLeft="25" paddingTop="25">
-				<s:Button id="createMapBtn" label="Create Map">
-				</s:Button >
-				<s:Button id="createProjectBtn" label="Create Project" click="Alert.show('This feature is not yet functional and is in the development process ...');">
-				</s:Button>
-			</s:HGroup>
-		</s:VGroup>	
-	</mx:Canvas>
 	
+	<components:Menu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
+	</components:Menu>
 	
 	<fx:Script>
 		<![CDATA[
+			import Model.AGORAModel;
+			
 			import classes.AgoraMap;
 			import classes.ArgumentPanel;
 			import classes.UserData;
@@ -40,17 +26,25 @@
 			import components.LoginWindow;
 			import components.Map;
 			import components.MapName;
+			import components.RegisterPanel;
+			
+			import mx.events.FlexEvent;
+			
+			//Model
+			private var model:AGORAModel;
+			//PopUp Window
+			public var loginWindow:LoginWindow;
+			//Registration Window
+			public var registrationWindow:RegisterPanel;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			public var username:String;
 			public var pass_hash:String;
-			
 			public var maps_map:Dictionary;
-			
 			public var presetMapName:String;
 			
-			
+			/*
 			public function createmap():void
 			{
 				var mapNameDialog:MapName = new MapName;
@@ -66,18 +60,9 @@
 			{
 				createmap();
 			}
+			*/
 			
-			
-			public function signIn(event:MouseEvent):void{
-				var loginWindow:LoginWindow = new LoginWindow;
-				PopUpManager.addPopUp(loginWindow,this,true);
-				PopUpManager.centerPopUp(loginWindow);
-				loginWindow.addEventListener("verification", function(event:Event):void{
-					loadMyMapList();
-				});
-			}
-			
-			
+			/*
 			public function createMap(event:MouseEvent):void
 			{
 				if(!UserData.isValid())
@@ -92,12 +77,14 @@
 					createmap();
 				}
 			}
-			
+			*/
+			/*
 			public function showMenu():void
 			{
 				agoraMenu.visible = true;
 			}
-			
+			*/
+			/*
 			protected function drawMap(event:Event):void
 			{
 				trace("In draw map");
@@ -109,7 +96,8 @@
 				ArgumentPanel.parentMap = map.agoraMap;
 				map.agoraMap.load(xml);
 			}
-			
+			*/
+			/*
 			public function displayMap(button:Button):void
 			{
 				//var button:Button = Button(event.target);
@@ -124,7 +112,9 @@
 				loader.load(request);
 				
 			}
+			*/
 			
+			/*
 			public function loadMyMapList():void
 			{
 				if(UserData.isValid())
@@ -145,6 +135,9 @@
 					loader.load(request);
 				}
 			}
+			*/
+			
+			/*
 			
 			public function loadMap(event:MouseEvent):void{
 				if(!UserData.isValid())
@@ -161,15 +154,17 @@
 				}
 				
 			}
+			*/
 			
-			
-			
+			/*
 			private function errorHandler(event:IOErrorEvent):void
 			{
 				Alert.show("A communication error occurred duing interaction with server");
 				
 			}
+			*/
 			
+			/*
 			public function loadMapList():void
 			{
 				//create a request object
@@ -190,12 +185,10 @@
 				loader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
 				loader.load(request);
 			}
+			*/
+
 			
-			public function loadProjectList():void
-			{
-				
-			}
-			
+			/*
 			public function loadData():void
 			{
 				maps_map = new Dictionary;
@@ -203,7 +196,14 @@
 				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
 				loadProjectList();
 			}
+			*/
 			
+
+			protected function application_preinitializeHandler(event:FlexEvent):void
+			{
+				model = AGORAModel.getInstance();
+			}
+
 		]]>
 	</fx:Script>
 </s:Application>

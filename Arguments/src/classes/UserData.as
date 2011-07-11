@@ -49,7 +49,7 @@ package classes
 			{
 				userNameStr = "";
 			}
-			object.verifyLogin();
+			//object.verifyLogin();
 		}
 		
 		public static function isValid():Boolean
@@ -67,7 +67,7 @@ package classes
 		private static function errorHandler(event:IOErrorEvent, object:LoginWindow):void
 		{
 			Alert.show("Error occurred when trying to contact server");
-			object.verifyLogin();
+			//object.verifyLogin();
 		}
 		
 		public static function validateUser(userName:String, passHash:String, object:LoginWindow):void

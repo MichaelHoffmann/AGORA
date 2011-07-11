@@ -51,20 +51,23 @@
 			import spark.components.Group;
 			
 			public function startWithClaim():void {
+				/*
 				var map:Map = new Map;
 				var group:Group = Group(this.parent);
 				group.addElement(map);
 				map.addEventListener("created",function(event:Event):void{map.addClaim();});
 				group.removeElement(this);
+				*/
 			}
 			
 			public function startWithScheme():void {
-				var map:Map = new Map;
+				
+/* 				var map:Map = new Map;
 				var group:Group = Group(this.parent);
 				group.addElement(map);
 				map.addEventListener("created",function(event:Event):void{map.addEmptyArgument();});	
 				group.removeElement(this);
-			}
+ */			}
 			
 			public function init():void {
 				argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";

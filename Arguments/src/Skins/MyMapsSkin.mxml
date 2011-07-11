@@ -4,7 +4,16 @@
 			 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="400">
 	<fx:Script>
 		<![CDATA[
+			import Controller.UserSessionController;
+			
 			import mx.core.FlexGlobals;
+
+			protected function userInfoTxt_clickHandler(event:MouseEvent):void
+			{
+				var userSessionController:UserSessionController = new UserSessionController;
+				userSessionController.showSignInBox();
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -71,7 +80,7 @@
 				</s:layout>	
 			</s:Group>
 			<s:Group id="labelGroup" visible.loggedIn="false" visible.notLoggedIn= "true">
-				<s:Label id="userInfoTxt" x="28" y="118" visible.loggedIn="false" visible.notLoggedIn="true"  click="FlexGlobals.topLevelApplication.signIn(event)" textDecoration="underline">
+				<s:Label id="userInfoTxt" x="28" y="118" visible.loggedIn="false" visible.notLoggedIn="true"  click="userInfoTxt_clickHandler(event)" textDecoration="underline">
 					<s:text>Sign In to view your maps</s:text>
 				</s:Label>
 				
