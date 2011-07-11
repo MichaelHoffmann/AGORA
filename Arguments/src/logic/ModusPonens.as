@@ -137,8 +137,8 @@ package logic
 					output += Language.lookup("ArgWhenever");
 					for(i=0;i<reason.length-1;i++)
 					{
-						output += reason[i].stmt + " and ";
-						reasonStr += reason[i].stmt + " and ";
+						output += reason[i].stmt + Language.lookup("ArgAnd");
+						reasonStr += reason[i].stmt + Language.lookup("ArgAnd");
 					}
 					output += reason[i].stmt + ", "+ claim.stmt;
 					reasonStr = reasonStr + reason[i].stmt;
