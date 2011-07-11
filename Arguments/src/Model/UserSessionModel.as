@@ -92,7 +92,7 @@ package Model
 			dispatchEvent( new NetworkEvent(NetworkEvent.FAULT));
 		}
 		
-		//---------------- Registration------------------------------------//
+		//---------------- Registration-----------------------------//
 		public function register(userData:UserDataVO):void{
 			var registrationRequestService:HTTPService = new HTTPService;
 			passHash = MD5.hash(userData.password + _salt);
@@ -124,8 +124,5 @@ package Model
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new NetworkEvent(NetworkEvent.FAULT));
 		}
-		
-		
-		
 	}
 }

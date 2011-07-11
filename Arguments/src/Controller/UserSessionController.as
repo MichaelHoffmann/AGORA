@@ -61,8 +61,11 @@ package Controller
 			event.target.removeEventListener(NetworkEvent.FAULT, onFault);
 			trace("User Authenticated");
 			removeSignInBox();
+			
 			var agoraController:AGORAController = new AGORAController;
-			agoraController.fetchDataMyMaps();	
+			agoraController.fetchDataMyMaps();
+			//FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateProperties();
+			//FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateDisplayList();
 		}
 		
 		protected function onAuthenticationFailure(event:NetworkEvent):void{
@@ -108,7 +111,7 @@ package Controller
 			}catch(error:Error){
 				event.target.removeEventListener(NetworkEvent.AUTHENTICATED, onAuthentication);
 				event.target.removeEventListener(NetworkEvent.USER_INVALID, onAuthenticationFailure);
-			}finally{
+				}finally{
 				event.target.removeEventListener(NetworkEvent.FAULT, onFault);	
 			}
 			Alert.show("Could not contact Authenticaion Server. Please make sure you are connected to the Internet");

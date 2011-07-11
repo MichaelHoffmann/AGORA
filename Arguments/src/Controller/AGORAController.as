@@ -29,7 +29,7 @@ package Controller
 		
 		public function fetchDataMyMaps():void{
 			if(AGORAModel.getInstance().userSessionModel.uid){
-				
+				AGORAModel.getInstance().myMapsModel.requestMapList();
 			}
 		}
 		
@@ -38,6 +38,7 @@ package Controller
 			var mapListModel:MapListModel = AGORAModel.getInstance().mapListModel;
 			mapListModel.removeEventListener(NetworkEvent.MAP_LIST_FETCHED, onMapListFetched);
 			mapListModel.removeEventListener(NetworkEvent.FAULT, onFault);
+			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateSkinState();
 			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateDisplayList();
 		}
