@@ -148,7 +148,7 @@ package logic
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[3]: // Only if
-					output += reason[0].stmt + " only if " + claim.stmt;
+					output += reason[0].stmt + Language.lookup("ArgOnlyIf") + claim.stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
 					inference.inputs[0].forwardUpdate();
@@ -156,11 +156,11 @@ package logic
 					break;
 				case _langTypes[4]: // Provided that
 					reasonStr = "";
-					output += claim.stmt + " provided that ";
+					output += claim.stmt + Language.lookup("ArgProvidedThat");
 					for(i=0;i<reason.length-1;i++)
 					{
-						output += reason[i].stmt + " and ";
-						reasonStr += reason[i].stmt + " and ";
+						output += reason[i].stmt + Language.lookup("ArgAnd");
+						reasonStr += reason[i].stmt + Language.lookup("ArgAnd");
 					}
 					output += reason[i].stmt;
 					reasonStr = reasonStr + reason[i].stmt;
@@ -170,35 +170,35 @@ package logic
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[5]: // Sufficient condition
-					output += reason[0].stmt + " is a sufficient condition for " + claim.stmt;
+					output += reason[0].stmt + Language.lookup("ArgSufficientCond") + claim.stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[6]: // Necessary condition
-					output += claim.stmt + " is a necessary condition for " + reason[0].stmt;
+					output += claim.stmt + Language.lookup("ArgNecessaryCond") + reason[0].stmt;
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[7]: //If and only if
-					output += claim.stmt + " if and only if " + reason[0].stmt; 	// IMP!! TODO: if-and-only-if2 : both claim and reason negated
+					output += claim.stmt + Language.lookup("ArgIff") + reason[0].stmt; 	// IMP!! TODO: if-and-only-if2 : both claim and reason negated
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[8]: //Necessary and sufficient condition
-					output += claim.stmt + " is a necessary and sufficient condition for " + reason[0].stmt; 	
+					output += claim.stmt + Language.lookup("ArgNecSuf") + reason[0].stmt; 	
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;// TODO: Necessary-and-sufficient2 : both claim and reason negated
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[9]: //Equivalent
-					output += claim.stmt + " and " + reason[0].stmt + " are equivalent"; 	// TODO: Equivalent2 : both claim and reason negated		
+					output += claim.stmt + Language.lookup("ArgAnd") + reason[0].stmt + Language.lookup("ArgEquiv"); 	// TODO: Equivalent2 : both claim and reason negated		
 					inference.inputs[1].text = reason[0].stmt;
 					inference.inputs[0].text = claim.stmt;
 					inference.inputs[0].forwardUpdate();
