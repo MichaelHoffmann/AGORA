@@ -66,7 +66,7 @@ package classes
 							return new ModusTollens;
 						case "DisjSyl":
 							return new DisjunctiveSyllogism;
-						case "NotALLSyl":
+						case "NotAllSyl":
 							return new NotAllSyllogism;
 						case "CS":
 							return new ConditionalSyllogism;
@@ -223,6 +223,7 @@ package classes
 						</node>
 						<connection></connection>
 						</map>;
+		
 			xml.@ID = ID;
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -390,16 +391,18 @@ package classes
 			}catch(error:Error){
 				return (<map><error text="Map was not saved ..." /></map>);
 			}
-			
+			trace(xml.toXMLString());
 			return xml;
 		}
 		
 		public function load(xmlData:XML):void{
 			
-			try{
+			//try{
 			//var xmlData:XML = new XML(event.target.data);
 			
 			ID = xmlData.@ID;
+			trace('This is the id of the map ' + id);
+			trace(ID);
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
@@ -602,9 +605,9 @@ package classes
 				//make all of the boxes uneditable
 				
 			}
-			}catch(error:Error){
-				Alert.show("There was an error in loading the map. The map is corrupted, and may not be correct ...");
-			}
+			//}catch(error:Error){
+			//	Alert.show("There was an error in loading the map. The map is corrupted, and may not be correct ...");
+			//}
 			layoutManager.layoutComponents();
 		}
 		

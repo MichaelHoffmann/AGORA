@@ -19,6 +19,10 @@ package logic
 		{
 			return _dbType;
 		}
+
+		override public function getLanguageType(dbString:String):String{
+			return _langTypes[0];
+		}
 		
 		override public function createLinks():void
 		{
