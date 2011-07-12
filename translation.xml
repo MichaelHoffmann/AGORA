@@ -1053,27 +1053,22 @@
 		<RUS text=" и "/>
 		<GER text=" und "/>
 	</ArgAnd>
-	<ArgAndComma>
-		<EN-US text=", and "/>
-		<RUS text=", и "/>
-		<GER text=", und "/>
-	</ArgAndComma>
 	<ArgAndIf>
 		<EN-US text=" and if"/>
 		<RUS text=" и если "/>
 		<GER text=" und wenn "/>
 	</ArgAndIf>
-	<ArgAndIfComma>
-		<EN-US text=", and if"/>
-		<RUS text=", и если "/>
-		<GER text=", und wenn "/>
-	</ArgAndIfComma>
 	
 	<ArgEither>
+		<EN-US text="either "/>
+		<RUS text="или "/>
+		<GER text="entweder "/>
+	</ArgEither>
+	<ArgEitherCap>
 		<EN-US text="Either "/>
 		<RUS text="Или "/>
 		<GER text="Entweder "/>
-	</ArgEither>
+	</ArgEitherCap>
 	
 	<ArgEquiv>
 		<EN-US text=" are equivalent"/>
