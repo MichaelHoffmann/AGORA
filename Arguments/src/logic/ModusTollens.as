@@ -21,6 +21,7 @@ package logic
 	 
 	 */
 	import classes.ArgumentPanel;
+	import classes.Language;
 	
 	import mx.controls.Alert;
 	
