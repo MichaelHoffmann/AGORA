@@ -1153,11 +1153,6 @@
 		<RUS text="; поэтому, "/>
 		<GER text="; deshalb, "/>
 	</ArgTherefore>
-	<ArgThereforeIf>
-		<EN-US text="; therefore, if "/>
-		<RUS text="; поэтому, если "/>
-		<GER text="; deshalb, wenn "/>
-	</ArgThereforeIf>
 	
 	<ArgWhenever>
 		<EN-US text="Whenever "/>
