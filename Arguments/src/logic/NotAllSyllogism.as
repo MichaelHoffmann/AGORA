@@ -22,6 +22,7 @@ package logic
 	 
 	 */
 	import classes.ArgumentPanel;
+	import classes.Language;
 	
 	import mx.controls.Alert;
 
@@ -95,10 +96,10 @@ package logic
 			var reasonStr:String;
 			var i:int;
 			
-			output += "It cannot be the case, at the same time, that ";
+			output += Language.lookup("ArgCannotBe");
 			for(i=0;i<inference.reasons.length;i++)
 			{
-					output += inference.reasons[i].stmt + " and that ";
+					output += inference.reasons[i].stmt + Language.lookup("ArgAnd") + Language.lookup("ArgThat");
 					//inference.inputs[i+1].text = inference.reasons[i].stmt;
 					//inference.inputs[i+1].forwardUpdate();
 			}
