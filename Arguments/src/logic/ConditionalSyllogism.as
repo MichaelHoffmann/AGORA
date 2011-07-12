@@ -23,8 +23,10 @@ package logic
 	import classes.ArgumentPanel;
 	import classes.DynamicTextArea;
 	import classes.Inference;
+	import classes.Language;
 	
 	import mx.controls.Alert;
+	
 	
 	public class ConditionalSyllogism extends ParentArg
 	{		
@@ -148,7 +150,8 @@ package logic
 					{
 						inference.inputs[0].text = inference.claim.inputs[0].text;
 					}
-					output = "If " + inference.inputs[1].text + ", then " +  inference.inputs[0].text;
+					output = Language.lookup("ArgIfCap") + inference.inputs[1].text +
+						"," +  Language.lookup("ArgThen") +  inference.inputs[0].text;
 					inference.inputs[1].forwardUpdate();
 					inference.inputs[0].forwardUpdate();
 					break;
@@ -158,7 +161,7 @@ package logic
 					{
 						inference.inputs[0].text = inference.claim.inputs[0].text;
 					}
-					output = inference.inputs[1].text + " implies " + inference.inputs[0].text;
+					output = inference.inputs[1].text + Language.lookup("ArgImplies") + inference.inputs[0].text;
 					inference.inputs[1].forwardUpdate();
 					inference.inputs[0].forwardUpdate();
 			}
