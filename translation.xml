@@ -1059,6 +1059,12 @@
 		<GER text=" und wenn "/>
 	</ArgAndIf>
 	
+	<ArgCannotBe>
+		<EN-US text="It cannot be the case, at the same time, that "/>
+		<RUS text="Это не может иметь место, в то же самое время, что "/>
+		<GER text="Es kann nicht zugleich der Fall sein, dass "/>
+	</ArgCannotBe>
+	
 	<ArgEither>
 		<EN-US text="either "/>
 		<RUS text="или "/>
@@ -1136,6 +1142,12 @@
 		<RUS text=" - достаточное условие для "/>
 		<GER text=" ist eine hinreichende Bedingung für "/>
 	</ArgSufficientCond>
+	
+	<ArgThat>
+		<EN-US text="that "/>
+		<RUS text="что "/>
+		<GER text="dass "/>
+	</ArgThat>	
 	
 	<ArgThen>
 		<EN-US text=" then "/>
