@@ -422,7 +422,7 @@
 	<OnlyIf>
 		<EN-US text="only if"/>
 		<RUS text="только если"/>
-		<GER text="nur dann, wenn"/>
+		<GER text="allein dann, wenn"/>
 	</OnlyIf>
 	
 	<Whenever>
