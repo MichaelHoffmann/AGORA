@@ -150,19 +150,20 @@ package logic
 					
 					inference.inputs[1].text = claim.positiveStmt;
 					
-					output = "If " + inference.inputs[1].text + ", then " + inference.inputs[0].text;
+					output = Language.lookup("ArgIfCap") + inference.inputs[1].text + ","
+					 	+ Language.lookup("ArgThen") + inference.inputs[0].text;
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[1]: // Implies
-					output +=  claim.positiveStmt + " implies " + reason[0].positiveStmt;
+					output +=  claim.positiveStmt + Language.lookup("ArgImplies") + reason[0].positiveStmt;
 					inference.inputs[0].text = reason[0].positiveStmt;
 					inference.inputs[1].text = claim.positiveStmt;
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[2]: //Whenever
-					output += "Whenever " + claim.positiveStmt + ", " + reason[0].positiveStmt;
+					output += Language.lookup("ArgWhenever") + claim.positiveStmt + ", " + reason[0].positiveStmt;
 					inference.inputs[0].text = reason[0].positiveStmt;
 					inference.inputs[1].text = claim.positiveStmt;
 					inference.inputs[0].forwardUpdate();
@@ -170,7 +171,7 @@ package logic
 					break;
 				case _langTypes[3]: // Only if
 					var reasonStr:String = "";
-					output += claim.positiveStmt + " only if ";
+					output += claim.positiveStmt + Language.lookup("ArgOnlyIf");
 					for(i=0;i<reason.length-1;i++)
 					{
 						output += reason[i].positiveStmt + " " + andOr + " ";
@@ -184,7 +185,7 @@ package logic
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[4]: // Provided that
-					output += reason[0].positiveStmt + " provided that " + claim.positiveStmt;
+					output += reason[0].positiveStmt + Language.lookup("ArgProvidedThat") + claim.positiveStmt;
 					inference.inputs[0].text = reason[0].positiveStmt;
 					inference.inputs[1].text = claim.positiveStmt;
 					inference.inputs[0].forwardUpdate();
@@ -192,14 +193,14 @@ package logic
 					break;
 				
 				case _langTypes[5]: // Sufficient condition
-					output += claim.positiveStmt + " is a sufficient condition for " + reason[0].positiveStmt;
+					output += claim.positiveStmt + Language.lookup("ArgSufficientCond") + reason[0].positiveStmt;
 					inference.inputs[0].text = reason[0].positiveStmt;
 					inference.inputs[1].text = claim.positiveStmt;
 					inference.inputs[0].forwardUpdate();
 					inference.inputs[1].forwardUpdate();
 					break;
 				case _langTypes[6]: // Necessary condition
-					output += reason[0].positiveStmt + " is a necessary condition for " + claim.positiveStmt;
+					output += reason[0].positiveStmt + Language.lookup("ArgNecessaryCond") + claim.positiveStmt;
 					inference.inputs[0].text = reason[0].positiveStmt;
 					inference.inputs[1].text = claim.positiveStmt;
 					inference.inputs[0].forwardUpdate();

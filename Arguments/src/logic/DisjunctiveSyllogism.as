@@ -22,6 +22,7 @@ package logic
 	 
 	 */
 	import classes.ArgumentPanel;
+	import classes.Language;
 	
 	import mx.controls.Alert;
 	
@@ -91,10 +92,10 @@ package logic
 			switch(inference.myschemeSel.selectedType) 
 			{
 				case _langTypes[0]: 
-					output += "Either ";
+					output += Language.lookup("ArgEitherCap");
 					for(i=0;i<inference.reasons.length;i++)
 					{
-						output += inference.reasons[i].positiveStmt + " or ";
+						output += inference.reasons[i].positiveStmt + Language.lookup("ArgOr");
 						//Required for constructive dillemma
 						//inference.inputs[i+1].text = inference.reasons[i].positiveStmt;
 						//inference.inputs[i+1].forwardUpdate();
