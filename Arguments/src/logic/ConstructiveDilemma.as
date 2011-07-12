@@ -21,6 +21,8 @@ package logic
 	 
 	 */
 	import classes.ArgumentPanel;
+	import classes.Language; //TODO: Replace raw text with Language.lookup()
+	
 	public class ConstructiveDilemma extends ParentArg
 	{
 		
