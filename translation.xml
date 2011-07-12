@@ -1147,11 +1147,6 @@
 		<RUS text=" то "/>
 		<GER  text=" dann "/>
 	</ArgThen>
-	<ArgThenComma>
-		<EN-US text=", then "/>
-		<RUS text=", то "/>
-		<GER  text=", dann "/>
-	</ArgThenComma>
 	
 	<ArgTherefore>
 		<EN-US text="; therefore, "/>

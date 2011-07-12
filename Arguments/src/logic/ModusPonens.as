@@ -118,7 +118,7 @@ package logic
 						output += reason[i].stmt + Language.lookup("ArgAnd") + Language.lookup("ArgIf");
 						reasonStr = reasonStr + reason[i].stmt + Language.lookup("ArgAnd") + Language.lookup("ArgIf");
 					}
-					output += reason[i].stmt + Language.lookup("ArgThenComma") + claim.stmt;
+					output += reason[i].stmt + ", " + Language.lookup("ArgThen") + claim.stmt;
 					reasonStr = reasonStr + reason[i].stmt;
 					inference.inputs[1].text = reasonStr;
 					inference.inputs[0].text = claim.stmt;
