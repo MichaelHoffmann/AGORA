@@ -1069,6 +1069,12 @@
 		<GER text=", und wenn "/>
 	</ArgAndIfComma>
 	
+	<ArgEither>
+		<EN-US text="Either "/>
+		<RUS text="Или "/>
+		<GER text="Entweder "/>
+	</ArgEither>
+	
 	<ArgEquiv>
 		<EN-US text=" are equivalent"/>
 		<RUS text=" эквивалентны"/>
@@ -1085,6 +1091,7 @@
 		<RUS text="Если "/>
 		<GER text="Wenn "/>
 	</ArgIfCap>
+	
 	
 	<ArgIff>
 		<EN-US text=" if and only if "/>
@@ -1116,6 +1123,13 @@
 		<GER text=" allein dann, wenn "/>
 	</ArgOnlyIf>
 	
+	<ArgOr>
+		<EN-US text=" or "/>
+		<RUS text=" или "/>
+		<GER text=" oder "/>
+	</ArgOr>
+	
+	
 	<ArgProvidedThat>
 		<EN-US text=" provided that "/>
 		<RUS text=" при условии, что "/>
@@ -1139,6 +1153,11 @@
 		<GER  text=", dann "/>
 	</ArgThenComma>
 	
+	<ArgTherefore>
+		<EN-US text="; therefore, "/>
+		<RUS text="; поэтому, "/>
+		<GER text="; deshalb, "/>
+	</ArgTherefore>
 	<ArgThereforeIf>
 		<EN-US text="; therefore, if "/>
 		<RUS text="; поэтому, если "/>
