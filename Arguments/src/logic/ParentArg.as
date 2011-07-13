@@ -1,5 +1,25 @@
 package logic
 {
+	/**
+	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+	 reflection, critique, deliberation, and creativity in individual argument construction 
+	 and in collaborative or adversarial settings. 
+	 Copyright (C) 2011 Georgia Institute of Technology
+	 
+	 This program is free software: you can redistribute it and/or modify
+	 it under the terms of the GNU Affero General Public License as
+	 published by the Free Software Foundation, either version 3 of the
+	 License, or (at your option) any later version.
+	 
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU Affero General Public License for more details.
+	 
+	 You should have received a copy of the GNU Affero General Public License
+	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 
+	 */
 	import classes.ArgumentPanel;
 	import classes.DynamicTextArea;
 	import classes.Inference;
@@ -21,8 +41,9 @@ package logic
 	public var inference:Inference;
 	//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
 	//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
-	public var dbName:String;
+	//public var dbName:String;
 	public var _langTypes:Array;
+	public var dbLangTypeNames:Array;
 	public var multipleReasons:Boolean;
 	public var _expLangTypes:Array;
 	public static var MOD_PON:String = "Modus Ponens";
@@ -33,6 +54,37 @@ package logic
 	public static var CONST_DILEM:String = "Constructive Dilemma";
 	public static var EXP_AND:String = "and";
 	public static var EXP_OR:String = "or";
+	public var _dbType:String;
+	
+	public function get dbType():String
+	{
+		for(var i:int=0; i<_langTypes.length; i++)
+		{
+			if(inference.myschemeSel.selectedType == _langTypes[i])
+			{
+				return _dbType+dbLangTypeNames[i];
+			}
+		}
+		return "Unset";
+	}
+	
+	public function getOption(dbString:String):String
+	{
+		return "";
+	}
+	
+	public function getLanguageType(dbString:String):String
+	{
+		for(var i:int=0;i<dbLangTypeNames.length;i++)
+		{
+			if(dbString.indexOf(dbLangTypeNames[i]) >= 0)
+			{
+				return _langTypes[i];
+			}
+
+		}
+		return "";
+	}
 	
 	public function get isLanguageExp():Boolean
 	{
@@ -47,7 +99,7 @@ package logic
 	
 	public function ParentArg()
 	{
-		
+		_dbType = "Unset";	
 	}
 	
 	public function deleteLinks():void

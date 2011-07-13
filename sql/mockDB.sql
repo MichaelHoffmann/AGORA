@@ -1,3 +1,21 @@
+--	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+--			reflection, critique, deliberation, and creativity in individual argument construction 
+--			and in collaborative or adversarial settings. 
+--    Copyright (C) 2011 Georgia Institute of Technology
+--
+--    This program is free software: you can redistribute it and/or modify
+--    it under the terms of the GNU Affero General Public License as
+--    published by the Free Software Foundation, either version 3 of the
+--    License, or (at your option) any later version.
+--
+--    This program is distributed in the hope that it will be useful,
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--    GNU Affero General Public License for more details.
+--
+--    You should have received a copy of the GNU Affero General Public License
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 USE agora;
 
 INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES
@@ -10,7 +28,7 @@ INSERT INTO maps (user_id, title, description, lang, created_date, modified_date
 	(1, "Babelfish", "Douglas Adams's proof by contradiction of the nonexistence of god.", "EN-US", NOW(), NOW());
 
 INSERT INTO nodes (user_id, map_id, nodetype_id, x_coord, y_coord, created_date, modified_date) VALUES 
-	(1,1,1,1,1,NOW(), NOW()), (1,1,1,20,1,NOW(), NOW()), (1,1,2,15,12,NOW(), NOW()), (1,1,1,25,12,NOW(), NOW()), (1,1,2,20,24,NOW(), NOW());
+	(1,1,1,1,1,NOW(), NOW()), (1,1,1,20,1,NOW(), NOW()), (1,1,3,15,12,NOW(), NOW()), (1,1,1,25,12,NOW(), NOW()), (1,1,3,20,24,NOW(), NOW());
 
 INSERT INTO textboxes (text, user_id, map_id, created_date, modified_date) VALUES 
 					("FOO", 1, 1, NOW(), NOW()), ("BAR", 1, 1, NOW(), NOW()), ("BAZ", 1, 1, NOW(), NOW());

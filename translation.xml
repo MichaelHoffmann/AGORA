@@ -422,7 +422,7 @@
 	<OnlyIf>
 		<EN-US text="only if"/>
 		<RUS text="только если"/>
-		<GER text="nur dann, wenn"/>
+		<GER text="allein dann, wenn"/>
 	</OnlyIf>
 	
 	<Whenever>
@@ -1043,4 +1043,133 @@
 		<RUS text="Щелкните, чтобы видеть четыре опции, чтобы перезаписать части автоматически создаваемой структуры Вашего аргумента"/>
 		<GER text="Klicke hier, um vier Möglichkeiten zu sehen, Teile der automatisch generierten Struktur eines Argumentes zu überschreiben "/>
 	</FourOptions>
+	
+	<!-- 
+		These translations can be used in arguments so long as the language allows similar phrase structure.
+		A more robust system (see translation_schemes for an idea) would be needed if a language had greatly different argumentation layout.
+	-->
+	<ArgAnd>
+		<EN-US text=" and "/>
+		<RUS text=" и "/>
+		<GER text=" und "/>
+	</ArgAnd>
+	<ArgAndIf>
+		<EN-US text=" and if"/>
+		<RUS text=" и если "/>
+		<GER text=" und wenn "/>
+	</ArgAndIf>
+	
+	<ArgCannotBe>
+		<EN-US text="It cannot be the case, at the same time, that "/>
+		<RUS text="Это не может иметь место, в то же самое время, что "/>
+		<GER text="Es kann nicht zugleich der Fall sein, dass "/>
+	</ArgCannotBe>
+	
+	<ArgEither>
+		<EN-US text="either "/>
+		<RUS text="или "/>
+		<GER text="entweder "/>
+	</ArgEither>
+	<ArgEitherCap>
+		<EN-US text="Either "/>
+		<RUS text="Или "/>
+		<GER text="Entweder "/>
+	</ArgEitherCap>
+	
+	<ArgEquiv>
+		<EN-US text=" are equivalent"/>
+		<RUS text=" эквивалентны"/>
+		<GER text=" sind equivalent"/>
+	</ArgEquiv>
+	
+	<ArgIf>
+		<EN-US text="if "/>
+		<RUS text="если "/>
+		<GER text="wenn "/>
+	</ArgIf>
+	<ArgIfCap>
+		<EN-US text="If "/>
+		<RUS text="Если "/>
+		<GER text="Wenn "/>
+	</ArgIfCap>
+	
+	
+	<ArgIff>
+		<EN-US text=" if and only if "/>
+		<RUS text=", если и только если "/>
+		<GER text=" genau dann, wenn "/>
+	</ArgIff>
+	
+	<ArgImplies>
+		<EN-US text=" implies "/>
+		<RUS text=" подразумевает "/>
+		<GER text=" impliziert "/>
+	</ArgImplies>
+	
+	<ArgNecessaryCond>
+		<EN-US text=" is a necessary condition for "/>
+		<RUS text=" - необходимое условие для "/>
+		<GER text=" ist eine notwendige Bedingung für "/>
+	</ArgNecessaryCond>
+	
+	<ArgNecSuf>
+		<EN-US text=" is a necessary and sufficient condition for "/>
+		<RUS text=" - необходимое и достаточное условие для "/>
+		<GER text=" ist eine notwendige und hinreichende Bedingung für "/>
+	</ArgNecSuf>
+	
+	<ArgOnlyIf>
+		<EN-US text=" only if "/>
+		<RUS text=", только если "/>
+		<GER text=" allein dann, wenn "/>
+	</ArgOnlyIf>
+	
+	<ArgOr>
+		<EN-US text=" or "/>
+		<RUS text=" или "/>
+		<GER text=" oder "/>
+	</ArgOr>
+	
+	
+	<ArgProvidedThat>
+		<EN-US text=" provided that "/>
+		<RUS text=" при условии, что "/>
+		<GER text=", gegeben dass "/>
+	</ArgProvidedThat>
+	
+	<ArgSufficientCond>
+		<EN-US text=" is a sufficient condition for "/>
+		<RUS text=" - достаточное условие для "/>
+		<GER text=" ist eine hinreichende Bedingung für "/>
+	</ArgSufficientCond>
+	
+	<ArgThat>
+		<EN-US text="that "/>
+		<RUS text="что "/>
+		<GER text="dass "/>
+	</ArgThat>	
+	
+	<ArgThen>
+		<EN-US text=" then "/>
+		<RUS text=" то "/>
+		<GER  text=" dann "/>
+	</ArgThen>
+	
+	<ArgTherefore>
+		<EN-US text="; therefore, "/>
+		<RUS text="; поэтому, "/>
+		<GER text="; deshalb, "/>
+	</ArgTherefore>
+	
+	<ArgWhenever>
+		<EN-US text="Whenever "/>
+		<RUS text="Всякий раз, когда "/>
+		<GER text="Immer wenn "/>
+	</ArgWhenever>
+	
+	
+	
+	
+	
+	
 </Translations>

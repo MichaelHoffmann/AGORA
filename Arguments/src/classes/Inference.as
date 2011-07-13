@@ -1,9 +1,35 @@
 package classes
 {
+	/**
+	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+	 reflection, critique, deliberation, and creativity in individual argument construction 
+	 and in collaborative or adversarial settings. 
+	 Copyright (C) 2011 Georgia Institute of Technology
+	 
+	 This program is free software: you can redistribute it and/or modify
+	 it under the terms of the GNU Affero General Public License as
+	 published by the Free Software Foundation, either version 3 of the
+	 License, or (at your option) any later version.
+	 
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU Affero General Public License for more details.
+	 
+	 You should have received a copy of the GNU Affero General Public License
+	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 
+	 */
 	import components.ArgSelector;
+	import components.HelpText;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	
 	import logic.*;
 	
@@ -11,10 +37,13 @@ package classes
 	import mx.controls.Alert;
 	import mx.controls.Label;
 	import mx.controls.List;
+	import mx.controls.Menu;
 	import mx.controls.listClasses.ListData;
 	import mx.core.IVisualElement;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
+	import mx.events.MenuEvent;
+	import mx.managers.FocusManager;
 	import mx.utils.ArrayUtil;
 	
 	import org.osmf.layout.AbsoluteLayoutFacet;
@@ -23,6 +52,8 @@ package classes
 	import spark.components.HGroup;
 	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
+	
+	import classes.Configure;
 	
 	public class Inference extends ArgumentPanel
 	{
@@ -46,8 +77,8 @@ package classes
 		public var myArg:ParentArg;		
 		//Is the scheme expandable
 		private var _hasMultipleReasons:Boolean;
-		public var connectionID:int;
-		public var connectionIDs:Vector.<int>;
+		//public var connectionID:int;
+		//public var connectionIDs:Vector.<int>;
 		//Used when constructing the argument beginning with reason
 		//Set to true if the user has begun to choose an argument scheme.
 		//happens when construct argument is chosen
@@ -56,16 +87,27 @@ package classes
 		//until it becomes an open end
 		private var _typed:Boolean;
 		public static var REASON_ADDED:String  = "Reason Added";
+		public static var REASON_DELETED:String = "Reason Deleted";
 		//private var _schemeChangable:Boolean;
 		private var _schemeSelected:Boolean;
 		//The string that is displayed
 		public var _displayStr:String;
+		//if adding multiple reasons are allowed
+		public var reasonAddable:Boolean;
+		
+		public var connID:int;
+		public var connTID:int;
+		
+		public var hasConnID:Boolean;
+		
+		private var addReasonMenuData:XML;
 		
 		public function Inference()
 		{
 			super();
-			connectionID = connections++;
-			connectionIDs = new Vector.<int>(0,false);
+			addReasonMenuData = <root><menuitem   label = "... another reason for this argument so that only the combination of all reasons justifies the claim" /></root>;
+			//connectionID = connections++;
+			//connectionIDs = new Vector.<int>(0,false);
 			panelType = ArgumentPanel.INFERENCE;
 			state = 0; //Inference is always a Universal statement
 			input = new Vector.<DynamicTextArea>(0,false);
@@ -77,6 +119,8 @@ package classes
 			selectedBool = false;
 			typed = false;
 			schemeSelected = false;
+			reasonAddable = false;
+			hasConnID = false;
 		}
 		///Getters and Setters
 		
@@ -99,6 +143,13 @@ package classes
 			invalidateProperties();
 			invalidateSize();
 			invalidateDisplayList();
+		}
+		
+		public function get connectionType():String
+		{
+			if(myArg == null)
+				return "";
+			return myArg.dbType;
 		}
 		
 		public function get selectedBool():Boolean
@@ -155,7 +206,7 @@ package classes
 			changePossibleSchemes();
 		}
 		
-		protected function reasonAdded(event:Event):void
+		public function reasonDeleted():void
 		{
 			if(reasons.length > 1)
 			{
@@ -171,6 +222,32 @@ package classes
 			}
 		}
 		
+		public function reasonAdded(event:Event):void
+		{
+			if(reasons.length > 1)
+			{
+				hasMultipleReasons = true;
+			}
+			else
+			{
+				hasMultipleReasons = false;
+			}
+			if(myArg != null)
+			{
+				myArg.createLinks();
+			}
+			if(claim.inference == null)
+			{
+				reasons[reasons.length - 1].makeUnEditable();
+				reasons[reasons.length - 1].displayTxt.text = "[Enter your reason]";
+			}
+			else
+			{
+				reasons[reasons.length - 1].makeEditable();
+			}
+			claim.removeEventListener(Inference.REASON_ADDED, reasonAdded);
+		}
+		
 		public function setRuleState():void
 		{
 			//seting type makes sense only after a particular scheme has been chosen
@@ -183,7 +260,8 @@ package classes
 				else 
 				{
 					typed = false;
-				}				
+					
+				}	
 			}
 			
 		}
@@ -216,25 +294,27 @@ package classes
 		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
-			if(typed)
-			{
-				myschemeSel.mainSchemes.visible = false;
-				myschemeSel.typeSelector.x = 0;
-				myschemeSel.andor.x = myschemeSel.typeSelector.width;
-				if(myArg != null)
+			if(myschemeSel != null){
+				if(typed)
 				{
-					if(hasMultipleReasons)
+					myschemeSel.mainSchemes.visible = false;
+					myschemeSel.typeSelector.x = 0;
+					myschemeSel.andor.x = myschemeSel.typeSelector.width;
+					if(myArg != null)
 					{
-						myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
+						if(hasMultipleReasons)
+						{
+							myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
+						}
+						else
+						{
+							myschemeSel.typeSelector.dataProvider = myArg._langTypes;
+						}
 					}
-					else
+					if(myArg is ConditionalSyllogism)
 					{
-						myschemeSel.typeSelector.dataProvider = myArg._langTypes;
+						argType.changeSchemeBtn.enabled = false;
 					}
-				}
-				if(myArg is ConditionalSyllogism)
-				{
-					argType.changeSchemeBtn.enabled = false;
 				}
 			}
 			if(!typed && myschemeSel != null)
@@ -242,6 +322,16 @@ package classes
 				myschemeSel.mainSchemes.visible = true;
 				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
 				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
+				if(myArg!=null)
+				{
+					argType.changeSchemeBtn.enabled = true;
+				}
+				
+			}
+			if(myschemeSel != null){
+			myschemeSel.invalidateProperties();
+			myschemeSel.invalidateSize();
+			myschemeSel.invalidateDisplayList();
 			}
 		}
 		
@@ -252,25 +342,18 @@ package classes
 			//of giving the user a menu
 			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
 			var optionsArr:Array = ["And","Or"];
-			if( (!claim.statementNegated) && claim.inference != null)
+			if( (!claim.statementNegated) && (claim.inference != null || claim.userEntered))
 			{
-				//typeArr.splice(1,1);
-				//typeArr.splice(3,1);
 				typeArr.splice(typeArr.indexOf(ParentArg.MOD_TOL,0),1);
 				typeArr.splice(typeArr.indexOf(ParentArg.NOT_ALL_SYLL,0),1);
 			}
-			else if(claim.statementNegated && claim.inference != null)
+			else if(claim.statementNegated && (claim.inference != null || claim.userEntered) )
 			{
 				typeArr = ["Modus Tollens", "Not-All Syllogism"];
-				trace("setting type array");
-				trace(typeArr);
 			}
-			
 			if(!claim.multiStatement && (claim.inference != null || claim.userEntered == true) && !claim.statementNegated )
 			{
 				typeArr.splice(typeArr.indexOf(ParentArg.COND_SYLL,0),1);
-				trace("After splicing typeArray");
-				trace(typeArr);
 			}
 			else if(claim.multiStatement && claim.inference != null)
 			{
@@ -278,36 +361,51 @@ package classes
 				typeArr.splice(0,0,"Conditional Syllogism");
 			}
 			
-			if(claim.multiStatement && claim.inference != null)
+			//the first claim is not set to multistatement by default
+			if(claim.multiStatement)
 			{
 				//claim is a multistatement and claim is of type P->Q
 				//Only one possible scheme - conditional syllogism
 				if(claim.implies)
 				{
-					typeArr = ["Conditional Syllogism"];
+				
+					if(!schemeSelected)
+					{
+						reasons[0].makeEditable();
+					}
+					//typeArr = ["Conditional Syllogism"];
 					//the language type is already determined
 					//It is that of the enabler.
-					//if(claim is Inference){
-						//feasibility of adding is already checked
-						myschemeSel.selectedScheme = ParentArg.COND_SYLL;
+					//feasibility of adding is already checked
+					myschemeSel.selectedScheme = ParentArg.COND_SYLL;
+					if(claim is Inference){
 						var infClaim:Inference = Inference(claim);
 						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
-						//var array:Array = new Array;
-						//array.splice(0,0,infClaim,myschemeSel.selectedType);
-						//myschemeSel.typeSelector.dataProvider = array;
-						argType.changeSchemeBtn.label=ParentArg.COND_SYLL;					
+					}
+					else
+					{
+						myschemeSel.selectedType = claim.connectingStr;
+					}
+					//var array:Array = new Array;
+					//array.splice(0,0,infClaim,myschemeSel.selectedType);
+					//myschemeSel.typeSelector.dataProvider = array;
+					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;
+					if(claim.inference != null){
 						argType.changeSchemeBtn.enabled = false;
-						myArg = new ConditionalSyllogism;
-						myArg.isLanguageExp = true;
-						myArg.inference = this;
-						myArg.addInitialReasons();
-						myArg.createLinks();
-						selectedBool = true;
-						schemeSelected = true;
-						parentMap.option.visible = false;
-						this.visible = true;
-						reasons[0].makeEditable();
-					//}
+					}
+					myArg = new ConditionalSyllogism;
+					myArg.isLanguageExp = true;
+					myArg.inference = this;
+					myArg.addInitialReasons();
+					myArg.createLinks();
+					selectedBool = true;
+					schemeSelected = true;
+					parentMap.option.visible = false;
+					claim.removeEventListeners();
+					this.visible = true;
+					
+					
+					//dispatchEvent(new Event(REASON_ADDED));
 				}
 				else
 				{
@@ -315,19 +413,32 @@ package classes
 				}
 				
 			}
-			
 			myschemeSel.scheme = typeArr;
-			trace(typeArr);
 			var sublist:List = myschemeSel.typeSelector;
 			var oplist:List = myschemeSel.andor;
 			oplist.dataProvider = optionsArr;
 			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
+			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_CLICK,setArgScheme);
 			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
 			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
 			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
 			oplist.addEventListener(ListEvent.ITEM_ROLL_OVER,statementOption);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
+			setRuleState();
+			changePossibleSchemes();
+		}
+		
+		public function setArgScheme(event:ListEvent):void
+		{
+			var scheme:String = event.itemRenderer.data.toString();
+			if(scheme == ParentArg.DIS_SYLL || scheme == ParentArg.NOT_ALL_SYLL)
+			{
+				myschemeSel.visible = false;
+				schemeSelected = true;
+				parentMap.helpText.visible = false;
+			}
+			
 		}
 		
 		public function get argType():MenuPanel
@@ -368,15 +479,21 @@ package classes
 			}
 		}
 		
-		
-		public function addReason():void
-		{
+		public function addReasonToMap(event:Event):void{
+			var responseXML:XML = XML(event.target.data);
+			//separate XML for Argument Panel
+			var reasonXML:XML = new XML("<map></map>");
+			var textboxList:XMLList = responseXML.textbox;
+			reasonXML.appendChild(textboxList);
+			var firstNodeText:XML = responseXML.node[0];
+			reasonXML.appendChild(firstNodeText);
 			var tmp:ArgumentPanel = new ArgumentPanel();
+			tmp._initXML = reasonXML;
 			parentMap.addElement(tmp);
 			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);		
 			try{
 				reasons.push(tmp);
-				connectionIDs.push(connections++);
+				//connectionIDs.push(connections++);
 				tmp.inference = this;
 				parentMap.layoutManager.registerPanel(tmp);
 				//create an invisible box in the inference rule
@@ -404,30 +521,56 @@ package classes
 			}
 		}
 		
+		public function addReason():void
+		{
+			var xml:XML = parentMap.getAddReason(this);
+			var urlRequest:URLRequest = new URLRequest;
+			urlRequest.url = Configure.lookup("baseURL") + "insert.php";
+			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml);
+			urlRequest.data = urlRequestVars;
+			urlRequest.method = URLRequestMethod.GET;
+			var urlLoader:URLLoader = new URLLoader;
+			urlLoader.addEventListener(Event.COMPLETE, addReasonToMap);
+			urlLoader.load(urlRequest);
+		}
+		
 		public function addReasonHandler(event:MouseEvent):void
 		{
-			if(schemeSelected != true)
-			{
-				Alert.show("Complete the enabler before adding further reasons");
-				return;
-			}
-			if(myArg.isLanguageExp)
-			{
-				addReason();
-			}
-			else
-			{
-				Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
-			}
+			
+			var menu:Menu = Menu.createMenu(null, addReasonMenuData,false);
+			menu.labelField = "@label";
+			menu.addEventListener(MenuEvent.ITEM_CLICK, function (event:MenuEvent):void {
+				if(schemeSelected != true)
+				{
+					Alert.show("Complete the enabler before adding further reasons");
+					return;
+				}
+				if(myArg.isLanguageExp || (myArg is ModusTollens && reasonAddable == true && myschemeSel.selectedType == myArg._expLangTypes[0]))
+				{
+					addReason();
+				}
+				else
+				{	
+					if(myArg is ModusTollens && myschemeSel.selectedType == myArg._expLangTypes[0])
+					{
+						Alert.show("Select the language type that determines how the reasons are combined: 'or' or 'and'");
+						reasonAddable = true;	
+					}
+					else
+					{
+						Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
+					}
+				}
+			});
+			var globalPosition:Point = parentMap.getGlobalCoordinates(new Point(argType.x,argType.y + argType.height));
+			menu.show(globalPosition.x,globalPosition.y);
 		}
 		
 		override public function makeUnEditable():void
 		{
-			//enabler is never edited
 		}
 		override public function makeEditable():void
 		{
-			//enabler is never edited
 		}
 		
 		override public function onArgumentPanelCreate(e:FlexEvent):void
@@ -442,17 +585,23 @@ package classes
 			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
 			multiStatement = true;
 			group.removeElement(msVGroup);
-			//msVGroup.visible = false;
-			
+			setIDs();
 		}
+		
 		public function chooseEnablerText():void
 		{
 			if(myschemeSel.scheme != null){
+				setRuleState();
 				if(myschemeSel.scheme.length == 0)
 				{
 					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
 					return;
 				}
+			}
+			
+			if((myArg is DisjunctiveSyllogism || myArg is NotAllSyllogism) && typed)
+			{
+				return;
 			}
 			myschemeSel.visible=true;
 			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
@@ -472,9 +621,15 @@ package classes
 		
 		public function setType(le:ListEvent):void
 		{
+			if(myArg is ModusTollens)
+			{
+				if(myschemeSel.selectedType != myArg._expLangTypes[0])
+				{
+					reasonAddable = false;
+				}
+			}
 			if(myschemeSel.andor.visible==false)
 			{
-				//parentMap.parent.removeChild(myschemeSel);
 				myschemeSel.visible = false;
 			}
 			schemeSelected = true;
@@ -483,9 +638,16 @@ package classes
 		
 		public function displayTypes(le:ListEvent):void
 		{
+			setRuleState();
 			myschemeSel.selectedScheme = le.itemRenderer.data.toString();
 			var sublist:List = myschemeSel.typeSelector;
-			sublist.visible=true;
+			sublist.visible = false;
+			if(myschemeSel.selectedScheme != ParentArg.DIS_SYLL && myschemeSel.selectedScheme != ParentArg.NOT_ALL_SYLL)
+			{
+				sublist.visible=true;
+			}
+			
+			displayStr = "";
 			
 			switch(myschemeSel.selectedScheme)
 			{
@@ -500,9 +662,19 @@ package classes
 					break;
 				case ParentArg.DIS_SYLL:
 					myArg = new DisjunctiveSyllogism;
+					myArg.inference = this;
+					myArg.createLinks();
+					myArg.isLanguageExp = true;
+					myschemeSel.selectedType = myArg._langTypes[0];
+					displayStr = myArg.correctUsage();
 					break;
 				case ParentArg.NOT_ALL_SYLL:
 					myArg = new NotAllSyllogism;
+					myArg.inference = this;
+					myArg.createLinks();
+					myArg.isLanguageExp = true;
+					myschemeSel.selectedType = myArg._langTypes[0];
+					displayStr = myArg.correctUsage();
 					break;
 				case ParentArg.CONST_DILEM:
 					myArg = new ConstructiveDilemma;
@@ -510,6 +682,7 @@ package classes
 			}
 			myArg.inference = this;
 			myArg.createLinks();
+			
 			if(hasMultipleReasons)
 			{
 				sublist.dataProvider = myArg._expLangTypes;	
@@ -532,11 +705,16 @@ package classes
 			{
 				if(typeText == "Only if") 
 				{
-					oplist.visible=true;
-					myArg.isLanguageExp = true;
+					var modusTollens:ModusTollens = ModusTollens(myArg);
+					if(hasMultipleReasons || reasonAddable == true)
+					{
+						oplist.visible=true;
+					}
+					else
+					{
+						oplist.visible=false;
+					}
 				}
-				else
-					oplist.visible=false;
 			}	
 			else if(myArg.myname == ParentArg.MOD_PON)
 			{
@@ -561,19 +739,16 @@ package classes
 				myArg.isLanguageExp = true;
 				myArg.createLinks();
 			}
-			
 			displayStr = myArg.correctUsage();
 		}
 		
 		public function setOption(le:ListEvent):void
 		{
 			var andor:String = le.itemRenderer.data.toString();
-			
 			if(reasons.length > 1)
 			{
 				typed = true;
 			}
-			
 			if(andor=="And")
 			{
 				myschemeSel.selectedOption = ParentArg.EXP_AND;
@@ -597,7 +772,6 @@ package classes
 			displayStr = myArg.correctUsage();
 			input1.forwardUpdate();
 			schemeSelected = true;
-			
 			parentMap.helpText.visible = false;
 		}
 		
@@ -632,7 +806,7 @@ package classes
 		
 		public function goBackward(e:MouseEvent):void
 		{
-			//Alert.show("Argument Panel");
+			
 		}
 		
 		public function makeVisible():void{
@@ -640,5 +814,75 @@ package classes
 			this.argType.visible = true;
 		}
 		
+		override protected function deleteThis(event:MouseEvent):void
+		{
+			this.selfDestroy();
+		}
+		
+		override public function deleteLinks():void
+		{
+			//Need not worry about incoming links from reason.
+			//Reasons are deleted before deleting hte inference
+			//This function cleans up links to a deleted node
+			//from ndoes on the map
+			deleteLinkFromArgumentPanel(input1,claim);
+			for(var i:int = 0; i < inputs.length; i++)
+			{
+				deleteLinkFromArgumentPanel(inputs[i],claim);
+			}
+			for(i=0; i<input.length; i++)
+			{
+				deleteLinkFromArgumentPanel(input[i],claim);
+			}
+		}
+		
+		override public function inferenceDeleted():void
+		{
+			if(this.rules.length == 0)
+			{
+				if(!argType.changeSchemeBtn.enabled){
+					argType.changeSchemeBtn.enabled = true;
+				}
+			}
+		}
+		
+		override public function selfDestroy():void
+		{
+			//it may also be supported by further arguments
+			for(var i:int=rules.length-1; i >= 0; i--)
+			{
+				//delete(rules[i]);
+				rules[i].selfDestroy();
+			}
+			for(i = reasons.length-1; i >= 0; i--)
+			{
+				//delete(reasons[i]);
+				reasons[i].selfDestroy();
+			}
+			claim.rules.splice(claim.rules.indexOf(this),1);
+			//remove menu panel
+			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(argType),1);
+			deleteLinks();
+			parentMap.removeChild(argType);
+			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this),1);
+			parentMap.removeChild(this);
+			trace(this + ' destroyed');
+			claim.inferenceDeleted();
+		}
+		
+		override public function setIDs():void
+		{
+			if(_initXML == null)
+				return;
+			
+			try{
+				ID = _initXML.node[0].@ID;
+				connID = _initXML.connection.@ID;
+			}
+			catch(e:Error)
+			{
+				trace(e);
+			}
+		}
 	}
 }

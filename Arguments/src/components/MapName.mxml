@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="200">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			import mx.managers.PopUpManager;
+			public function map_name():void{
+				FlexGlobals.topLevelApplication.presetMapName = mapName.text;
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</fx:Script>
+	<mx:Form id="form">
+		<mx:FormItem tabIndex="1" label="Enter a name for your map">
+			<s:TextInput id="mapName">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem>
+			<s:HGroup>
+				<s:Button label="OK" tabIndex="7" id="OK_btn" click="map_name();">		
+				</s:Button>
+			</s:HGroup>		
+		</mx:FormItem>
+	</mx:Form>
+</s:Panel>

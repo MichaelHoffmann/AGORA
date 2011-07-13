@@ -12,7 +12,7 @@
 				<claim/>
 			</EN-US>
 			<RUS>
-				<string text="Если  "/>
+				<string text="Если "/>
 				<reason/>
 				<repeat>
 					<conjunction text=" и "/>

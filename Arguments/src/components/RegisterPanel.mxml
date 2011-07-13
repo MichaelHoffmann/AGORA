@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" preinitialize="setProperties();" creationComplete="init();">
@@ -8,11 +27,21 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.adobe.crypto.MD5;
+			
 			import mx.controls.Alert;
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
 			
 			import org.osmf.layout.AbsoluteLayoutFacet;
+			
+			import classes.Configure;
+			
+			private static var _salt:String = "AGORA";
+			
+			public static function get salt():String{
+				return _salt;
+			}
 			
 			public function init():void
 			{
@@ -56,9 +85,9 @@
 					Alert.show("Passwords do not match");
 					return;
 				}
-				var requestVariables:URLVariables = new URLVariables("username="+username.text+"&pass_hash="+pass_hash.text+"&firstname="+firstname.text+"&lastname="+lastname.text+"&email="+email.text+"&url="+url.text);
+				var requestVariables:URLVariables = new URLVariables("username="+username.text+"&pass_hash="+ MD5.hash(pass_hash.text+salt)+"&firstname="+firstname.text+"&lastname="+lastname.text+"&email="+email.text+"&url="+url.text);
 				var request:URLRequest = new URLRequest;
-				request.url = "http://agora.gatech.edu/dev/register.php";
+				request.url = Configure.lookup("baseURL") + "register.php";
 				request.method = URLRequestMethod.GET;
 				request.data = requestVariables;
 				var urlLoader:URLLoader = new URLLoader;
@@ -70,36 +99,38 @@
 		]]>
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="Username">
+		<mx:FormItem tabIndex="1" label="Username*">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
 		
-		<mx:FormItem label="Password">
+		<mx:FormItem label="Password*">
 			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Confirm Password" >
+		<mx:FormItem  label="Confirm Password*" >
 			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="First Name">
+		<mx:FormItem label="First Name*">
 			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Last Name">
+		<mx:FormItem label="Last Name*">
 			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Email">
+		<mx:FormItem  label="Email*">
 			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>
-		
 		<mx:FormItem label="URL">
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
+		<mx:FormItem label="Entries with an * are mandatory">
+		</mx:FormItem>
+
 		<mx:FormItem>
 			<s:HGroup>
 				<s:Button label="Submit" tabIndex="7" id="submit_btn" click="submit_form();">		

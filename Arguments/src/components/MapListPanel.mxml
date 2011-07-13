@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="400" skinClass="components.MapListPanelSkin">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	
+	<fx:Metadata>
+		[SkinState("disabled")]
+		[SkinState("normal")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			
+			import spark.components.Button;
+			import spark.components.VGroup;
+			
+			[bindable]
+			public var mapList:XML;
+			
+			[SkinPart(required="true")]
+			public var mapsGroup:VGroup;
+			
+			protected override function commitProperties():void{
+				super.commitProperties();
+				if(mapList != null){
+					if(mapsGroup.numElements > 0){
+						mapsGroup.removeAllElements();
+					}	
+					for each (var map:XML in mapList.map)
+					{
+						try{
+							if(map.@is_deleted == "1"){
+								continue;
+							}
+						}catch(error:Error){
+							trace("is_deleted not available yet");
+						}
+						trace(mapList.toXMLString());
+						var mapObject:Object = new Object;
+						mapObject.mapId = int(map.attribute("ID"));
+						mapObject.title = map.attribute("title");
+						var mapButton:Button = new Button;
+						mapButton.width = 170;
+						mapButton.name = mapObject.mapId.toString();
+						mapButton.addEventListener(MouseEvent.CLICK, FlexGlobals.topLevelApplication.loadMap);
+						mapButton.label = mapObject.title;
+						mapsGroup.addElement(mapButton);
+						FlexGlobals.topLevelApplication.maps_map[mapObject.mapId] = mapObject;
+					}
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+</s:Panel>

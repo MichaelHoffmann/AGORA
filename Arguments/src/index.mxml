@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" applicationComplete="loadData();" xmlns:components="components.*" >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Canvas id="agoraMenu" width="800" height="600" name="agoraMenu">
+	<mx:Canvas id="agoraMenu" width="800" minHeight="600" name="agoraMenu">
 		<s:VGroup id="Agora">
 			<s:HGroup paddingLeft="25" paddingTop="25">
 				<s:Label text="Welcome to AGORA...">
 				</s:Label>	
 			</s:HGroup>
 			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
-				<s:Panel id="mapList" title="List of Maps" width="200" height="400" >
-					<s:VGroup id="mapNameList" gap="5" paddingTop="5" paddingLeft="5" width="100%"> 
-					</s:VGroup>
-				</s:Panel>
-				<s:Panel id="myMaps" title="My Maps" width="200" height="400">
-				</s:Panel>
-				<s:Panel  id="projects" title="Projects" width="200" height="400">	
+				
+				 <components:MapListPanel id="mapList" title="List of Maps" width="200" height="400"></components:MapListPanel>
+				
+				<components:MyMapsPanel id="myMaps" title="My Maps" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
+				
+				<s:Panel  id="projects" title="Projects" width="200" minHeight="400">	
 				</s:Panel>
 			</s:HGroup>
 			<s:HGroup paddingLeft="25" paddingTop="25">
@@ -29,27 +47,35 @@
 			</s:HGroup>
 		</s:VGroup>	
 	</mx:Canvas>
-
+	
 	
 	<fx:Script>
 		<![CDATA[
 			import classes.AgoraMap;
+			import classes.ArgumentPanel;
 			import classes.UserData;
 			
 			import components.LAMWorld;
 			import components.LoginWindow;
 			import components.Map;
+			import components.MapName;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
+			import classes.Configure;
 			public var username:String;
 			public var pass_hash:String;
 			
 			public var maps_map:Dictionary;
 			
+			public var presetMapName:String;
+			
 			
 			public function createmap():void
 			{
+				var mapNameDialog:MapName = new MapName;
+				PopUpManager.addPopUp(mapNameDialog,this,true);
+				PopUpManager.centerPopUp(mapNameDialog);
 				var lamWorld:LAMWorld = new LAMWorld;
 				agoraMenu.visible = false;
 				addElement(lamWorld);
@@ -61,6 +87,7 @@
 				createmap();
 			}
 			
+			
 			public function createMap(event:MouseEvent):void
 			{
 				if(!UserData.isValid())
@@ -69,6 +96,7 @@
 					PopUpManager.addPopUp(loginWindow,this,true);
 					PopUpManager.centerPopUp(loginWindow);
 					loginWindow.addEventListener("verification",onVerification);
+					loginWindow.addEventListener("verification",function (event:Event):void{loadMyMapList();});
 				}
 				else{
 					createmap();
@@ -82,84 +110,107 @@
 			
 			protected function drawMap(event:Event):void
 			{
+				trace("In draw map");
 				agoraMenu.visible = false;
 				var xml:XML = XML(event.target.data);
 				var map:Map = new Map;
 				addElement(map);
+				//trace(xml.toXMLString());
+				ArgumentPanel.parentMap = map.agoraMap;
 				map.agoraMap.load(xml);
-				
 			}
 			
-			protected function loadMap(event:MouseEvent):void{
-				var button:Button = Button(event.target);
+			public function displayMap(button:Button):void
+			{
+				//var button:Button = Button(event.target);
 				var mapId:int = int(button.name);
 				var request:URLRequest = new URLRequest;
-				request.url="http://agora.gatech.edu/dev/load_map.php";
+				request.url=Configure.lookup("baseURL") + "load_map.php";
 				request.method = URLRequestMethod.GET;
 				request.data = new URLVariables("timestamp=0&map_id="+mapId);
 				var loader:URLLoader = new URLLoader;
 				loader.addEventListener(Event.COMPLETE, drawMap);
 				loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
 				loader.load(request);
+				
 			}
-
 			
-			public function displayMaps(event: Event):void
+			public function loadMyMapList():void
 			{
-				var xmlData:XML = XML(event.target.data);
-				var maps:XMLList = xmlData.map;
-				//var xmls:Object = new Object;
-				for each (var map:XML in maps)
+				if(UserData.isValid())
 				{
-						//trace(map.toXMLString());
-						var mapObject:Object = new Object;
-						mapObject.mapId = int(map.attribute("id"));
-						mapObject.title = map.attribute("title");
-						var mapButton:Button = new Button;
-						mapButton.width = 190;
-						mapButton.name = mapObject.mapId.toString();
-						mapButton.addEventListener(MouseEvent.CLICK, loadMap);
-						mapButton.label = mapObject.title;
-						mapNameList.addElement(mapButton);
-						maps_map[mapObject.mapId] = mapObject;
+					var request:URLRequest = new URLRequest;
+					request.url=Configure.lookup("baseURL") + "my_maps.php";
+					request.method = URLRequestMethod.GET;
+					request.data = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr);
+					var loader:URLLoader = new URLLoader;
+					loader.addEventListener(Event.COMPLETE, function(event:Event):void{
+						myMaps.mapListXML = XML(event.target.data);
+						myMaps.invalidateProperties();
+						myMaps.invalidateDisplayList();
+						loadMapList();
+						myMaps.skinState = true;
+					});
+					loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
+					loader.load(request);
 				}
 			}
-
+			
+			public function loadMap(event:MouseEvent):void{
+				if(!UserData.isValid())
+				{
+					var loginWindow:LoginWindow = new LoginWindow;
+					PopUpManager.addPopUp(loginWindow,this,true);
+					PopUpManager.centerPopUp(loginWindow);
+					loginWindow.addEventListener("verification", function ( e:Event):void{ displayMap(Button(event.target)); });
+					//loginWindow.addEventListener("verification", loadMyMapList);
+				}
+				else
+				{
+					displayMap(Button(event.target));
+				}
+				
+			}
+			
+			
+			
 			private function errorHandler(event:IOErrorEvent):void
 			{
 				Alert.show("A communication error occurred duing interaction with server");
-
+				
 			}
 			
 			public function loadMapList():void
 			{
 				//create a request object
 				var request:URLRequest = new URLRequest;
-				request.url="http://agora.gatech.edu/dev/list_maps.php";
+				request.url=Configure.lookup("baseURL") + "list_maps.php";
 				request.method = URLRequestMethod.GET;
 				
 				//create a loader
 				var loader:URLLoader = new URLLoader;
-				//add a handler for handling the response
-				loader.addEventListener(Event.COMPLETE,displayMaps);
+				
+				//loader.addEventListener(Event.COMPLETE,displayMaps);
+				loader.addEventListener(Event.COMPLETE, function (event: Event):void{
+					mapList.mapList = XML(event.target.data);
+					mapList.invalidateProperties();
+					mapList.invalidateDisplayList();
+				});
+				
 				loader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
-				
-				//load the request obect
 				loader.load(request);
-				
-				//registerEventHandler for createMap
-				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);	
 			}
 			
 			public function loadProjectList():void
 			{
-			
+				
 			}
 			
 			public function loadData():void
 			{
 				maps_map = new Dictionary;
 				loadMapList();
+				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
 				loadProjectList();
 			}
 			
