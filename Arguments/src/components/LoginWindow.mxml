@@ -28,6 +28,7 @@
 	<fx:Script>
 		<![CDATA[
 			import classes.UserData;
+			import classes.Language;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
@@ -83,18 +84,18 @@
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Password">
+		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}">
 			<s:TextInput id="pass_hash" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
 		
 		<mx:FormItem>
 			<s:HGroup>
-				<s:Button label="Submit" id="submit_btn" click="submit_form();">		
+				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" id="submit_btn" click="submit_form();">		
 				</s:Button>
-				<s:Button label="Back" id="back_btn" click="clear_form();">		
+				<s:Button label="{Language.lookup(&quot;Back&quot;)}" id="back_btn" click="clear_form();">		
 				</s:Button>
-				<s:Button label="Register" id="register_btn" click="register_form();">		
+				<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="register_form();">		
 				</s:Button>
 			</s:HGroup>		
 		</mx:FormItem>

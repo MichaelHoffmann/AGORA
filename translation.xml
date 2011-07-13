@@ -21,11 +21,11 @@
 		Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
 	</Intro>
 	
-	<back>
+	<Back>
 		<EN-US text="Back"/>
 		<RUS text="Назад"/>
 		<GER text="Zurück"/>
-	</back>
+	</Back>
 	
 	<Construct>
 		<EN-US text="construct argument"/>
@@ -101,10 +101,16 @@
 	</NewPass>
 	
 	<Register>
+		<EN-US text="Register"/>
+		<RUS text="Регистровать"/>
+		<GER text="Registriere"/>
+	</Register>
+	
+	<RegisterAsNew>
 		<EN-US text="Register as new user"/>
 		<RUS text="Регистровать как нового пользователя"/>
 		<GER text="Registriere dich als neuer Benutzer"/>
-	</Register>
+	</RegisterAsNew>
 	
 	<NewUsername>
 		<EN-US text="Desired Username"/>
