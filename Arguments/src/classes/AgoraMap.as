@@ -25,7 +25,7 @@ package classes
 	import components.HelpText;
 	import components.Option;
 	
-	import flash.display.Graphics; 
+	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.net.URLLoader;
@@ -62,6 +62,9 @@ package classes
 		private static var _tempID:int;
 		public var initXML:XML;
 		public static var dbTypes:Array = ["MP","MT","DisjSyl","NotAllSyl","CS", "CD"];
+		public var timestamp:String;
+		
+		
 		public function AgoraMap()
 		{
 			layoutManager = new ALayoutManager;	
@@ -85,7 +88,7 @@ package classes
 							return new ModusTollens;
 						case "DisjSyl":
 							return new DisjunctiveSyllogism;
-						case "NotALLSyl":
+						case "NotAllSyl":
 							return new NotAllSyllogism;
 						case "CS":
 							return new ConditionalSyllogism;
@@ -126,9 +129,65 @@ package classes
 		
 		public function getConnection( claim:ArgumentPanel):XML
 		{
-			var xml:XML = <map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" typed="0" is_positive="1" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><node Type="Inference" typed="0" is_positive="1" x="0" y="0"></node><connection type="Unset" x="0" y="0" /></map>
+			var coordinate:Coordinate = new Coordinate;
+			var argTypeCoordinate:Coordinate = new Coordinate;
+			var reasonCoordinate:Coordinate = new Coordinate;
+			
+			coordinate.gridX = claim.gridX;
+			coordinate.gridY = claim.gridY;
+			
+			//First rule
+			if(claim.rules.length == 0)
+			{
+				coordinate.gridX += Math.ceil(claim.height / layoutManager.uwidth ) + 2;
+				coordinate.gridY +=  Math.ceil(claim.width / layoutManager.uwidth ) + 2;
+			}
+				//Not First Rule
+			else{
+				var lastInference:Inference = claim.rules[claim.rules.length - 1];
+				var lastInferenceGridX:int  = lastInference.gridX + layoutManager.getGridSpan(lastInference.height);
+				var lastReason:ArgumentPanel = lastInference.reasons[lastInference.reasons.length - 1];
+				var lastReasonGridX:int = lastReason.gridX + layoutManager.getGridSpan(lastReason.height);
+				var max:int;
+				
+				if(lastInferenceGridX <= lastReasonGridX){
+					max = lastReasonGridX;
+				}
+				else{
+					max = lastInferenceGridX;
+				}
+				max = max + layoutManager.yArgDistances;
+				coordinate.gridY = coordinate.gridY + layoutManager.getGridSpan(claim.width) + 2;
+				coordinate.gridX = max;
+			}
+			
+			if(claim.rules.length == 0){
+				argTypeCoordinate.gridX = claim.gridX;
+				argTypeCoordinate.gridY = coordinate.gridY;
+			}
+			else{
+				argTypeCoordinate.gridX = coordinate.gridX - layoutManager.yArgDisplay;
+				argTypeCoordinate.gridY = coordinate.gridY;
+			}
+			
+			reasonCoordinate.gridX = argTypeCoordinate.gridX;
+			reasonCoordinate.gridY = coordinate.gridY + Math.ceil(claim.width/layoutManager.uwidth) + 1;
+			
+			var xml:XML = <map>
+							<textbox text=""/>
+							<textbox text=""/>
+							<textbox text=""/>
+							<node Type="Standard" typed="0" is_positive="1" x={reasonCoordinate.gridX} y={reasonCoordinate.gridY}>
+								<nodetext/><nodetext/><nodetext/>
+							</node>
+							<node Type="Inference" typed="0" is_positive="1" x={coordinate.gridX} y={coordinate.gridY}>
+							</node>
+							<connection type="Unset" x={argTypeCoordinate.gridX} y={argTypeCoordinate.gridY} />
+						 </map>
+			
 			//setting the ID of the map
 			xml.@ID = ID;
+			
 			//temporary IDs for the three new textboxes
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -168,7 +227,25 @@ package classes
 		
 		public function getAddReason(inference:Inference):XML
 		{
-			var xml:XML=<map><textbox text=""/><textbox text=""/><textbox text=""/><node Type="Standard" typed="0" is_positive="1" x="0" y="0"><nodetext/><nodetext/><nodetext/></node><connection></connection></map>;
+			//cannot be the first reason
+			//get the recently added reason
+			var reason:ArgumentPanel = inference.reasons[inference.reasons.length - 1];
+			var coordinate:Coordinate = new Coordinate;
+			coordinate.gridX = reason.gridX + layoutManager.getGridSpan(reason.height) + 1;
+			coordinate.gridY = reason.gridY;
+			
+			var xml:XML=<map>
+						<textbox text=""/>
+						<textbox text=""/>
+						<textbox text=""/>
+						<node Type="Standard" typed="0" is_positive="1" x={coordinate.gridX} y={coordinate.gridY}>
+							<nodetext/>
+							<nodetext/>
+							<nodetext/>
+						</node>
+						<connection></connection>
+						</map>;
+		
 			xml.@ID = ID;
 			var textboxesList:XMLList = xml.textbox;
 			for each(var textbox:XML in textboxesList)
@@ -230,123 +307,124 @@ package classes
 		public function getMapXml():XML
 		{
 			try{
-				var xml:XML = new XML("<map id=\""+ID+"\"></map>");
-				var argumentPanel:ArgumentPanel;
-				var inferencePanel:Inference;
-				//form textboxes
-				for( var i:int=0; i<layoutManager.panelList.length; i++)
+			var xml:XML = new XML("<map id=\""+ID+"\"></map>");
+			var argumentPanel:ArgumentPanel;
+			var inferencePanel:Inference;
+			//form textboxes
+			for( var i:int=0; i<layoutManager.panelList.length; i++)
+			{
+				var panel:GridPanel = layoutManager.panelList[i] as GridPanel;
+				//The panel may be an inference a reason/claim  or displayArgType
+				if(panel is Inference)
+				{	
+				}
+					//note an Inference is also an Argument Panel, because Inference is a more specific type. So
+					//it should come before in the else-if structure.
+				else if(panel is ArgumentPanel)
 				{
-					var panel:GridPanel = layoutManager.panelList[i] as GridPanel;
-					//The panel may be an inference a reason/claim  or displayArgType
-					if(panel is Inference)
-					{	
-					}
-						//note an Inference is also an Argument Panel, because Inference is a more specific type. So
-						//it should come before in the else-if structure.
-					else if(panel is ArgumentPanel)
+					argumentPanel = ArgumentPanel(panel);
+					//add input1
+					var currTextBox:DynamicTextArea = argumentPanel.input1;
+					var currXML:XML = <textbox></textbox>;
+					currXML.@ID = currTextBox.ID;
+					if(argumentPanel.statementNegated)
 					{
-						argumentPanel = ArgumentPanel(panel);
-						//add input1
-						var currTextBox:DynamicTextArea = argumentPanel.input1;
-						var currXML:XML = <textbox></textbox>;
-						currXML.@ID = currTextBox.ID;
-						if(argumentPanel.statementNegated)
-						{
-							currXML.@text = "#$#$#$"+currTextBox.text; //TODO: Remove this since it is now a serverside attribute
-						}
-						else{
-							currXML.@text = currTextBox.text;
-						}
-						xml = xml.appendChild(currXML);
-						//add inputs
-						for(var j:int=0; j<argumentPanel.inputs.length; j++)
-						{
-							currXML = <textbox></textbox>;
-							currXML.@ID = argumentPanel.inputs[j].ID;
-							currXML.@text = argumentPanel.inputs[j].text;
-							xml = xml.appendChild(currXML);
-						}
-					}	
-				}
-				//nodes
-				for(i=0; i  < layoutManager.panelList.length; i++)
-				{
-					panel = layoutManager.panelList[i] as GridPanel;
-					if(!(panel is MenuPanel)){
-						currXML= <node></node>;
-						if(panel is Inference)
-						{
-							inferencePanel = Inference(panel);
-							currXML.@ID = inferencePanel.ID;
-							currXML.@Type = "Inference";
-							currXML.@is_positive = 1;
-						}
-						else if(panel is ArgumentPanel)
-						{
-							argumentPanel = ArgumentPanel(panel);
-							currXML.@ID = argumentPanel.ID;
-							if(argumentPanel.state == 0){
-								currXML.@Type="Universal";		
-							}
-							else{
-								currXML.@Type = "Particular";
-							}
-							
-							var nodeText:XML = <nodetext></nodetext>;
-							nodeText.@ID = argumentPanel.input1NTID;
-							nodeText.@textboxID = argumentPanel.input1.ID;
-							currXML = currXML.appendChild(nodeText);
-							for(j=0; j<argumentPanel.inputsNTID.length; j++)
-							{
-								nodeText = <nodetext></nodetext>;
-								nodeText.@ID = argumentPanel.inputsNTID[j];
-								nodeText.@textboxID = argumentPanel.inputs[j].ID;
-								currXML = currXML.appendChild(nodeText);
-							}
-							if(argumentPanel.statementNegated){
-								currXML.@is_positive = 0;
-							}
-							else{
-								currXML.@is_positive = 1;
-							}
-						
-						}
-						currXML.@typed = 0;
-						currXML.@x = panel.gridX;
-						currXML.@y = panel.gridY;
-						trace(currXML.toXMLString());
+						currXML.@text = "#$#$#$"+currTextBox.text;
+					}
+					else{
+						currXML.@text = currTextBox.text;
+					}
+					xml = xml.appendChild(currXML);
+					//add inputs
+					for(var j:int=0; j<argumentPanel.inputs.length; j++)
+					{
+						currXML = <textbox></textbox>;
+						currXML.@ID = argumentPanel.inputs[j].ID;
+						currXML.@text = argumentPanel.inputs[j].text;
 						xml = xml.appendChild(currXML);
 					}
-				}
-				
-				//print connections
-				for(i=0; i<layoutManager.panelList.length; i++)
-				{
-					panel = layoutManager.panelList[i] as GridPanel;
+				}	
+			}
+			//nodes
+			for(i=0; i  < layoutManager.panelList.length; i++)
+			{
+				panel = layoutManager.panelList[i] as GridPanel;
+				if(!(panel is MenuPanel)){
+					currXML= <node></node>;
 					if(panel is Inference)
 					{
 						inferencePanel = Inference(panel);
-						currXML = <connection></connection>;
-						currXML.@ID = inferencePanel.connID;
-						currXML.@type = inferencePanel.myArg.dbType;
-						currXML.@x = inferencePanel.argType.gridX;
-						currXML.@y = inferencePanel.argType.gridY;
-						xml = xml.appendChild(currXML);
-					}	
+						currXML.@ID = inferencePanel.ID;
+						currXML.@Type = "Inference";
+						currXML.@is_positive = 1;
+					}
+					else if(panel is ArgumentPanel)
+					{
+						argumentPanel = ArgumentPanel(panel);
+						currXML.@ID = argumentPanel.ID;
+						if(argumentPanel.state == 0){
+							currXML.@Type="Universal";
+						}
+						else{
+							currXML.@Type = "Particular";
+						}
+						
+						var nodeText:XML = <nodetext></nodetext>;
+						nodeText.@ID = argumentPanel.input1NTID;
+						nodeText.@textboxID = argumentPanel.input1.ID;
+						currXML = currXML.appendChild(nodeText);
+						for(j=0; j<argumentPanel.inputsNTID.length; j++)
+						{
+							nodeText = <nodetext></nodetext>;
+							nodeText.@ID = argumentPanel.inputsNTID[j];
+							nodeText.@textboxID = argumentPanel.inputs[j].ID;
+							currXML = currXML.appendChild(nodeText);
+						}
+						if(argumentPanel.statementNegated){
+							currXML.@is_positive = 0;
+						}
+						else{
+							currXML.@is_positive = 1;
+						}
+						
+					}
+					currXML.@typed = 0;
+					currXML.@x = panel.gridX;
+					currXML.@y = panel.gridY;
+					xml = xml.appendChild(currXML);
 				}
-			}catch(error:Error)
-			{
-				trace(error);
-				return <map><error></error></map>;
 			}
-			//Alert.show(xml.toXMLString());
+			
+			//print connections
+			for(i=0; i<layoutManager.panelList.length; i++)
+			{
+				panel = layoutManager.panelList[i] as GridPanel;
+				if(panel is Inference)
+				{
+					inferencePanel = Inference(panel);
+					currXML = <connection></connection>;
+					currXML.@ID = inferencePanel.connID;
+					currXML.@type = inferencePanel.connectionType;
+					currXML.@x = inferencePanel.argType.gridX;
+					currXML.@y = inferencePanel.argType.gridY;
+					xml = xml.appendChild(currXML);
+				}	
+			}
+			}catch(error:Error){
+				return (<map><error text="Map was not saved ..." /></map>);
+			}
+			trace(xml.toXMLString());
 			return xml;
 		}
 		
 		public function load(xmlData:XML):void{
+			
+			//try{
 			//var xmlData:XML = new XML(event.target.data);
 			
 			ID = xmlData.@ID;
+			trace('This is the id of the map ' + id);
+			trace(ID);
 			var textboxes:XMLList = xmlData.textbox;
 			var textbox_map:Object = new Object;
 			
@@ -549,6 +627,9 @@ package classes
 				//make all of the boxes uneditable
 				
 			}
+			//}catch(error:Error){
+			//	Alert.show("There was an error in loading the map. The map is corrupted, and may not be correct ...");
+			//}
 			layoutManager.layoutComponents();
 		}
 		

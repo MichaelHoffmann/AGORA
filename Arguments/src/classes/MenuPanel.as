@@ -27,12 +27,13 @@ package classes
 	import mx.core.DragSource;
 	import mx.core.IUIComponent;
 	import mx.events.DragEvent;
+	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
 	import spark.components.VGroup;
-
+	
 	public class MenuPanel extends GridPanel
 	{
 		public var vgroup:VGroup;
@@ -69,21 +70,33 @@ package classes
 			title = "Therefore";
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
-			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);	
+			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+			addEventListener(FlexEvent.PREINITIALIZE, menuPanelCreated);
 		}
+		
+		private function menuPanelCreated(event:FlexEvent):void{
+			try{
+				gridX = inference._initXML.connection[0].@x;
+				gridY = inference._initXML.connection[1].@y;
+			}catch(e:Error){
+				trace(e);
+			}
+		}
+		
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{
-			var dInitiator:MenuPanel = mEvent.currentTarget.parent.parent.parent.parent.parent as MenuPanel;
-			var ds:DragSource = new DragSource;
-			ds.addData(dInitiator.mouseX,"x");
-			ds.addData(dInitiator.mouseY,"y");
-			ds.addData(dInitiator.gridX,"gx");
-			ds.addData(dInitiator.gridY,"gy");
-			DragManager.doDrag(dInitiator,ds,mEvent,null);
+				var dInitiator:MenuPanel = mEvent.currentTarget.parent.parent.parent.parent.parent as MenuPanel;
+				var ds:DragSource = new DragSource;
+				ds.addData(dInitiator.mouseX,"x");
+				ds.addData(dInitiator.mouseY,"y");
+				ds.addData(dInitiator.gridX,"gx");
+				ds.addData(dInitiator.gridY,"gy");
+				DragManager.doDrag(dInitiator,ds,mEvent,null);
 			}catch (e:Error){
 				trace(e);
 			}
 		}
+		
 	}
 }

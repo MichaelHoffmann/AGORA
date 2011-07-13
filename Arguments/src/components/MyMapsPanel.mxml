@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="components.MyMapsSkin">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="components.MyMapsSkin" initialize="selectString = MARK_ALL">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -15,6 +15,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import classes.MapMetaData;
 			import classes.UserData;
 			
 			import flash.net.URLLoader;
@@ -28,6 +29,7 @@
 			import mx.core.FlexGlobals;
 			import mx.managers.CursorManager;
 			
+			import spark.components.Button;
 			import spark.components.Group;
 			import spark.components.Label;
 			
@@ -44,8 +46,19 @@
 			public var labelGroup:Group;
 			
 			[SkinPart(required="true")]
-			public var userInfoTxt:Text;
+			public var userInfoTxt:Label;
 			
+			[SkinPart(required="true")]
+			public var  selectBtn:Button;
+			
+			[SkinPart(required="true")]
+			public var deleteBtn:Button;
+			
+			public static const MARK_ALL:String = "Select All";
+			public static const UNMARK_ALL:String = "Select None";
+			
+			[Bindable]
+			public var selectString:String;
 			
 			public function set skinState(value:Boolean):void{
 				invalidateSkinState();
@@ -71,7 +84,7 @@
 						mapsGroup.removeAllElements();
 					}	
 					var maps:XMLList = mapListXML.map;
-					
+					var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
 					for each(var map:XML in maps)
 					{
 						try{
@@ -82,11 +95,23 @@
 						}catch(error:Error){
 							trace("is_deleted not available yet...");
 						}
-						var myMapName:MyMapName = new MyMapName;
-						myMapName.mapId = map.@ID;
-						myMapName.mapName = map.@title;
-						mapsGroup.addElement(myMapName);
+						
+						var mapMetaData:MapMetaData = new MapMetaData();
+						mapMetaData.mapID = map.@ID;
+						mapMetaData.mapName = map.@title;
+						mapMetaDataVector.push(mapMetaData);
 					}
+					
+					mapMetaDataVector.sort(MapMetaData.isGreater);
+					
+					for each( mapMetaData in mapMetaDataVector){
+						var myMapName:MyMapName = new MyMapName;
+						myMapName.mapId = mapMetaData.mapID;
+						myMapName.mapName = mapMetaData.mapName;
+						mapsGroup.addElement(myMapName);	
+					}
+					selectBtn.enabled = (mapsGroup.numElements == 0)? false:true;
+					deleteBtn.enabled = (mapsGroup.numElements == 0)? false:true;
 				}
 			}
 			
@@ -94,32 +119,25 @@
 			}
 			
 			
-			  public function deleteAllMaps(event:MouseEvent):void{
-				
-				CursorManager.setBusyCursor();
-				
+			public function makeSelection(event:MouseEvent):void{
 				var mapsMarked:Vector.<MyMapName> = new Vector.<MyMapName>(0,false);
 				for(var i:int=0; i < mapsGroup.numElements; i++)
 				{
 					var myMapName:MyMapName = MyMapName(mapsGroup.getElementAt(i));
-					mapsMarked.push(myMapName);	
+					if(selectString == MARK_ALL){
+						myMapName.thisMap.selected = true;
+					}else{
+						myMapName.thisMap.selected = false;
+					}	
 				}
 				
-				if(mapsMarked.length > 0 ){
-					var map:MyMapName = mapsMarked.pop();
-					deleteMap(map,mapsMarked);
-				}else{
-					Alert.show("You do not own any maps yet. Click on 'Create Map' button to create a map");
-					CursorManager.removeBusyCursor();
-				}
-				
-				
+				selectString = (selectString == MARK_ALL)? UNMARK_ALL : MARK_ALL;
 				
 			}
 			
 			public function deleteMaps(event:MouseEvent):void{
+				selectString = MARK_ALL;
 				CursorManager.setBusyCursor();
-				//FlexGlobals.topLevelApplication.loadMapList();
 				FlexGlobals.topLevelApplication
 				var mapsMarked:Vector.<MyMapName> = new Vector.<MyMapName>(0,false);
 				for(var i:int=0; i < mapsGroup.numElements; i++)
@@ -160,7 +178,7 @@
 						FlexGlobals.topLevelApplication.loadMyMapList();
 						FlexGlobals.topLevelApplication.loadMapList();
 						Alert.show("maps deleted ...");
-							
+						
 					}
 				});
 				urlLoader.addEventListener( IOErrorEvent.IO_ERROR, function (event:IOErrorEvent):void{Alert.show("Deleting " + map.mapName + " failed ...");});

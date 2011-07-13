@@ -53,7 +53,6 @@ package classes
 			xml = x;
 			ready=true;
 		}
-
 		
 		/**The key function. Use this to look up a label from the translation document according to the set language.*/
 		
@@ -71,7 +70,5 @@ package classes
 			trace("Output is: " + output);
 			return output;
 		}
-		
-		
 	}
 }
