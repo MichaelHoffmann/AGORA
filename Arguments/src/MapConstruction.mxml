@@ -34,7 +34,7 @@
 				  y="67" 
 				  width="191" 
 				  height="45" 
-				  text="What is the main claim of your argument?" 
+				  text="{Language.lookup(&quot;WhatIsMainClaim&quot;)}" 
 				  toolTip="The easiest way to construct an argument"
 				  textAlign="center"
 				  click="startWithClaim()"/>

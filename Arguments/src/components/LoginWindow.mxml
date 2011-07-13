@@ -79,7 +79,7 @@
 		]]>
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem label="Username">
+		<mx:FormItem label="{Language.lookup(&quot;Username&quot;)}" >
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
