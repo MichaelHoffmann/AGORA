@@ -394,7 +394,7 @@ package classes
 						argType.changeSchemeBtn.enabled = false;
 					}
 					myArg = new ConditionalSyllogism;
-					myArg._isLanguageExp = true;
+					myArg.isLanguageExp = true;
 					myArg.inference = this;
 					myArg.addInitialReasons();
 					myArg.createLinks();
@@ -588,7 +588,7 @@ package classes
 					Alert.show("Complete the enabler before adding further reasons");
 					return;
 				}
-				if(myArg._isLanguageExp || (myArg is ModusTollens && reasonAddable == true && myschemeSel.selectedType == myArg._expLangTypes[0]))
+				if(myArg.isLanguageExp || (myArg is ModusTollens && reasonAddable == true && myschemeSel.selectedType == myArg._expLangTypes[0]))
 				{
 					addReason();
 				}
@@ -707,7 +707,7 @@ package classes
 					myArg = new DisjunctiveSyllogism;
 					myArg.inference = this;
 					myArg.createLinks();
-					myArg._isLanguageExp = true;
+					myArg.isLanguageExp = true;
 					myschemeSel.selectedType = myArg._langTypes[0];
 					displayStr = myArg.correctUsage();
 					break;
@@ -715,7 +715,7 @@ package classes
 					myArg = new NotAllSyllogism;
 					myArg.inference = this;
 					myArg.createLinks();
-					myArg._isLanguageExp = true;
+					myArg.isLanguageExp = true;
 					myschemeSel.selectedType = myArg._langTypes[0];
 					displayStr = myArg.correctUsage();
 					break;
@@ -723,7 +723,6 @@ package classes
 					myArg = new ConstructiveDilemma;
 					break;
 			}
-			
 			myArg.inference = this;
 			myArg.createLinks();
 			
@@ -744,7 +743,7 @@ package classes
 			oplist.visible = false;
 			var typeText:String=le.itemRenderer.data.toString();
 			myschemeSel.selectedType = typeText;
-			myArg._isLanguageExp = false;
+			myArg.isLanguageExp = false;
 			if(myArg.myname == ParentArg.MOD_TOL)
 			{
 				if(typeText == "Only if") 
@@ -766,21 +765,21 @@ package classes
 				{
 					if(myArg._expLangTypes[i] == typeText) 
 					{
-						myArg._isLanguageExp = true;
+						myArg.isLanguageExp = true;
 					}
 				}
 			}
 			else if(myArg.myname == ParentArg.DIS_SYLL)
 			{
-				myArg._isLanguageExp = true;
+				myArg.isLanguageExp = true;
 			}
 			else if(myArg.myname == ParentArg.NOT_ALL_SYLL)
 			{
-				myArg._isLanguageExp = true;
+				myArg.isLanguageExp = true;
 			}
 			else if(myArg.myname == ParentArg.COND_SYLL)
 			{
-				myArg._isLanguageExp = true;
+				myArg.isLanguageExp = true;
 				myArg.createLinks();
 			}
 			displayStr = myArg.correctUsage();

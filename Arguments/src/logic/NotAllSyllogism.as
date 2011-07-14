@@ -33,11 +33,7 @@ package logic
 			myname = NOT_ALL_SYLL;
 			_dbType = "NotAllSyl";
 			_langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
-			_isLanguageExp = true;
-		}
-		
-		override public function setIsExp():void{
-			_isLanguageExp = true;
+			isLanguageExp = true;
 		}
 		
 		override public function get dbType():String
