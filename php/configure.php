@@ -25,5 +25,5 @@
 	/** dirName: name of the current directory */
 	$dirName = "release";
 	/** version: current version number */
-	$version = "11.7.8"
+	$version = "11.7.14"
 ?>
