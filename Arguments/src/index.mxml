@@ -32,7 +32,7 @@
 			</s:HGroup>
 			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
 				
-				 <components:MapListPanel id="mapList" title="List of Maps" width="200" height="400"></components:MapListPanel>
+				 <components:MapListPanel id="mapList" title="{Language.lookup(&quot;ListMaps&quot;)}" width="200" height="400"></components:MapListPanel>
 				
 				<components:MyMapsPanel id="myMaps" title="My Maps" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
 				
@@ -63,6 +63,8 @@
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import classes.Configure;
+			import classes.Language;
+			
 			public var username:String;
 			public var pass_hash:String;
 			

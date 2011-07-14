@@ -877,7 +877,7 @@
 	</LinkToMap>
 	
 	<ListMaps>
-		<EN-US text="list of existing maps"/>
+		<EN-US text="List of Maps"/>
 		<RUS text="список существующих карт"/>
 		<GER text="Liste von Argumentationen"/>
 	</ListMaps>
