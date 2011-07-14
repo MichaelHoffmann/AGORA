@@ -27,7 +27,7 @@
 	<mx:Canvas id="agoraMenu" width="800" minHeight="600" name="agoraMenu">
 		<s:VGroup id="Agora">
 			<s:HGroup paddingLeft="25" paddingTop="25">
-				<s:Label text="Welcome to AGORA...">
+				<s:Label text="{Configure.lookup(&quot;version&quot;)}">
 				</s:Label>	
 			</s:HGroup>
 			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
