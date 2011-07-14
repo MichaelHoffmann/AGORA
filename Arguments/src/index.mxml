@@ -34,15 +34,15 @@
 				
 				 <components:MapListPanel id="mapList" title="{Language.lookup(&quot;ListMaps&quot;)}" width="200" height="400"></components:MapListPanel>
 				
-				<components:MyMapsPanel id="myMaps" title="My Maps" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
+				<components:MyMapsPanel id="myMaps" title="{Language.lookup(&quot;MyMaps&quot;)}" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
 				
 				<s:Panel  id="projects" title="Projects" width="200" minHeight="400">	
 				</s:Panel>
 			</s:HGroup>
 			<s:HGroup paddingLeft="25" paddingTop="25">
-				<s:Button id="createMapBtn" label="Create Map">
+				<s:Button id="createMapBtn" label="{Language.lookup(&quot;NewMap&quot;)}">
 				</s:Button >
-				<s:Button id="createProjectBtn" label="Create Project" click="Alert.show('This feature is not yet functional and is in the development process ...');">
+				<s:Button id="createProjectBtn" label="Create Project" click="Alert.show('error | ошибка | fehler --- This feature is not yet functional and is in the development process ...');">
 				</s:Button>
 			</s:HGroup>
 		</s:VGroup>	
