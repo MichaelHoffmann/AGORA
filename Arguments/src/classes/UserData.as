@@ -98,7 +98,7 @@ package classes
 			request.url = Configure.lookup("baseURL") + "login.php";
 			request.data = new URLVariables("username="+userName+"&pass_hash="+ com.adobe.crypto.MD5.hash(passHash + RegisterPanel.salt));
 			passHashStr = MD5.hash(passHash + RegisterPanel.salt);
-			trace("SANITY CHECK- before: " + passHash + " after: " + passHashStr);
+			trace("SANITY CHECK- before: " + passHash + " after: " + passHashStr + " TOTAL URL: " + request.url + "?" + request.data);
 			request.method = URLRequestMethod.GET;
 			urlLoader.addEventListener(Event.COMPLETE,function(event:Event):void{verifyUser(event,object)});
 			urlLoader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{errorHandler(event,object)});

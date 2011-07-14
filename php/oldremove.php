@@ -105,7 +105,8 @@ List of variables for insertion:
 	*/
 	function remove($xmlin, $userID, $pass_hash)
 	{
-	//Standard SQL connection stuff
+		global $dbName;
+		//Standard SQL connection stuff
 		$linkID= establishLink();
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 

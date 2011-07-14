@@ -431,6 +431,7 @@ List of variables for insertion:
 	*/
 	function insert($xmlin, $userID, $pass_hash)
 	{
+		global $dbName;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$output = new SimpleXMLElement($xmlstr);

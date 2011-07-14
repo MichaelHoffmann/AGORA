@@ -39,7 +39,7 @@ List of variables for insertion:
 	require 'establish_link.php';
 
 	function removeMap($map, $linkID, $userID){
-		
+		global $dbName;
 		$mapID = $map['id'];
 		
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapID";

@@ -26,6 +26,7 @@
 	*	Might be worth refactoring this somewhat.
 	*/
 	function get_map($mapID, $timestamp){
+		global $dbName;
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");

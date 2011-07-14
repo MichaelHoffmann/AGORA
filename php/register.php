@@ -26,6 +26,7 @@
 	*/
 	function register($username, $pass_hash, $firstname, $lastname, $email, $url)
 	{
+		global $dbName;
 		$linkID= establishLink();
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");
