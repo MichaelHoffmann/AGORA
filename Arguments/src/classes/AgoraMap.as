@@ -537,6 +537,7 @@ package classes
 					inference.myschemeSel.selectedScheme = inference.myArg.myname;
 					inference.myschemeSel.selectedType = inference.myArg.getLanguageType(type);
 					inference.myschemeSel.selectedOption = inference.myArg.getOption(type);
+					inference.myArg.setIsExp();
 					if(inference.hasMultipleReasons)
 					{
 						inference.myschemeSel.typeSelector.dataProvider = inference.myArg._expLangTypes;
