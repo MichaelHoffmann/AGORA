@@ -273,6 +273,7 @@ package classes
 			{
 				inference.setRuleState();
 			}
+			this.deleteBtn.enabled = false;
 		}
 		
 		public function get statementNegated():Boolean
@@ -1027,6 +1028,7 @@ package classes
 				Alert.show(error.toString());
 			}
 		}
+		
 	}
 	
 }
