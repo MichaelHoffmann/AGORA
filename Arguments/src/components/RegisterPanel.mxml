@@ -36,6 +36,7 @@
 			import org.osmf.layout.AbsoluteLayoutFacet;
 			
 			import classes.Configure;
+			import classes.Language;
 			
 			private static var _salt:String = "AGORA";
 			
@@ -99,43 +100,41 @@
 		]]>
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="Username*">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
 		
-		<mx:FormItem label="Password*">
+		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}">
 			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Confirm Password*" >
+		<mx:FormItem  label="{Language.lookup(&quot;Password&quot;)}" >
 			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="First Name*">
+		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}">
 			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Last Name*">
+		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}">
 			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Email*">
+		<mx:FormItem  label="{Language.lookup(&quot;Email&quot;)}">
 			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="URL">
+		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}">
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
-		</mx:FormItem>
-		<mx:FormItem label="Entries with an * are mandatory">
 		</mx:FormItem>
 
 		<mx:FormItem>
 			<s:HGroup>
-				<s:Button label="Submit" tabIndex="7" id="submit_btn" click="submit_form();">		
+				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="7" id="submit_btn" click="submit_form();">		
 				</s:Button>
-				<s:Button label="Back"  tabIndex="8" id="back_btn" click="clear_form();">		
+				<s:Button label="{Language.lookup(&quot;Back&quot;)}"  tabIndex="8" id="back_btn" click="clear_form();">		
 				</s:Button>
 			</s:HGroup>		
 			
