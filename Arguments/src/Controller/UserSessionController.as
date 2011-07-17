@@ -1,6 +1,6 @@
 package Controller
 {
-	import Events.NetworkEvent;
+	import Events.AGORAEvent;
 	
 	import Model.AGORAModel;
 	import Model.UserSessionModel;
@@ -19,8 +19,25 @@ package Controller
 
 	public class UserSessionController
 	{	
-		public function UserSessionController(){
-			
+		private static var instance:UserSessionController;
+		
+		//----------------Constructor---------------------//
+		public function UserSessionController(singletonEnforcer:SingletonEnforcer){
+			instance = this;
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.AUTHENTICATED, onAuthentication);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.USER_INVALID, onAuthenticationFailure);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FAULT, onFault);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.REGISTRATION_SUCCEEDED, onRegistrationRequestSuccess);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.REGISTRATION_FAILED, onRegistrationRequestFailure);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FAULT, onFault);
+		}
+		
+		//----------------get Instance ----------------------------//
+		public static function getInstance():UserSessionController{
+			if(!instance){
+				instance = new UserSessionController(new SingletonEnforcer);
+			}
+			return instance;
 		}
 		
 		//----------------Displaying Login Box---------------------//
@@ -49,29 +66,17 @@ package Controller
 		//--------------Login Function--------------------------//
 		public function login(userDataVO:UserDataVO):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			userSessionModel.addEventListener(NetworkEvent.AUTHENTICATED, onAuthentication);
-			userSessionModel.addEventListener(NetworkEvent.USER_INVALID, onAuthenticationFailure);
-			userSessionModel.addEventListener(NetworkEvent.FAULT, onFault);
 			userSessionModel.authenticate(userDataVO);
 		}
 		
-		protected function onAuthentication(event:NetworkEvent):void{
-			event.target.removeEventListener(NetworkEvent.AUTHENTICATED, onAuthentication);
-			event.target.removeEventListener(NetworkEvent.USER_INVALID, onAuthenticationFailure);
-			event.target.removeEventListener(NetworkEvent.FAULT, onFault);
+		protected function onAuthentication(event:AGORAEvent):void{
 			trace("User Authenticated");
 			removeSignInBox();
-			
-			var agoraController:AGORAController = new AGORAController;
+			var agoraController:AGORAController = AGORAController.getInstance();
 			agoraController.fetchDataMyMaps();
-			//FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateProperties();
-			//FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateDisplayList();
 		}
 		
-		protected function onAuthenticationFailure(event:NetworkEvent):void{
-			event.target.removeEventListener(NetworkEvent.AUTHENTICATED, onAuthentication);
-			event.target.removeEventListener(NetworkEvent.USER_INVALID, onAuthenticationFailure);
-			event.target.removeEventListener(NetworkEvent.FAULT, onFault);
+		protected function onAuthenticationFailure(event:AGORAEvent):void{
 			trace("User Authentication Failed");	
 			Alert.show("Invalid username/password");
 		}
@@ -79,43 +84,27 @@ package Controller
 		//----------------Registration Function--------------------//
 		public function register(userDataVO:UserDataVO):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			userSessionModel.addEventListener(NetworkEvent.REGISTRATION_SUCCEEDED, onRegistrationRequestSuccess);
-			userSessionModel.addEventListener(NetworkEvent.REGISTRATION_FAILED, onRegistrationRequestFailure);
-			userSessionModel.addEventListener(NetworkEvent.FAULT, onFault);
-			
 			userSessionModel.register(userDataVO);
 		}
 		
-		protected function onRegistrationRequestSuccess(event:NetworkEvent):void{
-			event.target.removeEventListener(NetworkEvent.REGISTRATION_SUCCEEDED, onRegistrationRequestSuccess);
-			event.target.removeEventListener(NetworkEvent.REGISTRATION_FAILED, onRegistrationRequestFailure);
-			event.target.removeEventListener(NetworkEvent.FAULT, onFault);
-			
+		protected function onRegistrationRequestSuccess(event:AGORAEvent):void{
 			removeRegistrationBox();
 			Alert.show("Registration Successful. You may use your username/password to participate in AGORA.");
 		}
 		
-		protected function onRegistrationRequestFailure(event:NetworkEvent):void{
-			event.target.removeEventListener(NetworkEvent.REGISTRATION_SUCCEEDED, onRegistrationRequestSuccess);
-			event.target.removeEventListener(NetworkEvent.REGISTRATION_FAILED, onRegistrationRequestFailure);
-			event.target.removeEventListener(NetworkEvent.FAULT, onFault);
-			
+		protected function onRegistrationRequestFailure(event:AGORAEvent):void{
 			Alert.show("Registration Failed");
 		}
 		
 		//---------------Generic Network Fault----------------------//
-		protected function onFault(event:NetworkEvent):void{
-			try{
-				event.target.removeEventListener(NetworkEvent.REGISTRATION_SUCCEEDED, onRegistrationRequestSuccess);
-				event.target.removeEventListener(NetworkEvent.REGISTRATION_FAILED, onRegistrationRequestFailure);
-			}catch(error:Error){
-				event.target.removeEventListener(NetworkEvent.AUTHENTICATED, onAuthentication);
-				event.target.removeEventListener(NetworkEvent.USER_INVALID, onAuthenticationFailure);
-				}finally{
-				event.target.removeEventListener(NetworkEvent.FAULT, onFault);	
-			}
+		protected function onFault(event:AGORAEvent):void{
 			Alert.show("Could not contact Authenticaion Server. Please make sure you are connected to the Internet");
 		}
 		
 	}
+}
+
+
+class SingletonEnforcer{
+	
 }

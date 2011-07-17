@@ -49,7 +49,7 @@
 			
 			public function register_form():void
 			{	
-				var userSessionController:UserSessionController = new UserSessionController;
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showRegistrationBox();
 			}
 		
@@ -64,14 +64,14 @@
 				userDataVO.userName = username.text;
 				userDataVO.password = pass_hash.text;
 				
-				var userLoginController:UserSessionController = new UserSessionController;
+				var userLoginController:UserSessionController = UserSessionController.getInstance();
 				userLoginController.login(userDataVO);
 				
 			}
 			
 			protected function register_btn_clickHandler(event:MouseEvent):void
 			{
-				var userSessionController:UserSessionController = new UserSessionController;
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showRegistrationBox();
 			}
 

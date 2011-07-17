@@ -13,6 +13,7 @@
 			<s:Button id="discardChangesBtn" label="Home" visible="false">
 			</s:Button>
 		</s:HGroup>
+		
 		<s:Scroller id="agora">	
 			<s:Group>
 				<mx:Canvas>

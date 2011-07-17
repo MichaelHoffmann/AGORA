@@ -71,11 +71,12 @@
 
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
-				var fetchCommand:AGORAController = new AGORAController;
+				var fetchCommand:AGORAController =  AGORAController.getInstance();
 				fetchCommand.fetchDataMapList();
 			}
 			
 			protected function onMapObjectClicked(event:MouseEvent):void{
+				
 			}
 
 		]]>

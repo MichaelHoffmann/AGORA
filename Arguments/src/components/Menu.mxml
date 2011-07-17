@@ -3,11 +3,27 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
 		 xmlns:components="components.*"
+		 creationComplete="creationCompleteHandler(event)"
 		 >
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
+			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
+			
+			public var timer:Timer = new Timer(10000);
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				timer.addEventListener(TimerEvent.TIMER, timerFired);
+				timer.start();
+			}
+			
+			protected function timerFired(event:TimerEvent):void{
+				AGORAController.getInstance().onTimer();	
+			}
+
 		]]>
 	</fx:Script>
 	

@@ -48,7 +48,6 @@
 					Alert.show("Registration Successful. You may now Login");
 				}
 				PopUpManager.removePopUp(this);
-				
 			}
 			
 			public function errorHandler(event: IOErrorEvent):void
@@ -77,7 +76,7 @@
 				userDataVO.email = email.text;
 				userDataVO.URL = url.text;
 				
-				var userSessionController:UserSessionController = new UserSessionController;
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.register(userDataVO);
 			}
 		]]>

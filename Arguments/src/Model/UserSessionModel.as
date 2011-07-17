@@ -1,7 +1,7 @@
 package Model
 {
 	
-	import Events.NetworkEvent;
+	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.UserDataVO;
@@ -79,17 +79,17 @@ package Model
 				uid = event.result.login.ID;
 				firstName = event.result.login.firstname;
 				lastName = event.result.login.lastname;
-				dispatchEvent(new NetworkEvent(NetworkEvent.AUTHENTICATED));
+				dispatchEvent(new AGORAEvent(AGORAEvent.AUTHENTICATED));
 			}catch(e:Error){
 				trace("In UserSessionModel.onLoginRequestServiceResult: expected attributes were not present either because of invalid credentials or change in server ");
-				dispatchEvent(new NetworkEvent(NetworkEvent.USER_INVALID));
+				dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
 			}
 		}
 		
 		protected function onLoginRequestServiceFault(event:FaultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
-			dispatchEvent( new NetworkEvent(NetworkEvent.FAULT));
+			dispatchEvent( new AGORAEvent(AGORAEvent.FAULT));
 		}
 		
 		//---------------- Registration-----------------------------//
@@ -97,8 +97,6 @@ package Model
 			var registrationRequestService:HTTPService = new HTTPService;
 			passHash = MD5.hash(userData.password + _salt);
 			registrationRequestService.url = AGORAParameters.getInstance().registrationURL;
-			registrationRequestService.request['username'] = userData.userName;
-			registrationRequestService.request['pass_hash'] = passHash;
 			registrationRequestService.addEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			registrationRequestService.addEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			registrationRequestService.send({username:userData.userName,
@@ -113,16 +111,16 @@ package Model
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			if(event.result.login.hasOwnProperty("created")){
-				dispatchEvent(new NetworkEvent(NetworkEvent.REGISTRATION_SUCCEEDED));
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_SUCCEEDED));
 			}else{
-				dispatchEvent(new NetworkEvent(NetworkEvent.REGISTRATION_FAILED));
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED));
 			}
 		}
 		
 		protected function onRegistrationRequestServiceFault(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
-			dispatchEvent(new NetworkEvent(NetworkEvent.FAULT));
+			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 	}
 }
