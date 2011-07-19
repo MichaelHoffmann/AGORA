@@ -54,6 +54,7 @@ package classes
 	import spark.components.VGroup;
 	
 	import classes.Configure;
+	import classes.Language;
 	
 	public class Inference extends ArgumentPanel
 	{
@@ -239,7 +240,7 @@ package classes
 			if(claim.inference == null)
 			{
 				reasons[reasons.length - 1].makeUnEditable();
-				reasons[reasons.length - 1].displayTxt.text = "[Enter your reason]";
+				reasons[reasons.length - 1].displayTxt.text = Language.lookup("EnterReason");
 			}
 			else
 			{
@@ -485,7 +486,7 @@ package classes
 			
 			//requesting load_map.php with new timestamp
 			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/load_map.php";
+			urlRequest.url = Configure.lookup("baseURL") + "load_map.php";
 			var timestamp:String;
 			
 			if(parentMap.timestamp == null){
@@ -622,7 +623,7 @@ package classes
 			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
 			displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
 			displayTxt.visible = true;
-			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
+			displayTxt.toolTip = Language.lookup("Enabler");
 			bottomHG.visible = true;
 			doneHG.visible = false;
 			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
