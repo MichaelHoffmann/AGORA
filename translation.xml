@@ -299,11 +299,11 @@
 		<GER text="wende an "/>
 	</apply>
 	
-	<done>
+	<Done>
 		<EN-US text="Done"/>
 		<RUS text="Сделанный"/>
 		<GER text="Fertig"/>
-	</done>
+	</Done>
 	
 	<NotTheCase>
 		<EN-US text="It is not the case that "/>

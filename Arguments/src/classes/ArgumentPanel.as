@@ -767,19 +767,19 @@ package classes
 			}
 			else
 			{
-				//stmtTypeLbl.text = Language.lookup("Particular");
-				stmtTypeLbl.text = "Particular";
+				stmtTypeLbl.text = Language.lookup("Particular");
+				//stmtTypeLbl.text = "Particular";
 				state = 1;
 			}
-			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
 			//stmtTypeLbl.toolTip = "Please change it before commiting";
-			stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
+			//stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
 			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
 			
 			bottomHG = new HGroup();
 			doneHG = new HGroup;
 			doneBtn = new AButton;
-			doneBtn.label = "Done";
+			doneBtn.label = Language.lookup("Done");
 			doneHG.addElement(doneBtn);
 			doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
 			
