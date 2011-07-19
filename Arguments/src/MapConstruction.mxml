@@ -41,7 +41,7 @@
 	<mx:TextArea id="schemeStart"
 				 x="338" 
 				 y="67" 
-				 text="Click here if you want to use a specific argument scheme" 
+				 text="{Language.lookup(&quot;UseArgScheme&quot;)}" 
 				 textAlign="center" 
 				 width="184"
 				 click="startWithScheme()"/>
