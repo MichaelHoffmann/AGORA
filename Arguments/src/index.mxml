@@ -188,7 +188,7 @@
 			
 			private function errorHandler(event:IOErrorEvent):void
 			{
-				Alert.show("A communication error occurred duing interaction with server");
+				Alert.show("A communication error occurred during interaction with server");
 				
 			}
 			
