@@ -1124,6 +1124,12 @@
 		<GER text=" ist eine notwendige und hinreichende Bedingung für "/>
 	</ArgNecSuf>
 	
+	<ArgNotCase>
+		<EN-US text="It is not the case that "/>
+		<RUS text="Не то, что "/>
+		<GER text="Es ist nicht der Fall, dass "/>
+	</ArgNotCase>
+	
 	<ArgOnlyIf>
 		<EN-US text=" only if "/>
 		<RUS text=", только если "/>

@@ -21,6 +21,7 @@ package classes
 	 
 	 */
 	import classes.Language;
+	import classes.Configure;
 	
 	import components.ArgSelector;
 	import components.Option;
@@ -354,15 +355,16 @@ package classes
 				if(implies)
 				{
 					if(connectingStr == "If-then")
-						statement = "If " + inputs[1].text + ", then " + inputs[0].text;
+						statement = Language.lookup("ArgIf") + inputs[1].text + "," 
+										+ Language.lookup("ArgThen")+ inputs[0].text;
 					else
-						statement = inputs[1].text + " implies " + inputs[0].text;					
+						statement = inputs[1].text + Language.lookup("ArgImplies") + inputs[0].text;					
 				}
 				else
 				{
 					for(var i:int=0; i<inputs.length - 1; i++)
 					{
-						statement = statement + inputs[i].text + " and ";
+						statement = statement + inputs[i].text + Language.lookup("ArgAnd");
 					}
 					statement = statement + inputs[i].text;
 				}
@@ -373,7 +375,7 @@ package classes
 			}
 			if(statementNegated == true)
 			{
-				return ("it is not the case that " + statement);
+				return (Language.lookup("ArgNotCase") + statement);
 			}
 			else
 			{
@@ -545,7 +547,7 @@ package classes
 			xml.appendChild(responseXML);
 		
 			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/load_map.php";
+			urlRequest.url = Configure.lookup("baseURL") + "load_map.php";
 			var timestamp:String;
 			if(parentMap.timestamp == null){
 				timestamp = "0";
