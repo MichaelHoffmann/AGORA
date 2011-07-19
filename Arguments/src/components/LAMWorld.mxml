@@ -37,14 +37,14 @@
 				  y="67" 
 				  width="191" 
 				  height="45" 
-				  text="What is the main claim of your argument?" 
+				  text="{Language.lookup(&quot;WhatIsMainClaim&quot;)}"
 				  toolTip="The easiest way to construct an argument"
 				  textAlign="center"
 				  click="startWithClaim()"/>
 	<mx:TextArea id="schemeStart"
 				 x="338" 
 				 y="67" 
-				 text="Click here if you want to use a specific argument scheme" 
+				 text="{Language.lookup(&quot;UseArgScheme&quot;)}" 
 				 textAlign="center" 
 				 width="184"
 				 click="startWithScheme()"/>
@@ -68,6 +68,7 @@
 			import mx.events.FlexEvent;
 			
 			import spark.components.Group;
+			import classes.Language;
 			
 			public function startWithClaim():void {
 				var map:Map = new Map;
@@ -86,7 +87,7 @@
 			}
 			
 			public function init():void {
-				argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";
+				argumentPaste.text=Language.lookup("PasteArgument");
 				conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
 				
 			}
