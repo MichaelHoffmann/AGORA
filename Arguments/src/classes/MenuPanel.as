@@ -67,7 +67,7 @@ package classes
 			changeSchemeBtn.label = "Scheme";
 			changeSchemeBtn.percentWidth = 100;
 			titleDisplay.setStyle("textAlign","center");
-			title = "Therefore";
+			title = Language.lookup("Therefore");
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);

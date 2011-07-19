@@ -506,9 +506,9 @@
 	</Includes>
 	
 	<Therefore>
-		<EN-US text="therefore"/>
+		<EN-US text="Therefore"/>
 		<RUS text="поэтому"/>
-		<GER text="deshalb"/>
+		<GER text="Deshalb"/>
 	</Therefore>
 	
 	<ArgScheme>
