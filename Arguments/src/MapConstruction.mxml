@@ -23,7 +23,7 @@
 			   xmlns:classes="classes.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()">
 		
-	<s:Label text="Welcome to Agora! Please choose one of the following tasks to continue.."
+	<s:Label text="Welcome to Agora! Please choose one of the following tasks to continue..."
 			 x="10" y="10"
 			 fontWeight="bold" 
 			 fontFamily="Verdana"  
