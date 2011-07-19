@@ -246,15 +246,15 @@
 	</PasteArgument>
 	
 	<Particular>
-		<EN-US text="particular statement"/>
+		<EN-US text="Particular Statement"/>
 		<RUS text="особое утверждение"/>
 		<GER text="Einzelaussage"/>
 	</Particular>
 	
 	<Universal>
-		<EN-US text="universal statement"/>
+		<EN-US text="Universal Statement"/>
 		<RUS text="универсальное утверждение"/>
-		<GER text="universelle Aussage"/>
+		<GER text="Universelle Aussage"/>
 	</Universal>
 	
 	<ParticularUniversalClarification>
@@ -275,11 +275,11 @@
 		<GER text="AU"/>
 	</AU>
 	
-	<add>
-		<EN-US text="add "/>
+	<Add>
+		<EN-US text="Add "/>
 		<RUS text="добавьте "/>
-		<GER text="füge hinzu "/>
-	</add>
+		<GER text="Füge hinzu "/>
+	</Add>
 	
 	<use>
 		<EN-US text="use as "/>

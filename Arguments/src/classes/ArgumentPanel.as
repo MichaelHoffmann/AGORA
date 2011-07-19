@@ -816,7 +816,7 @@ package classes
 			userIdLbl.toolTip = userInfoStr;
 			
 			negatedLbl = new Label;
-			negatedLbl.text = "It is not the case that";
+			negatedLbl.text = Language.lookup("ArgNotCase");
 			negatedLbl.visible = false;
 			addElement(negatedLbl);
 			
@@ -836,11 +836,11 @@ package classes
 			btnG.addElement(doneHG);
 			btnG.addElement(bottomHG);
 			addBtn = new AButton;
-			addBtn.label = "add...";
+			addBtn.label = Language.lookup("Add")+"...";
 			
 			bottomHG.addElement(addBtn);
 			deleteBtn = new AButton;
-			deleteBtn.label = "delete...";
+			deleteBtn.label = Language.lookup("Delete")+"...";
 			deleteBtn.addEventListener(MouseEvent.CLICK,deleteThis);
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
@@ -905,17 +905,17 @@ package classes
 				if(this.panelType!=INFERENCE)
 				{
 					state = 1;
-					stmtTypeLbl.text = "Particular Statement";
+					stmtTypeLbl.text = Language.lookup("Particular Statement");
 					this.setStyle("cornerRadius",0);
 				}
 				else {
 					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
-					stmtTypeLbl.text = "Universal Statement";
+					stmtTypeLbl.text = Language.lookup("Universal");
 				}
 			} 
 			else {
 				state = 0;
-				stmtTypeLbl.text = "Universal Statement";
+				stmtTypeLbl.text = Language.lookup("Universal");
 				this.setStyle("cornerRadius",30);
 			} 
 		}
