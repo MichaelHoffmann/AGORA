@@ -8,6 +8,7 @@ package ValueObjects
 		public var loginURL:String;
 		public var registrationURL:String;
 		public var mapRemoveURL:String;
+		public var insertURL:String;
 	
 		
 		public function AGORAParameters()
@@ -17,6 +18,7 @@ package ValueObjects
 			loginURL = "http://agora.gatech.edu/dev/login.php";
 			registrationURL = "http://agora.gatech.edu/dev/register.php";
 			mapRemoveURL = "http://agora.gatech.edu/dev/remove_map.php";
+			insertURL = "http://agora.gatech.edu/dev/insert.php";
 			
 			reference = this;
 		}

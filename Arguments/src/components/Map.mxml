@@ -6,14 +6,13 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:VGroup id="container">			
-		<s:HGroup id="topPanel">
-			<s:Button id="gotoMenuBtn" label="Save and Exit">
+	<s:VGroup id="container" paddingBottom="10" paddingTop="10">			
+		<s:HGroup id="topPanel" gap="10">
+			<s:Button id="gotoMenuBtn" label="Home" width="50">
 			</s:Button>
-			<s:Button id="discardChangesBtn" label="Home" visible="false">
+			<s:Button id="saveAsBtn" label="Save Map As" visible="true" width="50">
 			</s:Button>
 		</s:HGroup>
-		
 		<s:Scroller id="agora">	
 			<s:Group>
 				<mx:Canvas>
@@ -93,7 +92,6 @@
 				urlRequestMap.method = URLRequestMethod.GET;
 				var urlLoaderMap:URLLoader = new URLLoader;
 				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
-					//agoraMap.enabled = true;
 				});
 				urlLoaderMap.load(urlRequestMap);
 			}

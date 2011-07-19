@@ -46,7 +46,6 @@
 				{
 					thisMapButton.label = mapName;
 					thisMapButton.name = mapId.toString();
-					thisMapButton.addEventListener(MouseEvent.CLICK, function (event:Event):void{ FlexGlobals.topLevelApplication.displayMap(thisMapButton)});
 				}
 			}
 			

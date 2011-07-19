@@ -23,7 +23,7 @@
 			import Model.AGORAModel;
 			import Model.MapListModel;
 			
-			import classes.MapMetaData;
+			import Model.MapMetaData;
 			
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;

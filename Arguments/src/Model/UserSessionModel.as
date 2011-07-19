@@ -20,11 +20,12 @@ package Model
 	
 	import org.osmf.utils.URL;
 	
+	[Bindable]
 	public class UserSessionModel extends EventDispatcher
 	{
 		public var firstName:String;
 		public var lastName:String;
-		public var uid:int;
+		public var _uid:int;
 		public var password:String;
 		public var passHash:String;
 		public var email:String;
@@ -33,14 +34,14 @@ package Model
 		private var _valueObject:UserDataVO;
 		private static var _salt:String = "AGORA";
 		
-
+		
 		public function UserSessionModel(target:IEventDispatcher=null)
 		{
 			_valueObject = new UserDataVO;
 			super(target);
 		}
 		
-		//Getters
+		//Getters and setters
 		public function get valueObject():UserDataVO
 		{
 			_valueObject.firstName = this.firstName;
@@ -50,8 +51,20 @@ package Model
 			_valueObject.URL = this.URL;
 			return _valueObject;
 		}
+		
 
-		//other public functions
+		public function get uid():int{
+			return _uid;
+		}
+		
+		public function set uid(value:int):void{
+			if(value != _uid){
+				_uid = value;
+				dispatchEvent(new AGORAEvent(AGORAEvent.LOGIN_STATUS_SET));
+			}
+		}
+		
+		[Bindable(event="LogInStatus")]
 		public function loggedIn():Boolean{
 			if(uid){
 				return true;
@@ -100,11 +113,11 @@ package Model
 			registrationRequestService.addEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			registrationRequestService.addEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			registrationRequestService.send({username:userData.userName,
-											pass_hash:passHash,
-											firstname:userData.firstName,
-											lastname:userData.lastName,
-											email:userData.email,
-											url:userData.URL});
+				pass_hash:passHash,
+				firstname:userData.firstName,
+				lastname:userData.lastName,
+				email:userData.email,
+				url:userData.URL});
 		}
 		
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
@@ -122,5 +135,7 @@ package Model
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
+		
+		
 	}
 }

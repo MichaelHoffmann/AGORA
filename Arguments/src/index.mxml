@@ -36,6 +36,8 @@
 			public var loginWindow:LoginWindow;
 			//Registration Window
 			public var registrationWindow:RegisterPanel;
+			//MapName Box
+			public var mapNameBox:MapName;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;

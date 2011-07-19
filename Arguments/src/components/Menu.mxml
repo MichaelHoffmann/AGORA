@@ -8,6 +8,10 @@
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
+			import Controller.UpdateController;
+			import Controller.UserSessionController;
+			
+			import Model.AGORAModel;
 			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
@@ -17,11 +21,30 @@
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				timer.addEventListener(TimerEvent.TIMER, timerFired);
+				//temporarily commented due to extremely slow internet connection
 				timer.start();
 			}
 			
 			protected function timerFired(event:TimerEvent):void{
-				AGORAController.getInstance().onTimer();	
+				AGORAController.getInstance().onTimer();
+			}
+			
+
+			protected function createMapBtn_clickHandler(event:MouseEvent):void
+			{
+				UpdateController.getInstance().displayMapInfoBox();
+			}
+
+
+			protected function signInBtn_clickHandler(event:MouseEvent):void
+			{
+				UserSessionController.getInstance().signInSignOut();
+			}
+
+
+			protected function registerBtn_clickHandler(event:MouseEvent):void
+			{
+				UserSessionController.getInstance().showRegistrationBox();
 			}
 
 		]]>
@@ -56,12 +79,23 @@
 			</s:Panel>
 		</s:HGroup>
 		<s:HGroup paddingLeft="25" paddingTop="25">
-			<s:Button id="createMapBtn" 
-					  label="Create Map">
+			
+			<s:Button id="createMapBtn"
+					  label="Create Map" click="createMapBtn_clickHandler(event)">
 			</s:Button >
+			
 			<s:Button id="createProjectBtn" 
 					  label="Create Project" click="Alert.show('This feature is not yet functional and is in the development process ...');">
 			</s:Button>
+			
+			<s:Button id="signInBtn"
+					  label="{AGORAModel.getInstance().userSessionModel.uid? 'Sign Out': 'Sign In'}"
+					  click="signInBtn_clickHandler(event)" />
+			
+			<s:Button id="registerBtn"
+					  label="Register"
+					  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
+					  click="registerBtn_clickHandler(event)" />
 		</s:HGroup>
 	</s:VGroup>	
 </s:Group>

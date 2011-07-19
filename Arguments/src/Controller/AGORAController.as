@@ -10,24 +10,20 @@ package Controller
 	import components.MyMapName;
 	import components.MyMapsPanel;
 	
-	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
-	import flash.events.TimerEvent;
-	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
+	import mx.managers.CursorManager;
 	
 	import spark.components.Group;
 	
-	public class AGORAController extends EventDispatcher
+	public class AGORAController
 	{
 		private static var instance:AGORAController;
 			
 		//-------------------------Constructor-----------------------------//
-		public function AGORAController(singletonEnforcer:SingletonEnforcer, target:IEventDispatcher=null)
+		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
-			super(target);
 			instance = this;
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.MAP_LIST_FETCHED, onMapListFetched);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MY_MAPS_LIST_FETCHED, onMyMapsListFetched);
@@ -79,8 +75,6 @@ package Controller
 			FlexGlobals.topLevelApplication.invalidateDisplayList();
 		}
 		
-		
-		
 		//-------------------------Delete Maps-----------------------------//
 		public function deleteSelectedMaps():void{
 			var myMapListPanel: MyMapsPanel = FlexGlobals.topLevelApplication.agoraMenu.myMaps;
@@ -125,6 +119,15 @@ package Controller
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				fetchDataMyMaps();
 			}
+		}
+		
+		//--------------------Freeze the app--------------//
+		public function freeze():void{
+			CursorManager.setBusyCursor();
+		}
+		
+		public function unfreeze():void{
+			CursorManager.removeBusyCursor();
 		}
 		
 		//--------------------Generic Fault Event ----------------------//

@@ -20,7 +20,7 @@
 			
 			import Model.AGORAModel;
 			
-			import classes.MapMetaData;
+			import Model.MapMetaData;
 			import classes.UserData;
 			
 			import flash.net.URLLoader;
@@ -87,7 +87,7 @@
 				trace(" In MyMapsPanel: commitProperties" + skin.currentState);
 				if( skin.currentState == "loggedIn")
 				{ 
-					titleDisplay.text = UserData.userNameStr + "'s" + " maps";
+					titleDisplay.text = AGORAModel.getInstance().userSessionModel.firstName+ "'s" + " maps";
 					if(mapsGroup.numElements > 0){
 						mapsGroup.removeAllElements();
 					}	

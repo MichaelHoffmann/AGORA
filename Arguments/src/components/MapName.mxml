@@ -7,11 +7,14 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			
 			import mx.core.FlexGlobals;
 			import mx.managers.PopUpManager;
 			public function map_name():void{
-				FlexGlobals.topLevelApplication.presetMapName = mapName.text;
-				PopUpManager.removePopUp(this);
+				AGORAController.getInstance().freeze();
+				ArgumentController.getInstance().createMap(mapName.text);
 			}
 		]]>
 	</fx:Script>

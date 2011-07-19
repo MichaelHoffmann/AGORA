@@ -10,8 +10,13 @@ package Model
 		private static var reference:AGORAModel;
 		
 		public var mapListModel:MapListModel;
+		
 		public var myMapsModel:MyMapsModel;
+		
+		[Bindable]
 		public var userSessionModel:UserSessionModel;
+		
+		public var agoraMapModel:AGORAMapModel;
 		
 		
 		private var _state:int;
@@ -27,6 +32,8 @@ package Model
 			mapListModel = new MapListModel;
 			myMapsModel = new MyMapsModel;
 			userSessionModel = new UserSessionModel;
+			agoraMapModel = new AGORAMapModel;
+			
 			state = MENU;
 			reference = this;
 		}

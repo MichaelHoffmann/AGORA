@@ -16,7 +16,7 @@ package Controller
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 	import mx.managers.SystemManager;
-
+	
 	public class UserSessionController
 	{	
 		private static var instance:UserSessionController;
@@ -41,7 +41,7 @@ package Controller
 		}
 		
 		//----------------Displaying Login Box---------------------//
-		public function showSignInBox():void{
+		public function showSignInBox(message:String = null):void{
 			FlexGlobals.topLevelApplication.loginWindow = new LoginWindow;
 			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.loginWindow, DisplayObject(FlexGlobals.topLevelApplication),true);
 			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.loginWindow);
@@ -101,6 +101,28 @@ package Controller
 			Alert.show("Could not contact Authenticaion Server. Please make sure you are connected to the Internet");
 		}
 		
+		//---------------Other public methods----------------------//
+		public function getSignInBtnText(uid:int):String{
+			if(uid == 0){
+				return "Sign In";
+			}
+			else{
+				return "Sign Out";
+			}
+			
+		}
+		
+		public function signInSignOut():void{
+			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+				AGORAModel.getInstance().userSessionModel.uid = 0;
+				FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
+				FlexGlobals.topLevelApplication.invalidateProperties();
+				FlexGlobals.topLevelApplication.invalidateDisplayList();
+			}
+			else{
+				showSignInBox();
+			}
+		}
 	}
 }
 
