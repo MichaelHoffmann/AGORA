@@ -51,7 +51,7 @@
 			
 			public function setProperties():void
 			{
-				title="Register";
+				title=Language.lookup("Register");
 			}
 			
 			private function displayStatus(event:Event):void
@@ -71,7 +71,7 @@
 			
 			public function errorHandler(event: IOErrorEvent):void
 			{
-				Alert.show("Error occurred  when contacting server");
+				Alert.show("Error occurred when contacting server");
 			}
 			
 			public function clear_form():void
