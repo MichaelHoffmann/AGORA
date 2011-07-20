@@ -41,6 +41,7 @@
 								<mx:htmlText>
 									<![CDATA[<u>Support:</u><br /> <br />Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")
 									]]>
+									<!-- Todo: how does syntax work for changing this? -->
 								</mx:htmlText>
 							</mx:Text>
 						</mx:Canvas>
