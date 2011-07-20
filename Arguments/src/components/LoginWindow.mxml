@@ -35,7 +35,7 @@
 			
 			public function setProperties():void
 			{
-				title="Login";
+				title=Language.lookup("Login");
 			}
 			
 			private function displayStatus(event:Event):void
