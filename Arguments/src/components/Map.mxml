@@ -56,7 +56,9 @@
 			import classes.ALayoutManager;
 			import classes.ArgumentPanel;
 			import classes.ClaimAddedEvent;
+			import classes.Configure;
 			import classes.GridPanel;
+			import classes.Language;
 			import classes.UserData;
 			
 			import flash.display.*;
@@ -73,7 +75,6 @@
 			import spark.components.Group;
 			import spark.primitives.Graphic;
 			
-			import classes.Configure;
 			
 			public var numComponentsX:int;
 			public var numComponentsY:int;
@@ -109,7 +110,7 @@
 				}	
 				
 				var urlRequestMap:URLRequest = new URLRequest;
-				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
+				urlRequestMap.url = Configure.lookup("baseURL") + "insert.php";
 				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
 				urlRequestMap.data = urlRequestVarsMap;
 				urlRequestMap.method = URLRequestMethod.GET;
@@ -212,7 +213,7 @@
 				this.addEventListener(ClaimAddedEvent.CLAIM_ADDED,function (event:ClaimAddedEvent):void{
 					canvas.visible = true;
 					var argumentPanel:ArgumentPanel = event.argumentPanel;
-					argumentPanel.displayTxt.text  = "[Enter your claim]";
+					argumentPanel.displayTxt.text  = Language.lookup("EnterClaim");
 					argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
 					canvas.setStyle("backgroundColor",uint("0x99FF99"));
 					canvas.x = 25 * 3 + 250;
