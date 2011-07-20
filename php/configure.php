@@ -21,9 +21,9 @@
 	*/
 	
 	/** dbName: name of the database to use */
-	$dbName = "agora";
+	$dbName = "agoraDev";
 	/** dirName: name of the current directory */
-	$dirName = "release";
+	$dirName = "testing";
 	/** version: current version number */
-	$version = "11.7.14"
+	$version = "11.7.20"
 ?>
