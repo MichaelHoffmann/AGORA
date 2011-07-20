@@ -24,7 +24,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Text text="... Or do you want to start with a certain argument scheme? click here!" width="75" >
+	<mx:Text text="{Language.lookup(&quot;OrStartWithScheme&quot;)}" width="75" >
 	</mx:Text>
 	<fx:Script>	
 		<![CDATA[
