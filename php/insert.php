@@ -107,7 +107,7 @@ List of variables for insertion:
 			$dbUID = $row["user_id"];
 			//print "<BR>UID out of the database: $dbUID";
 			if($userID == $dbUID){
-				$uquery = "UPDATE textboxes SET text=\"$text\", modified_date=NOW() WHERE textbox_id=$id";
+				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
 				//print "<BR>Update query: $uquery";
 				$status = mysql_query($uquery, $linkID);
 				//print "<BR>Query executed! Status: $status";
@@ -121,7 +121,7 @@ List of variables for insertion:
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES
-										($userID, $mapID, \"$text\", NOW(), NOW())";
+										($userID, $mapID, '$text', NOW(), NOW())";
 			//print "<BR>Query: $iquery";
 			$success = mysql_query($iquery, $linkID);
 			if(!$success){
@@ -218,7 +218,7 @@ List of variables for insertion:
 		$y = mysql_real_escape_string($attr["y"]);
 		$typed = mysql_real_escape_string($attr["typed"]);
 		$positivity = mysql_real_escape_string($attr["is_positive"]);
-		$query = "SELECT * FROM node_types WHERE type=\"$type\"";
+		$query = "SELECT * FROM node_types WHERE type='$type'";
 		//print "<BR>Query is: $query";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
@@ -338,7 +338,7 @@ List of variables for insertion:
 		
 		//get Type ID since that's what we need
 		$type = mysql_real_escape_string($attr["type"]);
-		$query1 = "SELECT * FROM connection_types WHERE conn_name = \"$type\"";
+		$query1 = "SELECT * FROM connection_types WHERE conn_name = '$type'";
 		$resultID = mysql_query($query1, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row["type_id"];
@@ -431,12 +431,12 @@ List of variables for insertion:
 	*/
 	function insert($xmlin, $userID, $pass_hash)
 	{
-		global $dbName;
+		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		mysql_select_db($dbName, $linkID) or die ("error: Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
 			$fail=$output->addChild("error");
@@ -445,7 +445,12 @@ List of variables for insertion:
 		}
 	
 		//Dig the Map ID out of the XML
-		$xml = new SimpleXMLElement($xmlin);
+		try{
+			$xml = new SimpleXMLElement($xmlin);
+		}catch(Exception $e){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Improperly formatted input XML!");
+		}
 		$mapID = $xml['ID']; 
 		$mapClause = mysql_real_escape_string("$mapID");
 		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:
@@ -471,7 +476,7 @@ List of variables for insertion:
 				$lang="EN-US";
 			}
 			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
-										($userID, \"$title\", \"$desc\", \"$lang\", NOW(), NOW())";
+										($userID, '$title', '$desc', '$lang', NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
 			$mapClause = getLastInsert($linkID);
 			if(!$mapClause){
@@ -483,14 +488,13 @@ List of variables for insertion:
 		}
 
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
-		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
+		$resultID = mysql_query($query, $linkID) or die ("error: Cannot get map!"); 
 		$row = mysql_fetch_assoc($resultID);
 		
 		//Check to see if this is the map author
 		//If so, $ownMap is set to true.
 		
 		$author = $row['user_id'];
-		//print "Author: $author  Map: $mapClause <BR>";
 		$ownMap = false;
 		if($author == $userID){
 			$ownMap=true;
@@ -508,7 +512,6 @@ List of variables for insertion:
 		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
 		if($success===true){
 			mysql_query("COMMIT");
-			//print "<BR>Query committed!<BR>";
 		}else{
 			mysql_query("ROLLBACK");
 			$fail=$output->addChild("error");

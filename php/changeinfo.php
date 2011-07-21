@@ -27,9 +27,11 @@
 	*/
 	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $newpass)
 	{
-		global $dbName;
+		global $dbName, $version;
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<agora version='$version'/>\n";
+		mysql_select_db($dbName, $linkID) or die ("<error text='Could not find database'/>");
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
 		$fnclause = mysql_real_escape_string("$firstname");
