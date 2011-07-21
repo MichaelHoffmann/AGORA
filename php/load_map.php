@@ -26,7 +26,11 @@
 	*	Might be worth refactoring this somewhat.
 	*/
 	function get_map($mapID, $timestamp){
-		global $dbName;
+		global $dbName, $version;
+		//Set up the basics of the XML.
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
+		$xml = new SimpleXMLElement($xmlstr);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");
@@ -35,14 +39,11 @@
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause AND maps.is_deleted = 0";
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		if(mysql_num_rows($resultID)==0){
-			print "The map either does not exist or has been deleted. Query was: $query";
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("The map either does not exist or has been deleted. Query was: $query");
 			return false;
 		}
 		
-		//Set up the basics of the XML.
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
-		$xml = new SimpleXMLElement($xmlstr);
 		$row = mysql_fetch_assoc($resultID);
 		$xml->addAttribute("ID", $row['map_id']);
 		$xml->addAttribute("username", $row['username']);
