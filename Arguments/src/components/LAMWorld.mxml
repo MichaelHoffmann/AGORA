@@ -46,18 +46,15 @@
 	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
+			import Controller.ArgumentController;
+			
+			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			
 			import spark.components.Group;
 			
 			public function startWithClaim():void {
-				/*
-				var map:Map = new Map;
-				var group:Group = Group(this.parent);
-				group.addElement(map);
-				map.addEventListener("created",function(event:Event):void{map.addClaim();});
-				group.removeElement(this);
-				*/
+				ArgumentController.getInstance().startWithClaim();
 			}
 			
 			public function startWithScheme():void {

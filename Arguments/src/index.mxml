@@ -6,6 +6,7 @@
 			   xmlns:components="components.*"
 			   xmlns:Skins ="Skins.*"
 			   preinitialize="application_preinitializeHandler(event)"
+			   applicationComplete="application1_applicationCompleteHandler(event)"
 			   >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -13,6 +14,10 @@
 	
 	<components:Menu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
 	</components:Menu>
+	<components:LAMWorld id="lamWorld" visible="false">
+	</components:LAMWorld>
+	<components:Map id="map" visible="false">
+	</components:Map>
 	
 	<fx:Script>
 		<![CDATA[
@@ -50,6 +55,12 @@
 			protected function application_preinitializeHandler(event:FlexEvent):void
 			{
 				model = AGORAModel.getInstance();
+			}
+
+
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				
 			}
 
 		]]>

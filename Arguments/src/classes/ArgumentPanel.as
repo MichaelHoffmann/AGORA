@@ -1,5 +1,7 @@
 package classes
 {
+	import Model.StatementModel;
+	
 	import classes.Language;
 	
 	import components.ArgSelector;
@@ -21,6 +23,7 @@ package classes
 	import logic.ConditionalSyllogism;
 	import logic.ParentArg;
 	
+	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -52,6 +55,9 @@ package classes
 	
 	public class ArgumentPanel extends GridPanel
 	{
+		//model class
+		public var statementModel:StatementModel;
+		
 		//Input boxes
 		//The text box in which the user enters the argument
 		public var input1:DynamicTextArea;
@@ -176,10 +182,10 @@ package classes
 			userEntered = false;
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
-			this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-			this.addEventListener(KeyboardEvent.KEY_DOWN,keyEntered);
+			//this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
+			//this.addEventListener(KeyboardEvent.KEY_DOWN,keyEntered);
 			
-			this.addEventListener(ARGUMENT_CONSTRUCTED, argumentConstructed);
+			//this.addEventListener(ARGUMENT_CONSTRUCTED, argumentConstructed);
 			
 			//will be set by the object that creates this
 			inference = null;
@@ -433,8 +439,8 @@ package classes
 		public function onArgumentAddition(event:Event):void
 		{
 			parentMap.option.visible = true;
-			parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
-			rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+			//parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
+			//rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
 			parentMap.option.x = rules[rules.length - 1].reasons[0].x + rules[rules.length - 1].reasons[0].width + 10;
 			parentMap.option.y = rules[rules.length - 1].reasons[0].y;
 			invalidateProperties();
@@ -445,7 +451,7 @@ package classes
 		public function addHandler(event:MouseEvent):void
 		{
 			addSupportingArgument();
-			this.addEventListener(ARGUMENT_CONSTRUCTED,onArgumentAddition);	
+			//this.addEventListener(ARGUMENT_CONSTRUCTED,onArgumentAddition);	
 		}
 		
 		public function configureReason(event:FlexEvent):void
@@ -468,7 +474,7 @@ package classes
 			//This is important if beginByArgument is called 
 			//immediately after an argument is constructed
 			//input1 of reason might not be created then.
-			rules[rules.length-1].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
+			//rules[rules.length-1].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
 			if(rules[rules.length-1].reasons[0].input1 != null)
 			{
 				rules[rules.length-1].reasons[0].makeUnEditable();
@@ -494,7 +500,7 @@ package classes
 		{
 			var menu:Menu = Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
-			menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
+			//menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
@@ -535,6 +541,7 @@ package classes
 			urlRequest.data = urlRequestVars;
 			urlRequest.method = URLRequestMethod.GET;
 			var urlLoader:URLLoader = new URLLoader;
+			/*
 			urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
 				var loadResponseVariables:XML = XML(event.target.data);
 				var loadXML:XML = <load></load>;
@@ -544,6 +551,7 @@ package classes
 				insertLoad.appendChild(loadXML);
 				createArgument(insertLoad);
 			});
+			*/
 			urlLoader.load(urlRequest);
 		}
 		
@@ -630,7 +638,7 @@ package classes
 			currInference.gridX = inferenceCoordinate.gridX;
 			currInference.gridY = inferenceCoordinate.gridY;
 			currInference.myschemeSel = new ArgSelector;
-			currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
+			//currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
 			
 			//add the inference to map
 			parentMap.addElement(currInference);
@@ -656,7 +664,7 @@ package classes
 			reason.gridX = coordinate.gridX;
 			reason.gridY = coordinate.gridY;
 			
-			reason.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
+			//reason.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
 			//addEventListener(Inference.REASON_ADDED,currInference.reasonAdded);
 			//add reason to the map
 			parentMap.addElement(reason);
@@ -711,7 +719,7 @@ package classes
 			urlRequest.data = urlRequestVars;
 			urlRequest.method = URLRequestMethod.GET;
 			var urlLoader:URLLoader = new URLLoader;
-			urlLoader.addEventListener(Event.COMPLETE, inserted);
+			//urlLoader.addEventListener(Event.COMPLETE, inserted);
 			urlLoader.load(urlRequest);
 			
 		}
@@ -751,22 +759,24 @@ package classes
 			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
 			//stmtTypeLbl.toolTip = "Please change it before commiting";
 			stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
-			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
+			//stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
 			
 			bottomHG = new HGroup();
 			doneHG = new HGroup;
 			doneBtn = new AButton;
 			doneBtn.label = "Done";
 			doneHG.addElement(doneBtn);
-			doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
+			//doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
 			
 			input1 = new DynamicTextArea();
-			//this.input1.addEventListener(FocusEvent.FOCUS_OUT, makeUnEditable);
 			input1.panelReference = this;
 			input1.toolTip = "Otherwise, if you wish to start with Argument Scheme, click on the Add arg button below (do NOT press enter too)";
+			BindingUtils.bindProperty(input1, "text", statementModel, ["statement","text"]);
 			//TODO: Translate
 			displayTxt = new Text;
+			BindingUtils.bindProperty(displayTxt, "text", input1, ["text"]);
 			this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
+			Alert.show(statementModel.statement.text);
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			
@@ -802,7 +812,7 @@ package classes
 			addElement(group);
 			group.addElement(input1);
 			group.addElement(displayTxt);
-			displayTxt.addEventListener(FlexEvent.CREATION_COMPLETE,setGuidingText);
+			//displayTxt.addEventListener(FlexEvent.CREATION_COMPLETE,setGuidingText);
 			input1.visible=false;
 			
 			btnG = new Group;
@@ -818,9 +828,9 @@ package classes
 			bottomHG.addElement(addBtn);
 			deleteBtn = new AButton;
 			deleteBtn.label = "delete...";
-			deleteBtn.addEventListener(MouseEvent.CLICK,deleteThis);
+			//deleteBtn.addEventListener(MouseEvent.CLICK,deleteThis);
 			bottomHG.addElement(deleteBtn);
-			addBtn.addEventListener(MouseEvent.CLICK,addHandler);
+			//addBtn.addEventListener(MouseEvent.CLICK,addHandler);
 			bottomHG.visible = false;
 			
 			//presently, the requirement is only for two boxes

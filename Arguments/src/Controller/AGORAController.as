@@ -10,6 +10,8 @@ package Controller
 	import components.MyMapName;
 	import components.MyMapsPanel;
 	
+	import flash.events.Event;
+	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
@@ -135,6 +137,16 @@ package Controller
 			Alert.show("Network error occurred. Please make sure you are connected to the internet");
 		}
 		
+		//--------------------Application Complete---------------------//
+		public function viewCreated():void{
+			FlexGlobals.topLevelApplication.stage.addEventListener(Event.RESIZE, updateSize);	
+		}
+		
+		protected function updateSize(event:Event):void
+		{
+			FlexGlobals.topLevelApplication.map.agora.height = FlexGlobals.topLevelApplication.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 10;
+			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.stage.stageWidth;
+		}
 	}
 }
 

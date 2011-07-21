@@ -47,10 +47,8 @@ package Controller
 				var mapNameDialog:MapName = FlexGlobals.topLevelApplication.mapNameBox;
 				PopUpManager.addPopUp(mapNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
 				PopUpManager.centerPopUp(mapNameDialog);
-				var lamWorld:LAMWorld = new LAMWorld;
-				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
-				FlexGlobals.topLevelApplication.addElement(lamWorld);
-			}else{
+			}
+			else{
 				Alert.show("Only registered users can created a map. If you had already registered, click Sign In.");
 			}
 		}

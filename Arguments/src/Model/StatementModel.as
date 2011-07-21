@@ -14,8 +14,8 @@ package Model
 		public static const UNIVERSAL:String = "Universal";
 		public static const PARTICULAR:String = "Particular";
 		
-		private var _statement:String;
-		private var _statements:Vector.<String>;
+		private var _statement:SimpleStatementModel;
+		private var _statements:Vector.<SimpleStatementModel>;
 		private var _negated:Boolean;
 		private var _connectingString:String;
 		private var _complexStatement:String;
@@ -23,12 +23,51 @@ package Model
 		private var _inference:InferenceModel;
 		private var _firstClaim:Boolean;
 		private var _statementType:String;
+		private var _ID:int;
+		private var _nodeTextID:int;
+		private var _nodeTextIDs:Vector.<int>;
 		
 		
-		//--------------------Getters and Setters------------------//
+		
 		public function StatementModel(target:IEventDispatcher=null)
 		{
 			super(target);
+			statements = new Vector.<SimpleStatementModel>(0,false);
+			supportingArguments = new Vector.<InferenceModel>(0,false);
+			nodeTextIDs = new Vector.<int>(0,false);
+		}
+
+		
+		//--------------------Getters and Setters------------------//
+
+		public function get nodeTextID():int
+		{
+			return _nodeTextID;
+		}
+
+		public function set nodeTextID(value:int):void
+		{
+			_nodeTextID = value;
+		}
+
+		public function get nodeTextIDs():Vector.<int>
+		{
+			return _nodeTextIDs;
+		}
+
+		public function set nodeTextIDs(value:Vector.<int>):void
+		{
+			_nodeTextIDs = value;
+		}
+
+		public function get ID():int
+		{
+			return _ID;
+		}
+
+		public function set ID(value:int):void
+		{
+			_ID = value;
 		}
 
 		public function get statementType():String
@@ -101,25 +140,24 @@ package Model
 			_negated = value;
 		}
 
-		public function get statements():Vector.<String>
+		public function get statements():Vector.<SimpleStatementModel>
 		{
 			return _statements;
 		}
 
-		public function set statements(value:Vector.<String>):void
+		public function set statements(value:Vector.<SimpleStatementModel>):void
 		{
 			_statements = value;
 		}
 
-		public function get statement():String
+		public function get statement():SimpleStatementModel
 		{
 			return _statement;
 		}
 
-		public function set statement(value:String):void
+		public function set statement(value:SimpleStatementModel):void
 		{
 			_statement = value;
 		}
-
 	}
 }

@@ -2,15 +2,15 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
-		   xmlns:classes="classes.*"  creationComplete="initApp();" xmlns:components="components.*">
+		   xmlns:classes="classes.*" creationComplete="initApp();" xmlns:components="components.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:VGroup id="container" paddingBottom="10" paddingTop="10">			
 		<s:HGroup id="topPanel" gap="10">
-			<s:Button id="gotoMenuBtn" label="Home" width="50">
+			<s:Button id="gotoMenuBtn" label="Home" width="150">
 			</s:Button>
-			<s:Button id="saveAsBtn" label="Save Map As" visible="true" width="50">
+			<s:Button id="saveAsBtn" label="Save Map As" visible="true" width="150">
 			</s:Button>
 		</s:HGroup>
 		<s:Scroller id="agora">	
@@ -124,11 +124,7 @@
 				urlLoaderMap.load(urlRequestMap);	
 			}
 			
-			public function updateSize(event:Event):void
-			{
-				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
-				agora.width = this.stage.stageWidth;
-			}
+			
 			
 			public function addEmptyArgument():void
 			{
@@ -199,14 +195,14 @@
 			
 			public function initApp():void
 			{
-				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
-				agora.width = this.stage.stageWidth;
-				this.stage.addEventListener(Event.RESIZE, updateSize);	
+				trace(agora.height);
+				/*
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;
 				gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
-				discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);			
+				//discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);			
 				dispatchEvent(new Event("created",true,false));
+				*/
 			}
 		]]>
 	</fx:Script>

@@ -1,6 +1,8 @@
 //This class is the canvas on which everything will be drawn
 package classes
 {
+	import Model.StatementModel;
+	
 	import components.ArgSelector;
 	import components.HelpText;
 	import components.Option;
@@ -41,10 +43,12 @@ package classes
 		public var initXML:XML;
 		public static var dbTypes:Array = ["MP","MT","DisjSyl","NotAllSyl","CS", "CD"];
 		public var timestamp:String;
+		public var newPanels:Vector.<StatementModel>;
 		
 		
 		public function AgoraMap()
 		{
+			newPanels = new Vector.<StatementModel>;
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
@@ -708,6 +712,15 @@ package classes
 			layoutManager.layoutComponents();
 		}
 		
+		override protected function commitProperties():void{
+			for(var i:int=0; i<newPanels.length; i++){
+				var statementModel:StatementModel = newPanels[i];
+				var argumentPanel:ArgumentPanel = new ArgumentPanel;
+				argumentPanel.statementModel = newPanels[i];
+				addElement(argumentPanel);
+			}
+		}
+		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
@@ -721,6 +734,9 @@ package classes
 			else
 				return true;
 		}
+		
+		
+		
 		
 		public function connectRelatedPanels():void
 		{
