@@ -26,7 +26,7 @@
 	*/
 	function register($username, $pass_hash, $firstname, $lastname, $email, $url)
 	{
-		global $dbName;
+		global $dbName, $version;
 		$linkID= establishLink();
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 		$userclause = mysql_real_escape_string("$username");
@@ -35,22 +35,33 @@
 		$lnclause = mysql_real_escape_string("$lastname");
 		$mailclause = mysql_real_escape_string("$email");
 		$urlclause = mysql_real_escape_string("$url");
-		$query = "SELECT * FROM users WHERE username='$userclause'";
-	
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<login></login>";
-		$xml = new SimpleXMLElement($xmlstr);
 		
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$xml = new SimpleXMLElement($xmlstr);
+			
+		$equery = "SELECT * FROM users WHERE email='$mailclause'";
+		$eResultID = mysql_query($equery, $linkID) or die("Data not found."); 
+		$erow = mysql_fetch_assoc($eResultID);
+		if($erow['email']!=""){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "That e-mail address has already been used to register an account.");
+			return $xml;
+		}
+		$query = "SELECT * FROM users WHERE username='$userclause'";
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		$row = mysql_fetch_assoc($resultID);
+		
 		if($row['user_id']=="") // If user doesn't exist...
 		{
 			//insert into the database
 			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
 			$insID = mysql_query($iquery, $linkID) or die("Insertion failed for some reason."); 
-			$xml->addAttribute("created", true); // Successfully created the username.
+			$login=$xml->addChild("login");
+			$login->addAttribute("created", true); // Successfully created the username.
 		}else{
-			$xml->addAttribute("exists", true); // Username exists. Do NOT add to the db!
+			$login=$xml->addChild("error");
+			$login->addAttribute("text", "That username already exists!"); // Username exists. Do NOT add to the db!
 		}
 		return $xml;
 	}
