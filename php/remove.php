@@ -105,14 +105,20 @@ List of variables for insertion:
 	*/
 	function remove($xmlin, $userID, $pass_hash)
 	{
-		global $dbName;
+		global $dbName, $version;
+		
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'></AGORA>";
+		$output = new SimpleXMLElement($xmlstr);
+		
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
-			print "Incorrect login!";
-			return;
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Incorrect login!");
+			return $output;
 		}
 		
 		//Dig the Map ID out of the XML
@@ -132,18 +138,27 @@ List of variables for insertion:
 		$UID = $row['user_id'];
 		if($delMap && $mapClause!=0){
 			if($UID!=$userID){
-				print "You cannot delete someone else's map!";
-				return;
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "You cannot delete someone else's map!");
+				return $output;
 			}		
 			$query = "UPDATE maps SET is_deleted=1, modified_date=NOW() WHERE map_id=$mapClause";
 			$success = mysql_query($query, $linkID);
 			if($success){
-				print "Successfully deleted the map!";
+				$status=$output->addChild("status");
+				$status->addAttribute("value", "1");
+				$status->addAttribute("text", "Successfully deleted the map!");
+				return $output;
 			}else{
-				print "Could not delete the map!";
+				$status=$output->addChild("status");
+				$status->addAttribute("value", "0");
+				$status->addAttribute("text", "Could not delete the map!");
+				return $output;
 			}
 		}else if($mapClause==0 or mysql_num_rows($resultID)==0){
-			print "This map does not exist, therefore you cannot remove things from this map.";
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "This map does not exist, therefore you cannot remove things from this map.");
+			return $output;
 		}else{
 			//the map exists, and now we operate on it
 						
@@ -152,20 +167,16 @@ List of variables for insertion:
 			$success = xmlToDB($xml, $mapClause, $linkID, $userID);
 			if($success===true){
 				mysql_query("COMMIT");
-				print "<BR>Query committed!<BR>";
 			}else{
 				mysql_query("ROLLBACK");
-				print "<BR>Query rolled back!<BR>";
 			}
-			
-			//TODO: set up output XML here
-			
-		}		
+		}
+		return $output;
 	}
 
 	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
 	$output = remove($xmlparam, $userID, $pass_hash); 
-	//print($output->asXML()); //TODO: turn this back on when output XML is set up
+	print($output->asXML()); //TODO: turn this back on when output XML is set up
 ?>
