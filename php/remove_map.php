@@ -38,32 +38,41 @@ List of variables for insertion:
 	require 'checklogin.php';
 	require 'establish_link.php';
 
-	function removeMap($map, $linkID, $userID){
-		global $dbName;
+	function removeMap($map, $output, $linkID, $userID){
 		$mapID = $map['id'];
-		
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapID";
-		$resultID = mysql_query($query, $linkID) or die ("Cannot get map! Query was: $query"); 
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Cannot get map! Query was: $query");
+			return false;
+		}
 		$row = mysql_fetch_assoc($resultID);
 		$UID = $row['user_id'];
 		if($UID!=$userID){
-			print "You cannot delete someone else's map!";
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "You cannot delete someone else's map!");
 			return false;
 		}
 		$query = "UPDATE maps SET is_deleted=1, modified_date=NOW() WHERE map_id=$mapID";
 		$success = mysql_query($query, $linkID);
 		if($success){
-			print "Successfully deleted map $mapID!";
+			$rmap=$output->addChild("map");
+			$rmap->addAttribute("ID", $mapID);
+			$rmap->addAttribute("removed", true);
 			return true;
 		}else{
-			print "Could not delete the map!";
+			$rmap=$output->addChild("map");
+			$rmap->addAttribute("ID", $mapID);
+			$rmap->addAttribute("removed", false);		
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not delete the map!");
 			return false;
 		}
 	}
 	
-	function xmlToDB($xml, $linkID, $userID)	
+	function xmlToDB($xml, $output, $linkID, $userID)	
 	{
-		print "<BR>Now taking the XML and deleting things with it...";
 		$children = $xml->children();
 		$retval = true;
 		foreach ($children as $child)
@@ -71,7 +80,7 @@ List of variables for insertion:
 			switch($child->getName())
 			{
 				case "map":
-					$retval = removeMap($child, $linkID, $userID);
+					$retval = removeMap($child, $output, $linkID, $userID);
 					break;
 			}
 			if($retval == false){  // We've already had one failure, no reason to continue
@@ -81,40 +90,48 @@ List of variables for insertion:
 		return true;
 	}
 	
-	
-/**
-*	Highest level function. Handles SQL connection logic.
-*/
-function remove($xmlin, $userID, $pass_hash)
-{
-	//Standard SQL connection stuff
-	$linkID= establishLink();
-	mysql_select_db($dbName, $linkID) or die ("Could not find database");
-
-	if(!checkLogin($userID, $pass_hash, $linkID)){
-		print "Incorrect login!";
-		return;
+		
+	/**
+	*	Highest level function. Handles SQL connection logic.
+	*/
+	function remove($xmlin, $userID, $pass_hash)
+	{
+		global $dbName, $version;
+		//Standard SQL connection stuff
+		$linkID= establishLink();
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+			return $output;
+		}
+		//basic XML output initialization
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$output = new SimpleXMLElement($xmlstr);
+		
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Incorrect login");
+			return $output;
+		}
+		
+		//Dig the Map ID out of the XML
+		$xml = new SimpleXMLElement($xmlin);
+		//Transactions used for protecting maps from mass deletes that are partially illegal.
+		mysql_query("START TRANSACTION");
+		$success = xmlToDB($xml, $output, $linkID, $userID);
+		if($success===true){
+			mysql_query("COMMIT");
+		}else{
+			mysql_query("ROLLBACK");
+		}
+		return $output;
 	}
-	
-	//Dig the Map ID out of the XML
-	$xml = new SimpleXMLElement($xmlin);
-	//Transactions used for protecting maps from mass deletes that are partially illegal.
-	mysql_query("START TRANSACTION");
-	$success = xmlToDB($xml, $linkID, $userID);
-	if($success===true){
-		mysql_query("COMMIT");
-		print "<BR>Query committed!<BR>";
-	}else{
-		mysql_query("ROLLBACK");
-		print "<BR>Query rolled back!<BR>";
-	}
-	
-	//TODO: set up output XML here		
-}
 
 	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
 	$output = remove($xmlparam, $userID, $pass_hash); 
-	//print($output->asXML()); //TODO: turn this back on when output XML is set up
+	print $output->asXML();
 ?>
