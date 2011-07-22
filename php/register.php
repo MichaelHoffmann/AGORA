@@ -27,8 +27,16 @@
 	function register($username, $pass_hash, $firstname, $lastname, $email, $url)
 	{
 		global $dbName, $version;
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$xml = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+			return $xml;
+		}
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
 		$fnclause = mysql_real_escape_string("$firstname");
@@ -36,12 +44,14 @@
 		$mailclause = mysql_real_escape_string("$email");
 		$urlclause = mysql_real_escape_string("$url");
 		
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
-		$xml = new SimpleXMLElement($xmlstr);
 			
 		$equery = "SELECT * FROM users WHERE email='$mailclause'";
-		$eResultID = mysql_query($equery, $linkID) or die("Data not found."); 
+		$eResultID = mysql_query($equery, $linkID); 
+		if(!$eResultID){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Data not found");
+			return $xml;
+		}
 		$erow = mysql_fetch_assoc($eResultID);
 		if($erow['email']!=""){
 			$fail=$xml->addChild("error");
@@ -49,14 +59,24 @@
 			return $xml;
 		}
 		$query = "SELECT * FROM users WHERE username='$userclause'";
-		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Data not found.");
+			return $xml;
+		}
 		$row = mysql_fetch_assoc($resultID);
 		
 		if($row['user_id']=="") // If user doesn't exist...
 		{
 			//insert into the database
 			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
-			$insID = mysql_query($iquery, $linkID) or die("Insertion failed for some reason."); 
+			$insID = mysql_query($iquery, $linkID); 
+			if(!$insID){
+				$fail=$xml->addChild("error");
+				$fail->addAttribute("text", "Insertion failed for some reason.");
+				return $xml;
+			}
 			$login=$xml->addChild("login");
 			$login->addAttribute("created", true); // Successfully created the username.
 		}else{
