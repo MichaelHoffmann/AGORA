@@ -31,10 +31,20 @@
 		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>\n";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("ERROR: Could not find database");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+			return $xml;
+		}
 		$userclause = mysql_real_escape_string("$username");
 		$query = "SELECT * FROM users WHERE username='$userclause'";
-		$resultID = mysql_query($query, $linkID) or die("ERROR: Data not found."); 
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Data not found");
+			return $xml;
+		}
 		$row = mysql_fetch_assoc($resultID);
 		$uid = $row['user_id'];
 		$email = $row['email'];
@@ -68,7 +78,12 @@
 		$qxml = $output->addChild("query");
 		$qxml->addAttribute("text", "$uquery");
 		
-		$resultID = mysql_query($uquery, $linkID) or die("<error text='Could not update database'/>");
+		$resultID = mysql_query($uquery, $linkID);
+		if(!$resultID){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Could not update database.");
+			return $xml;
+		}
 		$message = wordwrap("Your new password for the AGORA system is:\n $password", 70);
 		$headers = 'From: webmaster@agora.gatech.edu' . "\r\n" . 
 			'Reply-To: webmaster@agora.gatech.edu' . "\r\n" .
@@ -79,10 +94,10 @@
 			$fail=$output->addChild("error");
 			$fail->addAttribute("text", "The mail could not be sent");
 		}	
-		print $output->asXML();
+		return $output;
 	}
 	
 	$username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
 	forgot_pass($username);
-
+	print $output->asXML();
 ?>
