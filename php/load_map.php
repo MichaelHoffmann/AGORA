@@ -33,11 +33,21 @@
 		$xml = new SimpleXMLElement($xmlstr);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+			return $xml;
+		}
 		$whereclause = mysql_real_escape_string("$mapID");
 		$timeclause = mysql_real_escape_string("$timestamp");
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause AND maps.is_deleted = 0";
-		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Data not found.");
+			return $xml;
+		}
 		if(mysql_num_rows($resultID)==0){
 			$fail=$xml->addChild("error");
 			$fail->addAttribute("text", "The map either does not exist or has been deleted. Query was: $query");
@@ -48,7 +58,12 @@
 		$xml->addAttribute("ID", $row['map_id']);
 		$xml->addAttribute("username", $row['username']);
 		
-		$timeID = mysql_query("SELECT NOW()", $linkID) or die ("Could not get timestamp from server.");
+		$timeID = mysql_query("SELECT NOW()", $linkID);
+		if(!$timeID){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Time has ceased to exist. Could not get timestamp from server.");
+			return $xml;
+		}
 		$timerow = mysql_fetch_assoc($timeID);
 		$now = $timerow['NOW()'];
 		$xml->addAttribute("timestamp", "$now");
@@ -86,7 +101,12 @@
 				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
-				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in nodetext lookup."); 
+				$resultID2 = mysql_query($innerQuery, $linkID);
+				if(!$resultID2){
+					$fail=$xml->addChild("error");
+					$fail->addAttribute("text", "Data not found in nodetext lookup.");
+					return $xml;
+				}
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$nodetext = $node->addChild("nodetext");
 					$innerRow=mysql_fetch_assoc($resultID2);
@@ -114,7 +134,12 @@
 				$connection->addAttribute("deleted", $row['is_deleted']);
 				//Set up the inner query to find the source nodes
 				$innerQuery="SELECT * FROM sourcenodes WHERE connection_id=$conn_id";
-				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in connection lookup");
+				$resultID2 = mysql_query($innerQuery, $linkID);
+				if(!$resultID2){
+					$fail=$xml->addChild("error");
+					$fail->addAttribute("text", "Data not found in connection lookup.");
+					return $xml;
+				}
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$sourcenode = $connection->addChild("sourcenode");
 					$innerRow=mysql_fetch_assoc($resultID2);
