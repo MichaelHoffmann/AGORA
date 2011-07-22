@@ -176,8 +176,6 @@ List of variables for insertion:
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, connected_by, created_date, modified_date) VALUES
 							($nodeID, $textboxID, $position, $cBy, NOW(), NOW())";
-				$q=$output->addchild("query");
-				$q->addAttribute("text", "Query was: $query");
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("error");
