@@ -35,7 +35,13 @@
 	$xml = new SimpleXMLElement($xmlstr);
 	
 	$linkID= establishLink();
-	mysql_select_db($dbName, $linkID) or die ("Could not find database");
+	$status = mysql_select_db($dbName, $linkID);
+	if(!$status){
+		$fail=$xml->addChild("error");
+		$fail->addAttribute("text", "Could not connect to database");
+		print ($xml->asXML());
+		return false;
+	}
 	if(!checkLogin($userID, $pass_hash, $linkID)){
 		$fail=$xml->addChild("error");
 		$fail->addAttribute("text", "Login failed!");
@@ -44,15 +50,19 @@
 	}
 	
 	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.user_id=$userID AND maps.is_deleted=0 ORDER BY maps.title";
-	$resultID = mysql_query($query, $linkID) or die("Data not found."); 
+	$resultID = mysql_query($query, $linkID); 
 	if(!$resultID or mysql_num_rows($resultID)==0){
 		$fail=$xml->addChild("error");
-		$fail->addAttribute("There are no maps in the list! Query was: $query");
+		$fail->addAttribute("text", "The query failed! Query was: $query");
 		print ($xml->asXML());
 		return false;
 	}
+	if(mysql_num_rows($resultID)==0){
+		$empty = $xml->addChild("empty");
+		$empty->addAttribute("text", "This user has not created any maps");
+		//Idea for the client: put an additional "create map" button in the "my maps" list, perhaps?
+	}
 
-	
 	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 		$row = mysql_fetch_assoc($resultID);
 		$map = $xml->addChild("map");
