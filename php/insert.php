@@ -439,7 +439,11 @@ List of variables for insertion:
 		$xmlstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("error: Could not find database");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+		}
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
 			$fail=$output->addChild("error");
@@ -486,13 +490,19 @@ List of variables for insertion:
 			if(!$mapClause){
 				$fail=$output->addChild("error");
 				$fail->addAttribute("text", "The map was not added properly. Query: $iquery");
+				return $output;
 			}
 			
 			$output->addAttribute("ID", $mapClause);
 		}
 
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
-		$resultID = mysql_query($query, $linkID) or die ("error: Cannot get map!"); 
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "error: Cannot get map!");
+			return $output;
+		}
 		$row = mysql_fetch_assoc($resultID);
 		
 		//Check to see if this is the map author
