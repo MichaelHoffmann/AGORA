@@ -148,6 +148,10 @@ List of variables for insertion:
 		
 		//print "<BR>NodeText found";
 		$attr = $nt->attributes();
+		$cBy = $attr['connected_by'];
+		if(!$cBy){
+			$cBy='implication';
+		}
 		$textboxID = mysql_real_escape_string($attr["textboxID"]);
 		
 		$query = "SELECT * FROM nodetext WHERE node_id=$nodeID AND position=$position";
@@ -156,7 +160,7 @@ List of variables for insertion:
 		$ntID = $row['nodetext_id'];
 		if($ntID){
 			//update should ALWAYS have a real textbox ID.
-			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
+			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, connected_by=$cBy, modified_date=NOW() WHERE nodetext_id=$ntID";
 			//print "<BR>Update query is: $uquery";
 			$success = mysql_query($uquery, $linkID);
 			if(!$success){
@@ -170,13 +174,14 @@ List of variables for insertion:
 			//insert with real textbox ID
 			if($textboxID){
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
-							($nodeID, $textboxID, $position, NOW(), NOW())";
-				
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, connected_by, created_date, modified_date) VALUES
+							($nodeID, $textboxID, $position, $cBy, NOW(), NOW())";
+				$q=$output->addchild("query");
+				$q->addAttribute("text", "Query was: $query");
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
-					$fail=$output->addChild("queryout");
-					$fail->addAttribute("text5", "Unable to insert the NODETEXT. Query was: $iquery");
+					$fail=$output->addChild("error");
+					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
 					return false;
 				}
 			//insert with textbox TID
@@ -184,8 +189,8 @@ List of variables for insertion:
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
 				
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES 
-							($nodeID, $textID, $position, NOW(), NOW())";
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, connected_by, created_date, modified_date) VALUES 
+							($nodeID, $textID, $position, '$cBy', NOW(), NOW())";
 				
 				$success = mysql_query($iquery, $linkID);
 				if(!$success){
