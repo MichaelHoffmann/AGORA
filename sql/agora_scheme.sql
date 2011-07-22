@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS agora.nodetext (
   node_id INT UNSIGNED NOT NULL,
   textbox_id INT UNSIGNED NOT NULL,
   position INT UNSIGNED NOT NULL,
+  connected_by ENUM('implication, disjunction') NOT NULL DEFAULT 'implication',
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   is_deleted TINYINT(1)  NULL DEFAULT 0,
