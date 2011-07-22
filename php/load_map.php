@@ -40,8 +40,8 @@
 		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
 		if(mysql_num_rows($resultID)==0){
 			$fail=$xml->addChild("error");
-			$fail->addAttribute("The map either does not exist or has been deleted. Query was: $query");
-			return false;
+			$fail->addAttribute("text", "The map either does not exist or has been deleted. Query was: $query");
+			return $xml;
 		}
 		
 		$row = mysql_fetch_assoc($resultID);
@@ -92,6 +92,7 @@
 					$innerRow=mysql_fetch_assoc($resultID2);
 					$nodetext->addAttribute("ID", $innerRow['nodetext_id']);
 					$nodetext->addAttribute("textboxID", $innerRow['textbox_id']);
+					$nodetext->addAttribute("connected_by", $innerRow['connected_by']);
 					$nodetext->addAttribute("deleted", $innerRow['is_deleted']);
 				}			
 			}
