@@ -461,6 +461,7 @@ List of variables for insertion:
 		if($mapID && !$mapClause){
 			$mapClause=$mapID;
 		}
+		$output->addAttribute("ID", $mapClause);
 
 		//Check to see if the map already exists
 		if($mapClause==0){
