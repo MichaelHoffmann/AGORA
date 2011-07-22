@@ -4,6 +4,14 @@
 		  xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="400" height="300" preinitialize="setProperties();" creationComplete="init();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:StringValidator id="unameValidator"
+							source="{username}"
+							property="text">
+		</mx:StringValidator>
+		<mx:StringValidator id="passwordValidator"
+							source="{pass_hash}"
+							property="text">
+		</mx:StringValidator>
 	</fx:Declarations>
 	
 	<fx:Script>
@@ -12,6 +20,7 @@
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
+			import mx.validators.Validator;
 			
 			public function setProperties():void
 			{
@@ -54,7 +63,16 @@
 			
 			public function submit_form():void
 			{
-				UserData.validateUser(username.text,pass_hash.text, this);
+				var array:Array = new Array();
+				array.push(unameValidator);
+				array.push(passwordValidator);
+				var errors:Array = Validator.validateAll(array);
+				if(errors.length == 0){
+					UserData.validateUser(username.text,pass_hash.text, this);
+				}
+				else{
+					Alert.show("All fields are required.");
+				}
 				
 			}
 		]]>
@@ -68,7 +86,6 @@
 			<s:TextInput id="pass_hash" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		
 		<mx:FormItem>
 			<s:HGroup>
 				<s:Button label="Submit" id="submit_btn" click="submit_form();">		
