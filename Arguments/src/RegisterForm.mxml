@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<s?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"  xmlns:components="components.*" creationComplete="initApp();">
@@ -15,7 +15,6 @@
 			import mx.managers.PopUpManager;
 			public function initApp():void
 			{
-				//var registerPanel:RegisterPanel = new RegisterPanel;
 				var registerPanel:LoginWindow = new LoginWindow;	
 				registerPanel.height=300;
 				registerPanel.width=300;
