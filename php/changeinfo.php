@@ -29,6 +29,11 @@
 	{
 		global $dbName, $version;
 		$linkID= establishLink();
+		if(!$linkID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not establish link to the database server");
+			return $output;
+		}
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<agora version='$version'/>\n";
 		$xmlstr = "<?xml version='1.0' ?>\n";

@@ -31,6 +31,11 @@
 		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
 		$xml = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
+		if(!$linkID){
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Could not establish link to the database server");
+			return $xml;
+		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			$fail=$xml->addChild("error");

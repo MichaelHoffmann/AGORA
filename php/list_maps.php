@@ -31,6 +31,11 @@
 		$output = new SimpleXMLElement($xmlstr);
 		
 		$linkID= establishLink();
+		if(!$linkID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not establish link to the database server");
+			return $output;
+		}
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0 ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID); 

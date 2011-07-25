@@ -125,6 +125,11 @@ List of variables for insertion:
 		
 		//Standard SQL connection stuff
 		$linkID= establishLink();
+		if(!$linkID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not establish link to the database server");
+			return $output;
+		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			$fail=$output->addChild("error");

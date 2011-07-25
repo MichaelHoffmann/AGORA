@@ -408,6 +408,11 @@ List of variables for insertion:
 		$xmlstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
+		if(!$linkID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not establish link to the database server");
+			return $output;
+		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			$fail=$output->addChild("error");
