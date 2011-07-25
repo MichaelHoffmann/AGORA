@@ -94,35 +94,26 @@ List of variables for insertion:
 	function textboxToDB($tb, $mapID, $linkID, $userID, $output)
 	{
 		global $tbTIDarray;
-		//print "<BR>---Textbox found";
 		$attr = $tb->attributes();
 		$text = mysql_real_escape_string($attr["text"]);
 		$id = $attr["ID"];
 		if($id){
-			//print "<BR>Textbox ID is $id";
 			$query = "SELECT * FROM textboxes WHERE textbox_id=$id";
-			//print "<BR>author check query: $query";
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			//print "<BR>UID out of the database: $dbUID";
 			if($userID == $dbUID){
 				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
-				//print "<BR>Update query: $uquery";
 				$status = mysql_query($uquery, $linkID);
-				//print "<BR>Query executed! Status: $status";
 			}else{
 				$fail=$output->addChild("error");
 				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
 				return false;
 			}
-			
-
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES
 										($userID, $mapID, '$text', NOW(), NOW())";
-			//print "<BR>Query: $iquery";
 			$success = mysql_query($iquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
@@ -145,8 +136,6 @@ List of variables for insertion:
 	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $output)
 	{
 		global $tbTIDarray; //use the global variable
-		
-		//print "<BR>NodeText found";
 		$attr = $nt->attributes();
 		$cBy = $attr['connected_by'];
 		if(!$cBy){
@@ -161,7 +150,6 @@ List of variables for insertion:
 		if($ntID){
 			//update should ALWAYS have a real textbox ID.
 			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, connected_by=$cBy, modified_date=NOW() WHERE nodetext_id=$ntID";
-			//print "<BR>Update query is: $uquery";
 			$success = mysql_query($uquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
@@ -211,8 +199,6 @@ List of variables for insertion:
 	function nodeToDB($node, $mapID, $linkID, $userID, $output)
 	{
 		global $nodeTIDarray;
-		
-		//print "<BR>----Node found";
 		$nodeOut = null; // Done for later scoping
 		$attr = $node->attributes();
 		$nodeID = mysql_real_escape_string($attr["ID"]);
@@ -222,21 +208,15 @@ List of variables for insertion:
 		$typed = mysql_real_escape_string($attr["typed"]);
 		$positivity = mysql_real_escape_string($attr["is_positive"]);
 		$query = "SELECT * FROM node_types WHERE type='$type'";
-		//print "<BR>Query is: $query";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row['nodetype_id'];
-		//print "<BR>Type ID is $typeID";
 		if($nodeID){		
 			//update
-			//print "<BR>Node ID is $nodeID";
 			$query = "SELECT * FROM nodes WHERE node_id=$nodeID";
-			//print "<BR>author check query: $query";
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			
-			//print "<BR>UID out of the database: $dbUID";
 			if($userID == $dbUID){
 				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y, typed=$typed, is_positive=$positivity
 							WHERE node_id=$nodeID";
@@ -298,7 +278,6 @@ List of variables for insertion:
 		//Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
 		//They get DELETED automatically when the NODE they connect to is DELETED.
-		//print "<BR>SourceNode found";
 		$attr = $source->attributes();
 		$tid =  mysql_real_escape_string($attr["TID"]);
 		$nodeID = mysql_real_escape_string($attr["nodeID"]);
@@ -309,7 +288,6 @@ List of variables for insertion:
 		
 		$iquery = "INSERT INTO sourcenodes (connection_id, node_id, created_date, modified_date) VALUES
 											($connID, $nodeID, NOW(), NOW())";
-		//print "<BR>Insert Query is: $iquery";
 		$success = mysql_query($iquery, $linkID);
 		if($success){
 			$outID = getLastInsert($linkID);
@@ -330,7 +308,6 @@ List of variables for insertion:
 	function connectionToDB($conn, $mapID, $linkID, $userID, $output)
 	{
 		global $nodeTIDarray;
-		//print "<BR>---Connection found";
 		$connection = $output->addChild("connection");
 		$attr = $conn->attributes();
 		$id = mysql_real_escape_string($attr["ID"]);
@@ -355,7 +332,6 @@ List of variables for insertion:
 			//Insert the connection into the DB (target node and info)
 			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
 											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
-			//print "<BR>Insert Query is: $iquery";
 			$success = mysql_query($iquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
@@ -370,7 +346,6 @@ List of variables for insertion:
 			//Update TYPE of the connection
 			//It's not legal to change what node the connection is targeting.
 			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
-			//print "<BR>Update query: $uquery";
 			$success=mysql_query($uquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
@@ -395,30 +370,24 @@ List of variables for insertion:
 	*/
 	function xmlToDB($xml, $mapID, $linkID, $userID, $output)
 	{
-		//print "Now in xml-to-DB function<BR>";
 		$children = $xml->children();
-		//print count($children);
-
 		foreach ($children as $child)
 		{
 			switch($child->getName())
 			{
 				case "textbox":
-					//print "textbox";
 					$success = textboxToDB($child, $mapID, $linkID, $userID, $output);
 					if(!$success){
 						return false;
 					}
 					break;
 				case "node":
-					//print "node";
 					$success = nodeToDB($child, $mapID, $linkID, $userID, $output);
 					if(!$success){
 						return false;
 					}
 					break;
 				case "connection":
-					//print "conn";
 					$success = connectionToDB($child, $mapID, $linkID, $userID, $output);
 					if(!$success){
 						return false;
