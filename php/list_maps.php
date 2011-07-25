@@ -22,31 +22,44 @@
 	require 'configure.php';
 	require 'establish_link.php';
 	/**
-	*	File for getting the map list.
+	*	Function for getting the map list.
 	*/
-	global $dbName;
-	$linkID= establishLink();
-	mysql_select_db($dbName, $linkID) or die ("Could not find database");
-	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0 ORDER BY maps.title";
-	$resultID = mysql_query($query, $linkID) or die("Data not found."); 
-
-	if(mysql_num_rows($resultID)==0){
-		print "There are no maps in the list! Query was: $query";
-		return false;
-	}
-	header("Content-type: text/xml");
-	$xmlstr = "<?xml version='1.0' ?>\n<list></list>";
-	$xml = new SimpleXMLElement($xmlstr);
-	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
-		$row = mysql_fetch_assoc($resultID);
-		if($row['is_deleted']){
-			$fail = $xml->addChild("error");
-			$fail->addAttribute("Map has been deleted.");
+	function list_maps(){
+		global $dbName, $version;
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
+		$output = new SimpleXMLElement($xmlstr);
+		
+		$linkID= establishLink();
+		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0 ORDER BY maps.title";
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Database query not found.");
+			return $output;
 		}
-		$map = $xml->addChild("map");
-		$map->addAttribute("ID", $row['map_id']);
-		$map->addAttribute("title", $row['title']);
-		$map->addAttribute("creator", $row['username']);
+		if(mysql_num_rows($resultID)==0){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "There are no maps in the list! Query was: $query");
+			//Calling this an error is perhaps a bit strong, but an empty list seems uninformative ...
+			//but on the real server it won't be empty anyway.
+			return $output;
+		}else{
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+				$row = mysql_fetch_assoc($resultID);
+				if($row['is_deleted']){
+					$fail = $output->addChild("error");
+					$fail->addAttribute("Map has been deleted.");
+				}
+				$map = $output->addChild("map");
+				$map->addAttribute("ID", $row['map_id']);
+				$map->addAttribute("title", $row['title']);
+				$map->addAttribute("creator", $row['username']);
+			}
+		}
+		return $output;
 	}
-	print($xml->asXML());
+	$output=list_maps();
+	print($output->asXML());
 ?>

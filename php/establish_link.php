@@ -21,11 +21,12 @@
 	*/
 	/**
 	* Establish-link function separated out for widespread use.
+	* Caller is responsible for error handling.
 	*/
 	function establishLink()
 	{
-		$linkID = mysql_connect("localhost", "root", "") or die ("Could not connect to database!");
-		//$linkID = mysql_connect("localhost", "root", "root") or die ("Could not connect to database!");
+		$linkID = mysql_connect("localhost", "root", "");
+		//$linkID = mysql_connect("localhost", "root", "root");
 		return $linkID;
 	}
 ?>
