@@ -31,7 +31,15 @@
 		$linkID= establishLink();
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<agora version='$version'/>\n";
-		mysql_select_db($dbName, $linkID) or die ("<error text='Could not find database'/>");
+		$xmlstr = "<?xml version='1.0' ?>\n";
+		$xml = new SimpleXMLElement($xmlstr);
+		$login = $xml->addChild("login");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail=$login->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+			return $xml;
+		}
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
 		$fnclause = mysql_real_escape_string("$firstname");
@@ -40,17 +48,17 @@
 		$urlclause = mysql_real_escape_string("$url");
 		$npclause = mysql_real_escape_string("$newpass");
 		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$pass_hash'";
-		
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<login></login>";
-		$xml = new SimpleXMLElement($xmlstr);
-		
-		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			$fail=$login->addChild("error");
+			$fail->addAttribute("text", "Data not found");
+			return $xml;
+		}
 		$row = mysql_fetch_assoc($resultID);
 		$uid = $row['user_id'];
 		if($uid=="") // If user doesn't exist...
 		{
-			$xml->addAttribute("modified", false);
+			$login->addAttribute("modified", false);
 		}else{
 			//update the database
 			if($npclause!="")
@@ -64,8 +72,14 @@
 						url='$urlclause', last_login=NOW() WHERE user_id=$uid";
 			}
 
-			$insID = mysql_query($iquery, $linkID) or die("Update failed for some reason."); 
-			$xml->addAttribute("modified", true); // Successfully created the username.
+			$insID = mysql_query($iquery, $linkID) or die("Update failed for some reason.");
+			if(!$insID){
+				$fail=$login->addChild("error");
+				$fail->addAttribute("text", "Update failed for some reason.");
+				return $xml;
+			}else{
+				$login->addAttribute("modified", true); // Successfully created the username.
+			}
 		}
 		return $xml;
 	}
