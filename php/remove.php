@@ -48,25 +48,25 @@ List of variables for insertion:
 	/**
 	*	Function for removing a node from the database.
 	*/
-	function removeNode($node, $mapID, $linkID, $userID)
+	function removeNode($node, $mapID, $output, $linkID, $userID)
 	{
-		print "<BR>----Node found in XML";
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["ID"]);
 		$query = "SELECT * FROM nodes WHERE node_id=$nID";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		if($userID == $row["user_id"]){
-			print "<BR>Now deleting....<BR>";
 			$uquery = "UPDATE nodes SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
-			print $uquery;
 			$retval = mysql_query($uquery, $linkID);
 			if(!$retval){
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Database update failed. Query was: $uquery");
 				return $retval;
 			}			
 			return $retval;
 		}else{
-			print "<BR>You are attempting to delete someone else's work or a nonexistent node. This is not permissible.";
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "You are attempting to delete someone else's work or a nonexistent node. This is not permissible.");
 			return false;
 		}
 	}
@@ -74,9 +74,8 @@ List of variables for insertion:
 	*	Convenience function. Iterates throughout the database. Separated from main logic for clarity.
 	*	http://dev.mysql.com/doc/refman/5.5/en/innodb-foreign-key-constraints.html
 	*/
-	function xmlToDB($xml, $mapID, $linkID, $userID)	
+	function xmlToDB($xml, $mapID, $output, $linkID, $userID)	
 	{
-		print "<BR>Now taking the XML and deleting things with it...";
 		$children = $xml->children();
 		$retval = true;
 		foreach ($children as $child)
@@ -87,13 +86,15 @@ List of variables for insertion:
 					//textboxToDB($child, $mapID, $linkID, $userID);
 					break;
 				case "node":
-					$retval = removeNode($child, $mapID, $linkID, $userID);
+					$retval = removeNode($child, $mapID, $output, $linkID, $userID);
 					break;
 				case "connection":
 					//connectionToDB($child, $mapID, $linkID, $userID);
 					break;
 			}
 			if($retval == false){  // We've already had one failure, no reason to continue
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Due to a prior error, all remaining remove commands are being rejected");
 				return false;
 			}
 		}
@@ -113,7 +114,12 @@ List of variables for insertion:
 		
 		//Standard SQL connection stuff
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+			return $output;
+		}
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
 			$fail=$output->addChild("error");
@@ -133,7 +139,13 @@ List of variables for insertion:
 		$delMap = mysql_real_escape_string($xml['remove']);
 		//Check to see if the map already exists
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
-		$resultID = mysql_query($query, $linkID) or die ("Cannot get map! Query was: $query"); 
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Cannot get map! Query was: $query");
+			return $output;
+		}
+		
 		$row = mysql_fetch_assoc($resultID);
 		$UID = $row['user_id'];
 		if($delMap && $mapClause!=0){
@@ -164,7 +176,7 @@ List of variables for insertion:
 						
 			//Transactions used for protecting maps from mass deletes that are partially illegal.
 			mysql_query("START TRANSACTION");
-			$success = xmlToDB($xml, $mapClause, $linkID, $userID);
+			$success = xmlToDB($xml, $mapClause, $output, $linkID, $userID);
 			if($success===true){
 				mysql_query("COMMIT");
 			}else{
