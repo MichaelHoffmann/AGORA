@@ -54,15 +54,26 @@ List of variables for insertion:
 		$nID = mysql_real_escape_string($attr["ID"]);
 		$query = "SELECT * FROM nodes WHERE node_id=$nID";
 		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Could not query the database! Query was $query");
+			return false;
+		}
 		$row = mysql_fetch_assoc($resultID);
 		if($userID == $row["user_id"]){
 			$uquery = "UPDATE nodes SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			$retval = mysql_query($uquery, $linkID);
 			if(!$retval){
-				$fail=$output->addChild("error");
+				$status=$output->addChild("node");
+				$status->addAttribute("ID", $nID);
+				$fail=$status->addChild("error");
 				$fail->addAttribute("text", "Database update failed. Query was: $uquery");
 				return $retval;
-			}			
+			}else{
+				$status=$output->addChild("node");
+				$status->addAttribute("ID", $nID);
+				$status->addAttribute("removed", true);
+			}
 			return $retval;
 		}else{
 			$fail=$output->addChild("error");
