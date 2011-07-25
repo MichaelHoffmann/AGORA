@@ -27,18 +27,27 @@
 	*/
 	function login($username, $pass_hash)
 	{
-		global $dbName;
+		global $dbName, $version;
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<login version='$version'></login>";
+		$xml = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			$fail->$xml->addChild("error");
+			$fail->addAttribute("text", "Could not find database");
+		}
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
 		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$passclause'";
 
-		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			$fail->$xml->addChild("error");
+			$fail->addAttribute("text", "Could not execute the query. Query was: $query");
+		}
 		$row = mysql_fetch_assoc($resultID);
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<login></login>";
-		$xml = new SimpleXMLElement($xmlstr);
+
 		$xml->addAttribute("ID", $row['user_id']);
 		$xml->addAttribute("firstname", $row['firstname']);
 		$xml->addAttribute("lastname", $row['lastname']);
