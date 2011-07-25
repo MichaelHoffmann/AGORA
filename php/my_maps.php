@@ -31,7 +31,7 @@
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	
 	header("Content-type: text/xml");	
-	$xmlstr = "<?xml version='1.0' ?>\n<list></list>";
+	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 	$xml = new SimpleXMLElement($xmlstr);
 	
 	$linkID= establishLink();
