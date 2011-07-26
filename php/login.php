@@ -52,11 +52,14 @@
 			$fail->addAttribute("text", "Could not execute the query. Query was: $query");
 		}
 		$row = mysql_fetch_assoc($resultID);
-
-		$xml->addAttribute("ID", $row['user_id']);
-		$xml->addAttribute("firstname", $row['firstname']);
-		$xml->addAttribute("lastname", $row['lastname']);
-		
+		if($row['user_id'){
+			$xml->addAttribute("ID", $row['user_id']);
+			$xml->addAttribute("firstname", $row['firstname']);
+			$xml->addAttribute("lastname", $row['lastname']);
+		}else{
+			$fail=$xml->addChild("error");
+			$fail->addAttribute("text", "Could not log in. Either the username $username does not exist, or the password was wrong.");
+		}
 		return $xml;
 	}
 	
