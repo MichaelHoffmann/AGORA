@@ -144,7 +144,14 @@ List of variables for insertion:
 		}
 		
 		//Dig the Map ID out of the XML
-		$xml = new SimpleXMLElement($xmlin);
+		//Dig the Map ID out of the XML
+		try{
+			$xml = new SimpleXMLElement($xmlin);
+		}catch(Exception $e){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Improperly formatted input XML!");
+			return $output;
+		}
 		$mapID = $xml['ID'];
 		$mapClause = mysql_real_escape_string("$mapID");
 		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:

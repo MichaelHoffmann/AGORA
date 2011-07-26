@@ -121,8 +121,14 @@ List of variables for insertion:
 			return $output;
 		}
 		
-		//Dig the Map ID out of the XML
-		$xml = new SimpleXMLElement($xmlin);
+		//Read the input XML
+		try{
+			$xml = new SimpleXMLElement($xmlin);
+		}catch(Exception $e){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Improperly formatted input XML!");
+			return $output;
+		}
 		//Transactions used for protecting maps from mass deletes that are partially illegal.
 		mysql_query("START TRANSACTION");
 		$success = xmlToDB($xml, $output, $linkID, $userID);
