@@ -36,7 +36,6 @@
 		}
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<agora version='$version'/>\n";
-		$xmlstr = "<?xml version='1.0' ?>\n";
 		$xml = new SimpleXMLElement($xmlstr);
 		$login = $xml->addChild("login");
 		$status=mysql_select_db($dbName, $linkID);
@@ -88,14 +87,14 @@
 		}
 		return $xml;
 	}
-	
-	$username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
-	$pass_hash = $_REQUEST['pass_hash'];  //TODO: Change this back to a GET when all testing is done.
-	$firstname = $_REQUEST['firstname']; //TODO: Change this back to a GET when all testing is done.
-	$lastname = $_REQUEST['lastname']; //TODO: Change this back to a GET when all testing is done.
-	$email = $_REQUEST['email']; //TODO: Change this back to a GET when all testing is done.
-	$url = $_REQUEST['url']; //TODO: Change this back to a GET when all testing is done.
-	$new_pass= $_REQUEST['newpass']; //TODO: Change this back to a GET when all testing is done.
-	$xml = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
-	print($xml->asXML());
+
+$username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
+$pass_hash = $_REQUEST['pass_hash'];  //TODO: Change this back to a GET when all testing is done.
+$firstname = $_REQUEST['firstname']; //TODO: Change this back to a GET when all testing is done.
+$lastname = $_REQUEST['lastname']; //TODO: Change this back to a GET when all testing is done.
+$email = $_REQUEST['email']; //TODO: Change this back to a GET when all testing is done.
+$url = $_REQUEST['url']; //TODO: Change this back to a GET when all testing is done.
+$new_pass= $_REQUEST['newpass']; //TODO: Change this back to a GET when all testing is done.
+$xml = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
+print($xml->asXML());
 ?>
