@@ -431,6 +431,7 @@ List of variables for insertion:
 		}catch(Exception $e){
 			$fail=$output->addChild("error");
 			$fail->addAttribute("text", "Improperly formatted input XML!");
+			return $output;
 		}
 		$mapID = $xml['ID']; 
 		$mapClause = mysql_real_escape_string("$mapID");
