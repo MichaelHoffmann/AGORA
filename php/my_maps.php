@@ -27,8 +27,8 @@
 	*	File for getting the list of maps a specific user has made.
 	*/
 	
-	$userID = mysql_real_escape_string($_REQUEST['uid']);
-	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$userID = mysql_real_escape_string($_REQUEST['uid']);  //TODO: Change this back to a GET when all testing is done.
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']); //TODO: Change this back to a GET when all testing is done.
 	
 	header("Content-type: text/xml");	
 	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
@@ -57,7 +57,7 @@
 	
 	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.user_id=$userID AND maps.is_deleted=0 ORDER BY maps.title";
 	$resultID = mysql_query($query, $linkID); 
-	if(!$resultID or mysql_num_rows($resultID)==0){
+	if(!$resultID){
 		$fail=$xml->addChild("error");
 		$fail->addAttribute("text", "The query failed! Query was: $query");
 		print ($xml->asXML());
