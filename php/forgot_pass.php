@@ -103,6 +103,6 @@
 	}
 	
 	$username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
-	forgot_pass($username);
+	$output=forgot_pass($username);
 	print $output->asXML();
 ?>
