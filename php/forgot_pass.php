@@ -71,8 +71,8 @@
 		}
 		//We need to change password and email user afterwards.
 		//If changing password fails, we need to reset to the old password in case user finally remembers.
-		$password=$output->addChild("password");
-		$password->addAttribute("text", "$password");
+		$psw=$output->addChild("password");
+		$psw->addAttribute("text", "$password");
 		
 		//First thing first: create the Hash of the password - that's what we store.
 		//Salt the password:
