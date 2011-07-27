@@ -346,12 +346,7 @@
 	
 
 	<!--UNSORTED-->
-	
-	<NotTheCase>
-		<EN-US text="It is not the case that "/>
-		<RUS text="Не то, что "/>
-		<GER text="Es ist nicht der Fall, dass "/>
-	</NotTheCase>
+
 	
 	
 	<Subclaim1>
