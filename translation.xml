@@ -752,30 +752,45 @@
 					Therefore, not p"/> <!--TODO: This should be translated-->
 		<GER text="Modus tollens:\n
 					p --> q\n
-					not q\n
+					nicht q\n
 					Deshalb, not p"/>
 	</MTHelp>
 	
 	<CondSylHelp>
-		<EN-US text="Conditional Syllogism:
-					p --> q
-					q --> r
+		<EN-US text="Conditional Syllogism:\n
+					p --> q\n
+					q --> r\n
 					Therefore, p --> r"/>
-		<RUS text="Conditional Syllogism (untranslated):
-					p --> q
-					q --> r
+		<RUS text="Conditional Syllogism (untranslated):\n
+					p --> q\n
+					q --> r\n
 					Therefore, p --> r"/> <!--TODO: This should be translated-->
-		<GER text="Konditionaler Syllogismus:
-					p --> q
-					q --> r
+		<GER text="Konditionaler Syllogismus:\n
+					p --> q\n
+					q --> r\n
 					Deshalb, p --> r"/>					
 	</CondSylHelp>
 	
 	<DisSylHelp>
-		<EN-US text="To construct a disjunctive syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;): &quot;either p or q.&quot; In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
-		<RUS text="Чтобы создать дизъюнктивый силлогизм, начните  с &quot;гаранта&quot; Вашего аргумента (то есть, поле под &quot;поэтому&quot;): &quot;или p или q.&quot; В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
-		<GER text="Um einen disjunktiven Syllogismus zu konstruieren, starte mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“): „entweder p oder q“. Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
+		<EN-US text="Disjunctive Syllogism:\n
+					p v q\n
+					not p\n
+					Therefore, q"/>
+		<RUS text="Disjunctive Syllogism (untranslated):\n
+					p v q\n
+					not p\n
+					Therefore, q"/>
+		<GER text="Disjunktiver  Syllogism:\n
+					p v q\n
+					nicht p\n
+					Deshalb, q"/>
 	</DisSylHelp>
+	
+	<DisSylDetails>
+		<EN-US text="In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
+		<RUS text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
+		<GER text="Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
+	</DisSylDetails>
 	
 	<ConsDilOneProp>
 		<EN-US text="... with one proposition as claim"/>
@@ -796,9 +811,14 @@
 	</NotAllHelp>
 	
 	<ArgComplete>
-		<EN-US text="Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on &quot;add ...&quot; You might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger. Additionally, you need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme by clicking on &quot;ArgScheme.&quot;"/>
+		<EN-US text="Do you need to add another reason to this argument so that only the combination of all reasons justifies the claim? If so, click on the &quot;+&quot; button under &quot;therefore.&quot;\n
+		Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on the &quot;+&quot; button under that statement to which you want to add a supporting argument. If you want to add another independent argument (with its own enabler) to your claim, click on the &quot;+&quot; there. NOTE: The main difference between adding an independent argument and adding another reason to an existing argument is the following: If only one of the reasons in the latter case can be defeated, then the entire argument breaks down. If you have two independent arguments, then your claim is still justified by the remaining argument if one is defeated. However, sometimes only the combination of several reasons can justify the claim.\n
+		To improve your argument, you might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger.
+		"/>
 		<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
-		<GER text="Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf „füge hinzu ...“. Du kannst auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen. Du musst außerdem bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf „ArgSchema“ klickst, kannst Du das Argumentations-Schema wechseln "/>
+		<GER text="Ist es notwendig, einen weiteren Grund zu diesem Argument hinzuzufügen so dass allein die Kombination beider Gründe die Behauptung rechtfertigen kann? Wenn das so ist, klicke auf &quot;+&quot; unter &quot;deshalb&quot;.\n
+		Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf das &quot;+&quot; Symbol unter derjenigen Behauptung zu der du ein unterstützendes Argument hinzufügen willst. Wenn du ein weiteres unabhänges Argument zu deiner deiner Behauptung hinzufügen willst (mit seinem eigenen Garanten), klick dort auf &quot;+&quot;. BEACHTE: Der Hauptunterschied zwischen der Hinzufügung eines unabhängigen Argumentes und eines weiteren Grundes für ein existierendes Argument ist der folgende: Wenn im letzteren Fall allein einer der Gründe widerlegt werden kann, dann bricht das ganze Argument zusammen. Wenn du jedoch zwei unabhängige Argumente hast, dann ist deine Behauptung immer noch durch das zweite Argument gerechtfertigt wenn das andere widerlegt ist. Allerdings kann manchmal allein die Kombination mehrerer Gründe eine Behauptung rechtfertigen.\n
+		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen "/>
 	</ArgComplete>
 	
 	<CannotChangeScheme>
