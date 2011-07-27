@@ -25,6 +25,12 @@
 		<RUS text="добавьте "/>
 		<GER text="Füge hinzu "/>
 	</Add>
+
+	<apply>
+		<EN-US text="apply "/>
+		<RUS text="примените "/>
+		<GER text="wende an "/>
+	</apply>
 	
 	<AU>
 		<EN-US text="AU"/>
@@ -43,6 +49,18 @@
 		<RUS text="Введите  CAPTCHA"/>
 		<GER text="Gib die folgenden Zeichen ein"/>
 	</CAPTCHA>
+
+	<Delete>
+		<EN-US text="Delete"/>
+		<RUS text="Удалить"/>
+		<GER text="Lösche"/>
+	</Delete>
+
+	<Done>
+		<EN-US text="Done"/>
+		<RUS text="Сделанный"/>
+		<GER text="Fertig"/>
+	</Done>
 	
 	<Email>
 		<EN-US text="E-mail Address"/>
@@ -104,6 +122,12 @@
 		<GER text="URL (optional)"/>
 	</URL>
 	
+	<use>
+		<EN-US text="use as "/>
+		<RUS text="используйте в качестве "/>
+		<GER text="verwende als "/>
+	</use>
+	
 	<Username>
 		<EN-US text="Username"/>
 		<RUS text="ьзователя"/>
@@ -118,7 +142,13 @@
 		<RUS text="Пароль АГОРЫ"/>
 		<GER text="AGORA Passwort"/>
 	</AGORAPass>
-	
+
+	<AUInfo>
+		<EN-US text="Click to see author information"/>
+		<RUS text="Щелкните, чтобы видеть информацию об авторе"/>
+		<GER text="Klicke hier, um Informationen über den Autor zu sehen"/>
+	</AUInfo>
+
 	<ChangeInfo>
 		<EN-US text="Change Personal Information"/>
 		<RUS text="Измените Личную Информацию"/>
@@ -316,34 +346,6 @@
 	
 
 	<!--UNSORTED-->
-
-	
-	
-
-	
-	<use>
-		<EN-US text="use as "/>
-		<RUS text="используйте в качестве "/>
-		<GER text="verwende als "/>
-	</use>
-	
-	<AUInfo>
-		<EN-US text="Click to see author information"/>
-		<RUS text="Щелкните, чтобы видеть информацию об авторе"/>
-		<GER text="Klicke hier, um Informationen über den Autor zu sehen"/>
-	</AUInfo>
-	
-	<apply>
-		<EN-US text="apply "/>
-		<RUS text="примените "/>
-		<GER text="wende an "/>
-	</apply>
-	
-	<Done>
-		<EN-US text="Done"/>
-		<RUS text="Сделанный"/>
-		<GER text="Fertig"/>
-	</Done>
 	
 	<NotTheCase>
 		<EN-US text="It is not the case that "/>
@@ -351,11 +353,6 @@
 		<GER text="Es ist nicht der Fall, dass "/>
 	</NotTheCase>
 	
-	<Delete>
-		<EN-US text="Delete"/>
-		<RUS text="Удалить"/>
-		<GER text="Lösche"/>
-	</Delete>
 	
 	<Subclaim1>
 		<EN-US text="Enter first sub-claim"/>
