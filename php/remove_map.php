@@ -89,6 +89,8 @@ List of variables for insertion:
 					break;
 			}
 			if($retval == false){  // We've already had one failure, no reason to continue
+				$fail=$output->addChild("error");
+				$fail->addAttribute("text", "Due to a prior error, all remaining remove commands are being rejected");
 				return false;
 			}
 		}
