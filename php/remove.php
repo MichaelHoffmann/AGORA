@@ -52,7 +52,7 @@ List of variables for insertion:
 	{
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["ID"]);
-		$query = "SELECT * FROM nodes WHERE node_id=$nID";
+		$query = "SELECT * FROM nodes WHERE node_id=$nID AND map_id=$mapID";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			$fail=$output->addChild("error");
@@ -77,7 +77,7 @@ List of variables for insertion:
 			return $retval;
 		}else{
 			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "You are attempting to delete someone else's work or a nonexistent node. This is not permissible.");
+			$fail->addAttribute("text", "You are attempting to delete someone else's work or a node that is not in this map. This is not permissible.");
 			return false;
 		}
 	}
@@ -170,6 +170,7 @@ List of variables for insertion:
 		}
 		
 		$row = mysql_fetch_assoc($resultID);
+		
 		if(!$row['map_id']){
 			$fail=$output->addChild("error");
 			$fail->addAttribute("text", "Map $mapClause does not exist!");
