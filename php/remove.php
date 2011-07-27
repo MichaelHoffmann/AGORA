@@ -170,6 +170,12 @@ List of variables for insertion:
 		}
 		
 		$row = mysql_fetch_assoc($resultID);
+		if(!$row['map_id']){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Map $mapClause does not exist!");
+			return $output;
+		}
+		
 		$UID = $row['user_id'];
 		if($delMap && $mapClause!=0){
 			if($UID!=$userID){
