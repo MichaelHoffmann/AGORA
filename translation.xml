@@ -199,6 +199,91 @@
 	
 	<!--SHORT DESCRIPTIONS-->
 	
+	<AddArg>
+		<EN-US text="an argument for this statement"/>
+		<RUS text="аргумент для этого  утверждения"/>
+		<GER text="ein Argument für diese Aussage"/>
+	</AddArg>
+
+		
+	<AddDef>
+		<EN-US text="a definition of a term"/>
+		<RUS text="определение термина"/>
+		<GER text="eine Definition eines Begriffes"/>
+	</AddDef>
+	
+	<AddDist>
+		<EN-US text="a distinction between different cases for this statement"/>
+		<RUS text="различие между различными случаями для этого утверждения"/>
+		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
+	</AddDist>
+
+	<AddFA>
+		<EN-US text="a friendly amendment for a reformulation of this claim"/>
+		<RUS text="дружественная поправка для переформулировки этого заявления"/>
+		<GER text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
+	</AddFA>
+
+	<AddLinkToMap>
+		<EN-US text="a link to another argument map"/>
+		<RUS text="связь с другой картой аргумента"/>
+		<GER text="eine Verknüpfung zu einer anderen Argumentation"/>
+	</AddLinkToMap>
+	
+	<AddLinkToResource>
+		<EN-US text="a link to resources"/>
+		<RUS text="связь с ресурсами"/>
+		<GER text="eine Verknüpfung zu Materialien"/>
+	</AddLinkToResource>
+	
+	<AddObjArg>
+		<EN-US text="an objection that defeats this statement by a counter argument"/>
+		<RUS text="возражение, которое побеждает это утверждение встречным аргументом"/>
+		<GER text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
+	</AddObjArg>
+	
+	<AddObjEx>
+		<EN-US text="an objection that defeats this universal statement by a counter example"/>
+		<RUS text="возражение, которое побеждает это универсальное утверждение встречным примером"/>
+		<GER text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
+	</AddObjEx>
+	
+	<AddObjNeg>
+		<EN-US text="an objection that negates this statement without providing reasons (implies a request for justification)"/>
+		<RUS text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
+		<GER text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
+	</AddObjNeg>
+	
+	<AddObjQ>
+		<EN-US text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
+		<RUS text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
+		<GER text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
+	</AddObjQ>
+
+	<AddPaste>
+		<EN-US text="paste from clipboard"/>
+		<RUS text="вставить из клипборда(буфера)"/>
+		<GER text="kopiere aus dem Zwischenspeicher"/>
+	</AddPaste>
+	
+	<AddQ>
+		<EN-US text="a question"/>
+		<RUS text="вопрос"/>
+		<GER text="eine Frage"/>
+	</AddQ>
+	
+	<AddSupport>
+		<EN-US text="a supporting statement"/>
+		<RUS text="утверждение поддержки"/>
+		<GER text="eine unterstützende Bemerkung"/>
+	</AddSupport>
+	
+	<AddUnspecConn>
+		<EN-US text="an unspecified connection to another text box"/>
+		<RUS text="неуказанная связь с другим текстовым окном"/>
+		<GER text="eine nicht-vorgegebene Art der Verbindung"/>
+	</AddUnspecConn>
+	
 	<AGORAPass>
 		<EN-US text="AGORA password"/>
 		<RUS text="Пароль АГОРЫ"/>
@@ -240,6 +325,18 @@
 		<RUS text="Измените Личную Информацию"/>
 		<GER text="Ändere deine persönlichen Daten"/>
 	</ChangeInfo>
+
+	<ClaimInNewWithLink>
+		<EN-US text="claim in a new map, and create a link between this map and the new one"/>
+		<RUS text="заявление новой карты, и создает связь между этой картой и новой"/>
+		<GER text="Behauptung in einer neu zu beginnenden Argumentation und knüpfe eine Verbindung zwischen dieser Argumentation und der neuen."/>
+	</ClaimInNewWithLink>
+	
+	<ClaimInNewWOLink>
+		<EN-US text="claim in a new map without creating a link"/>
+		<RUS text="заявление новой карты, не создавая связь"/>
+		<GER text="Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen"/>
+	</ClaimInNewWOLink>
 	
 	<Construct>
 		<EN-US text="construct argument"/>
@@ -247,6 +344,13 @@
 		<GER text="konstruiere das Argument"/>
 	</Construct>
 
+	<CopyToClip>
+		<EN-US text="or copy into the clipboard "/>
+		<RUS text="или скопировать в клипборд(буфер)"/>
+		<GER text="oder kopiere in den Zwischenspeicher"/>
+	</CopyToClip>
+	
+	
 	<DefeatsByCounterArg>
 		<EN-US text="defeats by counter argument"/>
 		<RUS text="опровергает встречным аргументом"/>
@@ -695,6 +799,24 @@
 	
 	<!--HELP TEXT-->
 
+	<CannotAddReason>
+		<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
+		<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens  аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
+		<GER text="Entschuldigung, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: „Wenn P, dann Q“; „Immer wenn P, Q“; „Q, gegeben dass P“. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form „P allein dann, wenn Q“ ersetzt."/>
+	</CannotAddReason>
+
+	<CannotChangeMultReasons>
+		<EN-US text="Sorry, the scheme of an argument with more than one reason cannot be changed"/>
+		<RUS text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена"/>
+		<GER text="Entschuldigung, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden."/>
+	</CannotChangeMultReasons>
+	
+	<CannotChangeScheme>
+		<EN-US text="Sorry, this argument scheme cannot be changed"/>
+		<RUS text="Жаль, эта схема аргумента не может быть изменена"/>
+		<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
+	</CannotChangeScheme>
+	
 	<DisSylDetails>
 		<EN-US text="In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
 		<RUS text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
@@ -721,7 +843,24 @@
 		<!--Note that these must be followed by the password itself-->
 	</NewPass>
 	
+	<NotAllHelp>
+		<EN-US text="This syllogism has been created to infer a negative statement from one or more positive statements. If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false. See how it works!"/>
+		<RUS text="Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их  больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
+		<GER text="Dieser Syllogismus wurde geschaffen um eine negative Aussage von einer oder mehreren positiven Aussagen zu erschließen. Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss. Probiere aus wie das geht!"/>
+	</NotAllHelp>
+	
 	<!--WALLS OF TEXT-->
+		
+	<ArgComplete>
+		<EN-US text="Do you need to add another reason to this argument so that only the combination of all reasons justifies the claim? If so, click on the &quot;+&quot; button under &quot;therefore.&quot;\n
+		Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on the &quot;+&quot; button under that statement to which you want to add a supporting argument. If you want to add another independent argument (with its own enabler) to your claim, click on the &quot;+&quot; there. NOTE: The main difference between adding an independent argument and adding another reason to an existing argument is the following: If only one of the reasons in the latter case can be defeated, then the entire argument breaks down. If you have two independent arguments, then your claim is still justified by the remaining argument if one is defeated. However, sometimes only the combination of several reasons can justify the claim.\n
+		To improve your argument, you might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger.
+		"/>
+		<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+		<GER text="Ist es notwendig, einen weiteren Grund zu diesem Argument hinzuzufügen so dass allein die Kombination beider Gründe die Behauptung rechtfertigen kann? Wenn das so ist, klicke auf &quot;+&quot; unter &quot;deshalb&quot;.\n
+		Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf das &quot;+&quot; Symbol unter derjenigen Behauptung zu der du ein unterstützendes Argument hinzufügen willst. Wenn du ein weiteres unabhänges Argument zu deiner deiner Behauptung hinzufügen willst (mit seinem eigenen Garanten), klick dort auf &quot;+&quot;. BEACHTE: Der Hauptunterschied zwischen der Hinzufügung eines unabhängigen Argumentes und eines weiteren Grundes für ein existierendes Argument ist der folgende: Wenn im letzteren Fall allein einer der Gründe widerlegt werden kann, dann bricht das ganze Argument zusammen. Wenn du jedoch zwei unabhängige Argumente hast, dann ist deine Behauptung immer noch durch das zweite Argument gerechtfertigt wenn das andere widerlegt ist. Allerdings kann manchmal allein die Kombination mehrerer Gründe eine Behauptung rechtfertigen.\n
+		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen "/>
+	</ArgComplete>
 	
 	<Intro>
 		<EN-US text="Select a scheme and then a language form for this scheme. Then enter your reason and/or claim. You can change the argument scheme or the language form any time by clicking on the name of the argument scheme.\n
@@ -763,29 +902,6 @@
 		<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
 		<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
 	</ParticularUniversalClarification>
-
-
-
-	<!--UNSORTED-->
-	
-	
-	
-	<NotAllHelp>
-		<EN-US text="This syllogism has been created to infer a negative statement from one or more positive statements. If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false. See how it works!"/>
-		<RUS text="Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их  больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
-		<GER text="Dieser Syllogismus wurde geschaffen um eine negative Aussage von einer oder mehreren positiven Aussagen zu erschließen. Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss. Probiere aus wie das geht!"/>
-	</NotAllHelp>
-	
-	<ArgComplete>
-		<EN-US text="Do you need to add another reason to this argument so that only the combination of all reasons justifies the claim? If so, click on the &quot;+&quot; button under &quot;therefore.&quot;\n
-		Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on the &quot;+&quot; button under that statement to which you want to add a supporting argument. If you want to add another independent argument (with its own enabler) to your claim, click on the &quot;+&quot; there. NOTE: The main difference between adding an independent argument and adding another reason to an existing argument is the following: If only one of the reasons in the latter case can be defeated, then the entire argument breaks down. If you have two independent arguments, then your claim is still justified by the remaining argument if one is defeated. However, sometimes only the combination of several reasons can justify the claim.\n
-		To improve your argument, you might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger.
-		"/>
-		<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
-		<GER text="Ist es notwendig, einen weiteren Grund zu diesem Argument hinzuzufügen so dass allein die Kombination beider Gründe die Behauptung rechtfertigen kann? Wenn das so ist, klicke auf &quot;+&quot; unter &quot;deshalb&quot;.\n
-		Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf das &quot;+&quot; Symbol unter derjenigen Behauptung zu der du ein unterstützendes Argument hinzufügen willst. Wenn du ein weiteres unabhänges Argument zu deiner deiner Behauptung hinzufügen willst (mit seinem eigenen Garanten), klick dort auf &quot;+&quot;. BEACHTE: Der Hauptunterschied zwischen der Hinzufügung eines unabhängigen Argumentes und eines weiteren Grundes für ein existierendes Argument ist der folgende: Wenn im letzteren Fall allein einer der Gründe widerlegt werden kann, dann bricht das ganze Argument zusammen. Wenn du jedoch zwei unabhängige Argumente hast, dann ist deine Behauptung immer noch durch das zweite Argument gerechtfertigt wenn das andere widerlegt ist. Allerdings kann manchmal allein die Kombination mehrerer Gründe eine Behauptung rechtfertigen.\n
-		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen "/>
-	</ArgComplete>
 	
 	<PartUnivReq>
 		<EN-US text="You need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme any time by clicking on &quot;ArgScheme.&quot;"/>
@@ -793,126 +909,13 @@
 		<GER text="Du musst bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf &quot;ArgSchema&quot; klickst, kannst Du das Argumentations-Schema jederzeit wechseln."/>
 	</PartUnivReq>
 	
-	
-	<CannotChangeScheme>
-		<EN-US text="Sorry, this argument scheme cannot be changed"/>
-		<RUS text="Жаль, эта схема аргумента не может быть изменена"/>
-		<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
-	</CannotChangeScheme>
-	
-	<CannotChangeMultReasons>
-		<EN-US text="Sorry, the scheme of an argument with more than one reason cannot be changed"/>
-		<RUS text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена"/>
-		<GER text="Entschuldigung, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden."/>
-	</CannotChangeMultReasons>
-	
-	<CannotAddReason>
-		<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
-		<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens  аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
-		<GER text="Entschuldigung, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: „Wenn P, dann Q“; „Immer wenn P, Q“; „Q, gegeben dass P“. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form „P allein dann, wenn Q“ ersetzt."/>
-	</CannotAddReason>
-	
-	<ClaimInNewWithLink>
-		<EN-US text="claim in a new map, and create a link between this map and the new one"/>
-		<RUS text="заявление новой карты, и создает связь между этой картой и новой"/>
-		<GER text="Behauptung in einer neu zu beginnenden Argumentation und knüpfe eine Verbindung zwischen dieser Argumentation und der neuen."/>
-	</ClaimInNewWithLink>
-	
-	<ClaimInNewWOLink>
-		<EN-US text="claim in a new map without creating a link"/>
-		<RUS text="заявление новой карты, не создавая связь"/>
-		<GER text="Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen"/>
-	</ClaimInNewWOLink>
-	
-	<CopyToClip>
-		<EN-US text="or copy into the clipboard "/>
-		<RUS text="или скопировать в клипборд(буфер)"/>
-		<GER text="oder kopiere in den Zwischenspeicher"/>
-	</CopyToClip>
-	
-	<AddArg>
-		<EN-US text="an argument for this statement"/>
-		<RUS text="аргумент для этого  утверждения"/>
-		<GER text="ein Argument für diese Aussage"/>
-	</AddArg>
-	
-	<AddSupport>
-		<EN-US text="a supporting statement"/>
-		<RUS text="утверждение поддержки"/>
-		<GER text="eine unterstützende Bemerkung"/>
-	</AddSupport>
 
-	<AddObjEx>
-		<EN-US text="an objection that defeats this universal statement by a counter example"/>
-		<RUS text="возражение, которое побеждает это универсальное утверждение встречным примером"/>
-		<GER text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
-	</AddObjEx>
+
+	<!--UNSORTED-->
 	
-	<AddObjArg>
-		<EN-US text="an objection that defeats this statement by a counter argument"/>
-		<RUS text="возражение, которое побеждает это утверждение встречным аргументом"/>
-		<GER text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
-	</AddObjArg>
 	
-	<AddObjQ>
-		<EN-US text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
-		<RUS text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
-		<GER text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
-	</AddObjQ>
 	
-	<AddObjNeg>
-		<EN-US text="an objection that negates this statement without providing reasons (implies a request for justification)"/>
-		<RUS text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
-		<GER text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
-	</AddObjNeg>
-	
-	<AddFA>
-		<EN-US text="a friendly amendment for a reformulation of this claim"/>
-		<RUS text="дружественная поправка для переформулировки этого заявления"/>
-		<GER text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
-	</AddFA>
-	
-	<AddDist>
-		<EN-US text="a distinction between different cases for this statement"/>
-		<RUS text="различие между различными случаями для этого утверждения"/>
-		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
-	</AddDist>
-	
-	<AddDef>
-		<EN-US text="a definition of a term"/>
-		<RUS text="определение термина"/>
-		<GER text="eine Definition eines Begriffes"/>
-	</AddDef>
-	
-	<AddQ>
-		<EN-US text="a question"/>
-		<RUS text="вопрос"/>
-		<GER text="eine Frage"/>
-	</AddQ>
-	
-	<AddUnspecConn>
-		<EN-US text="an unspecified connection to another text box"/>
-		<RUS text="неуказанная связь с другим текстовым окном"/>
-		<GER text="eine nicht-vorgegebene Art der Verbindung"/>
-	</AddUnspecConn>
-	
-	<AddLinkToMap>
-		<EN-US text="a link to another argument map"/>
-		<RUS text="связь с другой картой аргумента"/>
-		<GER text="eine Verknüpfung zu einer anderen Argumentation"/>
-	</AddLinkToMap>
-	
-	<AddLinkToResource>
-		<EN-US text="a link to resources"/>
-		<RUS text="связь с ресурсами"/>
-		<GER text="eine Verknüpfung zu Materialien"/>
-	</AddLinkToResource>
-	
-	<AddPaste>
-		<EN-US text="paste from clipboard"/>
-		<RUS text="вставить из клипборда(буфера)"/>
-		<GER text="kopiere aus dem Zwischenspeicher"/>
-	</AddPaste>
+
 	
 	<ObjectionHelp>
 		<EN-US text="Since this claim is justified by a logically valid argument, you can add objections or distinction between different cases only at the &quot;open ends&quot; of this argumentation which are not justified by further arguments. If you click here, a new map will be created that will be linked to this claim. Nevertheless, you should also argue against the &quot;open ends&quot; of this argument if you do not agree."/>
