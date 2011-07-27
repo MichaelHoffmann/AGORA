@@ -642,16 +642,52 @@
 		<RUS text="конструктивная дилемма"/>
 		<GER text="Konstruktives Dilemma"/>
 	</ConsDil>
-	
 	<!-- There is russian text after Constructive Dilemma. I do not know what it is.
 	эквивалентность с инвертированной причиной и заявлением [то есть, Вы могли бы сказать “p, и q эквивалентны.” Тогда Вы можете вывести не-p из не-q]
 	-->
+	<ConsDilHelp>
+		<EN-US text="Constructive dilemma:\n
+					p v q\n
+					p --> r\n
+					q --> s\n
+					Therefore, s v t"/>
+		<RUS text="Constructive dilemma (untranslated):\n
+					p v q\n
+					p --> r\n
+					q --> s\n
+					Therefore, s v t"/> <!--TODO: This should be translated-->
+		<GER text="Konstruktives Dilemma:\n
+					p v q\n
+					p --> r\n
+					q --> s\n
+					Deshalb, s v t"/>
+	</ConsDilHelp>
+	
+	
 	
 	<EitherWay>
 		<EN-US text="either way"/>
 		<RUS text="either way (untranslated)"/> <!--TODO: This should be translated-->
 		<GER text="Wie-auch-immer"/>
 	</EitherWay>
+	
+	<EitherWayHelp>
+		<EN-US text="Either way:\n
+					p v q\n
+					p --> r\n
+					q --> r\n
+					Therefore, r"/>
+		<RUS text="Either way (untranslated):\n
+					p v q\n
+					p --> r\n
+					q --> r\n
+					Therefore, r"/> <!--TODO: This should be translated-->
+		<GER text="Wie-auch-immer:\n
+					p v q\n
+					p --> r\n
+					q --> r\n
+					Deshalb, r"/>
+	</EitherWayHelp>
 	
 	<EQnegated>
 		<EN-US text="with negated reason(s) and claim "/>
