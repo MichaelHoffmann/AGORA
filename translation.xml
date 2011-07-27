@@ -821,6 +821,13 @@
 		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen "/>
 	</ArgComplete>
 	
+	<PartUnivReq>
+		<EN-US text="You need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme any time by clicking on &quot;ArgScheme.&quot;"/>
+		<RUS text="Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+		<GER text="Du musst bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf &quot;ArgSchema&quot; klickst, kannst Du das Argumentations-Schema jederzeit wechseln."/>
+	</PartUnivReq>
+	
+	
 	<CannotChangeScheme>
 		<EN-US text="Sorry, this argument scheme cannot be changed [cannot be replaced by another scheme]"/>
 		<RUS text="Жаль, эта схема аргумента не может быть изменена [не может быть заменен другой схемой]"/>
