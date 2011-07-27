@@ -258,7 +258,7 @@
 	</Universal>
 	
 	<ParticularUniversalClarification>
-		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is &quot;defeated,&quot; then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only &quot;questioned&quot; or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof."/>
+		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement “All birds can fly” can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments."/>
 		<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
 		<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
 	</ParticularUniversalClarification>
@@ -647,6 +647,12 @@
 	эквивалентность с инвертированной причиной и заявлением [то есть, Вы могли бы сказать “p, и q эквивалентны.” Тогда Вы можете вывести не-p из не-q]
 	-->
 	
+	<EitherWay>
+		<EN-US text="either way"/>
+		<RUS text="either way (untranslated)"/> <!--TODO: This should be translated-->
+		<GER text="Wie-auch-immer"/>
+	</EitherWay>
+	
 	<EQnegated>
 		<EN-US text="with negated reason(s) and claim "/>
 		<RUS text="с инвертированной причиной (ами) и заявлением"/>
@@ -664,7 +670,8 @@
 		--p from q\n
 		--q from p\n
 		--not-p from not-q, or\n
-		--not-q from not-p"/>
+		--not-q from not-p\n
+		Select the form you need from the list on your right to complete your argument"/>
 		<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести\n
 		- p от q\n
 		- q от p\n
@@ -674,9 +681,27 @@
 		-- p von q,\n
 		-- q von p,\n
 		--nicht-p von nicht-q, oder\n
-		-- nicht-q von nicht-p\n
-		erschließen"/>
+		-- nicht-q von nicht-p erschließen\n
+		Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen."/>
 	</EQinferring>
+	
+	<MPHelp>
+		<EN-US text="Modus ponens:\n
+					p --> q\n
+					p\n
+					Therefore, q\n
+					Select a language form from the list on the right to complete your argument."/>
+		<RUS text="Modus ponens:\n
+					p --> q\n
+					p\n
+					Therefore, q\n
+					Select a language form from the list on the right to complete your argument. (untranslated)"/>
+		<GER text="Modus ponens:\n
+					p --> q\n
+					p\n
+					Deshalb, q\n
+					Wähle eine bestimmte sprachliche Form rechts von der Liste aus um dein Argument zu vervollständigen."/>
+	</MPHelp>
 	
 	<DisSylHelp>
 		<EN-US text="To construct a disjunctive syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;): &quot;either p or q.&quot; In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
