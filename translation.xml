@@ -9,6 +9,7 @@
 		--HELP TEXT
 		--WALLS OF TEXT
 		--ARGUMENT PIECES
+		--ADD CONTINUATIONS
 	Searching for these will take you directly to that section.
 	-->
 	
@@ -198,91 +199,6 @@
 	
 	
 	<!--SHORT DESCRIPTIONS-->
-	
-	<AddArg>
-		<EN-US text="an argument for this statement"/>
-		<RUS text="аргумент для этого  утверждения"/>
-		<GER text="ein Argument für diese Aussage"/>
-	</AddArg>
-
-		
-	<AddDef>
-		<EN-US text="a definition of a term"/>
-		<RUS text="определение термина"/>
-		<GER text="eine Definition eines Begriffes"/>
-	</AddDef>
-	
-	<AddDist>
-		<EN-US text="a distinction between different cases for this statement"/>
-		<RUS text="различие между различными случаями для этого утверждения"/>
-		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
-	</AddDist>
-
-	<AddFA>
-		<EN-US text="a friendly amendment for a reformulation of this claim"/>
-		<RUS text="дружественная поправка для переформулировки этого заявления"/>
-		<GER text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
-	</AddFA>
-
-	<AddLinkToMap>
-		<EN-US text="a link to another argument map"/>
-		<RUS text="связь с другой картой аргумента"/>
-		<GER text="eine Verknüpfung zu einer anderen Argumentation"/>
-	</AddLinkToMap>
-	
-	<AddLinkToResource>
-		<EN-US text="a link to resources"/>
-		<RUS text="связь с ресурсами"/>
-		<GER text="eine Verknüpfung zu Materialien"/>
-	</AddLinkToResource>
-	
-	<AddObjArg>
-		<EN-US text="an objection that defeats this statement by a counter argument"/>
-		<RUS text="возражение, которое побеждает это утверждение встречным аргументом"/>
-		<GER text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
-	</AddObjArg>
-	
-	<AddObjEx>
-		<EN-US text="an objection that defeats this universal statement by a counter example"/>
-		<RUS text="возражение, которое побеждает это универсальное утверждение встречным примером"/>
-		<GER text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
-	</AddObjEx>
-	
-	<AddObjNeg>
-		<EN-US text="an objection that negates this statement without providing reasons (implies a request for justification)"/>
-		<RUS text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
-		<GER text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
-	</AddObjNeg>
-	
-	<AddObjQ>
-		<EN-US text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
-		<RUS text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
-		<GER text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
-	</AddObjQ>
-
-	<AddPaste>
-		<EN-US text="paste from clipboard"/>
-		<RUS text="вставить из клипборда(буфера)"/>
-		<GER text="kopiere aus dem Zwischenspeicher"/>
-	</AddPaste>
-	
-	<AddQ>
-		<EN-US text="a question"/>
-		<RUS text="вопрос"/>
-		<GER text="eine Frage"/>
-	</AddQ>
-	
-	<AddSupport>
-		<EN-US text="a supporting statement"/>
-		<RUS text="утверждение поддержки"/>
-		<GER text="eine unterstützende Bemerkung"/>
-	</AddSupport>
-	
-	<AddUnspecConn>
-		<EN-US text="an unspecified connection to another text box"/>
-		<RUS text="неуказанная связь с другим текстовым окном"/>
-		<GER text="eine nicht-vorgegebene Art der Verbindung"/>
-	</AddUnspecConn>
 	
 	<AGORAPass>
 		<EN-US text="AGORA password"/>
@@ -1025,29 +941,7 @@
 		<GER text="Wie willst Du das zu kopierende Element mit dieser Textbox verknüpfen? Als ..."/>
 	</Paste>
 	
-	<AddAnotherReason>
-		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
-		<RUS text="другая причина этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
-		<GER text="einen weiteren Grund für dieses Argument, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt. "/>
-	</AddAnotherReason>
-	
-	<AddIntermediate>
-		<EN-US text="an intermediate reason to the reason on the right"/>
-		<RUS text="промежуточная причина для причины справа"/>
-		<GER text="einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite"/>
-	</AddIntermediate>
-	
-	<AddIntermediateToSecond>
-		<EN-US text="an intermediate reason to the second reason on the right"/>
-		<RUS text="промежуточная причина для второй причины справа"/>
-		<GER text="einen dazwischen geschaltenen Grund zu dem zweiten Grund auf der rechten Seite"/>
-	</AddIntermediateToSecond>
-	
-	<AddIntermediateLater>
-		<EN-US text="an intermediate reason to the third/fourth/fifth/ sixth/seventh reason on the right"/>
-		<RUS text="промежуточная причина для third/fourth/fifth/шестой/седьмой причины справа"/>
-		<GER text="einen dazwischen geschaltenen Grund zu dem dritten/vierten/fünften/sechsten/siebten Grund auf der rechten Seite"/>
-	</AddIntermediateLater>
+
 	
 	<ConnectionToReason>
 		<EN-US text="What kind of connection do you want to establish to the reason on the right?"/>
@@ -1279,8 +1173,117 @@
 		<GER text="Immer wenn "/>
 	</ArgWhenever>
 	
+	<!--ADD CONTINUATIONS-->
+	<!--There are a great many things which you can "add". 
+	Sentences continuing off the single word "add" go here.-->
+		<AddAnotherReason>
+		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
+		<RUS text="другая причина этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
+		<GER text="einen weiteren Grund für dieses Argument, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt. "/>
+	</AddAnotherReason>
 	
+	<AddArg>
+		<EN-US text="an argument for this statement"/>
+		<RUS text="аргумент для этого  утверждения"/>
+		<GER text="ein Argument für diese Aussage"/>
+	</AddArg>
+
+		
+	<AddDef>
+		<EN-US text="a definition of a term"/>
+		<RUS text="определение термина"/>
+		<GER text="eine Definition eines Begriffes"/>
+	</AddDef>
 	
+	<AddDist>
+		<EN-US text="a distinction between different cases for this statement"/>
+		<RUS text="различие между различными случаями для этого утверждения"/>
+		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
+	</AddDist>
+
+	<AddFA>
+		<EN-US text="a friendly amendment for a reformulation of this claim"/>
+		<RUS text="дружественная поправка для переформулировки этого заявления"/>
+		<GER text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
+	</AddFA>
+	
+	<AddIntermediate>
+		<EN-US text="an intermediate reason to the reason on the right"/>
+		<RUS text="промежуточная причина для причины справа"/>
+		<GER text="einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite"/>
+	</AddIntermediate>
+	
+	<AddIntermediateToSecond>
+		<EN-US text="an intermediate reason to the second reason on the right"/>
+		<RUS text="промежуточная причина для второй причины справа"/>
+		<GER text="einen dazwischen geschaltenen Grund zu dem zweiten Grund auf der rechten Seite"/>
+	</AddIntermediateToSecond>
+	
+	<AddIntermediateLater>
+		<EN-US text="an intermediate reason to the third/fourth/fifth/ sixth/seventh reason on the right"/>
+		<RUS text="промежуточная причина для third/fourth/fifth/шестой/седьмой причины справа"/>
+		<GER text="einen dazwischen geschaltenen Grund zu dem dritten/vierten/fünften/sechsten/siebten Grund auf der rechten Seite"/>
+	</AddIntermediateLater>
+	
+	<AddLinkToMap>
+		<EN-US text="a link to another argument map"/>
+		<RUS text="связь с другой картой аргумента"/>
+		<GER text="eine Verknüpfung zu einer anderen Argumentation"/>
+	</AddLinkToMap>
+	
+	<AddLinkToResource>
+		<EN-US text="a link to resources"/>
+		<RUS text="связь с ресурсами"/>
+		<GER text="eine Verknüpfung zu Materialien"/>
+	</AddLinkToResource>
+	
+	<AddObjArg>
+		<EN-US text="an objection that defeats this statement by a counter argument"/>
+		<RUS text="возражение, которое побеждает это утверждение встречным аргументом"/>
+		<GER text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
+	</AddObjArg>
+	
+	<AddObjEx>
+		<EN-US text="an objection that defeats this universal statement by a counter example"/>
+		<RUS text="возражение, которое побеждает это универсальное утверждение встречным примером"/>
+		<GER text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
+	</AddObjEx>
+	
+	<AddObjNeg>
+		<EN-US text="an objection that negates this statement without providing reasons (implies a request for justification)"/>
+		<RUS text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
+		<GER text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
+	</AddObjNeg>
+	
+	<AddObjQ>
+		<EN-US text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
+		<RUS text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
+		<GER text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
+	</AddObjQ>
+
+	<AddPaste>
+		<EN-US text="paste from clipboard"/>
+		<RUS text="вставить из клипборда(буфера)"/>
+		<GER text="kopiere aus dem Zwischenspeicher"/>
+	</AddPaste>
+	
+	<AddQ>
+		<EN-US text="a question"/>
+		<RUS text="вопрос"/>
+		<GER text="eine Frage"/>
+	</AddQ>
+	
+	<AddSupport>
+		<EN-US text="a supporting statement"/>
+		<RUS text="утверждение поддержки"/>
+		<GER text="eine unterstützende Bemerkung"/>
+	</AddSupport>
+	
+	<AddUnspecConn>
+		<EN-US text="an unspecified connection to another text box"/>
+		<RUS text="неуказанная связь с другим текстовым окном"/>
+		<GER text="eine nicht-vorgegebene Art der Verbindung"/>
+	</AddUnspecConn>
 	
 	
 	
