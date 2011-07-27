@@ -1,4 +1,168 @@
 ﻿<Translations>
+	<!--INDEX-->
+	<!--There are comments throughout this document which describe the various kinds of text which has been translated.
+	Those kinds are as follows:
+		--BUTTONS AND SINGLE WORDS
+		--SHORT DESCRIPTIONS
+		--NAMES OF ARGUMENTS
+		--ARGUMENT DESCRIPTIONS
+		--HELP TEXT
+		--WALLS OF TEXT
+		--ARGUMENT PIECES
+	Searching for these will take you directly to that section.
+	-->
+	
+	
+	<!--BUTTONS AND SINGLE WORDS-->
+	<Back>
+		<EN-US text="Back"/>
+		<RUS text="Назад"/>
+		<GER text="Zurück"/>
+	</Back>
+	
+	<Email>
+		<EN-US text="E-mail Address"/>
+		<RUS text="Адрес электронной почты"/>
+		<GER text="E-mail Adresse"/>
+	</Email>
+	
+	<FirstName>
+		<EN-US text="First Name"/>
+		<RUS text="Имя"/>
+		<GER text="Vorname"/>
+	</FirstName>
+	
+	<LastName>
+		<EN-US text="Last Name"/>
+		<RUS text="Фамилия"/>
+		<GER text="Nachname"/>
+	</LastName>
+	
+	<Login>
+		<EN-US text="Login"/>
+		<RUS text="Логин"/>
+		<GER text="Login"/>
+	</Login>	
+	
+	<Password>
+		<EN-US text="Password"/>
+		<RUS text="Пароль"/>
+		<GER text="Passwort"/>
+	</Password>
+	
+	<Register>
+		<EN-US text="Register"/>
+		<RUS text="Регистровать"/>
+		<GER text="Registriere"/>
+	</Register>
+	
+	<Submit>
+		<EN-US text="Submit"/>
+		<RUS text="Представить"/>
+		<GER text="Sende"/>
+	</Submit>
+	
+	<URL>
+		<EN-US text="URL (Optional)"/>
+		<RUS text="URL(опционально)"/>
+		<GER text="URL (optional)"/>
+	</URL>
+	
+	<Username>
+		<EN-US text="Username"/>
+		<RUS text="ьзователя"/>
+		<GER text="Benutzername"/>
+	</Username>
+	
+	
+	<!--SHORT DESCRIPTIONS-->
+		
+	<AGORAPass>
+		<EN-US text="AGORA password"/>
+		<RUS text="Пароль АГОРЫ"/>
+		<GER text="AGORA Passwort"/>
+	</AGORAPass>
+	
+	<Construct>
+		<EN-US text="construct argument"/>
+		<RUS text="конструктивный  аргумент"/>
+		<GER text="konstruiere das Argument"/>
+	</Construct>
+			
+	<ForgotPass>
+		<EN-US text="Forgot your password?"/>
+		<RUS text="Забыл Ваш пароль?"/>
+		<GER text="Passwort vergessen?"/>
+	</ForgotPass>
+	
+	<GenPass>
+		<EN-US text="AGORA will generate a new password for you. This action is irreversible."/>
+		<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо."/>
+		<GER text="AGORA wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden."/>
+	</GenPass>
+	
+	<MyMaps>
+		<EN-US text="My maps and those in which I participated"/>
+		<RUS text="Мои карты и те, в которых я участвовал(а)"/>
+		<GER text="Meine eigenen Argumente und solche, an denen ich mitgewirkt habe"/>
+	</MyMaps>
+	
+	<NewMap>
+		<EN-US text="Create a new argument map"/>
+		<RUS text="Создайте новую карту аргумента"/>
+		<GER text="Beginne eine neue Argumentation"/>
+	</NewMap>
+	
+	<NewProject>
+		<EN-US text="Create a password-protected project space"/>
+		<RUS text="Создайте защищённое паролем проектное пространство"/>
+		<GER text="Eröffne einen Passwort-geschützten Projektbereich"/>
+	</NewProject>
+	
+	<NewUsername>
+		<EN-US text="Desired Username"/>
+		<RUS text="Желаемое Имя пользователя"/>
+		<GER text="Erwünschter Benutzername"/>
+	</NewUsername>
+	
+	<PassRepeat>
+		<EN-US text="Repeat your password"/>
+		<RUS text="Повторите свой пароль"/>
+		<GER text="Wiederhole dein Passwort"/>
+	</PassRepeat>
+	
+	<RegisterAsNew>
+		<EN-US text="Register as new user"/>
+		<RUS text="Регистровать как нового пользователя"/>
+		<GER text="Registriere dich als neuer Benutzer"/>
+	</RegisterAsNew>
+	
+	<UsernameTaken>
+		<EN-US text="This username is already taken! Try another username."/>
+		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
+		<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
+	</UsernameTaken>
+	
+	<!--NAMES OF ARGUMENTS-->
+	
+	<!--ARGUMENT DESCRIPTIONS-->
+	
+	<!--HELP TEXT-->
+	<MustRegister>
+		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible"/>
+		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой"/>
+		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als „AU“ (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar"/>
+	</MustRegister>
+	
+	<NewPass>
+		<EN-US text="Your password on the AGORA server has been changed. Your new password is: "/>
+		<RUS text="Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: "/>
+		<GER text="Dein Passwort auf dem AGORA Server wurde geändert. Das neue Passwort ist: "/>
+		<!--Note that these must be followed by the password itself-->
+	</NewPass>
+	
+	<!--WALLS OF TEXT-->
+	
 	<Intro>
 		<EN-US text="Select a scheme and then a language form for this scheme. Then enter your reason and/or claim. You can change the argument scheme or the language form any time by clicking on the name of the argument scheme.\n
 		---\n
@@ -21,138 +185,20 @@
 		Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
 	</Intro>
 	
-	<Back>
-		<EN-US text="Back"/>
-		<RUS text="Назад"/>
-		<GER text="Zurück"/>
-	</Back>
+
 	
-	<Construct>
-		<EN-US text="construct argument"/>
-		<RUS text="конструктивный  аргумент"/>
-		<GER text="konstruiere das Argument"/>
-	</Construct>
+
+
+
 	
-	<NewMap>
-		<EN-US text="Create a new argument map"/>
-		<RUS text="Создайте новую карту аргумента"/>
-		<GER text="Beginne eine neue Argumentation"/>
-	</NewMap>
+
+
 	
-	<MyMaps>
-		<EN-US text="My maps and those in which I participated"/>
-		<RUS text="Мои карты и те, в которых я участвовал(а)"/>
-		<GER text="Meine eigenen Argumente und solche, an denen ich mitgewirkt habe"/>
-	</MyMaps>
+
 	
-	<CreateProject>
-		<EN-US text="Create a password-protected project space"/>
-		<RUS text="Создайте защищённое паролем проектное пространство"/>
-		<GER text="Eröffne einen Passwort-geschützten Projektbereich"/>
-	</CreateProject>
-	
-	<MustRegister>
-		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible"/>
-		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой"/>
-		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als „AU“ (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar"/>
-	</MustRegister>
-	
-	<Username>
-		<EN-US text="Username"/>
-		<RUS text="ьзователя"/>
-		<GER text="Benutzername"/>
-	</Username>
-	
-	<Password>
-		<EN-US text="Password"/>
-		<RUS text="Пароль"/>
-		<GER text="Passwort"/>
-	</Password>
-	
-	<Login>
-		<EN-US text="Login"/>
-		<RUS text="Логин"/>
-		<GER text="Login"/>
-	</Login>
-	
-	<ForgotPass>
-		<EN-US text="Forgot your password?"/>
-		<RUS text="Забыл Ваш пароль?"/>
-		<GER text="Passwort vergessen?"/>
-	</ForgotPass>
-	
-	<GenPass>
-		<EN-US text="AGORA will generate a new password for you. This action is irreversible."/>
-		<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо."/>
-		<GER text="AGORA wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden."/>
-	</GenPass>
-	
-	<AGORAPass>
-		<EN-US text="AGORA password"/>
-		<RUS text="Пароль АГОРЫ"/>
-		<GER text="AGORA Passwort"/>
-	</AGORAPass>
-	
-	<NewPass>
-		<EN-US text="Your password on the AGORA server has been changed. Your new password is: "/>
-		<RUS text="Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: "/>
-		<GER text="Dein Passwort auf dem AGORA Server wurde geändert. Das neue Passwort ist: "/>
-		<!--Note that these must be followed by the password itself-->
-	</NewPass>
-	
-	<Register>
-		<EN-US text="Register"/>
-		<RUS text="Регистровать"/>
-		<GER text="Registriere"/>
-	</Register>
-	
-	<RegisterAsNew>
-		<EN-US text="Register as new user"/>
-		<RUS text="Регистровать как нового пользователя"/>
-		<GER text="Registriere dich als neuer Benutzer"/>
-	</RegisterAsNew>
-	
-	<NewUsername>
-		<EN-US text="Desired Username"/>
-		<RUS text="Желаемое Имя пользователя"/>
-		<GER text="Erwünschter Benutzername"/>
-	</NewUsername>
-	
-	<UsernameTaken>
-		<EN-US text="This username is already taken! Try another username."/>
-		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
-		<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
-	</UsernameTaken>
-	
-	<PassRepeat>
-		<EN-US text="Repeat your password"/>
-		<RUS text="Повторите свой пароль"/>
-		<GER text="Wiederhole dein Passwort"/>
-	</PassRepeat>
-	
-	<Email>
-		<EN-US text="E-mail Address"/>
-		<RUS text="Адрес электронной почты"/>
-		<GER text="E-mail Adresse"/>
-	</Email>
-	
-	<FirstName>
-		<EN-US text="First Name"/>
-		<RUS text="Имя"/>
-		<GER text="Vorname"/>
-	</FirstName>
-	
-	<LastName>
-		<EN-US text="Last Name"/>
-		<RUS text="Фамилия"/>
-		<GER text="Nachname"/>
-	</LastName>
-	
-	<URL>
-		<EN-US text="URL (Optional)"/>
-		<RUS text="URL(опционально)"/>
-		<GER text="URL (optional)"/>
-	</URL>
+
+	<!--UNSORTED-->
+
 	
 	<Affiliation>
 		<EN-US text="Affiliation/Location (optional)"/>
@@ -166,12 +212,7 @@
 		<GER text="Gib die folgenden Zeichen ein"/>
 	</CAPTCHA>
 	
-	<Submit>
-		<EN-US text="Submit"/>
-		<RUS text="Представить"/>
-		<GER text="Sende"/>
-	</Submit>
-	
+
 	<ChangeInfo>
 		<EN-US text="Change Personal Information"/>
 		<RUS text="Измените Личную Информацию"/>
@@ -1170,8 +1211,9 @@
 		<GER text="Klicke hier, um vier Möglichkeiten zu sehen, Teile der automatisch generierten Struktur eines Argumentes zu überschreiben "/>
 	</FourOptions>
 	
-	<!-- 
-		These translations can be used in arguments so long as the language allows similar phrase structure.
+	<!--ARGUMENT PIECES-->
+	
+	<!-- These translations can be used in arguments so long as the language allows similar phrase structure.
 		A more robust system (see translation_schemes for an idea) would be needed if a language had greatly different argumentation layout.
 	-->
 	<ArgAnd>
