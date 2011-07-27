@@ -32,6 +32,12 @@
 		<GER text="wende an "/>
 	</apply>
 	
+	<ArgScheme>
+		<EN-US text="ArgScheme"/>
+		<RUS text="ArgScheme"/>
+		<GER text="ArgSchema"/>
+	</ArgScheme>
+	
 	<AU>
 		<EN-US text="AU"/>
 		<RUS text="AU"/>
@@ -49,7 +55,19 @@
 		<RUS text="Введите  CAPTCHA"/>
 		<GER text="Gib die folgenden Zeichen ein"/>
 	</CAPTCHA>
-
+	
+	<Claim>
+		<EN-US text="What is your claim? "/>
+		<RUS text="Каково Ваше заявление? "/>
+		<GER text="Was ist Deine Behauptung? "/>
+	</Claim>
+	
+	<ClaimReminder>
+		<EN-US text="Keep in mind that a claim can be descriptive (&quot;it is the case that ...&quot;) or normative (e.g., &quot;we should do x&quot;)"/>
+		<RUS text="Имейте в виду, что заявление может быть описательным (&quot;оно имеет место, что ...&quot;) или нормативным (например, &quot;мы должны сделать x&quot;),"/>
+		<GER text="Vergiss nicht, dass es deskriptive („es ist der Fall, dass ...“) und normative (z.B. „wir sollten x tun“) Behauptungen gibt."/>
+	</ClaimReminder>
+	
 	<Delete>
 		<EN-US text="Delete"/>
 		<RUS text="Удалить"/>
@@ -143,6 +161,13 @@
 		<GER text="AGORA Passwort"/>
 	</AGORAPass>
 
+	<AnotherReason>
+		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
+		<RUS text="другую причину для этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
+		<GER text="weiteren Grund für dieses Argument hinzufügen, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt"/>
+	</AnotherReason>
+	
+	
 	<AUInfo>
 		<EN-US text="Click to see author information"/>
 		<RUS text="Щелкните, чтобы видеть информацию об авторе"/>
@@ -167,11 +192,29 @@
 		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können"/>
 	</DivideToSubclaims>
 	
+	<EnterClaim>
+		<EN-US text="Enter your claim"/>
+		<RUS text="Введите свое заявление"/>
+		<GER text="Gib Deine Behauptung ein"/>
+	</EnterClaim>
+
+	<EnterReason>
+		<EN-US text="Enter your reason"/>
+		<RUS text="Введите свою причину"/>
+		<GER text="Gib deinen Grund ein"/>
+	</EnterReason>
+	
 	<ForgotPass>
 		<EN-US text="Forgot your password?"/>
 		<RUS text="Забыл Ваш пароль?"/>
 		<GER text="Passwort vergessen?"/>
 	</ForgotPass>
+
+	<FurtherReason>
+		<EN-US text="Enter a further reason"/>
+		<RUS text="Введите дальнейшую причину"/>
+		<GER text="Gib einen weiteren Grund ein"/>
+	</FurtherReason>	
 	
 	<GenPass>
 		<EN-US text="AGORA will generate a new password for you. This action is irreversible."/>
@@ -250,12 +293,61 @@
 		<RUS text="Пароль  Проекта"/>
 		<GER text="Projekt-Passwort"/>
 	</ProjPass>
+
+	<NewReason>
+		<EN-US text="Enter your new reason"/>
+		<RUS text="Введите свою новую причину"/>
+		<GER text="Gib deinen neuen Grund ein"/>
+	</NewReason>
+
+	
+	<Reason>
+		<EN-US text="What is your reason?"/>
+		<RUS text="Какова Ваша причина?"/>
+		<GER text="Was ist dein Grund?"/>
+	</Reason>
 	
 	<RegisterAsNew>
 		<EN-US text="Register as new user"/>
 		<RUS text="Регистровать как нового пользователя"/>
 		<GER text="Registriere dich als neuer Benutzer"/>
 	</RegisterAsNew>
+		
+	<Statement1>
+		<EN-US text="Enter first statement"/>
+		<RUS text="Введите первое заявление"/>
+		<GER text="Gib die erste Behauptung ein"/>
+	</Statement1>
+	
+	<Statement2>
+		<EN-US text="Enter second statement"/>
+		<RUS text="Введите второе заявление"/>
+		<GER text="Gib die zweite Behauptung ein"/>
+	</Statement2>
+	
+	<StatementMore>
+		<EN-US text="Enter more statements"/>
+		<RUS text="Введите большее количество заявлений"/>
+		<GER text="Gib weitere Teilbehauptungen ein"/>
+	</StatementMore>
+	
+	<Subclaim>
+		<EN-US text="Enter sub-claim"/>
+		<RUS text="Введите подзаявление"/>
+		<GER text="Gib eine Teilbehauptung ein"/>
+	</Subclaim>
+	
+	<Subclaim1>
+		<EN-US text="Enter first sub-claim"/>
+		<RUS text="Введите  первое подзаявление"/>
+		<GER text="Gib die erste Teilbehauptung ein"/>
+	</Subclaim1>
+	
+	<Subclaim2>
+		<EN-US text="Enter second sub-claim"/>
+		<RUS text="Введите второе подзаявление"/>
+		<GER text="Gib die zweite Teilbehauptung ein"/>
+	</Subclaim2>
 	
 	<UseArgScheme>
 		<EN-US text="Click here if you want to use a specific argument scheme"/>
@@ -282,7 +374,17 @@
 	</WhatIsMainClaim>
 	
 	<!--NAMES OF ARGUMENTS-->
+	<MP>
+		<EN-US text="Modus Ponens"/>
+		<RUS text="Modus Ponens"/>
+		<GER text="Modus Ponens"/>
+	</MP>
 	
+	<EQ>
+		<EN-US text="Equivalence"/>
+		<RUS text="эквивалентность"/>
+		<GER text="Äquivalenz"/>
+	</EQ>
 	<!--ARGUMENT DESCRIPTIONS-->
 	
 	<!--HELP TEXT-->
@@ -346,104 +448,10 @@
 	
 
 	<!--UNSORTED-->
-
 	
 	
-	<Subclaim1>
-		<EN-US text="Enter first sub-claim"/>
-		<RUS text="Введите  первое подзаявление"/>
-		<GER text="Gib die erste Teilbehauptung ein"/>
-	</Subclaim1>
 	
-	<Subclaim2>
-		<EN-US text="Enter second sub-claim"/>
-		<RUS text="Введите второе подзаявление"/>
-		<GER text="Gib die zweite Teilbehauptung ein"/>
-	</Subclaim2>
 	
-	<Subclaim>
-		<EN-US text="Enter sub-claim"/>
-		<RUS text="Введите подзаявление"/>
-		<GER text="Gib eine Teilbehauptung ein"/>
-	</Subclaim>
-	
-	<MoreStatements>
-		<EN-US text="Enter more statements"/>
-		<RUS text="Введите большее количество заявлений"/>
-		<GER text="Gib weitere Teilbehauptungen ein"/>
-	</MoreStatements>
-	
-	<Statement1>
-		<EN-US text="Enter first statement"/>
-		<RUS text="Введите первое заявление"/>
-		<GER text="Gib die erste Behauptung ein"/>
-	</Statement1>
-	
-	<Statement2>
-		<EN-US text="Enter second statement"/>
-		<RUS text="Введите второе заявление"/>
-		<GER text="Gib die zweite Behauptung ein"/>
-	</Statement2>
-	
-	<Claim>
-		<EN-US text="What is your claim? "/>
-		<RUS text="Каково Ваше заявление? "/>
-		<GER text="Was ist Deine Behauptung? "/>
-	</Claim>
-	
-	<ClaimReminder>
-		<EN-US text="Keep in mind that a claim can be descriptive (&quot;it is the case that ...&quot;) or normative (e.g., &quot;we should do x&quot;)"/>
-		<RUS text="Имейте в виду, что заявление может быть описательным (&quot;оно имеет место, что ...&quot;) или нормативным (например, &quot;мы должны сделать x&quot;),"/>
-		<GER text="Vergiss nicht, dass es deskriptive („es ist der Fall, dass ...“) und normative (z.B. „wir sollten x tun“) Behauptungen gibt."/>
-	</ClaimReminder>
-	
-	<EnterClaim>
-		<EN-US text="Enter your claim"/>
-		<RUS text="Введите свое заявление"/>
-		<GER text="Gib Deine Behauptung ein"/>
-	</EnterClaim>
-	
-	<Reason>
-		<EN-US text="What is your reason?"/>
-		<RUS text="Какова Ваша причина?"/>
-		<GER text="Was ist dein Grund?"/>
-	</Reason>
-	
-	<EnterReason>
-		<EN-US text="Enter your reason"/>
-		<RUS text="Введите свою причину"/>
-		<GER text="Gib deinen Grund ein"/>
-	</EnterReason>
-	
-	<FurtherReason>
-		<EN-US text="Enter a further reason"/>
-		<RUS text="Введите дальнейшую причину"/>
-		<GER text="Gib einen weiteren Grund ein"/>
-	</FurtherReason>
-	
-	<NewReason>
-		<EN-US text="Enter your new reason"/>
-		<RUS text="Введите свою новую причину"/>
-		<GER text="Gib deinen neuen Grund ein"/>
-	</NewReason>
-	
-	<AnotherReason>
-		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
-		<RUS text="другую причину для этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
-		<GER text="weiteren Grund für dieses Argument hinzufügen, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt"/>
-	</AnotherReason>
-	
-	<MP>
-		<EN-US text="Modus Ponens"/>
-		<RUS text="Modus Ponens"/>
-		<GER text="Modus Ponens"/>
-	</MP>
-	
-	<EQ>
-		<EN-US text="Equivalence"/>
-		<RUS text="эквивалентность"/>
-		<GER text="Äquivalenz"/>
-	</EQ>
 	
 	<IfThen>
 		<EN-US text="if-then"/>
@@ -543,11 +551,7 @@
 		<GER text="Deshalb"/>
 	</Therefore>
 	
-	<ArgScheme>
-		<EN-US text="ArgScheme"/>
-		<RUS text="ArgScheme"/>
-		<GER text="ArgSchema"/>
-	</ArgScheme>
+	
 	
 	<Supports>
 		<EN-US text="supports"/>
