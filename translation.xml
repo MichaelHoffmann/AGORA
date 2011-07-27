@@ -2,7 +2,7 @@
 	<!--INDEX-->
 	<!--There are comments throughout this document which describe the various kinds of text which has been translated.
 	Those kinds are as follows:
-		--BUTTONS AND SINGLE WORDS
+		--BUTTONS, LABELS, AND SINGLE WORDS
 		--SHORT DESCRIPTIONS
 		--NAMES OF ARGUMENTS
 		--ARGUMENT DESCRIPTIONS
@@ -13,12 +13,36 @@
 	-->
 	
 	
-	<!--BUTTONS AND SINGLE WORDS-->
+	<!--BUTTONS, LABELS, AND SINGLE WORDS-->
+	<Affiliation>
+		<EN-US text="Affiliation/Location (optional)"/>
+		<RUS text="Присоединение/Местоположение (опционально)"/>
+		<GER text="Institution/Ort (optional)"/>
+	</Affiliation>
+	
+	<Add>
+		<EN-US text="Add "/>
+		<RUS text="добавьте "/>
+		<GER text="Füge hinzu "/>
+	</Add>
+	
+	<AU>
+		<EN-US text="AU"/>
+		<RUS text="AU"/>
+		<GER text="AU"/>
+	</AU>
+	
 	<Back>
 		<EN-US text="Back"/>
 		<RUS text="Назад"/>
 		<GER text="Zurück"/>
 	</Back>
+	
+	<CAPTCHA>
+		<EN-US text="Enter CAPTCHA"/>
+		<RUS text="Введите  CAPTCHA"/>
+		<GER text="Gib die folgenden Zeichen ein"/>
+	</CAPTCHA>
 	
 	<Email>
 		<EN-US text="E-mail Address"/>
@@ -44,6 +68,12 @@
 		<GER text="Login"/>
 	</Login>	
 	
+	<Particular>
+		<EN-US text="Particular Statement"/>
+		<RUS text="особое утверждение"/>
+		<GER text="Einzelaussage"/>
+	</Particular>
+	
 	<Password>
 		<EN-US text="Password"/>
 		<RUS text="Пароль"/>
@@ -62,6 +92,12 @@
 		<GER text="Sende"/>
 	</Submit>
 	
+	<Universal>
+		<EN-US text="Universal Statement"/>
+		<RUS text="универсальное утверждение"/>
+		<GER text="Universelle Aussage"/>
+	</Universal>
+		
 	<URL>
 		<EN-US text="URL (Optional)"/>
 		<RUS text="URL(опционально)"/>
@@ -76,12 +112,18 @@
 	
 	
 	<!--SHORT DESCRIPTIONS-->
-		
+	
 	<AGORAPass>
 		<EN-US text="AGORA password"/>
 		<RUS text="Пароль АГОРЫ"/>
 		<GER text="AGORA Passwort"/>
 	</AGORAPass>
+	
+	<ChangeInfo>
+		<EN-US text="Change Personal Information"/>
+		<RUS text="Измените Личную Информацию"/>
+		<GER text="Ändere deine persönlichen Daten"/>
+	</ChangeInfo>
 	
 	<Construct>
 		<EN-US text="construct argument"/>
@@ -89,6 +131,12 @@
 		<GER text="konstruiere das Argument"/>
 	</Construct>
 			
+	<DivideToSubclaims>
+		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case"/>
+		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая"/>
+		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können"/>
+	</DivideToSubclaims>
+	
 	<ForgotPass>
 		<EN-US text="Forgot your password?"/>
 		<RUS text="Забыл Ваш пароль?"/>
@@ -100,6 +148,18 @@
 		<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо."/>
 		<GER text="AGORA wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden."/>
 	</GenPass>
+
+	<IncompleteInfo>
+		<EN-US text="Incomplete. Please provide all necessary information"/>
+		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
+		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle notwendigen Felder aus."/>
+	</IncompleteInfo>
+	
+	<IncompleteProjInfo>
+		<EN-US text="Incomplete. Please provide all necessary information."/>
+		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
+		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle Felder aus."/>
+	</IncompleteProjInfo>
 	
 	<MyMaps>
 		<EN-US text="My maps and those in which I participated"/>
@@ -125,11 +185,41 @@
 		<GER text="Erwünschter Benutzername"/>
 	</NewUsername>
 	
+	<PasswordProtected>
+		<EN-US text="This project is password protected. Do you want to sign up for this project?"/>
+		<RUS text="Этот проект  защищен паролем. Вы хотите подписаться на этот проект?"/>
+		<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
+	</PasswordProtected>
+	
 	<PassRepeat>
 		<EN-US text="Repeat your password"/>
 		<RUS text="Повторите свой пароль"/>
 		<GER text="Wiederhole dein Passwort"/>
 	</PassRepeat>
+		
+	<PasteArgument>
+		<EN-US text="Paste an argumentation or parts of it from your clipboard"/>
+		<RUS text="Присоедините аргументацию или ее части из Вашего клипборда"/>
+		<GER text="Kopiere eine Argumentation oder Teile von ihr hier hin"/>
+	</PasteArgument>
+	
+	<ProjName>
+		<EN-US text="Desired Project name"/>
+		<RUS text="Желаемое Название проекта"/>
+		<GER text="Erwünschter Projekt-Name"/>
+	</ProjName>
+	
+	<ProjNameTaken>
+		<EN-US text="This Project name is already taken! Try another Project name."/>
+		<RUS text="Это Имя проекта уже взято! Попробуйте другое Имя проекта"/>
+		<GER text="Dieser Projekt-Name ist bereits vergeben! Versuche einen anderen."/>
+	</ProjNameTaken>
+	
+	<ProjPass>
+		<EN-US text="Project password "/>
+		<RUS text="Пароль  Проекта"/>
+		<GER text="Projekt-Passwort"/>
+	</ProjPass>
 	
 	<RegisterAsNew>
 		<EN-US text="Register as new user"/>
@@ -137,17 +227,41 @@
 		<GER text="Registriere dich als neuer Benutzer"/>
 	</RegisterAsNew>
 	
+	<UseArgScheme>
+		<EN-US text="Click here if you want to use a specific argument scheme"/>
+		<RUS text="Щелкните здесь, если Вы хотите использовать определенную схему аргумента"/>
+		<GER text="Klicke hier wenn Du ein bestimmtes Argument-Schema verwenden willst"/>
+	</UseArgScheme>
+	
+	<UserList>
+		<EN-US text="Select users from the AGORA user list"/>
+		<RUS text="Выберите пользователей из пользовательского списка АГОРЫ"/>
+		<GER text="Wähle Benutzer von der AGORA Benutzer-Liste aus"/>
+	</UserList>
+	
 	<UsernameTaken>
 		<EN-US text="This username is already taken! Try another username."/>
 		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
 		<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
 	</UsernameTaken>
 	
+	<WhatIsMainClaim>
+		<EN-US text="What is the main claim of your argument?"/>
+		<RUS text="Каково главное заявление Вашего аргумента?"/>
+		<GER text="Was ist die zentrale Behauptung deines Argumentes?"/>
+	</WhatIsMainClaim>
+	
 	<!--NAMES OF ARGUMENTS-->
 	
 	<!--ARGUMENT DESCRIPTIONS-->
 	
 	<!--HELP TEXT-->
+	<Enabler>
+		<EN-US text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."/>
+		<RUS text=" Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив."/>
+		<GER text="Der Satz in dieser Textbox wird „Garant“ gennant. Der „Garant“ ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der „Garant“ ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist."/>
+	</Enabler>
+
 	<MustRegister>
 		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible"/>
 		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой"/>
@@ -185,7 +299,11 @@
 		Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
 	</Intro>
 	
-
+	<ParticularUniversalClarification>
+		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement “All birds can fly” can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments."/>
+		<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
+		<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
+	</ParticularUniversalClarification>
 	
 
 
@@ -200,127 +318,8 @@
 	<!--UNSORTED-->
 
 	
-	<Affiliation>
-		<EN-US text="Affiliation/Location (optional)"/>
-		<RUS text="Присоединение/Местоположение (опционально)"/>
-		<GER text="Institution/Ort (optional)"/>
-	</Affiliation>
-	
-	<CAPTCHA>
-		<EN-US text="Enter CAPTCHA"/>
-		<RUS text="Введите  CAPTCHA"/>
-		<GER text="Gib die folgenden Zeichen ein"/>
-	</CAPTCHA>
 	
 
-	<ChangeInfo>
-		<EN-US text="Change Personal Information"/>
-		<RUS text="Измените Личную Информацию"/>
-		<GER text="Ändere deine persönlichen Daten"/>
-	</ChangeInfo>
-	
-	<IncompleteInfo>
-		<EN-US text="Incomplete. Please provide all necessary information"/>
-		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
-		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle notwendigen Felder aus."/>
-	</IncompleteInfo>
-	
-	<PasswordProtected>
-		<EN-US text="This project is password protected. Do you want to sign up for this project?"/>
-		<RUS text="Этот проект  защищен паролем. Вы хотите подписаться на этот проект?"/>
-		<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
-	</PasswordProtected>
-	
-	<ProjName>
-		<EN-US text="Desired Project name"/>
-		<RUS text="Желаемое Название проекта"/>
-		<GER text="Erwünschter Projekt-Name"/>
-	</ProjName>
-	
-	<ProjNameTaken>
-		<EN-US text="This Project name is already taken! Try another Project name."/>
-		<RUS text="Это Имя проекта уже взято! Попробуйте другое Имя проекта"/>
-		<GER text="Dieser Projekt-Name ist bereits vergeben! Versuche einen anderen."/>
-	</ProjNameTaken>
-	
-	<ProjPass>
-		<EN-US text="Project password "/>
-		<RUS text="Пароль  Проекта"/>
-		<GER text="Projekt-Passwort"/>
-	</ProjPass>
-	
-	<UserList>
-		<EN-US text="Select users from the AGORA user list"/>
-		<RUS text="Выберите пользователей из пользовательского списка АГОРЫ"/>
-		<GER text="Wähle Benutzer von der AGORA Benutzer-Liste aus"/>
-	</UserList>
-	
-	<!-- English is the same, other languages different-->
-	<IncompleteProjInfo>
-		<EN-US text="Incomplete. Please provide all necessary information."/>
-		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
-		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle Felder aus."/>
-	</IncompleteProjInfo>
-	
-	<WhatIsMainClaim>
-		<EN-US text="What is the main claim of your argument?"/>
-		<RUS text="Каково главное заявление Вашего аргумента?"/>
-		<GER text="Was ist die zentrale Behauptung deines Argumentes?"/>
-	</WhatIsMainClaim>
-	
-	<UseArgScheme>
-		<EN-US text="Click here if you want to use a specific argument scheme"/>
-		<RUS text="Щелкните здесь, если Вы хотите использовать определенную схему аргумента"/>
-		<GER text="Klicke hier wenn Du ein bestimmtes Argument-Schema verwenden willst"/>
-	</UseArgScheme>
-	
-	<DivideToSubclaims>
-		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case"/>
-		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая"/>
-		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können"/>
-	</DivideToSubclaims>
-	
-	<PasteArgument>
-		<EN-US text="Paste an argumentation or parts of it from your clipboard"/>
-		<RUS text="Присоедините аргументацию или ее части из Вашего клипборда"/>
-		<GER text="Kopiere eine Argumentation oder Teile von ihr hier hin"/>
-	</PasteArgument>
-	
-	<Particular>
-		<EN-US text="Particular Statement"/>
-		<RUS text="особое утверждение"/>
-		<GER text="Einzelaussage"/>
-	</Particular>
-	
-	<Universal>
-		<EN-US text="Universal Statement"/>
-		<RUS text="универсальное утверждение"/>
-		<GER text="Universelle Aussage"/>
-	</Universal>
-	
-	<ParticularUniversalClarification>
-		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement “All birds can fly” can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments."/>
-		<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
-		<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
-	</ParticularUniversalClarification>
-	
-	<Enabler>
-		<EN-US text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."/>
-		<RUS text=" Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив."/>
-		<GER text="Der Satz in dieser Textbox wird „Garant“ gennant. Der „Garant“ ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der „Garant“ ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist."/>
-	</Enabler>
-	
-	<AU>
-		<EN-US text="AU"/>
-		<RUS text="AU"/>
-		<GER text="AU"/>
-	</AU>
-	
-	<Add>
-		<EN-US text="Add "/>
-		<RUS text="добавьте "/>
-		<GER text="Füge hinzu "/>
-	</Add>
 	
 	<use>
 		<EN-US text="use as "/>
