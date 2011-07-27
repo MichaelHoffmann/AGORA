@@ -665,13 +665,19 @@
 		<GER text="mit affirmiertem Grund (Gründen) und Folge"/>
 	</EQaffirmed>
 	
+	
+	<SelectLanguageForm>
+		<EN-US text="Select the form you need from the list on your right to complete your argument"/>
+		<RUS text="Select the form you need from the list on your right to complete your argument"/>
+		<GER text="Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen."/>
+	</SelectLanguageForm>
+	
 	<EQinferring>
 		<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer\n
 		--p from q\n
 		--q from p\n
 		--not-p from not-q, or\n
-		--not-q from not-p\n
-		Select the form you need from the list on your right to complete your argument"/>
+		--not-q from not-p\n"/>
 		<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести\n
 		- p от q\n
 		- q от p\n
@@ -681,27 +687,38 @@
 		-- p von q,\n
 		-- q von p,\n
 		--nicht-p von nicht-q, oder\n
-		-- nicht-q von nicht-p erschließen\n
-		Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen."/>
+		-- nicht-q von nicht-p erschließen\n"/>
 	</EQinferring>
 	
 	<MPHelp>
 		<EN-US text="Modus ponens:\n
 					p --> q\n
 					p\n
-					Therefore, q\n
-					Select a language form from the list on the right to complete your argument."/>
-		<RUS text="Modus ponens:\n
+					Therefore, q\n"/>
+		<RUS text="Modus ponens (untranslated):\n
 					p --> q\n
 					p\n
-					Therefore, q\n
-					Select a language form from the list on the right to complete your argument. (untranslated)"/>
+					Therefore, q\n"/> <!--TODO: This should be translated-->
 		<GER text="Modus ponens:\n
 					p --> q\n
 					p\n
-					Deshalb, q\n
-					Wähle eine bestimmte sprachliche Form rechts von der Liste aus um dein Argument zu vervollständigen."/>
+					Deshalb, q\n"/>
 	</MPHelp>
+	
+	<MTHelp>
+		<EN-US text="Modus tollens:\n
+					p --> q\n
+					not q\n
+					Therefore, not p"/>
+		<RUS text="Modus tollens (untranslated):\n
+					p --> q\n
+					not q\n
+					Therefore, not p"/><!--TODO: This should be translated-->
+		<GER text="Modus tollens:\n
+					p --> q\n
+					not q\n
+					Deshalb, not p"/>
+	</MTHelp>
 	
 	<DisSylHelp>
 		<EN-US text="To construct a disjunctive syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;): &quot;either p or q.&quot; In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
