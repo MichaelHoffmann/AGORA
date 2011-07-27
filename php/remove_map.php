@@ -48,6 +48,11 @@ List of variables for insertion:
 			return false;
 		}
 		$row = mysql_fetch_assoc($resultID);
+		if(!$row['map_id']){
+			$fail=$output->addChild("error");
+			$fail->addAttribute("text", "Map $mapID does not exist!");
+			return false;
+		}
 		$UID = $row['user_id'];
 		if($UID!=$userID){
 			$fail=$output->addChild("error");
