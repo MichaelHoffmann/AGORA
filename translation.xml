@@ -829,8 +829,8 @@
 	
 	
 	<CannotChangeScheme>
-		<EN-US text="Sorry, this argument scheme cannot be changed [cannot be replaced by another scheme]"/>
-		<RUS text="Жаль, эта схема аргумента не может быть изменена [не может быть заменен другой схемой]"/>
+		<EN-US text="Sorry, this argument scheme cannot be changed"/>
+		<RUS text="Жаль, эта схема аргумента не может быть изменена"/>
 		<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
 	</CannotChangeScheme>
 	
