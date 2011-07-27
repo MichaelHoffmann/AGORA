@@ -240,8 +240,8 @@
 	</DivideToSubclaims>
 	
 	<PasteArgument>
-		<EN-US text="Paste an argumentation or parts of it from your clipboard [to this location]"/>
-		<RUS text="Присоедините аргументацию или ее части из Вашего клипборда [к этому местоположению]"/>
+		<EN-US text="Paste an argumentation or parts of it from your clipboard"/>
+		<RUS text="Присоедините аргументацию или ее части из Вашего клипборда"/>
 		<GER text="Kopiere eine Argumentation oder Teile von ihr hier hin"/>
 	</PasteArgument>
 	
@@ -270,8 +270,8 @@
 	</Enabler>
 	
 	<AU>
-		<EN-US text="AU [short for “author”]"/>
-		<RUS text="AU [сокращение для &quot;автора&quot;]"/>
+		<EN-US text="AU"/>
+		<RUS text="AU"/>
 		<GER text="AU"/>
 	</AU>
 	
@@ -542,8 +542,8 @@
 	</Questions>
 	
 	<SeeObjection>
-		<EN-US text="See the following objection against this claim in another argument map [opens another map in which this objection can be justified]"/>
-		<RUS text="См.  следующее возражение против этого заявления в другой карте аргумента [открывает другую карту, в которой это возражение может быть оправдано]"/>
+		<EN-US text="See the following objection against this claim in another argument map"/>
+		<RUS text="См.  следующее возражение против этого заявления в другой карте аргумента"/>
 		<GER text="Siehe den folgenden Einwand, der in einem anderen Argument verteidigt wird"/>
 	</SeeObjection>
 	
@@ -554,8 +554,8 @@
 	</Negates>
 	
 	<FriendlyAmend>
-		<EN-US text="friendly amendment [a suggestion by a supporter to improve the formulation of a claim]"/>
-		<RUS text="дружественная поправка [предложение сторонником, чтобы улучшить формулировку заявления]"/>
+		<EN-US text="friendly amendment"/>
+		<RUS text="дружественная поправка"/>
 		<GER text="Verbesserungsvorschlag"/>
 	</FriendlyAmend>
 	
@@ -925,8 +925,8 @@
 	</AddQ>
 	
 	<AddUnspecConn>
-		<EN-US text="an unspecified connection to another text box [user needs to specify the kind of connection]"/>
-		<RUS text="неуказанная связь с другим текстовым окном [пользователь должна определить вид связи]"/>
+		<EN-US text="an unspecified connection to another text box"/>
+		<RUS text="неуказанная связь с другим текстовым окном"/>
 		<GER text="eine nicht-vorgegebene Art der Verbindung"/>
 	</AddUnspecConn>
 	
@@ -967,15 +967,15 @@
 	</Objection>
 	
 	<CounterEx>
-		<EN-US text="[Enter your counterexample in form of a statement]"/>
-		<RUS text="[Введите Ваш контрпример в форме утверждения]"/>
-		<GER text="[Gib Deinen Einwand in Form einer Aussage ein]"/>
+		<EN-US text="Enter your counterexample in form of a statement"/>
+		<RUS text="Введите Ваш контрпример в форме утверждения"/>
+		<GER text="Gib Deinen Einwand in Form einer Aussage ein"/>
 	</CounterEx>
 	
 	<Question>
-		<EN-US text="[Enter a statement that questions this statement]"/>
-		<RUS text="[Введите утверждение, которое оспаривает это утверждение]"/>
-		<GER text="[Gib eine Aussage ein, welche diese Aussage in Frage stellt]"/>
+		<EN-US text="Enter a statement that questions this statement"/>
+		<RUS text="Введите утверждение, которое оспаривает это утверждение"/>
+		<GER text="Gib eine Aussage ein, welche diese Aussage in Frage stellt"/>
 	</Question>
 	
 	<FriendlyAmend>
@@ -1009,14 +1009,14 @@
 	</ArgMapOn>
 	
 	<SeeAlso>
-		<EN-US text="See also ... [continues with: .. the argument on [title]]"/>
-		<RUS text="См. также... [продолжается с:.. аргумент на [названии]]"/>
+		<EN-US text="See also ... "/>
+		<RUS text="См. также... "/>
 		<GER text="Siehe auch ..."/>
 	</SeeAlso>
 	
 	<AddURL>
-		<EN-US text="... add URL [webaddress]"/>
-		<RUS text="... добавьте URL [webaddress]"/>
+		<EN-US text="... add URL"/>
+		<RUS text="... добавьте URL"/>
 		<GER text="... füge URL hinzu"/>
 	</AddURL>
 	
@@ -1045,14 +1045,14 @@
 	</Upload>
 	
 	<Resource>
-		<EN-US text="Resource file: [Enter title of your uploaded resources]"/>
-		<RUS text="Файл ресурса: [Введите название своих загруженных ресурсов]"/>
-		<GER text="Datei: [Gib einen Titel für die hochgeladenen Materialien ein]"/>
+		<EN-US text="Resource file:"/>
+		<RUS text="Файл ресурса:"/>
+		<GER text="Datei:"/>
 	</Resource>
 	
 	<Paste>
-		<EN-US text="How do you want to connect this pasted element? As ... [it follows the list of items listed under &quot;add ...&quot; above]"/>
-		<RUS text="Как Вы хотите присоединить этот вставленный элемент? Как... [это следует за списком пунктов перечисленных под &quot;добавить...&quot; выше]"/>
+		<EN-US text="How do you want to connect this pasted element? As ... "/>
+		<RUS text="Как Вы хотите присоединить этот вставленный элемент? Как... "/>
 		<GER text="Wie willst Du das zu kopierende Element mit dieser Textbox verknüpfen? Als ..."/>
 	</Paste>
 	
@@ -1063,8 +1063,8 @@
 	</AddAnotherReason>
 	
 	<AddIntermediate>
-		<EN-US text="an intermediate reason to the reason on the right [e.g.: instead of &quot;p, therefore q&quot;: &quot;p, therefore s, therefore q&quot;]"/>
-		<RUS text="промежуточная причина для причины справа [например: вместо &quot;p, поэтому q&quot;: &quot;p, поэтому s, поэтому q&quot;]"/>
+		<EN-US text="an intermediate reason to the reason on the right"/>
+		<RUS text="промежуточная причина для причины справа"/>
 		<GER text="einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite"/>
 	</AddIntermediate>
 	
@@ -1135,8 +1135,8 @@
 	</FirstAlt>
 	
 	<SecondAlt>
-		<EN-US text="-- the second alternative [both alternatives refer to the alternative in a constructive dilemma]"/>
-		<RUS text="- вторая альтернатива [обе альтернативы обращаются к альтернативе в конструктивной дилемме]"/>
+		<EN-US text="-- the second alternative"/>
+		<RUS text="- вторая альтернатива"/>
 		<GER text="--der zweiten Alternative"/>
 	</SecondAlt>
 	
@@ -1159,8 +1159,8 @@
 	</AttiNormInst>
 	
 	<Qualification>
-		<EN-US text="... qualification [such as &quot;probably,&quot; &quot;generally&quot; in an argument]"/>
-		<RUS text=".... условие  [такое как, &quot;вероятно,&quot; &quot;вообще&quot; в аргументе]"/>
+		<EN-US text="... qualification"/>
+		<RUS text=".... условие"/>
 		<GER text="... Qualifizierung"/>
 	</Qualification>
 	
