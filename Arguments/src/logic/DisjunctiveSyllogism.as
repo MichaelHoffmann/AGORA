@@ -14,15 +14,7 @@ package logic
 			myname = DIS_SYLL;
 			_dbType = "DisjSyl";
 		}
-<<<<<<< HEAD
-		
-		override public function setIsExp():void{
-			_isLanguageExp = true;
-		}
-		
-=======
 /*		
->>>>>>> Architect
 		override public function get dbType():String
 		{
 			return _dbType;

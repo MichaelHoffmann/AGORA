@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-<<<<<<< HEAD
-		  xmlns:mx="library://ns.adobe.com/flex/mx" 
-		  layout="absolute" 
-		  width="400" height="300" 
-		  preinitialize="setProperties();" 
-		  creationComplete="init();"
-		  keyDown="panel_keyDownHandler(event)">
-=======
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  layout="absolute" width="400" height="300" creationComplete="init();">
->>>>>>> Architect
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:StringValidator id="unameValidator"
@@ -78,26 +69,6 @@
 			
 			public function submit_form():void
 			{
-<<<<<<< HEAD
-				var array:Array = new Array();
-				array.push(unameValidator);
-				array.push(passwordValidator);
-				var errors:Array = Validator.validateAll(array);
-				if(errors.length == 0){
-					UserData.validateUser(username.text,pass_hash.text, this);
-				}
-				else{
-					Alert.show("All fields are required.");
-				}
-				
-			}
-
-			protected function panel_keyDownHandler(event:KeyboardEvent):void
-			{
-				if(event.keyCode == Keyboard.ENTER){
-					submit_form();
-				}
-=======
 				var userDataVO:UserDataVO = new UserDataVO;
 				userDataVO.userName = username.text;
 				userDataVO.password = pass_hash.text;
@@ -111,7 +82,6 @@
 			{
 				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showRegistrationBox();
->>>>>>> Architect
 			}
 
 		]]>

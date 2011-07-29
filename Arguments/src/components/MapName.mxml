@@ -11,13 +11,8 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-<<<<<<< HEAD
-			import mx.controls.Alert;
-=======
 			import Controller.AGORAController;
 			import Controller.ArgumentController;
-			
->>>>>>> Architect
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.managers.FocusManager;

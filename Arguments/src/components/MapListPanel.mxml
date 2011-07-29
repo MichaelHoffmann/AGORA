@@ -55,11 +55,7 @@
 						var mapMetaData:MapMetaData = new MapMetaData;
 						mapMetaData.mapID = int(map.attribute("ID")); 
 						mapMetaData.mapName = map.attribute("title"); 
-<<<<<<< HEAD
-						mapMetaDataVector.push(mapMetaData);
-=======
 						mapMetaDataVector.push(mapMetaData);						
->>>>>>> Architect
 					}
 					mapMetaDataVector.sort(MapMetaData.isGreater);
 					for each(var mapMetaData:MapMetaData in mapMetaDataVector){

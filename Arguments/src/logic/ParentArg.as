@@ -140,14 +140,9 @@ package logic
 				reasons[i].input1.forwardList.push(inference.input[i+1]);
 				inference.input[i+1].forwardList.push(inference.inputs[1]);
 			}
-			inference.implies = true;
+			//inference.implies = true;
 		}
-<<<<<<< HEAD
-		public function correctUsage():String { return "";}
-=======
 		//inference.implies = true;
-	}
-	public function correctUsage():String { return "";}
->>>>>>> Architect
+		public function correctUsage():String { return "";}
 	}
 }
