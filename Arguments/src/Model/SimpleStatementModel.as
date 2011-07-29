@@ -9,15 +9,28 @@ package Model
 		private var _text:String;
 		[Bindable]
 		private var _forwardList:Vector.<SimpleStatementModel>;
+		
 		private var _ID:int;
+		
+		private var _hasOwn:Boolean;
 		
 		public function SimpleStatementModel(target:IEventDispatcher=null)
 		{
 			super(target);
 		}
 		
-		//------------------------Getters/Setters-------------------------/n/
+		//------------------------Getters/Setters-------------------------//
 		
+		public function get hasOwn():Boolean
+		{
+			return _hasOwn;
+		}
+
+		public function set hasOwn(value:Boolean):void
+		{
+			_hasOwn = value;
+		}
+
 		public function get text():String{
 			return _text;
 		}

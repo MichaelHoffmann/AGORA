@@ -36,6 +36,32 @@ package logic
 		public static var EXP_OR:String = "or";
 		public var _dbType:String;
 		
+		public static const MPIfThen:String = "MPifthen";
+		public static const MPimplies:String = "MPimplies";
+		public static const MPwhenever:String = "MPwhenever";
+		public static const MPonlyif:String = "MPonlyif";
+		public static const MPprovidedthat:String = "MPprovidedthat";
+		public static const MPsufficient:String = "MPsufficient";
+		public static const MPnecessary:String = "MPnecessary";
+		public static const MTifthen:String = "MTifthen";
+		public static const MTimplies:String = "MTimplies";
+		public static const MTwhenever:String = "MTwhenever";
+		public static const MTonlyif:String = "MTonlyif";
+		public static const MTonlyiffor:String = "MTonlyiffor";
+		public static const MTprovidedthat:String = "MTprovidedthat";
+		public static const MTsufficient:String = "MTsufficient";
+		public static const MTnecessary:String = "MTnecessary";
+		public static const DisjSyl:String = "DisjSyl";
+		public static const NotAllSyll:String = "NotAllSyl";
+		public static const EQiff:String = "EQiff";
+		public static const EQnecsuf:String = "EQnecsuf";
+		public static const EQ:String = "EQ";
+		public static const CSifthen:String = "CSifthen";
+		public static const CSimplies:String = "CSimplies";
+		public static const CDaltclaim:String = "CDaltclaim";
+		public static const CDpropclaim:String = "CDpropclaim";
+		public static const Unset:String = "Unset";
+		
 		public function setIsExp():void{
 			if(inference.myschemeSel.selectedType != null){
 				for each(var langType:String in _expLangTypes){
@@ -45,7 +71,6 @@ package logic
 				}
 			}
 		}
-		
 		
 		public function get dbType():String
 		{

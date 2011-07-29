@@ -8,6 +8,8 @@ package logic
 	
 	public class ConditionalSyllogism extends ParentArg
 	{		
+		
+		
 		public var built:Boolean;	
 		
 		public function ConditionalSyllogism()

@@ -4,6 +4,8 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
+	import mx.controls.Alert;
+	
 	[Bindable]
 	public class StatementModel extends EventDispatcher
 	{
@@ -18,13 +20,12 @@ package Model
 		private var _statements:Vector.<SimpleStatementModel>;
 		private var _negated:Boolean;
 		private var _connectingString:String;
-		private var _complexStatement:String;
+		private var _complexStatement:Boolean;
 		private var _supportingArguments:Vector.<InferenceModel>;
 		private var _inference:InferenceModel;
 		private var _firstClaim:Boolean;
 		private var _statementType:String;
 		private var _ID:int;
-		private var _nodeTextID:int;
 		private var _nodeTextIDs:Vector.<int>;
 		private var _xgrid:int;
 		private var _ygrid:int;
@@ -59,16 +60,6 @@ package Model
 		public function set xgrid(value:int):void
 		{
 			_xgrid = value;
-		}
-
-		public function get nodeTextID():int
-		{
-			return _nodeTextID;
-		}
-
-		public function set nodeTextID(value:int):void
-		{
-			_nodeTextID = value;
 		}
 
 		public function get nodeTextIDs():Vector.<int>
@@ -131,12 +122,12 @@ package Model
 			_supportingArguments = value;
 		}
 
-		public function get complexStatement():String
+		public function get complexStatement():Boolean
 		{
 			return _complexStatement;
 		}
 
-		public function set complexStatement(value:String):void
+		public function set complexStatement(value:Boolean):void
 		{
 			_complexStatement = value;
 		}
@@ -186,6 +177,20 @@ package Model
 			//trace(xml);
 			return new StatementModel;	
 			
+		}
+		
+		
+		//---------------------- Forming StatmentModels ---------------//
+		public static function createStatementFromObject(obj:Object):StatementModel{
+			var statementModel:StatementModel = new StatementModel;
+			statementModel.ID = obj.ID;
+			//statementModel.
+			return statementModel;
+		}
+		
+		public static function createStatmentFromXML(xml:XML):StatementModel{
+			var statementModel:StatementModel = new StatementModel;
+			return statementModel;
 		}
 		
 		public function getXML():XML{

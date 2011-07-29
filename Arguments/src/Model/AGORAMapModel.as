@@ -123,10 +123,8 @@ package Model
 		public function addFirstClaim():void{
 			var mapXML:XML=<map id={ID}>
 								<textbox text=""/>
-								<textbox text=""/>
-								<textbox text=""/>
 								<node TID="1" Type="Universal" typed="0" is_positive="1"  x="2" y="3">
-									<nodetext/><nodetext /><nodetext />
+									<nodetext/>
 								</node>
 						   </map>;	
 			
@@ -142,6 +140,7 @@ package Model
 				
 				//---------node----------//
 				statementModel.ID = map.node.ID;
+				statementModel.complexStatement = false;
 				
 				
 				//-------textboxes & nodetext----------//
@@ -149,15 +148,7 @@ package Model
 				
 				
 				if(map.textbox is ArrayCollection){
-					//read first textbox as statement
-					simpleStatement = new SimpleStatementModel;
-					
-					simpleStatement.ID = map.textbox[0].ID;
-					simpleStatement.text = map.textbox[0].text;
-					statementModel.statement = simpleStatement;
-					statementModel.nodeTextID = map.node.nodetext[0].ID;
-					
-					//read subsequent textboxes
+					trace("first claim as complex statement...");//shouldn't occur because there is no use case that allows this.
 					for(var i:int=1; i < ArrayCollection(map.textbox).length; i++){
 						simpleStatement = new SimpleStatementModel;
 						simpleStatement.ID = map.textbox[i].ID;
@@ -170,11 +161,9 @@ package Model
 					simpleStatement = new SimpleStatementModel;
 					simpleStatement.ID = map.textbox.ID;
 					simpleStatement.text = map.textbox.text;
-					statementModel.statement = simpleStatement;
-					statementModel.nodeTextID = map.node.nodetext.ID;
+					statementModel.statements.push(simpleStatement);
+					statementModel.nodeTextIDs.push(map.node.nodetext.ID);
 				}
-				
-				
 				
 			}catch(error:Error){
 				trace("OnAddFirstClaimResult: Error occurred in reading XML");
@@ -196,6 +185,9 @@ package Model
 		protected function onLoadMapModelResult(event:ResultEvent):void{
 			trace('map loaded');
 			var map:Object = event.result.map;
+			
+			try{
+			//update timestamp
 			timestamp = map.timestamp;
 			
 			//Form a map of textboxes
@@ -215,10 +207,42 @@ package Model
 			}
 			
 			//Form a map of nodes
-			
+			var nodeHash:Object = new Object;
+			if(map.hasOwnProperty("node")){
+				var statementModel:StatementModel = null;
+				if(map.node is ArrayCollection){
+					for each(obj in map.node){
+						statementModel = StatementModel.createStatementFromObject(obj);
+						nodeHash[obj.ID] = statementModel;
+					}	
+				}
+				else{
+					statementModel = StatementModel.createStatementFromObject(map.node);
+					nodeHash[map.node.ID] = statementModel;
+				}
+			}
 			
 			//Form a map of connections
+			var connectionsHash:Object = new Object;
+			if(map.hasOwnProperty("connection")){
+				if(map.connection is ArrayCollection){
+					for each(obj in map.connection){
+						
+					}
+				}
+				else{
+					
+				}
+			}
 			
+			//Establish Links for the connections created
+			
+			
+			
+			//Set Text
+			}catch(error:Error){
+				trace("Error in reading update to Map");
+			}
 			
 			
 		}

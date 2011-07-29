@@ -24,8 +24,9 @@ package ValueObjects
 			insertURL = "http://agora.gatech.edu/dev/insert.php";
 			loadMapURL = "http://agora.gatech.edu/dev/load_map.php";
 			
-			gridWidth = 25;
 			
+			
+			gridWidth = 25;
 			reference = this;
 		}
 		
