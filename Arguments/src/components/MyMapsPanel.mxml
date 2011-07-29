@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="components.MyMapsSkin" initialize="selectString = MARK_ALL">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="Skins.MyMapsSkin" initialize="initializeMyMaps(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -13,9 +13,14 @@
 		[SkinState("loggedIn")]
 	</fx:Metadata>
 	
+	
 	<fx:Script>
 		<![CDATA[
-			import classes.MapMetaData;
+			import Controller.AGORAController;
+			
+			import Model.AGORAModel;
+			
+			import Model.MapMetaData;
 			import classes.UserData;
 			
 			import flash.net.URLLoader;
@@ -58,13 +63,18 @@
 			[Bindable]
 			public var selectString:String;
 			
+			
+			protected function initializeMyMaps(event:Event):void{
+				//addEventListener(
+				selectString = MARK_ALL;
+			}
+			
 			public function set skinState(value:Boolean):void{
 				invalidateSkinState();
 			}
 			
 			override protected function getCurrentSkinState():String{
-				if(UserData.isValid()){
-					
+				if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 					return "loggedIn";
 				}
 				else{
@@ -77,12 +87,14 @@
 				trace(" In MyMapsPanel: commitProperties" + skin.currentState);
 				if( skin.currentState == "loggedIn")
 				{ 
-					titleDisplay.text = UserData.userNameStr + "'s" + " maps";
+					titleDisplay.text = AGORAModel.getInstance().userSessionModel.firstName+ "'s" + " maps";
 					if(mapsGroup.numElements > 0){
 						mapsGroup.removeAllElements();
 					}	
+					
 					var maps:XMLList = mapListXML.map;
 					var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+					
 					for each(var map:XML in maps)
 					{
 						try{
@@ -128,62 +140,14 @@
 						myMapName.thisMap.selected = false;
 					}	
 				}
-				
 				selectString = (selectString == MARK_ALL)? UNMARK_ALL : MARK_ALL;
-				
 			}
 			
 			public function deleteMaps(event:MouseEvent):void{
 				selectString = MARK_ALL;
-				CursorManager.setBusyCursor();
-				FlexGlobals.topLevelApplication
-				var mapsMarked:Vector.<MyMapName> = new Vector.<MyMapName>(0,false);
-				for(var i:int=0; i < mapsGroup.numElements; i++)
-				{
-					var myMapName:MyMapName = MyMapName(mapsGroup.getElementAt(i));
-					if(myMapName.thisMap.selected){
-						mapsMarked.push(myMapName);
-					}
-				}
-				
-				if(mapsMarked.length > 0){
-					var map:MyMapName = mapsMarked.pop();
-					deleteMap(map,mapsMarked);
-				}
-				else{
-					Alert.show("Please use the checkbox to select maps for deletion");
-					CursorManager.removeBusyCursor();
-				}
+				AGORAController.getInstance().deleteSelectedMaps();
 				
 			}
-			
-			private function deleteMap(map:MyMapName, mapsMarked:Vector.<MyMapName>):void{
-				var xml:XML = new XML("<map id=\""+ map.mapId +"\" remove=\"1\" />");
-				var urlRequest:URLRequest = new URLRequest;
-				urlRequest.url = "http://agora.gatech.edu/dev/remove.php";
-				var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml.toXMLString());
-				urlRequest.data = urlRequestVars;
-				urlRequest.method = URLRequestMethod.GET;
-				var urlLoader:URLLoader = new URLLoader;
-				urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
-					if(mapsMarked.length > 0){
-						var tmpMap:MyMapName = mapsMarked.pop();
-						deleteMap(tmpMap,mapsMarked);
-					}
-					else
-					{
-						CursorManager.removeBusyCursor();
-						FlexGlobals.topLevelApplication.loadMyMapList();
-						FlexGlobals.topLevelApplication.loadMapList();
-						Alert.show("maps deleted ...");
-						
-					}
-				});
-				urlLoader.addEventListener( IOErrorEvent.IO_ERROR, function (event:IOErrorEvent):void{Alert.show("Deleting " + map.mapName + " failed ...");});
-				urlLoader.load(urlRequest);
-			}
-			
-			
 		]]>
 	</fx:Script>
 </s:Panel>

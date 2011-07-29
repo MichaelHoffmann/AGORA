@@ -1,37 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" applicationComplete="loadData();" xmlns:components="components.*" >
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600"
+			   xmlns:components="components.*"
+			   xmlns:Skins ="Skins.*"
+			   preinitialize="application_preinitializeHandler(event)"
+			   applicationComplete="application1_applicationCompleteHandler(event)"
+			   >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Canvas id="agoraMenu" width="800" minHeight="600" name="agoraMenu">
-		<s:VGroup id="Agora">
-			<s:HGroup paddingLeft="25" paddingTop="25">
-				<s:Label text="Welcome to AGORA...">
-				</s:Label>	
-			</s:HGroup>
-			<s:HGroup id="mainPanel" paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
-				
-				 <components:MapListPanel id="mapList" title="List of Maps" width="200" height="400"></components:MapListPanel>
-				
-				<components:MyMapsPanel id="myMaps" title="My Maps" skinClass="components.MyMapsSkin"></components:MyMapsPanel>
-				
-				<s:Panel  id="projects" title="Projects" width="200" minHeight="400">	
-				</s:Panel>
-			</s:HGroup>
-			<s:HGroup paddingLeft="25" paddingTop="25">
-				<s:Button id="createMapBtn" label="Create Map">
-				</s:Button >
-				<s:Button id="createProjectBtn" label="Create Project" click="Alert.show('This feature is not yet functional and is in the development process ...');">
-				</s:Button>
-			</s:HGroup>
-		</s:VGroup>	
-	</mx:Canvas>
 	
+	<components:Menu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
+	</components:Menu>
+	<components:LAMWorld id="lamWorld" visible="false">
+	</components:LAMWorld>
+	<components:Map id="map" visible="false">
+	</components:Map>
 	
 	<fx:Script>
 		<![CDATA[
+			import Model.AGORAModel;
+			
 			import classes.AgoraMap;
 			import classes.ArgumentPanel;
 			import classes.UserData;
@@ -40,170 +31,38 @@
 			import components.LoginWindow;
 			import components.Map;
 			import components.MapName;
+			import components.RegisterPanel;
+			
+			import mx.events.FlexEvent;
+			
+			//Model
+			private var model:AGORAModel;
+			//PopUp Window
+			public var loginWindow:LoginWindow;
+			//Registration Window
+			public var registrationWindow:RegisterPanel;
+			//MapName Box
+			public var mapNameBox:MapName;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			public var username:String;
 			public var pass_hash:String;
-			
 			public var maps_map:Dictionary;
-			
 			public var presetMapName:String;
-			
-			
-			public function createmap():void
+						
+
+			protected function application_preinitializeHandler(event:FlexEvent):void
 			{
-				var mapNameDialog:MapName = new MapName;
-				PopUpManager.addPopUp(mapNameDialog,this,true);
-				PopUpManager.centerPopUp(mapNameDialog);
-				var lamWorld:LAMWorld = new LAMWorld;
-				agoraMenu.visible = false;
-				addElement(lamWorld);
+				model = AGORAModel.getInstance();
 			}
-			
-			
-			public function onVerification(event:Event):void
-			{
-				createmap();
-			}
-			
-			
-			public function signIn(event:MouseEvent):void{
-				var loginWindow:LoginWindow = new LoginWindow;
-				PopUpManager.addPopUp(loginWindow,this,true);
-				PopUpManager.centerPopUp(loginWindow);
-				loginWindow.addEventListener("verification", function(event:Event):void{
-					loadMyMapList();
-				});
-			}
-			
-			
-			public function createMap(event:MouseEvent):void
-			{
-				if(!UserData.isValid())
-				{
-					var loginWindow:LoginWindow = new LoginWindow;
-					PopUpManager.addPopUp(loginWindow,this,true);
-					PopUpManager.centerPopUp(loginWindow);
-					loginWindow.addEventListener("verification",onVerification);
-					loginWindow.addEventListener("verification",function (event:Event):void{loadMyMapList();});
-				}
-				else{
-					createmap();
-				}
-			}
-			
-			public function showMenu():void
-			{
-				agoraMenu.visible = true;
-			}
-			
-			protected function drawMap(event:Event):void
-			{
-				trace("In draw map");
-				agoraMenu.visible = false;
-				var xml:XML = XML(event.target.data);
-				var map:Map = new Map;
-				addElement(map);
-				//trace(xml.toXMLString());
-				ArgumentPanel.parentMap = map.agoraMap;
-				map.agoraMap.load(xml);
-			}
-			
-			public function displayMap(button:Button):void
-			{
-				//var button:Button = Button(event.target);
-				var mapId:int = int(button.name);
-				var request:URLRequest = new URLRequest;
-				request.url="http://agora.gatech.edu/dev/load_map.php";
-				request.method = URLRequestMethod.GET;
-				request.data = new URLVariables("timestamp=0&map_id="+mapId);
-				var loader:URLLoader = new URLLoader;
-				loader.addEventListener(Event.COMPLETE, drawMap);
-				loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
-				loader.load(request);
-				
-			}
-			
-			public function loadMyMapList():void
-			{
-				if(UserData.isValid())
-				{
-					var request:URLRequest = new URLRequest;
-					request.url="http://agora.gatech.edu/dev/my_maps.php";
-					request.method = URLRequestMethod.GET;
-					request.data = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr);
-					var loader:URLLoader = new URLLoader;
-					loader.addEventListener(Event.COMPLETE, function(event:Event):void{
-						myMaps.mapListXML = XML(event.target.data);
-						myMaps.invalidateProperties();
-						myMaps.invalidateDisplayList();
-						loadMapList();
-						myMaps.skinState = true;
-					});
-					loader.addEventListener(IOErrorEvent.IO_ERROR,function(event:IOErrorEvent):void{Alert.show("Network error");});			
-					loader.load(request);
-				}
-			}
-			
-			public function loadMap(event:MouseEvent):void{
-				if(!UserData.isValid())
-				{
-					var loginWindow:LoginWindow = new LoginWindow;
-					PopUpManager.addPopUp(loginWindow,this,true);
-					PopUpManager.centerPopUp(loginWindow);
-					loginWindow.addEventListener("verification", function ( e:Event):void{ displayMap(Button(event.target)); });
-					//loginWindow.addEventListener("verification", loadMyMapList);
-				}
-				else
-				{
-					displayMap(Button(event.target));
-				}
-				
-			}
-			
-			
-			
-			private function errorHandler(event:IOErrorEvent):void
-			{
-				Alert.show("A communication error occurred duing interaction with server");
-				
-			}
-			
-			public function loadMapList():void
-			{
-				//create a request object
-				var request:URLRequest = new URLRequest;
-				request.url="http://agora.gatech.edu/dev/list_maps.php";
-				request.method = URLRequestMethod.GET;
-				
-				//create a loader
-				var loader:URLLoader = new URLLoader;
-				
-				//loader.addEventListener(Event.COMPLETE,displayMaps);
-				loader.addEventListener(Event.COMPLETE, function (event: Event):void{
-					mapList.mapList = XML(event.target.data);
-					mapList.invalidateProperties();
-					mapList.invalidateDisplayList();
-				});
-				
-				loader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
-				loader.load(request);
-			}
-			
-			public function loadProjectList():void
+
+
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
 			{
 				
 			}
-			
-			public function loadData():void
-			{
-				maps_map = new Dictionary;
-				loadMapList();
-				createMapBtn.addEventListener(MouseEvent.CLICK,createMap);
-				loadProjectList();
-			}
-			
+
 		]]>
 	</fx:Script>
 </s:Application>

@@ -102,10 +102,6 @@ package classes
 		}
 		///Getters and Setters
 		
-		override public function get stmt():String
-		{
-			return _displayStr;
-		}
 		
 		public function get displayStr():String
 		{
@@ -244,30 +240,6 @@ package classes
 			
 		}
 		
-		override public function addHandler(event:MouseEvent):void
-		{
-			if(implies)	
-			{
-				if(myschemeSel.selectedType!="If-then" && myschemeSel.selectedType != "Implies")
-				{
-					//TODO: translate
-					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
-					return;
-				}
-			}
-			else 
-			{
-				if(!implies && myschemeSel.selectedType != "Either-or")
-				{
-					//TODO: translate
-					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
-					return;
-				}
-			}
-			argType.changeSchemeBtn.enabled = false;
-			super.addHandler(event);
-		}
-		
 		//This happens when the argument
 		//  scheme is fixed
 		public function changePossibleSchemes():void
@@ -315,6 +287,7 @@ package classes
 		
 		public function menuCreated(fe:FlexEvent):void
 		{ 
+<<<<<<< HEAD
 			//Sometimes only one posisble scheme is possible.
 			//In those situations, they are created automatically, instead
 			//of giving the user a menu
@@ -402,6 +375,8 @@ package classes
 			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
 			setRuleState();
 			changePossibleSchemes();
+=======
+>>>>>>> Architect
 		}
 		
 		public function setArgScheme(event:ListEvent):void
@@ -440,6 +415,7 @@ package classes
 		
 		protected function goToReason(event:FlexEvent):void
 		{
+			/*
 			var panel:ArgumentPanel = ArgumentPanel(event.target);
 			panel.makeEditable();
 			if(reasons.length > 0)
@@ -452,6 +428,7 @@ package classes
 					}
 				}
 			}
+			*/
 		}
 		
 		protected function reasonInserted(event:Event):void{
@@ -592,21 +569,6 @@ package classes
 		}
 		override public function makeEditable():void
 		{
-		}
-		
-		override public function onArgumentPanelCreate(e:FlexEvent):void
-		{
-			super.onArgumentPanelCreate(e);
-			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
-			displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
-			displayTxt.visible = true;
-			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
-			bottomHG.visible = true;
-			doneHG.visible = false;
-			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
-			multiStatement = true;
-			group.removeElement(msVGroup);
-			setIDs();
 		}
 		
 		public function chooseEnablerText():void
@@ -792,7 +754,7 @@ package classes
 			
 			myschemeSel.visible = false;
 			displayStr = myArg.correctUsage();
-			input1.forwardUpdate();
+			//input1.forwardUpdate();
 			schemeSelected = true;
 			parentMap.helpText.visible = false;
 		}
@@ -836,75 +798,6 @@ package classes
 			this.argType.visible = true;
 		}
 		
-		override protected function deleteThis(event:MouseEvent):void
-		{
-			this.selfDestroy();
-		}
 		
-		override public function deleteLinks():void
-		{
-			//Need not worry about incoming links from reason.
-			//Reasons are deleted before deleting hte inference
-			//This function cleans up links to a deleted node
-			//from ndoes on the map
-			deleteLinkFromArgumentPanel(input1,claim);
-			for(var i:int = 0; i < inputs.length; i++)
-			{
-				deleteLinkFromArgumentPanel(inputs[i],claim);
-			}
-			for(i=0; i<input.length; i++)
-			{
-				deleteLinkFromArgumentPanel(input[i],claim);
-			}
-		}
-		
-		override public function inferenceDeleted():void
-		{
-			if(this.rules.length == 0)
-			{
-				if(!argType.changeSchemeBtn.enabled){
-					argType.changeSchemeBtn.enabled = true;
-				}
-			}
-		}
-		
-		override public function selfDestroy():void
-		{
-			//it may also be supported by further arguments
-			for(var i:int=rules.length-1; i >= 0; i--)
-			{
-				//delete(rules[i]);
-				rules[i].selfDestroy();
-			}
-			for(i = reasons.length-1; i >= 0; i--)
-			{
-				//delete(reasons[i]);
-				reasons[i].selfDestroy();
-			}
-			claim.rules.splice(claim.rules.indexOf(this),1);
-			//remove menu panel
-			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(argType),1);
-			deleteLinks();
-			parentMap.removeChild(argType);
-			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this),1);
-			parentMap.removeChild(this);
-			trace(this + ' destroyed');
-			claim.inferenceDeleted();
-		}
-		
-		override public function setIDs():void
-		{
-			if(_initXML == null)
-				return;
-			
-			try{
-				ID = _initXML.node[0].@ID;
-				connID = _initXML.connection.@ID;
-			}
-			catch(e:Error)
-			{
-				trace(e);
-			}
-		}
 	}
 }

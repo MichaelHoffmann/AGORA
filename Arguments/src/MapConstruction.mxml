@@ -26,6 +26,7 @@
 				 textAlign="center" 
 				 width="184"
 				 click="startWithScheme()"/>
+	
 	<classes:DynamicTextArea id="conceptStart"
 							 x="658" 
 							 y="67" 
@@ -42,13 +43,6 @@
 	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
-		public function startWithClaim():void {
-			navigateToURL(new URLRequest('Arguments.html'),'_self') 	
-		}
-			
-		public function startWithScheme():void {
-			navigateToURL(new URLRequest('startScheme.html'),'_self') 
-		}
 			
 		public function init():void {
 			argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";

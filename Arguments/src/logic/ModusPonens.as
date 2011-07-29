@@ -18,7 +18,7 @@ package logic
 			myname = MOD_PON;
 			_dbType = "MP";
 		}
-		
+	/*	
 		override public function getLanguageType(dbString:String):String
 		{
 			for(var i:int=0;i<dbLangTypeNames.length;i++)
@@ -183,6 +183,8 @@ package logic
 					inference.inputs[1].forwardUpdate();
 			}
 			return output;		
-		}		
+		}
+		*/
 	}
+	
 }

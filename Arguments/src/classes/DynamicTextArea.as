@@ -49,7 +49,6 @@ package classes
 			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
 			invalidateSize();
 			invalidateDisplayList();
-			updateOthers();
 		}
 		
 		public function forceUpdate():void
@@ -57,52 +56,12 @@ package classes
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
-		public function updateOthers():void
-		{
-			forwardUpdate();
-		}
-		
-		
 		override public function set text(value:String):void
 		{
 			super.text = value;
 			invalidateProperties();
 			invalidateSize();
 			invalidateDisplayList();
-		}
-		
-		public function forwardUpdate():void
-		{
-			var currInput:DynamicTextArea;
-			//var flag:int = 0;
-			if(this.visible == false && this.panelReference.panelType == ArgumentPanel.INFERENCE && this != panelReference.input1)
-			{
-				if(forwardList.length>0)
-				{
-					currInput= forwardList[0];
-					var infPanel:Inference = Inference(panelReference);
-					var s:String;
-					if(infPanel.selectedBool == true) 
-					{ 
-						infPanel.displayStr = infPanel.myArg.correctUsage();
-					}
-					currInput.forwardUpdate();
-				}
-				else
-				{
-				}
-			}
-			else
-			{
-				panelReference.displayTxt.text = panelReference.stmt;
-				if(forwardList.length == 0 )
-					return;
-				for(var i:int = 0; i < forwardList.length; i++){
-					currInput = forwardList[i];
-					currInput.text = text;
-					currInput.forwardUpdate();
-				}
-			}
 		}
 		
 		

@@ -18,7 +18,7 @@ package logic
 		override public function setIsExp():void{
 			_isLanguageExp = true;
 		}
-		
+		/*
 		override public function get dbType():String
 		{
 			return _dbType;
@@ -95,5 +95,6 @@ package logic
 			//inference.inputs[0].forwardUpdate();
 			return output;
 		}
+		*/
 	}
 }

@@ -9,6 +9,7 @@ package logic
 		public var andOr:String;
 		private var _isExp:Boolean;
 		
+		
 		public function ModusTollens()
 		{
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
@@ -17,6 +18,7 @@ package logic
 			myname = MOD_TOL;
 			_dbType = "MT";
 		}
+		/*
 		
 		override public function getOption(dbString:String):String{
 			if(dbString.indexOf("or") >= 0)
@@ -188,5 +190,6 @@ package logic
 			}
 			return output;
 		}
+		*/
 	}
 }

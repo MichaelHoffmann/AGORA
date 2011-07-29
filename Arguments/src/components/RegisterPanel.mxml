@@ -40,6 +40,10 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import ValueObjects.UserDataVO;
+			
 			import com.adobe.crypto.MD5;
 			
 			import mx.controls.Alert;
@@ -82,7 +86,6 @@
 					Alert.show("Registration Successful. You may now Login");
 				}
 				PopUpManager.removePopUp(this);
-				
 			}
 			
 			public function errorHandler(event: IOErrorEvent):void
@@ -102,16 +105,17 @@
 					Alert.show("Passwords do not match");
 					return;
 				}
-				var requestVariables:URLVariables = new URLVariables("username="+username.text+"&pass_hash="+ MD5.hash(pass_hash.text+salt)+"&firstname="+firstname.text+"&lastname="+lastname.text+"&email="+email.text+"&url="+url.text);
-				var request:URLRequest = new URLRequest;
-				request.url = "http://agora.gatech.edu/dev/register.php";
-				request.method = URLRequestMethod.GET;
-				request.data = requestVariables;
-				var urlLoader:URLLoader = new URLLoader;
-				urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
-				urlLoader.addEventListener(Event.COMPLETE,displayStatus);
-				urlLoader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
-				urlLoader.load(request);
+				
+				var userDataVO:UserDataVO = new UserDataVO;
+				userDataVO.firstName = firstname.text;
+				userDataVO.lastName = lastname.text;
+				userDataVO.userName = username.text;
+				userDataVO.password = pass_hash.text;
+				userDataVO.email = email.text;
+				userDataVO.URL = url.text;
+				
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.register(userDataVO);
 			}
 
 			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
@@ -129,6 +133,7 @@
 			}
 
 		]]>
+		
 	</fx:Script>
 	<mx:Form id="form">
 		<mx:FormItem tabIndex="1" label="Username" required="true">

@@ -142,6 +142,12 @@ package logic
 			}
 			inference.implies = true;
 		}
+<<<<<<< HEAD
 		public function correctUsage():String { return "";}
+=======
+		//inference.implies = true;
+	}
+	public function correctUsage():String { return "";}
+>>>>>>> Architect
 	}
 }

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
+<<<<<<< HEAD
 		  xmlns:mx="library://ns.adobe.com/flex/mx" 
 		  layout="absolute" 
 		  width="400" height="300" 
 		  preinitialize="setProperties();" 
 		  creationComplete="init();"
 		  keyDown="panel_keyDownHandler(event)">
+=======
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  layout="absolute" width="400" height="300" creationComplete="init();">
+>>>>>>> Architect
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:StringValidator id="unameValidator"
@@ -21,12 +26,17 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import ValueObjects.UserDataVO;
+			
 			import classes.UserData;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import mx.validators.Validator;
 			
+			/*
 			public function setProperties():void
 			{
 				title="Login";
@@ -47,20 +57,20 @@
 				}
 				PopUpManager.removePopUp(this);
 			}
+			*/
 			
 			public function init():void
 			{	
 				focusManager.setFocus(username);
 			}
 			
+			
 			public function register_form():void
-			{
-				var registerForm:RegisterPanel = new RegisterPanel;
-				PopUpManager.addPopUp(registerForm,this.parent);
-				PopUpManager.centerPopUp(registerForm);
+			{	
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.showRegistrationBox();
 			}
-			
-			
+		
 			public function clear_form():void
 			{
 				PopUpManager.removePopUp(this);
@@ -68,6 +78,7 @@
 			
 			public function submit_form():void
 			{
+<<<<<<< HEAD
 				var array:Array = new Array();
 				array.push(unameValidator);
 				array.push(passwordValidator);
@@ -86,9 +97,25 @@
 				if(event.keyCode == Keyboard.ENTER){
 					submit_form();
 				}
+=======
+				var userDataVO:UserDataVO = new UserDataVO;
+				userDataVO.userName = username.text;
+				userDataVO.password = pass_hash.text;
+				
+				var userLoginController:UserSessionController = UserSessionController.getInstance();
+				userLoginController.login(userDataVO);
+				
+			}
+			
+			protected function register_btn_clickHandler(event:MouseEvent):void
+			{
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.showRegistrationBox();
+>>>>>>> Architect
 			}
 
 		]]>
+		
 	</fx:Script>
 	<mx:Form id="form">
 		<mx:FormItem label="Username">
@@ -105,7 +132,7 @@
 				</s:Button>
 				<s:Button label="Back" id="back_btn" click="clear_form();">		
 				</s:Button>
-				<s:Button label="Register" id="register_btn" click="register_form();">		
+				<s:Button label="Register" id="register_btn" click="register_btn_clickHandler(event)">		
 				</s:Button>
 			</s:HGroup>		
 		</mx:FormItem>
