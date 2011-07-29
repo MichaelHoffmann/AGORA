@@ -20,7 +20,7 @@ package logic
 			built = false;
 			// Both types here are expandable. like a chain rule
 		}
-		
+/*		
 		override public function addInitialReasons():void
 		{
 			if(inference == null)
@@ -144,5 +144,6 @@ package logic
 			}
 			return output;
 		}
+		*/
 	}
 }

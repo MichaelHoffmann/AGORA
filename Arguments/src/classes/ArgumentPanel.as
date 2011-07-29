@@ -2,6 +2,8 @@ package classes
 {
 	import Model.StatementModel;
 	
+	import ValueObjects.AGORAParameters;
+	
 	import classes.Language;
 	
 	import components.ArgSelector;
@@ -174,196 +176,43 @@ package classes
 			firstClaim = false;
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
 			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
-			//addMenuData = new XML("<root><menuitem label=\"" + Language.lookup("add") + 
-			//					Language.lookup("AddArg") + "\" type=\"TopLevel\" /></root>");
-			//constructArgData = new XML("<root><menuitem label=\"" + Language.lookup("add") +
-			//					Language.lookup("AddAnotherReason") + 
-			//					"\" type=\"TopLevel\"/><menuitem label=\"construct argument\" type=\"TopLevel\"/></root>");
+			
 			userEntered = false;
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
-			this.addEventListener(FlexEvent.CREATION_COMPLETE,onArgumentPanelCreate);	
-			//this.addEventListener(UpdateEvent.UPDATE_EVENT,adjustHeight);
-			//this.addEventListener(KeyboardEvent.KEY_DOWN,keyEntered);
 			
-			//this.addEventListener(ARGUMENT_CONSTRUCTED, argumentConstructed);
+			inputs = new Vector.<DynamicTextArea>;
 			
 			//will be set by the object that creates this
 			inference = null;
-			
-			//this should not use the set method
-			//because the set method triggers actions on child elements
-			//which are not created yet
-			_statementNegated = false;
-			//initially it does not have a permanent ID
-			hasID = false;
-			
-			rules = new Vector.<Inference>(0,false);
-			inputs = new Vector.<DynamicTextArea>(0,false);
-			
-			inputsNTTID = new Vector.<int>(0, false);
-			inputsNTID = new Vector.<int>(0, false);
-			inputsNTHasID = new Vector.<Boolean>(0,false);
-			
 			width = 180;
 			minHeight = 100;	
+			
+			//Event handlers
+			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
-		public function get implies():Boolean
-		{
-			return _implies;
+		public function setX(value:int):void{
+			y = value * AGORAParameters.getInstance().gridWidth;
 		}
 		
-		public function set implies(value:Boolean):void
-		{
-			if(_implies != value)
-			{
-				_implies = value;
-			}
+		public function setY(value:int):void{
+			x = value * AGORAParameters.getInstance().gridWidth;
 		}
 		
-		public function get multiStatement():Boolean
-		{
-			return _multiStatement;
-		}
-		
-		public function set multiStatement(value:Boolean):void
-		{
-			var previous:Boolean = _multiStatement
-			if(_multiStatement != value)
-			{
-				if(value == true){
-					input1.visible = false;
-					group.addElement(msVGroup);
-					if(!userEntered)
-					{
-						input1.text = "";
-					}		
-				}
-				else
-				{
-					try{
-						group.removeElement(msVGroup);
-					}catch(error:Error)
-					{
-						trace(error);
-					}
-				}
-				_multiStatement = value;
-				userEntered = false;
-			}
-		}
-		
-		protected function argumentConstructed(event:Event):void
-		{
-			if(inference != null)
-			{
-				inference.setRuleState();
-			}
-		}
-		
-		public function get statementNegated():Boolean
-		{
-			return _statementNegated;
-		}
-		
-		public function set statementNegated(value:Boolean):void
-		{
-			if(_statementNegated != value)
-			{
-				_statementNegated = value;
-				if(value == true)
-				{
-					negatedLbl.visible = true;
-				}
-				else
-				{
-					negatedLbl.visible = false;
-				}
-			}
-			makeUnEditable();
+		protected function onCreationComplete(event:FlexEvent):void{
+			panelSkin = this.skin as PanelSkin;
+			panelSkin.topGroup.includeInLayout = false;
+			panelSkin.topGroup.visible = false;
 		}
 		
 		public function makeEditable():void
 		{
-			if(userEntered == false)
-			{
-				userEntered = true;
-			}
-			if(multiStatement){
-				focusManager.setFocus(inputs[0]);
-				msVGroup.visible = true;
-			}
-			else{
-				focusManager.setFocus(input1);
-				input1.visible = true;
-			}
-			displayTxt.visible = false;
-			doneHG.visible = true;
-			bottomHG.visible=false;
+			
 		}
 		
 		public function makeUnEditable():void
 		{
-			if(multiStatement)
-			{
-				//input1 is just used to calculate height
-				input1.text = stmt;
-				displayTxt.width = msVGroup.width;
-				displayTxt.height = msVGroup.height;
-			}
-			else{
-				displayTxt.width = input1.width;
-				displayTxt.height = input1.height;
-			}
-			
-			displayTxt.text = positiveStmt;
-			displayTxt.visible = true;
-			bottomHG.visible = true;
-			doneHG.visible = false;
-			if(multiStatement)
-			{
-				msVGroup.visible = false;
-			}
-			else
-			{
-				input1.visible = false;
-			}
-		}
 		
-		public function get stmt():String
-		{
-			
-			var statement:String = "";
-			if(multiStatement)
-			{
-				if(implies)
-				{
-					if(connectingStr == "If-then")
-						statement = "If " + inputs[1].text + ", then " + inputs[0].text;
-					else
-						statement = inputs[1].text + " implies " + inputs[0].text;					
-				}
-				else
-				{
-					for(var i:int=0; i<inputs.length - 1; i++)
-					{
-						statement = statement + inputs[i].text + " and ";
-					}
-					statement = statement + inputs[i].text;
-				}
-			}
-			else
-			{
-				statement = input1.text;
-			}
-			if(statementNegated == true)
-			{
-				return ("it is not the case that " + statement);
-			}
-			else
-			{
-				return statement;
-			}
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
@@ -371,28 +220,11 @@ package classes
 			makeEditable();
 		}
 		
-		public function get positiveStmt():String
-		{
-			return input1.text;
-		}
-		
-		public function adjustHeight(e:Event):void
-		{
-			if(this is Inference)
-			{
-			}
-			else if(this.inference != null)
-			{
-				parentMap.layoutManager.alignReasons(this, this.gridY);
-			}
-			return;
-		}
-		
 		public function keyEntered(event: KeyboardEvent):void
 		{
 			if(event.keyCode == Keyboard.ENTER)	
 			{
-				statementEntered();	
+				//statementEntered();	
 			}
 		}
 		
@@ -416,85 +248,19 @@ package classes
 			}
 		}
 		
-		
 		public function removeEventListeners():void
 		{
-			parentMap.option.removeEventListener(MouseEvent.CLICK,optionClicked);	
-			rules[rules.length - 1].reasons[0].input1.removeEventListener(KeyboardEvent.KEY_DOWN,hideOption);
+		
 		}
 		
 		protected function optionClicked(event:MouseEvent):void
 		{
-			beginByArgument();
-			parentMap.option.visible = false;
-			removeEventListeners();
 		}
 		
 		protected function hideOption(event:KeyboardEvent):void
 		{
-			parentMap.option.visible = false;	
-			removeEventListeners();
 		}
 		
-		public function onArgumentAddition(event:Event):void
-		{
-			parentMap.option.visible = true;
-			//parentMap.option.addEventListener(MouseEvent.CLICK,optionClicked);
-			//rules[rules.length - 1].reasons[0].input1.addEventListener(KeyboardEvent.KEY_DOWN,hideOption);
-			parentMap.option.x = rules[rules.length - 1].reasons[0].x + rules[rules.length - 1].reasons[0].width + 10;
-			parentMap.option.y = rules[rules.length - 1].reasons[0].y;
-			invalidateProperties();
-			invalidateSize();
-			invalidateDisplayList();
-		}
-		
-		public function addHandler(event:MouseEvent):void
-		{
-			addSupportingArgument();
-			//this.addEventListener(ARGUMENT_CONSTRUCTED,onArgumentAddition);	
-		}
-		
-		public function configureReason(event:FlexEvent):void
-		{
-			var reason:ArgumentPanel = ArgumentPanel(event.target);
-			reason.makeUnEditable();
-		}
-		
-		public function beginByArgument():void{
-			rules[rules.length-1].visible = true; 
-			rules[rules.length-1].chooseEnablerText();
-			if(inference == null)
-			{
-				if(multiStatement){
-				}
-				else{
-				}
-			}
-			makeUnEditable();
-			//This is important if beginByArgument is called 
-			//immediately after an argument is constructed
-			//input1 of reason might not be created then.
-			//rules[rules.length-1].reasons[0].addEventListener(FlexEvent.CREATION_COMPLETE,configureReason);
-			if(rules[rules.length-1].reasons[0].input1 != null)
-			{
-				rules[rules.length-1].reasons[0].makeUnEditable();
-			}
-			parentMap.invalidateDisplayList();
-		}
-		
-		public function constructArgument(event:MenuEvent):void
-		{
-			if(event.label == "add another reason")
-			{
-				inference.addReason();
-			}
-			else if(event.label == "construct argument")
-			{
-				inference.chooseEnablerText();
-				inference.visible = true;
-				parentMap.invalidateDisplayList();
-			}
-		}
 		
 		public function showMenu():void
 		{
@@ -505,231 +271,16 @@ package classes
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
-		public function statementEntered():void
-		{
-			if(this.inference == null && this.rules.length == 0)
-			{
-				dispatchEvent(new Event("UserInteractionBegan",true,false));
-				addSupportingArgument();
-			}
-			makeUnEditable();
-			if(inference!=null && inference.selectedBool == false)
-			{
-				showMenu();		
-			}
-		}
 		
 		public function doneHandler(d:MouseEvent):void
 		{
-			statementEntered();
+			//statementEntered();
 		}
 		
-		protected function inserted(event:Event):void{
-			var responseXML:XML = XML(event.target.data);
-			var xml:XML = <insert></insert>;
-			xml.appendChild(responseXML);
-		
-			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/load_map.php";
-			var timestamp:String;
-			if(parentMap.timestamp == null){
-				timestamp = "0";
-			}else{
-				timestamp = parentMap.timestamp;
-			}
-			var urlRequestVars:URLVariables = new URLVariables("map_id="+parentMap.ID + "&" + "timestamp=" + timestamp);
-			urlRequest.data = urlRequestVars;
-			urlRequest.method = URLRequestMethod.GET;
-			var urlLoader:URLLoader = new URLLoader;
-			/*
-			urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
-				var loadResponseVariables:XML = XML(event.target.data);
-				var loadXML:XML = <load></load>;
-				loadXML.appendChild(loadResponseVariables);
-				var insertLoad:XML = <xmldata></xmldata>;
-				insertLoad.appendChild(xml);
-				insertLoad.appendChild(loadXML);
-				createArgument(insertLoad);
-			});
-			*/
-			urlLoader.load(urlRequest);
-		}
-		
-		//reason must be registered before inference is
-		//user must not change the inference rule. He creates the inference rule
-		//through argument type, reasons and claim
-		protected function createArgument(responseXML:XML):void
-		{
-			//var responseXML:XML = XML(event.target.data);
-			//Alert.show(responseXML.toXMLString());
-			
-			/*A typical response
-			<map ID="20">
-			<textbox TID="7" ID="50"/>
-			<textbox TID="8" ID="51"/>
-			<textbox TID="9" ID="52"/>
-			<node TID="10" ID="39">
-				<nodetext TID="12" ID="63"/>
-				<nodetext TID="13" ID="64"/>
-				<nodetext TID="14" ID="65"/>
-			</node>
-			<node TID="11" ID="40"/>
-			<connection TID="15" ID="10">
-				<sourcenode TID="16" ID="29"/>
-				<sourcenode TID="17" ID="30"/>
-			</connection>
-			</map>
-			*/
-			//separate xml data for inference and for argument panel
-			//reason
-			
-			///###### updates by other users not handled yet
-			
-				//reason's textboxes
-			var reasonXML:XML = new XML("<map></map>");                                                                     
-			var textboxList:XMLList = responseXML.insert.map.textbox;
-			reasonXML.appendChild(textboxList);
-				//reason's node
-			var firstNodeText:XML = responseXML.insert.map.node[0];
-			reasonXML.appendChild(firstNodeText);
-			
-			//no collaboration
-			var reasonAXML:XML = <map></map>;
-			//reasonAXML.appendChild(responseXML.load.map.node[0]);
-			for each(var iXML:XML in responseXML.load.map.node){
-				if(iXML.@ID == responseXML.insert.map.node[0].@ID){
-					reasonAXML.appendChild(iXML);
-				}
-			}
-
-			var coordinate:Coordinate = new Coordinate;
-			coordinate.gridX = reasonAXML.node[0].@x;
-			coordinate.gridY = reasonAXML.node[0].@y;
-			
-			//inference
-			var inferenceXML:XML = new XML("<map></map>");
-			var inferenceNode:XML =  responseXML.insert.map.node[1];
-			inferenceXML.appendChild(inferenceNode);
-			var inferenceCoordinate:Coordinate = new Coordinate;
-			for each(iXML in responseXML.load.map.node){
-				if(iXML.@ID == responseXML.insert.map.node[1].@ID){
-					//reasonAXML.appendChild(iXML);
-					inferenceCoordinate.gridX = iXML.@x;
-					inferenceCoordinate.gridY = iXML.@y;
-				}
-			}
-			
-			
-			//connection
-			var connectionXML:XML = responseXML.insert.map.connection[0];
-			inferenceXML.appendChild(connectionXML);
-			var connectionCoordinate:Coordinate = new Coordinate;
-			
-			for each(iXML in responseXML.load.map.connection){
-				trace("connection loaded");
-				trace(responseXML.load.map.connection);
-				if(iXML.@connID == responseXML.insert.map.connection[0].@ID){
-					connectionCoordinate.gridX = iXML.@x;
-					connectionCoordinate.gridY = iXML.@y;
-				}
-			}
-			var currInference:Inference = new Inference();
-			currInference._initXML = inferenceXML;
-			currInference.gridX = inferenceCoordinate.gridX;
-			currInference.gridY = inferenceCoordinate.gridY;
-			currInference.myschemeSel = new ArgSelector;
-			//currInference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.menuCreated);	
-			
-			//add the inference to map
-			parentMap.addElement(currInference);
-			currInference.visible=false;
-			
-			//create the panel that displays connection information
-			var infoPanel:MenuPanel = new MenuPanel;
-			currInference.argType = infoPanel;
-			currInference.argType.inference = currInference;
-			currInference.argType.gridX = connectionCoordinate.gridX;
-			currInference.argType.gridY = connectionCoordinate.gridY;
-			parentMap.addElement(currInference.argType);
-			
-			//add inference to the list of inferences
-			rules.push(currInference);
-			//set the claim of the inference rule to this
-			currInference.claim = this;
-			currInference.inference = currInference;
-			//create a reason node
-			var reason:ArgumentPanel = new ArgumentPanel();
-			reason._initXML = reasonXML;
-			
-			reason.gridX = coordinate.gridX;
-			reason.gridY = coordinate.gridY;
-			
-			//reason.addEventListener(FlexEvent.CREATION_COMPLETE, currInference.reasonAdded);
-			//addEventListener(Inference.REASON_ADDED,currInference.reasonAdded);
-			//add reason to the map
-			parentMap.addElement(reason);
-			//dispatchEvent(new Event(Inference.REASON_ADDED));
-			//push reason to the list of reasons belonging to this particular class
-			currInference.reasons.push(reason);
-			//dispatchEvent(new Event(Inference.REASON_ADDED));
-			//temporary, should be replaced by TID
-			//currInference.connectionIDs.push(Inference.connections++);
-			//set the inference of the reason
-			reason.inference = currInference;
-			//type of reason
-			//register the reason
-			parentMap.layoutManager.registerPanel(reason);
-			//create an invisible box for the inference rule corresponding to the claim
-			var tmpInput:DynamicTextArea = new DynamicTextArea();
-			//add it to the map
-			parentMap.addElement(tmpInput);
-			//set the input box as invisible
-			tmpInput.visible = false;
-			//logical
-			//set the panel to which the input box belongs
-			tmpInput.panelReference = currInference;
-			//add a pointer to the input
-			currInference.input.push(tmpInput);		
-			//binding
-			//tmpInput.forwardList.push(currInference.input1);
-			//input1.forwardList.push(currInference.input[0]);
-			//create an invisible box for the reason
-			var tmpInput2:DynamicTextArea = new DynamicTextArea();
-			parentMap.addElement(tmpInput2);
-			tmpInput2.visible = false;
-			tmpInput2.panelReference = currInference;
-			currInference.input.push(tmpInput2);	
-			//tmpInput2.forwardList.push(currInference.input1);
-			//reason.input1.forwardList.push(tmpInput2);
-			parentMap.layoutManager.registerPanel(currInference);
-			//should be added towards the end
-			//if there is only one possible scheme,
-			//it is automatically selected
-			parentMap.addChild(currInference.myschemeSel);
-			currInference.myschemeSel.visible = false;
-			dispatchEvent(new Event(ARGUMENT_CONSTRUCTED,true,false));	
-		}
-		
-		public function addSupportingArgument():void
-		{
-			var requestXML:XML = parentMap.getConnection(this);
-			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
-			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ requestXML);
-			urlRequest.data = urlRequestVars;
-			urlRequest.method = URLRequestMethod.GET;
-			var urlLoader:URLLoader = new URLLoader;
-			//urlLoader.addEventListener(Event.COMPLETE, inserted);
-			urlLoader.load(urlRequest);
-			
-		}
-		
-		
-		
+	
 		//create children must be overriden to create dynamically allocated children
 		override protected function createChildren():void
 		{
-			
 			//Elements are constructed, initialized with properties, and attached to display list		
 			//create the children of MX Panel
 			super.createChildren();		
@@ -766,7 +317,6 @@ package classes
 			doneBtn = new AButton;
 			doneBtn.label = "Done";
 			doneHG.addElement(doneBtn);
-			//doneBtn.addEventListener(MouseEvent.CLICK,doneHandler);
 			
 			input1 = new DynamicTextArea();
 			input1.panelReference = this;
@@ -776,7 +326,6 @@ package classes
 			displayTxt = new Text;
 			BindingUtils.bindProperty(displayTxt, "text", input1, ["text"]);
 			this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
-			Alert.show(statementModel.statement.text);
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
 			
@@ -862,161 +411,7 @@ package classes
 			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
 			userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);		
 		}
-		
-		public function onArgumentPanelCreate(e:FlexEvent):void
-		{
-			//remove the default title bar provided by mx
-			panelSkin = this.skin as PanelSkin;
-			panelSkin.topGroup.includeInLayout = false;
-			panelSkin.topGroup.visible = false;
-			setIDs();
-		}
-		
-		protected function setGuidingText(event:FlexEvent):void
-		{
-			if(this.panelType==ARGUMENT_PANEL)
-			{
-				//input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
-			}
-			else if(this.panelType==INFERENCE)
-			{
-			}
-			displayTxt.text = input1.text;
-			displayTxt.width = input1.width;
-			displayTxt.height = input1.height;
-		}
-		
-		public function toggleType():void
-		{
-			if(this.state==0) {
-				if(this.panelType!=INFERENCE)
-				{
-					state = 1;
-					stmtTypeLbl.text = "Particular Statement";
-					this.setStyle("cornerRadius",0);
-				}
-				else {
-					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
-					stmtTypeLbl.text = "Universal Statement";
-				}
-			} 
-			else {
-				state = 0;
-				stmtTypeLbl.text = "Universal Statement";
-				this.setStyle("cornerRadius",30);
-			} 
-		}
-		
-		public function toggle(m:MouseEvent):void
-		{
-			toggleType();	
-		}
-		
-		protected function deleteThis(event:MouseEvent):void
-		{
-			if(inference != null && inference.myArg is ConditionalSyllogism)
-			{
-				Alert.show("You cannot delete a reason of a conditional syllogism argument separately. To delete this argument, delete the enabler");
-				return;
-			}
-			this.selfDestroy();
-			if(inference != null)
-			{
-				if(inference.reasons.length == 0)
-				{
-					trace('No of reasons is zero, therefore deleting the inference panel');
-					inference.selfDestroy();
-				}
-			}
-		}
-		
-		public function deleteLinkFromArgumentPanel(inputBox:DynamicTextArea, claim:ArgumentPanel):void
-		{
-			//for input1.
-			if(claim.input1.forwardList.indexOf(inputBox) != -1)
-			{
-				claim.input1.forwardList.splice(claim.input1.forwardList.indexOf(inputBox),1);
-			}
-			//for inputs
-			for(var i:int=0; i< claim.inputs.length; i++)
-			{
-				var currInput:DynamicTextArea = claim.inputs[i];
-				if(currInput.forwardList.indexOf(inputBox) != -1)
-				{
-					currInput.forwardList.splice(currInput.forwardList.indexOf(inputBox),1);
-				}
-			}
-		}
-		
-		public function deleteLinks():void
-		{
-			if(inference == null)
-				return;
-			var claim:ArgumentPanel = inference.claim;
-			deleteLinkFromArgumentPanel(input1,claim);
-			for(var i:int = 0; i < inputs.length; i++)
-			{
-				deleteLinkFromArgumentPanel(inputs[i],claim);
-			}
-			//There will be no incoming links from inference
-		}
-		
-		public function inferenceDeleted():void
-		{
-			if(rules.length == 0)
-			{
-				if(this.inference != null)
-				{
-					inference.setRuleState();
-				}
-			}
-		}
-		
-		public function selfDestroy():void
-		{
-			for(var i:int=rules.length-1; i >= 0; i--)
-			{
-				rules[i].selfDestroy();
-			}
-			if(inference != null)
-			{
-				inference.reasons.splice(inference.reasons.indexOf(this,0),1);
-			}
-			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this,0),1);
-			deleteLinks();
-			parentMap.removeChild(this);
-			trace(this + ' destroyed');
-			if(inference != null)
-			{
-				if(inference.reasons.length > 0)
-				{
-					parentMap.layoutManager.alignReasons(this,this.gridY);
-					inference.displayStr = inference.myArg.correctUsage();
-					inference.reasonDeleted();
-				}
-			}
-		}
-		
-		public function setIDs():void
-		{
-			//By default there are only three textboxes
-			if(_initXML == null)
-				return;
-			try{
-			input1.ID = _initXML.textbox[0].@ID;
-			inputs[0].ID = _initXML.textbox[1].@ID;
-			inputs[1].ID = _initXML.textbox[2].@ID;
-			//only one node is returned
-			ID = _initXML.node.@ID;
-			input1NTID = _initXML.node.nodetext[0].@ID;
-			inputsNTID.push(_initXML.node.nodetext[1].@ID);
-			inputsNTID.push(_initXML.node.nodetext[2].@ID);
-			}
-			catch(error:Error)
-			{
-				Alert.show(error.toString());
-			}
-		}
+				
 	}
 	
 }

@@ -14,7 +14,7 @@ package logic
 			_langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
 			isLanguageExp = true;
 		}
-		
+		/*
 		override public function get dbType():String
 		{
 			return _dbType;
@@ -87,5 +87,6 @@ package logic
 			//inference.inputs[0].forwardUpdate();
 			return output;
 		}
+		*/
 	}
 }

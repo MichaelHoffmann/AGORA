@@ -26,7 +26,8 @@ package Model
 		private var _ID:int;
 		private var _nodeTextID:int;
 		private var _nodeTextIDs:Vector.<int>;
-		
+		private var _xgrid:int;
+		private var _ygrid:int;
 		
 		
 		public function StatementModel(target:IEventDispatcher=null)
@@ -39,6 +40,26 @@ package Model
 
 		
 		//--------------------Getters and Setters------------------//
+		
+		public function get ygrid():int
+		{
+			return _ygrid;
+		}
+
+		public function set ygrid(value:int):void
+		{
+			_ygrid = value;
+		}
+
+		public function get xgrid():int
+		{
+			return _xgrid;
+		}
+
+		public function set xgrid(value:int):void
+		{
+			_xgrid = value;
+		}
 
 		public function get nodeTextID():int
 		{
@@ -158,6 +179,23 @@ package Model
 		public function set statement(value:SimpleStatementModel):void
 		{
 			_statement = value;
+		}
+		
+		//----------------------- other public functions -------------//
+		public static function getObject(xml:XML):StatementModel{
+			//trace(xml);
+			return new StatementModel;	
+			
+		}
+		
+		public function getXML():XML{
+			var xml:XML = <node></node>;
+			xml.@Type = statementType;
+			xml.@typed = 0;
+			xml.@is_positive = negated? 0 : 1;
+			xml.@x = xgrid;
+			xml.@y = ygrid;
+			return xml;
 		}
 	}
 }

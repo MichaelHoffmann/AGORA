@@ -76,10 +76,14 @@ package Controller
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
 			FlexGlobals.topLevelApplication.map.agoraMap.newPanels.push(statementModel);
+			LoadController.getInstance().fetchMapData();
+			//Edit: Delay the below invalidation until next update
 			//invalidate component, so that they get updated during the validation  cycle of the Flex architecture
-			FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
-			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
+			//FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
+			//FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 		}
+		
+		
 		
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{

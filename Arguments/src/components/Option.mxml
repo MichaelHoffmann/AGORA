@@ -11,8 +11,7 @@
 		<![CDATA[
 
 			public function init():void
-			{
-				//this.addEventListener(MouseEvent.CLICK, claim.buildByArgument);
+			{				
 			}
 		]]>
 	</fx:Script>

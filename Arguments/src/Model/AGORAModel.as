@@ -39,7 +39,6 @@ package Model
 		}
 		
 		
-		
 		//-----------------------------Getters and Setters--------------------------------------------------------//
 		public function get state():int
 		{

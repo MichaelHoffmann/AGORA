@@ -4,6 +4,8 @@ package Model
 	
 	import ValueObjects.AGORAParameters;
 	
+	import components.Map;
+	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
@@ -19,6 +21,7 @@ package Model
 		private var createMapService: HTTPService;
 		private var createNodeService: HTTPService;
 		private var createFirstClaim: HTTPService;
+		private var loadMapService: HTTPService;
 		
 		private var _name:String;
 		private var _description:String;
@@ -41,22 +44,28 @@ package Model
 			createFirstClaim.addEventListener(ResultEvent.RESULT, onAddFirstClaimResult);
 			createFirstClaim.addEventListener(FaultEvent.FAULT, onFault);
 			
-			panelListHash = new Object;
+			//create load map service
+			loadMapService = new HTTPService();
+			loadMapService.url = AGORAParameters.getInstance().loadMapURL;
+			loadMapService.addEventListener(ResultEvent.RESULT, onLoadMapModelResult);
+			loadMapService.addEventListener(FaultEvent.FAULT, onFault);
 			
+			panelListHash = new Object;
+			timestamp = "0";
 		}
 		
 		//-------------------------Getters and Setters--------------------------------//
-
+		
 		public function get panelListHash():Object
 		{
 			return _panelListHash;
 		}
-
+		
 		public function set panelListHash(value:Object):void
 		{
 			_panelListHash = value;
 		}
-
+		
 		public function get ID():int
 		{
 			return _ID;
@@ -116,7 +125,7 @@ package Model
 								<textbox text=""/>
 								<textbox text=""/>
 								<textbox text=""/>
-								<node TID="1" Type="Standard" typed="0" is_positive="1"  x="2" y="3"  >
+								<node TID="1" Type="Universal" typed="0" is_positive="1"  x="2" y="3">
 									<nodetext/><nodetext /><nodetext />
 								</node>
 						   </map>;	
@@ -179,6 +188,40 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.FIRST_CLAIM_ADDED, null, statementModel));	
 		}
 		
+		//----------------------- Load New Data ----------------------------------------------//
+		public function loadMapModel():void{
+			loadMapService.send({map_id:ID.toString(),timestamp:timestamp});		
+		}
+		
+		protected function onLoadMapModelResult(event:ResultEvent):void{
+			trace('map loaded');
+			var map:Object = event.result.map;
+			timestamp = map.timestamp;
+			
+			//Form a map of textboxes
+			var textboxHash:Object = new Object;
+			if(map.hasOwnProperty("textbox")){
+				var simpleStatement:SimpleStatementModel = null;
+				if(map.textbox is ArrayCollection){
+					for each(var obj:Object in map.textbox){
+						simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(obj);
+						textboxHash[obj.ID] = simpleStatement;
+					}
+				}
+				else{
+					simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textbox);
+					textboxHash[map.textbox.ID] = simpleStatement;
+				}
+			}
+			
+			//Form a map of nodes
+			
+			
+			//Form a map of connections
+			
+			
+			
+		}
 		
 		//----------------------- Reinitializing the model ----------------------------------//
 		public function reinitializeModel():void{

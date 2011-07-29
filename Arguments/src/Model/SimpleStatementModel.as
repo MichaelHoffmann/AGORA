@@ -16,7 +16,8 @@ package Model
 			super(target);
 		}
 		
-		//------------------------Getters/Setters-------------------------//
+		//------------------------Getters/Setters-------------------------/n/
+		
 		public function get text():String{
 			return _text;
 		}
@@ -24,11 +25,34 @@ package Model
 			_text = value;
 		}
 		
+		public function get forwardList():Vector.<SimpleStatementModel>{
+			return _forwardList;
+		}
+		
+		public function set forwardList(value:Vector.<SimpleStatementModel>):void{
+			_forwardList = value;
+		}
+		
 		public function get ID():int{
 			return _ID;
 		}
 		public function set ID(value:int):void{
-			_ID = value;
+			_ID = value;              
+		}
+		
+		//------------------ get simple statment --------------------------//
+		public static function createSimpleStatementFromXML(xml:XML):SimpleStatementModel{
+			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
+			simpleStatement.ID = xml.@ID;
+			simpleStatement.text = xml.@text;
+			return simpleStatement;
+		}
+		
+		public static function createSimpleStatementFromObject(obj:Object):SimpleStatementModel{
+			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
+			simpleStatement.ID = obj.ID;
+			simpleStatement.text = obj.text;
+			return simpleStatement;
 		}
 	}
 }

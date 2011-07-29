@@ -2,7 +2,7 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
-		   xmlns:classes="classes.*" creationComplete="initApp();" xmlns:components="components.*">
+		   xmlns:classes="classes.*" creationComplete="" xmlns:components="components.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -74,136 +74,6 @@
 			{
 			}
 			
-			
-			public function update():void{
-				//agoraMap.enabled = false;
-				var xml:XML;
-				xml = agoraMap.getMapXml();
-				if(xml.error.length > 0)
-				{
-					Alert.show("Error occurred in saving map");
-					return;
-				}	
-				
-				var urlRequestMap:URLRequest = new URLRequest;
-				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
-				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
-				urlRequestMap.data = urlRequestVarsMap;
-				urlRequestMap.method = URLRequestMethod.GET;
-				var urlLoaderMap:URLLoader = new URLLoader;
-				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
-				});
-				urlLoaderMap.load(urlRequestMap);
-			}
-			
-			
-			public function saveMap(event:MouseEvent):void
-			{
-				var xml:XML;
-				xml = agoraMap.getMapXml();
-				if(xml.error.length > 0)
-				{
-					Alert.show("Error occurred in saving map");
-					hideMap();
-					return;
-				}	
-				
-				var urlRequestMap:URLRequest = new URLRequest;
-				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
-				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
-				urlRequestMap.data = urlRequestVarsMap;
-				urlRequestMap.method = URLRequestMethod.GET;
-				var urlLoaderMap:URLLoader = new URLLoader;
-				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
-					var retXMLMap:XML =  XML(eventMap.target.data);
-					if( XMLList(retXMLMap.error).length() > 0){
-						Alert.show(retXMLMap.error[0].@text);
-					}
-					hideMap();
-				});
-				urlLoaderMap.load(urlRequestMap);	
-			}
-			
-			
-			
-			public function addEmptyArgument():void
-			{
-				addPanelToMap();
-				this.addEventListener(ClaimAddedEvent.CLAIM_ADDED,function (event:ClaimAddedEvent):void{
-					var argumentPanel:ArgumentPanel = event.argumentPanel;
-					argumentPanel.addSupportingArgument();
-					argumentPanel.addEventListener(ArgumentPanel.ARGUMENT_CONSTRUCTED,function (event:Event):void{
-						argumentPanel.beginByArgument();
-					});
-				});
-			}
-			
-			public function addPanelToMap():void
-			{
-				//map is given an id
-				var xmlMap:XML = new XML("<map id=\"0\" title=\"" + FlexGlobals.topLevelApplication.presetMapName + "\" ></map>");
-				var urlRequestMap:URLRequest = new URLRequest;
-				urlRequestMap.url = "http://agora.gatech.edu/dev/insert.php";
-				var urlRequestVarsMap:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+xmlMap.toXMLString());
-				urlRequestMap.data = urlRequestVarsMap;
-				urlRequestMap.method = URLRequestMethod.GET;
-				var urlLoaderMap:URLLoader = new URLLoader;
-				urlLoaderMap.addEventListener(Event.COMPLETE, function (eventMap:Event):void{
-					var retXMLMap:XML =  XML(eventMap.target.data);
-					//Alert.show(retXMLMap.toXMLString());
-					agoraMap.ID = retXMLMap.@ID;
-					
-					var urlRequest:URLRequest = new URLRequest;
-					urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
-					var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+agoraMap.getAP());
-					urlRequest.data = urlRequestVars;
-					urlRequest.method = URLRequestMethod.GET;
-					var urlLoader:URLLoader = new URLLoader;
-					urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
-						var xml:XML = XML(event.target.data);
-						var argumentPanel:ArgumentPanel = new ArgumentPanel;
-						argumentPanel._initXML = xml;
-						argumentPanel.gridX = 2;
-						argumentPanel.gridY = 3;
-						argumentPanel.firstClaim = true;
-						agoraMap.addChild(argumentPanel);
-						agoraMap.layoutManager.registerPanel(argumentPanel);
-						argumentPanel.addEventListener(FlexEvent.CREATION_COMPLETE,function(event:FlexEvent):void{
-							dispatchEvent(new ClaimAddedEvent(ClaimAddedEvent.CLAIM_ADDED,argumentPanel,true,false));
-						});
-					});
-					urlLoader.load(urlRequest);
-				});
-				urlLoaderMap.load(urlRequestMap);
-			}
-			
-			
-			public function addClaim():void 
-			{
-				addPanelToMap();
-				this.addEventListener(ClaimAddedEvent.CLAIM_ADDED,function (event:ClaimAddedEvent):void{
-					canvas.visible = true;
-					var argumentPanel:ArgumentPanel = event.argumentPanel;
-					argumentPanel.displayTxt.text  = "[Enter your claim]";
-					argumentPanel.addEventListener("UserInteractionBegan",function(event:Event):void{canvas.visible=false;});
-					canvas.setStyle("backgroundColor",uint("0x99FF99"));
-					canvas.x = 25 * 3 + 250;
-					canvas.y = 25 * 2;
-					
-				});
-			}
-			
-			public function initApp():void
-			{
-				trace(agora.height);
-				/*
-				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
-				ArgumentPanel.parentMap = agoraMap;
-				gotoMenuBtn.addEventListener(MouseEvent.CLICK,saveMap);
-				//discardChangesBtn.addEventListener(MouseEvent.CLICK,discardChanges);			
-				dispatchEvent(new Event("created",true,false));
-				*/
-			}
 		]]>
 	</fx:Script>
 </mx:Canvas>

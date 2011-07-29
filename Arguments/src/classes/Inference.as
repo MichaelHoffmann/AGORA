@@ -102,10 +102,6 @@ package classes
 		}
 		///Getters and Setters
 		
-		override public function get stmt():String
-		{
-			return _displayStr;
-		}
 		
 		public function get displayStr():String
 		{
@@ -244,30 +240,6 @@ package classes
 			
 		}
 		
-		override public function addHandler(event:MouseEvent):void
-		{
-			if(implies)	
-			{
-				if(myschemeSel.selectedType!="If-then" && myschemeSel.selectedType != "Implies")
-				{
-					//TODO: translate
-					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
-					return;
-				}
-			}
-			else 
-			{
-				if(!implies && myschemeSel.selectedType != "Either-or")
-				{
-					//TODO: translate
-					Alert.show("This language type cannot be supported. Please change the language type before proceeding");
-					return;
-				}
-			}
-			argType.changeSchemeBtn.enabled = false;
-			super.addHandler(event);
-		}
-		
 		//This happens when the argument
 		//  scheme is fixed
 		public function changePossibleSchemes():void
@@ -315,93 +287,6 @@ package classes
 		
 		public function menuCreated(fe:FlexEvent):void
 		{ 
-			//Sometimes only one posisble scheme is possible.
-			//In those situations, they are created automatically, instead
-			//of giving the user a menu
-			var typeArr:Array = ["Modus Ponens","Modus Tollens","Conditional Syllogism","Disjunctive Syllogism","Not-All Syllogism"];
-			var optionsArr:Array = ["And","Or"];
-			if( (!claim.statementNegated) && (claim.inference != null || claim.userEntered))
-			{
-				typeArr.splice(typeArr.indexOf(ParentArg.MOD_TOL,0),1);
-				typeArr.splice(typeArr.indexOf(ParentArg.NOT_ALL_SYLL,0),1);
-			}
-			else if(claim.statementNegated && (claim.inference != null || claim.userEntered) )
-			{
-				typeArr = ["Modus Tollens", "Not-All Syllogism"];
-			}
-			if(!claim.multiStatement && (claim.inference != null || claim.userEntered == true) && !claim.statementNegated )
-			{
-				typeArr.splice(typeArr.indexOf(ParentArg.COND_SYLL,0),1);
-			}
-			else if(claim.multiStatement && claim.inference != null)
-			{
-				typeArr = [];
-				typeArr.splice(0,0,"Conditional Syllogism");
-			}
-			
-			//the first claim is not set to multistatement by default
-			if(claim.multiStatement)
-			{
-				//claim is a multistatement and claim is of type P->Q
-				//Only one possible scheme - conditional syllogism
-				if(claim.implies)
-				{
-					
-					if(!schemeSelected)
-					{
-						reasons[0].makeEditable();
-					}
-					//typeArr = ["Conditional Syllogism"];
-					//the language type is already determined
-					//It is that of the enabler.
-					//feasibility of adding is already checked
-					myschemeSel.selectedScheme = ParentArg.COND_SYLL;
-					if(claim is Inference){
-						var infClaim:Inference = Inference(claim);
-						myschemeSel.selectedType = infClaim.myschemeSel.selectedType;
-					}
-					else
-					{
-						myschemeSel.selectedType = claim.connectingStr;
-					}
-					//var array:Array = new Array;
-					//array.splice(0,0,infClaim,myschemeSel.selectedType);
-					//myschemeSel.typeSelector.dataProvider = array;
-					argType.changeSchemeBtn.label=ParentArg.COND_SYLL;
-					if(claim.inference != null){
-						argType.changeSchemeBtn.enabled = false;
-					}
-					myArg = new ConditionalSyllogism;
-					myArg.isLanguageExp = true;
-					myArg.inference = this;
-					myArg.addInitialReasons();
-					myArg.createLinks();
-					selectedBool = true;
-					schemeSelected = true;
-					parentMap.option.visible = false;
-					claim.removeEventListeners();
-					this.visible = true;
-				}
-				else
-				{
-					typeArr = ["Constructive Dilemma"];
-				}
-				
-			}
-			myschemeSel.scheme = typeArr;
-			var sublist:List = myschemeSel.typeSelector;
-			var oplist:List = myschemeSel.andor;
-			oplist.dataProvider = optionsArr;
-			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER,displayTypes);
-			myschemeSel.mainSchemes.addEventListener(ListEvent.ITEM_CLICK,setArgScheme);
-			sublist.addEventListener(ListEvent.ITEM_CLICK,setType);
-			sublist.addEventListener(ListEvent.ITEM_ROLL_OVER,displayOption);
-			oplist.addEventListener(ListEvent.ITEM_CLICK,setOption);
-			oplist.addEventListener(ListEvent.ITEM_ROLL_OVER,statementOption);
-			myschemeSel.addEventListener(MouseEvent.MOUSE_OVER,bringForward);
-			myschemeSel.addEventListener(MouseEvent.MOUSE_OUT,goBackward);
-			setRuleState();
-			changePossibleSchemes();
 		}
 		
 		public function setArgScheme(event:ListEvent):void
@@ -440,6 +325,7 @@ package classes
 		
 		protected function goToReason(event:FlexEvent):void
 		{
+			/*
 			var panel:ArgumentPanel = ArgumentPanel(event.target);
 			panel.makeEditable();
 			if(reasons.length > 0)
@@ -452,6 +338,7 @@ package classes
 					}
 				}
 			}
+			*/
 		}
 		
 		protected function reasonInserted(event:Event):void{
@@ -592,21 +479,6 @@ package classes
 		}
 		override public function makeEditable():void
 		{
-		}
-		
-		override public function onArgumentPanelCreate(e:FlexEvent):void
-		{
-			super.onArgumentPanelCreate(e);
-			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
-			displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
-			displayTxt.visible = true;
-			displayTxt.toolTip = "The statement in this text box is called the \"enabler\". An \"enabler\" is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."
-			bottomHG.visible = true;
-			doneHG.visible = false;
-			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
-			multiStatement = true;
-			group.removeElement(msVGroup);
-			setIDs();
 		}
 		
 		public function chooseEnablerText():void
@@ -791,7 +663,7 @@ package classes
 			
 			myschemeSel.visible = false;
 			displayStr = myArg.correctUsage();
-			input1.forwardUpdate();
+			//input1.forwardUpdate();
 			schemeSelected = true;
 			parentMap.helpText.visible = false;
 		}
@@ -835,75 +707,6 @@ package classes
 			this.argType.visible = true;
 		}
 		
-		override protected function deleteThis(event:MouseEvent):void
-		{
-			this.selfDestroy();
-		}
 		
-		override public function deleteLinks():void
-		{
-			//Need not worry about incoming links from reason.
-			//Reasons are deleted before deleting hte inference
-			//This function cleans up links to a deleted node
-			//from ndoes on the map
-			deleteLinkFromArgumentPanel(input1,claim);
-			for(var i:int = 0; i < inputs.length; i++)
-			{
-				deleteLinkFromArgumentPanel(inputs[i],claim);
-			}
-			for(i=0; i<input.length; i++)
-			{
-				deleteLinkFromArgumentPanel(input[i],claim);
-			}
-		}
-		
-		override public function inferenceDeleted():void
-		{
-			if(this.rules.length == 0)
-			{
-				if(!argType.changeSchemeBtn.enabled){
-					argType.changeSchemeBtn.enabled = true;
-				}
-			}
-		}
-		
-		override public function selfDestroy():void
-		{
-			//it may also be supported by further arguments
-			for(var i:int=rules.length-1; i >= 0; i--)
-			{
-				//delete(rules[i]);
-				rules[i].selfDestroy();
-			}
-			for(i = reasons.length-1; i >= 0; i--)
-			{
-				//delete(reasons[i]);
-				reasons[i].selfDestroy();
-			}
-			claim.rules.splice(claim.rules.indexOf(this),1);
-			//remove menu panel
-			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(argType),1);
-			deleteLinks();
-			parentMap.removeChild(argType);
-			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this),1);
-			parentMap.removeChild(this);
-			trace(this + ' destroyed');
-			claim.inferenceDeleted();
-		}
-		
-		override public function setIDs():void
-		{
-			if(_initXML == null)
-				return;
-			
-			try{
-				ID = _initXML.node[0].@ID;
-				connID = _initXML.connection.@ID;
-			}
-			catch(e:Error)
-			{
-				trace(e);
-			}
-		}
 	}
 }
