@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="components.MyMapNameSkin">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 skinClass="Skins.MyMapNameSkin"
+		 creationComplete="panel_creationCompleteHandler(event)"
+		 >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -14,6 +17,8 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.managers.FocusManager;
 			
 			import spark.components.Button;
 			import spark.components.CheckBox;
@@ -46,10 +51,14 @@
 				{
 					thisMapButton.label = mapName;
 					thisMapButton.name = mapId.toString();
-					thisMapButton.addEventListener(MouseEvent.CLICK, function (event:Event):void{ FlexGlobals.topLevelApplication.displayMap(thisMapButton)});
 				}
 			}
 			
+
+			protected function panel_creationCompleteHandler(event:FlexEvent):void
+			{
+			}
+
 		]]>
 	</fx:Script>
 </s:Panel>

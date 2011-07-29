@@ -35,11 +35,7 @@ package logic
 			myname = DIS_SYLL;
 			_dbType = "DisjSyl";
 		}
-		
-		override public function setIsExp():void{
-			_isLanguageExp = true;
-		}
-		
+/*		
 		override public function get dbType():String
 		{
 			return _dbType;
@@ -115,5 +111,6 @@ package logic
 			}
 			return output;
 		}
+		*/
 	}
 }

@@ -22,7 +22,7 @@
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
 		   xmlns:classes="classes.*"
-		   width="1440" height="700" creationComplete="init();">
+		   creationComplete="init();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -65,26 +65,26 @@
 	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
+			import Controller.ArgumentController;
+			
+			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			
 			import spark.components.Group;
 			import classes.Language;
 			
 			public function startWithClaim():void {
-				var map:Map = new Map;
-				var group:Group = Group(this.parent);
-				group.addElement(map);
-				map.addEventListener("created",function(event:Event):void{map.addClaim();});
-				group.removeElement(this);
+				ArgumentController.getInstance().startWithClaim();
 			}
 			
 			public function startWithScheme():void {
-				var map:Map = new Map;
+				
+/* 				var map:Map = new Map;
 				var group:Group = Group(this.parent);
 				group.addElement(map);
 				map.addEventListener("created",function(event:Event):void{map.addEmptyArgument();});	
 				group.removeElement(this);
-			}
+ */			}
 			
 			public function init():void {
 				argumentPaste.text=Language.lookup("PasteArgument");

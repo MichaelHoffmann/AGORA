@@ -18,12 +18,13 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:classes="classes.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()">
 		
-	<s:Label text="Welcome to Agora! Please choose one of the following tasks to continue..."
+	<s:Label text="Welcome to AGORA-net! Please choose one of the following tasks to continue.."
 			 x="10" y="10"
 			 fontWeight="bold" 
 			 fontFamily="Verdana"  
@@ -45,6 +46,7 @@
 				 textAlign="center" 
 				 width="184"
 				 click="startWithScheme()"/>
+	
 	<classes:DynamicTextArea id="conceptStart"
 							 x="658" 
 							 y="67" 
@@ -61,14 +63,8 @@
 	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
-		public function startWithClaim():void {
-			navigateToURL(new URLRequest('Arguments.html'),'_self') 	
-		}
-			
-		public function startWithScheme():void {
-			navigateToURL(new URLRequest('startScheme.html'),'_self') 
-		}
-			
+	
+
 		public function init():void {
 			argumentPaste.text=Language.lookup("PasteArgument") + "(under construction)"; 
 			//TODO: construct this and/or get translation for "Under construction" 

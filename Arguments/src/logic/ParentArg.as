@@ -160,8 +160,9 @@ package logic
 				reasons[i].input1.forwardList.push(inference.input[i+1]);
 				inference.input[i+1].forwardList.push(inference.inputs[1]);
 			}
-			inference.implies = true;
+			//inference.implies = true;
 		}
+		//inference.implies = true;
 		public function correctUsage():String { return "";}
 	}
 }
