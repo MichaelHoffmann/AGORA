@@ -14,6 +14,8 @@ package Model
 		
 		private var _hasOwn:Boolean;
 		
+		public static const DEPENDENT_TEXT:String = "$#$DependentText$#$";
+		
 		public function SimpleStatementModel(target:IEventDispatcher=null)
 		{
 			super(target);
@@ -65,6 +67,12 @@ package Model
 			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
 			simpleStatement.ID = obj.ID;
 			simpleStatement.text = obj.text;
+			if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
+				simpleStatement.hasOwn = false;
+			}
+			else{
+				simpleStatement.hasOwn = true;
+			}
 			return simpleStatement;
 		}
 	}

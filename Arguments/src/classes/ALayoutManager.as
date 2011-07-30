@@ -35,7 +35,7 @@ package classes
 			yArgDistances = 10;
 			yArgDisplay  = 7;
 		}
-		
+		/*
 		public function alignReasons(reason:ArgumentPanel,tmpY:int):void
 		{
 			//two conditions
@@ -58,6 +58,7 @@ package classes
 			}
 			layoutComponents();
 		}
+		*/
 		
 		public function unregister(panel:ArgumentPanel):void
 		{
@@ -82,6 +83,7 @@ package classes
 		
 		public function moveConnectedPanels(claim:ArgumentPanel,diffX:int, diffY:int):void
 		{
+			/*
 			if(claim is Inference){
 				var inference:Inference = claim as Inference;
 				alignReasons(inference.reasons[0],inference.reasons[0].gridY + diffY);
@@ -111,6 +113,7 @@ package classes
 			}
 
 			layoutComponents();
+			*/
 		}
 		
 		public function addSavedPanel(panel:GridPanel):void

@@ -69,12 +69,14 @@ package classes
 		}
 		
 		private function menuPanelCreated(event:FlexEvent):void{
+			/*
 			try{
 				gridX = inference._initXML.connection[0].@x;
 				gridY = inference._initXML.connection[1].@y;
 			}catch(e:Error){
 				trace(e);
 			}
+			*/
 		}
 		
 		public function beginDrag( mEvent:MouseEvent):void

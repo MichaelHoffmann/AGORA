@@ -96,9 +96,10 @@ package classes
 			}
 			return xml;
 		}
-		
+		/*
 		public function getConnection( claim:ArgumentPanel):XML
 		{
+			
 			var coordinate:Coordinate = new Coordinate;
 			var argTypeCoordinate:Coordinate = new Coordinate;
 			var reasonCoordinate:Coordinate = new Coordinate;
@@ -107,16 +108,17 @@ package classes
 			coordinate.gridY = claim.gridY;
 			
 			//First rule
-			if(claim.rules.length == 0)
+			//if(claim.rules.length == 0)
 			{
 				coordinate.gridX += Math.ceil(claim.height / layoutManager.uwidth ) + 2;
 				coordinate.gridY +=  Math.ceil(claim.width / layoutManager.uwidth ) + 2;
 			}
 				//Not First Rule
-			else{
-				var lastInference:Inference = claim.rules[claim.rules.length - 1];
-				var lastInferenceGridX:int  = lastInference.gridX + layoutManager.getGridSpan(lastInference.height);
-				var lastReason:ArgumentPanel = lastInference.reasons[lastInference.reasons.length - 1];
+			//else
+			{
+			//	var lastInference:Inference = claim.rules[claim.rules.length - 1];
+			//	var lastInferenceGridX:int  = lastInference.gridX + layoutManager.getGridSpan(lastInference.height);
+			//	var lastReason:ArgumentPanel = lastInference.reasons[lastInference.reasons.length - 1];
 				var lastReasonGridX:int = lastReason.gridX + layoutManager.getGridSpan(lastReason.height);
 				var max:int;
 				
@@ -184,7 +186,7 @@ package classes
 			//add a connection
 			var newConnXML:XML = xml.connection[0];
 			newConnXML.@TID = tempID;
-			newConnXML.@targetnodeID = claim.ID;
+			//newConnXML.@targetnodeID = claim.ID;
 			for(i=0; i<nodeList.length(); i++)
 			{
 				var sourcenodeXML:XML = <sourcenode />;
@@ -194,6 +196,7 @@ package classes
 			}
 			return xml;
 		}
+		*/
 		
 		public function getAddReason(inference:Inference):XML
 		{
@@ -240,7 +243,7 @@ package classes
 			connection.@type = inference.myArg.dbType;
 			connection.@x = inference.argType.gridX;
 			connection.@y = inference.argType.gridY;
-			connection.@targetnode = inference.claim.ID;
+			//connection.@targetnode = inference.claim.ID;
 			//add a sourcenode to the connection
 			var sourcenode:XML = <sourcenode />;
 			sourcenode.@TID = tempID;
@@ -284,6 +287,7 @@ package classes
 		
 		public function handleDrop(dragEvent:DragEvent):void
 		{	
+			/*
 			try{
 				
 				var currentStage:Canvas = Canvas(dragEvent.currentTarget);
@@ -356,12 +360,14 @@ package classes
 						layoutManager.moveConnectedPanels(argdisplay.inference,diffX,0);
 					}
 				}
+		
 				
 			}catch(error:Error)
 			{
 				Alert.show(error.message.toString());
 			}
 			layoutManager.layoutComponents();
+			*/
 		}
 		
 		override protected function commitProperties():void{
@@ -421,6 +427,7 @@ package classes
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			
+			/*
 			
 			for(var i:int=0; i<panelList.length; i++)
 			{
@@ -473,7 +480,9 @@ package classes
 						drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 + 5);
 					}	
 				}
+			
 			}
+			*/
 		}		
 	}
 }

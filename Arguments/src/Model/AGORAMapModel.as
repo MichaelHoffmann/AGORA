@@ -63,37 +63,37 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
-
+		
 		public function get connectionListHash():Dictionary
 		{
 			return _connectionListHash;
 		}
-
+		
 		public function set connectionListHash(value:Dictionary):void
 		{
 			_connectionListHash = value;
 		}
-
+		
 		public function get newConnections():ArrayCollection
 		{
 			return _newConnections;
 		}
-
+		
 		public function set newConnections(value:ArrayCollection):void
 		{
 			_newConnections = value;
 		}
-
+		
 		public function get newPanels():ArrayCollection
 		{
 			return _newPanels;
 		}
-
+		
 		public function set newPanels(value:ArrayCollection):void
 		{
 			_newPanels = value;
 		}
-
+		
 		public function get panelListHash():Dictionary
 		{
 			return _panelListHash;
@@ -227,28 +227,15 @@ package Model
 				//update timestamp
 				timestamp = map.timestamp;
 				
-				//Form a map of textboxes
-				var textboxHash:Object = new Object;
-				if(map.hasOwnProperty("textbox")){
-					var simpleStatement:SimpleStatementModel = null;
-					if(map.textbox is ArrayCollection){
-						for each(var obj:Object in map.textbox){
-							simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(obj);
-							textboxHash[obj.ID] = simpleStatement;
-						}
-					}
-					else{
-						simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textbox);
-						textboxHash[map.textbox.ID] = simpleStatement;
-					}
-				}
-				
 				//Form a map of nodes
+				var obj:Object;
 				var nodeHash:Object = new Object;
+				var textboxHash:Object = new Object;
 				if(map.hasOwnProperty("node")){
 					var statementModel:StatementModel = null;
 					if(map.node is ArrayCollection){
 						for each(obj in map.node){
+							if(obj.deleted == "0"){
 							if(obj.Type == "Inference"){
 								statementModel = InferenceModel.createStatementFromObject(obj);
 								(statementModel as InferenceModel).typed = obj.Typed == 1? true:false;
@@ -260,7 +247,9 @@ package Model
 							statementModel.xgrid = obj.x;
 							statementModel.ygrid = obj.y;
 							nodeHash[obj.ID] = statementModel;
+							}
 						}	
+							
 					}
 					else{
 						obj = map.node;
@@ -341,9 +330,35 @@ package Model
 						}
 					}
 				}
+				//read and set text
+				if(map.hasOwnProperty("node")){
+					var simpleStatement:SimpleStatementModel;
+					var statementModel:StatementModel;
+					if(map.node is ArrayCollection){
+						for each (var nodeO:Object in map.node){
+							if(nodeO.hasOwnProperty("nodetext")){
+								var nodetext:Object;
+								if(nodeO.nodetext is ArrayCollection){
+									for each(nodetext in nodeO.nodetext){
+										statementModel = nodeHash[nodeO.ID];
+										statementModel.nodeTextIDs.push(int(nodetext.ID));
+										simpleStatement = new SimpleStatementModel();
+										simpleStatement.ID = nodetext.textboxID;
+										statementModel.statements.push(simpleStatement);
+									}
+								}
+								else{
+									
+								}
+							}	
+						}
+					}
+					else{
+						
+					}
+				}
 				
-				//Set Text for every node
-				//Add new elements to Model
+				//add new elements to Model
 				for each(var node:StatementModel in nodeHash){
 					newPanels.addItem(node);
 					panelListHash[node.ID] = node;

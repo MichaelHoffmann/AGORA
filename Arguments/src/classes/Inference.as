@@ -126,8 +126,6 @@ package classes
 		{
 			_displayStr = value;
 			displayTxt.text = _displayStr;
-			input1.text = _displayStr;
-			displayTxt.height = input1.height;
 			invalidateProperties();
 			invalidateSize();
 			invalidateDisplayList();
@@ -240,18 +238,6 @@ package classes
 		{
 			//seting type makes sense only after a particular scheme has been chosen
 			//before this, reasons may be empty
-			if(schemeSelected){
-				if( (reasons.length > 1 || reasons[0].rules.length > 0) && schemeSelected)
-				{
-					typed = true;
-				}
-				else 
-				{
-					typed = false;
-					
-				}	
-			}
-			
 		}
 		
 		//This happens when the argument
@@ -403,7 +389,6 @@ package classes
 			
 			
 			var tmp:ArgumentPanel = new ArgumentPanel();
-			tmp._initXML = reasonXML;
 			for each( var lXML:XML in responseXML.load.map.node){
 				if( lXML.@ID == responseXML.insert.map.node[0].@ID){
 					tmp.gridX = lXML.@x;
@@ -429,9 +414,6 @@ package classes
 				var inferenceRule:Inference = this;
 				tmpInput.panelReference = inferenceRule;
 				inferenceRule.input.push(tmpInput);		
-				
-				//set the id
-				tmpInput.id = tmp.input1.id;
 				
 				//binding
 				//tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
