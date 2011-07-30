@@ -190,13 +190,7 @@ package classes
 			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
-		public function setX(value:int):void{
-			y = value * AGORAParameters.getInstance().gridWidth;
-		}
 		
-		public function setY(value:int):void{
-			x = value * AGORAParameters.getInstance().gridWidth;
-		}
 		
 		protected function onCreationComplete(event:FlexEvent):void{
 			panelSkin = this.skin as PanelSkin;
@@ -400,7 +394,7 @@ package classes
 
 		override protected function commitProperties():void
 		{
-			super.commitProperties();	
+			super.commitProperties();
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void

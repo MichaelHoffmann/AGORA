@@ -19,6 +19,8 @@ package Events
 		public static const MAP_CREATED:String = "MapCreated";
 		public static const MAP_CREATION_FAILED:String = "MapCreationFailed";
 		public static const FIRST_CLAIM_ADDED:String = "FirstClaimAdded";
+		public static const MAP_LOADED:String = "MapLoaded";
+		public static const MAP_LOADING_FAILED:String = "MapLoadingFailed";
 		
 		public var xmlData:XML;
 		public var eventData:Object;

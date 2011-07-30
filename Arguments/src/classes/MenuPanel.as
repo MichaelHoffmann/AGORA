@@ -1,5 +1,7 @@
 package classes
 {
+	import Model.ArgumentTypeModel;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.containers.Panel;
@@ -16,6 +18,7 @@ package classes
 	
 	public class MenuPanel extends GridPanel
 	{
+		private var _model:ArgumentTypeModel;
 		public var vgroup:VGroup;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
@@ -29,6 +32,17 @@ package classes
 			width = 150;
 			this.setStyle("chromeColor",uint("0xdddddd"));
 		}
+
+		public function get model():ArgumentTypeModel
+		{
+			return _model;
+		}
+
+		public function set model(value:ArgumentTypeModel):void
+		{
+			_model = value;
+		}
+
 		override protected function createChildren():void
 		{
 			super.createChildren();

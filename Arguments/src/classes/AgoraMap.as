@@ -4,6 +4,9 @@ package classes
 	import Controller.ArgumentController;
 	import Controller.LoadController;
 	
+	import Model.AGORAModel;
+	import Model.ArgumentTypeModel;
+	import Model.InferenceModel;
 	import Model.StatementModel;
 	
 	import components.ArgSelector;
@@ -14,6 +17,7 @@ package classes
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -27,6 +31,7 @@ package classes
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
+	import mx.collections.ArrayCollection;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.core.DragSource;
@@ -45,21 +50,20 @@ package classes
 		private static var _tempID:int;
 		public var initXML:XML;
 		public static var dbTypes:Array = ["MP","MT","DisjSyl","NotAllSyl","CS", "CD"];
-		public var timestamp:String;
-		public var newPanels:Vector.<StatementModel>;
 		public var timer:Timer;
+		
+		public var panelsHash:Dictionary;
 		
 		
 		public function AgoraMap()
 		{
-			newPanels = new Vector.<StatementModel>;
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
 			addEventListener(FlexEvent.CREATION_COMPLETE, mapCreated);
 			timer = new Timer(30000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
-			_tempID = 0;
+			panelsHash = new Dictionary;
 		}
 		
 
@@ -361,16 +365,35 @@ package classes
 		}
 		
 		override protected function commitProperties():void{
-			for(var i:int=0; i<newPanels.length; i++){
-				var statementModel:StatementModel = newPanels[i];
-				var argumentPanel:ArgumentPanel = new ArgumentPanel;
-				argumentPanel.statementModel = newPanels[i];
-				addElement(argumentPanel);
-				
-				var xWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setX, argumentPanel.statementModel, "xgrid", true);
-				var yWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setY, argumentPanel.statementModel, "ygrid", true);
-				
+			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
+			for(var i:int=0; i< newPanels.length; i++){
+				if(newPanels[i] is InferenceModel){
+					var inference:Inference = new Inference;
+					inference.model = newPanels[i];
+					panelsHash[inference.model.ID] = inference;
+					var xWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(inference.setX, inference.model, "xgrid", true);
+					var yWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(inference.setY, inference.model, "ygrid", true);
+					addChild(inference);
+				}
+				else if(newPanels[i] is StatementModel){
+					var argumentPanel:ArgumentPanel = new ArgumentPanel;
+					argumentPanel.statementModel = newPanels[i];
+					var xWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setX, argumentPanel.statementModel, "xgrid", true);
+					var yWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setY, argumentPanel.statementModel, "ygrid", true);
+					addChild(argumentPanel);
+				}
 			}
+			var newMenuPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newConnections;
+			for each(var argumentTypeModel:ArgumentTypeModel in newMenuPanels){
+				var menuPanel:MenuPanel = new MenuPanel;
+				menuPanel.model = argumentTypeModel;
+				var xWatcherSetterMenuPanel:ChangeWatcher = BindingUtils.bindSetter(menuPanel.setX, menuPanel.model, "xgrid", true);
+				var yWatcherSetterMenuPanel:ChangeWatcher = BindingUtils.bindSetter(menuPanel.setY, menuPanel.model, "ygrid", true);
+				addChild(menuPanel);
+			}
+			
+			LoadController.getInstance().mapUpdateCleanUp();
+			
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void

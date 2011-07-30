@@ -12,6 +12,9 @@ package ValueObjects
 		public var loadMapURL:String;
 		
 		public var gridWidth:int;
+		
+		//prompts
+		public var MAP_LOADING_FAILED:String;
 	
 		
 		public function AGORAParameters()
@@ -24,6 +27,7 @@ package ValueObjects
 			insertURL = "http://agora.gatech.edu/dev/insert.php";
 			loadMapURL = "http://agora.gatech.edu/dev/load_map.php";
 			
+			MAP_LOADING_FAILED = "Error occured when loading map";
 			
 			
 			gridWidth = 25;

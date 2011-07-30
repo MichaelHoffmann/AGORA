@@ -16,6 +16,7 @@ package Model
 		public static const UNIVERSAL:String = "Universal";
 		public static const PARTICULAR:String = "Particular";
 		
+		private var _author:String;
 		private var _statement:SimpleStatementModel;
 		private var _statements:Vector.<SimpleStatementModel>;
 		private var _negated:Boolean;
@@ -42,6 +43,16 @@ package Model
 		
 		//--------------------Getters and Setters------------------//
 		
+		public function get author():String
+		{
+			return _author;
+		}
+
+		public function set author(value:String):void
+		{
+			_author = value;
+		}
+
 		public function get ygrid():int
 		{
 			return _ygrid;

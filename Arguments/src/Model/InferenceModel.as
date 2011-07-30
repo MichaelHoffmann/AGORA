@@ -1,13 +1,31 @@
 package Model
 {
-	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
-	
-	public class InferenceModel extends EventDispatcher
+	public class InferenceModel extends StatementModel
 	{
-		public function InferenceModel(target:IEventDispatcher=null)
+		private var _typed:Boolean;
+		
+		public function InferenceModel()
 		{
-			super(target);
+			super();
 		}
+		
+		//---------------------- Forming StatmentModels ---------------//
+
+		public function get typed():Boolean
+		{
+			return _typed;
+		}
+
+		public function set typed(value:Boolean):void
+		{
+			_typed = value;
+		}
+
+		public static function createStatementFromObject(obj:Object):StatementModel{
+			var statementModel:InferenceModel = new InferenceModel;
+			statementModel.ID = obj.ID;
+			return statementModel;
+		}
+		
 	}
 }

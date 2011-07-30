@@ -14,6 +14,8 @@ package logic
 	public class ParentArg {
 		
 		private static var instance:ParentArg;
+		private  var _logicHash:Object;
+		
 		
 		public var _isLanguageExp:Boolean;
 		public var myname:String;
@@ -66,8 +68,55 @@ package logic
 		
 		public function ParentArg(){
 			instance = this;
+			//Modus Ponens 
+			_logicHash[ParentArg.MPIfThen] = ModusPonens.getInstance();
+			_logicHash[ParentArg.MPimplies]  = ModusPonens.getInstance();
+			_logicHash[ParentArg.MPnecessary] = ModusPonens.getInstance();
+			_logicHash[ParentArg.MPonlyif] = ModusPonens.getInstance();
+			_logicHash[ParentArg.MPsufficient] = ModusPonens.getInstance();
+			_logicHash[ParentArg.MPwhenever] = ModusPonens.getInstance();
+			
+			//Modus Tollens
+			_logicHash[ParentArg.MTifthen] = ModusTollens.getInstance();
+			_logicHash[ParentArg.MTimplies] = ModusTollens.getInstance();
+			_logicHash[ParentArg.MTnecessary] = ModusTollens.getInstance();
+			_logicHash[ParentArg.MTonlyif] = ModusTollens.getInstance();
+			_logicHash[ParentArg.MTonlyiffor] = ModusTollens.getInstance();
+			_logicHash[ParentArg.MTsufficient] = ModusTollens.getInstance();
+			_logicHash[ParentArg.MTwhenever] = ModusTollens.getInstance();
+			
+			//Disjunctive Syllogism
+			_logicHash[ParentArg.DisjSyl] = DisjunctiveSyllogism.getInstance();
+			
+			//Equivalence
+			_logicHash[ParentArg.EQ] = Equivalence.getInstance();
+			_logicHash[ParentArg.EQiff] = Equivalence.getInstance();
+			_logicHash[ParentArg.EQnecsuf] = Equivalence.getInstance();
+			
+			//Not-All Syllogism
+			_logicHash[ParentArg.NotAllSyll] = NotAllSyllogism.getInstance();
+			
+			//Conditional Syllogism
+			_logicHash[ParentArg.CSifthen] = ConditionalSyllogism.getInstance();
+			_logicHash[ParentArg.CSimplies] = ConditionalSyllogism.getInstance();
+			
+			//Constructive Dilemma
+			_logicHash[ParentArg.CDaltclaim] = ConstructiveDilemma.getInstance();
+			_logicHash[ParentArg.CDpropclaim] = ConstructiveDilemma.getInstance();
+			
+			
 		}
 		
+		public function get logicHash():Object
+		{
+			return _logicHash;
+		}
+
+		public function set logicHash(value:Object):void
+		{
+			_logicHash = value;
+		}
+
 		public static function getInstance():ParentArg{
 			if(instance == null){
 				instance = new ParentArg;
@@ -116,10 +165,19 @@ package logic
 		}
 		
 		public var mySelector:ArgSelector;	// reference to be moved from Inference to here - specific argscheme
+	
+		public function deleteLinks():void{
+			
+		}
 		
+		public function link():void{
+			
+		}
 		
+		/*
 		public function deleteLinks():void
 		{
+			
 			var dta:DynamicTextArea;
 			for(var i:int=0; i < inference.input.length; i++)
 			{
@@ -160,6 +218,7 @@ package logic
 			}
 			dta.forwardList.push(box);
 		}
+		*/
 		
 		public function addInitialReasons():void{};
 		

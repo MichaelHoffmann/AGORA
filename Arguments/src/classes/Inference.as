@@ -1,5 +1,7 @@
 package classes
 {
+	import Model.InferenceModel;
+	
 	import components.ArgSelector;
 	import components.HelpText;
 	
@@ -35,6 +37,8 @@ package classes
 	
 	public class Inference extends ArgumentPanel
 	{
+		
+		private var _model:InferenceModel;
 		//temporary variable for generating temporary permanent ids
 		public static var connections:int;
 		//list of reasons
@@ -103,6 +107,16 @@ package classes
 		///Getters and Setters
 		
 		
+		public function get model():InferenceModel
+		{
+			return _model;
+		}
+
+		public function set model(value:InferenceModel):void
+		{
+			_model = value;
+		}
+
 		public function get displayStr():String
 		{
 			return _displayStr;
@@ -353,11 +367,13 @@ package classes
 			urlRequest.url = "http://agora.gatech.edu/dev/load_map.php";
 			var timestamp:String;
 			
+			/*
 			if(parentMap.timestamp == null){
 				timestamp = "0";
 			}else{
 				timestamp = parentMap.timestamp;
 			}
+			*/
 			
 			var urlRequestVars:URLVariables = new URLVariables("map_id="+parentMap.ID + "&" + "timestamp=" + timestamp);
 			urlRequest.data = urlRequestVars;

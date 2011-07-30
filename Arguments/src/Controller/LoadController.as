@@ -4,6 +4,10 @@ package Controller
 	
 	import Model.AGORAModel;
 	
+	import ValueObjects.AGORAParameters;
+	
+	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 
 	public class LoadController
@@ -13,6 +17,9 @@ package Controller
 		
 		public function LoadController(singletonEnforcer:SingletonEnforcer)
 		{
+			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.MAP_LOADED, onMapLoaded);
+			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.MAP_LOADING_FAILED, onMapLoadingFailed);
+			
 			instance = this;
 			model = AGORAModel.getInstance();
 		}
@@ -30,11 +37,23 @@ package Controller
 			model.agoraMapModel.loadMapModel();
 		}
 		
-		protected function onMapDataFetched(event:AGORAEvent):void{
+		protected function onMapLoaded(event:AGORAEvent):void{
+			trace("map loaded");
+			FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
+			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.stop();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.start();
-			trace('onMapDataFetched called');
-			
+		}
+		
+		protected function onMapLoadingFailed(event:AGORAEvent):void{
+			Alert.show(AGORAParameters.getInstance().MAP_LOADING_FAILED);
+		}
+	
+		public function mapUpdateCleanUp():void{
+			var newPanels:ArrayCollection = model.agoraMapModel.newPanels;
+			newPanels.removeAll();
+			var newConnections:ArrayCollection = model.agoraMapModel.newConnections;
+			newConnections.removeAll();
 		}
 
 	}

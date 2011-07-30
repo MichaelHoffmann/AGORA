@@ -1,6 +1,10 @@
 package classes
 {
+	import ValueObjects.AGORAParameters;
+	
 	import flash.events.MouseEvent;
+	
+	import mx.controls.Alert;
 	
 	import spark.components.Panel;
 	
@@ -24,5 +28,15 @@ package classes
 		{
 			super.createChildren();
 		}
+		
+		public function setX(value:int):void{
+			y = value * AGORAParameters.getInstance().gridWidth;
+			Alert.show(y.toString());
+		}
+		
+		public function setY(value:int):void{
+			x = value * AGORAParameters.getInstance().gridWidth;
+		}
+		
 	}
 }

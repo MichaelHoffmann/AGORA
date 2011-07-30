@@ -3,12 +3,18 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
+	import logic.ConditionalSyllogism;
+	import logic.DisjunctiveSyllogism;
+	import logic.ModusPonens;
+	import logic.ModusTollens;
+	import logic.NotAllSyllogism;
 	import logic.ParentArg;
 	
 	import mx.collections.ArrayCollection;
 	
 	public class ArgumentTypeModel extends EventDispatcher
 	{
+		private var _logicHash:Object;
 		private var _inferenceModel:InferenceModel;
 		private var _claimModel:StatementModel;
 		private var _reasonModels:Vector.<StatementModel>;
@@ -16,15 +22,50 @@ package Model
 		private var _languageTyped:Boolean;
 		private var _formed:Boolean;
 		private var _logicClass:ParentArg;
+		private var _dbType:String;
 		private var _argumentMenu:ArrayCollection;
 		private var _ID:int;
+		private var _xgrid:int;
+		private var _ygrid:int;
 		
 		public function ArgumentTypeModel(target:IEventDispatcher=null)
 		{
+		
 			super(target);
 		}
 
 		//-------------------- Getters and Setters -----------------------//
+
+		public function get dbType():String
+		{
+			return _dbType;
+		}
+
+		public function set dbType(value:String):void
+		{
+			_dbType = value;
+			logicClass = ParentArg.getInstance().logicHash[_dbType];
+		}
+
+		public function get ygrid():int
+		{
+			return _ygrid;
+		}
+
+		public function set ygrid(value:int):void
+		{
+			_ygrid = value;
+		}
+
+		public function get xgrid():int
+		{
+			return _xgrid;
+		}
+
+		public function set xgrid(value:int):void
+		{
+			_xgrid = value;
+		}
 
 		public function get ID():int
 		{
@@ -116,6 +157,13 @@ package Model
 			_inferenceModel = value;
 		}
 		
+		
+		//-------------------------- Creation mehtods ----------------------//
+		public static function createArgumentTypeFromObject(obj:Object):ArgumentTypeModel{
+			var argumentTypeModel:ArgumentTypeModel = new ArgumentTypeModel;
+			argumentTypeModel.ID = obj.ID;
+			return argumentTypeModel;
+		}
 		
 
 	}

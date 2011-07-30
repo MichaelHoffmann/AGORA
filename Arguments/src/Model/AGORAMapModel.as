@@ -8,6 +8,7 @@ package Model
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
 	import mx.rpc.events.FaultEvent;
@@ -16,7 +17,10 @@ package Model
 	
 	public class AGORAMapModel extends EventDispatcher
 	{	
-		private var _panelListHash:Object;
+		private var _panelListHash:Dictionary;
+		private var _connectionListHash:Dictionary;
+		private var _newPanels:ArrayCollection;
+		private var _newConnections:ArrayCollection;
 		
 		private var createMapService: HTTPService;
 		private var createNodeService: HTTPService;
@@ -50,18 +54,52 @@ package Model
 			loadMapService.addEventListener(ResultEvent.RESULT, onLoadMapModelResult);
 			loadMapService.addEventListener(FaultEvent.FAULT, onFault);
 			
-			panelListHash = new Object;
+			panelListHash = new Dictionary;
+			
+			newPanels = new ArrayCollection;
+			newConnections = new ArrayCollection;
 			timestamp = "0";
 		}
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
-		public function get panelListHash():Object
+
+		public function get connectionListHash():Dictionary
+		{
+			return _connectionListHash;
+		}
+
+		public function set connectionListHash(value:Dictionary):void
+		{
+			_connectionListHash = value;
+		}
+
+		public function get newConnections():ArrayCollection
+		{
+			return _newConnections;
+		}
+
+		public function set newConnections(value:ArrayCollection):void
+		{
+			_newConnections = value;
+		}
+
+		public function get newPanels():ArrayCollection
+		{
+			return _newPanels;
+		}
+
+		public function set newPanels(value:ArrayCollection):void
+		{
+			_newPanels = value;
+		}
+
+		public function get panelListHash():Dictionary
 		{
 			return _panelListHash;
 		}
 		
-		public function set panelListHash(value:Object):void
+		public function set panelListHash(value:Dictionary):void
 		{
 			_panelListHash = value;
 		}
@@ -142,10 +180,8 @@ package Model
 				statementModel.ID = map.node.ID;
 				statementModel.complexStatement = false;
 				
-				
 				//-------textboxes & nodetext----------//
 				var simpleStatement:SimpleStatementModel = null;
-				
 				
 				if(map.textbox is ArrayCollection){
 					trace("first claim as complex statement...");//shouldn't occur because there is no use case that allows this.
@@ -164,6 +200,7 @@ package Model
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(map.node.nodetext.ID);
 				}
+				statementModel.firstClaim = true;
 				
 			}catch(error:Error){
 				trace("OnAddFirstClaimResult: Error occurred in reading XML");
@@ -187,61 +224,140 @@ package Model
 			var map:Object = event.result.map;
 			
 			try{
-			//update timestamp
-			timestamp = map.timestamp;
-			
-			//Form a map of textboxes
-			var textboxHash:Object = new Object;
-			if(map.hasOwnProperty("textbox")){
-				var simpleStatement:SimpleStatementModel = null;
-				if(map.textbox is ArrayCollection){
-					for each(var obj:Object in map.textbox){
-						simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(obj);
-						textboxHash[obj.ID] = simpleStatement;
+				//update timestamp
+				timestamp = map.timestamp;
+				
+				//Form a map of textboxes
+				var textboxHash:Object = new Object;
+				if(map.hasOwnProperty("textbox")){
+					var simpleStatement:SimpleStatementModel = null;
+					if(map.textbox is ArrayCollection){
+						for each(var obj:Object in map.textbox){
+							simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(obj);
+							textboxHash[obj.ID] = simpleStatement;
+						}
+					}
+					else{
+						simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textbox);
+						textboxHash[map.textbox.ID] = simpleStatement;
 					}
 				}
-				else{
-					simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textbox);
-					textboxHash[map.textbox.ID] = simpleStatement;
-				}
-			}
-			
-			//Form a map of nodes
-			var nodeHash:Object = new Object;
-			if(map.hasOwnProperty("node")){
-				var statementModel:StatementModel = null;
-				if(map.node is ArrayCollection){
-					for each(obj in map.node){
-						statementModel = StatementModel.createStatementFromObject(obj);
+				
+				//Form a map of nodes
+				var nodeHash:Object = new Object;
+				if(map.hasOwnProperty("node")){
+					var statementModel:StatementModel = null;
+					if(map.node is ArrayCollection){
+						for each(obj in map.node){
+							if(obj.Type == "Inference"){
+								statementModel = InferenceModel.createStatementFromObject(obj);
+								(statementModel as InferenceModel).typed = obj.Typed == 1? true:false;
+							}else
+							{
+								statementModel = StatementModel.createStatementFromObject(obj);
+							}
+							statementModel.author = obj.Author;
+							statementModel.xgrid = obj.x;
+							statementModel.ygrid = obj.y;
+							nodeHash[obj.ID] = statementModel;
+						}	
+					}
+					else{
+						obj = map.node;
+						if(obj.Type == "Inference"){
+							statementModel = InferenceModel.createStatementFromObject(obj);
+							(statementModel as InferenceModel).typed = obj.Typed == 1? true:false;
+						}else
+						{
+							statementModel = StatementModel.createStatementFromObject(obj);
+						}
+						statementModel.author = obj.Author;
+						statementModel.xgrid = obj.x;
+						statementModel.ygrid = obj.y;
 						nodeHash[obj.ID] = statementModel;
-					}	
-				}
-				else{
-					statementModel = StatementModel.createStatementFromObject(map.node);
-					nodeHash[map.node.ID] = statementModel;
-				}
-			}
-			
-			//Form a map of connections
-			var connectionsHash:Object = new Object;
-			if(map.hasOwnProperty("connection")){
-				if(map.connection is ArrayCollection){
-					for each(obj in map.connection){
-						
 					}
 				}
-				else{
-					
+				
+				//Form a map of connections
+				var connectionsHash:Object = new Object;
+				if(map.hasOwnProperty("connection")){
+					var argumentTypeModel:ArgumentTypeModel;
+					if(map.connection is ArrayCollection){
+						for each(obj in map.connection){
+							//create a ArgumentTypeModel
+							if(obj.deleted != 0){
+								argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
+								argumentTypeModel.dbType = obj.type;
+								argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+								argumentTypeModel.xgrid = obj.x;
+								argumentTypeModel.ygrid = obj.y;
+								argumentTypeModel.typed = obj.typed == 1? true:false;
+								
+								if(obj.hasOwnProperty("sourcenode")){
+									if(obj.sourcenode is ArrayCollection){
+										for each(var argElements:Object in obj.sourcenode){
+											if(nodeHash[argElements.nodeID] is InferenceModel){
+												argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
+											}
+											else{
+												argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+											}
+										}	
+									}
+									else{
+										trace("error: Only one sourcenode found!");
+									}
+									argumentTypeModel.logicClass.link();
+								}		
+							}
+						}
+					}
+					else{
+						obj = map.connection;
+						if(obj.deleted != 0){
+							argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
+							argumentTypeModel.dbType = obj.type;
+							argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+							argumentTypeModel.xgrid = obj.x;
+							argumentTypeModel.ygrid = obj.y;
+							argumentTypeModel.typed = obj.typed == 1? true:false;
+							
+							if(obj.hasOwnProperty("sourcenode")){
+								if(obj.sourcenode is ArrayCollection){
+									for each(argElements in obj.sourcenode){
+										if(nodeHash[argElements.nodeID] is InferenceModel){
+											argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
+										}
+										else{
+											argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+										}
+									}	
+								}
+								else{
+									trace("error: Only one sourcenode found!");
+								}
+								argumentTypeModel.logicClass.link();
+							}		
+						}
+					}
 				}
-			}
-			
-			//Establish Links for the connections created
-			
-			
-			
-			//Set Text
+				
+				//Set Text for every node
+				//Add new elements to Model
+				for each(var node:StatementModel in nodeHash){
+					newPanels.addItem(node);
+					panelListHash[node.ID] = node;
+				}
+				
+				for each(var connection:ArgumentTypeModel in connectionsHash){
+					newConnections.addItem(connection);
+					connectionListHash[connection.ID] = connection;
+				}
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
+				
 			}catch(error:Error){
 				trace("Error in reading update to Map");
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
 			}
 			
 			
