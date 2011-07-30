@@ -3,6 +3,7 @@ package logic
 	import classes.ArgumentPanel;
 	public class ConstructiveDilemma extends ParentArg
 	{
+		private static var instance:ConstructiveDilemma;
 		
 		public function ConstructiveDilemma()
 		{
@@ -13,6 +14,14 @@ package logic
 			_dbType = "CD";
 			
 		}
+		
+		public static function getInstance():ConstructiveDilemma{
+			if(instance==null){
+				instance = new ConstructiveDilemma;
+			}
+			return instance;
+		}
+		
 		
 		override public function correctUsage():String {
 			var output:String = "";

@@ -13,6 +13,8 @@ package logic
 	
 	public class ParentArg {
 		
+		private static var instance:ParentArg;
+		
 		public var _isLanguageExp:Boolean;
 		public var myname:String;
 		//This is set by the Inference that creates it.
@@ -62,6 +64,17 @@ package logic
 		public static const CDpropclaim:String = "CDpropclaim";
 		public static const Unset:String = "Unset";
 		
+		public function ParentArg(){
+			instance = this;
+		}
+		
+		public static function getInstance():ParentArg{
+			if(instance == null){
+				instance = new ParentArg;
+			}
+			return instance;
+		}
+		
 		public function setIsExp():void{
 			if(inference.myschemeSel.selectedType != null){
 				for each(var langType:String in _expLangTypes){
@@ -104,10 +117,6 @@ package logic
 		
 		public var mySelector:ArgSelector;	// reference to be moved from Inference to here - specific argscheme
 		
-		public function ParentArg()
-		{
-			_dbType = "Unset";	
-		}
 		
 		public function deleteLinks():void
 		{

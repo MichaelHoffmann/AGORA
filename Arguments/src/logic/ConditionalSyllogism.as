@@ -8,10 +8,11 @@ package logic
 	
 	public class ConditionalSyllogism extends ParentArg
 	{		
-		
+		private static var instance:ConditionalSyllogism;
 		
 		public var built:Boolean;	
 		
+	
 		public function ConditionalSyllogism()
 		{
 			_langTypes = ["If-then","Implies"];
@@ -22,6 +23,14 @@ package logic
 			built = false;
 			// Both types here are expandable. like a chain rule
 		}
+		
+		public static function getInstance():ConditionalSyllogism{
+			if(instance == null){
+				instance = new ConditionalSyllogism;
+			}
+			return instance;
+		}
+		
 /*		
 		override public function addInitialReasons():void
 		{

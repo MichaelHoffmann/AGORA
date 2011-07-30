@@ -7,12 +7,20 @@ package logic
 
 	public class NotAllSyllogism extends ParentArg
 	{
+		private static var instance:NotAllSyllogism;
 		public function NotAllSyllogism()
 		{
 			myname = NOT_ALL_SYLL;
 			_dbType = "NotAllSyl";
 			_langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
 			_isLanguageExp = true;
+		}
+		
+		public static function getInstance():NotAllSyllogism{
+			if(instance==null){
+				instance = new NotAllSyllogism;
+			}
+			return instance;
 		}
 		
 		override public function setIsExp():void{

@@ -7,6 +7,8 @@ package logic
 	
 	public class DisjunctiveSyllogism extends ParentArg
 	{
+		private static var instance:DisjunctiveSyllogism;
+		
 		public function DisjunctiveSyllogism()
 		{
 			_langTypes = ["Either-or"];
@@ -14,6 +16,14 @@ package logic
 			myname = DIS_SYLL;
 			_dbType = "DisjSyl";
 		}
+		
+		public static function getInstance():DisjunctiveSyllogism{
+			if(instance == null){
+				instance = new DisjunctiveSyllogism;
+			}
+			return instance;
+		}
+		
 /*		
 		override public function get dbType():String
 		{

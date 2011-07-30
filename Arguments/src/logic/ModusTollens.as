@@ -8,6 +8,7 @@ package logic
 	{ 
 		public var andOr:String;
 		private var _isExp:Boolean;
+		private static var instance:ModusTollens;
 		
 		
 		public function ModusTollens()
@@ -18,6 +19,14 @@ package logic
 			myname = MOD_TOL;
 			_dbType = "MT";
 		}
+		
+		public static function getInstance():ModusTollens{
+			if(instance == null){
+				instance = new ModusTollens;
+			}
+			return instance;
+		}
+		
 		/*
 		
 		override public function getOption(dbString:String):String{
