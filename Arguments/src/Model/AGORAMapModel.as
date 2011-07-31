@@ -210,7 +210,8 @@ package Model
 			}
 			
 			//push it to the model
-			//panelListHash[statementModel.ID] = statementModel;
+			panelListHash[statementModel.ID] = statementModel;
+			newPanels.addItem(statementModel);
 			
 			//raise event 
 			dispatchEvent(new AGORAEvent(AGORAEvent.FIRST_CLAIM_ADDED, null, statementModel));	
@@ -224,7 +225,6 @@ package Model
 		protected function onLoadMapModelResult(event:ResultEvent):void{
 			trace('map loaded');
 			var map:Object = event.result.map;
-			
 			try{
 				//update timestamp
 				timestamp = map.timestamp;
@@ -260,7 +260,6 @@ package Model
 				
 				//add new elements to Model
 				for each(var node:StatementModel in nodeHash){
-					trace(panelListHash.hasOwnProperty(node.ID));
 					if(!panelListHash.hasOwnProperty(node.ID)){
 						newPanels.addItem(node);
 						panelListHash[node.ID] = node;				
@@ -271,10 +270,13 @@ package Model
 					newConnections.addItem(connection);
 					connectionListHash[connection.ID] = connection;
 				}
+				
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
+				
 				
 			}
 			catch(error:Error){
+				trace(error.message);
 				trace("Error in reading update to Map");
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
 			}
@@ -505,6 +507,7 @@ package Model
 					}
 				}
 				else{
+					obj = map.textbox;
 					result = processTextbox(obj, textboxHash);
 					if(!result){
 						return false;
