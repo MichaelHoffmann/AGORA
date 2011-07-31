@@ -38,15 +38,8 @@ package classes
 	public class Inference extends ArgumentPanel
 	{
 		
-		private var _model:InferenceModel;
+		private var _inferenceModel:InferenceModel;
 		//temporary variable for generating temporary permanent ids
-		public static var connections:int;
-		//list of reasons
-		public var reasons:Vector.<ArgumentPanel>;
-		//list of dynamic text areas that are made invisible
-		public var input:Vector.<DynamicTextArea>;
-		//what is this
-		public var argumentClass:String;
 		//vgroup
 		public var vgroup:VGroup;
 		//The statement that is enabled by this enabler and a set of reasons
@@ -57,66 +50,30 @@ package classes
 		public var myschemeSel:ArgSelector;
 		//Reference to the specific argument scheme class
 		public var myArg:ParentArg;		
-		//Is the scheme expandable
-		private var _hasMultipleReasons:Boolean;
-		//public var connectionID:int;
-		//public var connectionIDs:Vector.<int>;
-		//Used when constructing the argument beginning with reason
-		//Set to true if the user has begun to choose an argument scheme.
-		//happens when construct argument is chosen
-		private var _selectedBool:Boolean;
-		//A scheme has been chosen for this argument and cannot be changed
-		//until it becomes an open end
-		private var _typed:Boolean;
+
 		public static var REASON_ADDED:String  = "Reason Added";
 		public static var REASON_DELETED:String = "Reason Deleted";
-		//private var _schemeChangable:Boolean;
 		private var _schemeSelected:Boolean;
 		//The string that is displayed
 		public var _displayStr:String;
-		//if adding multiple reasons are allowed
-		public var reasonAddable:Boolean;
-		
-		public var connID:int;
-		public var connTID:int;
-		
-		public var hasConnID:Boolean;
-		
+
 		private var addReasonMenuData:XML;
 		
 		public function Inference()
 		{
 			super();
 			addReasonMenuData = <root><menuitem   label = "... another reason for this argument so that only the combination of all reasons justifies the claim" /></root>;
-			//connectionID = connections++;
-			//connectionIDs = new Vector.<int>(0,false);
 			panelType = ArgumentPanel.INFERENCE;
-			state = 0; //Inference is always a Universal statement
-			input = new Vector.<DynamicTextArea>(0,false);
-			reasons = new Vector.<ArgumentPanel>(0,false);
 			
-			this.addEventListener(REASON_ADDED,reasonAdded);
 			
 			this.setStyle("cornerRadius",30);	
-			selectedBool = false;
-			typed = false;
-			schemeSelected = false;
-			reasonAddable = false;
-			hasConnID = false;
+			//schemeSelected = false;
 		}
+		
+		
 		///Getters and Setters
+	
 		
-		
-		public function get model():InferenceModel
-		{
-			return _model;
-		}
-
-		public function set model(value:InferenceModel):void
-		{
-			_model = value;
-		}
-
 		public function get displayStr():String
 		{
 			return _displayStr;
@@ -130,22 +87,12 @@ package classes
 			invalidateSize();
 			invalidateDisplayList();
 		}
-		
+		/*
 		public function get connectionType():String
 		{
 			if(myArg == null)
 				return "";
 			return myArg.dbType;
-		}
-		
-		public function get selectedBool():Boolean
-		{
-			return _selectedBool;
-		}
-		
-		public function set selectedBool(value:Boolean):void
-		{
-			_selectedBool = value;
 		}
 		
 		public function get schemeSelected():Boolean
@@ -158,82 +105,7 @@ package classes
 			_schemeSelected = value;
 			setRuleState();
 		}
-		
-		public function get hasMultipleReasons():Boolean
-		{
-			return _hasMultipleReasons;
-		}
-		
-		public function set hasMultipleReasons(value:Boolean):void
-		{
-			_hasMultipleReasons = value;
-			if(myArg != null)
-			{
-				if(hasMultipleReasons)	
-				{
-					myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
-				}
-				else
-				{
-					myschemeSel.typeSelector.dataProvider = myArg._langTypes;
-				}
-			}
-			setRuleState();
-		}
-		
-		public function get typed():Boolean
-		{
-			return _typed;
-		}
-		
-		public function set typed(value:Boolean):void
-		{
-			_typed = value;
-			changePossibleSchemes();
-		}
-		
-		public function reasonDeleted():void
-		{
-			if(reasons.length > 1)
-			{
-				hasMultipleReasons = true;
-			}
-			else
-			{
-				hasMultipleReasons = false;
-			}
-			if(myArg != null)
-			{
-				myArg.createLinks();
-			}
-		}
-		
-		public function reasonAdded(event:Event):void
-		{
-			if(reasons.length > 1)
-			{
-				hasMultipleReasons = true;
-			}
-			else
-			{
-				hasMultipleReasons = false;
-			}
-			if(myArg != null)
-			{
-				myArg.createLinks();
-			}
-			if(claim.inference == null)
-			{
-				reasons[reasons.length - 1].makeUnEditable();
-				reasons[reasons.length - 1].displayTxt.text = "[Enter your reason]";
-			}
-			else
-			{
-				reasons[reasons.length - 1].makeEditable();
-			}
-			claim.removeEventListener(Inference.REASON_ADDED, reasonAdded);
-		}
-		
+				
 		public function setRuleState():void
 		{
 			//seting type makes sense only after a particular scheme has been chosen
@@ -244,45 +116,7 @@ package classes
 		//  scheme is fixed
 		public function changePossibleSchemes():void
 		{
-			if(myschemeSel != null){
-				if(typed)
-				{
-					myschemeSel.mainSchemes.visible = false;
-					myschemeSel.typeSelector.x = 0;
-					myschemeSel.andor.x = myschemeSel.typeSelector.width;
-					if(myArg != null)
-					{
-						if(hasMultipleReasons)
-						{
-							myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
-						}
-						else
-						{
-							myschemeSel.typeSelector.dataProvider = myArg._langTypes;
-						}
-					}
-					if(myArg is ConditionalSyllogism)
-					{
-						argType.changeSchemeBtn.enabled = false;
-					}
-				}
-			}
-			if(!typed && myschemeSel != null)
-			{
-				myschemeSel.mainSchemes.visible = true;
-				myschemeSel.typeSelector.x = myschemeSel.mainSchemes.width;
-				myschemeSel.andor.x = myschemeSel.typeSelector.x + myschemeSel.typeSelector.width;
-				if(myArg!=null)
-				{
-					argType.changeSchemeBtn.enabled = true;
-				}
-				
-			}
-			if(myschemeSel != null){
-				myschemeSel.invalidateProperties();
-				myschemeSel.invalidateSize();
-				myschemeSel.invalidateDisplayList();
-			}
+	
 		}
 		
 		public function menuCreated(fe:FlexEvent):void
@@ -312,165 +146,13 @@ package classes
 			_menuPanel.addEventListener(FlexEvent.CREATION_COMPLETE,addToMap);
 		}
 		
-		public function addToMap(fe:FlexEvent):void
-		{
-			argType.addReasonBtn.addEventListener(MouseEvent.CLICK,addReasonHandler);
-			argType.changeSchemeBtn.addEventListener(MouseEvent.CLICK,changeScheme);
-		}
-		
 		public function changeScheme(event:MouseEvent):void
 		{
 			changeHandler(event);
 		}
 		
-		protected function goToReason(event:FlexEvent):void
-		{
-			/*
-			var panel:ArgumentPanel = ArgumentPanel(event.target);
-			panel.makeEditable();
-			if(reasons.length > 0)
-			{
-				if(typed)
-				{
-					if(myArg.myname == ParentArg.MOD_TOL)
-					{
-						panel.statementNegated = true;
-					}
-				}
-			}
-			*/
-		}
 		
-		protected function reasonInserted(event:Event):void{
-			//getting response XML from insert.php
-			var responseXML:XML = XML(event.target.data);
-			//adding it to insert node
-			var xml:XML = <insert></insert>;
-			xml.appendChild(responseXML);
-			
-			//requesting load_map.php with new timestamp
-			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/load_map.php";
-			var timestamp:String;
-			
-			/*
-			if(parentMap.timestamp == null){
-				timestamp = "0";
-			}else{
-				timestamp = parentMap.timestamp;
-			}
-			*/
-			
-			var urlRequestVars:URLVariables = new URLVariables("map_id="+parentMap.ID + "&" + "timestamp=" + timestamp);
-			urlRequest.data = urlRequestVars;
-			urlRequest.method = URLRequestMethod.GET;
-			var urlLoader:URLLoader = new URLLoader;
-			urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
-				var loadResponseVariables:XML = XML(event.target.data);
-				var loadXML:XML = <load></load>;
-				loadXML.appendChild(loadResponseVariables);
-				var insertLoad:XML = <xmldata></xmldata>;
-				insertLoad.appendChild(xml);
-				insertLoad.appendChild(loadXML);
-				addReasonToMap(insertLoad);
-			});
-			urlLoader.load(urlRequest);
-		}
 		
-		public function addReasonToMap(responseXML:XML):void{
-			//var responseXML:XML = XML(event.target.data);
-			//trace(responseXML);
-			//separate XML for Argument Panel
-			var reasonXML:XML = new XML("<map></map>");
-			var textboxList:XMLList = responseXML.insert.map.textbox;
-			reasonXML.appendChild(textboxList);
-			var firstNodeText:XML = responseXML.insert.map.node[0];
-			reasonXML.appendChild(firstNodeText);
-			
-			
-			var tmp:ArgumentPanel = new ArgumentPanel();
-			for each( var lXML:XML in responseXML.load.map.node){
-				if( lXML.@ID == responseXML.insert.map.node[0].@ID){
-					tmp.gridX = lXML.@x;
-					tmp.gridY = lXML.@y;
-				}
-			}
-			
-			parentMap.layoutManager.registerPanel(tmp);
-			parentMap.addElement(tmp);
-			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);
-			
-			try{
-				reasons.push(tmp);
-				//connectionIDs.push(connections++);
-				tmp.inference = this;
-				//create an invisible box in the inference rule
-				var tmpInput:DynamicTextArea = new DynamicTextArea();
-				//visual
-				parentMap.addElement(tmpInput);
-				tmpInput.visible = false;
-				
-				//logical
-				var inferenceRule:Inference = this;
-				tmpInput.panelReference = inferenceRule;
-				inferenceRule.input.push(tmpInput);		
-				
-				//binding
-				//tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
-				//tmp.input1.forwardList.push(tmpInput);
-				//this new reason's input1 text forwards to that invisible box
-				dispatchEvent(new Event(REASON_ADDED,true,false));
-				
-			}catch (e:Error)
-			{
-				Alert.show(e.toString());
-			}
-		}
-		
-		public function addReason():void
-		{
-			var xml:XML = parentMap.getAddReason(this);
-			var urlRequest:URLRequest = new URLRequest;
-			urlRequest.url = "http://agora.gatech.edu/dev/insert.php";
-			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml);
-			urlRequest.data = urlRequestVars;
-			urlRequest.method = URLRequestMethod.GET;
-			var urlLoader:URLLoader = new URLLoader;
-			urlLoader.addEventListener(Event.COMPLETE, reasonInserted);
-			urlLoader.load(urlRequest);
-		}
-		
-		public function addReasonHandler(event:MouseEvent):void
-		{
-			
-			var menu:Menu = Menu.createMenu(null, addReasonMenuData,false);
-			menu.labelField = "@label";
-			menu.addEventListener(MenuEvent.ITEM_CLICK, function (event:MenuEvent):void {
-				if(schemeSelected != true)
-				{
-					Alert.show("Complete the enabler before adding further reasons");
-					return;
-				}
-				if(myArg._isLanguageExp || (myArg is ModusTollens && reasonAddable == true && myschemeSel.selectedType == myArg._expLangTypes[0]))
-				{
-					addReason();
-				}
-				else
-				{	
-					if(myArg is ModusTollens && myschemeSel.selectedType == myArg._expLangTypes[0])
-					{
-						Alert.show("Select the language type that determines how the reasons are combined: 'or' or 'and'");
-						reasonAddable = true;	
-					}
-					else
-					{
-						Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
-					}
-				}
-			});
-			var globalPosition:Point = parentMap.getGlobalCoordinates(new Point(argType.x,argType.y + argType.height));
-			menu.show(globalPosition.x,globalPosition.y);
-		}
 		
 		override public function makeUnEditable():void
 		{
@@ -478,33 +160,8 @@ package classes
 		override public function makeEditable():void
 		{
 		}
-		
-		public function chooseEnablerText():void
-		{
-			if(myschemeSel.scheme != null){
-				setRuleState();
-				if(myschemeSel.scheme.length == 0)
-				{
-					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
-					return;
-				}
-			}
-			
-			if((myArg is DisjunctiveSyllogism || myArg is NotAllSyllogism) && typed)
-			{
-				return;
-			}
-			myschemeSel.visible=true;
-			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
-			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
-			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
-			myschemeSel.depth = parentMap.parent.numChildren;
-			selectedBool = true;
-			parentMap.helpText.visible = true;
-			parentMap.helpText.x = myschemeSel.x + myschemeSel.width + 20;
-			parentMap.helpText.y = myschemeSel.y - 200;
-		}
-		
+		*/
+		/*
 		public function changeHandler(e:MouseEvent):void
 		{
 			chooseEnablerText();
@@ -668,7 +325,7 @@ package classes
 		}
 		
 		
-		protected function statementOption(le:ListEvent):void
+		public function statementOption(le:ListEvent):void
 		{
 			var andor:String = le.itemRenderer.data.toString();
 			if(andor=="And")
@@ -706,6 +363,6 @@ package classes
 			this.argType.visible = true;
 		}
 		
-		
+	 */	
 	}
 }

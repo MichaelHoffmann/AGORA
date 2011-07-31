@@ -43,7 +43,6 @@ package Model
 		public function requestMapList():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){	
-				//requestMapsService.addEventListener(ResultEvent.RESULT, onRequestMapsServiceResult);
 				requestMapsService.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash});
 			}else{
 				Alert.show("Attempting to fetch my maps when the user is not logged in... Please report this error...");

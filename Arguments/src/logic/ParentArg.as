@@ -224,6 +224,7 @@ package logic
 		
 		public function createLinks():void
 		{
+			/*
 			var	claim:ArgumentPanel = inference.claim;
 			var reasons:Vector.<ArgumentPanel> = inference.reasons;
 			//claim.input1.forwardList.push(inference.input[0]);
@@ -233,6 +234,7 @@ package logic
 			//	reasons[i].input1.forwardList.push(inference.input[i+1]);
 				inference.input[i+1].forwardList.push(inference.inputs[1]);
 			}
+			*/
 			//inference.implies = true;
 		}
 		//inference.implies = true;

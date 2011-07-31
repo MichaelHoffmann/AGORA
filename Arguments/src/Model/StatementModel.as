@@ -187,7 +187,24 @@ package Model
 		public static function getObject(xml:XML):StatementModel{
 			//trace(xml);
 			return new StatementModel;	
-			
+		}
+		
+		public function hasStatement(id:int):Boolean{
+			for each(var simpleStatement:SimpleStatementModel in statements){
+				if(simpleStatement.ID == id){
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public function getStatement(id:int):SimpleStatementModel{
+			for each(var simpleStatement:SimpleStatementModel in statements){
+				if(id == simpleStatement.ID){
+					return simpleStatement;
+				}
+			}
+			return null;
 		}
 		
 		

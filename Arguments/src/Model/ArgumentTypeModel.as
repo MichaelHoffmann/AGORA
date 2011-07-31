@@ -157,6 +157,15 @@ package Model
 			_inferenceModel = value;
 		}
 		
+		//-------------------------- other public methods -----------------//
+		public function hasReason(id:int):Boolean{
+			for each(var statementModel:StatementModel in reasonModels){
+				if(id == statementModel.ID){
+					return true;
+				}
+			}
+			return false;
+		}
 		
 		//-------------------------- Creation mehtods ----------------------//
 		public static function createArgumentTypeFromObject(obj:Object):ArgumentTypeModel{

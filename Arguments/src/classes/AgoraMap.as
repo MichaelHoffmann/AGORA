@@ -96,6 +96,7 @@ package classes
 			}
 			return xml;
 		}
+		
 		/*
 		public function getConnection( claim:ArgumentPanel):XML
 		{
@@ -200,6 +201,7 @@ package classes
 		
 		public function getAddReason(inference:Inference):XML
 		{
+			/*
 			//cannot be the first reason
 			//get the recently added reason
 			var reason:ArgumentPanel = inference.reasons[inference.reasons.length - 1];
@@ -249,7 +251,9 @@ package classes
 			sourcenode.@TID = tempID;
 			sourcenode.@nodeTID = reasonNode.@TID;
 			connection.appendChild(sourcenode);
-			return xml;
+			*/
+			return new XML;
+			
 		}
 		
 		public static function get tempID():int
@@ -371,6 +375,7 @@ package classes
 		}
 		
 		override protected function commitProperties():void{
+			super.commitProperties();
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
 				if(newPanels[i] is InferenceModel){
@@ -383,9 +388,9 @@ package classes
 				}
 				else if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel = new ArgumentPanel;
-					argumentPanel.statementModel = newPanels[i];
-					var xWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setX, argumentPanel.statementModel, "xgrid", true);
-					var yWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setY, argumentPanel.statementModel, "ygrid", true);
+					argumentPanel.model = newPanels[i];
+					var xWatcherSetterArgumentPanel:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setX, argumentPanel.model, "xgrid", true);
+					var yWatcherSetterArgumentPanel:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setY, argumentPanel.model, "ygrid", true);
 					addChild(argumentPanel);
 				}
 			}

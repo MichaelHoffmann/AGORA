@@ -4,6 +4,8 @@ package Model
 	
 	import ValueObjects.AGORAParameters;
 	
+	import com.adobe.protocols.dict.Dict;
+	
 	import components.Map;
 	
 	import flash.events.EventDispatcher;
@@ -208,7 +210,7 @@ package Model
 			}
 			
 			//push it to the model
-			panelListHash[statementModel.ID] = statementModel;
+			//panelListHash[statementModel.ID] = statementModel;
 			
 			//raise event 
 			dispatchEvent(new AGORAEvent(AGORAEvent.FIRST_CLAIM_ADDED, null, statementModel));	
@@ -229,153 +231,301 @@ package Model
 				
 				//Form a map of nodes
 				var obj:Object;
-				var nodeHash:Object = new Object;
-				var textboxHash:Object = new Object;
-				if(map.hasOwnProperty("node")){
-					var statementModel:StatementModel = null;
-					if(map.node is ArrayCollection){
-						for each(obj in map.node){
-							if(obj.deleted == "0"){
-							if(obj.Type == "Inference"){
-								statementModel = InferenceModel.createStatementFromObject(obj);
-								(statementModel as InferenceModel).typed = obj.Typed == 1? true:false;
-							}else
-							{
-								statementModel = StatementModel.createStatementFromObject(obj);
-							}
-							statementModel.author = obj.Author;
-							statementModel.xgrid = obj.x;
-							statementModel.ygrid = obj.y;
-							nodeHash[obj.ID] = statementModel;
-							}
-						}	
-							
-					}
-					else{
-						obj = map.node;
-						if(obj.Type == "Inference"){
-							statementModel = InferenceModel.createStatementFromObject(obj);
-							(statementModel as InferenceModel).typed = obj.Typed == 1? true:false;
-						}else
-						{
-							statementModel = StatementModel.createStatementFromObject(obj);
-						}
-						statementModel.author = obj.Author;
-						statementModel.xgrid = obj.x;
-						statementModel.ygrid = obj.y;
-						nodeHash[obj.ID] = statementModel;
-					}
+				var nodeHash:Dictionary = new Dictionary;
+				var textboxHash:Dictionary = new Dictionary;
+				var result:Boolean;
+				
+				//read nodes and create Statment Models
+				result = parseNode(map, nodeHash, textboxHash);
+				if(!result){
+					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+					return;
 				}
 				
 				//Form a map of connections
-				var connectionsHash:Object = new Object;
-				if(map.hasOwnProperty("connection")){
-					var argumentTypeModel:ArgumentTypeModel;
-					if(map.connection is ArrayCollection){
-						for each(obj in map.connection){
-							//create a ArgumentTypeModel
-							if(obj.deleted != 0){
-								argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
-								argumentTypeModel.dbType = obj.type;
-								argumentTypeModel.claimModel = nodeHash[obj.targetnode];
-								argumentTypeModel.xgrid = obj.x;
-								argumentTypeModel.ygrid = obj.y;
-								argumentTypeModel.typed = obj.typed == 1? true:false;
-								
-								if(obj.hasOwnProperty("sourcenode")){
-									if(obj.sourcenode is ArrayCollection){
-										for each(var argElements:Object in obj.sourcenode){
-											if(nodeHash[argElements.nodeID] is InferenceModel){
-												argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
-											}
-											else{
-												argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
-											}
-										}	
-									}
-									else{
-										trace("error: Only one sourcenode found!");
-									}
-									argumentTypeModel.logicClass.link();
-								}		
-							}
-						}
-					}
-					else{
-						obj = map.connection;
-						if(obj.deleted != 0){
-							argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
-							argumentTypeModel.dbType = obj.type;
-							argumentTypeModel.claimModel = nodeHash[obj.targetnode];
-							argumentTypeModel.xgrid = obj.x;
-							argumentTypeModel.ygrid = obj.y;
-							argumentTypeModel.typed = obj.typed == 1? true:false;
-							
-							if(obj.hasOwnProperty("sourcenode")){
-								if(obj.sourcenode is ArrayCollection){
-									for each(argElements in obj.sourcenode){
-										if(nodeHash[argElements.nodeID] is InferenceModel){
-											argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
-										}
-										else{
-											argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
-										}
-									}	
-								}
-								else{
-									trace("error: Only one sourcenode found!");
-								}
-								argumentTypeModel.logicClass.link();
-							}		
-						}
-					}
+				var connectionsHash:Dictionary = new Dictionary;
+				result = parseConnection(map, connectionsHash, nodeHash);
+				if(!result){
+					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+					return;
 				}
-				//read and set text
-				if(map.hasOwnProperty("node")){
-					var simpleStatement:SimpleStatementModel;
-					var statementModel:StatementModel;
-					if(map.node is ArrayCollection){
-						for each (var nodeO:Object in map.node){
-							if(nodeO.hasOwnProperty("nodetext")){
-								var nodetext:Object;
-								if(nodeO.nodetext is ArrayCollection){
-									for each(nodetext in nodeO.nodetext){
-										statementModel = nodeHash[nodeO.ID];
-										statementModel.nodeTextIDs.push(int(nodetext.ID));
-										simpleStatement = new SimpleStatementModel();
-										simpleStatement.ID = nodetext.textboxID;
-										statementModel.statements.push(simpleStatement);
-									}
-								}
-								else{
-									
-								}
-							}	
-						}
-					}
-					else{
-						
-					}
+				
+				
+				//read and set text - This should be performed after links are created
+				result = parseTextox(map, textboxHash);
+				if(!result){
+					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+					return;
 				}
 				
 				//add new elements to Model
 				for each(var node:StatementModel in nodeHash){
-					newPanels.addItem(node);
-					panelListHash[node.ID] = node;
+					trace(panelListHash.hasOwnProperty(node.ID));
+					if(!panelListHash.hasOwnProperty(node.ID)){
+						newPanels.addItem(node);
+						panelListHash[node.ID] = node;				
+					}
 				}
 				
-				for each(var connection:ArgumentTypeModel in connectionsHash){
+				for each(var connection:ArgumentTypeModel in connectionsHash){	
 					newConnections.addItem(connection);
 					connectionListHash[connection.ID] = connection;
 				}
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
 				
-			}catch(error:Error){
+			}
+			catch(error:Error){
 				trace("Error in reading update to Map");
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
 			}
 			
 			
+		}
+		
+		//---------------------- Parsing Node ---------------------------------------------------------//
+		protected function parseNode(map:Object, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
+			if(map.hasOwnProperty("node")){
+				var statementModel:StatementModel = null;
+				var obj:Object;
+				var result:Boolean;
+				//If there are multiple nodes in the returned XML
+				if(map.node is ArrayCollection){
+					for each(obj in map.node){
+						result = processNode(obj,nodeHash,textboxHash);
+						if(!result){
+							return false;
+						}
+					}	
+				}
+					//If there is only one node in the returned XML
+				else{
+					obj = map.node;
+					result = processNode(obj,nodeHash, textboxHash);
+					if(!result){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		protected function processNode(obj:Object, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
+			var statementModel:StatementModel;
+			if(obj.deleted == "0"){
+				//Set attributes
+				if(!panelListHash.hasOwnProperty(obj.ID)){
+					if(obj.Type == "Inference"){
+						statementModel = InferenceModel.createStatementFromObject(obj);
+						(statementModel as InferenceModel).typed = obj.Typed == 1? true:false;
+					}else
+					{
+						statementModel = StatementModel.createStatementFromObject(obj);
+					}
+				}else{
+					statementModel = panelListHash[obj.ID];
+				}
+				statementModel.author = obj.Author;
+				statementModel.xgrid = obj.x;
+				statementModel.ygrid = obj.y;
+				nodeHash[obj.ID] = statementModel;
+				
+				var result:Boolean = parseNodeText(obj, nodeHash, textboxHash);
+				if(!result){
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		//----------------------- Parse Nodetexts -------------------------------------------//
+		protected function parseNodeText(obj:Object, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
+			//read nodetexts and create simpleStatement Models
+			var statementModel:StatementModel = nodeHash[obj.ID];
+			var result:Boolean;
+			if(obj.hasOwnProperty("nodetext")){
+				var simpleStatement:SimpleStatementModel;
+				var nodetext:Object;
+				//multiple nodetexts
+				if(obj.nodetext is ArrayCollection){
+					for each(nodetext in obj.nodetext){
+						result = processNodeText(nodetext,obj,nodeHash,textboxHash);
+						if(!result){
+							return false;
+						}
+					}
+				}
+				else{//single nodetext
+					nodetext = obj.nodetext;
+					result = processNodeText(nodetext,obj, nodeHash, textboxHash);
+					if(!result){
+						return false;
+					}
+				}
+				
+			}else{
+				trace("Node has no node text");
+			}
+			return true;
+		}
+		
+		protected function processNodeText(nodetext:Object, node:Object,  nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
+			var statementModel:StatementModel = nodeHash[node.ID];
+			var simpleStatement:SimpleStatementModel;
+			if(!statementModel.hasStatement(nodetext.ID)){
+				simpleStatement = new SimpleStatementModel;
+				simpleStatement.ID = nodetext.textboxID;
+			}
+			else{
+				simpleStatement = statementModel.getStatement(nodetext.ID);
+			}
+			
+			if(!statementModel.hasStatement(simpleStatement.ID)){
+				statementModel.statements.push(simpleStatement);
+				statementModel.nodeTextIDs.push(nodetext.ID);
+			}
+			
+			textboxHash[simpleStatement.ID] = simpleStatement;
+			return true;
+		}
+		
+		//----------------------- Parsing Connections ---------------------------------------//
+		/**
+		 * Parses connections in the map
+		 **/
+		protected function parseConnection(map:Object, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
+			var obj:Object;
+			var result:Boolean;
+			if(map.hasOwnProperty("connection")){
+				var argumentTypeModel:ArgumentTypeModel;
+				if(map.connection is ArrayCollection){
+					for each(obj in map.connection){
+						result = processConnection(obj, connectionsHash, nodeHash);
+						if(!result){
+							return false;
+						}
+					}
+				}
+				else{
+					obj = map.connection;
+					result = processConnection(obj, connectionsHash, nodeHash);
+					if(!result){
+						return false;
+					}
+				}
+			}
+			
+			return true;
+		}
+		
+		protected function processConnection(obj:Object, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
+			var argumentTypeModel:ArgumentTypeModel;
+			var result:Boolean;
+			if(obj.deleted != 0){
+				if(connectionListHash.hasOwnProperty(obj.ID)){
+					argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
+				}else{
+					argumentTypeModel = connectionListHash[obj.ID];
+				}
+				argumentTypeModel.dbType = obj.type;
+				argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+				argumentTypeModel.xgrid = obj.x;
+				argumentTypeModel.ygrid = obj.y;
+				argumentTypeModel.typed = obj.typed == 1? true:false;
+				connectionsHash[obj.ID] = argumentTypeModel;
+				
+				result = parseSourceNode(obj, nodeHash, connectionsHash);
+				if(!result){
+					return false;
+				}	
+			}
+			return true;
+		}
+		
+		//----------------------- Parsing Source Nodes --------------------------------------//
+		protected function parseSourceNode(obj:Object, nodeHash:Dictionary, connectionsHash:Dictionary):Boolean
+		{
+			if(obj.hasOwnProperty("sourcenode")){
+				if(obj.sourcenode is ArrayCollection){
+					for each(var argElements:Object in obj.sourcenode){
+						//If read in this loading phase
+						var result:Boolean = processSourceNode(argElements,obj,connectionsHash, nodeHash);
+						if(!result){
+							return false;
+						}
+					}	
+				}
+				else{
+					trace("error: Only one sourcenode found!");
+					return false;
+				}
+			}
+			var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.ID];
+			argumentTypeModel.logicClass.link();
+			return true;
+		}
+		
+		protected function processSourceNode(argElements:Object, obj:Object, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
+			var argumentTypeModel:ArgumentTypeModel;
+			if(nodeHash.hasOwnProperty(argElements.nodeID)){
+				if(nodeHash[argElements.nodeID] is InferenceModel){
+					argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
+				}
+				else{
+					if(!argumentTypeModel.hasReason(argElements.nodeID)){
+						argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+					}
+				}
+			}
+			else{ //read earlier
+				if(panelListHash[argElements.nodeID] is InferenceModel){
+					argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
+				}
+				else{
+					if(!argumentTypeModel.hasReason(argElements.nodeID)){
+						argumentTypeModel.reasonModels.push(panelListHash[argElements.nodeID]);
+					}
+				}
+			}
+			return true;
+		}
+		
+		//----------------------- Parsing Textboxes -----------------------------------------//
+		protected function parseTextox(map:Object, textboxHash:Dictionary):Boolean{
+			var obj:Object;
+			var simpleStatement:SimpleStatementModel;
+			var result:Boolean;
+			if(map.hasOwnProperty("textbox")){
+				//many textboxes
+				if(map.textbox is ArrayCollection){
+					for each(obj in map.textbox){
+						result = processTextbox(obj, textboxHash);
+						if(!result){
+							return false;
+						}
+					}
+				}
+				else{
+					result = processTextbox(obj, textboxHash);
+					if(!result){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		protected function processTextbox(obj:Object, textboxHash:Dictionary):Boolean{
+			var simpleStatement:SimpleStatementModel;
+			if(obj.deleted == "0"){
+				//fetch simpleStatementModel from Dictionary
+				simpleStatement = textboxHash[obj.ID];
+				//update text
+				simpleStatement.text = obj.text;
+				if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
+					simpleStatement.hasOwn = false;
+				}
+			}
+			return true;
 		}
 		
 		//----------------------- Reinitializing the model ----------------------------------//

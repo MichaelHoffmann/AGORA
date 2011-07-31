@@ -52,7 +52,7 @@
 							trace("is_deleted not available yet");
 						}
 						//var mapObject:Object = new Object;
-						var mapMetaData:MapMetaData = new MapMetaData;
+						mapMetaData = new MapMetaData;
 						mapMetaData.mapID = int(map.attribute("ID")); 
 						mapMetaData.mapName = map.attribute("title"); 
 						mapMetaDataVector.push(mapMetaData);						

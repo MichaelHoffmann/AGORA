@@ -1,5 +1,8 @@
 package classes
 {
+	import Controller.ViewController;
+	
+	import Model.SimpleStatementModel;
 	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
@@ -22,6 +25,7 @@ package classes
 	import logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
+	import mx.binding.utils.ChangeWatcher;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -54,10 +58,11 @@ package classes
 	public class ArgumentPanel extends GridPanel
 	{
 		//model class
-		public var statementModel:StatementModel;
+		public var model:StatementModel;
 		
 		//Input boxes
 		public var inputs:Vector.<DynamicTextArea>;
+		public var changeWatchers:Vector.<ChangeWatcher>;
 		//dragging handle	
 		
 		//Text display elements
@@ -87,14 +92,15 @@ package classes
 		public var panelSkin:PanelSkin;
 		
 		//State Variables
-		//state=0 -> universal statement and state=1 -> particular statement
-		public var state:int;	
+		private var _state:String;
+		
 		//Takes either INFERENCE or ARGUMENT_PANEL
 		public var panelType:int;
-		//Specifies whether the statement is negative or positive
+		
+		//dirty flags
 		private var _statementNegatedDF:Boolean;		
-		private var _textDF:Boolean;
-		//type of multistatement
+		private var _statementsAddedDF:Boolean;
+		private var _stateDF:Boolean;
 		
 		//constants
 		//Type of Panel: this could be found by just using is operator
@@ -102,8 +108,10 @@ package classes
 		//Type of Panel
 		public static const INFERENCE:int = 1;
 		//connecting string constants required for multistatements
-		public static var IF_THEN:String = "If-then";
-		public static var IMPLIES:String = "Implies";		
+		public static const IF_THEN:String = "If-then";
+		public static const IMPLIES:String = "Implies";	
+		public static const EDIT:String = "Edit";
+		public static const DISPLAY:String = "Display";
 		
 		//References to other objects
 		//A reference to the current map diplayed to the user
@@ -133,7 +141,7 @@ package classes
 		public var addMenuData:XML;
 		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
-	
+		
 		//other instance variables
 		public var connectingStr:String;
 		public function ArgumentPanel()
@@ -144,15 +152,69 @@ package classes
 			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			
 			inputs = new Vector.<DynamicTextArea>;
+			changeWatchers = new Vector.<ChangeWatcher>;
 			
 			//will be set by the object that creates this
 			inference = null;
 			width = 180;
-			minHeight = 100;	
+			minHeight = 100;
+			
+			state = DISPLAY;
+			
+			//set dirty Flags
+			statementNegatedDF = true;
+			statementsAddedDF = true;
+			state = DISPLAY;
+			stateDF = true;
+			
 			
 			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
+		
+		//------------------- Getters and Setters -----------------------------//
+		
+		public function get state():String
+		{
+			return _state;
+		}
+		
+		public function set state(value:String):void
+		{
+			_state = value;
+		}
+		
+		public function get stateDF():Boolean
+		{
+			return _stateDF;
+		}
+		
+		public function set stateDF(value:Boolean):void
+		{
+			_stateDF = value;
+		}
+		
+		public function get statementsAddedDF():Boolean
+		{
+			return _statementsAddedDF;
+		}
+		
+		public function set statementsAddedDF(value:Boolean):void
+		{
+			_statementsAddedDF = value;
+		}
+		
+		public function get statementNegatedDF():Boolean
+		{
+			return _statementNegatedDF;
+		}
+		
+		public function set statementNegatedDF(value:Boolean):void
+		{
+			_statementNegatedDF = value;
+		}
+		
+		//--------------------- Event Handlers ----------------------//
 		
 		protected function onCreationComplete(event:FlexEvent):void{
 			panelSkin = this.skin as PanelSkin;
@@ -160,26 +222,40 @@ package classes
 			panelSkin.topGroup.visible = false;
 		}
 		
-		public function makeEditable():void
-		{
+		protected function onDeleteBtnClicked(event:MouseEvent):void{
 			
 		}
 		
-		public function makeUnEditable():void
-		{
+		protected function onStmtTypeClicked(event:MouseEvent):void{
+			
+		}
 		
+		protected function onAddBtnClicked(event:MouseEvent):void{
+			
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
 		{
-			makeEditable();
+			state = EDIT;
+			stateDF = true;
+			Alert.show("asdfasfda");
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
 		}
 		
-		public function keyEntered(event: KeyboardEvent):void
+		protected function doneBtnClicked(event:MouseEvent):void{
+			state = DISPLAY;
+			stateDF = true;
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
+		}
+		
+		protected function keyEntered(event: KeyboardEvent):void
 		{
 			if(event.keyCode == Keyboard.ENTER)	
 			{
-				//statementEntered();	
 			}
 		}
 		
@@ -205,7 +281,7 @@ package classes
 		
 		public function removeEventListeners():void
 		{
-		
+			
 		}
 		
 		protected function optionClicked(event:MouseEvent):void
@@ -221,18 +297,30 @@ package classes
 		{
 			var menu:Menu = Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
-			//menu.addEventListener(MenuEvent.ITEM_CLICK, constructArgument);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
-		
 		public function doneHandler(d:MouseEvent):void
 		{
-			//statementEntered();
 		}
 		
-	
+		
+		//----------------------- Bind Setters -------------------------------------------------//
+		protected function setDisplayStatement(value:String):void{
+			if(!value){
+				if(model.firstClaim){
+					displayTxt.text = "[Enter your claim here]";
+				}else{
+					displayTxt.text = "[Enter your reason here]";
+				}
+			}
+			else{
+				displayTxt.text = value;
+			}
+		}
+		
+		//----------------------- Life Cycle Methods -------------------------------------------//
 		//create children must be overriden to create dynamically allocated children
 		override protected function createChildren():void
 		{
@@ -251,32 +339,23 @@ package classes
 			
 			stmtTypeLbl = new Label;
 			// default setting    	
-			if(this is Inference)
-			{
-				stmtTypeLbl.text = "";
-				state = 0;
-			}
-			else
-			{
-				//stmtTypeLbl.text = Language.lookup("Particular");
-				stmtTypeLbl.text = "Particular";
-				state = 1;
-			}
+			
 			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
 			//stmtTypeLbl.toolTip = "Please change it before commiting";
 			stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
-			//stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
+			stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
 			
 			bottomHG = new HGroup();
 			doneHG = new HGroup;
 			doneBtn = new AButton;
 			doneBtn.label = "Done";
+			doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
 			doneHG.addElement(doneBtn);
 			
-			//BindingUtils.bindProperty(input1, "text", statementModel, ["statement","text"]);
 			//TODO: Translate
 			displayTxt = new Text;
-			BindingUtils.bindProperty(displayTxt, "text", statementModel, ["statement","text"]);
+			//BindingUtils.bindProperty(displayTxt, "text", model, ["statement","text"]);
+			BindingUtils.bindSetter(setDisplayStatement, model, ["statement", "text"]);
 			this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
 			//Create a UIComponent for clicking and dragging
 			topArea = new UIComponent;
@@ -318,39 +397,74 @@ package classes
 			btnG.addElement(bottomHG);
 			doneHG = new HGroup;
 			doneHG.addElement(doneBtn);
-			btnG.addElement(doneHG);
-			btnG.addElement(bottomHG);
+			//btnG.addElement(doneHG);
+			//btnG.addElement(bottomHG);
 			addBtn = new AButton;
 			addBtn.label = "add...";
 			
 			bottomHG.addElement(addBtn);
 			deleteBtn = new AButton;
 			deleteBtn.label = "delete...";
-			//deleteBtn.addEventListener(MouseEvent.CLICK,deleteThis);
+			deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
 			bottomHG.addElement(deleteBtn);
-			//addBtn.addEventListener(MouseEvent.CLICK,addHandler);
-			bottomHG.visible = false;
-			
-			//presently, the requirement is only for two boxes
-			msVGroup = new VGroup;
-			//group.addElement(msVGroup);
-			var dta:DynamicTextArea = new DynamicTextArea;
-			dta.panelReference = this;
-			inputs.push(dta);
-			dta = new DynamicTextArea;
-			dta.panelReference = this;
-			inputs.push(dta);
-			for(var i:int=0; i < inputs.length; i++)
-			{
-				msVGroup.addElement(inputs[i]);
-			}
-			
-			invalidateProperties();
+			addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
 		}
-
+		
 		override protected function commitProperties():void
 		{
 			super.commitProperties();
+			var dta:DynamicTextArea;
+			var simpleStatement:SimpleStatementModel;
+			//check if new statements were added
+			if(statementsAddedDF){
+				//clear flag
+				statementsAddedDF = false;
+				
+				//remove inputs
+				for each(dta in inputs){
+					try{
+						group.removeElement(dta);
+					}catch(error:Error){
+						trace("error: Trying to remove an element that is not present");
+					}
+				}
+				inputs.splice(0,inputs.length);
+				
+				//for each statement add an input text
+				for each(simpleStatement in model.statements){
+					dta = new DynamicTextArea;
+					//add model
+					dta.model = simpleStatement;
+					//push that into inputs
+					inputs.push(dta);
+				}	
+			}
+			
+			if(stateDF){
+				stateDF = false;
+				if(state == EDIT){
+					group.removeAllElements();
+					btnG.removeAllElements();
+					
+					if(model.negated){
+						group.addElement(negatedLbl);
+					}
+					for each(dta in inputs){
+						group.addElement(dta);
+					}	
+					btnG.addElement(doneHG);
+				}
+				else if(state == DISPLAY){
+					//remove inputs
+					group.removeAllElements();
+					//remove buttons
+					btnG.removeAllElements();
+					//add label
+					group.addElement(displayTxt);
+					//add button
+					btnG.addElement(bottomHG);
+				}
+			}
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void

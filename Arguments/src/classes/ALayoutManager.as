@@ -148,7 +148,7 @@ package classes
 			try{
 				if(panel1 is Inference)
 				{
-					registerPanel(Inference(panel1).argType);
+					//registerPanel(Inference(panel1).argType);
 				}
 			//This module is for a reason added to an existing argument
 				else if(panel1 is ArgumentPanel)

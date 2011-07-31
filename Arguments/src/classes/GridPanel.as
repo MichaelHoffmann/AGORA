@@ -31,7 +31,6 @@ package classes
 		
 		public function setX(value:int):void{
 			y = value * AGORAParameters.getInstance().gridWidth;
-			Alert.show(y.toString());
 		}
 		
 		public function setY(value:int):void{

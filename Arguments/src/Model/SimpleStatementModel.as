@@ -54,6 +54,9 @@ package Model
 		public function set ID(value:int):void{
 			_ID = value;              
 		}
+		//------------------ other public functions -----------------------//
+		
+		
 		
 		//------------------ get simple statment --------------------------//
 		public static function createSimpleStatementFromXML(xml:XML):SimpleStatementModel{

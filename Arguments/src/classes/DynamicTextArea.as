@@ -5,17 +5,28 @@ This class is derived from the TextArea component to provide text boxes that res
 */
 package classes
 {
+	import Controller.TextController;
+	
+	import Model.SimpleStatementModel;
+	
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.TextEvent;
+	import flash.ui.Keyboard;
+	
 	import logic.ParentArg;
+	
+	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
 	import mx.controls.TextArea;
 	import mx.core.mx_internal;
 	import mx.utils.NameUtil;
+	
 	import org.osmf.layout.AbsoluteLayoutFacet;
 	
 	public class DynamicTextArea extends TextArea
 	{
+		private var _model:SimpleStatementModel;
 		public static var count:int;
 		private var topPadding:int;
 		private var bottomPadding:int;
@@ -44,6 +55,24 @@ package classes
 			hasID = false;
 		}
 		
+		public function get model():SimpleStatementModel
+		{
+			return _model;
+		}
+
+		public function set model(value:SimpleStatementModel):void
+		{
+			_model = value;
+			//Bind values
+			BindingUtils.bindProperty(this, "text", model, ["text"]);
+			//set event Listeners
+			addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+		}
+		
+		protected function onKeyPressed(event:KeyboardEvent):void{
+			TextController.getInstance().updateModelText(this);
+		}
+
 		private function adjustHeightHandler(event:Event):void
 		{
 			dispatchEvent(new UpdateEvent(UpdateEvent.UPDATE_EVENT));
