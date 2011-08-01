@@ -20,16 +20,53 @@
 -->
 <mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" preinitialize="setProperties();" creationComplete="init();">
+		  xmlns:mx="library://ns.adobe.com/flex/mx"  
+		  preinitialize="setProperties();" 
+		  creationComplete="init();"
+		  keyDown="panel1_keyDownHandler(event)" xmlns:components="components.*">
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:EmailValidator id="emailValidator" 
+						   source="{email}" property="text">
+		</mx:EmailValidator>
+		
+		<mx:StringValidator id="firstnameValidator"
+							source="{firstname}"
+							property="text">			
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="lastnameValidator"
+							source="{lastname}"
+							property="text">
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="passwordValidator"
+							source="{pass_hash}"
+							property="text">
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="passwordDupValidator"
+							source="{pass_hash_dup}"
+							property="text">
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="usernameValidator"
+							source="{username}"
+							property="text">
+		</mx:StringValidator>
 	</fx:Declarations>
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import ValueObjects.UserDataVO;
+			
 			import com.adobe.crypto.MD5;
 			
 			import mx.controls.Alert;
+			import mx.events.ValidationResultEvent;
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
 			
@@ -59,14 +96,18 @@
 				var xml:XML = XML(event.target.data);
 				if(xml.@created.length() == 0)
 				{
-					Alert.show("Registration Failed");
+					if( XMLList(xml.@exists).length() == 1){
+						Alert.show("Username exists. Please choose a different user name");
+					}
+					else{
+						Alert.show(xml.toXMLString());
+					}
 				}
 				else if(xml.@created.length() == 1)
 				{
 					Alert.show("Registration Successful. You may now Login");
 				}
 				PopUpManager.removePopUp(this);
-				
 			}
 			
 			public function errorHandler(event: IOErrorEvent):void
@@ -86,42 +127,58 @@
 					Alert.show("Passwords do not match");
 					return;
 				}
-				var requestVariables:URLVariables = new URLVariables("username="+username.text+"&pass_hash="+ MD5.hash(pass_hash.text+salt)+"&firstname="+firstname.text+"&lastname="+lastname.text+"&email="+email.text+"&url="+url.text);
-				var request:URLRequest = new URLRequest;
-				request.url = Configure.lookup("baseURL") + "register.php";
-				request.method = URLRequestMethod.GET;
-				request.data = requestVariables;
-				var urlLoader:URLLoader = new URLLoader;
-				urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
-				urlLoader.addEventListener(Event.COMPLETE,displayStatus);
-				urlLoader.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
-				urlLoader.load(request);
+				
+				var userDataVO:UserDataVO = new UserDataVO;
+				userDataVO.firstName = firstname.text;
+				userDataVO.lastName = lastname.text;
+				userDataVO.userName = username.text;
+				userDataVO.password = pass_hash.text;
+				userDataVO.email = email.text;
+				userDataVO.URL = url.text;
+				
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.register(userDataVO);
 			}
+
+			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
+			{
+				Alert.show("Enter a valid email address...");
+				email.text = "";
+			}
+
+
+			protected function panel1_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.ENTER){
+					submit_form();
+				}
+			}
+
 		]]>
+		
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}">
+		<mx:FormItem tabIndex="1" label="Username" required="true">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
-		
-		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}">
+		<mx:FormItem label="Password" required="true">
 			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="{Language.lookup(&quot;Password&quot;)}" >
+		<mx:FormItem  label="Confirm Password" required="true" >
 			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}">
+		<mx:FormItem label="First Name" required="true">
 			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}">
+		<mx:FormItem label="Last Name" required="true">
 			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="{Language.lookup(&quot;Email&quot;)}">
+		<mx:FormItem  label="Email" required="true">
 			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>

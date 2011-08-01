@@ -20,19 +20,34 @@
 -->
 <mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="400" height="300" preinitialize="setProperties();" creationComplete="init();">
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  layout="absolute" width="400" height="300" creationComplete="init();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:StringValidator id="unameValidator"
+							source="{username}"
+							property="text">
+		</mx:StringValidator>
+		<mx:StringValidator id="passwordValidator"
+							source="{pass_hash}"
+							property="text">
+		</mx:StringValidator>
 	</fx:Declarations>
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import ValueObjects.UserDataVO;
+			
 			import classes.UserData;
 			import classes.Language;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
+			import mx.validators.Validator;
 			
+			/*
 			public function setProperties():void
 			{
 				title=Language.lookup("Login");
@@ -53,20 +68,20 @@
 				}
 				PopUpManager.removePopUp(this);
 			}
+			*/
 			
 			public function init():void
 			{	
 				focusManager.setFocus(username);
 			}
 			
+			
 			public function register_form():void
-			{
-				var registerForm:RegisterPanel = new RegisterPanel;
-				PopUpManager.addPopUp(registerForm,this.parent);
-				PopUpManager.centerPopUp(registerForm);
+			{	
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.showRegistrationBox();
 			}
-			
-			
+		
 			public function clear_form():void
 			{
 				PopUpManager.removePopUp(this);
@@ -74,10 +89,23 @@
 			
 			public function submit_form():void
 			{
-				UserData.validateUser(username.text,pass_hash.text, this);
+				var userDataVO:UserDataVO = new UserDataVO;
+				userDataVO.userName = username.text;
+				userDataVO.password = pass_hash.text;
+				
+				var userLoginController:UserSessionController = UserSessionController.getInstance();
+				userLoginController.login(userDataVO);
 				
 			}
+			
+			protected function register_btn_clickHandler(event:MouseEvent):void
+			{
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.showRegistrationBox();
+			}
+
 		]]>
+		
 	</fx:Script>
 	<mx:Form id="form">
 		<mx:FormItem label="{Language.lookup(&quot;Username&quot;)}" >
@@ -88,14 +116,13 @@
 			<s:TextInput id="pass_hash" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		
 		<mx:FormItem>
 			<s:HGroup>
 				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" id="submit_btn" click="submit_form();">		
 				</s:Button>
 				<s:Button label="{Language.lookup(&quot;Back&quot;)}" id="back_btn" click="clear_form();">		
 				</s:Button>
-				<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="register_form();">		
+				<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="register_btn_clickHandler(event)">		
 				</s:Button>
 			</s:HGroup>		
 		</mx:FormItem>

@@ -21,17 +21,19 @@ package classes
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
+	import Controller.ArgumentController;
+	import Controller.LoadController;
+	
+	import Model.StatementModel;
 	import components.ArgSelector;
 	import components.HelpText;
 	import components.Option;
 	
 	import flash.display.Graphics;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestMethod;
-	import flash.net.URLVariables;
+	import flash.utils.Timer;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
@@ -42,6 +44,8 @@ package classes
 	import logic.NotAllSyllogism;
 	import logic.ParentArg;
 	
+	import mx.binding.utils.BindingUtils;
+	import mx.binding.utils.ChangeWatcher;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.core.DragSource;
@@ -63,42 +67,25 @@ package classes
 		public var initXML:XML;
 		public static var dbTypes:Array = ["MP","MT","DisjSyl","NotAllSyl","CS", "CD"];
 		public var timestamp:String;
+		public var newPanels:Vector.<StatementModel>;
+		public var timer:Timer;
 		
 		
 		public function AgoraMap()
 		{
+			newPanels = new Vector.<StatementModel>;
 			layoutManager = new ALayoutManager;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
 			addEventListener(FlexEvent.CREATION_COMPLETE, mapCreated);
+			timer = new Timer(30000);
+			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			_tempID = 0;
 		}
 		
-		public function getMyArg(type:String):ParentArg
-		{
-			for(var i:int=0; i<dbTypes.length;i++)
-			{
-				if(type.indexOf(dbTypes[i],0) == 0)
-				{
-					//use a switch case
-					switch (dbTypes[i]){
-						case "MP":
-							return new ModusPonens;
-						case "MT":
-							return new ModusTollens;
-						case "DisjSyl":
-							return new DisjunctiveSyllogism;
-						case "NotAllSyl":
-							return new NotAllSyllogism;
-						case "CS":
-							return new ConditionalSyllogism;
-						case "CD":
-							//return new ParentArg;
-					}
-				}
-				
-			}
-			return null;
+
+		protected function onMapTimer(event:TimerEvent):void{
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		private function mapCreated(event:FlexEvent):void
@@ -734,6 +721,19 @@ package classes
 			layoutManager.layoutComponents();
 		}
 		
+		override protected function commitProperties():void{
+			for(var i:int=0; i<newPanels.length; i++){
+				var statementModel:StatementModel = newPanels[i];
+				var argumentPanel:ArgumentPanel = new ArgumentPanel;
+				argumentPanel.statementModel = newPanels[i];
+				addElement(argumentPanel);
+				
+				var xWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setX, argumentPanel.statementModel, "xgrid", true);
+				var yWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setY, argumentPanel.statementModel, "ygrid", true);
+				
+			}
+		}
+		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
@@ -747,6 +747,9 @@ package classes
 			else
 				return true;
 		}
+		
+		
+		
 		
 		public function connectRelatedPanels():void
 		{

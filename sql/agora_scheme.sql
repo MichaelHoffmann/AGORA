@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS agora.textboxes (
 CREATE TABLE IF NOT EXISTS agora.nodetext (
   nodetext_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   node_id INT UNSIGNED NOT NULL,
-  textbox_id INT UNSIGNED NOT NULL,
+  textbox_id INT UNSIGNED NULL,
   position INT UNSIGNED NOT NULL,
   connected_by ENUM('implication, disjunction') NOT NULL DEFAULT 'implication',
   created_date DATETIME NOT NULL,

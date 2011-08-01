@@ -1,4 +1,4 @@
-package classes
+package Model
 {
 	public class MapMetaData
 	{
