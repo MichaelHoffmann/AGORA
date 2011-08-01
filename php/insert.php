@@ -142,14 +142,19 @@ List of variables for insertion:
 			$cBy='implication';
 		}
 		$textboxID = mysql_real_escape_string($attr["textboxID"]);
+		$tgtNodeID = mysql_real_escape_string($attr["targetNodeID"]);
 		
 		$query = "SELECT * FROM nodetext WHERE node_id=$nodeID AND position=$position";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$ntID = $row['nodetext_id'];
 		if($ntID){
-			//update should ALWAYS have a real textbox ID.
-			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, connected_by=$cBy, modified_date=NOW() WHERE nodetext_id=$ntID";
+			//update should ALWAYS have a real textbox ID, or a null..
+			if(!$textboxID || $textboxID=="NULL"){
+				$uquery = "UPDATE nodetext SET textbox_id=NULL, target_node_id=$tgtNodeID, connected_by=$cBy, modified_date=NOW() WHERE nodetext_id=$ntID";
+			}else{
+				$uquery = "UPDATE nodetext SET textbox_id=$textboxID, connected_by=$cBy, modified_date=NOW() WHERE nodetext_id=$ntID";
+			}
 			$success = mysql_query($uquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
