@@ -1,6 +1,6 @@
 package logic
 {
-	import classes.ArgumentPanel;
+	import components.ArgumentPanel;
 	
 	import mx.controls.Alert;
 	

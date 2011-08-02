@@ -16,7 +16,7 @@
 		<s:Scroller id="agora">	
 			<s:Group>
 				<mx:Canvas>
-					<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" minWidth="1400" minHeight="800">	
+					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" minWidth="1400" minHeight="800">	
 						<mx:Canvas id="canvas" width="150" visible="false">
 							<mx:Text width="150" height="140" id="helpTxt">
 								<mx:htmlText>
@@ -25,7 +25,7 @@
 								</mx:htmlText>
 							</mx:Text>
 						</mx:Canvas>
-					</classes:AgoraMap>	
+					</components:AgoraMap>	
 				</mx:Canvas>
 			</s:Group>
 		</s:Scroller>
@@ -33,10 +33,8 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import classes.ALayoutManager;
-			import classes.ArgumentPanel;
+			import Controller.LayoutController;
 			import classes.ClaimAddedEvent;
-			import classes.GridPanel;
 			import classes.UserData;
 			
 			import flash.display.*;
@@ -54,7 +52,7 @@
 			import spark.primitives.Graphic;
 			public var numComponentsX:int;
 			public var numComponentsY:int;
-			public var layoutManager:ALayoutManager;
+			public var layoutManager:LayoutController;
 			
 			public function hideMap():void
 			{

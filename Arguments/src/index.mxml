@@ -12,8 +12,8 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<components:Menu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
-	</components:Menu>
+	<components:AGORAMenu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
+	</components:AGORAMenu>
 	<components:LAMWorld id="lamWorld" visible="false">
 	</components:LAMWorld>
 	<components:Map id="map" visible="false">
@@ -23,8 +23,8 @@
 		<![CDATA[
 			import Model.AGORAModel;
 			
-			import classes.AgoraMap;
-			import classes.ArgumentPanel;
+			import components.AgoraMap;
+			import components.ArgumentPanel;
 			import classes.UserData;
 			
 			import components.LAMWorld;

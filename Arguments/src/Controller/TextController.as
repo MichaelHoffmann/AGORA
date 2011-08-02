@@ -1,6 +1,6 @@
 package Controller
 {
-	import classes.DynamicTextArea;
+	import components.DynamicTextArea;
 
 	public class TextController
 	{

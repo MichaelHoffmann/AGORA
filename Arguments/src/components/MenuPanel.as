@@ -1,4 +1,4 @@
-package classes
+package components
 {
 	import Model.ArgumentTypeModel;
 	

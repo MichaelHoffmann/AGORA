@@ -1,5 +1,5 @@
 //This class is the canvas on which everything will be drawn
-package classes
+package components
 {
 	import Controller.ArgumentController;
 	import Controller.LoadController;
@@ -9,9 +9,6 @@ package classes
 	import Model.InferenceModel;
 	import Model.StatementModel;
 	
-	import components.ArgSelector;
-	import components.HelpText;
-	import components.Option;
 	
 	import flash.display.Graphics;
 	import flash.events.Event;
@@ -39,10 +36,11 @@ package classes
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
+	import Controller.LayoutController;
 	
 	public class AgoraMap extends Canvas
 	{
-		public var layoutManager:ALayoutManager = null;
+		public var layoutManager:LayoutController = null;
 		public var drawUtility:UIComponent = null;
 		public var ID:int;
 		public var option:Option;
@@ -57,7 +55,7 @@ package classes
 		
 		public function AgoraMap()
 		{
-			layoutManager = new ALayoutManager;	
+			layoutManager = new LayoutController;	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
 			addEventListener(FlexEvent.CREATION_COMPLETE, mapCreated);

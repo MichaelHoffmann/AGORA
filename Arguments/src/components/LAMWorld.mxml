@@ -3,7 +3,7 @@
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
 		   xmlns:classes="classes.*"
-		   creationComplete="init();">
+		   creationComplete="init();" xmlns:components="components.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -30,12 +30,12 @@
 				 width="184"
 				 click="startWithScheme()"/>
 	
-	<classes:DynamicTextArea id="conceptStart"
+	<components:DynamicTextArea id="conceptStart"
 							 x="658" 
 							 y="67" 
 							 minWidth="195"
 							 textAlign="center"/>
-	<classes:DynamicTextArea id="argumentPaste"
+	<components:DynamicTextArea id="argumentPaste"
 							 x="1027" 
 							 y="67"  
 							 click="{argumentPaste.text=''}" 

@@ -1,9 +1,7 @@
-package classes
+package components
 {
 	import Model.InferenceModel;
 	
-	import components.ArgSelector;
-	import components.HelpText;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;

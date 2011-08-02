@@ -3,7 +3,7 @@
 /*
 This class is derived from the TextArea component to provide text boxes that resize automatically on user input, without displaying scrollbars, or hiding text.
 */
-package classes
+package components
 {
 	import Controller.TextController;
 	
@@ -23,6 +23,7 @@ package classes
 	import mx.utils.NameUtil;
 	
 	import org.osmf.layout.AbsoluteLayoutFacet;
+	import classes.UpdateEvent;
 	
 	public class DynamicTextArea extends TextArea
 	{

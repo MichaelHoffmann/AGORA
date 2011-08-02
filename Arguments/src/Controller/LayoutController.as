@@ -1,4 +1,4 @@
-package classes
+package Controller
 {
 	import components.Map;
 	
@@ -15,8 +15,11 @@ package classes
 	
 	import spark.components.VGroup;
 	import spark.layouts.VerticalLayout;
+	import components.ArgumentPanel;
+	import components.GridPanel;
+	import components.Inference;
 	
-	public class ALayoutManager
+	public class LayoutController
 	{
 		//public var listOfPanels:Vector.<ArgumentPanel>;
 		
@@ -26,7 +29,7 @@ package classes
 		public var yArgDistances:int;
 		public var yArgDisplay:int;
 		
-		public function ALayoutManager()
+		public function LayoutController()
 		{
 			//panelList = new Vector.<ArgumentPanel>(0,false);
 			panelList = new Vector.<GridPanel>(0,false);
@@ -65,21 +68,6 @@ package classes
 			var ind:int = panelList.indexOf(panel);
 			panelList.splice(ind,1);
 		}
-		
-		public function layoutComponents():void
-		{
-			var argumentPanel:GridPanel;
-			var i:int;
-			
-			for( i=0;i<panelList.length;i++)
-			{
-				argumentPanel = panelList[i];
-				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
-				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
-			}
-			//ArgumentPanel.parentMap.connectRelatedPanels();
-		}
-		
 		
 		public function moveConnectedPanels(claim:ArgumentPanel,diffX:int, diffY:int):void
 		{
@@ -161,7 +149,6 @@ package classes
 				Alert.show(e.toString());
 			}
 			panelList.push(panel1);
-			layoutComponents();
 			//components.Map(ArgumentPanel.parentMap.parent.parent.parent.parent.parent).update();
 		}
 		

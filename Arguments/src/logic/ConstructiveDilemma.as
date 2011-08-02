@@ -1,6 +1,6 @@
 package logic
 {
-	import classes.ArgumentPanel;
+	import components.ArgumentPanel;
 	public class ConstructiveDilemma extends ParentArg
 	{
 		private static var instance:ConstructiveDilemma;

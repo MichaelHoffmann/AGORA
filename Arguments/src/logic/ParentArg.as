@@ -1,8 +1,8 @@
 package logic
 {
-	import classes.ArgumentPanel;
-	import classes.DynamicTextArea;
-	import classes.Inference;
+	import components.ArgumentPanel;
+	import components.DynamicTextArea;
+	import components.Inference;
 	
 	import components.ArgSelector;
 	

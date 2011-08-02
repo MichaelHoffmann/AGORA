@@ -8,7 +8,7 @@ package Controller
 	
 	import ValueObjects.AGORAParameters;
 	
-	import classes.ArgumentPanel;
+	import components.ArgumentPanel;
 	
 	import components.LAMWorld;
 	import components.Map;

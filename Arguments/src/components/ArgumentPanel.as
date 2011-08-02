@@ -1,4 +1,4 @@
-package classes
+package components
 {
 	import Controller.ArgumentController;
 	import Controller.ViewController;
@@ -8,10 +8,9 @@ package classes
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.AButton;
 	import classes.Language;
-	
-	import components.ArgSelector;
-	import components.Option;
+	import classes.UserData;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -377,7 +376,7 @@ package classes
 		
 		public function showMenu():void
 		{
-			var menu:Menu = Menu.createMenu(null,constructArgData,false);
+			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
 			menu.show(globalPosition.x,globalPosition.y);	

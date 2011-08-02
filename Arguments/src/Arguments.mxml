@@ -5,22 +5,22 @@ This stage is where the user starts developing with just the claim
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:classes="classes.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="initApp()">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="initApp()" xmlns:components="components.*">
 	
 	<fx:Declarations>
 	</fx:Declarations>
 	
 	<s:VGroup>			
 	<mx:Canvas id="agora" width="1400" height="650">
-	<classes:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="5000" height="6000" >	
-	</classes:AgoraMap>
+	<components:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="5000" height="6000" >	
+	</components:AgoraMap>
 	</mx:Canvas>
 	</s:VGroup>
 	
 	<fx:Script>
 		<![CDATA[
-			import classes.ALayoutManager;
-			import classes.ArgumentPanel;
+			import Controller.LayoutController;
+			import components.ArgumentPanel;
 			import flash.display.*;
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -29,7 +29,7 @@ This stage is where the user starts developing with just the claim
 			
 			public var numComponentsX:int;
 			public var numComponentsY:int;
-			public var layoutManager:ALayoutManager;
+			public var layoutManager:LayoutController;
 			
 			public function initApp():void
 			{
