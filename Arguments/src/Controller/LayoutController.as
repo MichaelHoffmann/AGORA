@@ -13,6 +13,7 @@ package Controller
 	import components.Map;
 	import components.MenuPanel;
 	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import mx.containers.Canvas;
@@ -96,8 +97,9 @@ package Controller
 		
 		//------------------------- other public functions --------------------//
 		public function setApplicationLayoutProperties():void{
-			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.height - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 10;
-			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.width;
+			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.height - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 30;
+			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.width - 30;
+			FlexGlobals.topLevelApplication.map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
 		}
 		
 		

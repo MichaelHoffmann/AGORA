@@ -16,7 +16,7 @@
 		<s:Scroller id="agora">	
 			<s:Group>
 				<mx:Canvas>
-					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" minWidth="1400" minHeight="800">	
+					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
 						<mx:Canvas id="canvas" width="150" visible="false">
 							<mx:Text width="150" height="140" id="helpTxt">
 								<mx:htmlText>
@@ -34,6 +34,7 @@
 	<fx:Script>
 		<![CDATA[
 			import Controller.LayoutController;
+			
 			import classes.ClaimAddedEvent;
 			import classes.UserData;
 			
@@ -70,8 +71,8 @@
 			
 			public function setWidth(event: Event):void
 			{
-				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.height - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 10;
-				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.width;
+				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.height - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 50;
+				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.width - 50;
 			}
 			
 		]]>
