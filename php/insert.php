@@ -149,10 +149,11 @@ List of variables for insertion:
 		$row = mysql_fetch_assoc($resultID);
 		$ntID = $row['nodetext_id'];
 		if($ntID){
-			//update should ALWAYS have a real textbox ID, or a null..
-			if(!$textboxID || $textboxID=="NULL"){
+			//update should ALWAYS have a real textbox ID, or empty, so that we use target node ID
+			//Note that an update allows us to switch from textbox to target node or vice versa - this is intentional
+			if(!$textboxID && $tgtNodeID){ // We use the target node ID
 				$uquery = "UPDATE nodetext SET textbox_id=NULL, target_node_id=$tgtNodeID, connected_by=$cBy, modified_date=NOW() WHERE nodetext_id=$ntID";
-			}else{
+			}else{ // use the textbox ID
 				$uquery = "UPDATE nodetext SET textbox_id=$textboxID, connected_by=$cBy, modified_date=NOW() WHERE nodetext_id=$ntID";
 			}
 			$success = mysql_query($uquery, $linkID);
@@ -167,16 +168,25 @@ List of variables for insertion:
 			//insert with real textbox ID
 			if($textboxID){
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, connected_by, created_date, modified_date) VALUES
-							($nodeID, $textboxID, $position, $cBy, NOW(), NOW())";
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, connected_by, created_date, modified_date) VALUES
+							($nodeID, $textboxID, NULL, $position, $cBy, NOW(), NOW())";
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("error");
 					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
 					return false;
 				}
-			//insert with textbox TID
-			}else{
+			}else if($tgtNodeID){
+				//We are here given the real target node ID to put into a new nodetext position (new node, or new position in an existing node)
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, connected_by, created_date, modified_date) VALUES
+							($nodeID, NULL, $tgtNodeID, $position, $cBy, NOW(), NOW())";
+				$success=mysql_query($iquery, $linkID);
+				if(!$success){
+					$fail=$output->addChild("error");
+					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
+					return false;
+				}
+			}else{ //insert with textbox TID
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
 				
