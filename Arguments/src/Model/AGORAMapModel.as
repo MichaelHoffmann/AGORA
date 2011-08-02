@@ -566,6 +566,9 @@ package Model
 					xmlChild.@x = int(xmlChild.@x) + xgridDiff;
 					xmlChild.@y = int(xmlChild.@y) + ygridDiff;
 					xmlRequest.appendChild(xmlChild);
+					trace(int(xmlChild.@x));
+					trace(int(xmlChild.@y));
+					trace(ygridDiff);
 					trace(xmlChild.toXMLString());
 				}
 				else if(model is ArgumentTypeModel){

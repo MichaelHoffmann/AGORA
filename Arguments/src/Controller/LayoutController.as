@@ -174,7 +174,7 @@ package Controller
 		}
 		
 		public function getGridPositionY(tmpX:int):int
-		{
+		{	
 			return (Math.floor(tmpX/uwidth));
 		}
 		

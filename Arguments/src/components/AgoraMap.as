@@ -146,13 +146,14 @@ package components
 			tmpx = currentStage.mouseX - tmpx;
 			tmpy = currentStage.mouseY - tmpy;
 			
-			var tmpGridX:int = tmpy/AGORAParameters.getInstance().gridWidth;
-			var tmpGridY:int = tmpx/AGORAParameters.getInstance().gridWidth;
+			var diffx:int = Math.floor(tmpy/AGORAParameters.getInstance().gridWidth);
+			var diffy:int = Math.floor(tmpx/AGORAParameters.getInstance().gridWidth);
 			
-			var diffX:int = tmpGridX - int(dragSource.dataForFormat("gx"));
-			var diffY:int = tmpGridY - int(dragSource.dataForFormat("gy"));
-			
-			LayoutController.getInstance().movePanel(gridPanel, diffX, diffY);
+			//var diffX:int = tmpGridX - int(dragSource.dataForFormat("gx"));
+			//var diffY:int = tmpGridY - int(dragSource.dataForFormat("gy"));
+			trace("diffy");
+			trace(diffy);
+			LayoutController.getInstance().movePanel(gridPanel,diffx,diffy);
 		}
 		
 		override protected function commitProperties():void{
