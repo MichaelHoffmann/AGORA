@@ -177,8 +177,6 @@ package components
 		}
 		
 		//------------------- Getters and Setters -----------------------------//
-		
-		
 		public function get author():String
 		{
 			return _author;
@@ -343,15 +341,14 @@ package components
 		public function beginDrag( mouseEvent: MouseEvent ):void
 		{
 			try{
-				var	dinitiator:UIComponent = UIComponent(mouseEvent.currentTarget);
 				var dPInitiator:ArgumentPanel = this;
 				var ds:DragSource = new DragSource();
 				var tmpx:int = int(dPInitiator.mouseX);
 				var tmpy:int = int(dPInitiator.mouseY);
 				ds.addData(tmpx,"x");
 				ds.addData(tmpy,"y");
-				ds.addData(dPInitiator.gridX,"gx");
-				ds.addData(dPInitiator.gridY,"gy");
+				ds.addData(dPInitiator.model.xgrid,"gx");
+				ds.addData(dPInitiator.model.ygrid,"gy");
 				DragManager.doDrag(dPInitiator,ds,mouseEvent,null);
 			}
 			catch(error:Error)

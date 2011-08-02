@@ -146,11 +146,11 @@ package components
 			tmpx = currentStage.mouseX - tmpx;
 			tmpy = currentStage.mouseY - tmpy;
 			
-			var diffx:int = Math.floor(tmpy/AGORAParameters.getInstance().gridWidth);
-			var diffy:int = Math.floor(tmpx/AGORAParameters.getInstance().gridWidth);
+			var toxgrid:int = Math.floor(tmpy/AGORAParameters.getInstance().gridWidth);
+			var toygrid:int = Math.floor(tmpx/AGORAParameters.getInstance().gridWidth);
 			
-			//var diffX:int = tmpGridX - int(dragSource.dataForFormat("gx"));
-			//var diffY:int = tmpGridY - int(dragSource.dataForFormat("gy"));
+			var diffx:int = toxgrid - int(dragSource.dataForFormat("gx"));
+			var diffy:int = toygrid - int(dragSource.dataForFormat("gy"));
 			trace("diffy");
 			trace(diffy);
 			LayoutController.getInstance().movePanel(gridPanel,diffx,diffy);

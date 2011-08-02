@@ -94,6 +94,11 @@ package Controller
 			LoadController.getInstance().fetchMapData();
 		}
 		
+		//------------------------- other public functions --------------------//
+		public function setApplicationLayoutProperties():void{
+			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.height - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 10;
+			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.width;
+		}
 		
 		
 		
