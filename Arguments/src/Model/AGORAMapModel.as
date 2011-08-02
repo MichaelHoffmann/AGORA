@@ -13,6 +13,7 @@ package Model
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
@@ -327,6 +328,7 @@ package Model
 					statementModel = panelListHash[obj.ID];
 				}
 				statementModel.author = obj.Author;
+				statementModel.statementType = obj.Type;
 				statementModel.xgrid = obj.x;
 				statementModel.ygrid = obj.y;
 				nodeHash[obj.ID] = statementModel;

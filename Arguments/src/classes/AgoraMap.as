@@ -97,161 +97,9 @@ package classes
 			return xml;
 		}
 		
-		/*
-		public function getConnection( claim:ArgumentPanel):XML
-		{
-			
-			var coordinate:Coordinate = new Coordinate;
-			var argTypeCoordinate:Coordinate = new Coordinate;
-			var reasonCoordinate:Coordinate = new Coordinate;
-			
-			coordinate.gridX = claim.gridX;
-			coordinate.gridY = claim.gridY;
-			
-			//First rule
-			//if(claim.rules.length == 0)
-			{
-				coordinate.gridX += Math.ceil(claim.height / layoutManager.uwidth ) + 2;
-				coordinate.gridY +=  Math.ceil(claim.width / layoutManager.uwidth ) + 2;
-			}
-				//Not First Rule
-			//else
-			{
-			//	var lastInference:Inference = claim.rules[claim.rules.length - 1];
-			//	var lastInferenceGridX:int  = lastInference.gridX + layoutManager.getGridSpan(lastInference.height);
-			//	var lastReason:ArgumentPanel = lastInference.reasons[lastInference.reasons.length - 1];
-				var lastReasonGridX:int = lastReason.gridX + layoutManager.getGridSpan(lastReason.height);
-				var max:int;
-				
-				if(lastInferenceGridX <= lastReasonGridX){
-					max = lastReasonGridX;
-				}
-				else{
-					max = lastInferenceGridX;
-				}
-				max = max + layoutManager.yArgDistances;
-				coordinate.gridY = coordinate.gridY + layoutManager.getGridSpan(claim.width) + 2;
-				coordinate.gridX = max;
-			}
-			
-			if(claim.rules.length == 0){
-				argTypeCoordinate.gridX = claim.gridX;
-				argTypeCoordinate.gridY = coordinate.gridY;
-			}
-			else{
-				argTypeCoordinate.gridX = coordinate.gridX - layoutManager.yArgDisplay;
-				argTypeCoordinate.gridY = coordinate.gridY;
-			}
-			
-			reasonCoordinate.gridX = argTypeCoordinate.gridX;
-			reasonCoordinate.gridY = coordinate.gridY + Math.ceil(claim.width/layoutManager.uwidth) + 1;
-			
-			var xml:XML = <map>
-							<textbox text=""/>
-							<textbox text=""/>
-							<textbox text=""/>
-							<node Type="Standard" typed="0" is_positive="1" x={reasonCoordinate.gridX} y={reasonCoordinate.gridY}>
-								<nodetext/><nodetext/><nodetext/>
-							</node>
-							<node Type="Inference" typed="0" is_positive="1" x={coordinate.gridX} y={coordinate.gridY}>
-							</node>
-							<connection type="Unset" x={argTypeCoordinate.gridX} y={argTypeCoordinate.gridY} />
-						 </map>
-			
-			//setting the ID of the map
-			xml.@ID = ID;
-			
-			//temporary IDs for the three new textboxes
-			var textboxesList:XMLList = xml.textbox;
-			for each(var textbox:XML in textboxesList)
-			{
-				textbox.@TID = tempID;
-			}
-			var nodeList:XMLList = xml.node;
-			for each(var node:XML in nodeList)
-			{
-				node.@TID = tempID;
-			}
-			//set the node text for the reason box (standard)
-			var reasonNode:XML = nodeList[0];
-			var nodetextList:XMLList = reasonNode.nodetext;
-			for each(var nodetext:XML in nodetextList)
-			{
-				nodetext.@TID = tempID;
-			}
-			for(var i:int = 0; i < nodetextList.length(); i++)
-			{
-				nodetextList[i].@textboxTID = textboxesList[i].@TID;
-			}
-			
-			//add a connection
-			var newConnXML:XML = xml.connection[0];
-			newConnXML.@TID = tempID;
-			//newConnXML.@targetnodeID = claim.ID;
-			for(i=0; i<nodeList.length(); i++)
-			{
-				var sourcenodeXML:XML = <sourcenode />;
-				sourcenodeXML.@TID = tempID;
-				sourcenodeXML.@nodeTID = nodeList[i].@TID;
-				newConnXML.appendChild(sourcenodeXML);
-			}
-			return xml;
-		}
-		*/
-		
 		public function getAddReason(inference:Inference):XML
 		{
-			/*
-			//cannot be the first reason
-			//get the recently added reason
-			var reason:ArgumentPanel = inference.reasons[inference.reasons.length - 1];
-			var coordinate:Coordinate = new Coordinate;
-			coordinate.gridX = reason.gridX + layoutManager.getGridSpan(reason.height) + 1;
-			coordinate.gridY = reason.gridY;
 			
-			var xml:XML=<map>
-						<textbox text=""/>
-						<textbox text=""/>
-						<textbox text=""/>
-						<node Type="Standard" typed="0" is_positive="1" x={coordinate.gridX} y={coordinate.gridY}>
-							<nodetext/>
-							<nodetext/>
-							<nodetext/>
-						</node>
-						<connection></connection>
-						</map>;
-		
-			xml.@ID = ID;
-			var textboxesList:XMLList = xml.textbox;
-			for each(var textbox:XML in textboxesList)
-			{
-				textbox.@TID = tempID;
-			}
-			var nodeList:XMLList = xml.node;
-			
-			for each(var node:XML in nodeList)
-			{
-				node.@TID = tempID;
-			}
-			var reasonNode:XML = nodeList[0];
-			var nodetextList:XMLList = reasonNode.nodetext;
-			for(var i:int = 0; i < nodetextList.length(); i++)
-			{
-				nodetextList[i].@textboxTID = textboxesList[i].@TID;
-			}
-			//add connection
-			var connection:XML = xml.connection[0];
-			connection.@ID = inference.connID;
-			connection.@type = inference.myArg.dbType;
-			connection.@x = inference.argType.gridX;
-			connection.@y = inference.argType.gridY;
-			//connection.@targetnode = inference.claim.ID;
-			//add a sourcenode to the connection
-			var sourcenode:XML = <sourcenode />;
-			sourcenode.@TID = tempID;
-			sourcenode.@nodeTID = reasonNode.@TID;
-			connection.appendChild(sourcenode);
-			*/
 			return new XML;
 			
 		}
@@ -291,87 +139,7 @@ package classes
 		
 		public function handleDrop(dragEvent:DragEvent):void
 		{	
-			/*
-			try{
-				
-				var currentStage:Canvas = Canvas(dragEvent.currentTarget);
-				var akcdragInitiator1:GridPanel =  dragEvent.dragInitiator as GridPanel;
-				var dragSource:DragSource = dragEvent.dragSource;
-				var tmpx:int = int(dragSource.dataForFormat("x"));
-				var tmpy:int = int(dragSource.dataForFormat("y"));
-				tmpx = currentStage.mouseX -  tmpx;
-				tmpy = currentStage.mouseY - tmpy;
-				
-				var tmpGridX:int = layoutManager.getGridPositionX(tmpy);//In the logical co ordinates x and y are along different axes
-				var tmpGridY:int = layoutManager.getGridPositionY(tmpx);//Got to change this though ;-)
-				
-				var diffX:int = tmpGridX - int(dragSource.dataForFormat("gx"));
-				var diffY:int = tmpGridY - int(dragSource.dataForFormat("gy"));
-				
-				if(akcdragInitiator1 is Inference)
-				{
-					var akcdragInitiator:ArgumentPanel = ArgumentPanel(dragEvent.dragInitiator);
-					//figure out if it's allowed
-					var currInference:Inference = Inference(akcdragInitiator);
-					var lLimit:int = currInference.claim.gridY + layoutManager.getGridSpan(currInference.width);
-					var uLimit:int = currInference.reasons[0].gridY - layoutManager.getGridSpan(currInference.width) - 1; 
-					if(tmpGridY >= lLimit && tmpGridY <= uLimit)
-					{
-						currInference.gridX = tmpGridX;
-						if(currInference.rules.length > 0 )
-						{
-							layoutManager.moveConnectedPanels(currInference, diffX, 0);
-						}
-					}
-				}
-					
-				else if(akcdragInitiator1 is ArgumentPanel)
-				{
-					akcdragInitiator = akcdragInitiator1 as ArgumentPanel;
-					akcdragInitiator.gridY = tmpGridY;
-					if(akcdragInitiator.inference == null)
-					{
-						akcdragInitiator.gridX = tmpGridX;
-					}
-					else
-					{
-						layoutManager.alignReasons(akcdragInitiator,tmpGridY);
-					}
-					for(var i:int=0; i < akcdragInitiator.rules.length; i++)
-					{
-						akcdragInitiator.rules[i].gridY = akcdragInitiator.rules[i].gridY + diffY;
-						
-						akcdragInitiator.rules[i].argType.gridY = akcdragInitiator.rules[i].argType.gridY + diffY;
-						if(akcdragInitiator.inference == null)
-						{
-							akcdragInitiator.rules[i].argType.gridX=akcdragInitiator.rules[i].argType.gridX + diffX;
-							akcdragInitiator.rules[i].gridX = akcdragInitiator.rules[i].gridX + diffX;
-							layoutManager.moveConnectedPanels(akcdragInitiator.rules[i],diffX,diffY);
-						}
-						else
-						{
-							layoutManager.moveConnectedPanels(akcdragInitiator.rules[i], 0, diffY);
-						}
-						
-					}
-				}
-				else if(akcdragInitiator1 is MenuPanel)
-				{
-					var argdisplay:MenuPanel = akcdragInitiator1 as MenuPanel;
-					if(argdisplay.inference != argdisplay.inference.claim.rules[0]){
-						argdisplay.gridX = argdisplay.gridX + diffX;
-						argdisplay.inference.gridX = argdisplay.inference.gridX + diffX;
-						layoutManager.moveConnectedPanels(argdisplay.inference,diffX,0);
-					}
-				}
-		
-				
-			}catch(error:Error)
-			{
-				Alert.show(error.message.toString());
-			}
-			layoutManager.layoutComponents();
-			*/
+			
 		}
 		
 		override protected function commitProperties():void{
@@ -382,15 +150,12 @@ package classes
 					var inference:Inference = new Inference;
 					inference.model = newPanels[i];
 					panelsHash[inference.model.ID] = inference;
-					var xWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(inference.setX, inference.model, "xgrid", true);
-					var yWatcherSetter:ChangeWatcher = BindingUtils.bindSetter(inference.setY, inference.model, "ygrid", true);
 					addChild(inference);
 				}
 				else if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel = new ArgumentPanel;
 					argumentPanel.model = newPanels[i];
-					var xWatcherSetterArgumentPanel:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setX, argumentPanel.model, "xgrid", true);
-					var yWatcherSetterArgumentPanel:ChangeWatcher = BindingUtils.bindSetter(argumentPanel.setY, argumentPanel.model, "ygrid", true);
+					panelsHash[argumentPanel.model.ID] = argumentPanel;
 					addChild(argumentPanel);
 				}
 			}
@@ -398,8 +163,7 @@ package classes
 			for each(var argumentTypeModel:ArgumentTypeModel in newMenuPanels){
 				var menuPanel:MenuPanel = new MenuPanel;
 				menuPanel.model = argumentTypeModel;
-				var xWatcherSetterMenuPanel:ChangeWatcher = BindingUtils.bindSetter(menuPanel.setX, menuPanel.model, "xgrid", true);
-				var yWatcherSetterMenuPanel:ChangeWatcher = BindingUtils.bindSetter(menuPanel.setY, menuPanel.model, "ygrid", true);
+				panelsHash[menuPanel.model.ID] =  menuPanel;
 				addChild(menuPanel);
 			}
 			

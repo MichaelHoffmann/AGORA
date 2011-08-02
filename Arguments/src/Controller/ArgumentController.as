@@ -6,6 +6,10 @@ package Controller
 	import Model.MapMetaData;
 	import Model.StatementModel;
 	
+	import ValueObjects.AGORAParameters;
+	
+	import classes.ArgumentPanel;
+	
 	import components.LAMWorld;
 	import components.Map;
 	
@@ -13,8 +17,9 @@ package Controller
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
+	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
-
+	
 	public class ArgumentController
 	{
 		private static var instance:ArgumentController;
@@ -30,7 +35,7 @@ package Controller
 			//Event handlers
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
-			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);			
+			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -75,6 +80,10 @@ package Controller
 		
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
+			
+			//set event listeners
+			setEventListeners(statementModel);
+			
 			LoadController.getInstance().fetchMapData();
 			//Edit: Delay the below invalidation until next update
 			//invalidate component, so that they get updated during the validation  cycle of the Flex architecture
@@ -83,9 +92,35 @@ package Controller
 		}
 		
 		
+		//----------------- State Changes in a Statement --------------------//
+		public function changeType(ID:int):void{
+			try{
+				//Busy Cursor
+				CursorManager.setBusyCursor();
+				//Find out the model class
+				var sModel:StatementModel = model.agoraMapModel.panelListHash[ID];
+				//Change the model
+				sModel.toggleType();
+			}catch(error:Error){
+				Alert.show(AGORAParameters.getInstance().STATEMENT_TOGGLE_FAILED);
+			}
+		}
+		
+		protected function statementTypeToggled(event:AGORAEvent):void{
+			var sModel:StatementModel = AGORAModel.getInstance().agoraMapModel.panelListHash[event.eventData as int];
+			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[event.eventData as int];
+			CursorManager.removeBusyCursor();
+		}
+		
+		//------------------- configuration functions -----------------//
+		public function setEventListeners(statementModel:StatementModel):void{
+			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLED,statementTypeToggled); 	
+		}
+		
+		
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{
-			Alert.show("Error occurred. Please make sure you are connected to the internet");
+			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
 		
 	}

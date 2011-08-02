@@ -1,10 +1,17 @@
 package Model
 {
 	
+	import Events.AGORAEvent;
+	
+	import ValueObjects.AGORAParameters;
+	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
 	import mx.controls.Alert;
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
 	
 	[Bindable]
 	public class StatementModel extends EventDispatcher
@@ -32,12 +39,21 @@ package Model
 		private var _ygrid:int;
 		
 		
+		private var toggleStatementTypeService:HTTPService;
+		
+		
 		public function StatementModel(target:IEventDispatcher=null)
 		{
 			super(target);
 			statements = new Vector.<SimpleStatementModel>(0,false);
 			supportingArguments = new Vector.<InferenceModel>(0,false);
 			nodeTextIDs = new Vector.<int>(0,false);
+			
+			//create toggleStatementTypeService
+			toggleStatementTypeService = new HTTPService;
+			toggleStatementTypeService.url = AGORAParameters.getInstance().insertURL;
+			toggleStatementTypeService.addEventListener(ResultEvent.RESULT, onToggleTypeServiceResult);
+			toggleStatementTypeService.addEventListener(FaultEvent.FAULT, onFault);
 		}
 
 		
@@ -185,7 +201,6 @@ package Model
 		
 		//----------------------- other public functions -------------//
 		public static function getObject(xml:XML):StatementModel{
-			//trace(xml);
 			return new StatementModel;	
 		}
 		
@@ -198,6 +213,7 @@ package Model
 			return false;
 		}
 		
+		
 		public function getStatement(id:int):SimpleStatementModel{
 			for each(var simpleStatement:SimpleStatementModel in statements){
 				if(id == simpleStatement.ID){
@@ -207,12 +223,30 @@ package Model
 			return null;
 		}
 		
+		//------------------ Toggle Statement Type ------------------------//
+		public function toggleType():void{
+			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
+			var nodeXML:XML = getXML();
+			nodeXML.@Type = nodeXML.@Type == UNIVERSAL? PARTICULAR: UNIVERSAL;
+			requestXML.appendChild(nodeXML);
+			toggleStatementTypeService.send({uid: AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash, xml:requestXML});
+		}
+		
+		protected function onToggleTypeServiceResult(event:ResultEvent):void{
+			//check for error
+			statementType = statementType == UNIVERSAL? PARTICULAR: UNIVERSAL;
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_TYPE_TOGGLED, null, ID));
+		}
+		
+		//----------------- Generic Fault Handler -------------------------//
+		protected function onFault( fault:FaultEvent):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
+		}
 		
 		//---------------------- Forming StatmentModels ---------------//
 		public static function createStatementFromObject(obj:Object):StatementModel{
 			var statementModel:StatementModel = new StatementModel;
 			statementModel.ID = obj.ID;
-			//statementModel.
 			return statementModel;
 		}
 		
@@ -223,6 +257,7 @@ package Model
 		
 		public function getXML():XML{
 			var xml:XML = <node></node>;
+			xml.@ID = ID;
 			xml.@Type = statementType;
 			xml.@typed = 0;
 			xml.@is_positive = negated? 0 : 1;

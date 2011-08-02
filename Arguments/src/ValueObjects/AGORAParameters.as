@@ -15,6 +15,8 @@ package ValueObjects
 		
 		//prompts
 		public var MAP_LOADING_FAILED:String;
+		public var STATEMENT_TOGGLE_FAILED:String;
+		public var NETWORK_ERROR:String;
 	
 		
 		public function AGORAParameters()
@@ -28,6 +30,8 @@ package ValueObjects
 			loadMapURL = "http://agora.gatech.edu/dev/load_map.php";
 			
 			MAP_LOADING_FAILED = "Error occured when loading map";
+			STATEMENT_TOGGLE_FAILED = "Error occurred when trying to toggle the type of statement";
+			NETWORK_ERROR = "Unable to reach server. Please check your Internet connection...";
 			
 			
 			gridWidth = 25;
