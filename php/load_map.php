@@ -117,6 +117,7 @@
 					$innerRow=mysql_fetch_assoc($resultID2);
 					$nodetext->addAttribute("ID", $innerRow['nodetext_id']);
 					$nodetext->addAttribute("textboxID", $innerRow['textbox_id']);
+					$nodetext->addAttribute("targetNodeID", $innerRow['target_node_id']);
 					$nodetext->addAttribute("connected_by", $innerRow['connected_by']);
 					$nodetext->addAttribute("deleted", $innerRow['is_deleted']);
 				}			
