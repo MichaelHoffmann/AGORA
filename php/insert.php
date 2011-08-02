@@ -186,6 +186,9 @@ List of variables for insertion:
 					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
 					return false;
 				}
+			}else if($tgtNodeTID){
+				//We have a target node TID, rather than an ID. Stubbing out space in case this is needed.
+				
 			}else{ //insert with textbox TID
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
