@@ -1,7 +1,7 @@
 package components
 {
 	import Model.InferenceModel;
-	
+	import Model.StatementModel;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -69,9 +69,18 @@ package components
 		}
 		
 		
-		///Getters and Setters
-	
+		//--------- Getters and Setters -------------------//
 		
+		public function get inferenceModel():InferenceModel
+		{
+			return _inferenceModel;
+		}
+
+		public function set inferenceModel(value:InferenceModel):void
+		{
+			_inferenceModel = value;
+		}
+
 		public function get displayStr():String
 		{
 			return _displayStr;
@@ -85,6 +94,7 @@ package components
 			invalidateSize();
 			invalidateDisplayList();
 		}
+		
 		/*
 		public function get connectionType():String
 		{

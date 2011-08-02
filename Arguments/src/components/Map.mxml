@@ -15,7 +15,6 @@
 		</s:HGroup>
 		<s:Scroller id="agora">	
 			<s:Group>
-				<mx:Canvas>
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" minWidth="1400" minHeight="800">	
 						<mx:Canvas id="canvas" width="150" visible="false">
 							<mx:Text width="150" height="140" id="helpTxt">
@@ -26,7 +25,6 @@
 							</mx:Text>
 						</mx:Canvas>
 					</components:AgoraMap>	
-				</mx:Canvas>
 			</s:Group>
 		</s:Scroller>
 	</s:VGroup>

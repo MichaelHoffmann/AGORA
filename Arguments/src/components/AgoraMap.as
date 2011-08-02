@@ -2,6 +2,7 @@
 package components
 {
 	import Controller.ArgumentController;
+	import Controller.LayoutController;
 	import Controller.LoadController;
 	
 	import Model.AGORAModel;
@@ -9,6 +10,7 @@ package components
 	import Model.InferenceModel;
 	import Model.StatementModel;
 	
+	import ValueObjects.AGORAParameters;
 	
 	import flash.display.Graphics;
 	import flash.events.Event;
@@ -36,7 +38,6 @@ package components
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
-	import Controller.LayoutController;
 	
 	public class AgoraMap extends Canvas
 	{
@@ -137,7 +138,21 @@ package components
 		
 		public function handleDrop(dragEvent:DragEvent):void
 		{	
+			var currentStage:Canvas = Canvas(dragEvent.currentTarget);
+			var gridPanel:GridPanel = dragEvent.dragInitiator as GridPanel;
+			var dragSource:DragSource = dragEvent.dragSource;
+			var tmpx:int = int(dragSource.dataForFormat("x"));
+			var tmpy:int = int(dragSource.dataForFormat("y"));
+			tmpx = currentStage.mouseX - tmpx;
+			tmpy = currentStage.mouseY - tmpy;
 			
+			var tmpGridX:int = tmpy/AGORAParameters.getInstance().gridWidth;
+			var tmpGridY:int = tmpx/AGORAParameters.getInstance().gridWidth;
+			
+			var diffX:int = tmpGridX - int(dragSource.dataForFormat("gx"));
+			var diffY:int = tmpGridY - int(dragSource.dataForFormat("gy"));
+			
+			LayoutController.getInstance().movePanel(gridPanel, diffX, diffY);
 		}
 		
 		override protected function commitProperties():void{

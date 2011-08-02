@@ -1,5 +1,7 @@
 package Model
 {
+	import Controller.LoadController;
+	
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
@@ -29,6 +31,7 @@ package Model
 		private var createNodeService: HTTPService;
 		private var createFirstClaim: HTTPService;
 		private var loadMapService: HTTPService;
+		private var updatePositionsService:HTTPService;
 		
 		private var _name:String;
 		private var _description:String;
@@ -56,6 +59,14 @@ package Model
 			loadMapService.url = AGORAParameters.getInstance().loadMapURL;
 			loadMapService.addEventListener(ResultEvent.RESULT, onLoadMapModelResult);
 			loadMapService.addEventListener(FaultEvent.FAULT, onFault);
+			
+			//create update positions service
+			updatePositionsService = new HTTPService();
+			updatePositionsService.url = AGORAParameters.getInstance().insertURL;
+			updatePositionsService.addEventListener(ResultEvent.RESULT, updatePositionServiceResult);
+			updatePositionsService.addEventListener(FaultEvent.FAULT, onFault);
+			
+			
 			
 			panelListHash = new Dictionary;
 			
@@ -531,6 +542,42 @@ package Model
 				}
 			}
 			return true;
+		}
+		
+		//----------------------- Updating position -----------------------------------------//
+		public function updatePosition(model:Object, xgridDiff:int, ygridDiff:int):void{
+			//get the current model
+			var statementModel:StatementModel;
+			var inferenceModel:InferenceModel;
+			var argumentTypeModel:ArgumentTypeModel;
+			
+			var xmlRequest:XML = <map ID={ID} />;
+			var queue:Vector.<Object> = new Vector.<Object>;
+			queue.push(model);
+			
+			while(queue.length > 0){
+				model = queue.pop();
+				if(model is InferenceModel){
+					inferenceModel = InferenceModel(model);		
+				}
+				else if(model is StatementModel){
+					statementModel = StatementModel(model);
+					var xmlChild:XML = statementModel.getXML();
+					xmlChild.@x = int(xmlChild.@x) + xgridDiff;
+					xmlChild.@y = int(xmlChild.@y) + ygridDiff;
+					xmlRequest.appendChild(xmlChild);
+					trace(xmlChild.toXMLString());
+				}
+				else if(model is ArgumentTypeModel){
+					argumentTypeModel = ArgumentTypeModel(model);
+				}
+				
+				updatePositionsService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash, xml:xmlRequest});
+			}
+		}
+		
+		protected function updatePositionServiceResult(result:ResultEvent):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.POSITIONS_UPDATED));
 		}
 		
 		//----------------------- Reinitializing the model ----------------------------------//
