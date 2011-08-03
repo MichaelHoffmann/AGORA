@@ -8,9 +8,9 @@
 	<node TID="2" Type="Particular" x="10" y="1" typed="1" is_positive="1">
 		<nodetext TID="2" textboxTID="2"/>
 	</node>
-	<node TID="3" Type="Inference" x="5" y="5" typed="1" is_positive="1">
+	<node TID="3" Type="Inference" x="5" y="5" typed="1" is_positive="1" connected_by="disjunction">
 		<nodetext TID="3" textboxTID="1"/>
-		<nodetext TID="4" textboxTID="2" connected_by="disjunction"/>
+		<nodetext TID="4" textboxTID="2"/>
 	</node>
 	<connection TID="1" type="MPifthen" targetnodeTID="2" x="5" y="1" typed="1" is_positive="1">
 		<sourcenode TID="1" nodeTID="1"/>
