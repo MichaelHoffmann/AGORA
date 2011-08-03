@@ -102,7 +102,8 @@
 				$node->addAttribute("x", $row['x_coord']);
 				$node->addAttribute("y", $row['y_coord']);
 				$node->addAttribute("typed", $row['typed']);
-				$node->addAttribute("positive", $row['is_positive']);				
+				$node->addAttribute("positive", $row['is_positive']);
+				$node->addAttribute("connected_by", $row['connected_by']);				
 				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
@@ -118,7 +119,6 @@
 					$nodetext->addAttribute("ID", $innerRow['nodetext_id']);
 					$nodetext->addAttribute("textboxID", $innerRow['textbox_id']);
 					$nodetext->addAttribute("targetNodeID", $innerRow['target_node_id']);
-					$nodetext->addAttribute("connected_by", $innerRow['connected_by']);
 					$nodetext->addAttribute("deleted", $innerRow['is_deleted']);
 				}			
 			}

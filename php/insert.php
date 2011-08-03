@@ -137,10 +137,6 @@ List of variables for insertion:
 	{
 		global $tbTIDarray; //use the global variable
 		$attr = $nt->attributes();
-		$cBy = $attr['connected_by'];
-		if(!$cBy){
-			$cBy='implication';
-		}
 		$textboxID = mysql_real_escape_string($attr["textboxID"]);
 		$tgtNodeID = mysql_real_escape_string($attr["targetNodeID"]);
 		
@@ -152,9 +148,9 @@ List of variables for insertion:
 			//update should ALWAYS have a real textbox ID, or empty, so that we use target node ID
 			//Note that an update allows us to switch from textbox to target node or vice versa - this is intentional
 			if(!$textboxID && $tgtNodeID){ // We use the target node ID
-				$uquery = "UPDATE nodetext SET textbox_id=NULL, target_node_id=$tgtNodeID, connected_by='$cBy', modified_date=NOW() WHERE nodetext_id=$ntID";
+				$uquery = "UPDATE nodetext SET textbox_id=NULL, target_node_id=$tgtNodeID, modified_date=NOW() WHERE nodetext_id=$ntID";
 			}else{ // use the textbox ID
-				$uquery = "UPDATE nodetext SET textbox_id=$textboxID, connected_by='$cBy', modified_date=NOW() WHERE nodetext_id=$ntID";
+				$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
 			}
 			$success = mysql_query($uquery, $linkID);
 			if(!$success){
@@ -168,8 +164,8 @@ List of variables for insertion:
 			//insert with real textbox ID
 			if($textboxID){
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, connected_by, created_date, modified_date) VALUES
-							($nodeID, $textboxID, NULL, $position, '$cBy', NOW(), NOW())";
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, created_date, modified_date) VALUES
+							($nodeID, $textboxID, NULL, $position, NOW(), NOW())";
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("error");
@@ -178,8 +174,8 @@ List of variables for insertion:
 				}
 			}else if($tgtNodeID){
 				//We are here given the real target node ID to put into a new nodetext position (new node, or new position in an existing node)
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, connected_by, created_date, modified_date) VALUES
-							($nodeID, NULL, $tgtNodeID, $position, '$cBy', NOW(), NOW())";
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, created_date, modified_date) VALUES
+							($nodeID, NULL, $tgtNodeID, $position, NOW(), NOW())";
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("error");
@@ -193,8 +189,8 @@ List of variables for insertion:
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
 				
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, connected_by, created_date, modified_date) VALUES 
-							($nodeID, $textID, $position, '$cBy', NOW(), NOW())";
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES 
+							($nodeID, $textID, $position, NOW(), NOW())";
 				
 				$success = mysql_query($iquery, $linkID);
 				if(!$success){
@@ -211,6 +207,9 @@ List of variables for insertion:
 		}
 		return true;
 	}
+	
+	
+
 	/**
 	*	Takes a node from XML and puts it in the database.
 	*/
@@ -225,6 +224,10 @@ List of variables for insertion:
 		$y = mysql_real_escape_string($attr["y"]);
 		$typed = mysql_real_escape_string($attr["typed"]);
 		$positivity = mysql_real_escape_string($attr["is_positive"]);
+		$cBy = $attr['connected_by'];
+		if(!$cBy){
+			$cBy='implication';
+		}
 		$query = "SELECT * FROM node_types WHERE type='$type'";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
@@ -236,7 +239,8 @@ List of variables for insertion:
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
 			if($userID == $dbUID){
-				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y, typed=$typed, is_positive=$positivity
+				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y, 
+							typed=$typed, is_positive=$positivity, connected_by='$cBy'
 							WHERE node_id=$nodeID";
 				$success=mysql_query($uquery, $linkID);
 				if(!$success){
@@ -263,8 +267,8 @@ List of variables for insertion:
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);		
-			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord, typed, is_positive) VALUES
-										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y, $typed, $positivity)";
+			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord, typed, connected_by, is_positive) VALUES
+										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y, $typed, '$cBy', $positivity)";
 			$success=mysql_query($iquery, $linkID);
 			if(!$success){
 				$fail=$output->addChild("error");
