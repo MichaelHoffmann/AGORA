@@ -232,7 +232,7 @@ List of variables for insertion:
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row['nodetype_id'];
-		if($nodeID){		
+		if($nodeID){
 			//update
 			$query = "SELECT * FROM nodes WHERE node_id=$nodeID";
 			$resultID = mysql_query($query, $linkID);
@@ -253,7 +253,7 @@ List of variables for insertion:
 				}
 			}else{
 				//user is updating someone else's node. He is only allowed to change X and Y coordinates.
-				$uquery = "UPDATE nodes SET modified_date=NOW(), x_coord=$x, y_coord=$y, WHERE node_id=$nodeID";
+				$uquery = "UPDATE nodes SET modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
 				$success=mysql_query($uquery, $linkID);
 				if(!$success){
 					$fail=$output->addChild("error");
