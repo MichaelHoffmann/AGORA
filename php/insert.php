@@ -248,9 +248,17 @@ List of variables for insertion:
 					$nodeOut->addAttribute("ID", $nodeID);
 				}
 			}else{
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent node. This is not permissible.");
-				return false;
+				//user is updating someone else's node. He is only allowed to change X and Y coordinates.
+				$uquery = "UPDATE nodes SET modified_date=NOW(), x_coord=$x, y_coord=$y, WHERE node_id=$nodeID";
+				$success=mysql_query($uquery, $linkID);
+				if(!$success){
+					$fail=$output->addChild("error");
+					$fail->addAttribute("text", "Unable to update the NODE. Query was: $uquery");
+					return false;
+				}else{
+					$nodeOut=$output->addChild("node");
+					$nodeOut->addAttribute("ID", $nodeID);
+				}
 			}
 		}else{
 			//insert
