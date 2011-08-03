@@ -175,7 +175,7 @@ package Model
 		public function addFirstClaim():void{
 			var mapXML:XML=<map id={ID}>
 								<textbox text=""/>
-								<node TID="1" Type="Universal" typed="0" is_positive="1"  x="2" y="3">
+								<node TID="1" Type={StatementModel.PARTICULAR} typed="0" is_positive="1"  x="2" y="3">
 									<nodetext/>
 								</node>
 						   </map>;	
@@ -199,18 +199,22 @@ package Model
 				
 				if(map.textbox is ArrayCollection){
 					trace("first claim as complex statement...");//shouldn't occur because there is no use case that allows this.
+					/*
 					for(var i:int=1; i < ArrayCollection(map.textbox).length; i++){
 						simpleStatement = new SimpleStatementModel;
 						simpleStatement.ID = map.textbox[i].ID;
 						simpleStatement.text = map.textbox[i].text;
+						simpleStatement.parent = statementModel;
 						statementModel.statements.push(simpleStatement);
 						statementModel.nodeTextIDs.push(map.node.nodetext[i].ID);
-					}		
+					}
+					*/
 				}
 				else{
-					simpleStatement = new SimpleStatementModel;
-					simpleStatement.ID = map.textbox.ID;
+					simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textbox, statementModel);
 					simpleStatement.text = map.textbox.text;
+					simpleStatement.hasOwn = true;
+					simpleStatement.forwardList.push(statementModel.statement);
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(map.node.nodetext.ID);
 				}
@@ -253,6 +257,7 @@ package Model
 					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
 					return;
 				}
+				
 				
 				//Form a map of connections
 				var connectionsHash:Dictionary = new Dictionary;
@@ -386,12 +391,12 @@ package Model
 		protected function processNodeText(nodetext:Object, node:Object,  nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
 			var statementModel:StatementModel = nodeHash[node.ID];
 			var simpleStatement:SimpleStatementModel;
-			if(!statementModel.hasStatement(nodetext.ID)){
+			if(!statementModel.hasStatement(nodetext.textboxID)){
 				simpleStatement = new SimpleStatementModel;
 				simpleStatement.ID = nodetext.textboxID;
 			}
 			else{
-				simpleStatement = statementModel.getStatement(nodetext.ID);
+				simpleStatement = statementModel.getStatement(nodetext.textboxID);
 			}
 			
 			if(!statementModel.hasStatement(simpleStatement.ID)){
@@ -566,10 +571,6 @@ package Model
 					xmlChild.@x = int(xmlChild.@x) + xgridDiff;
 					xmlChild.@y = int(xmlChild.@y) + ygridDiff;
 					xmlRequest.appendChild(xmlChild);
-					trace(int(xmlChild.@x));
-					trace(int(xmlChild.@y));
-					trace(ygridDiff);
-					trace(xmlChild.toXMLString());
 				}
 				else if(model is ArgumentTypeModel){
 					argumentTypeModel = ArgumentTypeModel(model);

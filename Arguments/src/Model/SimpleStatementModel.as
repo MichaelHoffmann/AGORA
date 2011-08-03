@@ -1,28 +1,45 @@
 package Model
 {
+	import ValueObjects.AGORAParameters;
+	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
+	[Bindable]
 	public class SimpleStatementModel extends EventDispatcher
 	{
-		[Bindable]
 		private var _text:String;
-		[Bindable]
 		private var _forwardList:Vector.<SimpleStatementModel>;
 		
 		private var _ID:int;
 		
 		private var _hasOwn:Boolean;
 		
+		private var _parent:StatementModel;
+		
 		public static const DEPENDENT_TEXT:String = "$#$DependentText$#$";
+		
+		
 		
 		public function SimpleStatementModel(target:IEventDispatcher=null)
 		{
 			super(target);
+			forwardList = new Vector.<SimpleStatementModel>;
+			ID = 0;
 		}
 		
 		//------------------------Getters/Setters-------------------------//
 		
+		public function get parent():StatementModel
+		{
+			return _parent;
+		}
+
+		public function set parent(value:StatementModel):void
+		{
+			_parent = value;
+		}
+
 		public function get hasOwn():Boolean
 		{
 			return _hasOwn;
@@ -36,8 +53,36 @@ package Model
 		public function get text():String{
 			return _text;
 		}
+		
 		public function set text(value:String):void{
-			_text = value;
+			if(hasOwn){
+				_text = value;
+			}
+			else if(!parent is InferenceModel){
+				
+			}
+			else{
+				_text = "";
+				if(parent.statements.length == 1){
+					_text = value;
+				}
+				else{
+					if(parent.connectingString == StatementModel.IMPLICATION){
+						_text = AGORAParameters.getInstance().IF + " " + parent.statements[0] + ", " + AGORAParameters.getInstance().THEN + " " + parent.statements[1]; 
+					}
+					if(parent.connectingString == StatementModel.DISJUNCTION){
+						_text = parent.statements[0].text;
+						for(var i:int = 1; i < parent.statements.length; i++){
+							_text =  _text + " " + AGORAParameters.getInstance().OR;
+						}
+					}
+					else{
+					}
+				}	
+			}
+			for each(var simpleStatement:SimpleStatementModel in forwardList){
+				simpleStatement.text = _text;
+			}
 		}
 		
 		public function get forwardList():Vector.<SimpleStatementModel>{
@@ -59,23 +104,17 @@ package Model
 		
 		
 		//------------------ get simple statment --------------------------//
-		public static function createSimpleStatementFromXML(xml:XML):SimpleStatementModel{
+		public static function createSimpleStatementFromXML(xml:XML, statementModel:StatementModel):SimpleStatementModel{
 			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
 			simpleStatement.ID = xml.@ID;
 			simpleStatement.text = xml.@text;
 			return simpleStatement;
 		}
 		
-		public static function createSimpleStatementFromObject(obj:Object):SimpleStatementModel{
+		public static function createSimpleStatementFromObject(obj:Object, statementModel:StatementModel):SimpleStatementModel{
 			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
 			simpleStatement.ID = obj.ID;
-			simpleStatement.text = obj.text;
-			if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
-				simpleStatement.hasOwn = false;
-			}
-			else{
-				simpleStatement.hasOwn = true;
-			}
+			simpleStatement.parent = statementModel;
 			return simpleStatement;
 		}
 	}

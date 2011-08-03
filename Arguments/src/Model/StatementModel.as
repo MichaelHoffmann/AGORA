@@ -47,6 +47,8 @@ package Model
 			super(target);
 			statements = new Vector.<SimpleStatementModel>(0,false);
 			supportingArguments = new Vector.<InferenceModel>(0,false);
+			statement = new SimpleStatementModel;
+			statement.parent = this;
 			nodeTextIDs = new Vector.<int>(0,false);
 			
 			//create toggleStatementTypeService

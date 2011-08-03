@@ -325,6 +325,7 @@ package components
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
+			trace("Statment " + model.statement.text);
 			state = DISPLAY;
 		}
 		
@@ -386,6 +387,7 @@ package components
 		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
+			trace("value" + value);
 			if(!value){
 				if(model.firstClaim){
 					displayTxt.text = "[Enter your claim here]";
