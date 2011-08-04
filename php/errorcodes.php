@@ -43,6 +43,11 @@
 		$fail->addAttribute("code", 0);
 	}
 	
+	function metaError($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "Due to a prior error, all remaining commands are being rejected");
+	}
+	
 	function badDBLink($output){
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Could not establish link to the database server");
@@ -76,10 +81,17 @@
 	}
 	
 	//Only for "generic" update errors.
-	function insertFailed($output, $query){
+	function updateFailed($output, $query){
 		$fail=$login->addChild("error");
-		$fail->addAttribute("text", "Could update the database. Query was: $query");
+		$fail->addAttribute("text", "Could not update the database. Query was: $query");
 		$fail->addAttribute("code", 106);	
+	}
+	
+	//Only for "generic" delete errors.
+	function deleteFailed($output, $query){
+		$fail=$login->addChild("error");
+		$fail->addAttribute("text", "Could not delete that from the database. Query was: $query");
+		$fail->addAttribute("code", 107);	
 	}
 	
 	function mailSendFailed($output){
@@ -90,7 +102,7 @@
 	
 	function incorrectLogin($output){
 		$fail=$output->addChild("error");
-		$fail->addAttribute("text", "Incorrect Login!");
+		$fail->addAttribute("text", "Your login information is incorrect.");
 		$fail->addAttribute("code", 301);
 	}
 	
@@ -100,9 +112,9 @@
 		$fail->addAttribute("code", 302);
 	}
 	
-	function modifyOtherTB($output){
+	function modifyOther($output){
 		$fail=$output->addChild("error");
-		$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
+		$fail->addAttribute("text", "You are attempting to modify or delete someone else's work or a nonexistent item. This is not possible.");
 		$fail->addAttribute("code", 303);
 	}
 	
@@ -121,6 +133,22 @@
 		$fail->addAttribute("code", 305);
 	}
 	
+	function repeatEmail($output){
+		$fail=$xml->addChild("error");
+		$fail->addAttribute("text", "That e-mail address has already been used to register an account.");
+		$fail->addAttribute("code", 306);
+	}
 	
+	function repeatUsername($output){
+		$fail=$xml->addChild("error");
+		$fail->addAttribute("text", "An account with that username already exists.");
+		$fail->addAttribute("code", 307);
+	}
+	
+	function cannotDeleteFromNonexistent($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "This map does not exist, therefore you cannot remove things from this map.");
+		$fail->addAttribute("code", 308);
+	}
 	
 ?>
