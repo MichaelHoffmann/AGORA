@@ -37,7 +37,7 @@
 			return $output;
 		}
 		mysql_select_db($dbName, $linkID) or die ("Could not find database");
-		$query = "SELECT * FROM users WHERE username=$username";
+		$query = "SELECT * FROM users WHERE username='$username'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			$fail=$output->addChild("error");
