@@ -36,6 +36,13 @@
 			
 		Errors that also print out the query naturally require the query to be passed in.
 	*/
+	
+	function noTime($output){
+		$fail=$xml->addChild("error");
+		$fail->addAttribute("text", "Time has ceased to exist. Could not get timestamp from server.");
+		$fail->addAttribute("code", 0);
+	}
+	
 	function badDBLink($output){
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Could not establish link to the database server");
@@ -98,6 +105,22 @@
 		$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
 		$fail->addAttribute("code", 303);
 	}
+	
+	function accessDeleted($output){
+		$fail = $output->addChild("error");
+		$fail->addAttribute("text", "The item you are trying to access has been deleted.");
+		$fail->addAttribute("code", 304);
+	}
+	/*
+	The difference here is that the prior function is for when you are looking something up specifically, then checking its status.
+	The following one is for when the query itself has "WHERE is_deleted=0" or something similar, so you can't tell if it ever existed.
+	*/
+	function nonexistent($output, $query){
+		$fail=$xml->addChild("error");
+		$fail->addAttribute("text", "The item you are trying to access either does not exist or has been deleted. Query was: $query");
+		$fail->addAttribute("code", 305);
+	}
+	
 	
 	
 ?>
