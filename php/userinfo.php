@@ -54,7 +54,7 @@
 				$row = mysql_fetch_assoc($resultID);
 				if($row['is_deleted']){
 					$fail = $output->addChild("error");
-					$fail->addAttribute("text", "User's account has been deleted. For protection");
+					$fail->addAttribute("text", "User's account has been deleted. For user protection, we do not give out information from deleted accounts.");
 				}
 				$output->addAttribute("username", $row['username']);
 				$output->addAttribute("firstname", $row['firstname']);
