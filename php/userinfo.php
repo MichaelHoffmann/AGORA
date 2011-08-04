@@ -56,15 +56,16 @@
 					$fail = $output->addChild("error");
 					$fail->addAttribute("text", "User's account has been deleted. For protection");
 				}
-				$map = $output->addChild("map");
-				$map->addAttribute("ID", $row['map_id']);
-				$map->addAttribute("title", $row['title']);
-				$map->addAttribute("creator", $row['username']);
+				$output->addAttribute("username", $row['username']);
+				$output->addAttribute("firstname", $row['firstname']);
+				$output->addAttribute("lastname", $row['lastname']);
+				$output->addAttribute("email", $row['email']);
+				$output->addAttribute("ID", $row['user_id']);
 			}
 		}
 		return $output;
 	}
-	$userID = mysql_real_escape_string($_REQUEST['username']);  //TODO: Change this back to a GET when all testing is done.
+	$username = mysql_real_escape_string($_REQUEST['username']);  //TODO: Change this back to a GET when all testing is done.
 	$output=user_info($username);
 	print($output->asXML());
 ?>
