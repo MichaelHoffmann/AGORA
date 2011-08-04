@@ -55,7 +55,7 @@
 				$row = mysql_fetch_assoc($resultID);
 				if($row['is_deleted']){
 					$fail = $output->addChild("error");
-					$fail->addAttribute("Map has been deleted.");
+					$fail->addAttribute("text", "Map has been deleted.");
 				}
 				$map = $output->addChild("map");
 				$map->addAttribute("ID", $row['map_id']);
