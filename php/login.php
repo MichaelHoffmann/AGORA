@@ -20,6 +20,7 @@
 	
 	*/
 	require 'configure.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	/**
 	*	Function for allowing users to confirm their login information.
@@ -29,18 +30,17 @@
 	{
 		global $dbName, $version;
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<login version='$version'></login>";
-		$xml = new SimpleXMLElement($xmlstr);
+		$outputstr = "<?xml version='1.0' ?>\n<login version='$version'></login>";
+		$output = new SimpleXMLElement($outputstr);
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail->$xml->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
+			databaseNotFound($output);
+			return $output;
 		}
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
@@ -48,23 +48,22 @@
 
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			$fail->$xml->addChild("error");
-			$fail->addAttribute("text", "Could not execute the query. Query was: $query");
+			dataNotFound($output, $query);
+			return $output;
 		}
 		$row = mysql_fetch_assoc($resultID);
 		if($row['user_id'){
-			$xml->addAttribute("ID", $row['user_id']);
-			$xml->addAttribute("firstname", $row['firstname']);
-			$xml->addAttribute("lastname", $row['lastname']);
+			$output->addAttribute("ID", $row['user_id']);
+			$output->addAttribute("firstname", $row['firstname']);
+			$output->addAttribute("lastname", $row['lastname']);
 		}else{
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Could not log in. Either the username $username does not exist, or the password was wrong.");
+			$incorrectLogin($output);
 		}
-		return $xml;
+		return $output;
 	}
 	
 	$username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
 	$pass_hash = $_REQUEST['pass_hash'];  //TODO: Change this back to a GET when all testing is done.
-	$xml = login($username, $pass_hash);
-	print($xml->asXML());
+	$output = login($username, $pass_hash);
+	print($output->asXML());
 ?>
