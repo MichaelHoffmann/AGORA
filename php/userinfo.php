@@ -20,6 +20,7 @@
 	
 	*/
 	require 'configure.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	/**
 	*	Function for getting a particular user's information
@@ -32,22 +33,31 @@
 		
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		
+		$status = mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
+		
 		$query = "SELECT * FROM users WHERE username='$username'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Database query not found.");
+			dataNotFound($output, $query);
 			return $output;
 		}
+		
 		if(mysql_num_rows($resultID)==0){
 			$fail=$output->addChild("error");
 			$fail->addAttribute("text", "There is no user with this name! Query was: $query");
+			$fail->addAttribute("code", 305);
 			//Calling this an error is perhaps a bit strong, but an empty list seems uninformative ...
+			/*
+				This error code matches nonexistent() from errorcodes.php, but a custom message seemed better
+			*/
 			return $output;
 		}else{
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -55,6 +65,10 @@
 				if($row['is_deleted']){
 					$fail = $output->addChild("error");
 					$fail->addAttribute("text", "User's account has been deleted. For user protection, we do not give out information from deleted accounts.");
+					$fail->addAttribute("code", 304);
+					/*
+						Error code matches accessDeleted() from errorcodes.php, but wanted a custom error message
+					*/
 				}
 				$output->addAttribute("username", $row['username']);
 				$output->addAttribute("firstname", $row['firstname']);
