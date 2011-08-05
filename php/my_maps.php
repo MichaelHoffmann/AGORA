@@ -21,60 +21,57 @@
 	*/
 	require 'configure.php';
 	require 'checklogin.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	
 	/**
 	*	File for getting the list of maps a specific user has made.
 	*/
 	
+	function my_maps($userID, $pass_hash){
+		header("Content-type: text/xml");	
+		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
+		$output = new SimpleXMLElement($outputstr);
+		
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status = mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			incorrectLogin($output);
+			return $output;
+		}
+		
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.user_id=$userID AND maps.is_deleted=0 ORDER BY maps.title";
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		if(mysql_num_rows($resultID)==0){
+			$empty = $output->addChild("empty");
+			$empty->addAttribute("text", "This user has not created any maps");
+			//Idea for the client: put an additional "create map" button in the "my maps" list, perhaps?
+		}
+
+		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+			$row = mysql_fetch_assoc($resultID);
+			$map = $output->addChild("map");
+			$map->addAttribute("ID", $row['map_id']);
+			$map->addAttribute("title", $row['title']);
+			$map->addAttribute("creator", $row['username']);
+		}
+	}
+	
+	
 	$userID = mysql_real_escape_string($_REQUEST['uid']);  //TODO: Change this back to a GET when all testing is done.
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']); //TODO: Change this back to a GET when all testing is done.
-	
-	header("Content-type: text/xml");	
-	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
-	$xml = new SimpleXMLElement($xmlstr);
-	
-	$linkID= establishLink();
-	if(!$linkID){
-		$fail=$xml->addChild("error");
-		$fail->addAttribute("text", "Could not establish link to the database server");
-		print ($xml->asXML());
-		return false;
-	}
-	$status = mysql_select_db($dbName, $linkID);
-	if(!$status){
-		$fail=$xml->addChild("error");
-		$fail->addAttribute("text", "Could not connect to database");
-		print ($xml->asXML());
-		return false;
-	}
-	if(!checkLogin($userID, $pass_hash, $linkID)){
-		$fail=$xml->addChild("error");
-		$fail->addAttribute("text", "Login failed!");
-		print ($xml->asXML());
-		return false;
-	}
-	
-	$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.user_id=$userID AND maps.is_deleted=0 ORDER BY maps.title";
-	$resultID = mysql_query($query, $linkID); 
-	if(!$resultID){
-		$fail=$xml->addChild("error");
-		$fail->addAttribute("text", "The query failed! Query was: $query");
-		print ($xml->asXML());
-		return false;
-	}
-	if(mysql_num_rows($resultID)==0){
-		$empty = $xml->addChild("empty");
-		$empty->addAttribute("text", "This user has not created any maps");
-		//Idea for the client: put an additional "create map" button in the "my maps" list, perhaps?
-	}
-
-	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
-		$row = mysql_fetch_assoc($resultID);
-		$map = $xml->addChild("map");
-		$map->addAttribute("ID", $row['map_id']);
-		$map->addAttribute("title", $row['title']);
-		$map->addAttribute("creator", $row['username']);
-	}
-	print($xml->asXML());
+	my_maps($userID, $pass_hash);
+	print($output->asXML());
 ?>
