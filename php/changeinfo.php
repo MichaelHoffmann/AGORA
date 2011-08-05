@@ -20,6 +20,7 @@
 	
 	*/
 	require 'configure.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	
 	/**
@@ -28,22 +29,22 @@
 	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $newpass)
 	{
 		global $dbName, $version;
+		header("Content-type: text/xml");
+		$outputstr = "<?xml version='1.0' ?>\n<agora version='$version'/>\n";
+		$output = new SimpleXMLElement($outputstr);
+		$login = $output->addChild("login");
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<agora version='$version'/>\n";
-		$xml = new SimpleXMLElement($xmlstr);
-		$login = $xml->addChild("login");
+
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail=$login->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
-			return $xml;
+			databaseNotFound($output);
+			return $output;
 		}
+		
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
 		$fnclause = mysql_real_escape_string("$firstname");
@@ -54,10 +55,10 @@
 		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$pass_hash'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			$fail=$login->addChild("error");
-			$fail->addAttribute("text", "Data not found");
-			return $xml;
+			dataNotFound($output, $query);
+			return $output;
 		}
+		
 		$row = mysql_fetch_assoc($resultID);
 		$uid = $row['user_id'];
 		if($uid=="") // If user doesn't exist...
@@ -76,16 +77,15 @@
 						url='$urlclause', last_login=NOW() WHERE user_id=$uid";
 			}
 
-			$insID = mysql_query($iquery, $linkID) or die("Update failed for some reason.");
+			$insID = mysql_query($iquery, $linkID);
 			if(!$insID){
-				$fail=$login->addChild("error");
-				$fail->addAttribute("text", "Update failed for some reason.");
-				return $xml;
+				updateFailed($login, $iquery);
+				return $output;
 			}else{
 				$login->addAttribute("modified", true); // Successfully created the username.
 			}
 		}
-		return $xml;
+		return $output;
 	}
 
 $username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
@@ -95,6 +95,6 @@ $lastname = $_REQUEST['lastname']; //TODO: Change this back to a GET when all te
 $email = $_REQUEST['email']; //TODO: Change this back to a GET when all testing is done.
 $url = $_REQUEST['url']; //TODO: Change this back to a GET when all testing is done.
 $new_pass= $_REQUEST['newpass']; //TODO: Change this back to a GET when all testing is done.
-$xml = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
-print($xml->asXML());
+$output = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
+print($output->asXML());
 ?>
