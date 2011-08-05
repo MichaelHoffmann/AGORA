@@ -50,6 +50,10 @@
 		}
 		$row = mysql_fetch_assoc($resultID);
 		$uid = $row['user_id'];
+		if(!$uid){
+			nonexistent($output, $query);
+			return $output;
+		}
 		$email = $row['email'];
 		$status = $output->addChild("status");
 		$status->addAttribute("text", "User ID found: $uid ");
