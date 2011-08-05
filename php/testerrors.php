@@ -21,7 +21,7 @@
 	*/
 	
 	require 'errorcodes.php';
-	//header("Content-type: text/xml");
+	header("Content-type: text/xml");
 	$outputstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
 	$output = new SimpleXMLElement($outputstr);
 	$query = "example query";
@@ -44,5 +44,6 @@
 	nonexistent($output, $query);
 	repeatEmail($output);
 	repeatUsername($output);
-	cannotDeleteFromNonexistent($output);	
+	cannotDeleteFromNonexistent($output);
+	print($output->asXML());
 ?>
