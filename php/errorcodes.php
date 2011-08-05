@@ -46,6 +46,7 @@
 	function metaError($output){
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Due to a prior error, all remaining commands are being rejected");
+		$fail->addAttribute("code", 1);
 	}
 	
 	function badDBLink($output){
