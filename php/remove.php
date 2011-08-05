@@ -44,6 +44,7 @@ List of variables for insertion:
 */
 	require 'configure.php';
 	require 'checklogin.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	/**
 	*	Function for removing a node from the database.
@@ -55,8 +56,7 @@ List of variables for insertion:
 		$query = "SELECT * FROM nodes WHERE node_id=$nID AND map_id=$mapID";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not query the database! Query was $query");
+			dataNotFound($output, $query);
 			return false;
 		}
 		$row = mysql_fetch_assoc($resultID);
@@ -66,8 +66,7 @@ List of variables for insertion:
 			if(!$retval){
 				$status=$output->addChild("node");
 				$status->addAttribute("ID", $nID);
-				$fail=$status->addChild("error");
-				$fail->addAttribute("text", "Database update failed. Query was: $uquery");
+				updateFailed($output, $uquery);
 				return $retval;
 			}else{
 				$status=$output->addChild("node");
@@ -76,8 +75,7 @@ List of variables for insertion:
 			}
 			return $retval;
 		}else{
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "You are attempting to delete someone else's work or a node that is not in this map. This is not permissible.");
+			modifyOther($output);
 			return false;
 		}
 	}
@@ -104,8 +102,7 @@ List of variables for insertion:
 					break;
 			}
 			if($retval == false){  // We've already had one failure, no reason to continue
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Due to a prior error, all remaining remove commands are being rejected");
+				metaError($output);
 				return false;
 			}
 		}
@@ -126,20 +123,17 @@ List of variables for insertion:
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
+			databaseNotFound($output);
 			return $output;
 		}
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Incorrect login!");
+			incorrectLogin($output);
 			return $output;
 		}
 		
@@ -148,8 +142,7 @@ List of variables for insertion:
 		try{
 			$xml = new SimpleXMLElement($xmlin);
 		}catch(Exception $e){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Improperly formatted input XML!");
+			poorXML($output);
 			return $output;
 		}
 		$mapID = $xml['ID'];
@@ -164,24 +157,20 @@ List of variables for insertion:
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Cannot get map! Query was: $query");
+			dataNotFound($output, $query);
 			return $output;
 		}
 		
-		$row = mysql_fetch_assoc($resultID);
-		
+		$row = mysql_fetch_assoc($resultID);		
 		if(!$row['map_id']){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Map $mapClause does not exist!");
+			nonexistent($output, $query);
 			return $output;
 		}
 		
 		$UID = $row['user_id'];
 		if($delMap && $mapClause!=0){
 			if($UID!=$userID){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "You cannot delete someone else's map!");
+				modifyOther($output);
 				return $output;
 			}		
 			$query = "UPDATE maps SET is_deleted=1, modified_date=NOW() WHERE map_id=$mapClause";
@@ -198,8 +187,7 @@ List of variables for insertion:
 				return $output;
 			}
 		}else if($mapClause==0 or mysql_num_rows($resultID)==0){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "This map does not exist, therefore you cannot remove things from this map.");
+			cannotDeleteFromNonexistent($output);
 			return $output;
 		}else{
 			//the map exists, and now we operate on it
