@@ -45,5 +45,6 @@
 	nonexistent($output, $query);
 	repeatEmail($output);
 	repeatUsername($output);
-	cannotDeleteFromNonexistent($output);
+	cannotDeleteFromNonexistent($output);	
+	print($output->asXML());
 ?>
