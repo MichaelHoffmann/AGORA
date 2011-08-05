@@ -106,8 +106,7 @@ List of variables for insertion:
 				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
 				$status = mysql_query($uquery, $linkID);
 			}else{
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
+				modifyOther($output);
 				return false;
 			}
 		}else{	
@@ -116,8 +115,7 @@ List of variables for insertion:
 										($userID, $mapID, '$text', NOW(), NOW())";
 			$success = mysql_query($iquery, $linkID);
 			if(!$success){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "The textbox insert failed: $iquery");
+				insertFailed($output, $iquery)
 				return false;
 			}
 			$newID = getLastInsert($linkID);
@@ -154,8 +152,7 @@ List of variables for insertion:
 			}
 			$success = mysql_query($uquery, $linkID);
 			if(!$success){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Unable to update the NODETEXT link. Query was: $uquery");
+				updateFailed($output, $uquery)
 				return false;
 			}
 		}else{
@@ -168,8 +165,7 @@ List of variables for insertion:
 							($nodeID, $textboxID, NULL, $position, NOW(), NOW())";
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
-					$fail=$output->addChild("error");
-					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
+					insertFailed($output, $iquery){
 					return false;
 				}
 			}else if($tgtNodeID){
@@ -178,8 +174,7 @@ List of variables for insertion:
 							($nodeID, NULL, $tgtNodeID, $position, NOW(), NOW())";
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
-					$fail=$output->addChild("error");
-					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
+					insertFailed($output, $iquery);
 					return false;
 				}
 			}else if($tgtNodeTID){
@@ -194,8 +189,7 @@ List of variables for insertion:
 				
 				$success = mysql_query($iquery, $linkID);
 				if(!$success){
-					$fail=$output->addChild("error");
-					$fail->addAttribute("text", "Unable to insert the NODETEXT. Query was: $iquery");
+					insertFailed($output, $iquery);
 					return false;
 				}
 			}
@@ -244,8 +238,7 @@ List of variables for insertion:
 							WHERE node_id=$nodeID";
 				$success=mysql_query($uquery, $linkID);
 				if(!$success){
-					$fail=$output->addChild("error");
-					$fail->addAttribute("text", "Unable to update the NODE. Query was: $uquery");
+					updateFailed($output, $uquery);
 					return false;
 				}else{
 					$nodeOut=$output->addChild("node");
@@ -256,8 +249,7 @@ List of variables for insertion:
 				$uquery = "UPDATE nodes SET modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
 				$success=mysql_query($uquery, $linkID);
 				if(!$success){
-					$fail=$output->addChild("error");
-					$fail->addAttribute("text", "Unable to update the NODE. Query was: $uquery");
+					updateFailed($output, $uquery);
 					return false;
 				}else{
 					$nodeOut=$output->addChild("node");
@@ -271,8 +263,7 @@ List of variables for insertion:
 										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y, $typed, '$cBy', $positivity)";
 			$success=mysql_query($iquery, $linkID);
 			if(!$success){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Unable to add the NODE. Query was: $iquery");
+				insertFailed($output, $iquery);
 				return false;
 			}else{
 				$nodeID = getLastInsert($linkID);
@@ -325,8 +316,7 @@ List of variables for insertion:
 			$sourcenode->addAttribute("TID", $tid);
 			$sourcenode->addAttribute("ID", $outID);
 		}else{
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "The source node is not being added properly. Query was: $iquery");
+			insertFailed($output, $iquery);
 			return false;
 		}
 		return true;
@@ -364,8 +354,7 @@ List of variables for insertion:
 											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
 			$success = mysql_query($iquery, $linkID);
 			if(!$success){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+				insertFailed($output, $iquery);
 				return false;
 			}else{
 				$id = getLastInsert($linkID);
@@ -378,8 +367,7 @@ List of variables for insertion:
 			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 			$success=mysql_query($uquery, $linkID);
 			if(!$success){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Unable to update the CONNECTION. Query was: $uquery");
+				updateFailed($output, $uquery);
 				return false;
 			}
 			$connection->addAttribute("ID", $id);
@@ -439,19 +427,17 @@ List of variables for insertion:
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
+			 databaseNotFound($output);
+			 return $output;
 		}
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Incorrect Login!");
+			incorrectLogin($output);
 			return $output;
 		}
 	
@@ -459,8 +445,7 @@ List of variables for insertion:
 		try{
 			$xml = new SimpleXMLElement($xmlin);
 		}catch(Exception $e){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Improperly formatted input XML!");
+			poorXML($output);
 			return $output;
 		}
 		$mapID = $xml['ID']; 
@@ -493,8 +478,7 @@ List of variables for insertion:
 			mysql_query($iquery, $linkID);						
 			$mapClause = getLastInsert($linkID);
 			if(!$mapClause){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "The map was not added properly. Query: $iquery");
+				insertFailed($output, $iquery);
 				return $output;
 			}
 			
@@ -504,8 +488,7 @@ List of variables for insertion:
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "error: Cannot get map!");
+			dataNotFound($output, $query);
 			return $output;
 		}
 		$row = mysql_fetch_assoc($resultID);
@@ -533,8 +516,7 @@ List of variables for insertion:
 			mysql_query("COMMIT");
 		}else{
 			mysql_query("ROLLBACK");
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "The queries have been rolled back!");
+			rolledBack($output);
 		}
 		return $output;
 		

@@ -74,16 +74,16 @@
 	}
 	
 	//Only for "generic" insert errors.
-	function insertFailed($output, $query){
+	function insertFailed($output, $iquery){
 		$fail=$login->addChild("error");
-		$fail->addAttribute("text", "Could not add this data to the database. Query was: $query");
+		$fail->addAttribute("text", "Could not add this data to the database. Query was: $iquery");
 		$fail->addAttribute("code", 105);	
 	}
 	
 	//Only for "generic" update errors.
-	function updateFailed($output, $query){
+	function updateFailed($output, $uquery){
 		$fail=$login->addChild("error");
-		$fail->addAttribute("text", "Could not update the database. Query was: $query");
+		$fail->addAttribute("text", "Could not update the database. Query was: $uquery");
 		$fail->addAttribute("code", 106);	
 	}
 	
