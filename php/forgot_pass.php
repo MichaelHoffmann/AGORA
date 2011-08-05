@@ -87,7 +87,7 @@
 		
 		$resultID = mysql_query($uquery, $linkID);
 		if(!$resultID){
-			updateFailed($output, $uquery)
+			updateFailed($output, $uquery);
 			return $output;
 		}
 		$message = wordwrap("Your new password for the AGORA system is:\n $password", 70);
