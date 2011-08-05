@@ -38,7 +38,7 @@
 	*/
 	
 	function noTime($output){
-		$fail=$xml->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Time has ceased to exist. Could not get timestamp from server.");
 		$fail->addAttribute("code", 0);
 	}
@@ -128,19 +128,19 @@
 	The following one is for when the query itself has "WHERE is_deleted=0" or something similar, so you can't tell if it ever existed.
 	*/
 	function nonexistent($output, $query){
-		$fail=$xml->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "The item you are trying to access either does not exist or has been deleted. Query was: $query");
 		$fail->addAttribute("code", 305);
 	}
 	
 	function repeatEmail($output){
-		$fail=$xml->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "That e-mail address has already been used to register an account.");
 		$fail->addAttribute("code", 306);
 	}
 	
 	function repeatUsername($output){
-		$fail=$xml->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "An account with that username already exists.");
 		$fail->addAttribute("code", 307);
 	}
