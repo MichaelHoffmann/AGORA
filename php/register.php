@@ -73,7 +73,7 @@
 			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
 			$insID = mysql_query($iquery, $linkID); 
 			if(!$insID){
-				insertFailed($output, $iquery)
+				insertFailed($output, $iquery);
 				return $output;
 			}
 			$login=$output->addChild("login");

@@ -52,7 +52,7 @@
 			return $output;
 		}
 		$row = mysql_fetch_assoc($resultID);
-		if($row['user_id'){
+		if($row['user_id']){
 			$output->addAttribute("ID", $row['user_id']);
 			$output->addAttribute("firstname", $row['firstname']);
 			$output->addAttribute("lastname", $row['lastname']);
