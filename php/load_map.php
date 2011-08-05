@@ -20,6 +20,7 @@
 	
 	*/
 	require 'configure.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	/**
 	*	Function that loads a map from the database.
@@ -29,49 +30,44 @@
 		global $dbName, $version;
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
-		$xml = new SimpleXMLElement($xmlstr);
+		$outputstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
+		$output = new SimpleXMLElement($outputstr);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
-			return $xml;
+			badDBLink($output)
+			return $output;
 		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
-			return $xml;
+			databaseNotFound($output);
+			return $output;
 		}
 		$whereclause = mysql_real_escape_string("$mapID");
 		$timeclause = mysql_real_escape_string("$timestamp");
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause AND maps.is_deleted = 0";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Data not found.");
-			return $xml;
+			dataNotFound($output, $query);
+			return $output;
 		}
 		if(mysql_num_rows($resultID)==0){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "The map either does not exist or has been deleted. Query was: $query");
-			return $xml;
+			nonexistent($output, $query);
+			return $output;
 		}
 		
 		$row = mysql_fetch_assoc($resultID);
-		$xml->addAttribute("ID", $row['map_id']);
-		$xml->addAttribute("username", $row['username']);
+		$output->addAttribute("ID", $row['map_id']);
+		$output->addAttribute("username", $row['username']);
 		
 		$timeID = mysql_query("SELECT NOW()", $linkID);
 		if(!$timeID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Time has ceased to exist. Could not get timestamp from server.");
-			return $xml;
+			noTime($output);
+			return $output;
 		}
 		$timerow = mysql_fetch_assoc($timeID);
 		$now = $timerow['NOW()'];
-		$xml->addAttribute("timestamp", "$now");
+		$output->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
 		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY textbox_id";
@@ -79,7 +75,7 @@
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
-				$textbox = $xml->addChild("textbox");
+				$textbox = $output->addChild("textbox");
 				$textbox->addAttribute("ID", $row['textbox_id']);
 				$textbox->addAttribute("text", $row['text']);
 				$textbox->addAttribute("deleted", $row['is_deleted']);
@@ -95,7 +91,7 @@
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
 				$node_id = $row['node_id'];
-				$node = $xml->addChild("node");
+				$node = $output->addChild("node");
 				$node->addAttribute("ID", $node_id);
 				$node->addAttribute("Type", $row['type']);
 				$node->addAttribute("Author", $row['username']);
@@ -109,9 +105,8 @@
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
 				$resultID2 = mysql_query($innerQuery, $linkID);
 				if(!$resultID2){
-					$fail=$xml->addChild("error");
-					$fail->addAttribute("text", "Data not found in nodetext lookup.");
-					return $xml;
+					dataNotFound($output, $innerQuery);
+					return $output;
 				}
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$nodetext = $node->addChild("nodetext");
@@ -131,7 +126,7 @@
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
 				$conn_id=$row['connection_id'];
-				$connection = $xml->addChild("connection");
+				$connection = $output->addChild("connection");
 				$connection->addAttribute("connID", $conn_id);
 				$connection->addAttribute("type", $row['conn_name']);
 				$connection->addAttribute("targetnode", $row['node_id']);
@@ -142,9 +137,8 @@
 				$innerQuery="SELECT * FROM sourcenodes WHERE connection_id=$conn_id";
 				$resultID2 = mysql_query($innerQuery, $linkID);
 				if(!$resultID2){
-					$fail=$xml->addChild("error");
-					$fail->addAttribute("text", "Data not found in connection lookup.");
-					return $xml;
+					dataNotFound($output, $innerQuery);
+					return $output;
 				}
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$sourcenode = $connection->addChild("sourcenode");
@@ -155,10 +149,10 @@
 				}	
 			}
 		}
-		return $xml;
+		return $output;
 	}
 	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
 	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
-	$xml = get_map($map_id, $timestamp); 
-	print($xml->asXML());
+	$output = get_map($map_id, $timestamp); 
+	print($output->asXML());
 ?>
