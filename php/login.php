@@ -57,7 +57,8 @@
 			$output->addAttribute("firstname", $row['firstname']);
 			$output->addAttribute("lastname", $row['lastname']);
 		}else{
-			$incorrectLogin($output);
+			incorrectLogin($output);
+			return $output;
 		}
 		return $output;
 	}
