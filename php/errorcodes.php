@@ -68,28 +68,28 @@
 	
 	//Only for "generic" data errors.
 	function dataNotFound($output, $query){
-		$fail=$login->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Data not found. Query was: $query");
 		$fail->addAttribute("code", 104);	
 	}
 	
 	//Only for "generic" insert errors.
 	function insertFailed($output, $iquery){
-		$fail=$login->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Could not add this data to the database. Query was: $iquery");
 		$fail->addAttribute("code", 105);	
 	}
 	
 	//Only for "generic" update errors.
 	function updateFailed($output, $uquery){
-		$fail=$login->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Could not update the database. Query was: $uquery");
 		$fail->addAttribute("code", 106);	
 	}
 	
 	//Only for "generic" delete errors.
 	function deleteFailed($output, $query){
-		$fail=$login->addChild("error");
+		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Could not delete that from the database. Query was: $query");
 		$fail->addAttribute("code", 107);	
 	}
