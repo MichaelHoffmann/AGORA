@@ -20,6 +20,7 @@
 	
 	*/
 	require 'configure.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	/**
 	*	Function for emailing users who forget their password.
@@ -32,23 +33,20 @@
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
-			return $xml;
+			databaseNotFound($output);
+			return $output;
 		}
 		$userclause = mysql_real_escape_string("$username");
 		$query = "SELECT * FROM users WHERE username='$userclause'";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Data not found");
-			return $xml;
+			dataNotFound($output, $query);
+			return $output;
 		}
 		$row = mysql_fetch_assoc($resultID);
 		$uid = $row['user_id'];
@@ -85,9 +83,8 @@
 		
 		$resultID = mysql_query($uquery, $linkID);
 		if(!$resultID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Could not update database.");
-			return $xml;
+			updateFailed($output, $uquery)
+			return $output;
 		}
 		$message = wordwrap("Your new password for the AGORA system is:\n $password", 70);
 		$headers = 'From: webmaster@agora.gatech.edu' . "\r\n" . 
@@ -96,8 +93,7 @@
 		try{
 			mail($email, 'AGORA forgotten password update', $message, $headers);
 		}catch(Exception $e){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "The mail could not be sent");
+			mailSendFailed($output);
 		}	
 		return $output;
 	}
