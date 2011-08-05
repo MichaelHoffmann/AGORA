@@ -28,19 +28,17 @@
 	{
 		global $dbName, $version;
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
-		$xml = new SimpleXMLElement($xmlstr);
+		$outputstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$output = new SimpleXMLElement($outputstr);
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
-			return $xml;
+			badDBLink($output);
+			return $output;
 		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
-			return $xml;
+			databaseNotFound($output);
+			return $output;
 		}
 		$userclause = mysql_real_escape_string("$username");
 		$passclause = mysql_real_escape_string("$pass_hash");
@@ -53,22 +51,19 @@
 		$equery = "SELECT * FROM users WHERE email='$mailclause'";
 		$eResultID = mysql_query($equery, $linkID); 
 		if(!$eResultID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Data not found");
-			return $xml;
+			dataNotFound($output, $equery);
+			return $output;
 		}
 		$erow = mysql_fetch_assoc($eResultID);
 		if($erow['email']!=""){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "That e-mail address has already been used to register an account.");
-			return $xml;
+			repeatEmail($output);
+			return $output;
 		}
 		$query = "SELECT * FROM users WHERE username='$userclause'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			$fail=$xml->addChild("error");
-			$fail->addAttribute("text", "Data not found.");
-			return $xml;
+			dataNotFound($output, $query);
+			return $output;
 		}
 		$row = mysql_fetch_assoc($resultID);
 		
@@ -78,17 +73,16 @@
 			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
 			$insID = mysql_query($iquery, $linkID); 
 			if(!$insID){
-				$fail=$xml->addChild("error");
-				$fail->addAttribute("text", "Insertion failed for some reason.");
-				return $xml;
+				insertFailed($output, $iquery)
+				return $output;
 			}
-			$login=$xml->addChild("login");
+			$login=$output->addChild("login");
 			$login->addAttribute("created", true); // Successfully created the username.
 		}else{
-			$login=$xml->addChild("error");
+			$login=$output->addChild("error");
 			$login->addAttribute("text", "That username already exists!"); // Username exists. Do NOT add to the db!
 		}
-		return $xml;
+		return $output;
 	}
 	
 	$username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
@@ -98,6 +92,6 @@
 	$email = $_REQUEST['email']; //TODO: Change this back to a GET when all testing is done.
 	$url = $_REQUEST['url']; //TODO: Change this back to a GET when all testing is done.
 	
-	$xml = register($username, $pass_hash, $firstname, $lastname, $email, $url);
-	print($xml->asXML());
+	$output = register($username, $pass_hash, $firstname, $lastname, $email, $url);
+	print($output->asXML());
 ?>
