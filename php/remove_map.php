@@ -43,20 +43,17 @@ List of variables for insertion:
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapID";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Cannot get map! Query was: $query");
+			dataNotFound($output, $query);
 			return false;
 		}
 		$row = mysql_fetch_assoc($resultID);
 		if(!$row['map_id']){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Map $mapID does not exist!");
+			nonexistent($output, $query);
 			return false;
 		}
 		$UID = $row['user_id'];
 		if($UID!=$userID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "You cannot delete someone else's map!");
+			modifyOther($output);
 			return false;
 		}
 		$query = "UPDATE maps SET is_deleted=1, modified_date=NOW() WHERE map_id=$mapID";
@@ -70,8 +67,7 @@ List of variables for insertion:
 			$rmap=$output->addChild("map");
 			$rmap->addAttribute("ID", $mapID);
 			$rmap->addAttribute("removed", false);		
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not delete the map!");
+			deleteFailed($output, $query);
 			return false;
 		}
 	}
@@ -89,8 +85,7 @@ List of variables for insertion:
 					break;
 			}
 			if($retval == false){  // We've already had one failure, no reason to continue
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Due to a prior error, all remaining remove commands are being rejected");
+				metaError($output);
 				return false;
 			}
 		}
@@ -107,14 +102,12 @@ List of variables for insertion:
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not find database");
+			databaseNotFound($output);
 			return $output;
 		}
 		//basic XML output initialization
@@ -123,8 +116,7 @@ List of variables for insertion:
 		$output = new SimpleXMLElement($xmlstr);
 		
 		if(!checkLogin($userID, $pass_hash, $linkID)){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Incorrect login");
+			incorrectLogin($output);
 			return $output;
 		}
 		
@@ -132,8 +124,7 @@ List of variables for insertion:
 		try{
 			$xml = new SimpleXMLElement($xmlin);
 		}catch(Exception $e){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Improperly formatted input XML!");
+			poorXML($output);
 			return $output;
 		}
 		//Transactions used for protecting maps from mass deletes that are partially illegal.
