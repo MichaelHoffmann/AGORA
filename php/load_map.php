@@ -35,9 +35,10 @@
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		if(!$linkID){
-			badDBLink($output)
+			badDBLink($output);
 			return $output;
 		}
+		
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			databaseNotFound($output);
