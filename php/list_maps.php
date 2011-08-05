@@ -32,35 +32,35 @@
 		
 		$linkID= establishLink();
 		if(!$linkID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Could not establish link to the database server");
+			badDBLink($output);
 			return $output;
 		}
-		mysql_select_db($dbName, $linkID) or die ("Could not find database");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0 ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Database query not found.");
+			dataNotFound($output, $query);
 			return $output;
 		}
 		if(mysql_num_rows($resultID)==0){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "There are no maps in the list! Query was: $query");
-			//Calling this an error is perhaps a bit strong, but an empty list seems uninformative ...
-			//but on the real server it won't be empty anyway.
+			$output->addAttribute("map_count", "0");
+			//This is a better alternative than reporting an error.
 			return $output;
 		}else{
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
 				if($row['is_deleted']){
-					$fail = $output->addChild("error");
-					$fail->addAttribute("text", "Map has been deleted.");
+					accessDeleted($output);
+				}else{				
+					$map = $output->addChild("map");
+					$map->addAttribute("ID", $row['map_id']);
+					$map->addAttribute("title", $row['title']);
+					$map->addAttribute("creator", $row['username']);
 				}
-				$map = $output->addChild("map");
-				$map->addAttribute("ID", $row['map_id']);
-				$map->addAttribute("title", $row['title']);
-				$map->addAttribute("creator", $row['username']);
 			}
 		}
 		return $output;
