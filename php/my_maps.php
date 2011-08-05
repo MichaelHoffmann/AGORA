@@ -29,6 +29,7 @@
 	*/
 	
 	function my_maps($userID, $pass_hash){
+		global $dbName, $version;
 		header("Content-type: text/xml");	
 		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 		$output = new SimpleXMLElement($outputstr);
@@ -67,11 +68,12 @@
 			$map->addAttribute("title", $row['title']);
 			$map->addAttribute("creator", $row['username']);
 		}
+		return $output;
 	}
 	
 	
 	$userID = mysql_real_escape_string($_REQUEST['uid']);  //TODO: Change this back to a GET when all testing is done.
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']); //TODO: Change this back to a GET when all testing is done.
-	my_maps($userID, $pass_hash);
+	$output = my_maps($userID, $pass_hash);
 	print($output->asXML());
 ?>
