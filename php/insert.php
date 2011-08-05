@@ -116,7 +116,7 @@ List of variables for insertion:
 										($userID, $mapID, '$text', NOW(), NOW())";
 			$success = mysql_query($iquery, $linkID);
 			if(!$success){
-				insertFailed($output, $iquery)
+				insertFailed($output, $iquery);
 				return false;
 			}
 			$newID = getLastInsert($linkID);
@@ -153,7 +153,7 @@ List of variables for insertion:
 			}
 			$success = mysql_query($uquery, $linkID);
 			if(!$success){
-				updateFailed($output, $uquery)
+				updateFailed($output, $uquery);
 				return false;
 			}
 		}else{
@@ -166,7 +166,7 @@ List of variables for insertion:
 							($nodeID, $textboxID, NULL, $position, NOW(), NOW())";
 				$success=mysql_query($iquery, $linkID);
 				if(!$success){
-					insertFailed($output, $iquery){
+					insertFailed($output, $iquery);
 					return false;
 				}
 			}else if($tgtNodeID){
