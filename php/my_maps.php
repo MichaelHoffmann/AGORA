@@ -65,7 +65,7 @@
 			So, combine the list of maps a person's contributed to (owns a node) with a list of his own maps...
 			Then select all those maps from the maps table and get the full user info as well and order them by title.
 		*/
-		$query1 = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `nodes` WHERE user_id=$userID UNION SELECT DISTINCT map_id FROM `maps` WHERE user_id=$userID) ORDER BY title";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM nodes WHERE user_id=$userID UNION SELECT DISTINCT map_id FROM maps WHERE user_id=$userID) ORDER BY title";
 				
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
