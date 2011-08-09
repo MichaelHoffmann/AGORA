@@ -57,7 +57,7 @@
 		}
 		if(mysql_num_rows($resultID)==0){
 			$empty = $output->addChild("empty");
-			$empty->addAttribute("text", "This user has not created any maps");
+			$empty->addAttribute("text", "This user has not created or contributed to any maps");
 			//Idea for the client: put an additional "create map" button in the "my maps" list, perhaps?
 		}
 
