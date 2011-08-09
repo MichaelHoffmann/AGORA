@@ -49,7 +49,24 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.user_id=$userID AND maps.is_deleted=0 ORDER BY maps.title";
+		/*
+			Let's break this down.
+			SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (query) ORDER BY title
+			We want to get all the columns in `maps` JOINED with `users`, with user_id as the join column.
+			What's that mean? Basically, we get the maps, but we get full user info on the creator.
+			What are we getting that from? WHERE the map_id is IN the list of stuff from the other query.
+			Okay, so what's that query?
+			SELECT something UNION something else - in other words, two separate sets of maps.
+			The first one... SELECT DISTINCT map_id FROM `nodes` WHERE user_id=$userID
+			That gets us the list of unique maps where a user owns a node in it
+			The second one... SELECT DISTINCT map_id FROM `maps` WHERE user_id=$userID
+			That's the list of unique maps a person is considered to own.
+			
+			So, combine the list of maps a person's contributed to (owns a node) with a list of his own maps...
+			Then select all those maps from the maps table and get the full user info as well and order them by title.
+		*/
+		$query1 = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `nodes` WHERE user_id=$userID UNION SELECT DISTINCT map_id FROM `maps` WHERE user_id=$userID) ORDER BY title";
+				
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -60,7 +77,7 @@
 			$empty->addAttribute("text", "This user has not created or contributed to any maps");
 			//Idea for the client: put an additional "create map" button in the "my maps" list, perhaps?
 		}
-
+		
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
 			$map = $output->addChild("map");
