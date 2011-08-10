@@ -12,7 +12,16 @@
 		--ADD CONTINUATIONS
 		--CONDITIONAL PIECES
 		--APPLY UNDER THEREFORE
+		--SPECIAL
 	Searching for these will take you directly to that section.
+	
+	
+	This is the template for new entries.
+	
+		<EN-US text=""/>
+		<RUS text=""/>
+		<GER text=""/>
+		
 	-->
 	
 	
@@ -107,6 +116,18 @@
 		<RUS text="Адрес электронной почты"/>
 		<GER text="E-mail Adresse"/>
 	</Email>
+
+	<Enabler>
+		<EN-US text="Enabler"/>
+		<RUS text="Enabler"/> <!--TODO: translate -->
+		<GER text="Garant"/>
+	</Enabler>
+	
+	<Error>
+		<EN-US text="Error"/>
+		<RUS text="ошибка"/> <!--TODO: confirm -->
+		<GER text="Fehler"/>
+	</Error>
 	
 	<Equivalent>
 		<EN-US text="equivalent"/>
@@ -192,6 +213,18 @@
 		<GER text="Siehe auch ..."/>
 	</SeeAlso>
 	
+	<SelectAll>
+		<EN-US text="Select All"/>
+		<RUS text="Select All"/> <!--TODO: Translate-->
+		<GER text="Wähle alle aus"/>
+	</SelectAll>
+	
+	<SelectNone>
+		<EN-US text="Select None"/>
+		<RUS text="Select None"/> <!--TODO: Translate-->
+		<GER text="Wähle nichts aus"/>
+	</SelectNone>
+	
 	<Submit>
 		<EN-US text="Submit"/>
 		<RUS text="Представить"/>
@@ -240,8 +273,25 @@
 		<GER text="Benutzername"/>
 	</Username>
 	
+	<Version>
+		<EN-US text="Version"/>
+		<RUS text="Version"/> <-- TODO: Translate -->
+		<GER text="Version"/>
+	</Version>
 	
 	<!--SHORT DESCRIPTIONS-->
+	
+	<AddArgument>
+		<EN-US text="add an argument for this statement"/>
+		<RUS text="add an argument for this statement"/> <!--TODO: Translate-->
+		<GER text="verteidige diese Behauptung durch ein Argument"/>
+	</AddArgument>
+	
+	<AddReason>
+		<EN-US text="add another reason"/>
+		<RUS text="add another reason"/> <!--TODO: Translate-->
+		<GER text="führe einen weiteren Grund an"/>	
+	</AddReason>
 	
 	<AddURL>
 		<EN-US text="... add URL"/>
@@ -315,6 +365,24 @@
 		<GER text="Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen"/>
 	</ClaimInNewWOLink>
 	
+	<ClickToView>
+		<EN-US text="Click on a map to view it."/>
+		<RUS text="Click on a map to view it."/> <!--TODO: Translate-->
+		<GER text="Klicke auf eine Argumentation um sie anzusehen."/>
+	</ClickToView>
+	
+	<CommunicationError>
+		<EN-US text="A communication error occurred during interaction with server. Please try again."/>
+		<RUS text="A communication error occurred during interaction with server. Please try again."/> <!-- TODO: Translate-->
+		<GER text="In der Kommunikation mit dem Server ist ein Fehler aufgetreten. Bitte versuch’s noch einmal."/>
+	</CommunicationError>
+
+	<CompleteEnablerFirst>
+		<EN-US text="Complete the enabler before adding further reasons."/>
+		<RUS text="Complete the enabler before adding further reasons."/> <!--TODO: Translate-->
+		<GER text="Vervollständige den Garanten bevor du weitere Gründe hinzufügst."/>
+	</CompleteEnablerFirst>
+	
 	<ConnectionToReason>
 		<EN-US text="What kind of connection do you want to establish to the reason on the right?"/>
 		<RUS text="Какую связь Вы хотите установить к причине справа?"/>
@@ -358,17 +426,29 @@
 	</DefeatsByCounterEx>
 	
 	<DivideToSubclaims>
-		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case"/>
-		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая"/>
-		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können"/>
+		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case (under construction)"/>
+		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая (under construction)"/>
+		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können(noch nicht verfügbar)"/>
 	</DivideToSubclaims>
 	
+	<EasiestWay>
+		<EN-US text="The easiest way to construct an argument"/>
+		<RUS text="The easiest way to construct an argument"/> <!--TODO: Translate-->
+		<GER text="Der einfachste Weg, ein Argument zu konstruieren"/>
+	</EasiestWay>
+		
 	<EnterClaim>
 		<EN-US text="Enter your claim"/>
 		<RUS text="Введите свое заявление"/>
 		<GER text="Gib Deine Behauptung ein"/>
 	</EnterClaim>
 
+	<EnterMapName>
+		<EN-US text="Enter a name for your map"/>
+		<RUS text="Enter a name for your map"/> <!--TODO: Translate-->
+		<GER text="Gebe einen Namen für deine Argumentation ein"/>
+	</EnterMapName>
+	
 	<EnterReason>
 		<EN-US text="Enter your reason"/>
 		<RUS text="Введите свою причину"/>
@@ -453,16 +533,34 @@
 		<GER text="Liste von Argumentationen"/>
 	</ListMaps>
 	
+	<LoginFailed>
+		<EN-US text="Login failed. Please try again."/>
+		<RUS text="Login failed. Please try again."/> <!--TODO: Translate-->
+		<GER text="Log-in ist fehlgeschlagen. Bitte versuch’s noch einmal."/>
+	</LoginFailed>
+	
+	<MapSaveError>
+		<EN-US text="An error occurred when saving the map."/>
+		<RUS text="An error occurred when saving the map."/> <!--TODO: Translate-->
+		<GER text="Ein Fehler ist beim Speichern aufgetreten."/>
+	</MapSaveError>
+	
 	<MyMaps>
 		<EN-US text="My maps and those in which I participated"/>
 		<RUS text="Мои карты и те, в которых я участвовал(а)"/>
 		<GER text="Meine eigenen Argumente und solche, an denen ich mitgewirkt habe"/>
 	</MyMaps>
 	
+	<NetworkError>
+		<EN-US text="Network error"/>
+		<RUS text="Network error"/> <!-- TODO: Translate -->
+		<GER text="Netzwerk-Fehler"/>
+	</NetworkError>
+	
 	<NewMap>
-		<EN-US text="Create a new argument map"/>
+		<EN-US text="Create a new argument map (public)"/>
 		<RUS text="Создайте новую карту аргумента"/>
-		<GER text="Beginne eine neue Argumentation"/>
+		<GER text="Beginne eine neue Argumentation (öffentlich)"/>
 	</NewMap>
 	
 	<NewProject>
@@ -482,6 +580,12 @@
 		<RUS text="Желаемое Имя пользователя"/>
 		<GER text="Erwünschter Benutzername"/>
 	</NewUsername>
+	
+	<NotYet>
+		<EN-US text="this feature is not yet functional and is in development."/>
+		<RUS text="this feature is not yet functional and is in development"/> <!-- TODO: Translate -->
+		<GER text="Diese Funktion ist noch nicht verfügbar"/>
+	</NotYet>	
 
 	<Objection>
 		<EN-US text="Enter your objection"/>
@@ -490,9 +594,9 @@
 	</Objection>
 	
 	<OrStartWithScheme>
-		<EN-US text="... or do you want to start with a certain argument scheme?"/>
-		<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/>
-		<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen?"/>
+		<EN-US text="... or do you want to start with a certain argument scheme? Click here!"/>
+		<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/> <!--TODO: add "Click here"-->
+		<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen? Klicke hier!"/>
 	</OrStartWithScheme>
 	
 	<PasswordProtected>
@@ -578,7 +682,12 @@
 		<RUS text="Select the form you need from the list on your right to complete your argument"/>
 		<GER text="Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen."/>
 	</SelectLanguageForm>
-
+	
+	<SelectLanguageType>
+		<EN-US text="Select the language type that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/>
+		<RUS text="Select the language type that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/> <!--TODO: Translate-->
+		<GER text="Durch welche Formulierung sollen deine Gründe verbunden werden? Durch &quot;oder&quot; oder durch &quot;und&quot;?"/>
+	</SelectLanguageType>
 	
 	<SelfDefConn>
 		<EN-US text="self-defined connection"/>
@@ -645,6 +754,12 @@
 		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
 		<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
 	</UsernameTaken>
+	
+	<Welcome>
+		<EN-US text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/>
+		<RUS text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/> <!--TODO: Translate-->
+		<GER text="Willkommen im AGORA-net! Wähle eine der folgenden Aufgaben aus um fortzufahren..."/>
+	</Welcome>
 	
 	<WhatIsMainClaim>
 		<EN-US text="What is the main claim of your argument?"/>
@@ -1135,7 +1250,7 @@
 	
 	<AddArg>
 		<EN-US text="an argument for this statement"/>
-		<RUS text="аргумент для этого  утверждения"/>
+		<RUS text="аргумент для этого утверждения"/>
 		<GER text="ein Argument für diese Aussage"/>
 	</AddArg>
 
@@ -1282,5 +1397,11 @@
 		<GER text="... Qualifizierung"/>
 	</Qualification>
 	
+	<!-- SPECIAL -->
+	<!--POSSESSIVE
+		ENGLISH: <Name>'s <object>
+		RUSSIAN: ???
+		GERMAN: <Name>s <object>
+	-->
 	
 </Translations>
