@@ -189,6 +189,12 @@
 		<GER text="Passwort"/>
 	</Password>
 	
+	<ProjectPP>
+		<EN-US text="Projects (password protected)"/>
+		<RUS text="Projects (password protected)"/> <!--TODO: Translate-->
+		<GER text="Projekte (Passwort geschützt)"/>
+	</ProjectPP>
+	
 	<Questions>
 		<EN-US text="questions"/>
 		<RUS text="вопросы"/>
@@ -545,11 +551,29 @@
 		<GER text="Ein Fehler ist beim Speichern aufgetreten."/>
 	</MapSaveError>
 	
+	<MapsDeleted>
+		<EN-US text="Maps successfully deleted"/>
+		<RUS text="Maps successfully deleted"/> <!--TODO: Translate-->
+		<GER text="Argumentationen wurden gelöscht"/>
+	</MapsDeleted>
+	
 	<MyMaps>
-		<EN-US text="My maps and those in which I participated"/>
-		<RUS text="Мои карты и те, в которых я участвовал(а)"/>
-		<GER text="Meine eigenen Argumente und solche, an denen ich mitgewirkt habe"/>
+		<EN-US text="My Maps"/>
+		<RUS text="Мои карты"/> <!--TODO: Confirm-->
+		<GER text="Meine Argumente"/>
 	</MyMaps>
+	
+	<MyMapsEtc>
+		<EN-US text="My maps and those to which I contributed"/>
+		<RUS text="Мои карты и те, в которых я участвовал(а)"/> <!--TODO: Confirm-->
+		<GER text="Meine Argumente und solche, an denen ich mitgewirkt habe"/>
+	</MyMapsEtc>
+	
+	<MyPPProjects>
+		<EN-US text="My Password Protected Projects"/>
+		<RUS text="My Password Protected Projects"/> <!--TODO: Translate-->
+		<GER text="Meine Passwort-geschützten Projekte"/>
+	</MyPPProjects>
 	
 	<NetworkError>
 		<EN-US text="Network error"/>
@@ -636,10 +660,34 @@
 	</ProjNameTaken>
 	
 	<ProjPass>
-		<EN-US text="Project password "/>
+		<EN-US text="Project password"/>
 		<RUS text="Пароль  Проекта"/>
 		<GER text="Projekt-Passwort"/>
 	</ProjPass>
+	
+	<PublicMaps>
+		<EN-US text="Publicly Accessible Argument Maps"/>
+		<RUS text="Publicly Accessible Argument Maps"/> <!--TODO: Translate-->
+		<GER text="Öffentlich zugängliche Argumentationen"/>
+	</PublicMaps>
+	
+	<PublicMyMaps>	
+		<EN-US text="My Publicly Accessible Maps and those to which I contributed"/>
+		<RUS text="My Publicly Accessible Maps and those to which I contributed"/> <!--TODO: Translate-->
+		<GER text="Meine öffentlich zugänglichen Argumentationen und solche, zu denen ich beigetragen habe"/>
+	</PublicMyMaps>
+	
+	<PublicUserMaps>	
+		<EN-US text="Publicly Accessible Maps"/>
+		<RUS text="Publicly Accessible Maps"/> <!--TODO: Translate-->
+		<GER text="öffentlich zugängliche Argumentationen"/>
+	</PublicUserMaps>
+	
+	<PublicUserProj>
+		<EN-US text="Password Protected Projects"/>
+		<RUS text="Password Protected Projects"/> <!--TODO: Translate-->
+		<GER text="Passwort-geschützte Projekte"/>
+	</PublicUserProj>
 	
 	<Question>
 		<EN-US text="Enter a statement that questions this statement"/>
@@ -742,6 +790,12 @@
 		<RUS text="Щелкните здесь, если Вы хотите использовать определенную схему аргумента"/>
 		<GER text="Klicke hier wenn Du ein bestimmtes Argument-Schema verwenden willst"/>
 	</UseArgScheme>
+	
+	<UseCheckboxes>
+		<EN-US text="Please use the checkbox to select maps for deletion"/>
+		<RUS text="Please use the checkbox to select maps for deletion"/> <!--TODO: Translate-->
+		<GER text="Bitte markiere die entsprechenden Kästchen um Argumentationen zu löschen"/>
+	</UseCheckboxes>
 	
 	<UserList>
 		<EN-US text="Select users from the AGORA user list"/>
