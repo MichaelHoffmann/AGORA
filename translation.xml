@@ -50,6 +50,11 @@
 		<GER text="Argument"/>
 	</Arg>
 	
+	<ArgMaps>
+		<EN-US text="Argument Maps"/>
+		<RUS text="Argument Maps"/> <!-- TODO: Translate -->
+		<GER text="Argumentationen"/>
+	</ArgMaps>
 		
 	<ArgScheme>
 		<EN-US text="ArgScheme"/>
@@ -605,6 +610,13 @@
 		<GER text="Beginne eine neue Argumentation (öffentlich)"/>
 	</NewMap>
 	
+	<NewMapInProj>
+		<EN-US text="Create a new argument map within this password-protected project space"/>
+		<RUS text="Create a new argument map within this password-protected project space"/> <!-- TODO: Translate-->
+		<GER text="Beginne eine neue Argumentation innerhalb von diesem Passwort-geschützten Projektbereich"/>
+	</NewMapInProj>
+	
+	
 	<NewProject>
 		<EN-US text="Create a password-protected project space"/>
 		<RUS text="Создайте защищённое паролем проектное пространство"/>
@@ -684,10 +696,22 @@
 	</ProjNameTaken>
 	
 	<ProjPass>
-		<EN-US text="Project password, different from your user password (required)"/>
-		<RUS text="Пароль  Проекта"/> <!-- TODO: Update-->
-		<GER text="Projekt-Passwort (muss eingegeben werden und muss verschieden von deinem Benutzer-Passwort sein)"/>
+		<EN-US text="Enter your project password:"/>
+		<RUS text="Enter your project password:"/> <!-- TODO: Update-->
+		<GER text="Gib dein Projekt-Passwort ein:"/>
 	</ProjPass>
+	
+	<ProjPassCreate>
+		<EN-US text="Project password, different from your user password (required)"/>
+		<RUS text="Пароль Проекта"/> <!-- TODO: Update-->
+		<GER text="Projekt-Passwort (muss eingegeben werden und muss verschieden von deinem Benutzer-Passwort sein)"/>
+	</ProjPassCreate>
+	
+	<ProjPassRequest>
+		<EN-US text="Click here if you want to request the password for this project from the project administrator. In this case, the AGORA system will send an automatically created e-mail to the administrator which contains your user name and e-mail address."/>
+		<RUS text="Click here if you want to request the password for this project from the project administrator. In this case, the AGORA system will send an automatically created e-mail to the administrator which contains your user name and e-mail address."/> <!-- TODO: Update-->
+		<GER text="Klicke hier falls du das Passwort zu diesem Projekt vom Projekt Administrator erhalten willst. In diesem Fall wird das AGORA System dem Administrator eine automatisch generierte e-mail senden, welche deinen Benutzernamen und e-mail Addresse enthält."/>
+	</ProjPassRequest>
 	
 	<PublicMaps>
 		<EN-US text="Publicly Accessible Argument Maps"/>
