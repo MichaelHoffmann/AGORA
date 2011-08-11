@@ -347,6 +347,18 @@
 		<GER text="Klicke hier, um Informationen über den Autor zu sehen"/>
 	</AUInfo>
 
+	<CannotBePositive>
+		<EN-US text="This argument scheme cannot be used in an argument for a statement that is positively formulated (that is: one that is not negated by &quot;it is not the case that...&quot;)."/>
+		<RUS text="This argument scheme cannot be used in an argument for a statement that is positively formulated (that is: one that is not negated by &quot;it is not the case that...&quot;)."/>
+		<GER text="Dieses Argument-Schema kann nicht in einem Argument für eine Aussage verwendet werden, welche positiv formuliert ist (das heißt: eine Aussage, welche nicht durch &quot;es ist nicht der Fall, dass ...&quot; negiert wurde)."/>
+	</CannotBePositive>
+	
+	<CannotBeNegative>
+		<EN-US text="This argument scheme cannot be used in an argument for a negated statement (that is: one that starts with &quot;it is not the case that ...&quot;)."/>
+		<RUS text="This argument scheme cannot be used in an argument for a negated statement (that is: one that starts with &quot;it is not the case that ...&quot;)."/>
+		<GER text="Dieses Argument-Schema kann nicht in einem Argument für eine negierte Aussage verwendet werden (das heißt: eine Aussage, welche mit &quot;es ist nicht der Fall, dass ...&quot; beginnt)."/>
+	</CannotBeNegative>
+	
 	<ChangeInfo>
 		<EN-US text="Change Personal Information"/>
 		<RUS text="Измените Личную Информацию"/>
@@ -497,6 +509,12 @@
 		<GER text="Gib einen weiteren Grund ein"/>
 	</FurtherReason>	
 	
+	<GenericError>
+		<EN-US text="Sorry. Something has gone wrong with the software. Please try again."/>
+		<RUS text="Sorry. Something has gone wrong with the software. Please try again."/> <!--TODO: Translate-->
+		<GER text="Entschuldigung. Ein Software-Fehler ist aufgetreten. Bitte versuch’s noch einmal."/>
+	</GenericError>
+	
 	<GenPass>
 		<EN-US text="AGORA will generate a new password for you. This action is irreversible."/>
 		<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо."/>
@@ -629,6 +647,12 @@
 		<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
 	</PasswordProtected>
 	
+	<PassMismatch>
+		<EN-US text="Error: your passwords do not match"/>
+		<RUS text="Error: your passwords do not match."/> <!--TODO: Translate-->
+		<GER text="Fehler: Deine beiden Passwort-Eingaben sind nicht identisch."/>
+	</PassMismatch>
+	
 	<PassRepeat>
 		<EN-US text="Repeat your password"/>
 		<RUS text="Повторите свой пароль"/>
@@ -648,9 +672,9 @@
 	</PasteArgument>
 	
 	<ProjName>
-		<EN-US text="Desired Project name"/>
-		<RUS text="Желаемое Название проекта"/>
-		<GER text="Erwünschter Projekt-Name"/>
+		<EN-US text="Project name (required)"/>
+		<RUS text="Желаемое Название проекта"/> <!--TODO: update-->
+		<GER text="Projektname (muss eingegeben werden)"/>
 	</ProjName>
 	
 	<ProjNameTaken>
@@ -660,9 +684,9 @@
 	</ProjNameTaken>
 	
 	<ProjPass>
-		<EN-US text="Project password"/>
-		<RUS text="Пароль  Проекта"/>
-		<GER text="Projekt-Passwort"/>
+		<EN-US text="Project password, different from your user password (required)"/>
+		<RUS text="Пароль  Проекта"/> <!--TODO: Update-->
+		<GER text="Projekt-Passwort (muss eingegeben werden und muss verschieden von deinem Benutzer-Passwort sein)"/>
 	</ProjPass>
 	
 	<PublicMaps>
@@ -724,6 +748,12 @@
 		<RUS text="Error: Registration Failed. Please try again."/> <!--TODO: Translate-->
 		<GER text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch's noch einmal."/>
 	</RegisterFailed>
+
+	<RegisterSuccess>
+		<EN-US text="Registration successful. You may now log in."/>
+		<RUS text="Registration successful. You may now log in."/> <!--TODO: Translate-->
+		<GER text="Anmeldung erfolgreich. Du kannst dich jetzt einloggen."/>
+	</RegisterSuccess>
 
 	<SeeObjection>
 		<EN-US text="See the following objection against this claim in another argument map"/>
@@ -1167,7 +1197,17 @@
 		<GER text="Du musst bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf &quot;ArgSchema&quot; klickst, kannst Du das Argumentations-Schema jederzeit wechseln."/>
 	</PartUnivReq>
 	
-
+	<ProjectExplanation>
+		<EN-US text="Send the project name and the password to those who you would like to invite to your project. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps.\n
+		To get access to your project, select it from &quot;My Password Protected Projects.&quot;\n
+		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/>
+		<RUS text="Send the project name and the password to those who you would like to invite to your project. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps.\n
+		To get access to your project, select it from &quot;My Password Protected Projects.&quot;\n
+		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/> <!--TODO: Translate-->
+		<GER text="Schicke Projektname und Passwort denen, die du zu deinem Projekt einladen willst. Jedes Mitglied eines Projektes kann Argumentationen innerhalb deines Projektbereiches schaffen, die nur für andere Mitglieder sichtbar sind. Natürlich kannst du einen Projektbereich auch nur für dich selbst benutzen um deine Argumentationen zu schützen.\n
+		Um Zugang zu deinem Projekt zu erhalten, wähle es aus &quot;Meine Passwort-geschützten Projekte&quot; aus.\n
+		Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
+	</ProjectExplanation>
 
 
 	
