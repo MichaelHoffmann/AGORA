@@ -380,7 +380,7 @@
 	<CommunicationError>
 		<EN-US text="A communication error occurred during interaction with server. Please try again."/>
 		<RUS text="A communication error occurred during interaction with server. Please try again."/> <!-- TODO: Translate-->
-		<GER text="In der Kommunikation mit dem Server ist ein Fehler aufgetreten. Bitte versuch’s noch einmal."/>
+		<GER text="In der Kommunikation mit dem Server ist ein Fehler aufgetreten. Bitte versuch's noch einmal."/>
 	</CommunicationError>
 
 	<CompleteEnablerFirst>
@@ -542,7 +542,7 @@
 	<LoginFailed>
 		<EN-US text="Login failed. Please try again."/>
 		<RUS text="Login failed. Please try again."/> <!--TODO: Translate-->
-		<GER text="Log-in ist fehlgeschlagen. Bitte versuch’s noch einmal."/>
+		<GER text="Log-in ist fehlgeschlagen. Bitte versuch's noch einmal."/>
 	</LoginFailed>
 	
 	<MapSaveError>
@@ -718,6 +718,12 @@
 		<RUS text="Регистровать как нового пользователя"/>
 		<GER text="Registriere dich als neuer Benutzer"/>
 	</RegisterAsNew>
+	
+	<RegisterFailed>
+		<EN-US text="Error: Registration Failed. Please try again."/>
+		<RUS text="Error: Registration Failed. Please try again."/> <!--TODO: Translate-->
+		<GER text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch's noch einmal."/>
+	</RegisterFailed>
 
 	<SeeObjection>
 		<EN-US text="See the following objection against this claim in another argument map"/>
@@ -743,6 +749,12 @@
 		<GER text="Selbst-definierte Verknüpfung "/>
 	</SelfDefConn>
 
+	<SignInToViewProj>
+		<EN-US text="Sign in to view your projects"/>
+		<RUS text="Sign in to view your projects"/> <!--TODO: Translate-->
+		<GER text="Log dich ein um deine Projekte zu sehen"/>
+	</SignInToViewProj>
+	
 	<Statement1>
 		<EN-US text="Enter first statement"/>
 		<RUS text="Введите первое заявление"/>
