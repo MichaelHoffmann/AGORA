@@ -119,13 +119,13 @@
 
 	<Enabler>
 		<EN-US text="Enabler"/>
-		<RUS text="Enabler"/> <!--TODO: translate -->
+		<RUS text="Enabler"/> <!-- TODO: translate -->
 		<GER text="Garant"/>
 	</Enabler>
 	
 	<Error>
 		<EN-US text="Error"/>
-		<RUS text="ошибка"/> <!--TODO: confirm -->
+		<RUS text="ошибка"/> <!-- TODO: confirm -->
 		<GER text="Fehler"/>
 	</Error>
 	
@@ -191,7 +191,7 @@
 	
 	<ProjectPP>
 		<EN-US text="Projects (password protected)"/>
-		<RUS text="Projects (password protected)"/> <!--TODO: Translate-->
+		<RUS text="Projects (password protected)"/> <!-- TODO: Translate-->
 		<GER text="Projekte (Passwort geschützt)"/>
 	</ProjectPP>
 	
@@ -221,13 +221,13 @@
 	
 	<SelectAll>
 		<EN-US text="Select All"/>
-		<RUS text="Select All"/> <!--TODO: Translate-->
+		<RUS text="Select All"/> <!-- TODO: Translate-->
 		<GER text="Wähle alle aus"/>
 	</SelectAll>
 	
 	<SelectNone>
 		<EN-US text="Select None"/>
-		<RUS text="Select None"/> <!--TODO: Translate-->
+		<RUS text="Select None"/> <!-- TODO: Translate-->
 		<GER text="Wähle nichts aus"/>
 	</SelectNone>
 	
@@ -289,13 +289,13 @@
 	
 	<AddArgument>
 		<EN-US text="add an argument for this statement"/>
-		<RUS text="add an argument for this statement"/> <!--TODO: Translate-->
+		<RUS text="add an argument for this statement"/> <!-- TODO: Translate-->
 		<GER text="verteidige diese Behauptung durch ein Argument"/>
 	</AddArgument>
 	
 	<AddReason>
 		<EN-US text="add another reason"/>
-		<RUS text="add another reason"/> <!--TODO: Translate-->
+		<RUS text="add another reason"/> <!-- TODO: Translate-->
 		<GER text="führe einen weiteren Grund an"/>	
 	</AddReason>
 	
@@ -385,7 +385,7 @@
 	
 	<ClickToView>
 		<EN-US text="Click on a map to view it."/>
-		<RUS text="Click on a map to view it."/> <!--TODO: Translate-->
+		<RUS text="Click on a map to view it."/> <!-- TODO: Translate-->
 		<GER text="Klicke auf eine Argumentation um sie anzusehen."/>
 	</ClickToView>
 	
@@ -397,7 +397,7 @@
 
 	<CompleteEnablerFirst>
 		<EN-US text="Complete the enabler before adding further reasons."/>
-		<RUS text="Complete the enabler before adding further reasons."/> <!--TODO: Translate-->
+		<RUS text="Complete the enabler before adding further reasons."/> <!-- TODO: Translate-->
 		<GER text="Vervollständige den Garanten bevor du weitere Gründe hinzufügst."/>
 	</CompleteEnablerFirst>
 	
@@ -451,7 +451,7 @@
 	
 	<EasiestWay>
 		<EN-US text="The easiest way to construct an argument"/>
-		<RUS text="The easiest way to construct an argument"/> <!--TODO: Translate-->
+		<RUS text="The easiest way to construct an argument"/> <!-- TODO: Translate-->
 		<GER text="Der einfachste Weg, ein Argument zu konstruieren"/>
 	</EasiestWay>
 		
@@ -463,7 +463,7 @@
 
 	<EnterMapName>
 		<EN-US text="Enter a name for your map"/>
-		<RUS text="Enter a name for your map"/> <!--TODO: Translate-->
+		<RUS text="Enter a name for your map"/> <!-- TODO: Translate-->
 		<GER text="Gebe einen Namen für deine Argumentation ein"/>
 	</EnterMapName>
 	
@@ -511,7 +511,7 @@
 	
 	<GenericError>
 		<EN-US text="Sorry. Something has gone wrong with the software. Please try again."/>
-		<RUS text="Sorry. Something has gone wrong with the software. Please try again."/> <!--TODO: Translate-->
+		<RUS text="Sorry. Something has gone wrong with the software. Please try again."/> <!-- TODO: Translate-->
 		<GER text="Entschuldigung. Ein Software-Fehler ist aufgetreten. Bitte versuch’s noch einmal."/>
 	</GenericError>
 	
@@ -559,37 +559,37 @@
 	
 	<LoginFailed>
 		<EN-US text="Login failed. Please try again."/>
-		<RUS text="Login failed. Please try again."/> <!--TODO: Translate-->
+		<RUS text="Login failed. Please try again."/> <!-- TODO: Translate-->
 		<GER text="Log-in ist fehlgeschlagen. Bitte versuch's noch einmal."/>
 	</LoginFailed>
 	
 	<MapSaveError>
 		<EN-US text="An error occurred when saving the map."/>
-		<RUS text="An error occurred when saving the map."/> <!--TODO: Translate-->
+		<RUS text="An error occurred when saving the map."/> <!-- TODO: Translate-->
 		<GER text="Ein Fehler ist beim Speichern aufgetreten."/>
 	</MapSaveError>
 	
 	<MapsDeleted>
 		<EN-US text="Maps successfully deleted"/>
-		<RUS text="Maps successfully deleted"/> <!--TODO: Translate-->
+		<RUS text="Maps successfully deleted"/> <!-- TODO: Translate-->
 		<GER text="Argumentationen wurden gelöscht"/>
 	</MapsDeleted>
 	
 	<MyMaps>
 		<EN-US text="My Maps"/>
-		<RUS text="Мои карты"/> <!--TODO: Confirm-->
+		<RUS text="Мои карты"/> <!-- TODO: Confirm-->
 		<GER text="Meine Argumente"/>
 	</MyMaps>
 	
 	<MyMapsEtc>
 		<EN-US text="My maps and those to which I contributed"/>
-		<RUS text="Мои карты и те, в которых я участвовал(а)"/> <!--TODO: Confirm-->
+		<RUS text="Мои карты и те, в которых я участвовал(а)"/> <!-- TODO: Confirm-->
 		<GER text="Meine Argumente und solche, an denen ich mitgewirkt habe"/>
 	</MyMapsEtc>
 	
 	<MyPPProjects>
 		<EN-US text="My Password Protected Projects"/>
-		<RUS text="My Password Protected Projects"/> <!--TODO: Translate-->
+		<RUS text="My Password Protected Projects"/> <!-- TODO: Translate-->
 		<GER text="Meine Passwort-geschützten Projekte"/>
 	</MyPPProjects>
 	
@@ -637,7 +637,7 @@
 	
 	<OrStartWithScheme>
 		<EN-US text="... or do you want to start with a certain argument scheme? Click here!"/>
-		<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/> <!--TODO: add "Click here"-->
+		<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/> <!-- TODO: add "Click here"-->
 		<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen? Klicke hier!"/>
 	</OrStartWithScheme>
 	
@@ -649,7 +649,7 @@
 	
 	<PassMismatch>
 		<EN-US text="Error: your passwords do not match"/>
-		<RUS text="Error: your passwords do not match."/> <!--TODO: Translate-->
+		<RUS text="Error: your passwords do not match."/> <!-- TODO: Translate-->
 		<GER text="Fehler: Deine beiden Passwort-Eingaben sind nicht identisch."/>
 	</PassMismatch>
 	
@@ -673,7 +673,7 @@
 	
 	<ProjName>
 		<EN-US text="Project name (required)"/>
-		<RUS text="Желаемое Название проекта"/> <!--TODO: update-->
+		<RUS text="Желаемое Название проекта"/> <!-- TODO: update-->
 		<GER text="Projektname (muss eingegeben werden)"/>
 	</ProjName>
 	
@@ -685,31 +685,31 @@
 	
 	<ProjPass>
 		<EN-US text="Project password, different from your user password (required)"/>
-		<RUS text="Пароль  Проекта"/> <!--TODO: Update-->
+		<RUS text="Пароль  Проекта"/> <!-- TODO: Update-->
 		<GER text="Projekt-Passwort (muss eingegeben werden und muss verschieden von deinem Benutzer-Passwort sein)"/>
 	</ProjPass>
 	
 	<PublicMaps>
 		<EN-US text="Publicly Accessible Argument Maps"/>
-		<RUS text="Publicly Accessible Argument Maps"/> <!--TODO: Translate-->
+		<RUS text="Publicly Accessible Argument Maps"/> <!-- TODO: Translate-->
 		<GER text="Öffentlich zugängliche Argumentationen"/>
 	</PublicMaps>
 	
 	<PublicMyMaps>	
 		<EN-US text="My Publicly Accessible Maps and those to which I contributed"/>
-		<RUS text="My Publicly Accessible Maps and those to which I contributed"/> <!--TODO: Translate-->
+		<RUS text="My Publicly Accessible Maps and those to which I contributed"/> <!-- TODO: Translate-->
 		<GER text="Meine öffentlich zugänglichen Argumentationen und solche, zu denen ich beigetragen habe"/>
 	</PublicMyMaps>
 	
 	<PublicUserMaps>	
 		<EN-US text="Publicly Accessible Maps"/>
-		<RUS text="Publicly Accessible Maps"/> <!--TODO: Translate-->
+		<RUS text="Publicly Accessible Maps"/> <!-- TODO: Translate-->
 		<GER text="öffentlich zugängliche Argumentationen"/>
 	</PublicUserMaps>
 	
 	<PublicUserProj>
 		<EN-US text="Password Protected Projects"/>
-		<RUS text="Password Protected Projects"/> <!--TODO: Translate-->
+		<RUS text="Password Protected Projects"/> <!-- TODO: Translate-->
 		<GER text="Passwort-geschützte Projekte"/>
 	</PublicUserProj>
 	
@@ -745,13 +745,13 @@
 	
 	<RegisterFailed>
 		<EN-US text="Error: Registration Failed. Please try again."/>
-		<RUS text="Error: Registration Failed. Please try again."/> <!--TODO: Translate-->
+		<RUS text="Error: Registration Failed. Please try again."/> <!-- TODO: Translate-->
 		<GER text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch's noch einmal."/>
 	</RegisterFailed>
 
 	<RegisterSuccess>
 		<EN-US text="Registration successful. You may now log in."/>
-		<RUS text="Registration successful. You may now log in."/> <!--TODO: Translate-->
+		<RUS text="Registration successful. You may now log in."/> <!-- TODO: Translate-->
 		<GER text="Anmeldung erfolgreich. Du kannst dich jetzt einloggen."/>
 	</RegisterSuccess>
 
@@ -769,7 +769,7 @@
 	
 	<SelectLanguageType>
 		<EN-US text="Select the language type that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/>
-		<RUS text="Select the language type that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/> <!--TODO: Translate-->
+		<RUS text="Select the language type that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/> <!-- TODO: Translate-->
 		<GER text="Durch welche Formulierung sollen deine Gründe verbunden werden? Durch &quot;oder&quot; oder durch &quot;und&quot;?"/>
 	</SelectLanguageType>
 	
@@ -781,7 +781,7 @@
 
 	<SignInToViewProj>
 		<EN-US text="Sign in to view your projects"/>
-		<RUS text="Sign in to view your projects"/> <!--TODO: Translate-->
+		<RUS text="Sign in to view your projects"/> <!-- TODO: Translate-->
 		<GER text="Log dich ein um deine Projekte zu sehen"/>
 	</SignInToViewProj>
 	
@@ -835,7 +835,7 @@
 	
 	<UseCheckboxes>
 		<EN-US text="Please use the checkbox to select maps for deletion"/>
-		<RUS text="Please use the checkbox to select maps for deletion"/> <!--TODO: Translate-->
+		<RUS text="Please use the checkbox to select maps for deletion"/> <!-- TODO: Translate-->
 		<GER text="Bitte markiere die entsprechenden Kästchen um Argumentationen zu löschen"/>
 	</UseCheckboxes>
 	
@@ -853,7 +853,7 @@
 	
 	<Welcome>
 		<EN-US text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/>
-		<RUS text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/> <!--TODO: Translate-->
+		<RUS text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/> <!-- TODO: Translate-->
 		<GER text="Willkommen im AGORA-net! Wähle eine der folgenden Aufgaben aus um fortzufahren..."/>
 	</Welcome>
 	
@@ -898,7 +898,7 @@
 	
 	<EitherWay>
 		<EN-US text="either way"/>
-		<RUS text="either way (untranslated)"/> <!--TODO: This should be translated-->
+		<RUS text="either way (untranslated)"/> <!-- TODO: This should be translated-->
 		<GER text="Wie-auch-immer"/>
 	</EitherWay>
 	
@@ -967,7 +967,7 @@
 		<RUS text="Conditional Syllogism (untranslated):\n
 					p --> q\n
 					q --> r\n
-					Therefore, p --> r"/> <!--TODO: This should be translated-->
+					Therefore, p --> r"/> <!-- TODO: This should be translated-->
 		<GER text="Konditionaler Syllogismus:\n
 					p --> q\n
 					q --> r\n
@@ -984,7 +984,7 @@
 					p v q\n
 					p --> r\n
 					q --> s\n
-					Therefore, s v t"/> <!--TODO: This should be translated-->
+					Therefore, s v t"/> <!-- TODO: This should be translated-->
 		<GER text="Konstruktives Dilemma:\n
 					p v q\n
 					p --> r\n
@@ -1017,7 +1017,7 @@
 					p v q\n
 					p --> r\n
 					q --> r\n
-					Therefore, r"/> <!--TODO: This should be translated-->
+					Therefore, r"/> <!-- TODO: This should be translated-->
 		<GER text="Wie-auch-immer:\n
 					p v q\n
 					p --> r\n
@@ -1051,7 +1051,7 @@
 		<RUS text="Modus ponens (untranslated):\n
 					p --> q\n
 					p\n
-					Therefore, q\n"/> <!--TODO: This should be translated-->
+					Therefore, q\n"/> <!-- TODO: This should be translated-->
 		<GER text="Modus ponens:\n
 					p --> q\n
 					p\n
@@ -1066,7 +1066,7 @@
 		<RUS text="Modus tollens (untranslated):\n
 					p --> q\n
 					not q\n
-					Therefore, not p"/> <!--TODO: This should be translated-->
+					Therefore, not p"/> <!-- TODO: This should be translated-->
 		<GER text="Modus tollens:\n
 					p --> q\n
 					nicht q\n
@@ -1203,7 +1203,7 @@
 		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/>
 		<RUS text="Send the project name and the password to those who you would like to invite to your project. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps.\n
 		To get access to your project, select it from &quot;My Password Protected Projects.&quot;\n
-		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/> <!--TODO: Translate-->
+		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/> <!-- TODO: Translate-->
 		<GER text="Schicke Projektname und Passwort denen, die du zu deinem Projekt einladen willst. Jedes Mitglied eines Projektes kann Argumentationen innerhalb deines Projektbereiches schaffen, die nur für andere Mitglieder sichtbar sind. Natürlich kannst du einen Projektbereich auch nur für dich selbst benutzen um deine Argumentationen zu schützen.\n
 		Um Zugang zu deinem Projekt zu erhalten, wähle es aus &quot;Meine Passwort-geschützten Projekte&quot; aus.\n
 		Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
