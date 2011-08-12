@@ -4,9 +4,17 @@ package ValueObjects
 	{
 		public var ID:int;
 		public var text:String;
-		public var deleted:int;
-		public function TextboxValueObject()
+		public var deleted: Boolean;
+		public function TextboxValueObject(textboxObject:Object)
 		{
+			//no value must be undefined
+			try{
+				ID = textboxObject.ID;
+				text = textboxObject.text;
+				deleted = textboxObject.deleted == 1? true:false;
+			}catch(error:Error){
+				trace("TextboxValueObject::Constructor: Error reading textboxObject.");	
+			}	
 		}
 	}
 }
