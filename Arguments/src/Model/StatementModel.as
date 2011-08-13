@@ -240,6 +240,15 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_TYPE_TOGGLED, null, ID));
 		}
 		
+		//----------------- Add Supporting Argument -----------------------//
+		public function addSupportingArgument():void{
+						
+		}
+
+		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
+			
+		}
+		
 		//----------------- Generic Fault Handler -------------------------//
 		protected function onFault( fault:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));

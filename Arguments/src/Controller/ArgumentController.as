@@ -9,7 +9,6 @@ package Controller
 	import ValueObjects.AGORAParameters;
 	
 	import components.ArgumentPanel;
-	
 	import components.LAMWorld;
 	import components.Map;
 	
@@ -89,6 +88,11 @@ package Controller
 			//invalidate component, so that they get updated during the validation  cycle of the Flex architecture
 			//FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
 			//FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
+		}
+		
+		//----------------- Adding an Argument -------------------------------//
+		public function addSupportingArgument(ID:int):void{
+			
 		}
 		
 		

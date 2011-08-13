@@ -1,5 +1,8 @@
 package Model
 {
+	import ValueObjects.NodetextValueObject;
+	import ValueObjects.NodeValueObject;
+
 	public class InferenceModel extends StatementModel
 	{
 		private var _typed:Boolean;
@@ -21,7 +24,7 @@ package Model
 			_typed = value;
 		}
 
-		public static function createStatementFromObject(obj:Object):StatementModel{
+		public static function createStatementFromObject(obj:NodeValueObject):StatementModel{
 			var statementModel:InferenceModel = new InferenceModel;
 			statementModel.ID = obj.ID;
 			return statementModel;

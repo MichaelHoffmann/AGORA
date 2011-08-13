@@ -20,14 +20,14 @@ package ValueObjects
 			try{
 				ID = nodeObject.ID;
 				type = nodeObject.Type;
-				author = nodeObject.author;
+				author = nodeObject.Author;
 				x = nodeObject.x;
 				y = nodeObject.y;
 				typed = nodeObject.typed == 0? false : true;
 				positive = nodeObject.positive == 1? true : false;
 				connectedBy = nodeObject.connected_by;
-				deleted = nodeObject.deleted == 0? false:true;
-				if(nodeObject.hasOwnProperty("nodetext"){
+				deleted = nodeObject.deleted == 1? true: false; 
+				if(nodeObject.hasOwnProperty("nodetext")){
 					nodetexts = new Vector.<NodetextValueObject>;
 					if(nodeObject.nodetext is ArrayCollection){
 						for each(var obj:Object in nodeObject.nodetext){
@@ -36,7 +36,6 @@ package ValueObjects
 					}else{
 						nodetexts.push(new NodetextValueObject(nodeObject.nodetext));
 					}
-					
 				}
 			}catch(error:Error){
 				trace("NodeValueObject::Constructor: Error reading nodeObject");

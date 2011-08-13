@@ -5,6 +5,12 @@ package Model
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
+	import ValueObjects.ConnectionValueObject;
+	import ValueObjects.MapValueObject;
+	import ValueObjects.NodeValueObject;
+	import ValueObjects.NodetextValueObject;
+	import ValueObjects.SourcenodeValueObject;
+	import ValueObjects.TextboxValueObject;
 	
 	import com.adobe.protocols.dict.Dict;
 	
@@ -201,12 +207,12 @@ package Model
 					trace("first claim as complex statement...");//shouldn't occur because there is no use case that allows this.
 					/*
 					for(var i:int=1; i < ArrayCollection(map.textbox).length; i++){
-						simpleStatement = new SimpleStatementModel;
-						simpleStatement.ID = map.textbox[i].ID;
-						simpleStatement.text = map.textbox[i].text;
-						simpleStatement.parent = statementModel;
-						statementModel.statements.push(simpleStatement);
-						statementModel.nodeTextIDs.push(map.node.nodetext[i].ID);
+					simpleStatement = new SimpleStatementModel;
+					simpleStatement.ID = map.textbox[i].ID;
+					simpleStatement.text = map.textbox[i].text;
+					simpleStatement.parent = statementModel;
+					statementModel.statements.push(simpleStatement);
+					statementModel.nodeTextIDs.push(map.node.nodetext[i].ID);
 					}
 					*/
 				}
@@ -240,7 +246,9 @@ package Model
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{
 			trace('map loaded');
-			var map:Object = event.result.map;
+			var mapXMLRawObject:Object = event.result.map;
+			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
+			
 			try{
 				//update timestamp
 				timestamp = map.timestamp;
@@ -249,31 +257,18 @@ package Model
 				var obj:Object;
 				var nodeHash:Dictionary = new Dictionary;
 				var textboxHash:Dictionary = new Dictionary;
-				var result:Boolean;
 				
 				//read nodes and create Statment Models
-				result = parseNode(map, nodeHash, textboxHash);
-				if(!result){
-					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-					return;
-				}
-				
+				//parseNode(map, nodeHash, textboxHash);
+				processNode(map.nodeObjects,nodeHash, textboxHash);
 				
 				//Form a map of connections
 				var connectionsHash:Dictionary = new Dictionary;
-				result = parseConnection(map, connectionsHash, nodeHash);
-				if(!result){
-					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-					return;
-				}
-				
+				//parseConnection(map, connectionsHash, nodeHash);
+				processConnection(map.connections, connectionsHash, nodeHash);
 				
 				//read and set text - This should be performed after links are created
-				result = parseTextox(map, textboxHash);
-				if(!result){
-					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-					return;
-				}
+				processTextbox(map.textboxes, textboxHash);
 				
 				//add new elements to Model
 				for each(var node:StatementModel in nodeHash){
@@ -290,7 +285,6 @@ package Model
 				
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
 				
-				
 			}
 			catch(error:Error){
 				trace(error.message);
@@ -301,249 +295,118 @@ package Model
 			
 		}
 		
-		//---------------------- Parsing Node ---------------------------------------------------------//
-		protected function parseNode(map:Object, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
-			if(map.hasOwnProperty("node")){
-				var statementModel:StatementModel = null;
-				var obj:Object;
-				var result:Boolean;
-				//If there are multiple nodes in the returned XML
-				if(map.node is ArrayCollection){
-					for each(obj in map.node){
-						result = processNode(obj,nodeHash,textboxHash);
-						if(!result){
-							return false;
-						}
-					}	
-				}
-					//If there is only one node in the returned XML
-				else{
-					obj = map.node;
-					result = processNode(obj,nodeHash, textboxHash);
-					if(!result){
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-		
-		protected function processNode(obj:Object, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
+		//---------------------- Process Node ---------------------------------------------------------//
+		protected function processNode(obj:Vector.<NodeValueObject>, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
 			var statementModel:StatementModel;
-			if(obj.deleted == "0"){
-				//Set attributes
-				if(!panelListHash.hasOwnProperty(obj.ID)){
-					if(obj.Type == "Inference"){
-						statementModel = InferenceModel.createStatementFromObject(obj);
-						(statementModel as InferenceModel).typed = obj.Typed == 1? true:false;
-					}else
-					{
-						statementModel = StatementModel.createStatementFromObject(obj);
-					}
-				}else{
-					statementModel = panelListHash[obj.ID];
-				}
-				statementModel.author = obj.Author;
-				statementModel.statementType = obj.Type;
-				statementModel.xgrid = obj.x;
-				statementModel.ygrid = obj.y;
-				nodeHash[obj.ID] = statementModel;
-				
-				var result:Boolean = parseNodeText(obj, nodeHash, textboxHash);
-				if(!result){
-					return false;
-				}
-			}
-			return true;
-		}
-		
-		//----------------------- Parse Nodetexts -------------------------------------------//
-		protected function parseNodeText(obj:Object, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
-			//read nodetexts and create simpleStatement Models
-			var statementModel:StatementModel = nodeHash[obj.ID];
-			var result:Boolean;
-			if(obj.hasOwnProperty("nodetext")){
-				var simpleStatement:SimpleStatementModel;
-				var nodetext:Object;
-				//multiple nodetexts
-				if(obj.nodetext is ArrayCollection){
-					for each(nodetext in obj.nodetext){
-						result = processNodeText(nodetext,obj,nodeHash,textboxHash);
-						if(!result){
-							return false;
+			for each(var nodeVO:NodeValueObject in obj){
+				if(!nodeVO.deleted){
+					//Set attributes
+					if(!panelListHash.hasOwnProperty(nodeVO.ID)){
+						if(nodeVO.type == "Inference"){
+							statementModel = InferenceModel.createStatementFromObject(nodeVO);
+							(statementModel as InferenceModel).typed =  nodeVO.typed;
+						}else
+						{
+							statementModel = StatementModel.createStatementFromObject(obj);
 						}
+					}else{
+						statementModel = panelListHash[nodeVO.ID];
 					}
+					statementModel.author = nodeVO.author;
+					statementModel.statementType = nodeVO.type;
+					statementModel.xgrid = nodeVO.x;
+					statementModel.ygrid = nodeVO.y;
+					nodeHash[nodeVO.ID] = statementModel;
+					
+					processNodeText(nodeVO, nodeHash, textboxHash);
 				}
-				else{//single nodetext
-					nodetext = obj.nodetext;
-					result = processNodeText(nodetext,obj, nodeHash, textboxHash);
-					if(!result){
-						return false;
-					}
-				}
-				
-			}else{
-				trace("Node has no node text");
 			}
 			return true;
 		}
 		
-		protected function processNodeText(nodetext:Object, node:Object,  nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
-			var statementModel:StatementModel = nodeHash[node.ID];
+		protected function processNodeText(nodeVO:NodeValueObject, nodeHash:Dictionary, textboxHash:Dictionary):Boolean{
+			var statementModel:StatementModel = nodeHash[nodeVO.ID];
 			var simpleStatement:SimpleStatementModel;
-			if(!statementModel.hasStatement(nodetext.textboxID)){
-				simpleStatement = new SimpleStatementModel;
-				simpleStatement.ID = nodetext.textboxID;
-			}
-			else{
-				simpleStatement = statementModel.getStatement(nodetext.textboxID);
-			}
-			
-			if(!statementModel.hasStatement(simpleStatement.ID)){
-				statementModel.statements.push(simpleStatement);
-				statementModel.nodeTextIDs.push(nodetext.ID);
-			}
-			
-			textboxHash[simpleStatement.ID] = simpleStatement;
-			return true;
-		}
-		
-		//----------------------- Parsing Connections ---------------------------------------//
-		/**
-		 * Parses connections in the map
-		 **/
-		protected function parseConnection(map:Object, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
-			var obj:Object;
-			var result:Boolean;
-			if(map.hasOwnProperty("connection")){
-				var argumentTypeModel:ArgumentTypeModel;
-				if(map.connection is ArrayCollection){
-					for each(obj in map.connection){
-						result = processConnection(obj, connectionsHash, nodeHash);
-						if(!result){
-							return false;
-						}
-					}
+			for each(var nodetextVO:NodetextValueObject in nodeVO.nodetexts){
+				if(!statementModel.hasStatement(nodetextVO.textboxID)){
+					simpleStatement = new SimpleStatementModel;
+					simpleStatement.ID = nodetextVO.textboxID;
 				}
 				else{
-					obj = map.connection;
-					result = processConnection(obj, connectionsHash, nodeHash);
-					if(!result){
-						return false;
-					}
+					simpleStatement = statementModel.getStatement(nodetextVO.textboxID);
 				}
+				
+				if(!statementModel.hasStatement(simpleStatement.ID)){
+					statementModel.statements.push(simpleStatement);
+					statementModel.nodeTextIDs.push(nodetextVO.ID);
+				}
+				
+				textboxHash[simpleStatement.ID] = simpleStatement;
 			}
-			
 			return true;
 		}
 		
-		protected function processConnection(obj:Object, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
+		protected function processConnection(objs:Vector.<ConnectionValueObject>, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
 			var argumentTypeModel:ArgumentTypeModel;
 			var result:Boolean;
-			if(obj.deleted != 0){
-				if(connectionListHash.hasOwnProperty(obj.ID)){
-					argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
-				}else{
-					argumentTypeModel = connectionListHash[obj.ID];
+			for each(var obj:ConnectionValueObject in objs){
+				if(!obj.deleted){
+					if(connectionListHash.hasOwnProperty(obj.connID)){
+						argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
+					}else{
+						argumentTypeModel = connectionListHash[obj.connID];
+					}
+					argumentTypeModel.dbType = obj.type;
+					argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+					argumentTypeModel.xgrid = obj.x;
+					argumentTypeModel.ygrid = obj.y;
+					connectionsHash[obj.connID] = argumentTypeModel;
+					
+					processSourceNode(obj, connectionsHash, nodeHash);	
 				}
-				argumentTypeModel.dbType = obj.type;
-				argumentTypeModel.claimModel = nodeHash[obj.targetnode];
-				argumentTypeModel.xgrid = obj.x;
-				argumentTypeModel.ygrid = obj.y;
-				argumentTypeModel.typed = obj.typed == 1? true:false;
-				connectionsHash[obj.ID] = argumentTypeModel;
 				
-				result = parseSourceNode(obj, nodeHash, connectionsHash);
-				if(!result){
-					return false;
-				}	
 			}
 			return true;
 		}
 		
-		//----------------------- Parsing Source Nodes --------------------------------------//
-		protected function parseSourceNode(obj:Object, nodeHash:Dictionary, connectionsHash:Dictionary):Boolean
-		{
-			if(obj.hasOwnProperty("sourcenode")){
-				if(obj.sourcenode is ArrayCollection){
-					for each(var argElements:Object in obj.sourcenode){
-						//If read in this loading phase
-						var result:Boolean = processSourceNode(argElements,obj,connectionsHash, nodeHash);
-						if(!result){
-							return false;
-						}
-					}	
-				}
-				else{
-					trace("error: Only one sourcenode found!");
-					return false;
-				}
-			}
-			var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.ID];
-			argumentTypeModel.logicClass.link();
-			return true;
-		}
-		
-		protected function processSourceNode(argElements:Object, obj:Object, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
+		protected function processSourceNode(obj:ConnectionValueObject, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
 			var argumentTypeModel:ArgumentTypeModel;
-			if(nodeHash.hasOwnProperty(argElements.nodeID)){
-				if(nodeHash[argElements.nodeID] is InferenceModel){
-					argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
-				}
-				else{
-					if(!argumentTypeModel.hasReason(argElements.nodeID)){
-						argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+			for each(var argElements:SourcenodeValueObject in obj.sourcenodes){
+				if(nodeHash.hasOwnProperty(argElements.nodeID)){
+					if(nodeHash[argElements.nodeID] is InferenceModel){
+						argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
 					}
-				}
-			}
-			else{ //read earlier
-				if(panelListHash[argElements.nodeID] is InferenceModel){
-					argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
-				}
-				else{
-					if(!argumentTypeModel.hasReason(argElements.nodeID)){
-						argumentTypeModel.reasonModels.push(panelListHash[argElements.nodeID]);
-					}
-				}
-			}
-			return true;
-		}
-		
-		//----------------------- Parsing Textboxes -----------------------------------------//
-		protected function parseTextox(map:Object, textboxHash:Dictionary):Boolean{
-			var obj:Object;
-			var simpleStatement:SimpleStatementModel;
-			var result:Boolean;
-			if(map.hasOwnProperty("textbox")){
-				//many textboxes
-				if(map.textbox is ArrayCollection){
-					for each(obj in map.textbox){
-						result = processTextbox(obj, textboxHash);
-						if(!result){
-							return false;
+					else{
+						if(!argumentTypeModel.hasReason(argElements.nodeID)){
+							argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
 						}
 					}
 				}
-				else{
-					obj = map.textbox;
-					result = processTextbox(obj, textboxHash);
-					if(!result){
-						return false;
+				else{ //read earlier
+					if(panelListHash[argElements.nodeID] is InferenceModel){
+						argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
+					}
+					else{
+						if(!argumentTypeModel.hasReason(argElements.nodeID)){
+							argumentTypeModel.reasonModels.push(panelListHash[argElements.nodeID]);
+						}
 					}
 				}
 			}
 			return true;
 		}
 		
-		protected function processTextbox(obj:Object, textboxHash:Dictionary):Boolean{
+		protected function processTextbox(textboxes:Vector.<TextboxValueObject>, textboxHash:Dictionary):Boolean{
 			var simpleStatement:SimpleStatementModel;
-			if(obj.deleted == "0"){
-				//fetch simpleStatementModel from Dictionary
-				simpleStatement = textboxHash[obj.ID];
-				//update text
-				simpleStatement.text = obj.text;
-				if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
-					simpleStatement.hasOwn = false;
+			for each(var obj:TextboxValueObject in textboxes){
+				if(!obj.deleted){
+					//fetch simpleStatementModel from Dictionary
+					simpleStatement = textboxHash[obj.ID];
+					//update text
+					simpleStatement.text = obj.text;
+					if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
+						simpleStatement.hasOwn = false;
+					}
 				}
 			}
 			return true;

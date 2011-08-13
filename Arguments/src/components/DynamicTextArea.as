@@ -11,7 +11,10 @@ package components
 	
 	import classes.UpdateEvent;
 	
+	import com.adobe.utils.StringUtil;
+	
 	import flash.events.Event;
+	import flash.ui.Keyboard;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.TextArea;
@@ -51,7 +54,19 @@ package components
 		}
 		
 		override public function set text(value:String):void{
-			super.text = value;
+			if(value != null){
+				//For Windows and Linux
+				if(value.charAt(value.length - 1) == '\n'){
+					value = value.substr(0,value.length - 1);
+				}
+				//For Mac and Windows(\r\n)
+				if(value.charAt(value.length - 1) == '\r'){
+					value = value.substr(0,value.length - 1);
+				}
+				super.text = value;
+			}else{
+				super.text = value;
+			}
 			invalidateSize();
 			invalidateDisplayList();
 		}

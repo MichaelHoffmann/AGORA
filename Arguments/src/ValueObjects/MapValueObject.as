@@ -5,7 +5,7 @@ package ValueObjects
 	public class MapValueObject
 	{
 		public var ID:int;
-		public var deleted:int;
+		public var deleted:Boolean;
 		public var title:String;
 		public var username:String;
 		public var timestamp:String;
@@ -27,28 +27,34 @@ package ValueObjects
 			
 			var obj:Object;
 			
-			if(mapObject.textboxes is ArrayCollection){
-				for each(obj in mapObject.textbox){
-					textboxes.push(new TextboxValueObject(obj));
+			if(mapObject.hasOwnProperty("textbox")){
+				if(mapObject.textbox is ArrayCollection){
+					for each(obj in mapObject.textbox){
+						textboxes.push(new TextboxValueObject(obj));
+					}
+				}else{
+					textboxes.push(new TextboxValueObject(mapObject.textbox));
 				}
-			}else{
-				textboxes.push(new TextboxValueObject(obj));
 			}
 			
-			if(mapObject.node is ArrayCollection){
-				for each(obj in mapObject.node){
-					nodeObjects.push(new NodeValueObject(obj));
+			if(mapObject.hasOwnProperty("node")){
+				if(mapObject.node is ArrayCollection){
+					for each(obj in mapObject.node){
+						nodeObjects.push(new NodeValueObject(obj));
+					}
+				}else{
+					nodeObjects.push(new NodeValueObject(mapObject.node));
 				}
-			}else{
-				nodeObject.push(new NodeValueObject(mapObject.node));
 			}
 			
-			if(mapObject.connection is ArrayCollection){
-				for each(obj in mapObject.connection){
-					connections.push(new ConnectionValueObject(obj));	
+			if(mapObject.hasOwnProperty("connection")){
+				if(mapObject.connection is ArrayCollection){
+					for each(obj in mapObject.connection){
+						connections.push(new ConnectionValueObject(obj));	
+					}
+				}else{
+					connections.push(new ConnectionValueObject(mapObject.connection));
 				}
-			}else{
-				connections.push(new ConnectionValueObject(mapObject.connection));
 			}
 		}
 	}

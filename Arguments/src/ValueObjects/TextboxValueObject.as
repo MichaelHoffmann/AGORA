@@ -9,6 +9,7 @@ package ValueObjects
 		{
 			//no value must be undefined
 			try{
+				trace(textboxObject);
 				ID = textboxObject.ID;
 				text = textboxObject.text;
 				deleted = textboxObject.deleted == 1? true:false;

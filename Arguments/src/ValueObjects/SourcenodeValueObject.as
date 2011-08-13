@@ -2,9 +2,10 @@ package ValueObjects
 {
 	public class SourcenodeValueObject
 	{
-		var ID:int;
-		var nodeID:int;
-		var deleted:Boolean;
+		public var ID:int;
+		public var nodeID:int;
+		public var deleted:Boolean;
+		
 		public function SourcenodeValueObject(sourcenode:Object)
 		{
 			try{

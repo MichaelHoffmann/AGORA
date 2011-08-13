@@ -305,6 +305,10 @@ package components
 			panelSkin = this.skin as PanelSkin;
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
+			
+			//Event Listeners that are appropriate only after the component is 
+			//created
+			addEventListener(KeyboardEvent.KEY_DOWN, keyEntered);
 		}
 		
 		protected function onDeleteBtnClicked(event:MouseEvent):void{
@@ -325,14 +329,13 @@ package components
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
-			trace("Statment " + model.statement.text);
 			state = DISPLAY;
 		}
 		
 		protected function keyEntered(event: KeyboardEvent):void
 		{
 			if(event.keyCode == Keyboard.ENTER)	
-			{
+			{				
 				if(state == EDIT){
 					state = DISPLAY;
 				}
@@ -387,7 +390,6 @@ package components
 		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
-			trace("value" + value);
 			if(!value){
 				if(model.firstClaim){
 					displayTxt.text = "[Enter your claim here]";
@@ -435,6 +437,7 @@ package components
 			
 			//TODO: Translate
 			displayTxt = new Text;
+			displayTxt.width = 150;
 			BindingUtils.bindSetter(setDisplayStatement, model, ["statement", "text"]);
 			this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
 			//Create a UIComponent for clicking and dragging
@@ -465,7 +468,7 @@ package components
 			negatedLbl = new Label;
 			negatedLbl.text = "It is not the case that";
 			negatedLbl.visible = false;
-			addElement(negatedLbl);
+			//addElement(negatedLbl);
 			
 			
 			group = new Group;
@@ -538,6 +541,7 @@ package components
 					}
 					for each(dta in inputs){
 						group.addElement(dta);
+						stage.focus = dta;
 					}	
 					btnG.addElement(doneHG);
 				}

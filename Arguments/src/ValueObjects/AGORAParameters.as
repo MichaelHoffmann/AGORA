@@ -37,7 +37,7 @@ package ValueObjects
 			MAP_LOADING_FAILED = "Error occured when loading map";
 			STATEMENT_TOGGLE_FAILED = "Error occurred when trying to toggle the type of statement";
 			NETWORK_ERROR = "Unable to reach server. Please check your Internet connection...";
-			
+
 			
 			gridWidth = 25;
 			reference = this;
