@@ -20,6 +20,7 @@
 	
 	*/
 	require 'configure.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
 	/**
 	* Function allowing user to register a new account.
