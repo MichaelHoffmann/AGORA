@@ -44,6 +44,9 @@ package Model
 		private var _timestamp:String;
 		private var _ID:int;
 		
+		private var _statementWidth:int;
+		
+		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
@@ -79,11 +82,22 @@ package Model
 			newPanels = new ArrayCollection;
 			newConnections = new ArrayCollection;
 			timestamp = "0";
+			statementWidth = 8;
 		}
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
 		
+		public function get statementWidth():int
+		{
+			return _statementWidth;
+		}
+
+		public function set statementWidth(value:int):void
+		{
+			_statementWidth = value;
+		}
+
 		public function get connectionListHash():Dictionary
 		{
 			return _connectionListHash;
@@ -438,7 +452,6 @@ package Model
 				else if(model is ArgumentTypeModel){
 					argumentTypeModel = ArgumentTypeModel(model);
 				}
-				
 				updatePositionsService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash, xml:xmlRequest});
 			}
 		}

@@ -29,8 +29,7 @@ package Model
 		private var _negated:Boolean;
 		private var _connectingString:String;
 		private var _complexStatement:Boolean;
-		private var _supportingArguments:Vector.<InferenceModel>;
-		private var _inference:InferenceModel;
+		private var _supportingArguments:Vector.<ArgumentTypeModel>;
 		private var _firstClaim:Boolean;
 		private var _statementType:String;
 		private var _ID:int;
@@ -57,7 +56,7 @@ package Model
 			toggleStatementTypeService.addEventListener(ResultEvent.RESULT, onToggleTypeServiceResult);
 			toggleStatementTypeService.addEventListener(FaultEvent.FAULT, onFault);
 		}
-
+		
 		
 		//--------------------Getters and Setters------------------//
 		
@@ -65,137 +64,127 @@ package Model
 		{
 			return _author;
 		}
-
+		
 		public function set author(value:String):void
 		{
 			_author = value;
 		}
-
+		
 		public function get ygrid():int
 		{
 			return _ygrid;
 		}
-
+		
 		public function set ygrid(value:int):void
 		{
 			_ygrid = value;
 		}
-
+		
 		public function get xgrid():int
 		{
 			return _xgrid;
 		}
-
+		
 		public function set xgrid(value:int):void
 		{
 			_xgrid = value;
 		}
-
+		
 		public function get nodeTextIDs():Vector.<int>
 		{
 			return _nodeTextIDs;
 		}
-
+		
 		public function set nodeTextIDs(value:Vector.<int>):void
 		{
 			_nodeTextIDs = value;
 		}
-
+		
 		public function get ID():int
 		{
 			return _ID;
 		}
-
+		
 		public function set ID(value:int):void
 		{
 			_ID = value;
 		}
-
+		
 		public function get statementType():String
 		{
 			return _statementType;
 		}
-
+		
 		public function set statementType(value:String):void
 		{
 			_statementType = value;
 		}
-
+		
 		public function get firstClaim():Boolean
 		{
 			return _firstClaim;
 		}
-
+		
 		public function set firstClaim(value:Boolean):void
 		{
 			_firstClaim = value;
 		}
-
-		public function get inference():InferenceModel
-		{
-			return _inference;
-		}
-
-		public function set inference(value:InferenceModel):void
-		{
-			_inference = value;
-		}
-
-		public function get supportingArguments():Vector.<InferenceModel>
+		
+		public function get supportingArguments():Vector.<ArgumentTypeModel>
 		{
 			return _supportingArguments;
 		}
-
-		public function set supportingArguments(value:Vector.<InferenceModel>):void
+		
+		public function set supportingArguments(value:Vector.<ArgumentTypeModel>):void
 		{
 			_supportingArguments = value;
 		}
-
+		
 		public function get complexStatement():Boolean
 		{
 			return _complexStatement;
 		}
-
+		
 		public function set complexStatement(value:Boolean):void
 		{
 			_complexStatement = value;
 		}
-
+		
 		public function get connectingString():String
 		{
 			return _connectingString;
 		}
-
+		
 		public function set connectingString(value:String):void
 		{
 			_connectingString = value;
 		}
-
+		
 		public function get negated():Boolean
 		{
 			return _negated;
 		}
-
+		
 		public function set negated(value:Boolean):void
 		{
 			_negated = value;
 		}
-
+		
 		public function get statements():Vector.<SimpleStatementModel>
 		{
 			return _statements;
 		}
-
+		
 		public function set statements(value:Vector.<SimpleStatementModel>):void
 		{
 			_statements = value;
 		}
-
+		
 		public function get statement():SimpleStatementModel
 		{
 			return _statement;
 		}
-
+		
 		public function set statement(value:SimpleStatementModel):void
 		{
 			_statement = value;
@@ -241,10 +230,39 @@ package Model
 		}
 		
 		//----------------- Add Supporting Argument -----------------------//
-		public function addSupportingArgument():void{
-						
+		public function addSupportingArgument(x:int):void{
+			var statementWidth:int = AGORAModel.getInstance().agoraMapModel.statementWidth;
+				
+			var addArgumentXML:XML =<map>
+										<textbox text=" " TID="1"/>
+									</map>;
+			
+			var reasonNodeXML:XML = <node TID= "4" Type="Standard" x={x} y={ygrid}>
+											<nodetext TID="5" textboxTID="1"/>
+									</node>;
+			
+			var inferenceXML:XML =  <node TID="6" Type="Inference" x={x + 15} y={ygrid}>
+											<nodetext TID="7" />
+											<nodetext TID="8" />
+									</node>;
+			
+			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid} />;
+			
+			
+			//determine the row in which the argument occurs
+			//check if this is the first argument, modify only if it's not
+			if(supportingArguments.length > 0){
+				
+			}
+			
+			
+			
+			addArgumentXML.appendChild(reasonNodeXML);
+			addArgumentXML.appendChild(inferenceXML);
+			addArgumentXML.appendChild(connectionXML);
+			
 		}
-
+		
 		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
 			
 		}
