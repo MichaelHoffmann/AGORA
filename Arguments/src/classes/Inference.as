@@ -1,7 +1,30 @@
 package classes
 {
-	import Model.InferenceModel;
 	
+	/**
+	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+	 reflection, critique, deliberation, and creativity in individual argument construction 
+	 and in collaborative or adversarial settings. 
+	 Copyright (C) 2011 Georgia Institute of Technology
+	 
+	 This program is free software: you can redistribute it and/or modify
+	 it under the terms of the GNU Affero General Public License as
+	 published by the Free Software Foundation, either version 3 of the
+	 License, or (at your option) any later version.
+	 
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU Affero General Public License for more details.
+	 
+	 You should have received a copy of the GNU Affero General Public License
+	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 
+	 */
+	
+	
+	import Model.InferenceModel;
+
 	import components.ArgSelector;
 	import components.HelpText;
 	
@@ -34,6 +57,9 @@ package classes
 	import spark.components.HGroup;
 	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
+	
+	import classes.Configure;
+	import classes.Language;
 	
 	public class Inference extends ArgumentPanel
 	{
@@ -105,7 +131,86 @@ package classes
 			_schemeSelected = value;
 			setRuleState();
 		}
+<<<<<<< HEAD
 				
+=======
+		
+		public function get hasMultipleReasons():Boolean
+		{
+			return _hasMultipleReasons;
+		}
+		
+		public function set hasMultipleReasons(value:Boolean):void
+		{
+			_hasMultipleReasons = value;
+			if(myArg != null)
+			{
+				if(hasMultipleReasons)	
+				{
+					myschemeSel.typeSelector.dataProvider = myArg._expLangTypes;
+				}
+				else
+				{
+					myschemeSel.typeSelector.dataProvider = myArg._langTypes;
+				}
+			}
+			setRuleState();
+		}
+		
+		public function get typed():Boolean
+		{
+			return _typed;
+		}
+		
+		public function set typed(value:Boolean):void
+		{
+			_typed = value;
+			changePossibleSchemes();
+		}
+		
+		public function reasonDeleted():void
+		{
+			if(reasons.length > 1)
+			{
+				hasMultipleReasons = true;
+			}
+			else
+			{
+				hasMultipleReasons = false;
+			}
+			if(myArg != null)
+			{
+				myArg.createLinks();
+			}
+		}
+		
+		public function reasonAdded(event:Event):void
+		{
+			if(reasons.length > 1)
+			{
+				hasMultipleReasons = true;
+			}
+			else
+			{
+				hasMultipleReasons = false;
+			}
+			if(myArg != null)
+			{
+				myArg.createLinks();
+			}
+			if(claim.inference == null)
+			{
+				reasons[reasons.length - 1].makeUnEditable();
+				reasons[reasons.length - 1].displayTxt.text = Language.lookup("EnterReason");
+			}
+			else
+			{
+				reasons[reasons.length - 1].makeEditable();
+			}
+			claim.removeEventListener(Inference.REASON_ADDED, reasonAdded);
+		}
+		
+>>>>>>> Joshua/master
 		public function setRuleState():void
 		{
 			//seting type makes sense only after a particular scheme has been chosen
@@ -152,7 +257,142 @@ package classes
 		}
 		
 		
+<<<<<<< HEAD
 		
+=======
+		protected function reasonInserted(event:Event):void{
+			//getting response XML from insert.php
+			var responseXML:XML = XML(event.target.data);
+			//adding it to insert node
+			var xml:XML = <insert></insert>;
+			xml.appendChild(responseXML);
+			
+			//requesting load_map.php with new timestamp
+			var urlRequest:URLRequest = new URLRequest;
+			urlRequest.url = Configure.lookup("baseURL") + "load_map.php";
+			var timestamp:String;
+			
+			if(parentMap.timestamp == null){
+				timestamp = "0";
+			}else{
+				timestamp = parentMap.timestamp;
+			}
+			
+			var urlRequestVars:URLVariables = new URLVariables("map_id="+parentMap.ID + "&" + "timestamp=" + timestamp);
+			urlRequest.data = urlRequestVars;
+			urlRequest.method = URLRequestMethod.GET;
+			var urlLoader:URLLoader = new URLLoader;
+			urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
+				var loadResponseVariables:XML = XML(event.target.data);
+				var loadXML:XML = <load></load>;
+				loadXML.appendChild(loadResponseVariables);
+				var insertLoad:XML = <xmldata></xmldata>;
+				insertLoad.appendChild(xml);
+				insertLoad.appendChild(loadXML);
+				addReasonToMap(insertLoad);
+			});
+			urlLoader.load(urlRequest);
+		}
+		
+		public function addReasonToMap(responseXML:XML):void{
+			//var responseXML:XML = XML(event.target.data);
+			//trace(responseXML);
+			//separate XML for Argument Panel
+			var reasonXML:XML = new XML("<map></map>");
+			var textboxList:XMLList = responseXML.insert.map.textbox;
+			reasonXML.appendChild(textboxList);
+			var firstNodeText:XML = responseXML.insert.map.node[0];
+			reasonXML.appendChild(firstNodeText);
+			
+			
+			var tmp:ArgumentPanel = new ArgumentPanel();
+			tmp._initXML = reasonXML;
+			for each( var lXML:XML in responseXML.load.map.node){
+				if( lXML.@ID == responseXML.insert.map.node[0].@ID){
+					tmp.gridX = lXML.@x;
+					tmp.gridY = lXML.@y;
+				}
+			}
+			
+			parentMap.layoutManager.registerPanel(tmp);
+			parentMap.addElement(tmp);
+			tmp.addEventListener(FlexEvent.CREATION_COMPLETE, goToReason);
+			
+			try{
+				reasons.push(tmp);
+				//connectionIDs.push(connections++);
+				tmp.inference = this;
+				//create an invisible box in the inference rule
+				var tmpInput:DynamicTextArea = new DynamicTextArea();
+				//visual
+				parentMap.addElement(tmpInput);
+				tmpInput.visible = false;
+				
+				//logical
+				var inferenceRule:Inference = this;
+				tmpInput.panelReference = inferenceRule;
+				inferenceRule.input.push(tmpInput);		
+				
+				//set the id
+				tmpInput.id = tmp.input1.id;
+				
+				//binding
+				//tmpInput.forwardList.push(inferenceRule.input1);	//invisible box input forwards to the visible box input1 in inference
+				//tmp.input1.forwardList.push(tmpInput);
+				//this new reason's input1 text forwards to that invisible box
+				dispatchEvent(new Event(REASON_ADDED,true,false));
+				
+			}catch (e:Error)
+			{
+				Alert.show(e.toString());
+			}
+		}
+		
+		public function addReason():void
+		{
+			var xml:XML = parentMap.getAddReason(this);
+			var urlRequest:URLRequest = new URLRequest;
+			urlRequest.url = Configure.lookup("baseURL") + "insert.php";
+			var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml);
+			urlRequest.data = urlRequestVars;
+			urlRequest.method = URLRequestMethod.GET;
+			var urlLoader:URLLoader = new URLLoader;
+			urlLoader.addEventListener(Event.COMPLETE, reasonInserted);
+			urlLoader.load(urlRequest);
+		}
+		
+		public function addReasonHandler(event:MouseEvent):void
+		{
+			
+			var menu:Menu = Menu.createMenu(null, addReasonMenuData,false);
+			menu.labelField = "@label";
+			menu.addEventListener(MenuEvent.ITEM_CLICK, function (event:MenuEvent):void {
+				if(schemeSelected != true)
+				{
+					Alert.show("Complete the enabler before adding further reasons");
+					return;
+				}
+				if(myArg._isLanguageExp || (myArg is ModusTollens && reasonAddable == true && myschemeSel.selectedType == myArg._expLangTypes[0]))
+				{
+					addReason();
+				}
+				else
+				{	
+					if(myArg is ModusTollens && myschemeSel.selectedType == myArg._expLangTypes[0])
+					{
+						Alert.show("Select the language type that determines how the reasons are combined: 'or' or 'and'");
+						reasonAddable = true;	
+					}
+					else
+					{
+						Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
+					}
+				}
+			});
+			var globalPosition:Point = parentMap.getGlobalCoordinates(new Point(argType.x,argType.y + argType.height));
+			menu.show(globalPosition.x,globalPosition.y);
+		}
+>>>>>>> Joshua/master
 		
 		override public function makeUnEditable():void
 		{
@@ -160,8 +400,53 @@ package classes
 		override public function makeEditable():void
 		{
 		}
+<<<<<<< HEAD
 		*/
 		/*
+=======
+		
+		override public function onArgumentPanelCreate(e:FlexEvent):void
+		{
+			super.onArgumentPanelCreate(e);
+			doneBtn.removeEventListener(MouseEvent.CLICK,makeUnEditable);
+			displayTxt.removeEventListener(MouseEvent.CLICK,lblClicked);
+			displayTxt.visible = true;
+			displayTxt.toolTip = Language.lookup("Enabler");
+			bottomHG.visible = true;
+			doneHG.visible = false;
+			stmtTypeLbl.removeEventListener(MouseEvent.CLICK,toggle);
+			multiStatement = true;
+			group.removeElement(msVGroup);
+			setIDs();
+		}
+		
+		public function chooseEnablerText():void
+		{
+			if(myschemeSel.scheme != null){
+				setRuleState();
+				if(myschemeSel.scheme.length == 0)
+				{
+					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
+					return;
+				}
+			}
+			
+			if((myArg is DisjunctiveSyllogism || myArg is NotAllSyllogism) && typed)
+			{
+				return;
+			}
+			myschemeSel.visible=true;
+			parentMap.setChildIndex(myschemeSel,parentMap.numChildren - 1);
+			myschemeSel.x = this.gridY*parentMap.layoutManager.uwidth + this.width;
+			myschemeSel.y = this.gridX*parentMap.layoutManager.uwidth;
+			myschemeSel.depth = parentMap.parent.numChildren;
+			selectedBool = true;
+			parentMap.helpText.visible = true;
+			parentMap.helpText.x = myschemeSel.x + myschemeSel.width + 20;
+			parentMap.helpText.y = myschemeSel.y - 200;
+		}
+		
+>>>>>>> Joshua/master
 		public function changeHandler(e:MouseEvent):void
 		{
 			chooseEnablerText();

@@ -1,4 +1,944 @@
 ﻿<Translations>
+	<!--INDEX-->
+	<!--There are comments throughout this document which describe the various kinds of text which has been translated.
+	Those kinds are as follows:
+		--BUTTONS, LABELS, AND SINGLE WORDS
+		--SHORT DESCRIPTIONS
+		--NAMES OF ARGUMENTS
+		--ARGUMENT DESCRIPTIONS
+		--HELP TEXT
+		--WALLS OF TEXT
+		--ARGUMENT PIECES
+		--ADD CONTINUATIONS
+		--CONDITIONAL PIECES
+		--APPLY UNDER THEREFORE
+	Searching for these will take you directly to that section.
+	-->
+	
+	
+	<!--BUTTONS, LABELS, AND SINGLE WORDS-->
+	<Affiliation>
+		<EN-US text="Affiliation/Location (optional)"/>
+		<RUS text="Присоединение/Местоположение (опционально)"/>
+		<GER text="Institution/Ort (optional)"/>
+	</Affiliation>
+	
+	<Add>
+		<EN-US text="Add "/>
+		<RUS text="добавьте "/>
+		<GER text="Füge hinzu "/>
+	</Add>
+
+	<apply>
+		<EN-US text="apply "/>
+		<RUS text="примените "/>
+		<GER text="wende an "/>
+	</apply>
+	
+	<Arg>
+		<EN-US text="argument"/>
+		<RUS text="аргумент"/>
+		<GER text="Argument"/>
+	</Arg>
+	
+		
+	<ArgScheme>
+		<EN-US text="ArgScheme"/>
+		<RUS text="ArgScheme"/>
+		<GER text="ArgSchema"/>
+	</ArgScheme>
+	
+	<AU>
+		<EN-US text="AU"/>
+		<RUS text="AU"/>
+		<GER text="AU"/>
+	</AU>
+	
+	<Back>
+		<EN-US text="Back"/>
+		<RUS text="Назад"/>
+		<GER text="Zurück"/>
+	</Back>
+	
+	<CAPTCHA>
+		<EN-US text="Enter CAPTCHA"/>
+		<RUS text="Введите  CAPTCHA"/>
+		<GER text="Gib die folgenden Zeichen ein"/>
+	</CAPTCHA>
+	
+	<Claim>
+		<EN-US text="What is your claim? "/>
+		<RUS text="Каково Ваше заявление? "/>
+		<GER text="Was ist Deine Behauptung? "/>
+	</Claim>
+	
+	<ClaimReminder>
+		<EN-US text="Keep in mind that a claim can be descriptive (&quot;it is the case that ...&quot;) or normative (e.g., &quot;we should do x&quot;)"/>
+		<RUS text="Имейте в виду, что заявление может быть описательным (&quot;оно имеет место, что ...&quot;) или нормативным (например, &quot;мы должны сделать x&quot;),"/>
+		<GER text="Vergiss nicht, dass es deskriptive („es ist der Fall, dass ...“) und normative (z.B. „wir sollten x tun“) Behauptungen gibt."/>
+	</ClaimReminder>
+
+	<Comments>
+		<EN-US text="comments"/>
+		<RUS text="комментарии"/>
+		<GER text="Kommentar zu"/>
+	</Comments>
+
+	<Defines>
+		<EN-US text="defines"/>
+		<RUS text="определяет"/>
+		<GER text="definiert"/>
+	</Defines>
+	
+	<Delete>
+		<EN-US text="Delete"/>
+		<RUS text="Удалить"/>
+		<GER text="Lösche"/>
+	</Delete>
+
+	<Done>
+		<EN-US text="Done"/>
+		<RUS text="Сделанный"/>
+		<GER text="Fertig"/>
+	</Done>
+	
+	<Email>
+		<EN-US text="E-mail Address"/>
+		<RUS text="Адрес электронной почты"/>
+		<GER text="E-mail Adresse"/>
+	</Email>
+	
+	<Equivalent>
+		<EN-US text="equivalent"/>
+		<RUS text="эквивалентный"/>
+		<GER text="äquivalent"/>
+	</Equivalent>
+	
+	<FirstName>
+		<EN-US text="First Name"/>
+		<RUS text="Имя"/>
+		<GER text="Vorname"/>
+	</FirstName>
+
+	<FriendlyAmend>
+		<EN-US text="friendly amendment"/>
+		<RUS text="дружественная поправка"/>
+		<GER text="Verbesserungsvorschlag"/>
+	</FriendlyAmend>
+		
+	<IfThen>
+		<EN-US text="if-then"/>
+		<RUS text="если, то"/>
+		<GER text="wenn-dann"/>
+	</IfThen>
+
+	<Includes>
+		<EN-US text="includes"/>
+		<RUS text="включает"/>
+		<GER text="enthält"/>
+	</Includes>
+	
+	<LastName>
+		<EN-US text="Last Name"/>
+		<RUS text="Фамилия"/>
+		<GER text="Nachname"/>
+	</LastName>
+	
+	<Login>
+		<EN-US text="Login"/>
+		<RUS text="Логин"/>
+		<GER text="Login"/>
+	</Login>	
+	
+	<Negates>
+		<EN-US text="negates"/>
+		<RUS text="отрицает"/>
+		<GER text="negiert"/>
+	</Negates>
+	
+	<Particular>
+		<EN-US text="Particular Statement"/>
+		<RUS text="особое утверждение"/>
+		<GER text="Einzelaussage"/>
+	</Particular>
+	
+	<Password>
+		<EN-US text="Password"/>
+		<RUS text="Пароль"/>
+		<GER text="Passwort"/>
+	</Password>
+	
+	<Questions>
+		<EN-US text="questions"/>
+		<RUS text="вопросы"/>
+		<GER text="kritisiert"/>
+	</Questions>
+	
+	<Register>
+		<EN-US text="Register"/>
+		<RUS text="Регистровать"/>
+		<GER text="Registriere"/>
+	</Register>
+
+	<Resource>
+		<EN-US text="Resource file:"/>
+		<RUS text="Файл ресурса:"/>
+		<GER text="Datei:"/>
+	</Resource>
+
+	<SeeAlso>
+		<EN-US text="See also ... "/>
+		<RUS text="См. также... "/>
+		<GER text="Siehe auch ..."/>
+	</SeeAlso>
+	
+	<Submit>
+		<EN-US text="Submit"/>
+		<RUS text="Представить"/>
+		<GER text="Sende"/>
+	</Submit>
+	
+	<Support>
+		<EN-US text="support"/>
+		<RUS text="поддержка"/>
+		<GER text="Unterstützung"/>
+	</Support>
+	
+	<Supports>
+		<EN-US text="supports"/>
+		<RUS text="поддерживает"/>
+		<GER text="unterstützt"/>
+	</Supports>
+	
+	<Universal>
+		<EN-US text="Universal Statement"/>
+		<RUS text="универсальное утверждение"/>
+		<GER text="Universelle Aussage"/>
+	</Universal>
+
+	<Upload>
+		<EN-US text="upload!"/>
+		<RUS text="Закачка на сайт!"/>
+		<GER text="Lade hoch!"/>
+	</Upload>
+	
+	<URL>
+		<EN-US text="URL (Optional)"/>
+		<RUS text="URL(опционально)"/>
+		<GER text="URL (optional)"/>
+	</URL>
+	
+	<use>
+		<EN-US text="use as "/>
+		<RUS text="используйте в качестве "/>
+		<GER text="verwende als "/>
+	</use>
+	
+	<Username>
+		<EN-US text="Username"/>
+		<RUS text="ьзователя"/>
+		<GER text="Benutzername"/>
+	</Username>
+	
+	
+	<!--SHORT DESCRIPTIONS-->
+	
+	<AddURL>
+		<EN-US text="... add URL"/>
+		<RUS text="... добавьте URL"/>
+		<GER text="... füge URL hinzu"/>
+	</AddURL>
+	
+	<AGORAPass>
+		<EN-US text="AGORA password"/>
+		<RUS text="Пароль АГОРЫ"/>
+		<GER text="AGORA Passwort"/>
+	</AGORAPass>
+
+	<AnotherReason>
+		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
+		<RUS text="другую причину для этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
+		<GER text="weiteren Grund für dieses Argument hinzufügen, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt"/>
+	</AnotherReason>
+
+	<ArgMapOn>
+		<EN-US text="... the argument map on"/>
+		<RUS text="... карта аргумента на"/>
+		<GER text="... die Argumentation zu"/>
+	</ArgMapOn>
+	
+	<ArgSchemeChange>
+		<EN-US text="Click to change your argument scheme"/>
+		<RUS text="Щелкните, чтобы изменить Вашу схему аргумента"/>
+		<GER text="Klicke hier, um das Argument-Schema zu wechseln"/>
+	</ArgSchemeChange>
+	
+	<ArgSchemeSelect>
+		<EN-US text="Select an argument scheme:"/>
+		<RUS text="Выберите схему аргумента:"/>
+		<GER text="Wähle ein Argument-Schema aus:"/>
+	</ArgSchemeSelect>
+	
+	<ArrowDirChange>
+		<EN-US text="change the arrow direction"/>
+		<RUS text="измените направление стрелки"/>
+		<GER text="verändere die Richtung des Pfeils"/>
+	</ArrowDirChange>
+	
+	<AUInfo>
+		<EN-US text="Click to see author information"/>
+		<RUS text="Щелкните, чтобы видеть информацию об авторе"/>
+		<GER text="Klicke hier, um Informationen über den Autor zu sehen"/>
+	</AUInfo>
+
+	<ChangeInfo>
+		<EN-US text="Change Personal Information"/>
+		<RUS text="Измените Личную Информацию"/>
+		<GER text="Ändere deine persönlichen Daten"/>
+	</ChangeInfo>
+	
+	<ChooseFile>
+		<EN-US text="choose file"/>
+		<RUS text="выберите файл"/>
+		<GER text="Wähle eine Datei aus"/>
+	</ChooseFile>
+		
+	<ClaimInNewWithLink>
+		<EN-US text="claim in a new map, and create a link between this map and the new one"/>
+		<RUS text="заявление новой карты, и создает связь между этой картой и новой"/>
+		<GER text="Behauptung in einer neu zu beginnenden Argumentation und knüpfe eine Verbindung zwischen dieser Argumentation und der neuen."/>
+	</ClaimInNewWithLink>
+	
+	<ClaimInNewWOLink>
+		<EN-US text="claim in a new map without creating a link"/>
+		<RUS text="заявление новой карты, не создавая связь"/>
+		<GER text="Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen"/>
+	</ClaimInNewWOLink>
+	
+	<ConnectionToReason>
+		<EN-US text="What kind of connection do you want to establish to the reason on the right?"/>
+		<RUS text="Какую связь Вы хотите установить к причине справа?"/>
+		<GER text="Welche Art von Verknüpfung willst Du zu dem Grund auf der rechten Seite erstellen? "/>
+	</ConnectionToReason>
+
+	<ConnectViaAndOr>
+		<EN-US text="Connect your reasons by &quot;and&quot; | &quot;or&quot;"/>
+		<RUS text="Соедините свои причины с помощью  &quot;и&quot; | &quot;или&quot;"/>
+		<GER text="Verküpfe deinen Grund durch &quot;und&quot; | &quot;oder&quot;"/>
+	</ConnectViaAndOr>
+	
+	<Construct>
+		<EN-US text="construct argument"/>
+		<RUS text="конструктивный  аргумент"/>
+		<GER text="konstruiere das Argument"/>
+	</Construct>
+
+	<CopyToClip>
+		<EN-US text="or copy into the clipboard "/>
+		<RUS text="или скопировать в клипборд(буфер)"/>
+		<GER text="oder kopiere in den Zwischenspeicher"/>
+	</CopyToClip>
+
+	<CounterEx>
+		<EN-US text="Enter your counterexample in form of a statement"/>
+		<RUS text="Введите Ваш контрпример в форме утверждения"/>
+		<GER text="Gib Deinen Einwand in Form einer Aussage ein"/>
+	</CounterEx>	
+	
+	<DefeatsByCounterArg>
+		<EN-US text="defeats by counter argument"/>
+		<RUS text="опровергает встречным аргументом"/>
+		<GER text="widerlegt durch Gegenargument"/>
+	</DefeatsByCounterArg>
+	
+	<DefeatsByCounterEx>
+		<EN-US text="defeats by counter example"/>
+		<RUS text="опровергает встречным примером"/>
+		<GER text="widerlegt durch Gegenbeispiel"/>
+	</DefeatsByCounterEx>
+	
+	<DivideToSubclaims>
+		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case"/>
+		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая"/>
+		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können"/>
+	</DivideToSubclaims>
+	
+	<EnterClaim>
+		<EN-US text="Enter your claim"/>
+		<RUS text="Введите свое заявление"/>
+		<GER text="Gib Deine Behauptung ein"/>
+	</EnterClaim>
+
+	<EnterReason>
+		<EN-US text="Enter your reason"/>
+		<RUS text="Введите свою причину"/>
+		<GER text="Gib deinen Grund ein"/>
+	</EnterReason>
+		
+	<EnterQ>
+		<EN-US text="Enter your question"/>
+		<RUS text="Введите свой вопрос"/>
+		<GER text="Gib deine Frage ein"/>
+	</EnterQ>
+
+	<EnterURL>
+		<EN-US text="Enter URL"/>
+		<RUS text="Введите  URL"/>
+		<GER text="Gebe URL ein"/>
+	</EnterURL>
+
+	<ForgotPass>
+		<EN-US text="Forgot your password?"/>
+		<RUS text="Забыл Ваш пароль?"/>
+		<GER text="Passwort vergessen?"/>
+	</ForgotPass>
+	
+	<FourOptions>
+		<EN-US text="Click to see four options to overwrite parts of the automatically created structure of your argument"/>
+		<RUS text="Щелкните, чтобы видеть четыре опции, чтобы перезаписать части автоматически создаваемой структуры Вашего аргумента"/>
+		<GER text="Klicke hier, um vier Möglichkeiten zu sehen, Teile der automatisch generierten Struktur eines Argumentes zu überschreiben "/>
+	</FourOptions>
+	
+	<FriendlyAmend>
+		<EN-US text="Enter a suggestion to improve the formulation of this statement"/>
+		<RUS text="Введите предложение, чтобы улучшить  формулировку этого заявления"/>
+		<GER text="Gib einen Vorschlag zur Verbesserung dieser Behauptung ein"/>
+	</FriendlyAmend>
+		
+	<FurtherReason>
+		<EN-US text="Enter a further reason"/>
+		<RUS text="Введите дальнейшую причину"/>
+		<GER text="Gib einen weiteren Grund ein"/>
+	</FurtherReason>	
+	
+	<GenPass>
+		<EN-US text="AGORA will generate a new password for you. This action is irreversible."/>
+		<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо."/>
+		<GER text="AGORA wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden."/>
+	</GenPass>
+
+	<IncompleteInfo>
+		<EN-US text="Incomplete. Please provide all necessary information"/>
+		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
+		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle notwendigen Felder aus."/>
+	</IncompleteInfo>
+	
+	<IncompleteProjInfo>
+		<EN-US text="Incomplete. Please provide all necessary information."/>
+		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
+		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle Felder aus."/>
+	</IncompleteProjInfo>
+
+	<InterArgScheme>
+		<EN-US text="Select an argument scheme for the new argument on the right:"/>
+		<RUS text="Выберите схему аргумента для нового аргумента справа:"/>
+		<GER text="Wähle für dein neues Argument auf der rechten Seite ein Argument-Schema aus:"/>
+	</InterArgScheme>
+	
+	<LeadsToQ>
+		<EN-US text="leads to the question"/>
+		<RUS text="приводит к вопросу"/>
+		<GER text="führt zu der Frage"/>
+	</LeadsToQ>
+
+	<LinkToMap>
+		<EN-US text="create a link to an existing map"/>
+		<RUS text="создайте связь с существующей картой"/>
+		<GER text="Erstelle eine Verknüpfung zu einer bestehenden Argumentation."/>
+	</LinkToMap>
+	
+	<ListMaps>
+		<EN-US text="List of Maps"/>
+		<RUS text="список существующих карт"/>
+		<GER text="Liste von Argumentationen"/>
+	</ListMaps>
+	
+	<MyMaps>
+		<EN-US text="My maps and those in which I participated"/>
+		<RUS text="Мои карты и те, в которых я участвовал(а)"/>
+		<GER text="Meine eigenen Argumente und solche, an denen ich mitgewirkt habe"/>
+	</MyMaps>
+	
+	<NewMap>
+		<EN-US text="Create a new argument map"/>
+		<RUS text="Создайте новую карту аргумента"/>
+		<GER text="Beginne eine neue Argumentation"/>
+	</NewMap>
+	
+	<NewProject>
+		<EN-US text="Create a password-protected project space"/>
+		<RUS text="Создайте защищённое паролем проектное пространство"/>
+		<GER text="Eröffne einen Passwort-geschützten Projektbereich"/>
+	</NewProject>
+	
+	<NewReason>
+		<EN-US text="Enter your new reason"/>
+		<RUS text="Введите свою новую причину"/>
+		<GER text="Gib deinen neuen Grund ein"/>
+	</NewReason>
+
+	<NewUsername>
+		<EN-US text="Desired Username"/>
+		<RUS text="Желаемое Имя пользователя"/>
+		<GER text="Erwünschter Benutzername"/>
+	</NewUsername>
+
+	<Objection>
+		<EN-US text="Enter your objection"/>
+		<RUS text="Введите Ваше возражение"/>
+		<GER text="Gib deinen Einwand ein"/>
+	</Objection>
+	
+	<OrStartWithScheme>
+		<EN-US text="... or do you want to start with a certain argument scheme?"/>
+		<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/>
+		<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen?"/>
+	</OrStartWithScheme>
+	
+	<PasswordProtected>
+		<EN-US text="This project is password protected. Do you want to sign up for this project?"/>
+		<RUS text="Этот проект  защищен паролем. Вы хотите подписаться на этот проект?"/>
+		<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
+	</PasswordProtected>
+	
+	<PassRepeat>
+		<EN-US text="Repeat your password"/>
+		<RUS text="Повторите свой пароль"/>
+		<GER text="Wiederhole dein Passwort"/>
+	</PassRepeat>
+	
+	<Paste>
+		<EN-US text="How do you want to connect this pasted element? As ... "/>
+		<RUS text="Как Вы хотите присоединить этот вставленный элемент? Как... "/>
+		<GER text="Wie willst Du das zu kopierende Element mit dieser Textbox verknüpfen? Als ..."/>
+	</Paste>
+	
+	<PasteArgument>
+		<EN-US text="Paste an argumentation or parts of it from your clipboard"/>
+		<RUS text="Присоедините аргументацию или ее части из Вашего клипборда"/>
+		<GER text="Kopiere eine Argumentation oder Teile von ihr hier hin"/>
+	</PasteArgument>
+	
+	<ProjName>
+		<EN-US text="Desired Project name"/>
+		<RUS text="Желаемое Название проекта"/>
+		<GER text="Erwünschter Projekt-Name"/>
+	</ProjName>
+	
+	<ProjNameTaken>
+		<EN-US text="This Project name is already taken! Try another Project name."/>
+		<RUS text="Это Имя проекта уже взято! Попробуйте другое Имя проекта"/>
+		<GER text="Dieser Projekt-Name ist bereits vergeben! Versuche einen anderen."/>
+	</ProjNameTaken>
+	
+	<ProjPass>
+		<EN-US text="Project password "/>
+		<RUS text="Пароль  Проекта"/>
+		<GER text="Projekt-Passwort"/>
+	</ProjPass>
+	
+	<Question>
+		<EN-US text="Enter a statement that questions this statement"/>
+		<RUS text="Введите утверждение, которое оспаривает это утверждение"/>
+		<GER text="Gib eine Aussage ein, welche diese Aussage in Frage stellt"/>
+	</Question>
+
+	<Reason>
+		<EN-US text="What is your reason?"/>
+		<RUS text="Какова Ваша причина?"/>
+		<GER text="Was ist dein Grund?"/>
+	</Reason>
+	
+	<ReasonsAffirmed>
+		<EN-US text="with affirmed reasons"/>
+		<RUS text="с подтвержденными причинами"/>
+		<GER text="mit affirmatierten Gründen"/>
+	</ReasonsAffirmed>
+	
+	<ReasonsNegated>
+		<EN-US text="with negated reasons"/>
+		<RUS text="с инвертированными причинами"/>
+		<GER text="mit negierten Gründen"/>
+	</ReasonsNegated>
+	
+	<RegisterAsNew>
+		<EN-US text="Register as new user"/>
+		<RUS text="Регистровать как нового пользователя"/>
+		<GER text="Registriere dich als neuer Benutzer"/>
+	</RegisterAsNew>
+
+	<SeeObjection>
+		<EN-US text="See the following objection against this claim in another argument map"/>
+		<RUS text="См.  следующее возражение против этого заявления в другой карте аргумента"/>
+		<GER text="Siehe den folgenden Einwand, der in einem anderen Argument verteidigt wird"/>
+	</SeeObjection>
+
+	<SelectLanguageForm>
+		<EN-US text="Select the form you need from the list on your right to complete your argument"/>
+		<RUS text="Select the form you need from the list on your right to complete your argument"/>
+		<GER text="Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen."/>
+	</SelectLanguageForm>
+
+	
+	<SelfDefConn>
+		<EN-US text="self-defined connection"/>
+		<RUS text="самоопределенная связь"/>
+		<GER text="Selbst-definierte Verknüpfung "/>
+	</SelfDefConn>
+
+	<Statement1>
+		<EN-US text="Enter first statement"/>
+		<RUS text="Введите первое заявление"/>
+		<GER text="Gib die erste Behauptung ein"/>
+	</Statement1>
+	
+	<Statement2>
+		<EN-US text="Enter second statement"/>
+		<RUS text="Введите второе заявление"/>
+		<GER text="Gib die zweite Behauptung ein"/>
+	</Statement2>
+	
+	<StatementMore>
+		<EN-US text="Enter more statements"/>
+		<RUS text="Введите большее количество заявлений"/>
+		<GER text="Gib weitere Teilbehauptungen ein"/>
+	</StatementMore>
+	
+	<Subclaim>
+		<EN-US text="Enter sub-claim"/>
+		<RUS text="Введите подзаявление"/>
+		<GER text="Gib eine Teilbehauptung ein"/>
+	</Subclaim>
+	
+	<Subclaim1>
+		<EN-US text="Enter first sub-claim"/>
+		<RUS text="Введите  первое подзаявление"/>
+		<GER text="Gib die erste Teilbehauptung ein"/>
+	</Subclaim1>
+	
+	<Subclaim2>
+		<EN-US text="Enter second sub-claim"/>
+		<RUS text="Введите второе подзаявление"/>
+		<GER text="Gib die zweite Teilbehauptung ein"/>
+	</Subclaim2>
+	
+	<UploadRes>
+		<EN-US text="... upload resources"/>
+		<RUS text="... ресурсы закачки"/>
+		<GER text="... lade Materialien hoch"/>
+	</UploadRes>
+	
+	<UseArgScheme>
+		<EN-US text="Click here if you want to use a specific argument scheme"/>
+		<RUS text="Щелкните здесь, если Вы хотите использовать определенную схему аргумента"/>
+		<GER text="Klicke hier wenn Du ein bestimmtes Argument-Schema verwenden willst"/>
+	</UseArgScheme>
+	
+	<UserList>
+		<EN-US text="Select users from the AGORA user list"/>
+		<RUS text="Выберите пользователей из пользовательского списка АГОРЫ"/>
+		<GER text="Wähle Benutzer von der AGORA Benutzer-Liste aus"/>
+	</UserList>
+	
+	<UsernameTaken>
+		<EN-US text="This username is already taken! Try another username."/>
+		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
+		<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
+	</UsernameTaken>
+	
+	<WhatIsMainClaim>
+		<EN-US text="What is the main claim of your argument?"/>
+		<RUS text="Каково главное заявление Вашего аргумента?"/>
+		<GER text="Was ist die zentrale Behauptung deines Argumentes?"/>
+	</WhatIsMainClaim>
+	
+	<!--NAMES OF ARGUMENTS-->
+			
+	<ConSyl>
+		<EN-US text="conditional syllogism"/>
+		<RUS text="условный силлогизм"/>
+		<GER text="Hypothetischer Syllogismus"/>
+	</ConSyl>
+	
+	<ConsDil>
+		<EN-US text="constructive dilemma"/>
+		<RUS text="конструктивная дилемма"/>
+		<GER text="Konstruktives Dilemma"/>
+	</ConsDil>
+	
+	<ConsDilDisjClaim>
+		<EN-US text=" with a disjunctive statement as claim"/>
+		<RUS text=" с дизъюнктивым утверждением как заявлением"/>
+		<GER text=" mit einer disjunktiven Aussage als Folge"/>
+	</ConsDilDisjClaim>
+	
+	<ConsDilOneProp>
+		<EN-US text=" with one proposition as claim"/>
+		<RUS text=" с одним суждением как заявлением"/>
+		<GER text=" mit allein einem Satz als Folge"/>
+	</ConsDilOneProp>
+	
+	
+	<DisjunctSyl>
+		<EN-US text="disjunctive syllogism"/>
+		<RUS text="дизъюнктивный силлогизм"/>
+		<GER text="Disjunktiver Syllogismus"/>
+	</DisjunctSyl>
+	
+	<EitherWay>
+		<EN-US text="either way"/>
+		<RUS text="either way (untranslated)"/> <!--TODO: This should be translated-->
+		<GER text="Wie-auch-immer"/>
+	</EitherWay>
+	
+	<EQ>
+		<EN-US text="Equivalence"/>
+		<RUS text="эквивалентность"/>
+		<GER text="Äquivalenz"/>
+	</EQ>	
+
+	<EQaffirmed>
+		<EN-US text=" with affirmed reason(s) and claim"/>
+		<RUS text=" с подтвержденной причиной (ами) и заявлением"/>
+		<GER text=" mit affirmiertem Grund (Gründen) und Folge"/>
+	</EQaffirmed>
+
+	<EQnegated>
+		<EN-US text=" with negated reason(s) and claim "/>
+		<RUS text=" с инвертированной причиной (ами) и заявлением"/>
+		<GER text=" mit Grund und Folge negiert"/>
+	</EQnegated>
+	
+	<Equivalence>
+		<EN-US text="equivalence"/>
+		<RUS text="эквивалентность"/>
+		<GER text="Equivalenz"/>
+	</Equivalence>
+	
+	<MP>
+		<EN-US text="Modus Ponens"/>
+		<RUS text="Modus Ponens"/>
+		<GER text="Modus Ponens"/>
+	</MP>
+	
+	<ModusPonens>
+		<EN-US text="modus ponens"/>
+		<RUS text="modus ponens"/>
+		<GER text="modus ponens"/>
+	</ModusPonens>
+	
+	<ModusTollens>
+		<EN-US text="modus tollens"/>
+		<RUS text="modus tollens"/>
+		<GER text="modus tollens"/>
+	</ModusTollens>
+
+	<NotAllSyl>
+		<EN-US text="not-all syllogism"/>
+		<RUS text="«не – весь» силлогизм"/>
+		<GER text="Nicht-alle Syllogism"/>
+	</NotAllSyl>
+
+	<SpecifyConn>
+		<EN-US text="specify the connection"/>
+		<RUS text="определите связь"/>
+		<GER text="bestimme die Art der Verbindung"/>
+	</SpecifyConn>
+
+	
+	<!--ARGUMENT DESCRIPTIONS-->
+	
+	<CondSylDesc>
+		<EN-US text="Conditional Syllogism:\n
+					p --> q\n
+					q --> r\n
+					Therefore, p --> r"/>
+		<RUS text="Conditional Syllogism (untranslated):\n
+					p --> q\n
+					q --> r\n
+					Therefore, p --> r"/> <!--TODO: This should be translated-->
+		<GER text="Konditionaler Syllogismus:\n
+					p --> q\n
+					q --> r\n
+					Deshalb, p --> r"/>					
+	</CondSylDesc>
+	
+	<ConsDilDesc>
+		<EN-US text="Constructive dilemma:\n
+					p v q\n
+					p --> r\n
+					q --> s\n
+					Therefore, s v t"/>
+		<RUS text="Constructive dilemma (untranslated):\n
+					p v q\n
+					p --> r\n
+					q --> s\n
+					Therefore, s v t"/> <!--TODO: This should be translated-->
+		<GER text="Konstruktives Dilemma:\n
+					p v q\n
+					p --> r\n
+					q --> s\n
+					Deshalb, s v t"/>
+	</ConsDilDesc>
+	
+	<DisSylDesc>
+		<EN-US text="Disjunctive Syllogism:\n
+					p v q\n
+					not p\n
+					Therefore, q"/>
+		<RUS text="Disjunctive Syllogism (untranslated):\n
+					p v q\n
+					not p\n
+					Therefore, q"/>
+		<GER text="Disjunktiver  Syllogism:\n
+					p v q\n
+					nicht p\n
+					Deshalb, q"/>
+	</DisSylDesc>
+	
+	<EitherWayDesc>
+		<EN-US text="Either way:\n
+					p v q\n
+					p --> r\n
+					q --> r\n
+					Therefore, r"/>
+		<RUS text="Either way (untranslated):\n
+					p v q\n
+					p --> r\n
+					q --> r\n
+					Therefore, r"/> <!--TODO: This should be translated-->
+		<GER text="Wie-auch-immer:\n
+					p v q\n
+					p --> r\n
+					q --> r\n
+					Deshalb, r"/>
+	</EitherWayDesc>
+
+	<EQinferring>
+		<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer\n
+		--p from q\n
+		--q from p\n
+		--not-p from not-q, or\n
+		--not-q from not-p\n"/>
+		<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести\n
+		- p от q\n
+		- q от p\n
+		- не-p от не-q, или\n
+		- не-q от не-p"/>
+		<GER text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder\n
+		-- p von q,\n
+		-- q von p,\n
+		--nicht-p von nicht-q, oder\n
+		-- nicht-q von nicht-p erschließen\n"/>
+	</EQinferring>
+	
+	<MPDesc>
+		<EN-US text="Modus ponens:\n
+					p --> q\n
+					p\n
+					Therefore, q\n"/>
+		<RUS text="Modus ponens (untranslated):\n
+					p --> q\n
+					p\n
+					Therefore, q\n"/> <!--TODO: This should be translated-->
+		<GER text="Modus ponens:\n
+					p --> q\n
+					p\n
+					Deshalb, q\n"/>
+	</MPDesc>
+	
+	<MTDesc>
+		<EN-US text="Modus tollens:\n
+					p --> q\n
+					not q\n
+					Therefore, not p"/>
+		<RUS text="Modus tollens (untranslated):\n
+					p --> q\n
+					not q\n
+					Therefore, not p"/> <!--TODO: This should be translated-->
+		<GER text="Modus tollens:\n
+					p --> q\n
+					nicht q\n
+					Deshalb, not p"/>
+	</MTDesc>
+	
+	<!--HELP TEXT-->
+
+	<CannotAddReason>
+		<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
+		<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens  аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
+		<GER text="Entschuldigung, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: „Wenn P, dann Q“; „Immer wenn P, Q“; „Q, gegeben dass P“. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form „P allein dann, wenn Q“ ersetzt."/>
+	</CannotAddReason>
+
+	<CannotChangeMultReasons>
+		<EN-US text="Sorry, the scheme of an argument with more than one reason cannot be changed"/>
+		<RUS text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена"/>
+		<GER text="Entschuldigung, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden."/>
+	</CannotChangeMultReasons>
+	
+	<CannotChangeScheme>
+		<EN-US text="Sorry, this argument scheme cannot be changed"/>
+		<RUS text="Жаль, эта схема аргумента не может быть изменена"/>
+		<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
+	</CannotChangeScheme>
+	
+	<DisSylDetails>
+		<EN-US text="In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
+		<RUS text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
+		<GER text="Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
+	</DisSylDetails>
+
+	
+	<Enabler>
+		<EN-US text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."/>
+		<RUS text=" Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив."/>
+		<GER text="Der Satz in dieser Textbox wird „Garant“ gennant. Der „Garant“ ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der „Garant“ ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist."/>
+	</Enabler>
+	
+	<MTAndOrHelp>
+		<EN-US text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided."/>
+		<RUS text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин."/>
+		<GER text="Da es sich hier um ein modus tollens Argument handelt, musst Du entscheiden ob Du alle deine Gründe durch „und&quot; oder durch „oder&quot; verknüpfen willst. Wenn Du sie durch „und&quot; verknüpfst, dann ist dein Argument allein dann gültig wenn alle deine Gründe wahr sind. Das bedeutet, dass dein Argument durch die Widerlegung von allein einem deiner Gründe widerlegt werden kann. Wenn Du deine Gründe durch „oder&quot; verknüpfst, dann ist dein Argument logisch gültig so lange zumindest einer deiner Gründe wahr ist. Das bedeutet, dass dein Argument allein durch die Widerlegung aller Gründe widerlegt werden kann."/>
+	</MTAndOrHelp>
+	<MustRegister>
+		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible"/>
+		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой"/>
+		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als „AU“ (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar"/>
+	</MustRegister>
+	
+	<NewPass>
+		<EN-US text="Your password on the AGORA server has been changed. Your new password is: "/>
+		<RUS text="Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: "/>
+		<GER text="Dein Passwort auf dem AGORA Server wurde geändert. Das neue Passwort ist: "/>
+		<!--Note that these must be followed by the password itself-->
+	</NewPass>
+	
+	<NotAllHelp>
+		<EN-US text="This syllogism has been created to infer a negative statement from one or more positive statements. If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false. See how it works!"/>
+		<RUS text="Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их  больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
+		<GER text="Dieser Syllogismus wurde geschaffen um eine negative Aussage von einer oder mehreren positiven Aussagen zu erschließen. Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss. Probiere aus wie das geht!"/>
+	</NotAllHelp>
+	
+	<ObjectionHelp>
+		<EN-US text="Since this claim is justified by a logically valid argument, you can add objections or distinction between different cases only at the &quot;open ends&quot; of this argumentation which are not justified by further arguments. If you click here, a new map will be created that will be linked to this claim. Nevertheless, you should also argue against the &quot;open ends&quot; of this argument if you do not agree."/>
+		<RUS text="Так как это заявление оправдано логически действительным аргументом, Вы можете добавить возражения или различие между различными случаями только в &quot;открытых концах&quot; этой аргументации, которые не оправданы дальнейшими аргументами. Если Вы щелкнете здесь, то новая карта будет создана, который будет связан с этим заявлением. Однако, Вы должны также привести доводы против &quot;открытых концов&quot; этого аргумента, если Вы не соглашаетесь."/>
+		<GER text="Da diese Behauptung durch ein logisch gültiges Argument gerechtfertig ist, kannst Du Einwände oder eine Unterscheidung verschiedener Fälle ausschließlich an die „offenen Enden&quot; dieser Argumentation anfügen, die nicht durch weitere Argumente gerechtfertigt sind. Wenn Du diese Option hier auswählst, dann wird eine neue Argumentation begonnen welche mit dieser Behauptung hier verknüpft wird. Du solltest aber auf jeden Fall die „offenen Enden&quot; dieser Argumentation kritisieren, wenn Du der Schlussfolgerung nicht zustimmst."/>
+	</ObjectionHelp>
+	
+	
+	<!--WALLS OF TEXT-->
+		
+	<ArgComplete>
+		<EN-US text="Do you need to add another reason to this argument so that only the combination of all reasons justifies the claim? If so, click on the &quot;+&quot; button under &quot;therefore.&quot;\n
+		Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on the &quot;+&quot; button under that statement to which you want to add a supporting argument. If you want to add another independent argument (with its own enabler) to your claim, click on the &quot;+&quot; there. NOTE: The main difference between adding an independent argument and adding another reason to an existing argument is the following: If only one of the reasons in the latter case can be defeated, then the entire argument breaks down. If you have two independent arguments, then your claim is still justified by the remaining argument if one is defeated. However, sometimes only the combination of several reasons can justify the claim.\n
+		To improve your argument, you might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger.
+		"/>
+		<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+		<GER text="Ist es notwendig, einen weiteren Grund zu diesem Argument hinzuzufügen so dass allein die Kombination beider Gründe die Behauptung rechtfertigen kann? Wenn das so ist, klicke auf &quot;+&quot; unter &quot;deshalb&quot;.\n
+		Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf das &quot;+&quot; Symbol unter derjenigen Behauptung zu der du ein unterstützendes Argument hinzufügen willst. Wenn du ein weiteres unabhänges Argument zu deiner deiner Behauptung hinzufügen willst (mit seinem eigenen Garanten), klick dort auf &quot;+&quot;. BEACHTE: Der Hauptunterschied zwischen der Hinzufügung eines unabhängigen Argumentes und eines weiteren Grundes für ein existierendes Argument ist der folgende: Wenn im letzteren Fall allein einer der Gründe widerlegt werden kann, dann bricht das ganze Argument zusammen. Wenn du jedoch zwei unabhängige Argumente hast, dann ist deine Behauptung immer noch durch das zweite Argument gerechtfertigt wenn das andere widerlegt ist. Allerdings kann manchmal allein die Kombination mehrerer Gründe eine Behauptung rechtfertigen.\n
+		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen "/>
+	</ArgComplete>
+	
 	<Intro>
 		<EN-US text="Select a scheme and then a language form for this scheme. Then enter your reason and/or claim. You can change the argument scheme or the language form any time by clicking on the name of the argument scheme.\n
 		---\n
@@ -21,465 +961,6 @@
 		Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
 	</Intro>
 	
-	<back>
-		<EN-US text="Back"/>
-		<RUS text="Назад"/>
-		<GER text="Zurück"/>
-	</back>
-	
-	<Construct>
-		<EN-US text="construct argument"/>
-		<RUS text="конструктивный  аргумент"/>
-		<GER text="konstruiere das Argument"/>
-	</Construct>
-	
-	<NewMap>
-		<EN-US text="Create a new argument map"/>
-		<RUS text="Создайте новую карту аргумента"/>
-		<GER text="Beginne eine neue Argumentation"/>
-	</NewMap>
-	
-	<MyMaps>
-		<EN-US text="My maps and those in which I participated"/>
-		<RUS text="Мои карты и те, в которых я участвовал(а)"/>
-		<GER text="Meine eigenen Argumente und solche, an denen ich mitgewirkt habe"/>
-	</MyMaps>
-	
-	<CreateProject>
-		<EN-US text="Create a password-protected project space"/>
-		<RUS text="Создайте защищённое паролем проектное пространство"/>
-		<GER text="Eröffne einen Passwort-geschützten Projektbereich"/>
-	</CreateProject>
-	
-	<MustRegister>
-		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible"/>
-		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой"/>
-		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als „AU“ (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar"/>
-	</MustRegister>
-	
-	<Username>
-		<EN-US text="Username"/>
-		<RUS text="ьзователя"/>
-		<GER text="Benutzername"/>
-	</Username>
-	
-	<Password>
-		<EN-US text="Password"/>
-		<RUS text="Пароль"/>
-		<GER text="Passwort"/>
-	</Password>
-	
-	<Login>
-		<EN-US text="Login"/>
-		<RUS text="Логин"/>
-		<GER text="Login"/>
-	</Login>
-	
-	<ForgotPass>
-		<EN-US text="Forgot your password?"/>
-		<RUS text="Забыл Ваш пароль?"/>
-		<GER text="Passwort vergessen?"/>
-	</ForgotPass>
-	
-	<GenPass>
-		<EN-US text="AGORA will generate a new password for you. This action is irreversible."/>
-		<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо."/>
-		<GER text="AGORA wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden."/>
-	</GenPass>
-	
-	<AGORAPass>
-		<EN-US text="AGORA password"/>
-		<RUS text="Пароль АГОРЫ"/>
-		<GER text="AGORA Passwort"/>
-	</AGORAPass>
-	
-	<NewPass>
-		<EN-US text="Your password on the AGORA server has been changed. Your new password is: "/>
-		<RUS text="Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: "/>
-		<GER text="Dein Passwort auf dem AGORA Server wurde geändert. Das neue Passwort ist: "/>
-		<!--Note that these must be followed by the password itself-->
-	</NewPass>
-	
-	<Register>
-		<EN-US text="Register as new user"/>
-		<RUS text="Регистровать как нового пользователя"/>
-		<GER text="Registriere dich als neuer Benutzer"/>
-	</Register>
-	
-	<NewUsername>
-		<EN-US text="Desired Username"/>
-		<RUS text="Желаемое Имя пользователя"/>
-		<GER text="Erwünschter Benutzername"/>
-	</NewUsername>
-	
-	<UsernameTaken>
-		<EN-US text="This username is already taken! Try another username."/>
-		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
-		<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen."/>
-	</UsernameTaken>
-	
-	<PassRepeat>
-		<EN-US text="Repeat your password"/>
-		<RUS text="Повторите свой пароль"/>
-		<GER text="Wiederhole dein Passwort"/>
-	</PassRepeat>
-	
-	<Email>
-		<EN-US text="E-mail Address"/>
-		<RUS text="Адрес электронной почты"/>
-		<GER text="E-mail Adresse"/>
-	</Email>
-	
-	<FirstName>
-		<EN-US text="First Name"/>
-		<RUS text="Имя"/>
-		<GER text="Vorname"/>
-	</FirstName>
-	
-	<LastName>
-		<EN-US text="Last Name"/>
-		<RUS text="Фамилия"/>
-		<GER text="Nachname"/>
-	</LastName>
-	
-	<URL>
-		<EN-US text="URL (Optional)"/>
-		<RUS text="URL(опционально)"/>
-		<GER text="URL (optional)"/>
-	</URL>
-	
-	<Affiliation>
-		<EN-US text="Affiliation/Location (optional)"/>
-		<RUS text="Присоединение/Местоположение (опционально)"/>
-		<GER text="Institution/Ort (optional)"/>
-	</Affiliation>
-	
-	<CAPTCHA>
-		<EN-US text="Enter CAPTCHA"/>
-		<RUS text="Введите  CAPTCHA"/>
-		<GER text="Gib die folgenden Zeichen ein"/>
-	</CAPTCHA>
-	
-	<Submit>
-		<EN-US text="Submit"/>
-		<RUS text="Представить"/>
-		<GER text="Sende"/>
-	</Submit>
-	
-	<ChangeInfo>
-		<EN-US text="Change Personal Information"/>
-		<RUS text="Измените Личную Информацию"/>
-		<GER text="Ändere deine persönlichen Daten"/>
-	</ChangeInfo>
-	
-	<IncompleteInfo>
-		<EN-US text="Incomplete. Please provide all necessary information"/>
-		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
-		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle notwendigen Felder aus."/>
-	</IncompleteInfo>
-	
-	<PasswordProtected>
-		<EN-US text="This project is password protected. Do you want to sign up for this project?"/>
-		<RUS text="Этот проект  защищен паролем. Вы хотите подписаться на этот проект?"/>
-		<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
-	</PasswordProtected>
-	
-	<ProjName>
-		<EN-US text="Desired Project name"/>
-		<RUS text="Желаемое Название проекта"/>
-		<GER text="Erwünschter Projekt-Name"/>
-	</ProjName>
-	
-	<ProjNameTaken>
-		<EN-US text="This Project name is already taken! Try another Project name."/>
-		<RUS text="Это Имя проекта уже взято! Попробуйте другое Имя проекта"/>
-		<GER text="Dieser Projekt-Name ist bereits vergeben! Versuche einen anderen."/>
-	</ProjNameTaken>
-	
-	<ProjPass>
-		<EN-US text="Project password "/>
-		<RUS text="Пароль  Проекта"/>
-		<GER text="Projekt-Passwort"/>
-	</ProjPass>
-	
-	<UserList>
-		<EN-US text="Select users from the AGORA user list"/>
-		<RUS text="Выберите пользователей из пользовательского списка АГОРЫ"/>
-		<GER text="Wähle Benutzer von der AGORA Benutzer-Liste aus"/>
-	</UserList>
-	
-	<!-- English is the same, other languages different-->
-	<IncompleteProjInfo>
-		<EN-US text="Incomplete. Please provide all necessary information."/>
-		<RUS text="Незавершено. Пожалуйста, предоставьте всю необходимую информацию."/>
-		<GER text="Deine Angaben sind unvollständig. Bitte fülle alle Felder aus."/>
-	</IncompleteProjInfo>
-	
-	<WhatIsMainClaim>
-		<EN-US text="What is the main claim of your argument?"/>
-		<RUS text="Каково главное заявление Вашего аргумента?"/>
-		<GER text="Was ist die zentrale Behauptung deines Argumentes?"/>
-	</WhatIsMainClaim>
-	
-	<UseArgScheme>
-		<EN-US text="Click here if you want to use a specific argument scheme"/>
-		<RUS text="Щелкните здесь, если Вы хотите использовать определенную схему аргумента"/>
-		<GER text="Klicke hier wenn Du ein bestimmtes Argument-Schema verwenden willst"/>
-	</UseArgScheme>
-	
-	<DivideToSubclaims>
-		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case"/>
-		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая"/>
-		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können"/>
-	</DivideToSubclaims>
-	
-	<PasteArgument>
-		<EN-US text="Paste an argumentation or parts of it from your clipboard [to this location]"/>
-		<RUS text="Присоедините аргументацию или ее части из Вашего клипборда [к этому местоположению]"/>
-		<GER text="Kopiere eine Argumentation oder Teile von ihr hier hin"/>
-	</PasteArgument>
-	
-	<Particular>
-		<EN-US text="particular statement"/>
-		<RUS text="особое утверждение"/>
-		<GER text="Einzelaussage"/>
-	</Particular>
-	
-	<Universal>
-		<EN-US text="universal statement"/>
-		<RUS text="универсальное утверждение"/>
-		<GER text="universelle Aussage"/>
-	</Universal>
-	
-	<ParticularUniversalClarification>
-		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is &quot;defeated,&quot; then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only &quot;questioned&quot; or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof."/>
-		<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
-		<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
-	</ParticularUniversalClarification>
-	
-	<Enabler>
-		<EN-US text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."/>
-		<RUS text=" Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив."/>
-		<GER text="Der Satz in dieser Textbox wird „Garant“ gennant. Der „Garant“ ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der „Garant“ ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist."/>
-	</Enabler>
-	
-	<AU>
-		<EN-US text="AU [short for “author”]"/>
-		<RUS text="AU [сокращение для &quot;автора&quot;]"/>
-		<GER text="AU"/>
-	</AU>
-	
-	<add>
-		<EN-US text="add "/>
-		<RUS text="добавьте "/>
-		<GER text="füge hinzu "/>
-	</add>
-	
-	<use>
-		<EN-US text="use as "/>
-		<RUS text="используйте в качестве "/>
-		<GER text="verwende als "/>
-	</use>
-	
-	<AUInfo>
-		<EN-US text="Click to see author information"/>
-		<RUS text="Щелкните, чтобы видеть информацию об авторе"/>
-		<GER text="Klicke hier, um Informationen über den Autor zu sehen"/>
-	</AUInfo>
-	
-	<apply>
-		<EN-US text="apply "/>
-		<RUS text="примените "/>
-		<GER text="wende an "/>
-	</apply>
-	
-	<done>
-		<EN-US text="Done"/>
-		<RUS text="Сделанный"/>
-		<GER text="Fertig"/>
-	</done>
-	
-	<NotTheCase>
-		<EN-US text="It is not the case that "/>
-		<RUS text="Не то, что "/>
-		<GER text="Es ist nicht der Fall, dass "/>
-	</NotTheCase>
-	
-	<Delete>
-		<EN-US text="Delete"/>
-		<RUS text="Удалить"/>
-		<GER text="Lösche"/>
-	</Delete>
-	
-	<Subclaim1>
-		<EN-US text="Enter first sub-claim"/>
-		<RUS text="Введите  первое подзаявление"/>
-		<GER text="Gib die erste Teilbehauptung ein"/>
-	</Subclaim1>
-	
-	<Subclaim2>
-		<EN-US text="Enter second sub-claim"/>
-		<RUS text="Введите второе подзаявление"/>
-		<GER text="Gib die zweite Teilbehauptung ein"/>
-	</Subclaim2>
-	
-	<Subclaim>
-		<EN-US text="Enter sub-claim"/>
-		<RUS text="Введите подзаявление"/>
-		<GER text="Gib eine Teilbehauptung ein"/>
-	</Subclaim>
-	
-	<MoreStatements>
-		<EN-US text="Enter more statements"/>
-		<RUS text="Введите большее количество заявлений"/>
-		<GER text="Gib weitere Teilbehauptungen ein"/>
-	</MoreStatements>
-	
-	<Statement1>
-		<EN-US text="Enter first statement"/>
-		<RUS text="Введите первое заявление"/>
-		<GER text="Gib die erste Behauptung ein"/>
-	</Statement1>
-	
-	<Statement2>
-		<EN-US text="Enter second statement"/>
-		<RUS text="Введите второе заявление"/>
-		<GER text="Gib die zweite Behauptung ein"/>
-	</Statement2>
-	
-	<Claim>
-		<EN-US text="What is your claim? "/>
-		<RUS text="Каково Ваше заявление? "/>
-		<GER text="Was ist Deine Behauptung? "/>
-	</Claim>
-	
-	<ClaimReminder>
-		<EN-US text="Keep in mind that a claim can be descriptive (&quot;it is the case that ...&quot;) or normative (e.g., &quot;we should do x&quot;)"/>
-		<RUS text="Имейте в виду, что заявление может быть описательным (&quot;оно имеет место, что ...&quot;) или нормативным (например, &quot;мы должны сделать x&quot;),"/>
-		<GER text="Vergiss nicht, dass es deskriptive („es ist der Fall, dass ...“) und normative (z.B. „wir sollten x tun“) Behauptungen gibt."/>
-	</ClaimReminder>
-	
-	<EnterClaim>
-		<EN-US text="Enter your claim"/>
-		<RUS text="Введите свое заявление"/>
-		<GER text="Gib Deine Behauptung ein"/>
-	</EnterClaim>
-	
-	<Reason>
-		<EN-US text="What is your reason?"/>
-		<RUS text="Какова Ваша причина?"/>
-		<GER text="Was ist dein Grund?"/>
-	</Reason>
-	
-	<EnterReason>
-		<EN-US text="Enter your reason"/>
-		<RUS text="Введите свою причину"/>
-		<GER text="Gib deinen Grund ein"/>
-	</EnterReason>
-	
-	<FurtherReason>
-		<EN-US text="Enter a further reason"/>
-		<RUS text="Введите дальнейшую причину"/>
-		<GER text="Gib einen weiteren Grund ein"/>
-	</FurtherReason>
-	
-	<NewReason>
-		<EN-US text="Enter your new reason"/>
-		<RUS text="Введите свою новую причину"/>
-		<GER text="Gib deinen neuen Grund ein"/>
-	</NewReason>
-	
-	<AnotherReason>
-		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
-		<RUS text="другую причину для этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
-		<GER text="weiteren Grund für dieses Argument hinzufügen, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt"/>
-	</AnotherReason>
-	
-	<MP>
-		<EN-US text="Modus Ponens"/>
-		<RUS text="Modus Ponens"/>
-		<GER text="Modus Ponens"/>
-	</MP>
-	
-	<EQ>
-		<EN-US text="Equivalence"/>
-		<RUS text="эквивалентность"/>
-		<GER text="Äquivalenz"/>
-	</EQ>
-	
-	<IfThen>
-		<EN-US text="if-then"/>
-		<RUS text="если, то"/>
-		<GER text="wenn-dann"/>
-	</IfThen>
-	
-	<Implies>
-		<EN-US text="implies"/>
-		<RUS text="подразумевает"/>
-		<GER text="impliziert"/>
-	</Implies>
-	
-	<OnlyIf>
-		<EN-US text="only if"/>
-		<RUS text="только если"/>
-		<GER text="nur dann, wenn"/>
-	</OnlyIf>
-	
-	<Whenever>
-		<EN-US text="whenever"/>
-		<RUS text="всякий раз, когда"/>
-		<GER text="wann immer"/>
-	</Whenever>
-	
-	<ProvidedThat>
-		<EN-US text="provided that"/>
-		<RUS text="при условии, что"/>
-		<GER text="gegeben, dass"/>
-	</ProvidedThat>
-	
-	<Sufficient>
-		<EN-US text="sufficient condition"/>
-		<RUS text="достаточное условие"/>
-		<GER text="hinreichende Bedingung"/>
-	</Sufficient>
-	
-	<Necessary>
-		<EN-US text="Necessary condition"/>
-		<RUS text="необходимое условие"/>
-		<GER text="notwendige Bedingung"/>
-	</Necessary>
-
-	
-	<Iff>
-		<EN-US text="if-and-only-if"/>
-		<RUS text="если и только если"/>
-		<GER text="genau dann wenn"/>
-	</Iff>
-	
-	<Equivalent>
-		<EN-US text="equivalent"/>
-		<RUS text="эквивалентный"/>
-		<GER text="äquivalent"/>
-	</Equivalent>
-	
-	<NecAndSuf>
-		<EN-US text="necessary and sufficient condition"/>
-		<RUS text="необходимое и достаточное условие"/>
-		<GER text="notwendige und hinreichende Bedingung"/>
-	</NecAndSuf>
-	
-	<NegatedReasons>
-		<EN-US text="with negated reasons"/>
-		<RUS text="с инвертированными причинами"/>
-		<GER text="mit negierten Gründen"/>
-	</NegatedReasons>
-	
-	<AffirmedReasons>
-		<EN-US text="with affirmed reasons"/>
-		<RUS text="с подтвержденными причинами"/>
-		<GER text="mit affirmatierten Gründen"/>
-	</AffirmedReasons>
-	
 	<ParticularOrUniversal>
 		<EN-US text="Determine whether this statement is a\n
 					--particular statement\n
@@ -492,453 +973,194 @@
 					-- Einzelaussage oder\n
 					-- Allgemeine Aussage ist"/>
 	</ParticularOrUniversal>
-	
-	<Includes>
-		<EN-US text="includes"/>
-		<RUS text="включает"/>
-		<GER text="enthält"/>
-	</Includes>
-	
-	<Therefore>
-		<EN-US text="therefore"/>
-		<RUS text="поэтому"/>
-		<GER text="deshalb"/>
-	</Therefore>
-	
-	<ArgScheme>
-		<EN-US text="ArgScheme"/>
-		<RUS text="ArgScheme"/>
-		<GER text="ArgSchema"/>
-	</ArgScheme>
-	
-	<Supports>
-		<EN-US text="supports"/>
-		<RUS text="поддерживает"/>
-		<GER text="unterstützt"/>
-	</Supports>
-	
-	<DefeatsByCounterEx>
-		<EN-US text="defeats by counter example"/>
-		<RUS text="опровергает встречным примером"/>
-		<GER text="widerlegt durch Gegenbeispiel"/>
-	</DefeatsByCounterEx>
-	
-	<DefeatsByCounterArg>
-		<EN-US text="defeats by counter argument"/>
-		<RUS text="опровергает встречным аргументом"/>
-		<GER text="widerlegt durch Gegenargument"/>
-	</DefeatsByCounterArg>
-	
-	<Questions>
-		<EN-US text="questions"/>
-		<RUS text="вопросы"/>
-		<GER text="kritisiert"/>
-	</Questions>
-	
-	<SeeObjection>
-		<EN-US text="See the following objection against this claim in another argument map [opens another map in which this objection can be justified]"/>
-		<RUS text="См.  следующее возражение против этого заявления в другой карте аргумента [открывает другую карту, в которой это возражение может быть оправдано]"/>
-		<GER text="Siehe den folgenden Einwand, der in einem anderen Argument verteidigt wird"/>
-	</SeeObjection>
-	
-	<Negates>
-		<EN-US text="negates"/>
-		<RUS text="отрицает"/>
-		<GER text="negiert"/>
-	</Negates>
-	
-	<FriendlyAmend>
-		<EN-US text="friendly amendment [a suggestion by a supporter to improve the formulation of a claim]"/>
-		<RUS text="дружественная поправка [предложение сторонником, чтобы улучшить формулировку заявления]"/>
-		<GER text="Verbesserungsvorschlag"/>
-	</FriendlyAmend>
-	
-	<Defines>
-		<EN-US text="defines"/>
-		<RUS text="определяет"/>
-		<GER text="definiert"/>
-	</Defines>
-	
-	<Comments>
-		<EN-US text="comments"/>
-		<RUS text="комментарии"/>
-		<GER text="Kommentar zu"/>
-	</Comments>
-	
-	<LeadsToQ>
-		<EN-US text="leads to the question"/>
-		<RUS text="приводит к вопросу"/>
-		<GER text="führt zu der Frage"/>
-	</LeadsToQ>
-	
-	<SpecifyConn>
-		<EN-US text="specify the connection"/>
-		<RUS text="определите связь"/>
-		<GER text="bestimme die Art der Verbindung"/>
-	</SpecifyConn>
-	
-	<ArrowDirChange>
-		<EN-US text="change the arrow direction"/>
-		<RUS text="измените направление стрелки"/>
-		<GER text="verändere die Richtung des Pfeils"/>
-	</ArrowDirChange>
-	
-	<ArgSchemeChange>
-		<EN-US text="Click to change your argument scheme"/>
-		<RUS text="Щелкните, чтобы изменить Вашу схему аргумента"/>
-		<GER text="Klicke hier, um das Argument-Schema zu wechseln"/>
-	</ArgSchemeChange>
-	
-	<ArgSchemeSelect>
-		<EN-US text="Select an argument scheme:"/>
-		<RUS text="Выберите схему аргумента:"/>
-		<GER text="Wähle ein Argument-Schema aus:"/>
-	</ArgSchemeSelect>
-	
-	<ModusPonens>
-		<EN-US text="modus ponens"/>
-		<RUS text="modus ponens"/>
-		<GER text="modus ponens"/>
-	</ModusPonens>
-	
-	<ModusTollens>
-		<EN-US text="modus tollens"/>
-		<RUS text="modus tollens"/>
-		<GER text="modus tollens"/>
-	</ModusTollens>
-	
-	<DisjunctSyl>
-		<EN-US text="disjunctive syllogism"/>
-		<RUS text="дизъюнктивный силлогизм"/>
-		<GER text="Disjunktiver Syllogismus"/>
-	</DisjunctSyl>
-	
-	<NotAllSyl>
-		<EN-US text="not-all syllogism"/>
-		<RUS text="«не – весь» силлогизм"/>
-		<GER text="Nicht-alle Syllogism"/>
-	</NotAllSyl>
-	
-	<Equivalence>
-		<EN-US text="equivalence"/>
-		<RUS text="эквивалентность"/>
-		<GER text="Equivalenz"/>
-	</Equivalence>
-	
-	<ConSyl>
-		<EN-US text="conditional syllogism"/>
-		<RUS text="условный силлогизм"/>
-		<GER text="Hypothetischer Syllogismus"/>
-	</ConSyl>
-	
-	<ConsDil>
-		<EN-US text="constructive dilemma"/>
-		<RUS text="конструктивная дилемма"/>
-		<GER text="Konstruktives Dilemma"/>
-	</ConsDil>
-	
-	<!-- There is russian text after Constructive Dilemma. I do not know what it is.
-	эквивалентность с инвертированной причиной и заявлением [то есть, Вы могли бы сказать “p, и q эквивалентны.” Тогда Вы можете вывести не-p из не-q]
-	-->
-	
-	<EQnegated>
-		<EN-US text="with negated reason(s) and claim "/>
-		<RUS text="с инвертированной причиной (ами) и заявлением"/>
-		<GER text="mit Grund und Folge negiert"/>
-	</EQnegated>
-	
-	<EQaffirmed>
-		<EN-US text="with affirmed reason(s) and claim"/>
-		<RUS text="с подтвержденной причиной (ами) и заявлением"/>
-		<GER text="mit affirmiertem Grund (Gründen) und Folge"/>
-	</EQaffirmed>
-	
-	<EQinferring>
-		<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer\n
-		--p from q\n
-		--q from p\n
-		--not-p from not-q, or\n
-		--not-q from not-p"/>
-		<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести\n
-		- p от q\n
-		- q от p\n
-		- не-p от не-q, или\n
-		- не-q от не-p"/>
-		<GER text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder\n
-		-- p von q,\n
-		-- q von p,\n
-		--nicht-p von nicht-q, oder\n
-		-- nicht-q von nicht-p\n
-		erschließen"/>
-	</EQinferring>
-	
-	<DisSylHelp>
-		<EN-US text="To construct a disjunctive syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;): &quot;either p or q.&quot; In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
-		<RUS text="Чтобы создать дизъюнктивый силлогизм, начните  с &quot;гаранта&quot; Вашего аргумента (то есть, поле под &quot;поэтому&quot;): &quot;или p или q.&quot; В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
-		<GER text="Um einen disjunktiven Syllogismus zu konstruieren, starte mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“): „entweder p oder q“. Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
-	</DisSylHelp>
-	
-	<ConsDilOneProp>
-		<EN-US text="... with one proposition as claim"/>
-		<RUS text="... с одним суждением как заявлением"/>
-		<GER text="... mit allein einem Satz als Folge"/>
-	</ConsDilOneProp>
-	
-	<ConsDilDisjClaim>
-		<EN-US text="... with a disjunctive statement as claim"/>
-		<RUS text="... с дизъюнктивым утверждением как заявлением"/>
-		<GER text="... mit einer disjunktiven Aussage als Folge"/>
-	</ConsDilDisjClaim>
-	
-	<NotAllHelp>
-		<EN-US text="To construct a not-all syllogism, start with the enabler of your argument (i.e., the box under the &quot;therefore&quot;). If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false."/>
-		<RUS text="Чтобы создать не - весь силлогизм, начните с &quot;гаранта&quot; Вашего аргумента (то есть, поле под &quot;поэтому&quot;). Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
-		<GER text="Um einen nicht-alle Syllogismus zu konstruieren, beginner mit dem Garanten Deines Argumentes (i.e. der Box unter dem „deshalb“). Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss."/>
-	</NotAllHelp>
-	
-	<ArgComplete>
-		<EN-US text="Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on &quot;add ...&quot; You might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger. Additionally, you need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme by clicking on &quot;ArgScheme.&quot;"/>
-		<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
-		<GER text="Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf „füge hinzu ...“. Du kannst auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen. Du musst außerdem bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf „ArgSchema“ klickst, kannst Du das Argumentations-Schema wechseln "/>
-	</ArgComplete>
-	
-	<CannotChangeScheme>
-		<EN-US text="Sorry, this argument scheme cannot be changed [cannot be replaced by another scheme]"/>
-		<RUS text="Жаль, эта схема аргумента не может быть изменена [не может быть заменен другой схемой]"/>
-		<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
-	</CannotChangeScheme>
-	
-	<CannotChangeMultReasons>
-		<EN-US text="Sorry, the scheme of an argument with more than one reason cannot be changed"/>
-		<RUS text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена"/>
-		<GER text="Entschuldigung, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden."/>
-	</CannotChangeMultReasons>
-	
-	<CannotAddReason>
-		<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
-		<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens  аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
-		<GER text="Entschuldigung, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: „Wenn P, dann Q“; „Immer wenn P, Q“; „Q, gegeben dass P“. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form „P allein dann, wenn Q“ ersetzt."/>
-	</CannotAddReason>
-	
-	<ClaimInNewWithLink>
-		<EN-US text="claim in a new map, and create a link between this map and the new one"/>
-		<RUS text="заявление новой карты, и создает связь между этой картой и новой"/>
-		<GER text="Behauptung in einer neu zu beginnenden Argumentation und knüpfe eine Verbindung zwischen dieser Argumentation und der neuen."/>
-	</ClaimInNewWithLink>
-	
-	<ClaimInNewWOLink>
-		<EN-US text="claim in a new map without creating a link"/>
-		<RUS text="заявление новой карты, не создавая связь"/>
-		<GER text="Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen"/>
-	</ClaimInNewWOLink>
-	
-	<CopyToClip>
-		<EN-US text="or copy into the clipboard "/>
-		<RUS text="или скопировать в клипборд(буфер)"/>
-		<GER text="oder kopiere in den Zwischenspeicher"/>
-	</CopyToClip>
-	
-	<AddArg>
-		<EN-US text="an argument for this statement"/>
-		<RUS text="аргумент для этого  утверждения"/>
-		<GER text="ein Argument für diese Aussage"/>
-	</AddArg>
-	
-	<AddSupport>
-		<EN-US text="a supporting statement"/>
-		<RUS text="утверждение поддержки"/>
-		<GER text="eine unterstützende Bemerkung"/>
-	</AddSupport>
 
-	<AddObjEx>
-		<EN-US text="an objection that defeats this universal statement by a counter example"/>
-		<RUS text="возражение, которое побеждает это универсальное утверждение встречным примером"/>
-		<GER text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
-	</AddObjEx>
+	<ParticularUniversalClarification>
+		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement “All birds can fly” can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments."/>
+		<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
+		<GER text="Eine „universelle Aussage“ ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie „man sollte“, „man muss“ und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als „Einzelaussagen“ behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments „widerlegt“ ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur „kritisiert“ ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
+	</ParticularUniversalClarification>
 	
-	<AddObjArg>
-		<EN-US text="an objection that defeats this statement by a counter argument"/>
-		<RUS text="возражение, которое побеждает это утверждение встречным аргументом"/>
-		<GER text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
-	</AddObjArg>
+	<PartUnivReq>
+		<EN-US text="You need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme any time by clicking on &quot;ArgScheme.&quot;"/>
+		<RUS text="Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+		<GER text="Du musst bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf &quot;ArgSchema&quot; klickst, kannst Du das Argumentations-Schema jederzeit wechseln."/>
+	</PartUnivReq>
 	
-	<AddObjQ>
-		<EN-US text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
-		<RUS text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
-		<GER text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
-	</AddObjQ>
+
+
+
 	
-	<AddObjNeg>
-		<EN-US text="an objection that negates this statement without providing reasons (implies a request for justification)"/>
-		<RUS text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
-		<GER text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
-	</AddObjNeg>
 	
-	<AddFA>
-		<EN-US text="a friendly amendment for a reformulation of this claim"/>
-		<RUS text="дружественная поправка для переформулировки этого заявления"/>
-		<GER text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
-	</AddFA>
+
 	
-	<AddDist>
-		<EN-US text="a distinction between different cases for this statement"/>
-		<RUS text="различие между различными случаями для этого утверждения"/>
-		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
-	</AddDist>
 	
-	<AddDef>
-		<EN-US text="a definition of a term"/>
-		<RUS text="определение термина"/>
-		<GER text="eine Definition eines Begriffes"/>
-	</AddDef>
+	<!--ARGUMENT PIECES-->
 	
-	<AddQ>
-		<EN-US text="a question"/>
-		<RUS text="вопрос"/>
-		<GER text="eine Frage"/>
-	</AddQ>
+	<!-- These translations can be used in arguments so long as the language allows similar phrase structure.
+		A more robust system (see translation_schemes for an idea) would be needed if a language had greatly different argumentation layout.
+	-->
+	<ArgAnd>
+		<EN-US text=" and "/>
+		<RUS text=" и "/>
+		<GER text=" und "/>
+	</ArgAnd>
+	<ArgAndIf>
+		<EN-US text=" and if"/>
+		<RUS text=" и если "/>
+		<GER text=" und wenn "/>
+	</ArgAndIf>
 	
-	<AddUnspecConn>
-		<EN-US text="an unspecified connection to another text box [user needs to specify the kind of connection]"/>
-		<RUS text="неуказанная связь с другим текстовым окном [пользователь должна определить вид связи]"/>
-		<GER text="eine nicht-vorgegebene Art der Verbindung"/>
-	</AddUnspecConn>
+	<ArgCannotBe>
+		<EN-US text="It cannot be the case, at the same time, that "/>
+		<RUS text="Это не может иметь место, в то же самое время, что "/>
+		<GER text="Es kann nicht zugleich der Fall sein, dass "/>
+	</ArgCannotBe>
 	
-	<AddLinkToMap>
-		<EN-US text="a link to another argument map"/>
-		<RUS text="связь с другой картой аргумента"/>
-		<GER text="eine Verknüpfung zu einer anderen Argumentation"/>
-	</AddLinkToMap>
+	<ArgEither>
+		<EN-US text="either "/>
+		<RUS text="или "/>
+		<GER text="entweder "/>
+	</ArgEither>
+	<ArgEitherCap>
+		<EN-US text="Either "/>
+		<RUS text="Или "/>
+		<GER text="Entweder "/>
+	</ArgEitherCap>
 	
-	<AddLinkToResource>
-		<EN-US text="a link to resources"/>
-		<RUS text="связь с ресурсами"/>
-		<GER text="eine Verknüpfung zu Materialien"/>
-	</AddLinkToResource>
+	<ArgEquiv>
+		<EN-US text=" are equivalent"/>
+		<RUS text=" эквивалентны"/>
+		<GER text=" sind equivalent"/>
+	</ArgEquiv>
 	
-	<AddPaste>
-		<EN-US text="paste from clipboard"/>
-		<RUS text="вставить из клипборда(буфера)"/>
-		<GER text="kopiere aus dem Zwischenspeicher"/>
-	</AddPaste>
+	<ArgIf>
+		<EN-US text="if "/>
+		<RUS text="если "/>
+		<GER text="wenn "/>
+	</ArgIf>
+	<ArgIfCap>
+		<EN-US text="If "/>
+		<RUS text="Если "/>
+		<GER text="Wenn "/>
+	</ArgIfCap>
 	
-	<ObjectionHelp>
-		<EN-US text="Since this claim is justified by a logically valid argument, you can add objections or distinction between different cases only at the &quot;open ends&quot; of this argumentation which are not justified by further arguments. If you click here, a new map will be created that will be linked to this claim. Nevertheless, you should also argue against the &quot;open ends&quot; of this argument if you do not agree."/>
-		<RUS text="Так как это заявление оправдано логически действительным аргументом, Вы можете добавить возражения или различие между различными случаями только в &quot;открытых концах&quot; этой аргументации, которые не оправданы дальнейшими аргументами. Если Вы щелкнете здесь, то новая карта будет создана, который будет связан с этим заявлением. Однако, Вы должны также привести доводы против &quot;открытых концов&quot; этого аргумента, если Вы не соглашаетесь."/>
-		<GER text="Da diese Behauptung durch ein logisch gültiges Argument gerechtfertig ist, kannst Du Einwände oder eine Unterscheidung verschiedener Fälle ausschließlich an die „offenen Enden&quot; dieser Argumentation anfügen, die nicht durch weitere Argumente gerechtfertigt sind. Wenn Du diese Option hier auswählst, dann wird eine neue Argumentation begonnen welche mit dieser Behauptung hier verknüpft wird. Du solltest aber auf jeden Fall die „offenen Enden&quot; dieser Argumentation kritisieren, wenn Du der Schlussfolgerung nicht zustimmst."/>
-	</ObjectionHelp>
 	
-	<OrStartWithScheme>
-		<EN-US text="... or do you want to start with a certain argument scheme?"/>
-		<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/>
-		<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen?"/>
-	</OrStartWithScheme>
+	<ArgIff>
+		<EN-US text=" if and only if "/>
+		<RUS text=", если и только если "/>
+		<GER text=" genau dann, wenn "/>
+	</ArgIff>
 	
-	<Objection>
-		<EN-US text="Enter your objection"/>
-		<RUS text="Введите  Ваше возражение"/>
-		<GER text="Gib deinen Einwand ein"/>
-	</Objection>
+	<ArgImplies>
+		<EN-US text=" implies "/>
+		<RUS text=" подразумевает "/>
+		<GER text=" impliziert "/>
+	</ArgImplies>
 	
-	<CounterEx>
-		<EN-US text="[Enter your counterexample in form of a statement]"/>
-		<RUS text="[Введите Ваш контрпример в форме утверждения]"/>
-		<GER text="[Gib Deinen Einwand in Form einer Aussage ein]"/>
-	</CounterEx>
+	<ArgNecessaryCond>
+		<EN-US text=" is a necessary condition for "/>
+		<RUS text=" - необходимое условие для "/>
+		<GER text=" ist eine notwendige Bedingung für "/>
+	</ArgNecessaryCond>
 	
-	<Question>
-		<EN-US text="[Enter a statement that questions this statement]"/>
-		<RUS text="[Введите утверждение, которое оспаривает это утверждение]"/>
-		<GER text="[Gib eine Aussage ein, welche diese Aussage in Frage stellt]"/>
-	</Question>
+	<ArgNecSuf>
+		<EN-US text=" is a necessary and sufficient condition for "/>
+		<RUS text=" - необходимое и достаточное условие для "/>
+		<GER text=" ist eine notwendige und hinreichende Bedingung für "/>
+	</ArgNecSuf>
 	
-	<FriendlyAmend>
-		<EN-US text="Enter a suggestion to improve the formulation of this statement"/>
-		<RUS text="Введите предложение, чтобы улучшить  формулировку этого заявления"/>
-		<GER text="Gib einen Vorschlag zur Verbesserung dieser Behauptung ein"/>
-	</FriendlyAmend>
+	<ArgNotCase>
+		<EN-US text="It is not the case that "/>
+		<RUS text="Не то, что "/>
+		<GER text="Es ist nicht der Fall, dass "/>
+	</ArgNotCase>
 	
-	<EnterQ>
-		<EN-US text="Enter your question"/>
-		<RUS text="Введите свой вопрос"/>
-		<GER text="Gib deine Frage ein"/>
-	</EnterQ>
+	<ArgOnlyIf>
+		<EN-US text=" only if "/>
+		<RUS text=", только если "/>
+		<GER text=" allein dann, wenn "/>
+	</ArgOnlyIf>
 	
-	<LinkToMap>
-		<EN-US text="create a link to an existing map"/>
-		<RUS text="создайте связь с существующей картой"/>
-		<GER text="Erstelle eine Verknüpfung zu einer bestehenden Argumentation."/>
-	</LinkToMap>
+	<ArgOr>
+		<EN-US text=" or "/>
+		<RUS text=" или "/>
+		<GER text=" oder "/>
+	</ArgOr>
 	
-	<ListMaps>
-		<EN-US text="list of existing maps"/>
-		<RUS text="список существующих карт"/>
-		<GER text="Liste von Argumentationen"/>
-	</ListMaps>
 	
-	<ArgMapOn>
-		<EN-US text="... the argument map on"/>
-		<RUS text="... карта аргумента на"/>
-		<GER text="... die Argumentation zu"/>
-	</ArgMapOn>
+	<ArgProvidedThat>
+		<EN-US text=" provided that "/>
+		<RUS text=" при условии, что "/>
+		<GER text=", gegeben dass "/>
+	</ArgProvidedThat>
 	
-	<SeeAlso>
-		<EN-US text="See also ... [continues with: .. the argument on [title]]"/>
-		<RUS text="См. также... [продолжается с:.. аргумент на [названии]]"/>
-		<GER text="Siehe auch ..."/>
-	</SeeAlso>
+	<ArgSufficientCond>
+		<EN-US text=" is a sufficient condition for "/>
+		<RUS text=" - достаточное условие для "/>
+		<GER text=" ist eine hinreichende Bedingung für "/>
+	</ArgSufficientCond>
 	
-	<AddURL>
-		<EN-US text="... add URL [webaddress]"/>
-		<RUS text="... добавьте URL [webaddress]"/>
-		<GER text="... füge URL hinzu"/>
-	</AddURL>
+	<ArgThat>
+		<EN-US text="that "/>
+		<RUS text="что "/>
+		<GER text="dass "/>
+	</ArgThat>	
 	
-	<EnterURL>
-		<EN-US text="Enter URL"/>
-		<RUS text="Введите  URL"/>
-		<GER text="Gebe URL ein"/>
-	</EnterURL>
+	<ArgThen>
+		<EN-US text=" then "/>
+		<RUS text=" то "/>
+		<GER  text=" dann "/>
+	</ArgThen>
 	
-	<UploadRes>
-		<EN-US text="... upload resources"/>
-		<RUS text="... ресурсы закачки"/>
-		<GER text="... lade Materialien hoch"/>
-	</UploadRes>
+	<ArgTherefore>
+		<EN-US text="; therefore, "/>
+		<RUS text="; поэтому, "/>
+		<GER text="; deshalb, "/>
+	</ArgTherefore>
 	
-	<ChooseFile>
-		<EN-US text="choose file"/>
-		<RUS text="выберите файл"/>
-		<GER text="Wähle eine Datei aus"/>
-	</ChooseFile>
+	<ArgWhenever>
+		<EN-US text="Whenever "/>
+		<RUS text="Всякий раз, когда "/>
+		<GER text="Immer wenn "/>
+	</ArgWhenever>
 	
-	<Upload>
-		<EN-US text="upload!"/>
-		<RUS text="Закачка на сайт!"/>
-		<GER text="Lade hoch!"/>
-	</Upload>
-	
-	<Resource>
-		<EN-US text="Resource file: [Enter title of your uploaded resources]"/>
-		<RUS text="Файл ресурса: [Введите название своих загруженных ресурсов]"/>
-		<GER text="Datei: [Gib einen Titel für die hochgeladenen Materialien ein]"/>
-	</Resource>
-	
-	<Paste>
-		<EN-US text="How do you want to connect this pasted element? As ... [it follows the list of items listed under &quot;add ...&quot; above]"/>
-		<RUS text="Как Вы хотите присоединить этот вставленный элемент? Как... [это следует за списком пунктов перечисленных под &quot;добавить...&quot; выше]"/>
-		<GER text="Wie willst Du das zu kopierende Element mit dieser Textbox verknüpfen? Als ..."/>
-	</Paste>
-	
+	<!--ADD CONTINUATIONS-->
+	<!--There are a great many things which you can "add". 
+	Sentences continuing off the single word "add" go here.-->
 	<AddAnotherReason>
 		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim"/>
 		<RUS text="другая причина этого аргумента так, чтобы только комбинация всех причин оправдала заявление"/>
 		<GER text="einen weiteren Grund für dieses Argument, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt. "/>
 	</AddAnotherReason>
 	
+	<AddArg>
+		<EN-US text="an argument for this statement"/>
+		<RUS text="аргумент для этого  утверждения"/>
+		<GER text="ein Argument für diese Aussage"/>
+	</AddArg>
+
+		
+	<AddDef>
+		<EN-US text="a definition of a term"/>
+		<RUS text="определение термина"/>
+		<GER text="eine Definition eines Begriffes"/>
+	</AddDef>
+	
+	<AddDist>
+		<EN-US text="a distinction between different cases for this statement"/>
+		<RUS text="различие между различными случаями для этого утверждения"/>
+		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung"/>
+	</AddDist>
+
+	<AddFA>
+		<EN-US text="a friendly amendment for a reformulation of this claim"/>
+		<RUS text="дружественная поправка для переформулировки этого заявления"/>
+		<GER text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung"/>
+	</AddFA>
+	
 	<AddIntermediate>
-		<EN-US text="an intermediate reason to the reason on the right [e.g.: instead of &quot;p, therefore q&quot;: &quot;p, therefore s, therefore q&quot;]"/>
-		<RUS text="промежуточная причина для причины справа [например: вместо &quot;p, поэтому q&quot;: &quot;p, поэтому s, поэтому q&quot;]"/>
+		<EN-US text="an intermediate reason to the reason on the right"/>
+		<RUS text="промежуточная причина для причины справа"/>
 		<GER text="einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite"/>
 	</AddIntermediate>
 	
@@ -954,48 +1176,67 @@
 		<GER text="einen dazwischen geschaltenen Grund zu dem dritten/vierten/fünften/sechsten/siebten Grund auf der rechten Seite"/>
 	</AddIntermediateLater>
 	
-	<ConnectionToReason>
-		<EN-US text="What kind of connection do you want to establish to the reason on the right?"/>
-		<RUS text="Какую связь Вы хотите установить к причине справа?"/>
-		<GER text="Welche Art von Verknüpfung willst Du zu dem Grund auf der rechten Seite erstellen? "/>
-	</ConnectionToReason>
+	<AddLinkToMap>
+		<EN-US text="a link to another argument map"/>
+		<RUS text="связь с другой картой аргумента"/>
+		<GER text="eine Verknüpfung zu einer anderen Argumentation"/>
+	</AddLinkToMap>
 	
-	<Arg>
-		<EN-US text="argument"/>
-		<RUS text="аргумент"/>
-		<GER text="Argument"/>
-	</Arg>
+	<AddLinkToResource>
+		<EN-US text="a link to resources"/>
+		<RUS text="связь с ресурсами"/>
+		<GER text="eine Verknüpfung zu Materialien"/>
+	</AddLinkToResource>
 	
-	<Support>
-		<EN-US text="support"/>
-		<RUS text="поддержка"/>
-		<GER text="Unterstützung"/>
-	</Support>
+	<AddObjArg>
+		<EN-US text="an objection that defeats this statement by a counter argument"/>
+		<RUS text="возражение, которое побеждает это утверждение встречным аргументом"/>
+		<GER text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt."/>
+	</AddObjArg>
 	
-	<SelfDefConn>
-		<EN-US text="self-defined connection"/>
-		<RUS text="самоопределенная связь"/>
-		<GER text="Selbst-definierte Verknüpfung "/>
-	</SelfDefConn>
+	<AddObjEx>
+		<EN-US text="an objection that defeats this universal statement by a counter example"/>
+		<RUS text="возражение, которое побеждает это универсальное утверждение встречным примером"/>
+		<GER text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt."/>
+	</AddObjEx>
 	
-	<ConnectViaAndOr>
-		<EN-US text="Connect your reasons by &quot;and&quot; | &quot;or&quot;"/>
-		<RUS text="Соедините свои причины с помощью  &quot;и&quot; | &quot;или&quot;"/>
-		<GER text="Verküpfe deinen Grund durch &quot;und&quot; | &quot;oder&quot;"/>
-	</ConnectViaAndOr>
+	<AddObjNeg>
+		<EN-US text="an objection that negates this statement without providing reasons (implies a request for justification)"/>
+		<RUS text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании),"/>
+		<GER text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)"/>
+	</AddObjNeg>
 	
-	<MTAndOrHelp>
-		<EN-US text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided."/>
-		<RUS text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин."/>
-		<GER text="Da es sich hier um ein modus tollens Argument handelt, musst Du entscheiden ob Du alle deine Gründe durch „und&quot; oder durch „oder&quot; verknüpfen willst. Wenn Du sie durch „und&quot; verknüpfst, dann ist dein Argument allein dann gültig wenn alle deine Gründe wahr sind. Das bedeutet, dass dein Argument durch die Widerlegung von allein einem deiner Gründe widerlegt werden kann. Wenn Du deine Gründe durch „oder&quot; verknüpfst, dann ist dein Argument logisch gültig so lange zumindest einer deiner Gründe wahr ist. Das bedeutet, dass dein Argument allein durch die Widerlegung aller Gründe widerlegt werden kann."/>
-	</MTAndOrHelp>
+	<AddObjQ>
+		<EN-US text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)"/>
+		<RUS text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании),"/>
+		<GER text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)"/>
+	</AddObjQ>
+
+	<AddPaste>
+		<EN-US text="paste from clipboard"/>
+		<RUS text="вставить из клипборда(буфера)"/>
+		<GER text="kopiere aus dem Zwischenspeicher"/>
+	</AddPaste>
 	
-	<InterArgScheme>
-		<EN-US text="Select an argument scheme for the new argument on the right:"/>
-		<RUS text="Выберите схему аргумента для нового аргумента справа:"/>
-		<GER text="Wähle für dein neues Argument auf der rechten Seite ein Argument-Schema aus:"/>
-	</InterArgScheme>
+	<AddQ>
+		<EN-US text="a question"/>
+		<RUS text="вопрос"/>
+		<GER text="eine Frage"/>
+	</AddQ>
 	
+	<AddSupport>
+		<EN-US text="a supporting statement"/>
+		<RUS text="утверждение поддержки"/>
+		<GER text="eine unterstützende Bemerkung"/>
+	</AddSupport>
+	
+	<AddUnspecConn>
+		<EN-US text="an unspecified connection to another text box"/>
+		<RUS text="неуказанная связь с другим текстовым окном"/>
+		<GER text="eine nicht-vorgegebene Art der Verbindung"/>
+	</AddUnspecConn>
+	
+	<!--CONDITIONAL PIECES-->
 	<AnotherCond>
 		<EN-US text="Do you want to insert another conditional statement that is dependent on"/>
 		<RUS text="Вы хотите вставить другое зависимое условное заявление "/>
@@ -1009,11 +1250,14 @@
 	</FirstAlt>
 	
 	<SecondAlt>
-		<EN-US text="-- the second alternative [both alternatives refer to the alternative in a constructive dilemma]"/>
-		<RUS text="- вторая альтернатива [обе альтернативы обращаются к альтернативе в конструктивной дилемме]"/>
+		<EN-US text="-- the second alternative"/>
+		<RUS text="- вторая альтернатива"/>
 		<GER text="--der zweiten Alternative"/>
 	</SecondAlt>
 	
+	
+	<!--APPLY UNDER THEREFORE-->
+
 	<Generalization>
 		<EN-US text="... generalization"/>
 		<RUS text="... обобщение"/>
@@ -1033,14 +1277,10 @@
 	</AttiNormInst>
 	
 	<Qualification>
-		<EN-US text="... qualification [such as &quot;probably,&quot; &quot;generally&quot; in an argument]"/>
-		<RUS text=".... условие  [такое как, &quot;вероятно,&quot; &quot;вообще&quot; в аргументе]"/>
+		<EN-US text="... qualification"/>
+		<RUS text=".... условие"/>
 		<GER text="... Qualifizierung"/>
 	</Qualification>
 	
-	<FourOptions>
-		<EN-US text="Click to see four options to overwrite parts of the automatically created structure of your argument"/>
-		<RUS text="Щелкните, чтобы видеть четыре опции, чтобы перезаписать части автоматически создаваемой структуры Вашего аргумента"/>
-		<GER text="Klicke hier, um vier Möglichkeiten zu sehen, Teile der automatisch generierten Struktur eines Argumentes zu überschreiben "/>
-	</FourOptions>
+	
 </Translations>

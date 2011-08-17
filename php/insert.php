@@ -1,7 +1,78 @@
 <?php
+	/**
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+	*/
+
+/**
+List of variables for insertion:
+	* HTTP Query variables:
+	xml: The XML of map data to insert
+	uid: User ID of the user inserting the data
+	pass_hash: the hashed password of the user inserting the data
+	
+	* XML data:
+		MAP level:
+			id or ID: the ID of the map to be modified. 0 or nonexistent creates a new map and ignores everything else.
+			title: Title of the map (for new maps only)
+			desc: Description of the map (for new maps only)
+			lang: Language of the map (for new maps only)
+		
+		IN-MAP level:
+			textbox: insert or modify a textbox
+				text: The text the user typed into the box (or default text)
+				ID: ID of an existing textbox
+				TID: temporary (client) ID of a new textbox, will get an ID in the db and returned to the client
+			node: insert or modify a node
+				ID: ID of an existing node
+				TID: temporary (client) ID of a new node, will get an ID in the db and returned to the client
+				Type: Type of a node. See nodetypes table in database for a listing. Use the name.
+				x: x-coordinate of a node on the map
+				y: y-coordinate of a node on the map
+				typed: Whether the node has been typed or still contains default text
+				is_positive: Whether the argument is positive or not (logically speaking).
+				
+				* nodetext: link between a node and textbox. Due to hierarchy, it only needs one variable.
+					textboxID: ID of the textbox.
+					(NOTE: Position comes from ordering of the nodetexts. As a result, if ANY nodetext relationship is updated, 
+							ALL nodetexts must be included- even without change.)
+			connection: insert or modify a connection (arguments, objections, etc.)
+				ID: ID of an existing connection
+				TID: temporary (client) ID of a new connection, will get an ID in the db and returned to the client
+				targetnodeID: ID of the node the argument is supporting. This is the SINGLE node that has an arrow pointing to it.
+				targetnodeTID: Temporary ID of the same (for when a new node and connection go in simultaneously)
+				x: x-coordinate of the argument's position on the map
+				y: y-coordinate of the argument's position on the map
+
+				* sourcenode: link between supporting nodes and the argument. There can be as many of these as needed.
+					TID: Temporary (client) ID. No real ID is ever allowed, since modifying a relationship is nonsensical.
+							Delete the old one and add a new one instead, or modify the text in the node.
+					nodeID: ID of the node, if you're connecting an existing node to the argument (two-step process)
+					nodeTID: Temporary ID of the node, for when you're doing it all in one step.
+
+*/
+	require 'configure.php';
 	require 'checklogin.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
+	
+	
 	$tbTIDarray;
 	$nodeTIDarray;
 	/**
@@ -24,36 +95,30 @@
 	function textboxToDB($tb, $mapID, $linkID, $userID, $output)
 	{
 		global $tbTIDarray;
-		//print "<BR>---Textbox found";
 		$attr = $tb->attributes();
 		$text = mysql_real_escape_string($attr["text"]);
 		$id = $attr["ID"];
 		if($id){
-			//print "<BR>Textbox ID is $id";
 			$query = "SELECT * FROM textboxes WHERE textbox_id=$id";
-			//print "<BR>author check query: $query";
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			//print "<BR>UID out of the database: $dbUID";
 			if($userID == $dbUID){
-				$uquery = "UPDATE textboxes SET text=\"$text\", modified_date=NOW() WHERE textbox_id=$id";
-				//print "<BR>Update query: $uquery";
+				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
 				$status = mysql_query($uquery, $linkID);
-				//print "<BR>Query executed! Status: $status";
 			}else{
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.");
+				modifyOther($output);
 				return false;
 			}
-			
-
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES
-										($userID, $mapID, \"$text\", NOW(), NOW())";
-			//print "<BR>Query: $iquery";
-			mysql_query($iquery, $linkID);
+										($userID, $mapID, '$text', NOW(), NOW())";
+			$success = mysql_query($iquery, $linkID);
+			if(!$success){
+				insertFailed($output, $iquery);
+				return false;
+			}
 			$newID = getLastInsert($linkID);
 			$textbox=$output->addChild("textbox");
 			$textbox->addAttribute("TID", $tid);
@@ -61,6 +126,7 @@
 			
 			$tbTIDarray[$tid]=$newID; // Add the TID->ID mapping to the global lookup array
 		}
+		return true;
 	}
 
 	/**
@@ -69,106 +135,142 @@
 	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $output)
 	{
 		global $tbTIDarray; //use the global variable
-		
-		//print "<BR>NodeText found";
 		$attr = $nt->attributes();
 		$textboxID = mysql_real_escape_string($attr["textboxID"]);
+		$tgtNodeID = mysql_real_escape_string($attr["targetNodeID"]);
 		
 		$query = "SELECT * FROM nodetext WHERE node_id=$nodeID AND position=$position";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$ntID = $row['nodetext_id'];
-		
 		if($ntID){
-			//update should ALWAYS have a real textbox ID.
-			$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
-			//print "<BR>Update query is: $uquery";
-			mysql_query($uquery, $linkID);
+			//update should ALWAYS have a real textbox ID, or empty, so that we use target node ID
+			//Note that an update allows us to switch from textbox to target node or vice versa - this is intentional
+			if(!$textboxID && $tgtNodeID){ // We use the target node ID
+				$uquery = "UPDATE nodetext SET textbox_id=NULL, target_node_id=$tgtNodeID, modified_date=NOW() WHERE nodetext_id=$ntID";
+			}else{ // use the textbox ID
+				$uquery = "UPDATE nodetext SET textbox_id=$textboxID, modified_date=NOW() WHERE nodetext_id=$ntID";
+			}
+			$success = mysql_query($uquery, $linkID);
+			if(!$success){
+				updateFailed($output, $uquery);
+				return false;
+			}
 		}else{
 			//insert
+			$tid = mysql_real_escape_string($attr["TID"]);
+			//insert with real textbox ID
 			if($textboxID){
 				//We are here given the real textbox ID to put into a new nodetext position (new node, or new position in an existing node)
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
-							($nodeID, $textboxID, $position, NOW(), NOW())";
-				//print "<BR>Insert Query is: $iquery";
-				mysql_query($iquery, $linkID);
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, created_date, modified_date) VALUES
+							($nodeID, $textboxID, NULL, $position, NOW(), NOW())";
+				$success=mysql_query($iquery, $linkID);
+				if(!$success){
+					insertFailed($output, $iquery);
+					return false;
+				}
+			}else if($tgtNodeID){
+				//We are here given the real target node ID to put into a new nodetext position (new node, or new position in an existing node)
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, target_node_id, position, created_date, modified_date) VALUES
+							($nodeID, NULL, $tgtNodeID, $position, NOW(), NOW())";
+				$success=mysql_query($iquery, $linkID);
+				if(!$success){
+					insertFailed($output, $iquery);
+					return false;
+				}
+			}else if($tgtNodeTID){
+				//We have a target node TID, rather than an ID. Stubbing out space in case this is needed.
 				
-			}else{
-				$tid = mysql_real_escape_string($attr["TID"]);
+			}else{ //insert with textbox TID
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
 				
 				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES 
 							($nodeID, $textID, $position, NOW(), NOW())";
 				
-				mysql_query($iquery, $linkID);
-				
-				$outID = getLastInsert($linkID);
-				$ntOut=$output->addChild("nodetext");
-				$ntOut->addAttribute("TID", $tid);
-				$ntOut->addAttribute("ID", $outID);
+				$success = mysql_query($iquery, $linkID);
+				if(!$success){
+					insertFailed($output, $iquery);
+					return false;
+				}
 			}
+			//shared actions for ntTID logic
+			$outID = getLastInsert($linkID);
+			$ntOut=$output->addChild("nodetext");
+			$ntOut->addAttribute("TID", $tid);
+			$ntOut->addAttribute("ID", $outID);
 		}
+		return true;
 	}
+	
+	
+
 	/**
 	*	Takes a node from XML and puts it in the database.
 	*/
 	function nodeToDB($node, $mapID, $linkID, $userID, $output)
 	{
 		global $nodeTIDarray;
-		
-		//print "<BR>----Node found";
 		$nodeOut = null; // Done for later scoping
 		$attr = $node->attributes();
 		$nodeID = mysql_real_escape_string($attr["ID"]);
 		$type = mysql_real_escape_string($attr["Type"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
-		$query = "SELECT * FROM node_types WHERE type=\"$type\"";
-		//print "<BR>Query is: $query";
+		$typed = mysql_real_escape_string($attr["typed"]);
+		$positivity = mysql_real_escape_string($attr["is_positive"]);
+		$cBy = $attr['connected_by'];
+		if(!$cBy){
+			$cBy='implication';
+		}
+		$query = "SELECT * FROM node_types WHERE type='$type'";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row['nodetype_id'];
-		//print "<BR>Type ID is $typeID";
-		if($nodeID){		
+		if($nodeID){
 			//update
-			//print "<BR>Node ID is $nodeID";
 			$query = "SELECT * FROM nodes WHERE node_id=$nodeID";
-			//print "<BR>author check query: $query";
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			//print "<BR>UID out of the database: $dbUID";
 			if($userID == $dbUID){
-				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
-				//print "<BR>Update Query is: $uquery";							
-				$status=mysql_query($uquery, $linkID);
-				//print "<BR>Query executed! Status: $status";
+				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y, 
+							typed=$typed, is_positive=$positivity, connected_by='$cBy'
+							WHERE node_id=$nodeID";
+				$success=mysql_query($uquery, $linkID);
+				if(!$success){
+					updateFailed($output, $uquery);
+					return false;
+				}else{
+					$nodeOut=$output->addChild("node");
+					$nodeOut->addAttribute("ID", $nodeID);
+				}
 			}else{
-				//print "<BR>You are attempting to modify someone else's work or a nonexistent textbox. This is not permissible.";
-				return false;
+				//user is updating someone else's node. He is only allowed to change X and Y coordinates.
+				$uquery = "UPDATE nodes SET modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
+				$success=mysql_query($uquery, $linkID);
+				if(!$success){
+					updateFailed($output, $uquery);
+					return false;
+				}else{
+					$nodeOut=$output->addChild("node");
+					$nodeOut->addAttribute("ID", $nodeID);
+				}
 			}
-		
-		
-			$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE node_id=$nodeID";
-			//print "<BR>Update Query is: $uquery";							
-			mysql_query($uquery, $linkID);
 		}else{
 			//insert
 			$tid = mysql_real_escape_string($attr["TID"]);		
-			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord) VALUES
-										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y)";
-			//print "<BR>Insert Query is: $iquery";							
+			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord, typed, connected_by, is_positive) VALUES
+										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y, $typed, '$cBy', $positivity)";
 			$success=mysql_query($iquery, $linkID);
 			if(!$success){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+				insertFailed($output, $iquery);
+				return false;
 			}else{
 				$nodeID = getLastInsert($linkID);
 				$nodeOut=$output->addChild("node");
 				$nodeOut->addAttribute("TID", $tid);
 				$nodeOut->addAttribute("ID", $nodeID);
-				
 				$nodeTIDarray[$tid]=$nodeID; // Add the TID->ID mapping to the global lookup array
 			}
 		}
@@ -186,6 +288,7 @@
 			//if someone can't update a node they shouldn't be able to change its nodetext information.
 			//(Also, they should fail the textbox owner check as well.)
 		}
+		return true;
 	}
 	
 	/**
@@ -197,7 +300,6 @@
 		//Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
 		//They get DELETED automatically when the NODE they connect to is DELETED.
-		//print "<BR>SourceNode found";
 		$attr = $source->attributes();
 		$tid =  mysql_real_escape_string($attr["TID"]);
 		$nodeID = mysql_real_escape_string($attr["nodeID"]);
@@ -208,7 +310,6 @@
 		
 		$iquery = "INSERT INTO sourcenodes (connection_id, node_id, created_date, modified_date) VALUES
 											($connID, $nodeID, NOW(), NOW())";
-		//print "<BR>Insert Query is: $iquery";
 		$success = mysql_query($iquery, $linkID);
 		if($success){
 			$outID = getLastInsert($linkID);
@@ -216,9 +317,10 @@
 			$sourcenode->addAttribute("TID", $tid);
 			$sourcenode->addAttribute("ID", $outID);
 		}else{
-			$fail=$output->addChild("error");
-				$fail->addAttribute("text", "The source node is not being added properly. Query was: $iquery");
+			insertFailed($output, $iquery);
+			return false;
 		}
+		return true;
 	}
 	
 	/**
@@ -227,22 +329,20 @@
 	function connectionToDB($conn, $mapID, $linkID, $userID, $output)
 	{
 		global $nodeTIDarray;
-		//print "<BR>---Connection found";
 		$connection = $output->addChild("connection");
 		$attr = $conn->attributes();
 		$id = mysql_real_escape_string($attr["ID"]);
+		$tid = mysql_real_escape_string($attr["TID"]);
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
 		
 		//get Type ID since that's what we need
 		$type = mysql_real_escape_string($attr["type"]);
-		$query1 = "SELECT * FROM connection_types WHERE conn_name = \"$type\"";
+		$query1 = "SELECT * FROM connection_types WHERE conn_name = '$type'";
 		$resultID = mysql_query($query1, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row["type_id"];
-		
-		$tid = mysql_real_escape_string($attr["TID"]);
 		
 		if(!$nodeID){
 			$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
@@ -253,11 +353,10 @@
 			//Insert the connection into the DB (target node and info)
 			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
 											($userID, $mapID, $nodeID, $typeID, $x, $y, NOW(), NOW())";
-			//print "<BR>Insert Query is: $iquery";
 			$success = mysql_query($iquery, $linkID);
 			if(!$success){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "Unable to add the CONNECTION. Query was: $iquery");
+				insertFailed($output, $iquery);
+				return false;
 			}else{
 				$id = getLastInsert($linkID);
 				$connection->addAttribute("TID", $tid);
@@ -267,8 +366,11 @@
 			//Update TYPE of the connection
 			//It's not legal to change what node the connection is targeting.
 			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
-			//print "<BR>Update query: $uquery";
-			mysql_query($uquery, $linkID);
+			$success=mysql_query($uquery, $linkID);
+			if(!$success){
+				updateFailed($output, $uquery);
+				return false;
+			}
 			$connection->addAttribute("ID", $id);
 		}
 		//Get the source nodes
@@ -277,6 +379,7 @@
 		{
 			sourceNodeToDB($child, $id, $linkID, $connection);
 		}
+		return true;
 	}
 	
 	/**
@@ -286,22 +389,28 @@
 	*/
 	function xmlToDB($xml, $mapID, $linkID, $userID, $output)
 	{
-		//print "Now in xml-to-DB function<BR>";
 		$children = $xml->children();
-		//print count($children);
-
 		foreach ($children as $child)
 		{
 			switch($child->getName())
 			{
 				case "textbox":
-					textboxToDB($child, $mapID, $linkID, $userID, $output);
+					$success = textboxToDB($child, $mapID, $linkID, $userID, $output);
+					if(!$success){
+						return false;
+					}
 					break;
 				case "node":
-					nodeToDB($child, $mapID, $linkID, $userID, $output);
+					$success = nodeToDB($child, $mapID, $linkID, $userID, $output);
+					if(!$success){
+						return false;
+					}
 					break;
 				case "connection":
-					connectionToDB($child, $mapID, $linkID, $userID, $output);
+					$success = connectionToDB($child, $mapID, $linkID, $userID, $output);
+					if(!$success){
+						return false;
+					}
 					break;
 			}
 		}		
@@ -313,22 +422,33 @@
 	*/
 	function insert($xmlin, $userID, $pass_hash)
 	{
+		global $dbName, $version;
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
+		$xmlstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
 		$output = new SimpleXMLElement($xmlstr);
-		
 		$linkID= establishLink();
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			 databaseNotFound($output);
+			 return $output;
+		}
 
 		if(!checkLogin($userID, $pass_hash, $linkID)){
-			$fail=$output->addChild("error");
-			$fail->addAttribute("text", "Incorrect Login!");
-			return;
+			incorrectLogin($output);
+			return $output;
 		}
 	
-	
 		//Dig the Map ID out of the XML
-		$xml = new SimpleXMLElement($xmlin);
+		try{
+			$xml = new SimpleXMLElement($xmlin);
+		}catch(Exception $e){
+			poorXML($output);
+			return $output;
+		}
 		$mapID = $xml['ID']; 
 		$mapClause = mysql_real_escape_string("$mapID");
 		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:
@@ -336,37 +456,48 @@
 		if($mapID && !$mapClause){
 			$mapClause=$mapID;
 		}
-		
-		
-		$lang = mysql_real_escape_string($xml['lang']);
-		if(!$lang){
-			$lang="EN-US";
-		}
+		$output->addAttribute("ID", $mapClause);
 
 		//Check to see if the map already exists
 		if($mapClause==0){
 			//If not, create it!
+			$title = mysql_real_escape_string($xml['title']);
+			if(!$title){
+				$title = "Untitled Map";
+			}
+			$desc = mysql_real_escape_string($xml['desc']);
+			if(!$desc){
+				$desc = "No description";
+			}
+			
+			$lang = mysql_real_escape_string($xml['lang']);
+			if(!$lang){
+				$lang="EN-US";
+			}
 			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
-										($userID, 'Example', 'Description', \"$lang\", NOW(), NOW())";
+										($userID, '$title', '$desc', '$lang', NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
 			$mapClause = getLastInsert($linkID);
 			if(!$mapClause){
-				$fail=$output->addChild("error");
-				$fail->addAttribute("text", "The map was not added properly. Query: $iquery");
+				insertFailed($output, $iquery);
+				return $output;
 			}
 			
 			$output->addAttribute("ID", $mapClause);
 		}
 
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
-		$resultID = mysql_query($query, $linkID) or die ("Cannot get map!"); 
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
 		$row = mysql_fetch_assoc($resultID);
 		
 		//Check to see if this is the map author
 		//If so, $ownMap is set to true.
 		
 		$author = $row['user_id'];
-		//print "Author: $author  Map: $mapClause <BR>";
 		$ownMap = false;
 		if($author == $userID){
 			$ownMap=true;
@@ -384,10 +515,9 @@
 		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
 		if($success===true){
 			mysql_query("COMMIT");
-			//print "<BR>Query committed!<BR>";
 		}else{
 			mysql_query("ROLLBACK");
-			//print "<BR>Query rolled back!<BR>";
+			rolledBack($output);
 		}
 		return $output;
 		

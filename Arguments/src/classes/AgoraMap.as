@@ -1,6 +1,26 @@
 //This class is the canvas on which everything will be drawn
 package classes
 {
+	/**
+	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+	 reflection, critique, deliberation, and creativity in individual argument construction 
+	 and in collaborative or adversarial settings. 
+	 Copyright (C) 2011 Georgia Institute of Technology
+	 
+	 This program is free software: you can redistribute it and/or modify
+	 it under the terms of the GNU Affero General Public License as
+	 published by the Free Software Foundation, either version 3 of the
+	 License, or (at your option) any later version.
+	 
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU Affero General Public License for more details.
+	 
+	 You should have received a copy of the GNU Affero General Public License
+	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 
+	 */
 	import Controller.ArgumentController;
 	import Controller.LoadController;
 	
@@ -8,7 +28,6 @@ package classes
 	import Model.ArgumentTypeModel;
 	import Model.InferenceModel;
 	import Model.StatementModel;
-	
 	import components.ArgSelector;
 	import components.HelpText;
 	import components.Option;
@@ -39,6 +58,8 @@ package classes
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
+	
+	import classes.Configure;
 	
 	public class AgoraMap extends Canvas
 	{
@@ -266,9 +287,349 @@ package classes
 			var panel:ArgumentPanel = event.target as ArgumentPanel;
 		}
 		
+		public function pushToServer(xml:XML):void
+		{
+			var urlLoader:URLLoader = new URLLoader;
+			var request:URLRequest = new URLRequest;
+			request.url = Configure.lookup("baseURL") + "insert.php";
+			request.data = new URLVariables("uid="+UserData.uid+"&pass_hash="+UserData.passHashStr+"&xml="+xml.toXMLString());
+			request.method = URLRequestMethod.GET;
+			urlLoader.load(request);	
+		}
+		
 		public function getGlobalCoordinates(point:Point):Point
 		{
 			return localToGlobal(point);
+		}
+		
+		public function getMapXml():XML
+		{
+			try{
+			var xml:XML = new XML("<map id=\""+ID+"\"></map>");
+			var argumentPanel:ArgumentPanel;
+			var inferencePanel:Inference;
+			//form textboxes
+			for( var i:int=0; i<layoutManager.panelList.length; i++)
+			{
+				var panel:GridPanel = layoutManager.panelList[i] as GridPanel;
+				//The panel may be an inference a reason/claim  or displayArgType
+				if(panel is Inference)
+				{	
+				}
+					//note an Inference is also an Argument Panel, because Inference is a more specific type. So
+					//it should come before in the else-if structure.
+				else if(panel is ArgumentPanel)
+				{
+					argumentPanel = ArgumentPanel(panel);
+					//add input1
+					var currTextBox:DynamicTextArea = argumentPanel.input1;
+					var currXML:XML = <textbox></textbox>;
+					currXML.@ID = currTextBox.ID;
+					if(argumentPanel.statementNegated)
+					{
+						currXML.@text = "#$#$#$"+currTextBox.text;
+					}
+					else{
+						currXML.@text = currTextBox.text;
+					}
+					xml = xml.appendChild(currXML);
+					//add inputs
+					for(var j:int=0; j<argumentPanel.inputs.length; j++)
+					{
+						currXML = <textbox></textbox>;
+						currXML.@ID = argumentPanel.inputs[j].ID;
+						currXML.@text = argumentPanel.inputs[j].text;
+						xml = xml.appendChild(currXML);
+					}
+				}	
+			}
+			//nodes
+			for(i=0; i  < layoutManager.panelList.length; i++)
+			{
+				panel = layoutManager.panelList[i] as GridPanel;
+				if(!(panel is MenuPanel)){
+					currXML= <node></node>;
+					if(panel is Inference)
+					{
+						inferencePanel = Inference(panel);
+						currXML.@ID = inferencePanel.ID;
+						currXML.@Type = "Inference";
+						currXML.@is_positive = 1;
+					}
+					else if(panel is ArgumentPanel)
+					{
+						argumentPanel = ArgumentPanel(panel);
+						currXML.@ID = argumentPanel.ID;
+						if(argumentPanel.state == 0){
+							currXML.@Type="Universal";
+						}
+						else{
+							currXML.@Type = "Particular";
+						}
+						
+						var nodeText:XML = <nodetext></nodetext>;
+						nodeText.@ID = argumentPanel.input1NTID;
+						nodeText.@textboxID = argumentPanel.input1.ID;
+						currXML = currXML.appendChild(nodeText);
+						for(j=0; j<argumentPanel.inputsNTID.length; j++)
+						{
+							nodeText = <nodetext></nodetext>;
+							nodeText.@ID = argumentPanel.inputsNTID[j];
+							nodeText.@textboxID = argumentPanel.inputs[j].ID;
+							currXML = currXML.appendChild(nodeText);
+						}
+						if(argumentPanel.statementNegated){
+							currXML.@is_positive = 0;
+						}
+						else{
+							currXML.@is_positive = 1;
+						}
+						
+					}
+					currXML.@typed = 0;
+					currXML.@x = panel.gridX;
+					currXML.@y = panel.gridY;
+					xml = xml.appendChild(currXML);
+				}
+			}
+			
+			//print connections
+			for(i=0; i<layoutManager.panelList.length; i++)
+			{
+				panel = layoutManager.panelList[i] as GridPanel;
+				if(panel is Inference)
+				{
+					inferencePanel = Inference(panel);
+					currXML = <connection></connection>;
+					currXML.@ID = inferencePanel.connID;
+					currXML.@type = inferencePanel.connectionType;
+					currXML.@x = inferencePanel.argType.gridX;
+					currXML.@y = inferencePanel.argType.gridY;
+					xml = xml.appendChild(currXML);
+				}	
+			}
+			}catch(error:Error){
+				return (<map><error text="Map was not saved ..." /></map>);
+			}
+			trace(xml.toXMLString());
+			return xml;
+		}
+		
+		public function load(xmlData:XML):void{
+			
+			//try{
+			//var xmlData:XML = new XML(event.target.data);
+			
+			ID = xmlData.@ID;
+			trace('This is the id of the map ' + id);
+			trace(ID);
+			var textboxes:XMLList = xmlData.textbox;
+			var textbox_map:Object = new Object;
+			
+			//read all text boxes
+			for each (var xml:XML in textboxes)
+			{
+				textbox_map[xml.attribute("ID")] = xml.attribute("text");
+			}
+			
+			var nodes:XMLList = xmlData.node;
+			var nodes_map:Object = new Object;
+			//read all nodes. This includes setting the text of the node
+			//by reading the text in the corresponding textbox node
+			for each (xml in nodes)
+			{
+				var argumentPanel:ArgumentPanel = null;
+				if(xml.attribute("Type") == "Inference")
+				{
+					argumentPanel = new Inference;
+					var inferencePanel:Inference = Inference(argumentPanel);
+					inferencePanel.argType = new MenuPanel;
+					addElement(inferencePanel);
+					addElement(inferencePanel.argType);
+				}
+				else{
+					argumentPanel = new ArgumentPanel;
+					addElement(argumentPanel);// try moving addElements to one place so that to optimize code
+					argumentPanel.userEntered = true;
+				}
+				nodes_map[xml.attribute("ID")] = argumentPanel;
+				argumentPanel.ID = xml.@ID;
+				argumentPanel.gridY = xml.attribute("y");
+				argumentPanel.gridX = xml.attribute("x");				
+				layoutManager.panelList.push(argumentPanel);
+			}
+			
+			var connections_map:Object = new Object;
+			var connections:XMLList = xmlData.connection;
+			for each( xml in connections)
+			{
+				//find the target node - claim
+				var claim:ArgumentPanel = nodes_map[xml.attribute("targetnode")];
+				//find the inference node
+				var inference:Inference = null;
+				var sources:XMLList = xml.sourcenode;
+				var panel:ArgumentPanel;
+				for each ( var sourcenode:XML in sources )
+				{
+					panel = nodes_map[sourcenode.attribute("nodeID")];
+					if( panel is Inference){
+						inference = Inference(panel);
+						inference.argType.gridY = xml.attribute("y");
+						inference.argType.gridX = xml.attribute("x");
+						layoutManager.addSavedPanel(inference.argType);
+						connections_map[xml.@ID] = inference;
+					}
+				}
+				claim.rules.push(inference);
+				inference.claim = claim;
+				var dta:DynamicTextArea = new DynamicTextArea;
+				addElement(dta);
+				dta.visible = false;
+				dta.panelReference = inference;
+				inference.input.push(dta);
+				
+				//forward update should be called only after all links are created.
+				//That is, wait for the reasons to be added too.
+				//Not doing this might result in accessing illegal memory
+				for each ( sourcenode in sources )
+				{
+					panel = nodes_map[sourcenode.attribute("nodeID")];
+					if(!(panel is Inference)){
+						inference.reasons.push(panel);
+						panel.inference = inference;
+						dta = new DynamicTextArea;
+						addElement(dta);
+						dta.visible=false;
+						dta.panelReference = inference;
+						inference.input.push(dta);
+					}
+				}
+			}
+			//set states
+			//select myArg
+			for each(xml in connections)
+			{
+				sources = xml.sourcenode;
+				inference = null;
+				for each(var source:XML in sources)
+				{
+					panel = nodes_map[source.@nodeID];
+					if(panel is Inference)
+					{
+						inference = Inference(panel);
+						inference.connID = xml.@connID;
+					}
+				}
+				if(inference.reasons.length > 1)
+				{
+					inference.hasMultipleReasons = true;
+				}
+				var type:String = xml.@type;
+				if(type != "Unset"){
+					inference.myArg =  getMyArg(type);
+					inference.myArg.inference = inference;
+					inference.myschemeSel = new ArgSelector;	
+					inference.myschemeSel.visible = false;
+					inference.myschemeSel.addEventListener(FlexEvent.CREATION_COMPLETE,inference.menuCreated);	
+					addChild(inference.myschemeSel);
+					inference.myschemeSel.selectedScheme = inference.myArg.myname;
+					inference.myschemeSel.selectedType = inference.myArg.getLanguageType(type);
+					inference.myschemeSel.selectedOption = inference.myArg.getOption(type);
+					inference.myArg.setIsExp();
+					if(inference.hasMultipleReasons)
+					{
+						inference.myschemeSel.typeSelector.dataProvider = inference.myArg._expLangTypes;
+					}
+					else
+					{
+						inference.myschemeSel.typeSelector.dataProvider = inference.myArg._langTypes;
+					}
+					inference.myschemeSel.typeSelector.visible = true;
+					inference.myArg.createLinks();
+					inference.argType.changeSchemeBtn.label = inference.myschemeSel.selectedScheme;
+					inference.selectedBool = true;
+					inference.schemeSelected = true;
+				}
+				else
+				{
+					inference.selectedBool = false;
+					inference.schemeSelected = false;
+				}
+				
+				if(inference.myArg is ConditionalSyllogism)
+				{
+					claim.multiStatement = true;
+					claim.implies = true;
+					
+					for each(var reason:ArgumentPanel in inference.reasons)
+					{
+						reason.multiStatement = true;
+						reason.implies = true;
+					}
+				}
+			}
+			//fill out text
+			for each(var node:XML in nodes)
+			{
+				var aPanel:ArgumentPanel = nodes_map[node.@ID];
+				aPanel.ID = node.@ID;
+				aPanel.userIdLbl.text = "AU: " +  node.@Author;
+				if(node.@Type == "Universal" || aPanel is Inference){
+					aPanel.state = 1;
+					aPanel.toggleType();
+				}
+				else
+				{
+					aPanel.state = 0;
+					aPanel.toggleType();
+				}
+				var nodetextList:XMLList = node.nodetext;
+				var i:int = 0;
+				for each(var nodetext:XML in nodetextList)
+				{
+					var string:String = textbox_map[nodetext.@textboxID];
+					var ind:int = string.indexOf("#$#$#$",0);
+					if(ind != -1)
+					{
+						string = string.substr(6,string.length -1);
+					}
+					if(i == 0){
+						aPanel.input1.text = string;
+						aPanel.input1NTID = nodetext.@ID;
+						aPanel.input1.ID = nodetext.@textboxID;
+						aPanel.input1.invalidateProperties();
+						aPanel.input1.invalidateSize();
+						aPanel.input1.invalidateDisplayList();
+					}
+					else{
+						aPanel.inputs[i-1].text = string;
+						aPanel.inputsNTID.push(nodetext.@ID);
+						aPanel.inputs[i-1].ID = nodetext.@textboxID;
+						aPanel.inputs[i-1].invalidateProperties();
+						aPanel.inputs[i-1].invalidateSize();
+						aPanel.inputs[i-1].invalidateDisplayList();
+					}
+					
+					i++;
+				}
+				if(aPanel.inference != null)
+				{
+					if(aPanel.inference.myArg != null)
+						aPanel.inference.displayStr = aPanel.inference.myArg.correctUsage();
+				}
+				//trace('Look here');
+				for each(var argPanel:ArgumentPanel in nodes_map)
+				{
+					argPanel.makeUnEditable();	
+				}
+				//aPanel.makeUnEditable();
+				//make all of the boxes uneditable
+				
+			}
+			//}catch(error:Error){
+			//	Alert.show("There was an error in loading the map. The map is corrupted, and may not be correct ...");
+			//}
+			layoutManager.layoutComponents();
 		}
 		
 		override protected function createChildren():void

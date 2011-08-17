@@ -13,6 +13,8 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="ConfigureScript.mxml"/>
+    <application path="LanguageScript.mxml"/>
     <application path="index.mxml"/>
   </applications>
   <modules/>

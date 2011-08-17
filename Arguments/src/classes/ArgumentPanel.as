@@ -1,13 +1,35 @@
 package classes
 {
+	/**
+	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+	 reflection, critique, deliberation, and creativity in individual argument construction 
+	 and in collaborative or adversarial settings. 
+	 Copyright (C) 2011 Georgia Institute of Technology
+	 
+	 This program is free software: you can redistribute it and/or modify
+	 it under the terms of the GNU Affero General Public License as
+	 published by the Free Software Foundation, either version 3 of the
+	 License, or (at your option) any later version.
+	 
+	 This program is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU Affero General Public License for more details.
+	 
+	 You should have received a copy of the GNU Affero General Public License
+	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 
+	 */
+	
 	import Controller.ViewController;
 	
 	import Model.SimpleStatementModel;
+
 	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
-	
 	import classes.Language;
+	import classes.Configure;
 	
 	import components.ArgSelector;
 	import components.Option;
@@ -230,8 +252,8 @@ package classes
 			
 		}
 		
+
 		protected function onAddBtnClicked(event:MouseEvent):void{
-			
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
@@ -342,14 +364,16 @@ package classes
 			
 			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
 			//stmtTypeLbl.toolTip = "Please change it before commiting";
-			stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
-			stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
+			//stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
+			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
+
 			
 			bottomHG = new HGroup();
 			doneHG = new HGroup;
 			doneBtn = new AButton;
 			doneBtn.label = "Done";
 			doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
+
 			doneHG.addElement(doneBtn);
 			
 			//TODO: Translate
@@ -383,7 +407,7 @@ package classes
 			userIdLbl.toolTip = userInfoStr;
 			
 			negatedLbl = new Label;
-			negatedLbl.text = "It is not the case that";
+			negatedLbl.text = Language.lookup("ArgNotCase");
 			negatedLbl.visible = false;
 			addElement(negatedLbl);
 			
@@ -400,12 +424,12 @@ package classes
 			//btnG.addElement(doneHG);
 			//btnG.addElement(bottomHG);
 			addBtn = new AButton;
-			addBtn.label = "add...";
+			addBtn.label = Language.lookup("Add")+"...";
 			
 			bottomHG.addElement(addBtn);
 			deleteBtn = new AButton;
-			deleteBtn.label = "delete...";
-			deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
+			deleteBtn.label = Language.lookup("Delete")+"...";
+			deleteBtn.addEventListener(MouseEvent.CLICK,deleteThis);
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
 		}
@@ -473,6 +497,161 @@ package classes
 			topArea.graphics.beginFill(0xdddddd,1.0);
 			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
 			userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);		
+		}
+		
+		public function onArgumentPanelCreate(e:FlexEvent):void
+		{
+			//remove the default title bar provided by mx
+			panelSkin = this.skin as PanelSkin;
+			panelSkin.topGroup.includeInLayout = false;
+			panelSkin.topGroup.visible = false;
+			setIDs();
+		}
+		
+		protected function setGuidingText(event:FlexEvent):void
+		{
+			if(this.panelType==ARGUMENT_PANEL)
+			{
+				//input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
+			}
+			else if(this.panelType==INFERENCE)
+			{
+			}
+			displayTxt.text = input1.text;
+			displayTxt.width = input1.width;
+			displayTxt.height = input1.height;
+		}
+		
+		public function toggleType():void
+		{
+			if(this.state==0) {
+				if(this.panelType!=INFERENCE)
+				{
+					state = 1;
+					stmtTypeLbl.text = Language.lookup("Particular Statement");
+					this.setStyle("cornerRadius",0);
+				}
+				else {
+					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
+					stmtTypeLbl.text = Language.lookup("Universal");
+				}
+			} 
+			else {
+				state = 0;
+				stmtTypeLbl.text = Language.lookup("Universal");
+				this.setStyle("cornerRadius",30);
+			} 
+		}
+		
+		public function toggle(m:MouseEvent):void
+		{
+			toggleType();	
+		}
+		
+		protected function deleteThis(event:MouseEvent):void
+		{
+			if(inference != null && inference.myArg is ConditionalSyllogism)
+			{
+				Alert.show("You cannot delete a reason of a conditional syllogism argument separately. To delete this argument, delete the enabler");
+				return;
+			}
+			this.selfDestroy();
+			if(inference != null)
+			{
+				if(inference.reasons.length == 0)
+				{
+					trace('No of reasons is zero, therefore deleting the inference panel');
+					inference.selfDestroy();
+				}
+			}
+		}
+		
+		public function deleteLinkFromArgumentPanel(inputBox:DynamicTextArea, claim:ArgumentPanel):void
+		{
+			//for input1.
+			if(claim.input1.forwardList.indexOf(inputBox) != -1)
+			{
+				claim.input1.forwardList.splice(claim.input1.forwardList.indexOf(inputBox),1);
+			}
+			//for inputs
+			for(var i:int=0; i< claim.inputs.length; i++)
+			{
+				var currInput:DynamicTextArea = claim.inputs[i];
+				if(currInput.forwardList.indexOf(inputBox) != -1)
+				{
+					currInput.forwardList.splice(currInput.forwardList.indexOf(inputBox),1);
+				}
+			}
+		}
+		
+		public function deleteLinks():void
+		{
+			if(inference == null)
+				return;
+			var claim:ArgumentPanel = inference.claim;
+			deleteLinkFromArgumentPanel(input1,claim);
+			for(var i:int = 0; i < inputs.length; i++)
+			{
+				deleteLinkFromArgumentPanel(inputs[i],claim);
+			}
+			//There will be no incoming links from inference
+		}
+		
+		public function inferenceDeleted():void
+		{
+			if(rules.length == 0)
+			{
+				if(this.inference != null)
+				{
+					inference.setRuleState();
+				}
+			}
+		}
+		
+		public function selfDestroy():void
+		{
+			for(var i:int=rules.length-1; i >= 0; i--)
+			{
+				rules[i].selfDestroy();
+			}
+			if(inference != null)
+			{
+				inference.reasons.splice(inference.reasons.indexOf(this,0),1);
+			}
+			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this,0),1);
+			deleteLinks();
+			parentMap.removeChild(this);
+			trace(this + ' destroyed');
+			if(inference != null)
+			{
+				if(inference.reasons.length > 0)
+				{
+					parentMap.layoutManager.alignReasons(this,this.gridY);
+					inference.displayStr = inference.myArg.correctUsage();
+					inference.reasonDeleted();
+				}
+			}
+		}
+		
+		public function setIDs():void
+		{
+			//By default there are only three textboxes
+			if(_initXML == null)
+				return;
+			try{
+			input1.ID = _initXML.textbox[0].@ID;
+			inputs[0].ID = _initXML.textbox[1].@ID;
+			inputs[1].ID = _initXML.textbox[2].@ID;
+			//only one node is returned
+			ID = _initXML.node.@ID;
+			input1NTID = _initXML.node.nodetext[0].@ID;
+			inputsNTID.push(_initXML.node.nodetext[1].@ID);
+			inputsNTID.push(_initXML.node.nodetext[2].@ID);
+			}
+			catch(error:Error)
+			{
+				Alert.show(error.toString());
+			}
 		}
 	}
 	

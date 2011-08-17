@@ -7,13 +7,13 @@
 			import Controller.UserSessionController;
 			
 			import mx.core.FlexGlobals;
+			import classes.Language;
 
 			protected function userInfoTxt_clickHandler(event:MouseEvent):void
 			{
 				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showSignInBox();
 			}
-
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -92,7 +92,7 @@
 		<s:layout>
 			<s:HorizontalLayout paddingLeft="5" paddingRight="5"/>
 		</s:layout>
-		<s:Button label="Delete" id="deleteBtn" click="hostComponent.deleteMaps(event)">
+		<s:Button label="{Language.lookup(&quot;Delete&quot;)}" id="deleteBtn" click="hostComponent.deleteMaps(event)">
 		</s:Button>
 		<s:Button label="{hostComponent.selectString}" id = "selectBtn"  click="hostComponent.makeSelection(event)">
 		</s:Button>
