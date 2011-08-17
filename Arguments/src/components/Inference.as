@@ -1,4 +1,4 @@
-package classes
+package components
 {
 	
 	/**
@@ -21,12 +21,8 @@ package classes
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
-	
-	
 	import Model.InferenceModel;
-
-	import components.ArgSelector;
-	import components.HelpText;
+	import Model.StatementModel;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -97,9 +93,18 @@ package classes
 		}
 		
 		
-		///Getters and Setters
-	
+		//--------- Getters and Setters -------------------//
 		
+		public function get inferenceModel():InferenceModel
+		{
+			return _inferenceModel;
+		}
+
+		public function set inferenceModel(value:InferenceModel):void
+		{
+			_inferenceModel = value;
+		}
+
 		public function get displayStr():String
 		{
 			return _displayStr;
@@ -113,6 +118,7 @@ package classes
 			invalidateSize();
 			invalidateDisplayList();
 		}
+		
 		/*
 		public function get connectionType():String
 		{

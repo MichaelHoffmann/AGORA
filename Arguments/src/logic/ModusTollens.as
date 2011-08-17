@@ -1,5 +1,6 @@
 package logic
 {
+
 	/**
 	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 	 reflection, critique, deliberation, and creativity in individual argument construction 
@@ -20,8 +21,9 @@ package logic
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
-	import classes.ArgumentPanel;
-	import classes.Language;
+	import components.ArgumentPanel;
+	
+	import mx.controls.Alert;
 	
 	import mx.controls.Alert;
 	//TODO: translate this file

@@ -1,4 +1,3 @@
-
 package logic
 {
 	/**
@@ -19,12 +18,13 @@ package logic
 	 
 	 You should have received a copy of the GNU Affero General Public License
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	 
-	 */
-	import classes.ArgumentPanel;
-	import classes.Language;
+	
+	*/
+	
 	
 	import mx.controls.Alert;
+	import components.ArgumentPanel;
+
 
 	public class NotAllSyllogism extends ParentArg
 	{

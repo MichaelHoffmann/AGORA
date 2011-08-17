@@ -1,6 +1,8 @@
 package logic
-{
-	/**
+{	
+	
+	
+/**
 	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 	 reflection, critique, deliberation, and creativity in individual argument construction 
 	 and in collaborative or adversarial settings. 
@@ -18,12 +20,12 @@ package logic
 	 
 	 You should have received a copy of the GNU Affero General Public License
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	 
-	 */
-	import classes.ArgumentPanel;
+
+*/
+
 	
 	import components.ArgSelector;
-	
+	import components.ArgumentPanel;
 	import mx.controls.Alert;
 	import mx.messaging.channels.StreamingAMFChannel;
 	

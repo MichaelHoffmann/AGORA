@@ -20,9 +20,9 @@ package logic
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
-	import classes.ArgumentPanel;
-	import classes.Language; //TODO: Replace raw text with Language.lookup()
 	
+	
+	import components.ArgumentPanel;
 	public class ConstructiveDilemma extends ParentArg
 	{
 		private static var instance:ConstructiveDilemma;

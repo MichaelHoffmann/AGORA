@@ -20,10 +20,9 @@ package logic
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
-	import classes.ArgumentPanel;
-	import classes.DynamicTextArea;
-	import classes.Inference;
-	import classes.Language;
+	import components.ArgumentPanel;
+	import components.DynamicTextArea;
+	import components.Inference;
 	
 	import mx.controls.Alert;
 	

@@ -1,5 +1,6 @@
-package classes
+package components
 {
+
 	/**
 	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 	 reflection, critique, deliberation, and creativity in individual argument construction 
@@ -20,7 +21,7 @@ package classes
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
-	
+	import Controller.ArgumentController;
 	import Controller.ViewController;
 	
 	import Model.SimpleStatementModel;
@@ -28,11 +29,10 @@ package classes
 	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
-	import classes.Language;
-	import classes.Configure;
 	
-	import components.ArgSelector;
-	import components.Option;
+	import classes.AButton;
+	import classes.Language;
+	import classes.UserData;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -80,7 +80,8 @@ package classes
 	public class ArgumentPanel extends GridPanel
 	{
 		//model class
-		public var model:StatementModel;
+		[Bindable]
+		private var _model:StatementModel;
 		
 		//Input boxes
 		public var inputs:Vector.<DynamicTextArea>;
@@ -118,11 +119,20 @@ package classes
 		
 		//Takes either INFERENCE or ARGUMENT_PANEL
 		public var panelType:int;
+		[Bindable]
+		private var _statementNegated:Boolean;
+		[Bindable]
+		private var _statementType:String;
+		[Bindable]
+		private var _author:String;
 		
 		//dirty flags
 		private var _statementNegatedDF:Boolean;		
 		private var _statementsAddedDF:Boolean;
 		private var _stateDF:Boolean;
+		private var _statementTypeChangedDF:Boolean;
+		
+		
 		
 		//constants
 		//Type of Panel: this could be found by just using is operator
@@ -183,19 +193,90 @@ package classes
 			
 			state = DISPLAY;
 			
-			//set dirty Flags
-			statementNegatedDF = true;
-			statementsAddedDF = true;
-			state = DISPLAY;
-			stateDF = true;
-			
 			
 			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
 		//------------------- Getters and Setters -----------------------------//
+		public function get author():String
+		{
+			return _author;
+		}
+
+		public function set author(value:String):void
+		{
+			_author = value;
+		}
+
+		public function get statementNegated():Boolean
+		{
+			return _statementNegated;
+		}
+
+		public function set statementNegated(value:Boolean):void
+		{
+			_statementNegated = value;
+			statementNegatedDF = true;
+			
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
+		}
+
+
+		public function get statementType():String
+		{
+			return _statementType;
+		}
+
+		[Bindable]
+		public function set statementType(value:String):void
+		{
+			_statementType = value;
+			statementTypeChangedDF = true;
+			
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
+		}
+
+		public function get model():StatementModel{
+			return _model;
+		}
 		
+		public function set model(value:StatementModel):void{
+			if(model == null){
+				_model = value;
+				//bind variables
+				BindingUtils.bindProperty(this, "statementType", this, ["model","statementType"]);
+				BindingUtils.bindProperty(this, "statementNegated", model, ["negated"]);
+				BindingUtils.bindProperty(this, "gridX", model, ["xgrid"]);
+				BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
+				BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
+				author = model.author;
+				
+				statementsAddedDF = true;
+				
+				invalidateProperties();
+				invalidateSize();
+				invalidateDisplayList();
+			}else{
+				trace("Error (ArgumentPanel.as, set model): attempted to reassign the model of statement view. Not allowed.");
+			}
+			
+		}
+		
+		public function get statementTypeChangedDF():Boolean
+		{
+			return _statementTypeChangedDF;
+		}
+
+		public function set statementTypeChangedDF(value:Boolean):void
+		{
+			_statementTypeChangedDF = value;
+		}
+
 		public function get state():String
 		{
 			return _state;
@@ -204,6 +285,10 @@ package classes
 		public function set state(value:String):void
 		{
 			_state = value;
+			stateDF = true;
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
 		}
 		
 		public function get stateDF():Boolean
@@ -242,6 +327,10 @@ package classes
 			panelSkin = this.skin as PanelSkin;
 			panelSkin.topGroup.includeInLayout = false;
 			panelSkin.topGroup.visible = false;
+			
+			//Event Listeners that are appropriate only after the component is 
+			//created
+			addEventListener(KeyboardEvent.KEY_DOWN, keyEntered);
 		}
 		
 		protected function onDeleteBtnClicked(event:MouseEvent):void{
@@ -249,7 +338,7 @@ package classes
 		}
 		
 		protected function onStmtTypeClicked(event:MouseEvent):void{
-			
+			ArgumentController.getInstance().changeType(model.ID);
 		}
 		
 
@@ -259,40 +348,33 @@ package classes
 		protected function lblClicked(event:MouseEvent):void
 		{
 			state = EDIT;
-			stateDF = true;
-			Alert.show("asdfasfda");
-			invalidateProperties();
-			invalidateSize();
-			invalidateDisplayList();
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
 			state = DISPLAY;
-			stateDF = true;
-			invalidateProperties();
-			invalidateSize();
-			invalidateDisplayList();
 		}
 		
 		protected function keyEntered(event: KeyboardEvent):void
 		{
 			if(event.keyCode == Keyboard.ENTER)	
-			{
+			{				
+				if(state == EDIT){
+					state = DISPLAY;
+				}
 			}
 		}
 		
 		public function beginDrag( mouseEvent: MouseEvent ):void
 		{
 			try{
-				var	dinitiator:UIComponent = UIComponent(mouseEvent.currentTarget);
 				var dPInitiator:ArgumentPanel = this;
 				var ds:DragSource = new DragSource();
 				var tmpx:int = int(dPInitiator.mouseX);
 				var tmpy:int = int(dPInitiator.mouseY);
 				ds.addData(tmpx,"x");
 				ds.addData(tmpy,"y");
-				ds.addData(dPInitiator.gridX,"gx");
-				ds.addData(dPInitiator.gridY,"gy");
+				ds.addData(dPInitiator.model.xgrid,"gx");
+				ds.addData(dPInitiator.model.ygrid,"gy");
 				DragManager.doDrag(dPInitiator,ds,mouseEvent,null);
 			}
 			catch(error:Error)
@@ -317,7 +399,7 @@ package classes
 		
 		public function showMenu():void
 		{
-			var menu:Menu = Menu.createMenu(null,constructArgData,false);
+			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
 			menu.show(globalPosition.x,globalPosition.y);	
@@ -348,7 +430,7 @@ package classes
 		{
 			//Elements are constructed, initialized with properties, and attached to display list		
 			//create the children of MX Panel
-			super.createChildren();		
+			super.createChildren();
 			var uLayout:VerticalLayout = new VerticalLayout;
 			uLayout.paddingBottom = 10;
 			uLayout.paddingLeft = 10;
@@ -364,8 +446,10 @@ package classes
 			
 			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
 			//stmtTypeLbl.toolTip = "Please change it before commiting";
-			//stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
-			stmtTypeLbl.addEventListener(MouseEvent.CLICK,toggle);
+
+			stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
+			BindingUtils.bindProperty(stmtTypeLbl, "text",this, ["statementType"]);
+			stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
 
 			
 			bottomHG = new HGroup();
@@ -378,7 +462,7 @@ package classes
 			
 			//TODO: Translate
 			displayTxt = new Text;
-			//BindingUtils.bindProperty(displayTxt, "text", model, ["statement","text"]);
+			displayTxt.width = 150;
 			BindingUtils.bindSetter(setDisplayStatement, model, ["statement", "text"]);
 			this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
 			//Create a UIComponent for clicking and dragging
@@ -402,14 +486,14 @@ package classes
 			stmtInfoVG.addElement(stmtTypeLbl);
 			stmtInfoVG.addElement(userIdLbl);
 			
-			userIdLbl.text = "AU: " + UserData.userNameStr;
+			userIdLbl.text = "AU: " + author;
 			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
 			userIdLbl.toolTip = userInfoStr;
 			
 			negatedLbl = new Label;
 			negatedLbl.text = Language.lookup("ArgNotCase");
 			negatedLbl.visible = false;
-			addElement(negatedLbl);
+			//addElement(negatedLbl);
 			
 			
 			group = new Group;
@@ -421,8 +505,6 @@ package classes
 			btnG.addElement(bottomHG);
 			doneHG = new HGroup;
 			doneHG.addElement(doneBtn);
-			//btnG.addElement(doneHG);
-			//btnG.addElement(bottomHG);
 			addBtn = new AButton;
 			addBtn.label = Language.lookup("Add")+"...";
 			
@@ -443,7 +525,6 @@ package classes
 			if(statementsAddedDF){
 				//clear flag
 				statementsAddedDF = false;
-				
 				//remove inputs
 				for each(dta in inputs){
 					try{
@@ -464,17 +545,28 @@ package classes
 				}	
 			}
 			
+			if(statementTypeChangedDF){
+				statementTypeChangedDF = false;
+				if(statementType == StatementModel.UNIVERSAL){
+					this.setStyle("cornerRadius", 30);
+				}
+				else{
+					this.setStyle("cornerRadius", 0);
+				}
+			}
+			
 			if(stateDF){
 				stateDF = false;
 				if(state == EDIT){
 					group.removeAllElements();
 					btnG.removeAllElements();
 					
-					if(model.negated){
+					if(statementNegated){
 						group.addElement(negatedLbl);
 					}
 					for each(dta in inputs){
 						group.addElement(dta);
+						stage.focus = dta;
 					}	
 					btnG.addElement(doneHG);
 				}

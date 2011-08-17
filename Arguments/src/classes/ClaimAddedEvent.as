@@ -1,6 +1,7 @@
 package classes
 {
 	import flash.events.Event;
+	import components.ArgumentPanel;
 	
 	public class ClaimAddedEvent extends Event
 	{

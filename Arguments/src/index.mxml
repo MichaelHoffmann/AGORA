@@ -18,6 +18,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
@@ -30,8 +31,9 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<components:Menu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
-	</components:Menu>
+	
+	<components:AGORAMenu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
+	</components:AGORAMenu>
 	<components:LAMWorld id="lamWorld" visible="false">
 	</components:LAMWorld>
 	<components:Map id="map" visible="false">
@@ -39,12 +41,14 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.LayoutController;
+			
 			import Model.AGORAModel;
 			
-			import classes.AgoraMap;
-			import classes.ArgumentPanel;
 			import classes.UserData;
 			
+			import components.AgoraMap;
+			import components.ArgumentPanel;
 			import components.LAMWorld;
 			import components.LoginWindow;
 			import components.Map;
@@ -80,7 +84,7 @@
 
 			protected function application1_applicationCompleteHandler(event:FlexEvent):void
 			{
-				
+				LayoutController.getInstance().setApplicationLayoutProperties();
 			}
 		]]>
 	</fx:Script>

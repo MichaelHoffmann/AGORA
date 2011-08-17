@@ -35,7 +35,7 @@
 		<s:Scroller id="agora">	
 			<s:Group>
 				<mx:Canvas>
-					<classes:AgoraMap id="agoraMap" backgroundColor="0xffffff" minWidth="1400" minHeight="800">	
+					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
 						<mx:Canvas id="canvas" width="150" visible="false">
 							<mx:Text width="150" height="140" id="helpTxt">
 								<mx:htmlText>
@@ -45,7 +45,7 @@
 								</mx:htmlText>
 							</mx:Text>
 						</mx:Canvas>
-					</classes:AgoraMap>	
+					</components:AgoraMap>	
 				</mx:Canvas>
 			</s:Group>
 		</s:Scroller>
@@ -53,8 +53,8 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import classes.ALayoutManager;
-			import classes.ArgumentPanel;
+			import Controller.LayoutController;
+			
 			import classes.ClaimAddedEvent;
 			import classes.Configure;
 			import classes.GridPanel;
@@ -78,7 +78,7 @@
 			
 			public var numComponentsX:int;
 			public var numComponentsY:int;
-			public var layoutManager:ALayoutManager;
+			public var layoutManager:LayoutController;
 			
 			public function hideMap():void
 			{
@@ -96,6 +96,8 @@
 			
 			public function setWidth(event: Event):void
 			{
+				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 50;
+				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 50;
 			}
 			
 			public function update():void{

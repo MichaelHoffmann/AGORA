@@ -2,8 +2,8 @@ package Controller
 {
 	import Model.SimpleStatementModel;
 	
-	import classes.ArgumentPanel;
-	import classes.DynamicTextArea;
+	import components.ArgumentPanel;
+	import components.DynamicTextArea;
 	
 	import flash.events.KeyboardEvent;
 	

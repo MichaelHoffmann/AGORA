@@ -21,6 +21,8 @@ package Events
 		public static const FIRST_CLAIM_ADDED:String = "FirstClaimAdded";
 		public static const MAP_LOADED:String = "MapLoaded";
 		public static const MAP_LOADING_FAILED:String = "MapLoadingFailed";
+		public static const STATEMENT_TYPE_TOGGLED:String = "StatementTypeToggled";
+		public static const POSITIONS_UPDATED:String = "PositionsUpdated";
 		
 		public var xmlData:XML;
 		public var eventData:Object;

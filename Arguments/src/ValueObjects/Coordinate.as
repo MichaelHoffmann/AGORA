@@ -1,4 +1,4 @@
-package classes
+package ValueObjects
 {
 	public class Coordinate
 	{

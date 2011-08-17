@@ -1,5 +1,6 @@
-package classes
+package Controller
 {
+
 	/**
 	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 	 reflection, critique, deliberation, and creativity in individual argument construction 
@@ -20,8 +21,22 @@ package classes
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
-	import components.Map;
+
+	import Events.AGORAEvent;
 	
+	import Model.AGORAModel;
+	import Model.ArgumentTypeModel;
+	import Model.InferenceModel;
+	import Model.StatementModel;
+	
+	import components.ArgumentPanel;
+	import components.GridPanel;
+	import components.Inference;
+
+	import components.Map;
+	import components.MenuPanel;
+	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import mx.containers.Canvas;
@@ -29,16 +44,21 @@ package classes
 	import mx.controls.Text;
 	import mx.core.FlexGlobals;
 	import mx.core.INavigatorContent;
+	import mx.core.LayoutContainer;
 	import mx.core.UIComponent;
+	import mx.managers.CursorManager;
 	import mx.managers.LayoutManager;
 	import mx.messaging.messages.ErrorMessage;
 	
 	import spark.components.VGroup;
 	import spark.layouts.VerticalLayout;
 	
-	public class ALayoutManager
+	public class LayoutController
 	{
 		//public var listOfPanels:Vector.<ArgumentPanel>;
+		
+		private static var instance: LayoutController
+		private var _model:AGORAModel;
 		
 		public var panelList:Vector.<GridPanel>;
 		public var uwidth:int;
@@ -46,15 +66,67 @@ package classes
 		public var yArgDistances:int;
 		public var yArgDisplay:int;
 		
-		public function ALayoutManager()
+		public function LayoutController()
 		{
-			//panelList = new Vector.<ArgumentPanel>(0,false);
-			panelList = new Vector.<GridPanel>(0,false);
 			uwidth = 25;
 			yPadding = 0;
 			yArgDistances = 10;
 			yArgDisplay  = 7;
+			
+			model = AGORAModel.getInstance();
+			model.agoraMapModel.addEventListener(AGORAEvent.POSITIONS_UPDATED, onPositionsUpdated);
+			
 		}
+		
+		//-------------------------- get instance ----------------------//
+
+		public function get model():AGORAModel
+		{
+			return _model;
+		}
+
+		public function set model(value:AGORAModel):void
+		{
+			_model = value;
+		}
+
+		public static function getInstance():LayoutController{
+			if(instance == null){
+				instance = new LayoutController;
+			}
+			return instance;
+		}
+		
+		//-------------------------- panel moved -----------------------//
+		public function movePanel(panel:GridPanel, xgridDiff:int, ygridDiff:int):void{
+			if(panel is Inference){
+				var inferenceModel:InferenceModel = Inference(panel).inferenceModel;
+				model.agoraMapModel.updatePosition(inferenceModel, xgridDiff, ygridDiff);
+			}
+			else if(panel is ArgumentPanel){
+				var statementModel:StatementModel = ArgumentPanel(panel).model;
+				model.agoraMapModel.updatePosition(statementModel, xgridDiff, ygridDiff);
+			}
+			else if(panel is MenuPanel){
+				var argumentTypeModel:ArgumentTypeModel = MenuPanel(panel).model;
+				model.agoraMapModel.updatePosition(argumentTypeModel, xgridDiff, ygridDiff);
+			}
+		}
+		
+		protected function onPositionsUpdated(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
+			LoadController.getInstance().fetchMapData();
+		}
+		
+		//------------------------- other public functions --------------------//
+		public function setApplicationLayoutProperties():void{
+			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 30;
+			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 30;
+			FlexGlobals.topLevelApplication.map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
+		}
+		
+		
+		
 		/*
 		public function alignReasons(reason:ArgumentPanel,tmpY:int):void
 		{
@@ -85,21 +157,6 @@ package classes
 			var ind:int = panelList.indexOf(panel);
 			panelList.splice(ind,1);
 		}
-		
-		public function layoutComponents():void
-		{
-			var argumentPanel:GridPanel;
-			var i:int;
-			
-			for( i=0;i<panelList.length;i++)
-			{
-				argumentPanel = panelList[i];
-				argumentPanel.x = argumentPanel.gridY * uwidth + yPadding;
-				argumentPanel.y = argumentPanel.gridX * uwidth + yPadding;
-			}
-			//ArgumentPanel.parentMap.connectRelatedPanels();
-		}
-		
 		
 		public function moveConnectedPanels(claim:ArgumentPanel,diffX:int, diffY:int):void
 		{
@@ -147,7 +204,7 @@ package classes
 		}
 		
 		public function getGridPositionY(tmpX:int):int
-		{
+		{	
 			return (Math.floor(tmpX/uwidth));
 		}
 		
@@ -181,7 +238,6 @@ package classes
 				Alert.show(e.toString());
 			}
 			panelList.push(panel1);
-			layoutComponents();
 			//components.Map(ArgumentPanel.parentMap.parent.parent.parent.parent.parent).update();
 		}
 		

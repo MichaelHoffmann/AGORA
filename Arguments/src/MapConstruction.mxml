@@ -22,7 +22,7 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:classes="classes.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()" xmlns:components="components.*">
 		
 	<s:Label text="Welcome to AGORA-net! Please choose one of the following tasks to continue.."
 			 x="10" y="10"
@@ -47,12 +47,12 @@
 				 width="184"
 				 click="startWithScheme()"/>
 	
-	<classes:DynamicTextArea id="conceptStart"
+	<components:DynamicTextArea id="conceptStart"
 							 x="658" 
 							 y="67" 
 							 minWidth="195"
 							 textAlign="center"/>
-	<classes:DynamicTextArea id="argumentPaste"
+	<components:DynamicTextArea id="argumentPaste"
 							 x="1027" 
 							 y="67"  
 							 click="{argumentPaste.text=''}" 
