@@ -35,6 +35,7 @@ package classes
 		}
 
 		
-		/**The key function. Use this to look up a label from the translation document according to the set language.*/		
+		/**The key function. Use this to look up a label from the translation document according to the set language.*/	
+		
 	}
 }
