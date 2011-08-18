@@ -6,7 +6,7 @@ package ValueObjects
 		public var nodeID:int;
 		public var deleted:Boolean;
 		
-		public function SourcenodeValueObject(sourcenode:Object)
+		public function SourcenodeValueObject(sourcenode:Object, inserted:Boolean = false)
 		{
 			try{
 				ID = sourcenode.ID;

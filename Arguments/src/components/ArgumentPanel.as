@@ -520,6 +520,7 @@ package components
 				}	
 			}
 			
+			userIdLbl.width = this.explicitWidth - 60;
 			if(statementTypeChangedDF){
 				statementTypeChangedDF = false;
 				if(statementType == StatementModel.UNIVERSAL){
@@ -558,12 +559,17 @@ package components
 			}
 		}
 		
+		override protected function measure():void{
+			//call parent's measure
+			super.measure();
+			//userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);	
+		}
+		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
-			userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);		
+			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);		
 		}
 	}
 	

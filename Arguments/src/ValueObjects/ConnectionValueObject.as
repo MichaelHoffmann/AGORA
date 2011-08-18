@@ -14,7 +14,7 @@ package ValueObjects
 		public var deleted:Boolean;
 		public var sourcenodes:Vector.<SourcenodeValueObject>;
 		
-		public function ConnectionValueObject(connectionObject:Object)
+		public function ConnectionValueObject(connectionObject:Object, inserted:Boolean = false)
 		{
 			try{
 				connID = connectionObject.ID;
@@ -27,7 +27,7 @@ package ValueObjects
 					sourcenodes = new Vector.<SourcenodeValueObject>;
 					if(connectionObject.sourcenode is ArrayCollection){
 						for each(var obj:Object in connectionObject.sourcenode){
-							var  sourcenode:SourcenodeValueObject = new SourcenodeValueObject(obj);
+							var  sourcenode:SourcenodeValueObject = new SourcenodeValueObject(obj, inserted);
 							sourcenodes.push(sourcenode);
 						}
 					}else{

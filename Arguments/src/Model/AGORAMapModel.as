@@ -59,6 +59,9 @@ package Model
 			
 			//create first claim service
 			createFirstClaim = new HTTPService;
+			//Below statement is enabled when the xml is required for 
+			//debugging
+			//createFirstClaim.resultFormat = "e4x";
 			createFirstClaim.url = AGORAParameters.getInstance().insertURL;
 			createFirstClaim.addEventListener(ResultEvent.RESULT, onAddFirstClaimResult);
 			createFirstClaim.addEventListener(FaultEvent.FAULT, onFault);
@@ -205,39 +208,23 @@ package Model
 		
 		protected function onAddFirstClaimResult(event:ResultEvent):void{
 			//create statement model
-			var map:Object = event.result.map;
-			
+			var map:MapValueObject = new MapValueObject(event.result.map, true);
 			try{
 				var statementModel:StatementModel = new StatementModel;
 				
 				//---------node----------//
-				statementModel.ID = map.node.ID;
+				statementModel.ID = map.nodeObjects[0].ID;
 				statementModel.complexStatement = false;
 				
 				//-------textboxes & nodetext----------//
 				var simpleStatement:SimpleStatementModel = null;
-				
-				if(map.textbox is ArrayCollection){
-					trace("first claim as complex statement...");//shouldn't occur because there is no use case that allows this.
-					/*
-					for(var i:int=1; i < ArrayCollection(map.textbox).length; i++){
-					simpleStatement = new SimpleStatementModel;
-					simpleStatement.ID = map.textbox[i].ID;
-					simpleStatement.text = map.textbox[i].text;
-					simpleStatement.parent = statementModel;
-					statementModel.statements.push(simpleStatement);
-					statementModel.nodeTextIDs.push(map.node.nodetext[i].ID);
-					}
-					*/
-				}
-				else{
-					simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textbox, statementModel);
-					simpleStatement.text = map.textbox.text;
-					simpleStatement.hasOwn = true;
-					simpleStatement.forwardList.push(statementModel.statement);
-					statementModel.statements.push(simpleStatement);
-					statementModel.nodeTextIDs.push(map.node.nodetext.ID);
-				}
+				simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textboxes[0], statementModel);
+				//When first statement is created, there will not be any text
+				//simpleStatement.text = map.textboxes[0].text;
+				simpleStatement.hasOwn = true;
+				simpleStatement.forwardList.push(statementModel.statement);
+				statementModel.statements.push(simpleStatement);
+				statementModel.nodeTextIDs.push(map.nodeObjects[0].nodetexts[0].ID);
 				statementModel.firstClaim = true;
 				
 			}catch(error:Error){
@@ -248,7 +235,6 @@ package Model
 			//push it to the model
 			panelListHash[statementModel.ID] = statementModel;
 			newPanels.addItem(statementModel);
-			
 			//raise event 
 			dispatchEvent(new AGORAEvent(AGORAEvent.FIRST_CLAIM_ADDED, null, statementModel));	
 		}
