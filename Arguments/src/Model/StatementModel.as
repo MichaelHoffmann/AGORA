@@ -39,6 +39,7 @@ package Model
 		
 		
 		private var toggleStatementTypeService:HTTPService;
+		private var saveTextService:HTTPService;
 		
 		
 		public function StatementModel(target:IEventDispatcher=null)
@@ -55,6 +56,15 @@ package Model
 			toggleStatementTypeService.url = AGORAParameters.getInstance().insertURL;
 			toggleStatementTypeService.addEventListener(ResultEvent.RESULT, onToggleTypeServiceResult);
 			toggleStatementTypeService.addEventListener(FaultEvent.FAULT, onFault);
+			
+			//create save text service
+			saveTextService = new HTTPService;
+			saveTextService.url = AGORAParameters.getInstance().insertURL;
+			saveTextService.addEventListener(ResultEvent.RESULT, onSaveTextServiceResult);
+			saveTextService.addEventListener(FaultEvent.FAULT, onFault);
+			
+			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);
+			
 		}
 		
 		
@@ -233,7 +243,7 @@ package Model
 		public function addSupportingArgument(x:int):void{
 			var statementWidth:int = AGORAModel.getInstance().agoraMapModel.statementWidth;
 				
-			var addArgumentXML:XML =<map>
+			var addArgumentXML:XML =<map ID={AGORAModel.getInstance().agoraMapModel.ID}>
 										<textbox text=" " TID="1"/>
 									</map>;
 			
@@ -255,8 +265,6 @@ package Model
 				
 			}
 			
-			
-			
 			addArgumentXML.appendChild(reasonNodeXML);
 			addArgumentXML.appendChild(inferenceXML);
 			addArgumentXML.appendChild(connectionXML);
@@ -265,6 +273,21 @@ package Model
 		
 		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
 			
+		}
+	
+		//---------------- save statement Texts --------------------------//
+		public function saveTexts():void{
+			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
+			for each(var simpStatement:SimpleStatementModel in statements){
+				if(simpStatement.hasOwn){
+					requestXML.appendChild(<textbox ID={simpStatement.ID} text={simpStatement.text} />)
+				}
+			}
+			saveTextService.send({uid: AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash, xml:requestXML});
+			
+		}
+		protected function onSaveTextServiceResult(event:ResultEvent):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.TEXT_SAVED, null, this));
 		}
 		
 		//----------------- Generic Fault Handler -------------------------//

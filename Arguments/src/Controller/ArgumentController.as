@@ -2,6 +2,7 @@ package Controller
 {
 	import Events.AGORAEvent;
 	
+	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.MapMetaData;
 	import Model.StatementModel;
@@ -35,6 +36,7 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
+			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -79,10 +81,6 @@ package Controller
 		
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
-			
-			//set event listeners
-			setEventListeners(statementModel);
-			
 			LoadController.getInstance().fetchMapData();
 			//Edit: Delay the below invalidation until next update
 			//invalidate component, so that they get updated during the validation  cycle of the Flex architecture
@@ -116,9 +114,28 @@ package Controller
 			CursorManager.removeBusyCursor();
 		}
 		
+		//------------------ Saving Text -----------------------------------//
+		public function saveText(statementModel:StatementModel):void{
+			//call the model's update text function
+			statementModel.saveTexts();
+			CursorManager.setBusyCursor();
+			
+		}
+		
+		protected function textSaved(event:AGORAEvent):void{
+			var statementModel:StatementModel = StatementModel(event.eventData);
+			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
+			argumentPanel.state = ArgumentPanel.DISPLAY;
+			CursorManager.removeAllCursors();
+		}
+		
 		//------------------- configuration functions -----------------//
-		public function setEventListeners(statementModel:StatementModel):void{
-			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLED,statementTypeToggled); 	
+		public function setEventListeners(statementAddedEvent:AGORAEvent):void{
+			//get the statement model
+			var statementModel:StatementModel = statementAddedEvent.eventData as StatementModel;
+			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLED,statementTypeToggled); 
+			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, textSaved);
+			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
 		}
 		
 		

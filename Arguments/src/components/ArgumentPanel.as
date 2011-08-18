@@ -329,7 +329,7 @@ package components
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
-			state = DISPLAY;
+			ArgumentController.getInstance().saveText(model);
 		}
 		
 		protected function keyEntered(event: KeyboardEvent):void
@@ -337,12 +337,12 @@ package components
 			if(event.keyCode == Keyboard.ENTER)	
 			{				
 				if(state == EDIT){
-					state = DISPLAY;
+					ArgumentController.getInstance().saveText(model);
 				}
 			}
 		}
 		
-		public function beginDrag( mouseEvent: MouseEvent ):void
+		public function beginDrag(mouseEvent: MouseEvent ):void
 		{
 			try{
 				var dPInitiator:ArgumentPanel = this;
@@ -383,11 +383,7 @@ package components
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
-		public function doneHandler(d:MouseEvent):void
-		{
-		}
-		
-		
+
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
 			if(!value){

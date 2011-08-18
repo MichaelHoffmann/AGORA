@@ -180,6 +180,7 @@ package Model
 		{
 			_name = value;
 		}
+	
 		
 		//----------------------- Create a New Map --------------------------------------------//
 		public function createMap(mapName:String):void{
@@ -211,7 +212,6 @@ package Model
 			var map:MapValueObject = new MapValueObject(event.result.map, true);
 			try{
 				var statementModel:StatementModel = new StatementModel;
-				
 				//---------node----------//
 				statementModel.ID = map.nodeObjects[0].ID;
 				statementModel.complexStatement = false;
@@ -239,6 +239,10 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.FIRST_CLAIM_ADDED, null, statementModel));	
 		}
 		
+		//----------------------- Notify new statement model -----------------------------//
+		public function newStatementAdded(statementModel:StatementModel):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_ADDED, null, statementModel));
+		}
 		//----------------------- Load New Data ----------------------------------------------//
 		public function loadMapModel():void{
 			loadMapService.send({map_id:ID.toString(),timestamp:timestamp});		
@@ -450,7 +454,7 @@ package Model
 		public function reinitializeModel():void{
 			
 		}
-		
+	
 		//----------------------- Generic Fault Event  Handler-------------------------------//
 		protected function onFault(event:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));	
