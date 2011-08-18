@@ -17,6 +17,7 @@ package Model
 	public class StatementModel extends EventDispatcher
 	{
 		
+		public static const STATEMENT:String = "Statement";
 		public static const DISJUNCTION:String = "Disjunction";
 		public static const IMPLICATION:String = "Implication";
 		public static const INFERENCE:String = "Inference";
@@ -24,6 +25,7 @@ package Model
 		public static const PARTICULAR:String = "Particular";
 		
 		private var _author:String;
+		private var _functionsAs:String;
 		private var _statement:SimpleStatementModel;
 		private var _statements:Vector.<SimpleStatementModel>;
 		private var _negated:Boolean;
@@ -42,7 +44,7 @@ package Model
 		private var saveTextService:HTTPService;
 		
 		
-		public function StatementModel(target:IEventDispatcher=null)
+		public function StatementModel(modelType:String=STATEMENT, target:IEventDispatcher=null)
 		{
 			super(target);
 			statements = new Vector.<SimpleStatementModel>(0,false);
@@ -63,6 +65,8 @@ package Model
 			saveTextService.addEventListener(ResultEvent.RESULT, onSaveTextServiceResult);
 			saveTextService.addEventListener(FaultEvent.FAULT, onFault);
 			
+			functionsAs = modelType;	
+			
 			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);
 			
 		}
@@ -70,6 +74,19 @@ package Model
 		
 		//--------------------Getters and Setters------------------//
 		
+		public function get functionsAs():String
+		{
+			return _functionsAs;
+		}
+
+		public function set functionsAs(value:String):void
+		{
+			if( value == INFERENCE){
+				statementType = UNIVERSAL;
+			}
+			_functionsAs = value;
+		}
+
 		public function get author():String
 		{
 			return _author;
@@ -247,11 +264,11 @@ package Model
 										<textbox text=" " TID="1"/>
 									</map>;
 			
-			var reasonNodeXML:XML = <node TID= "4" Type="Standard" x={x} y={ygrid}>
+			var reasonNodeXML:XML = <node TID= "4" Type="Standard" typed="0" is_positive="1" x={x} y={ygrid}>
 											<nodetext TID="5" textboxTID="1"/>
 									</node>;
 			
-			var inferenceXML:XML =  <node TID="6" Type="Inference" x={x + 15} y={ygrid}>
+			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 15} y={ygrid}>
 											<nodetext TID="7" />
 											<nodetext TID="8" />
 									</node>;

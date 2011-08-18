@@ -96,7 +96,7 @@ package components
 		private var _state:String;
 		
 		//Takes either INFERENCE or ARGUMENT_PANEL
-		public var panelType:int;
+		public var panelType:String;
 		[Bindable]
 		private var _statementNegated:Boolean;
 		[Bindable]
@@ -114,9 +114,9 @@ package components
 		
 		//constants
 		//Type of Panel: this could be found by just using is operator
-		public static const ARGUMENT_PANEL:int = 0;
+		public static const ARGUMENT_PANEL:String = "ArgumentPanel"
 		//Type of Panel
-		public static const INFERENCE:int = 1;
+		public static const INFERENCE:String = "Inference";
 		//connecting string constants required for multistatements
 		public static const IF_THEN:String = "If-then";
 		public static const IMPLIES:String = "Implies";	
@@ -154,7 +154,7 @@ package components
 		
 		//other instance variables
 		public var connectingStr:String;
-		public function ArgumentPanel()
+		public function ArgumentPanel(type:String = ARGUMENT_PANEL)
 		{
 			super();
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
@@ -170,7 +170,7 @@ package components
 			minHeight = 100;
 			
 			state = DISPLAY;
-			
+			panelType = type;
 			
 			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
@@ -181,17 +181,17 @@ package components
 		{
 			return _author;
 		}
-
+		
 		public function set author(value:String):void
 		{
 			_author = value;
 		}
-
+		
 		public function get statementNegated():Boolean
 		{
 			return _statementNegated;
 		}
-
+		
 		public function set statementNegated(value:Boolean):void
 		{
 			_statementNegated = value;
@@ -201,13 +201,13 @@ package components
 			invalidateSize();
 			invalidateDisplayList();
 		}
-
-
+		
+		
 		public function get statementType():String
 		{
 			return _statementType;
 		}
-
+		
 		[Bindable]
 		public function set statementType(value:String):void
 		{
@@ -218,7 +218,7 @@ package components
 			invalidateSize();
 			invalidateDisplayList();
 		}
-
+		
 		public function get model():StatementModel{
 			return _model;
 		}
@@ -249,12 +249,12 @@ package components
 		{
 			return _statementTypeChangedDF;
 		}
-
+		
 		public function set statementTypeChangedDF(value:Boolean):void
 		{
 			_statementTypeChangedDF = value;
 		}
-
+		
 		public function get state():String
 		{
 			return _state;
@@ -383,7 +383,7 @@ package components
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
-
+		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
 			if(!value){
@@ -490,75 +490,90 @@ package components
 		override protected function commitProperties():void
 		{
 			super.commitProperties();
-			var dta:DynamicTextArea;
-			var simpleStatement:SimpleStatementModel;
-			//check if new statements were added
-			if(statementsAddedDF){
-				//clear flag
-				statementsAddedDF = false;
-				//remove inputs
-				for each(dta in inputs){
-					try{
-						group.removeElement(dta);
-					}catch(error:Error){
-						trace("error: Trying to remove an element that is not present");
-					}
-				}
-				inputs.splice(0,inputs.length);
-				
-				//for each statement add an input text
-				for each(simpleStatement in model.statements){
-					dta = new DynamicTextArea;
-					//add model
-					dta.model = simpleStatement;
-					//push that into inputs
-					inputs.push(dta);
-				}	
-			}
-			
-			userIdLbl.width = this.explicitWidth - 60;
-			if(statementTypeChangedDF){
-				statementTypeChangedDF = false;
-				if(statementType == StatementModel.UNIVERSAL){
-					this.setStyle("cornerRadius", 30);
-				}
-				else{
-					this.setStyle("cornerRadius", 0);
-				}
-			}
-			
-			if(stateDF){
-				stateDF = false;
-				if(state == EDIT){
-					group.removeAllElements();
-					btnG.removeAllElements();
-					
-					if(statementNegated){
-						group.addElement(negatedLbl);
-					}
-					for each(dta in inputs){
-						group.addElement(dta);
-						stage.focus = dta;
-					}	
-					btnG.addElement(doneHG);
-				}
-				else if(state == DISPLAY){
+			if(panelType == ARGUMENT_PANEL){
+				var dta:DynamicTextArea;
+				var simpleStatement:SimpleStatementModel;
+				//check if new statements were added
+				if(statementsAddedDF){
+					//clear flag
+					statementsAddedDF = false;
 					//remove inputs
-					group.removeAllElements();
-					//remove buttons
-					btnG.removeAllElements();
-					//add label
-					group.addElement(displayTxt);
-					//add button
-					btnG.addElement(bottomHG);
+					for each(dta in inputs){
+						try{
+							group.removeElement(dta);
+						}catch(error:Error){
+							trace("error: Trying to remove an element that is not present");
+						}
+					}
+					inputs.splice(0,inputs.length);
+					
+					//for each statement add an input text
+					for each(simpleStatement in model.statements){
+						dta = new DynamicTextArea;
+						//add model
+						dta.model = simpleStatement;
+						//push that into inputs
+						inputs.push(dta);
+					}	
 				}
+				
+				userIdLbl.width = this.explicitWidth - 60;
+				if(statementTypeChangedDF){
+					statementTypeChangedDF = false;
+					if(statementType == StatementModel.UNIVERSAL){
+						this.setStyle("cornerRadius", 30);
+					}
+					else{
+						this.setStyle("cornerRadius", 0);
+					}
+				}
+				
+				if(stateDF){
+					stateDF = false;
+					if(state == EDIT){
+						group.removeAllElements();
+						btnG.removeAllElements();
+						
+						if(statementNegated){
+							group.addElement(negatedLbl);
+						}
+						for each(dta in inputs){
+							group.addElement(dta);
+							stage.focus = dta;
+						}	
+						btnG.addElement(doneHG);
+					}
+					else if(state == DISPLAY){
+						//remove inputs
+						group.removeAllElements();
+						//remove buttons
+						btnG.removeAllElements();
+						//add label
+						group.addElement(displayTxt);
+						//add button
+						btnG.addElement(bottomHG);
+					}
+				}
+			}
+			else{
+				//remove all textboxes
+				inputs.splice(0,inputs.length);
+				//remove inputs
+				group.removeAllElements();
+				//remove buttons
+				btnG.removeAllElements();
+				//add label
+				group.addElement(displayTxt);
+				//add button
+				btnG.addElement(bottomHG);
+				//set corner radius
+				this.setStyle("cornerRadius", 30);
 			}
 		}
 		
 		override protected function measure():void{
 			//call parent's measure
 			super.measure();
-			//userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);	
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void

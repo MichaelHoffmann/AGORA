@@ -152,7 +152,6 @@ package components
 			var diffx:int = toxgrid - int(dragSource.dataForFormat("gx"));
 			var diffy:int = toygrid - int(dragSource.dataForFormat("gy"));
 
-			LayoutController.getInstance().movePanel(gridPanel,diffx,diffy);
 		}
 		
 		override protected function commitProperties():void{
