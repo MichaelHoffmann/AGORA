@@ -17,21 +17,26 @@ package ValueObjects
 		public function ConnectionValueObject(connectionObject:Object, inserted:Boolean = false)
 		{
 			try{
-				connID = connectionObject.ID;
-				type = connectionObject.type;
-				targetnode = connectionObject.targetnode;
-				x = connectionObject.x;
-				y = connectionObject.y;
-				deleted = connectionObject.deleted == 1? true:false;
-				if(connectionObject.hasOwnProperty("sourcenode")){
-					sourcenodes = new Vector.<SourcenodeValueObject>;
-					if(connectionObject.sourcenode is ArrayCollection){
-						for each(var obj:Object in connectionObject.sourcenode){
-							var  sourcenode:SourcenodeValueObject = new SourcenodeValueObject(obj, inserted);
-							sourcenodes.push(sourcenode);
+				if(inserted){
+					connID = connectionObject.ID;
+				}
+				if(!inserted){
+					connID = connectionObject.connID;
+					type = connectionObject.type;
+					targetnode = connectionObject.targetnode;
+					x = connectionObject.x;
+					y = connectionObject.y;
+					deleted = connectionObject.deleted == 1? true:false;
+					if(connectionObject.hasOwnProperty("sourcenode")){
+						sourcenodes = new Vector.<SourcenodeValueObject>;
+						if(connectionObject.sourcenode is ArrayCollection){
+							for each(var obj:Object in connectionObject.sourcenode){
+								var  sourcenode:SourcenodeValueObject = new SourcenodeValueObject(obj, inserted);
+								sourcenodes.push(sourcenode);
+							}
+						}else{
+							trace("ConnectionValueObject::Constructor: Error. A connection cannot exist with only one node. ConnID: " + connID);
 						}
-					}else{
-						trace("ConnectionValueObject::Constructor: Error. A connection cannot exist with only one node. ConnID: " + connID);
 					}
 				}
 			}catch(error:Error){

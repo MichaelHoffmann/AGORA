@@ -4,9 +4,15 @@ package Model
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
+	import ValueObjects.ConnectionValueObject;
+	import ValueObjects.MapValueObject;
+	import ValueObjects.NodeValueObject;
+	import ValueObjects.NodetextValueObject;
+	import ValueObjects.TextboxValueObject;
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.utils.Dictionary;
 	
 	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
@@ -17,15 +23,15 @@ package Model
 	public class StatementModel extends EventDispatcher
 	{
 		
-		public static const STATEMENT:String = "Statement";
 		public static const DISJUNCTION:String = "Disjunction";
 		public static const IMPLICATION:String = "Implication";
 		public static const INFERENCE:String = "Inference";
+		public static const STATEMENT:String = "Statement";
 		public static const UNIVERSAL:String = "Universal";
 		public static const PARTICULAR:String = "Particular";
 		
 		private var _author:String;
-		private var _functionsAs:String;
+		private var _statementFunction:String;
 		private var _statement:SimpleStatementModel;
 		private var _statements:Vector.<SimpleStatementModel>;
 		private var _negated:Boolean;
@@ -37,12 +43,11 @@ package Model
 		private var _ID:int;
 		private var _nodeTextIDs:Vector.<int>;
 		private var _xgrid:int;
-		private var _ygrid:int;
-		
+		private var _ygrid:int;		
 		
 		private var toggleStatementTypeService:HTTPService;
 		private var saveTextService:HTTPService;
-		
+		private var addArgumentService:HTTPService;
 		
 		public function StatementModel(modelType:String=STATEMENT, target:IEventDispatcher=null)
 		{
@@ -65,7 +70,11 @@ package Model
 			saveTextService.addEventListener(ResultEvent.RESULT, onSaveTextServiceResult);
 			saveTextService.addEventListener(FaultEvent.FAULT, onFault);
 			
-			functionsAs = modelType;	
+			//add argument service
+			addArgumentService = new HTTPService;
+			addArgumentService.url = AGORAParameters.getInstance().insertURL;
+			addArgumentService.addEventListener(ResultEvent.RESULT, onAddArgumentServiceResponse);
+			addArgumentService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);
 			
@@ -74,17 +83,19 @@ package Model
 		
 		//--------------------Getters and Setters------------------//
 		
-		public function get functionsAs():String
+
+
+		public function get statementFunction():String
 		{
-			return _functionsAs;
+			return _statementFunction;
 		}
 
-		public function set functionsAs(value:String):void
+		public function set statementFunction(value:String):void
 		{
-			if( value == INFERENCE){
+			_statementFunction = value;
+			if(_statementFunction == INFERENCE){
 				statementType = UNIVERSAL;
 			}
-			_functionsAs = value;
 		}
 
 		public function get author():String
@@ -261,36 +272,75 @@ package Model
 			var statementWidth:int = AGORAModel.getInstance().agoraMapModel.statementWidth;
 				
 			var addArgumentXML:XML =<map ID={AGORAModel.getInstance().agoraMapModel.ID}>
-										<textbox text=" " TID="1"/>
+										<textbox text="" TID="1"/>
+										<textbox text={SimpleStatementModel.DEPENDENT_TEXT} TID="10" />
+										<textbox text={SimpleStatementModel.DEPENDENT_TEXT} TID="11" />
 									</map>;
 			
-			var reasonNodeXML:XML = <node TID= "4" Type="Standard" typed="0" is_positive="1" x={x} y={ygrid}>
+			var reasonNodeXML:XML = <node TID= "4" Type="Particular" typed="0" is_positive="1" x={x} y={ygrid + 25}>
 											<nodetext TID="5" textboxTID="1"/>
 									</node>;
 			
-			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 15} y={ygrid}>
-											<nodetext TID="7" />
-											<nodetext TID="8" />
+			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 15} y={ygrid + 12}>
+											<nodetext TID="7" textboxTID="10"/>
+											<nodetext TID="8" textboxTID="11"/>
 									</node>;
 			
-			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid} />;
-			
-			
-			//determine the row in which the argument occurs
-			//check if this is the first argument, modify only if it's not
-			if(supportingArguments.length > 0){
-				
-			}
+			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid + 12} targetnodeID={ID}>
+										<sourcenode TID="12" nodeTID="6" />
+										<sourcenode TID="13" nodeTID="4" />
+									 </connection>;
 			
 			addArgumentXML.appendChild(reasonNodeXML);
 			addArgumentXML.appendChild(inferenceXML);
-			addArgumentXML.appendChild(connectionXML);
-			
+			addArgumentXML.appendChild(connectionXML);	
+			addArgumentService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:addArgumentXML.toXMLString()});
 		}
 		
-		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
-			
+	
+	protected function onAddArgumentServiceResponse(event:ResultEvent):void{
+		var map:MapValueObject = new MapValueObject(event.result.map, true);
+		var statementModelHash:Dictionary = new Dictionary;
+		var simpleStatementModelHash:Dictionary = new Dictionary;
+		var argumentTypeModel:ArgumentTypeModel = new ArgumentTypeModel;
+		
+		for each(var nodeObject:NodeValueObject in map.nodeObjects){
+			statementModel = StatementModel.createStatementFromObject(nodeObject);
+			/*
+			for each(var nodetext:NodetextValueObject in nodeObject.nodetexts){
+				statementModel.nodeTextIDs.push(nodetext.ID);
+				var simpleStatementModel:SimpleStatementModel = new SimpleStatementModel();
+				simpleStatementModel.ID = nodetext.textboxID;
+				simpleStatementModel.parent = statementModel;
+				simpleStatementModel.forwardList.push(statementModel.statement);
+				statementModel.statements.push(simpleStatementModel);
+				simpleStatementModelHash[simpleStatementModel.ID] = simpleStatementModel;
+			}
+			*/
+			statementModelHash[statementModel.ID] = statementModel;
 		}
+		
+		for each(var connection:ConnectionValueObject in map.connections){
+			
+			argumentTypeModel.ID = connection.connID;
+			argumentTypeModel.reasonsCompleted = false;
+		}
+		
+		for each(var statementModel:StatementModel in statementModelHash)
+		{
+			AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
+			AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
+		}
+		
+		var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
+
+		AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
+		AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
+			
+		dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
+		
+	}
+	
 	
 		//---------------- save statement Texts --------------------------//
 		public function saveTexts():void{
@@ -316,11 +366,6 @@ package Model
 		public static function createStatementFromObject(obj:Object):StatementModel{
 			var statementModel:StatementModel = new StatementModel;
 			statementModel.ID = obj.ID;
-			return statementModel;
-		}
-		
-		public static function createStatmentFromXML(xml:XML):StatementModel{
-			var statementModel:StatementModel = new StatementModel;
 			return statementModel;
 		}
 		

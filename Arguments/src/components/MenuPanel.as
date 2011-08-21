@@ -4,6 +4,7 @@ package components
 	
 	import flash.events.MouseEvent;
 	
+	import mx.binding.utils.BindingUtils;
 	import mx.containers.Panel;
 	import mx.controls.Label;
 	import mx.core.DragSource;
@@ -33,6 +34,7 @@ package components
 			this.setStyle("chromeColor",uint("0xdddddd"));
 		}
 
+
 		public function get model():ArgumentTypeModel
 		{
 			return _model;
@@ -41,6 +43,8 @@ package components
 		public function set model(value:ArgumentTypeModel):void
 		{
 			_model = value;
+			BindingUtils.bindSetter(this.setX, model, "xgrid");
+			BindingUtils.bindSetter(this.setY, model, "ygrid");
 		}
 
 		override protected function createChildren():void

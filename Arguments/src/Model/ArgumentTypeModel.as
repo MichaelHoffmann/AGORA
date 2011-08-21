@@ -15,7 +15,7 @@ package Model
 	public class ArgumentTypeModel extends EventDispatcher
 	{
 		private var _logicHash:Object;
-		private var _inferenceModel:InferenceModel;
+		private var _inferenceModel:StatementModel;
 		private var _claimModel:StatementModel;
 		private var _reasonModels:Vector.<StatementModel>;
 		private var _typed:Boolean;
@@ -27,14 +27,27 @@ package Model
 		private var _ID:int;
 		private var _xgrid:int;
 		private var _ygrid:int;
+		//always true for arguments made on other clients
+		private var _reasonsCompleted:Boolean;
 		
 		public function ArgumentTypeModel(target:IEventDispatcher=null)
 		{
-		
 			super(target);
+			reasonsCompleted = true;
+			reasonModels = new Vector.<StatementModel>;
 		}
 
 		//-------------------- Getters and Setters -----------------------//
+
+		public function get reasonsCompleted():Boolean
+		{
+			return _reasonsCompleted;
+		}
+
+		public function set reasonsCompleted(value:Boolean):void
+		{
+			_reasonsCompleted = value;
+		}
 
 		public function get dbType():String
 		{
@@ -44,7 +57,7 @@ package Model
 		public function set dbType(value:String):void
 		{
 			_dbType = value;
-			logicClass = ParentArg.getInstance().logicHash[_dbType];
+			//logicClass = ParentArg.getInstance().logicHash[_dbType];
 		}
 
 		public function get ygrid():int
@@ -147,12 +160,12 @@ package Model
 			_claimModel = value;
 		}
 
-		public function get inferenceModel():InferenceModel
+		public function get inferenceModel():StatementModel
 		{
 			return _inferenceModel;
 		}
 
-		public function set inferenceModel(value:InferenceModel):void
+		public function set inferenceModel(value:StatementModel):void
 		{
 			_inferenceModel = value;
 		}
@@ -170,7 +183,7 @@ package Model
 		//-------------------------- Creation mehtods ----------------------//
 		public static function createArgumentTypeFromObject(obj:Object):ArgumentTypeModel{
 			var argumentTypeModel:ArgumentTypeModel = new ArgumentTypeModel;
-			argumentTypeModel.ID = obj.ID;
+			argumentTypeModel.ID = obj.connID;
 			return argumentTypeModel;
 		}
 		

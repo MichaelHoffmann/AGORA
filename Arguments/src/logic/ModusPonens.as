@@ -12,13 +12,17 @@ package logic
 		
 		private static var instance:ModusPonens;
 		
+		
 		public function ModusPonens()
 		{
+			/*
+			
 			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			_expLangTypes = ["If-then","Whenever","Provided that"];	
 			myname = MOD_PON;
 			_dbType = "MP";
+			*/
 		}
 		
 		public static function getInstance():ModusPonens{
@@ -27,6 +31,7 @@ package logic
 			}
 			return instance;
 		}
+	
 	/*	
 		override public function getLanguageType(dbString:String):String
 		{

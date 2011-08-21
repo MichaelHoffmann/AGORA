@@ -158,13 +158,14 @@ package components
 			super.commitProperties();
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
-				if(newPanels[i] is InferenceModel){
-					var inference:Inference = new Inference;
-					inference.model = newPanels[i];
-					panelsHash[inference.model.ID] = inference;
-					addChild(inference);
-				}
-				else if(newPanels[i] is StatementModel){
+				//if(newPanels[i] is InferenceModel){
+					//var inference:Inference = new Inference;
+					//inference.model = newPanels[i];
+					//panelsHash[inference.model.ID] = inference;
+					//addChild(inference);
+				//}
+				//else if(newPanels[i] is StatementModel){
+				if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel = new ArgumentPanel;
 					argumentPanel.model = newPanels[i];
 					panelsHash[argumentPanel.model.ID] = argumentPanel;
@@ -209,7 +210,6 @@ package components
 			drawUtility.graphics.lineStyle(2,0,1);
 			
 			/*
-			
 			for(var i:int=0; i<panelList.length; i++)
 			{
 				//Drawing an arrow. Arrows are always pointing towards the left on the claim.

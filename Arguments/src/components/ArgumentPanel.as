@@ -320,7 +320,7 @@ package components
 		}
 		
 		protected function onAddBtnClicked(event:MouseEvent):void{
-			
+			ArgumentController.getInstance().addSupportingArgument(model);
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
@@ -464,7 +464,6 @@ package components
 			negatedLbl = new Label;
 			negatedLbl.text = "It is not the case that";
 			negatedLbl.visible = false;
-			//addElement(negatedLbl);
 			
 			
 			group = new Group;

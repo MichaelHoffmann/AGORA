@@ -4,12 +4,14 @@ package Controller
 	
 	import Model.AGORAMapModel;
 	import Model.AGORAModel;
+	import Model.ArgumentTypeModel;
 	import Model.MapMetaData;
 	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
 	
 	import components.ArgumentPanel;
+	import components.Inference;
 	import components.LAMWorld;
 	import components.Map;
 	
@@ -19,6 +21,7 @@ package Controller
 	import mx.core.FlexGlobals;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
+	import mx.states.State;
 	
 	public class ArgumentController
 	{
@@ -89,10 +92,34 @@ package Controller
 		}
 		
 		//----------------- Adding an Argument -------------------------------//
-		public function addSupportingArgument(ID:int):void{
-			
+		public function addSupportingArgument(model:StatementModel):void{
+			//tell the statement to support itself with an argument. Supply the position.
+			//figure out the position
+			//find out the last menu panel
+			if(model.supportingArguments.length > 0){
+				var argumentTypeModel:ArgumentTypeModel = model.supportingArguments[model.supportingArguments.length - 1];
+				//Find the last grid
+				//Find out the inference
+				var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+				var inference:ArgumentPanel = this.model.agoraMapModel.panelListHash[inferenceModel.ID];
+				var xgridInference:int = (inference.x + inference.height) / AGORAParameters.getInstance().gridWidth + 1;
+				//find out hte last reason
+				var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
+				var reason:ArgumentPanel = this.model.agoraMapModel.panelListHash[reasonModel.ID];
+				//find the last grid
+				var xgridReason:int = (reason.x + reason.height ) / AGORAParameters.getInstance().gridWidth + 1;
+				//compare and figure out the max
+				var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
+			}else{
+				nxgrid = model.xgrid;
+			}
+			//call the function
+			model.addSupportingArgument(nxgrid);
 		}
 		
+		protected function onArgumentCreated(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData(); 
+		}
 		
 		//----------------- State Changes in a Statement --------------------//
 		public function changeType(ID:int):void{
@@ -135,6 +162,7 @@ package Controller
 			var statementModel:StatementModel = statementAddedEvent.eventData as StatementModel;
 			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLED,statementTypeToggled); 
 			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, textSaved);
+			statementModel.addEventListener(AGORAEvent.ARGUMENT_CREATED, onArgumentCreated);
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
 		}
 		
