@@ -61,7 +61,6 @@ package components
 		{
 			super();
 			addReasonMenuData = <root><menuitem   label = "... another reason for this argument so that only the combination of all reasons justifies the claim" /></root>;
-			panelType = ArgumentPanel.INFERENCE;
 	
 			this.setStyle("cornerRadius",30);	
 			//schemeSelected = false;

@@ -322,15 +322,17 @@ package Model
 					//Set attributes
 					if(!panelListHash.hasOwnProperty(nodeVO.ID)){
 						statementModel = StatementModel.createStatementFromObject(nodeVO);
-						if(nodeVO.type == "Inference"){
-							statementModel.statementFunction = StatementModel.INFERENCE;
-						}else
-						{
-							statementModel.statementFunction = StatementModel.STATEMENT;	
-						}
 					}else{
 						statementModel = panelListHash[nodeVO.ID];
 					}
+					
+					if(nodeVO.type == StatementModel.INFERENCE){
+						statementModel.statementFunction = StatementModel.INFERENCE;
+					}else
+					{
+						statementModel.statementFunction = StatementModel.STATEMENT;	
+					}
+					
 					statementModel.author = nodeVO.author;
 					statementModel.statementType = nodeVO.type;
 					statementModel.xgrid = nodeVO.x;
@@ -351,12 +353,6 @@ package Model
 					simpleStatement.forwardList.push(statementModel.statement);
 					simpleStatement.ID = nodetextVO.textboxID;
 					simpleStatement.parent = statementModel;
-					//}
-					//else{
-					//	simpleStatement = statementModel.getStatement(nodetextVO.textboxID);
-					//}
-					
-					//if(!statementModel.hasStatement(simpleStatement.ID)){
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(nodetextVO.ID);
 					textboxHash[simpleStatement.ID] = simpleStatement;
@@ -376,13 +372,11 @@ package Model
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
-					//trace(argumentTypeModel);
 					argumentTypeModel.dbType = obj.type;
 					argumentTypeModel.claimModel = nodeHash[obj.targetnode];
 					argumentTypeModel.xgrid = obj.x;
 					argumentTypeModel.ygrid = obj.y;
 					connectionsHash[obj.connID] = argumentTypeModel;
-					
 					processSourceNode(obj, connectionsHash, nodeHash);	
 				}
 				
@@ -396,20 +390,24 @@ package Model
 				if(nodeHash.hasOwnProperty(argElements.nodeID)){
 					if(StatementModel(nodeHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
+						StatementModel(nodeHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 					}
 					else{
 						if(!argumentTypeModel.hasReason(argElements.nodeID)){
 							argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+							StatementModel(nodeHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 						}
 					}
 				}
 				else{ //read earlier
 					if(StatementModel(panelListHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
+						StatementModel(panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 					}
 					else{
 						if(!argumentTypeModel.hasReason(argElements.nodeID)){
 							argumentTypeModel.reasonModels.push(panelListHash[argElements.nodeID]);
+							StatementModel(	panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 						}
 					}
 				}

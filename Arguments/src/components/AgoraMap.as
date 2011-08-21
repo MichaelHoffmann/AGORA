@@ -65,7 +65,7 @@ package components
 			panelsHash = new Dictionary;
 		}
 		
-
+		
 		protected function onMapTimer(event:TimerEvent):void{
 			LoadController.getInstance().fetchMapData();
 		}
@@ -151,25 +151,39 @@ package components
 			
 			var diffx:int = toxgrid - int(dragSource.dataForFormat("gx"));
 			var diffy:int = toygrid - int(dragSource.dataForFormat("gy"));
-
+			
 		}
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
-				//if(newPanels[i] is InferenceModel){
-					//var inference:Inference = new Inference;
-					//inference.model = newPanels[i];
-					//panelsHash[inference.model.ID] = inference;
-					//addChild(inference);
-				//}
-				//else if(newPanels[i] is StatementModel){
-				if(newPanels[i] is StatementModel){
-					var argumentPanel:ArgumentPanel = new ArgumentPanel;
-					argumentPanel.model = newPanels[i];
-					panelsHash[argumentPanel.model.ID] = argumentPanel;
-					addChild(argumentPanel);
+				if(StatementModel(newPanels[i]).statementFunction == StatementModel.INFERENCE){
+					var inference:ArgumentPanel = new ArgumentPanel;
+					inference.model = newPanels[i];
+					panelsHash[inference.model.ID] = inference;
+					addChild(inference);
+				}
+				else if(newPanels[i] is StatementModel){
+					if(newPanels[i] is StatementModel){
+						var model:StatementModel = newPanels[i];
+						var argumentPanel:ArgumentPanel = new ArgumentPanel;
+						argumentPanel.model = model;
+						panelsHash[model.ID] = argumentPanel;
+						if(model.argumentTypeModel){
+							if(!model.argumentTypeModel.reasonsCompleted)
+							{
+								if(model.argumentTypeModel.reasonModels.length == 1){
+									argumentPanel.branchControl = new Option;
+									argumentPanel.branchControl.x = argumentPanel.x + AGORAParameters.getInstance().gridWidth * 9;
+									argumentPanel.branchControl.y = argumentPanel.y;
+									argumentPanel.branchControl.argumentTypeModel = model.argumentTypeModel;
+									addChild(argumentPanel.branchControl);
+								}
+							}
+						}
+						addChild(argumentPanel);
+					}
 				}
 			}
 			var newMenuPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newConnections;
@@ -212,55 +226,55 @@ package components
 			/*
 			for(var i:int=0; i<panelList.length; i++)
 			{
-				//Drawing an arrow. Arrows are always pointing towards the left on the claim.
-				var tmp1:GridPanel = panelList[i];
-				if(tmp1 is ArgumentPanel){
-					var tmp:ArgumentPanel = tmp1 as ArgumentPanel;
-					var m:int;
-					for(m = 0; m < tmp.rules.length; m++)
-					{
-						//for each  rule
-						var gridy:int = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
-						//horizontal lines to argType box
-						drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[m].argType.y + 30);
-						drawUtility.graphics.lineTo(tmp.rules[m].argType.x, tmp.rules[m].argType.y + 30);
-						//vertical line from argtype to inference box
-						if(tmp.rules[m].visible == true)
-						{
-							drawUtility.graphics.moveTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].argType.y + tmp.rules[m].argType.height);
-							drawUtility.graphics.lineTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].y);
-						}
-						//an inference always has reasons
-						var gridyreasons:int = tmp.rules[m].reasons[0].gridY - 1;
-						for(var n:int = 0; n < tmp.rules[m].reasons.length; n++){
-							//draw a line from the prev grid to the current reason
-							drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n].y + 30);
-							drawUtility.graphics.lineTo(tmp.rules[m].reasons[n].x, tmp.rules[m].reasons[n].y + 30);
-						}
-						
-						drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
-						drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n-1].y + 30);
-						
-						drawUtility.graphics.moveTo(tmp.rules[m].argType.x  + tmp.rules[m].argType.width, tmp.rules[m].argType.y + 30);
-						drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
-						
-					}
-					if(tmp.rules.length > 0){
-						gridy = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
-						//vert line
-						drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y+30);
-						drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[m-1].argType.y + 30);
-						
-						//first horizontal line
-						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
-						drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y + 30);
-						//draw an arrow
-						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
-						drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 - 5);
-						drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
-						drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 + 5);
-					}	
-				}
+			//Drawing an arrow. Arrows are always pointing towards the left on the claim.
+			var tmp1:GridPanel = panelList[i];
+			if(tmp1 is ArgumentPanel){
+			var tmp:ArgumentPanel = tmp1 as ArgumentPanel;
+			var m:int;
+			for(m = 0; m < tmp.rules.length; m++)
+			{
+			//for each  rule
+			var gridy:int = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
+			//horizontal lines to argType box
+			drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[m].argType.y + 30);
+			drawUtility.graphics.lineTo(tmp.rules[m].argType.x, tmp.rules[m].argType.y + 30);
+			//vertical line from argtype to inference box
+			if(tmp.rules[m].visible == true)
+			{
+			drawUtility.graphics.moveTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].argType.y + tmp.rules[m].argType.height);
+			drawUtility.graphics.lineTo(tmp.rules[m].argType.x + tmp.rules[m].argType.width/2, tmp.rules[m].y);
+			}
+			//an inference always has reasons
+			var gridyreasons:int = tmp.rules[m].reasons[0].gridY - 1;
+			for(var n:int = 0; n < tmp.rules[m].reasons.length; n++){
+			//draw a line from the prev grid to the current reason
+			drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n].y + 30);
+			drawUtility.graphics.lineTo(tmp.rules[m].reasons[n].x, tmp.rules[m].reasons[n].y + 30);
+			}
+			
+			drawUtility.graphics.moveTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
+			drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[n-1].y + 30);
+			
+			drawUtility.graphics.moveTo(tmp.rules[m].argType.x  + tmp.rules[m].argType.width, tmp.rules[m].argType.y + 30);
+			drawUtility.graphics.lineTo(gridyreasons * layoutManager.uwidth, tmp.rules[m].reasons[0].y + 30);
+			
+			}
+			if(tmp.rules.length > 0){
+			gridy = tmp.rules[0].claim.gridY +  layoutManager.getGridSpan(tmp.rules[0].claim.width) + 1;
+			//vert line
+			drawUtility.graphics.moveTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y+30);
+			drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[m-1].argType.y + 30);
+			
+			//first horizontal line
+			drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
+			drawUtility.graphics.lineTo(gridy * layoutManager.uwidth, tmp.rules[0].argType.y + 30);
+			//draw an arrow
+			drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
+			drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 - 5);
+			drawUtility.graphics.moveTo(tmp.x + tmp.width, tmp.y + 30);
+			drawUtility.graphics.lineTo(tmp.x + tmp.width + 5, tmp.y + 30 + 5);
+			}	
+			}
 			
 			}
 			*/

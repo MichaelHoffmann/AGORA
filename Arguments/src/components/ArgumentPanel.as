@@ -87,6 +87,8 @@ package components
 		public var addBtn:AButton;
 		//delete button
 		public var deleteBtn:AButton;
+		//banch option control
+		public var branchControl:Option;
 		
 		//appearance
 		//skin of the panel
@@ -96,7 +98,7 @@ package components
 		private var _state:String;
 		
 		//Takes either INFERENCE or ARGUMENT_PANEL
-		public var panelType:String;
+		private var _panelType:String;
 		[Bindable]
 		private var _statementNegated:Boolean;
 		[Bindable]
@@ -113,10 +115,6 @@ package components
 		
 		
 		//constants
-		//Type of Panel: this could be found by just using is operator
-		public static const ARGUMENT_PANEL:String = "ArgumentPanel"
-		//Type of Panel
-		public static const INFERENCE:String = "Inference";
 		//connecting string constants required for multistatements
 		public static const IF_THEN:String = "If-then";
 		public static const IMPLIES:String = "Implies";	
@@ -154,12 +152,11 @@ package components
 		
 		//other instance variables
 		public var connectingStr:String;
-		public function ArgumentPanel(type:String = ARGUMENT_PANEL)
+		public function ArgumentPanel()
 		{
 			super();
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
-			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
-			panelType = ArgumentPanel.ARGUMENT_PANEL;			
+			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;		
 			
 			inputs = new Vector.<DynamicTextArea>;
 			changeWatchers = new Vector.<ChangeWatcher>;
@@ -170,13 +167,20 @@ package components
 			minHeight = 100;
 			
 			state = DISPLAY;
-			panelType = type;
 			
 			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
 		//------------------- Getters and Setters -----------------------------//
+		public function get panelType():String{
+			return _panelType;
+		}
+		
+		public function set panelType(value:String):void{
+			_panelType = value;
+		}
+		
 		public function get author():String
 		{
 			return _author;
@@ -232,6 +236,9 @@ package components
 				BindingUtils.bindProperty(this, "gridX", model, ["xgrid"]);
 				BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
 				BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
+				BindingUtils.bindProperty(this, "panelType", model, ["statementFunction"]);
+				BindingUtils.bindSetter(setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
+				
 				author = model.author;
 				
 				statementsAddedDF = true;
@@ -386,15 +393,23 @@ package components
 		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
-			if(!value){
-				if(model.firstClaim){
-					displayTxt.text = "[Enter your claim here]";
-				}else{
-					displayTxt.text = "[Enter your reason here]";
-				}
+			if(value == null){
+					if(model.firstClaim){
+						displayTxt.text = "[Enter your claim here]";
+					}else{
+						displayTxt.text = "[Enter your reason here]";
+					}
 			}
 			else{
 				displayTxt.text = value;
+			}
+		}
+		
+		protected function setVisibility(value:Boolean):void{
+			if(model.statementFunction == StatementModel.INFERENCE){
+				if(!model.argumentTypeModel.reasonsCompleted){
+					this.visible = false;
+				}
 			}
 		}
 		
@@ -451,6 +466,9 @@ package components
 			//add a vertical subgroup
 			stmtInfoVG = new VGroup;
 			stmtInfoVG.gap = 0;
+			if(model.statementFunction == StatementModel.INFERENCE){
+				stmtInfoVG.visible = false;
+			}
 			topHG.addElement(stmtInfoVG);
 			
 			
@@ -489,7 +507,7 @@ package components
 		override protected function commitProperties():void
 		{
 			super.commitProperties();
-			if(panelType == ARGUMENT_PANEL){
+			if(!(panelType == StatementModel.INFERENCE)){
 				var dta:DynamicTextArea;
 				var simpleStatement:SimpleStatementModel;
 				//check if new statements were added
@@ -579,8 +597,7 @@ package components
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);		
+			topArea.graphics.drawRect(0,0,40,40);		
 		}
-	}
-	
+	}	
 }

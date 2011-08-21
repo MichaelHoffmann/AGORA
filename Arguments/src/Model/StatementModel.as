@@ -38,12 +38,15 @@ package Model
 		private var _connectingString:String;
 		private var _complexStatement:Boolean;
 		private var _supportingArguments:Vector.<ArgumentTypeModel>;
+		private var _argumentTypeModel:ArgumentTypeModel;
 		private var _firstClaim:Boolean;
 		private var _statementType:String;
 		private var _ID:int;
 		private var _nodeTextIDs:Vector.<int>;
 		private var _xgrid:int;
 		private var _ygrid:int;		
+		
+		private var _enablerVisible:Boolean;
 		
 		private var toggleStatementTypeService:HTTPService;
 		private var saveTextService:HTTPService;
@@ -57,6 +60,8 @@ package Model
 			statement = new SimpleStatementModel;
 			statement.parent = this;
 			nodeTextIDs = new Vector.<int>(0,false);
+			statementFunction = modelType;
+			
 			
 			//create toggleStatementTypeService
 			toggleStatementTypeService = new HTTPService;
@@ -78,18 +83,30 @@ package Model
 			
 			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);
 			
+			
+			
 		}
 		
 		
 		//--------------------Getters and Setters------------------//
 		
+		
+	
+		public function get argumentTypeModel():ArgumentTypeModel
+		{
+			return _argumentTypeModel;
+		}
 
+		public function set argumentTypeModel(value:ArgumentTypeModel):void
+		{
+			_argumentTypeModel = value;
+		}
 
 		public function get statementFunction():String
 		{
 			return _statementFunction;
 		}
-
+		
 		public function set statementFunction(value:String):void
 		{
 			_statementFunction = value;
@@ -97,7 +114,7 @@ package Model
 				statementType = UNIVERSAL;
 			}
 		}
-
+		
 		public function get author():String
 		{
 			return _author;
@@ -270,7 +287,7 @@ package Model
 		//----------------- Add Supporting Argument -----------------------//
 		public function addSupportingArgument(x:int):void{
 			var statementWidth:int = AGORAModel.getInstance().agoraMapModel.statementWidth;
-				
+			
 			var addArgumentXML:XML =<map ID={AGORAModel.getInstance().agoraMapModel.ID}>
 										<textbox text="" TID="1"/>
 										<textbox text={SimpleStatementModel.DEPENDENT_TEXT} TID="10" />
@@ -297,17 +314,17 @@ package Model
 			addArgumentService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:addArgumentXML.toXMLString()});
 		}
 		
-	
-	protected function onAddArgumentServiceResponse(event:ResultEvent):void{
-		var map:MapValueObject = new MapValueObject(event.result.map, true);
-		var statementModelHash:Dictionary = new Dictionary;
-		var simpleStatementModelHash:Dictionary = new Dictionary;
-		var argumentTypeModel:ArgumentTypeModel = new ArgumentTypeModel;
 		
-		for each(var nodeObject:NodeValueObject in map.nodeObjects){
-			statementModel = StatementModel.createStatementFromObject(nodeObject);
-			/*
-			for each(var nodetext:NodetextValueObject in nodeObject.nodetexts){
+		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
+			var map:MapValueObject = new MapValueObject(event.result.map, true);
+			var statementModelHash:Dictionary = new Dictionary;
+			var simpleStatementModelHash:Dictionary = new Dictionary;
+			var argumentTypeModel:ArgumentTypeModel = new ArgumentTypeModel;
+			
+			for each(var nodeObject:NodeValueObject in map.nodeObjects){
+				statementModel = StatementModel.createStatementFromObject(nodeObject);
+				/*
+				for each(var nodetext:NodetextValueObject in nodeObject.nodetexts){
 				statementModel.nodeTextIDs.push(nodetext.ID);
 				var simpleStatementModel:SimpleStatementModel = new SimpleStatementModel();
 				simpleStatementModel.ID = nodetext.textboxID;
@@ -315,33 +332,33 @@ package Model
 				simpleStatementModel.forwardList.push(statementModel.statement);
 				statementModel.statements.push(simpleStatementModel);
 				simpleStatementModelHash[simpleStatementModel.ID] = simpleStatementModel;
+				}
+				*/
+				statementModelHash[statementModel.ID] = statementModel;
 			}
-			*/
-			statementModelHash[statementModel.ID] = statementModel;
-		}
-		
-		for each(var connection:ConnectionValueObject in map.connections){
 			
-			argumentTypeModel.ID = connection.connID;
-			argumentTypeModel.reasonsCompleted = false;
-		}
-		
-		for each(var statementModel:StatementModel in statementModelHash)
-		{
-			AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
-			AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
-		}
-		
-		var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
-
-		AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
-		AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
+			for each(var connection:ConnectionValueObject in map.connections){
+				
+				argumentTypeModel.ID = connection.connID;
+				argumentTypeModel.reasonsCompleted = false;
+			}
 			
-		dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
+			for each(var statementModel:StatementModel in statementModelHash)
+			{
+				AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
+				AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
+			}
+			
+			var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
+			
+			AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
+			AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
+			
+			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
+			
+		}
 		
-	}
-	
-	
+		
 		//---------------- save statement Texts --------------------------//
 		public function saveTexts():void{
 			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
@@ -363,8 +380,13 @@ package Model
 		}
 		
 		//---------------------- Forming StatmentModels ---------------//
-		public static function createStatementFromObject(obj:Object):StatementModel{
-			var statementModel:StatementModel = new StatementModel;
+		public static function createStatementFromObject(obj:NodeValueObject):StatementModel{
+			var statementModel:StatementModel;
+			if(obj.type == StatementModel.INFERENCE){
+				statementModel = new StatementModel(INFERENCE);
+			}else{
+				statementModel = new StatementModel;
+			}
 			statementModel.ID = obj.ID;
 			return statementModel;
 		}

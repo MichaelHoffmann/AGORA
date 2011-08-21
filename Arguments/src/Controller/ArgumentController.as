@@ -14,6 +14,7 @@ package Controller
 	import components.Inference;
 	import components.LAMWorld;
 	import components.Map;
+	import components.Option;
 	
 	import flash.display.DisplayObject;
 	
@@ -139,6 +140,18 @@ package Controller
 			var sModel:StatementModel = AGORAModel.getInstance().agoraMapModel.panelListHash[event.eventData as int];
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[event.eventData as int];
 			CursorManager.removeBusyCursor();
+		}
+		
+		//------------------ Building by Argument Scheme ------------------//
+		public function buildByArgumentScheme(option:Option):void{
+			//remove option
+			FlexGlobals.topLevelApplication.map.agoraMap.removeChild(option);
+			//get the argumentTypeModel and set reasonsCompleted to be true
+			//This automatically sets the inference visible through a bind
+			//setter
+			option.argumentTypeModel.reasonsCompleted = true;
+			//display argument scheme options
+			
 		}
 		
 		//------------------ Saving Text -----------------------------------//

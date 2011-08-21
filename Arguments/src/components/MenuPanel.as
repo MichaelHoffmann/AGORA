@@ -45,8 +45,18 @@ package components
 			_model = value;
 			BindingUtils.bindSetter(this.setX, model, "xgrid");
 			BindingUtils.bindSetter(this.setY, model, "ygrid");
+			
 		}
 
+		//------------------ Bind Setters --------------------------//
+		protected function enableAddReason(value:Boolean):void{
+			addReasonBtn.enabled = value;
+		}
+		protected function enableChangeScheme(value:Boolean):void{
+			changeSchemeBtn.enabled = value;	
+		}
+		
+		//------------------- Framework methods---------------------//
 		override protected function createChildren():void
 		{
 			super.createChildren();
@@ -69,19 +79,14 @@ package components
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
-			addEventListener(FlexEvent.PREINITIALIZE, menuPanelCreated);
+			
+			
+			//set bind setters
+			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");
+			BindingUtils.bindSetter(enableChangeScheme, model, "reasonsCompleted");
+			
 		}
 		
-		private function menuPanelCreated(event:FlexEvent):void{
-			/*
-			try{
-				gridX = inference._initXML.connection[0].@x;
-				gridY = inference._initXML.connection[1].@y;
-			}catch(e:Error){
-				trace(e);
-			}
-			*/
-		}
 		
 		public function beginDrag( mEvent:MouseEvent):void
 		{
