@@ -74,6 +74,7 @@ package Controller
 			yArgDisplay  = 7;
 			
 			model = AGORAModel.getInstance();
+			model.agoraMapModel.addEventListener(AGORAEvent.POSITIONS_UPDATED, onPositionsUpdated);
 			
 		}
 		
@@ -96,7 +97,26 @@ package Controller
 			return instance;
 		}
 		
+		//-------------------------- panel moved -----------------------//
+		public function movePanel(panel:GridPanel, xgridDiff:int, ygridDiff:int):void{
+			if(panel is Inference){
+				var inferenceModel:InferenceModel = Inference(panel).inferenceModel;
+				model.agoraMapModel.updatePosition(inferenceModel, xgridDiff, ygridDiff);
+			}
+			else if(panel is ArgumentPanel){
+				var statementModel:StatementModel = ArgumentPanel(panel).model;
+				model.agoraMapModel.updatePosition(statementModel, xgridDiff, ygridDiff);
+			}
+			else if(panel is MenuPanel){
+				var argumentTypeModel:ArgumentTypeModel = MenuPanel(panel).model;
+				model.agoraMapModel.updatePosition(argumentTypeModel, xgridDiff, ygridDiff);
+			}
+		}
 		
+		protected function onPositionsUpdated(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
+			LoadController.getInstance().fetchMapData();
+		}
 		
 		//------------------------- other public functions --------------------//
 		public function setApplicationLayoutProperties():void{

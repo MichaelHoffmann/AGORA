@@ -89,7 +89,6 @@ package logic
 		public function ParentArg(){
 			instance = this;
 			//Modus Ponens 
-			/*
 			_logicHash[ParentArg.MPIfThen] = ModusPonens.getInstance();
 			_logicHash[ParentArg.MPimplies]  = ModusPonens.getInstance();
 			_logicHash[ParentArg.MPnecessary] = ModusPonens.getInstance();
@@ -125,7 +124,7 @@ package logic
 			_logicHash[ParentArg.CDaltclaim] = ConstructiveDilemma.getInstance();
 			_logicHash[ParentArg.CDpropclaim] = ConstructiveDilemma.getInstance();
 			
-			*/
+			
 		}
 		
 		public function get logicHash():Object

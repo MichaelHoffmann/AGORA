@@ -1,5 +1,6 @@
 package components
 {
+
 	/**
 	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 	 reflection, critique, deliberation, and creativity in individual argument construction 
@@ -42,8 +43,8 @@ package components
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
-	import Controller.logic.ConditionalSyllogism;
-	import Controller.logic.ParentArg;
+	import logic.ConditionalSyllogism;
+	import logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -108,8 +109,6 @@ package components
 		public var addBtn:AButton;
 		//delete button
 		public var deleteBtn:AButton;
-		//banch option control
-		public var branchControl:Option;
 		
 		//appearance
 		//skin of the panel
@@ -119,7 +118,7 @@ package components
 		private var _state:String;
 		
 		//Takes either INFERENCE or ARGUMENT_PANEL
-		private var _panelType:String;
+		public var panelType:int;
 		[Bindable]
 		private var _statementNegated:Boolean;
 		[Bindable]
@@ -136,6 +135,10 @@ package components
 		
 		
 		//constants
+		//Type of Panel: this could be found by just using is operator
+		public static const ARGUMENT_PANEL:int = 0;
+		//Type of Panel
+		public static const INFERENCE:int = 1;
 		//connecting string constants required for multistatements
 		public static const IF_THEN:String = "If-then";
 		public static const IMPLIES:String = "Implies";	
@@ -177,7 +180,8 @@ package components
 		{
 			super();
 			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
-			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;		
+			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
+			panelType = ArgumentPanel.ARGUMENT_PANEL;			
 			
 			inputs = new Vector.<DynamicTextArea>;
 			changeWatchers = new Vector.<ChangeWatcher>;
@@ -189,34 +193,27 @@ package components
 			
 			state = DISPLAY;
 			
+			
 			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
 		//------------------- Getters and Setters -----------------------------//
-		public function get panelType():String{
-			return _panelType;
-		}
-		
-		public function set panelType(value:String):void{
-			_panelType = value;
-		}
-		
 		public function get author():String
 		{
 			return _author;
 		}
-		
+
 		public function set author(value:String):void
 		{
 			_author = value;
 		}
-		
+
 		public function get statementNegated():Boolean
 		{
 			return _statementNegated;
 		}
-		
+
 		public function set statementNegated(value:Boolean):void
 		{
 			_statementNegated = value;
@@ -226,13 +223,13 @@ package components
 			invalidateSize();
 			invalidateDisplayList();
 		}
-		
-		
+
+
 		public function get statementType():String
 		{
 			return _statementType;
 		}
-		
+
 		[Bindable]
 		public function set statementType(value:String):void
 		{
@@ -243,7 +240,7 @@ package components
 			invalidateSize();
 			invalidateDisplayList();
 		}
-		
+
 		public function get model():StatementModel{
 			return _model;
 		}
@@ -257,9 +254,6 @@ package components
 				BindingUtils.bindProperty(this, "gridX", model, ["xgrid"]);
 				BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
 				BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
-				BindingUtils.bindProperty(this, "panelType", model, ["statementFunction"]);
-				BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
-				
 				author = model.author;
 				
 				statementsAddedDF = true;
@@ -277,12 +271,12 @@ package components
 		{
 			return _statementTypeChangedDF;
 		}
-		
+
 		public function set statementTypeChangedDF(value:Boolean):void
 		{
 			_statementTypeChangedDF = value;
 		}
-		
+
 		public function get state():String
 		{
 			return _state;
@@ -349,8 +343,6 @@ package components
 		
 
 		protected function onAddBtnClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().addSupportingArgument(model);
-
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
@@ -359,7 +351,7 @@ package components
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().saveText(model);
+			state = DISPLAY;
 		}
 		
 		protected function keyEntered(event: KeyboardEvent):void
@@ -367,12 +359,12 @@ package components
 			if(event.keyCode == Keyboard.ENTER)	
 			{				
 				if(state == EDIT){
-					ArgumentController.getInstance().saveText(model);
+					state = DISPLAY;
 				}
 			}
 		}
 		
-		public function beginDrag(mouseEvent: MouseEvent ):void
+		public function beginDrag( mouseEvent: MouseEvent ):void
 		{
 			try{
 				var dPInitiator:ArgumentPanel = this;
@@ -403,50 +395,32 @@ package components
 		protected function hideOption(event:KeyboardEvent):void
 		{
 		}
-	
-		protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
-			 if(menuEvent.label == "add another reason"){
-				 ArgumentController.getInstance().addReason(model.argumentTypeModel);
-			 }else{
-				 ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
-			 }
-		}
+		
 		
 		public function showMenu():void
 		{
-			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>; 
 			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
-			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
-	
+		public function doneHandler(d:MouseEvent):void
+		{
+		}
 		
 		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
-			if(value == null){
-					if(model.firstClaim){
-						displayTxt.text = "[Enter your claim here]";
-					}else{
-						displayTxt.text = "[Enter your reason here]";
-					}
+			if(!value){
+				if(model.firstClaim){
+					displayTxt.text = "[Enter your claim here]";
+				}else{
+					displayTxt.text = "[Enter your reason here]";
+				}
 			}
 			else{
 				displayTxt.text = value;
-			}
-		}
-		
-		protected function setVisibility(value:Boolean):void{
-			if(model.statementFunction == StatementModel.INFERENCE){
-				if(!model.argumentTypeModel.reasonsCompleted){
-					this.visible = false;
-				}
-				else{
-					this.visible = true;
-				}
 			}
 		}
 		
@@ -506,9 +480,6 @@ package components
 			//add a vertical subgroup
 			stmtInfoVG = new VGroup;
 			stmtInfoVG.gap = 0;
-			if(model.statementFunction == StatementModel.INFERENCE){
-				stmtInfoVG.visible = false;
-			}
 			topHG.addElement(stmtInfoVG);
 			
 			
@@ -520,8 +491,9 @@ package components
 			userIdLbl.toolTip = userInfoStr;
 			
 			negatedLbl = new Label;
-		
+			negatedLbl.text = Language.lookup("ArgNotCase");
 			negatedLbl.visible = false;
+			//addElement(negatedLbl);
 			
 			
 			group = new Group;
@@ -547,97 +519,232 @@ package components
 		override protected function commitProperties():void
 		{
 			super.commitProperties();
-			if(!(panelType == StatementModel.INFERENCE)){
-				var dta:DynamicTextArea;
-				var simpleStatement:SimpleStatementModel;
-				//check if new statements were added
-				if(statementsAddedDF){
-					//clear flag
-					statementsAddedDF = false;
-					//remove inputs
-					for each(dta in inputs){
-						try{
-							group.removeElement(dta);
-						}catch(error:Error){
-							trace("error: Trying to remove an element that is not present");
-						}
-					}
-					inputs.splice(0,inputs.length);
-					
-					//for each statement add an input text
-					for each(simpleStatement in model.statements){
-						dta = new DynamicTextArea;
-						//add model
-						dta.model = simpleStatement;
-						//push that into inputs
-						inputs.push(dta);
-					}	
-				}
-				
-				userIdLbl.width = this.explicitWidth - 60;
-				if(statementTypeChangedDF){
-					statementTypeChangedDF = false;
-					if(statementType == StatementModel.UNIVERSAL){
-						this.setStyle("cornerRadius", 30);
-					}
-					else{
-						this.setStyle("cornerRadius", 0);
-					}
-				}
-				
-				if(stateDF){
-					stateDF = false;
-					if(state == EDIT){
-						group.removeAllElements();
-						btnG.removeAllElements();
-						
-						if(statementNegated){
-							group.addElement(negatedLbl);
-						}
-						for each(dta in inputs){
-							group.addElement(dta);
-							stage.focus = dta;
-						}	
-						btnG.addElement(doneHG);
-					}
-					else if(state == DISPLAY){
-						//remove inputs
-						group.removeAllElements();
-						//remove buttons
-						btnG.removeAllElements();
-						//add label
-						group.addElement(displayTxt);
-						//add button
-						btnG.addElement(bottomHG);
-					}
-				}
-			}
-			else{
-				//remove all textboxes
-				inputs.splice(0,inputs.length);
+			var dta:DynamicTextArea;
+			var simpleStatement:SimpleStatementModel;
+			//check if new statements were added
+			if(statementsAddedDF){
+				//clear flag
+				statementsAddedDF = false;
 				//remove inputs
-				group.removeAllElements();
-				//remove buttons
-				btnG.removeAllElements();
-				//add label
-				group.addElement(displayTxt);
-				//add button
-				btnG.addElement(bottomHG);
-				//set corner radius
-				this.setStyle("cornerRadius", 30);
+				for each(dta in inputs){
+					try{
+						group.removeElement(dta);
+					}catch(error:Error){
+						trace("error: Trying to remove an element that is not present");
+					}
+				}
+				inputs.splice(0,inputs.length);
+				
+				//for each statement add an input text
+				for each(simpleStatement in model.statements){
+					dta = new DynamicTextArea;
+					//add model
+					dta.model = simpleStatement;
+					//push that into inputs
+					inputs.push(dta);
+				}	
 			}
-		}
-		
-		override protected function measure():void{
-			//call parent's measure
-			super.measure();
+			
+			if(statementTypeChangedDF){
+				statementTypeChangedDF = false;
+				if(statementType == StatementModel.UNIVERSAL){
+					this.setStyle("cornerRadius", 30);
+				}
+				else{
+					this.setStyle("cornerRadius", 0);
+				}
+			}
+			
+			if(stateDF){
+				stateDF = false;
+				if(state == EDIT){
+					group.removeAllElements();
+					btnG.removeAllElements();
+					
+					if(statementNegated){
+						group.addElement(negatedLbl);
+					}
+					for each(dta in inputs){
+						group.addElement(dta);
+						stage.focus = dta;
+					}	
+					btnG.addElement(doneHG);
+				}
+				else if(state == DISPLAY){
+					//remove inputs
+					group.removeAllElements();
+					//remove buttons
+					btnG.removeAllElements();
+					//add label
+					group.addElement(displayTxt);
+					//add button
+					btnG.addElement(bottomHG);
+				}
+			}
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,40,40);		
+			topArea.graphics.drawRect(0,0,40,stmtInfoVG.height);
+			userIdLbl.setActualSize(this.width - stmtInfoVG.x - 10, userIdLbl.height);		
 		}
-	}	
+		
+		public function onArgumentPanelCreate(e:FlexEvent):void
+		{
+			//remove the default title bar provided by mx
+			panelSkin = this.skin as PanelSkin;
+			panelSkin.topGroup.includeInLayout = false;
+			panelSkin.topGroup.visible = false;
+			setIDs();
+		}
+		
+		protected function setGuidingText(event:FlexEvent):void
+		{
+			if(this.panelType==ARGUMENT_PANEL)
+			{
+				//input1.text = "[Enter your claim/reason]. Pressing Enter afterwards will prompt you for a reason";
+			}
+			else if(this.panelType==INFERENCE)
+			{
+			}
+			displayTxt.text = input1.text;
+			displayTxt.width = input1.width;
+			displayTxt.height = input1.height;
+		}
+		
+		public function toggleType():void
+		{
+			if(this.state==0) {
+				if(this.panelType!=INFERENCE)
+				{
+					state = 1;
+					stmtTypeLbl.text = Language.lookup("Particular Statement");
+					this.setStyle("cornerRadius",0);
+				}
+				else {
+					Alert.show("Inference can only be Universal Statement. Therefore, cannot change");
+					stmtTypeLbl.text = Language.lookup("Universal");
+				}
+			} 
+			else {
+				state = 0;
+				stmtTypeLbl.text = Language.lookup("Universal");
+				this.setStyle("cornerRadius",30);
+			} 
+		}
+		
+		public function toggle(m:MouseEvent):void
+		{
+			toggleType();	
+		}
+		
+		protected function deleteThis(event:MouseEvent):void
+		{
+			if(inference != null && inference.myArg is ConditionalSyllogism)
+			{
+				Alert.show("You cannot delete a reason of a conditional syllogism argument separately. To delete this argument, delete the enabler");
+				return;
+			}
+			this.selfDestroy();
+			if(inference != null)
+			{
+				if(inference.reasons.length == 0)
+				{
+					trace('No of reasons is zero, therefore deleting the inference panel');
+					inference.selfDestroy();
+				}
+			}
+		}
+		
+		public function deleteLinkFromArgumentPanel(inputBox:DynamicTextArea, claim:ArgumentPanel):void
+		{
+			//for input1.
+			if(claim.input1.forwardList.indexOf(inputBox) != -1)
+			{
+				claim.input1.forwardList.splice(claim.input1.forwardList.indexOf(inputBox),1);
+			}
+			//for inputs
+			for(var i:int=0; i< claim.inputs.length; i++)
+			{
+				var currInput:DynamicTextArea = claim.inputs[i];
+				if(currInput.forwardList.indexOf(inputBox) != -1)
+				{
+					currInput.forwardList.splice(currInput.forwardList.indexOf(inputBox),1);
+				}
+			}
+		}
+		
+		public function deleteLinks():void
+		{
+			if(inference == null)
+				return;
+			var claim:ArgumentPanel = inference.claim;
+			deleteLinkFromArgumentPanel(input1,claim);
+			for(var i:int = 0; i < inputs.length; i++)
+			{
+				deleteLinkFromArgumentPanel(inputs[i],claim);
+			}
+			//There will be no incoming links from inference
+		}
+		
+		public function inferenceDeleted():void
+		{
+			if(rules.length == 0)
+			{
+				if(this.inference != null)
+				{
+					inference.setRuleState();
+				}
+			}
+		}
+		
+		public function selfDestroy():void
+		{
+			for(var i:int=rules.length-1; i >= 0; i--)
+			{
+				rules[i].selfDestroy();
+			}
+			if(inference != null)
+			{
+				inference.reasons.splice(inference.reasons.indexOf(this,0),1);
+			}
+			parentMap.layoutManager.panelList.splice(parentMap.layoutManager.panelList.indexOf(this,0),1);
+			deleteLinks();
+			parentMap.removeChild(this);
+			trace(this + ' destroyed');
+			if(inference != null)
+			{
+				if(inference.reasons.length > 0)
+				{
+					parentMap.layoutManager.alignReasons(this,this.gridY);
+					inference.displayStr = inference.myArg.correctUsage();
+					inference.reasonDeleted();
+				}
+			}
+		}
+		
+		public function setIDs():void
+		{
+			//By default there are only three textboxes
+			if(_initXML == null)
+				return;
+			try{
+			input1.ID = _initXML.textbox[0].@ID;
+			inputs[0].ID = _initXML.textbox[1].@ID;
+			inputs[1].ID = _initXML.textbox[2].@ID;
+			//only one node is returned
+			ID = _initXML.node.@ID;
+			input1NTID = _initXML.node.nodetext[0].@ID;
+			inputsNTID.push(_initXML.node.nodetext[1].@ID);
+			inputsNTID.push(_initXML.node.nodetext[2].@ID);
+			}
+			catch(error:Error)
+			{
+				Alert.show(error.toString());
+			}
+		}
+	}
+	
 }

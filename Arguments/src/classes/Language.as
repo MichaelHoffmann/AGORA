@@ -53,18 +53,19 @@ package classes
 			xml = x;
 			ready=true;
 		}
-
-		/**The key function. Use this to look up a label from the translation document according to the set language.*/	
+		
+		/**The key function. Use this to look up a label from the translation document according to the set language.*/
+		
 		public static function lookup(label:String):String{
 			if(!ready){
-				init();
+				init();				
 			}
 			trace("Now looking up:" + label);
 			var lbl:XMLList = xml.descendants(label);
 			var lang:XMLList = lbl.descendants(language);
 			var output:String = lang.attribute("text");
 			if(!output){
-				output = "error | ������������ | fehler --- There was a problem getting the text for this item. The label was: " + label;
+				output = "error | ошибка | fehler --- There was a problem getting the text for this item. The label was: " + label;
 			}
 			trace("Output is: " + output);
 			return output;

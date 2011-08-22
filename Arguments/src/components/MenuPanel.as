@@ -1,5 +1,7 @@
 package components
 {
+	
+	
 	/**
 	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 	 reflection, critique, deliberation, and creativity in individual argument construction 
@@ -23,7 +25,6 @@ package components
 
 	import flash.events.MouseEvent;
 	import Model.ArgumentTypeModel;
-	import mx.binding.utils.BindingUtils;
 	import mx.containers.Panel;
 	import mx.controls.Label;
 	import mx.core.DragSource;
@@ -45,26 +46,12 @@ package components
 		public var changeSchemeBtn:Button;
 		public var inference:Inference;
 		
-		
-		private var _schemeSelector:ArgSelector;
-		
 		public function MenuPanel()
 		{
 			super();
 			minHeight = 20;
 			width = 150;
 			this.setStyle("chromeColor",uint("0xdddddd"));
-		}
-
-
-		public function get schemeSelector():ArgSelector
-		{
-			return _schemeSelector;
-		}
-
-		public function set schemeSelector(value:ArgSelector):void
-		{
-			_schemeSelector = value;
 		}
 
 		public function get model():ArgumentTypeModel
@@ -75,19 +62,8 @@ package components
 		public function set model(value:ArgumentTypeModel):void
 		{
 			_model = value;
-			BindingUtils.bindSetter(this.setX, model, "xgrid");
-			BindingUtils.bindSetter(this.setY, model, "ygrid");
 		}
 
-		//------------------ Bind Setters --------------------------//
-		protected function enableAddReason(value:Boolean):void{
-			addReasonBtn.enabled = value;
-		}
-		protected function enableChangeScheme(value:Boolean):void{
-			changeSchemeBtn.enabled = value;	
-		}
-		
-		//------------------- Framework methods---------------------//
 		override protected function createChildren():void
 		{
 			super.createChildren();
@@ -106,16 +82,24 @@ package components
 			changeSchemeBtn.label = "Scheme";
 			changeSchemeBtn.percentWidth = 100;
 			titleDisplay.setStyle("textAlign","center");
-			//title = Language.lookup("Therefore");
+			title = Language.lookup("Therefore");
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
-			
-			//set bind setters
-			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");
-			BindingUtils.bindSetter(enableChangeScheme, model, "reasonsCompleted");
+			addEventListener(FlexEvent.PREINITIALIZE, menuPanelCreated);
 		}
-				
+		
+		private function menuPanelCreated(event:FlexEvent):void{
+			/*
+			try{
+				gridX = inference._initXML.connection[0].@x;
+				gridY = inference._initXML.connection[1].@y;
+			}catch(e:Error){
+				trace(e);
+			}
+			*/
+		}
+		
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{

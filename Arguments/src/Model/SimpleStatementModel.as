@@ -26,7 +26,6 @@ package Model
 			super(target);
 			forwardList = new Vector.<SimpleStatementModel>;
 			ID = 0;
-			hasOwn = true;
 		}
 		
 		//------------------------Getters/Setters-------------------------//
@@ -81,10 +80,8 @@ package Model
 					}
 				}	
 			}
-			trace(this.forwardList.length);
 			for each(var simpleStatement:SimpleStatementModel in forwardList){
 				simpleStatement.text = _text;
-				trace(simpleStatement.text);
 			}
 		}
 		
@@ -107,6 +104,13 @@ package Model
 		
 		
 		//------------------ get simple statment --------------------------//
+		public static function createSimpleStatementFromXML(xml:XML, statementModel:StatementModel):SimpleStatementModel{
+			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
+			simpleStatement.ID = xml.@ID;
+			simpleStatement.text = xml.@text;
+			return simpleStatement;
+		}
+		
 		public static function createSimpleStatementFromObject(obj:Object, statementModel:StatementModel):SimpleStatementModel{
 			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
 			simpleStatement.ID = obj.ID;

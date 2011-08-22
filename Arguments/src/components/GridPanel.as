@@ -36,8 +36,11 @@ package components
 		public static var count:int;
 		public var gridX:int;
 		public var gridY:int;
+		public var aid:int;
 		public function GridPanel()
 		{
+			count = count + 1;
+			aid = count;
 			super();
 			this.setStyle("dropShadowVisible",false);
 			this.setStyle("cornerRadius",4);

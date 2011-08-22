@@ -18,7 +18,7 @@ package ValueObjects
 		public var MAP_LOADING_FAILED:String;
 		public var STATEMENT_TOGGLE_FAILED:String;
 		public var NETWORK_ERROR:String;
-		
+	
 		
 		public var IF:String = "If";
 		public var THEN:String = "then";
