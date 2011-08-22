@@ -87,7 +87,7 @@
  */			}
 			
 			public function init():void {
-				argumentPaste.text=Language.lookup("PasteArgument");
+				argumentPaste.text = Language.lookup("PasteArgument");
 				conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
 				
 			}
