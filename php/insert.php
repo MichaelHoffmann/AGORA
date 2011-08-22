@@ -513,6 +513,9 @@ List of variables for insertion:
 		mysql_query("START TRANSACTION");
 		
 		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
+		//Update map last modified time
+		$status = mysql_query("UPDATE maps SET modified_date=NOW() WHERE map_id=$mapclause");
+		
 		if($success===true){
 			mysql_query("COMMIT");
 		}else{

@@ -61,6 +61,7 @@
 					$map->addAttribute("ID", $row['map_id']);
 					$map->addAttribute("title", $row['title']);
 					$map->addAttribute("creator", $row['username']);
+					$map->addAttribute("last_modified", $row['last_modified']);
 				}
 			}
 		}
