@@ -11,7 +11,7 @@ package components
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
-	import logic.*;
+	import Controller.logic.*;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/mx" width="75"  backgroundColor="0xFFFF00">
+		   xmlns:mx="library://ns.adobe.com/flex/mx" width="75" preinitialize="initializeOption(event)"  backgroundColor="0xFFFF00">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -10,8 +10,8 @@
 	<fx:Script>	
 		<![CDATA[
 			import Controller.ArgumentController;
-			
 			import Model.ArgumentTypeModel;
+			import mx.events.FlexEvent;
 			private var _argumentTypeModel:ArgumentTypeModel;
 			
 			//----------------- Getters and Setters----------------//
@@ -26,7 +26,12 @@
 			protected function onOptionClicked(event:MouseEvent):void{
 				ArgumentController.getInstance().buildByArgumentScheme(this);
 			}
-			
+
+			protected function initializeOption(event:FlexEvent):void
+			{
+				addEventListener(MouseEvent.CLICK, onOptionClicked);
+			}
+
 		]]>
 	</fx:Script>
 	

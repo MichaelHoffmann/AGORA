@@ -26,6 +26,9 @@ package components
 		public var changeSchemeBtn:Button;
 		public var inference:Inference;
 		
+		
+		private var _schemeSelector:ArgSelector;
+		
 		public function MenuPanel()
 		{
 			super();
@@ -34,6 +37,16 @@ package components
 			this.setStyle("chromeColor",uint("0xdddddd"));
 		}
 
+
+		public function get schemeSelector():ArgSelector
+		{
+			return _schemeSelector;
+		}
+
+		public function set schemeSelector(value:ArgSelector):void
+		{
+			_schemeSelector = value;
+		}
 
 		public function get model():ArgumentTypeModel
 		{
@@ -45,7 +58,6 @@ package components
 			_model = value;
 			BindingUtils.bindSetter(this.setX, model, "xgrid");
 			BindingUtils.bindSetter(this.setY, model, "ygrid");
-			
 		}
 
 		//------------------ Bind Setters --------------------------//
@@ -80,14 +92,11 @@ package components
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			
-			
 			//set bind setters
 			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");
 			BindingUtils.bindSetter(enableChangeScheme, model, "reasonsCompleted");
-			
 		}
-		
-		
+				
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{

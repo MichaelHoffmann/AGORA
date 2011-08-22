@@ -4,6 +4,12 @@ package components
 	import Controller.ArgumentController;
 	import Controller.LayoutController;
 	import Controller.LoadController;
+	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.DisjunctiveSyllogism;
+	import Controller.logic.ModusPonens;
+	import Controller.logic.ModusTollens;
+	import Controller.logic.NotAllSyllogism;
+	import Controller.logic.ParentArg;
 	
 	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
@@ -20,13 +26,6 @@ package components
 	import flash.utils.Timer;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
-	
-	import logic.ConditionalSyllogism;
-	import logic.DisjunctiveSyllogism;
-	import logic.ModusPonens;
-	import logic.ModusTollens;
-	import logic.NotAllSyllogism;
-	import logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -52,7 +51,7 @@ package components
 		public var timer:Timer;
 		
 		public var panelsHash:Dictionary;
-		
+		public var menuPanelsHash:Dictionary;
 		
 		public function AgoraMap()
 		{
@@ -63,6 +62,7 @@ package components
 			timer = new Timer(30000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			panelsHash = new Dictionary;
+			menuPanelsHash = new Dictionary;
 		}
 		
 		
@@ -190,8 +190,14 @@ package components
 			for each(var argumentTypeModel:ArgumentTypeModel in newMenuPanels){
 				var menuPanel:MenuPanel = new MenuPanel;
 				menuPanel.model = argumentTypeModel;
-				panelsHash[menuPanel.model.ID] =  menuPanel;
+				menuPanel.schemeSelector = new ArgSelector;
+				menuPanel.schemeSelector.visible = false;
+				menuPanel.schemeSelector.argumentTypeModel = argumentTypeModel;
+				
+				
+				menuPanelsHash[menuPanel.model.ID] =  menuPanel;
 				addChild(menuPanel);
+				addChild(menuPanel.schemeSelector);
 			}
 			
 			LoadController.getInstance().mapUpdateCleanUp();

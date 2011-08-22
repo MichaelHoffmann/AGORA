@@ -1,5 +1,8 @@
 package Controller
 {
+	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.ParentArg;
+	
 	import Events.AGORAEvent;
 	
 	import Model.AGORAMapModel;
@@ -10,16 +13,20 @@ package Controller
 	
 	import ValueObjects.AGORAParameters;
 	
+	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.Inference;
 	import components.LAMWorld;
 	import components.Map;
+	import components.MenuPanel;
 	import components.Option;
 	
 	import flash.display.DisplayObject;
 	
 	import mx.controls.Alert;
+	import mx.controls.Menu;
 	import mx.core.FlexGlobals;
+	import mx.events.MenuEvent;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
 	import mx.states.State;
@@ -122,6 +129,67 @@ package Controller
 			LoadController.getInstance().fetchMapData(); 
 		}
 		
+		//------------------ Adding a Reason -------------------------------------//
+		public function addReason(argumentTypeModel:ArgumentTypeModel):void{
+			
+		}
+		
+		//----------------- Construct Argument -----------------------------//
+		public function constructArgument(argumentTypeModel:ArgumentTypeModel):void{
+			//make inference visible
+			argumentTypeModel.reasonsCompleted = true;
+			//get the scheme selector
+			var menuPanel:MenuPanel = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID];
+			var schemeSelector:ArgSelector = menuPanel.schemeSelector;
+			//Fill them up
+			//if constrained
+			if(argumentTypeModel.isLanguageTyped()){
+				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
+			}
+			//if constructed by argument and first claim is being supported
+			else if(AGORAModel.getInstance().agoraMapModel.mapConstructedFromArgument && argumentTypeModel.claimModel.firstClaim){
+				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
+			}
+			
+			else if(argumentTypeModel.claimModel.firstClaim){
+				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
+			}
+			
+			//if simple positive statement
+			else if(!argumentTypeModel.claimModel.negated){
+				schemeSelector.scheme = ParentArg.getInstance().getPositiveArray();
+			}
+			//if simple negative statement
+			else if(argumentTypeModel.claimModel.negated){
+				schemeSelector.scheme = ParentArg.getInstance().getNegativeArray();
+			}
+			//if positive implication
+			else if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
+				schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
+			}
+			//if positive disjunction
+			else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
+				schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
+			}
+			
+			//show the menu
+			schemeSelector.visible = true;
+		}
+		
+		//----------------- After done button is clicked --------------------//
+		public function onTextEntered(argumentPanel:ArgumentPanel):void{
+			//if first claim
+			var model:StatementModel = argumentPanel.model;
+			if(model.firstClaim){
+			}
+			//if reasons Completed
+			else if(model.argumentTypeModel.reasonsCompleted){
+			}
+			else{
+				argumentPanel.showMenu();
+			}
+		}
+		
 		//----------------- State Changes in a Statement --------------------//
 		public function changeType(ID:int):void{
 			try{
@@ -149,9 +217,7 @@ package Controller
 			//get the argumentTypeModel and set reasonsCompleted to be true
 			//This automatically sets the inference visible through a bind
 			//setter
-			option.argumentTypeModel.reasonsCompleted = true;
-			//display argument scheme options
-			
+			constructArgument(option.argumentTypeModel);
 		}
 		
 		//------------------ Saving Text -----------------------------------//
@@ -159,14 +225,15 @@ package Controller
 			//call the model's update text function
 			statementModel.saveTexts();
 			CursorManager.setBusyCursor();
-			
 		}
+		
 		
 		protected function textSaved(event:AGORAEvent):void{
 			var statementModel:StatementModel = StatementModel(event.eventData);
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
 			argumentPanel.state = ArgumentPanel.DISPLAY;
 			CursorManager.removeAllCursors();
+			onTextEntered(argumentPanel);
 		}
 		
 		//------------------- configuration functions -----------------//

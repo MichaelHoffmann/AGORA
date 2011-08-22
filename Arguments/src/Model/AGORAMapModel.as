@@ -48,6 +48,8 @@ package Model
 		private var _statementWidth:int;
 		
 		
+		private var _mapConstructedFromArgument:Boolean;
+		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
@@ -93,6 +95,16 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		
+		public function get mapConstructedFromArgument():Boolean
+		{
+			return _mapConstructedFromArgument;
+		}
+		
+		public function set mapConstructedFromArgument(value:Boolean):void
+		{
+			_mapConstructedFromArgument = value;
+		}
 		
 		public function get textboxListHash():Dictionary
 		{
@@ -233,7 +245,6 @@ package Model
 				simpleStatement.forwardList.push(statementModel.statement);
 				statementModel.statements.push(simpleStatement);
 				statementModel.nodeTextIDs.push(map.nodeObjects[0].nodetexts[0].ID);
-				statementModel.firstClaim = true;
 				
 				textboxListHash[simpleStatement.ID] = simpleStatement;
 				
@@ -265,53 +276,53 @@ package Model
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
 			
-			//try{
-			//update timestamp
-			timestamp = map.timestamp;
-			
-			//Form a map of nodes
-			var obj:Object;
-			var nodeHash:Dictionary = new Dictionary;
-			var textboxHash:Dictionary = new Dictionary;
-			
-			//read nodes and create Statment Models
-			//parseNode(map, nodeHash, textboxHash);
-			processNode(map.nodeObjects,nodeHash, textboxHash);
-			
-			//Form a map of connections
-			var connectionsHash:Dictionary = new Dictionary;
-			//parseConnection(map, connectionsHash, nodeHash);
-			processConnection(map.connections, connectionsHash, nodeHash);
-			
-			//read and set text - This should be performed after links are created
-			processTextbox(map.textboxes, textboxHash);
-			
-			//add new elements to Model
-			for each(var node:StatementModel in nodeHash){
-				if(!panelListHash.hasOwnProperty(node.ID)){
-					newPanels.addItem(node);
-					panelListHash[node.ID] = node;				
+			try{
+				//update timestamp
+				timestamp = map.timestamp;
+				
+				//Form a map of nodes
+				var obj:Object;
+				var nodeHash:Dictionary = new Dictionary;
+				var textboxHash:Dictionary = new Dictionary;
+				
+				//read nodes and create Statment Models
+				//parseNode(map, nodeHash, textboxHash);
+				processNode(map.nodeObjects,nodeHash, textboxHash);
+				
+				//Form a map of connections
+				var connectionsHash:Dictionary = new Dictionary;
+				//parseConnection(map, connectionsHash, nodeHash);
+				processConnection(map.connections, connectionsHash, nodeHash);
+				
+				//read and set text - This should be performed after links are created
+				processTextbox(map.textboxes, textboxHash);
+				
+				//add new elements to Model
+				for each(var node:StatementModel in nodeHash){
+					if(!panelListHash.hasOwnProperty(node.ID)){
+						newPanels.addItem(node);
+						panelListHash[node.ID] = node;				
+					}
 				}
-			}
-			
-			for each(var connection:ArgumentTypeModel in connectionsHash){	
-				if(!connectionListHash.hasOwnProperty(connection.ID)){
-					newConnections.addItem(connection);
-					connectionListHash[connection.ID] = connection;
+				
+				for each(var connection:ArgumentTypeModel in connectionsHash){	
+					if(!connectionListHash.hasOwnProperty(connection.ID)){
+						newConnections.addItem(connection);
+						connectionListHash[connection.ID] = connection;
+					}
 				}
+				
+				for each(var textbox:SimpleStatementModel in textboxHash){
+					textboxListHash[textbox.ID] = textbox;
+				}
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
+				
 			}
-			
-			for each(var textbox:SimpleStatementModel in textboxHash){
-				textboxListHash[textbox.ID] = textbox;
-			}
-			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
-			
-			//}
-			//catch(error:Error){
-			//	trace(error.message);
-			//	trace("Error in reading update to Map");
-			//	dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			//}			
+			catch(error:Error){
+				trace(error.message);
+				trace("Error in reading update to Map");
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+			}			
 		}
 		
 		//---------------------- Process Node ---------------------------------------------------------//
@@ -328,7 +339,8 @@ package Model
 					
 					if(nodeVO.type == StatementModel.INFERENCE){
 						statementModel.statementFunction = StatementModel.INFERENCE;
-					}else
+					}
+					else
 					{
 						statementModel.statementFunction = StatementModel.STATEMENT;	
 					}
@@ -373,7 +385,12 @@ package Model
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
 					argumentTypeModel.dbType = obj.type;
-					argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+					if(nodeHash.hasOwnProperty(obj.targetnode)){
+						argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+					}
+					else{
+						argumentTypeModel.claimModel = panelListHash[obj.targetnode];
+					}
 					argumentTypeModel.xgrid = obj.x;
 					argumentTypeModel.ygrid = obj.y;
 					connectionsHash[obj.connID] = argumentTypeModel;
@@ -471,8 +488,7 @@ package Model
 		}
 		
 		//----------------------- Reinitializing the model ----------------------------------//
-		public function reinitializeModel():void{
-			
+		public function reinitializeModel():void{	
 		}
 		
 		//----------------------- Generic Fault Event  Handler-------------------------------//

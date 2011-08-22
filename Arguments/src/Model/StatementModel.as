@@ -177,12 +177,13 @@ package Model
 		
 		public function get firstClaim():Boolean
 		{
-			return _firstClaim;
-		}
-		
-		public function set firstClaim(value:Boolean):void
-		{
-			_firstClaim = value;
+			//return _firstClaim;
+			if(argumentTypeModel == null){
+				return true;
+			}else{
+				return false;
+			}
+			
 		}
 		
 		public function get supportingArguments():Vector.<ArgumentTypeModel>

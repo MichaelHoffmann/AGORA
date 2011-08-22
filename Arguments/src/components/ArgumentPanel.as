@@ -21,8 +21,8 @@ package components
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
-	import logic.ConditionalSyllogism;
-	import logic.ParentArg;
+	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -237,7 +237,7 @@ package components
 				BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
 				BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
 				BindingUtils.bindProperty(this, "panelType", model, ["statementFunction"]);
-				BindingUtils.bindSetter(setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
+				BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
 				
 				author = model.author;
 				
@@ -380,15 +380,26 @@ package components
 		protected function hideOption(event:KeyboardEvent):void
 		{
 		}
-		
+	
+		protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
+			 if(menuEvent.label == "add another reason"){
+				 ArgumentController.getInstance().addReason(model.argumentTypeModel);
+			 }else{
+				 ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+			 }
+		}
 		
 		public function showMenu():void
 		{
+			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>; 
 			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
+			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
 			var globalPosition:Point = localToGlobal(new Point(0,this.height));
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
+		
+	
 		
 		
 		//----------------------- Bind Setters -------------------------------------------------//
@@ -409,6 +420,9 @@ package components
 			if(model.statementFunction == StatementModel.INFERENCE){
 				if(!model.argumentTypeModel.reasonsCompleted){
 					this.visible = false;
+				}
+				else{
+					this.visible = true;
 				}
 			}
 		}
