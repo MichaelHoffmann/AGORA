@@ -17,6 +17,7 @@ package components
 	import flash.ui.Keyboard;
 	
 	import mx.binding.utils.BindingUtils;
+	import mx.controls.Alert;
 	import mx.controls.TextArea;
 	import mx.core.mx_internal;
 	
@@ -50,11 +51,12 @@ package components
 			//Bind values
 			BindingUtils.bindProperty(this, "text", model, ["text"]);
 			//set event Listeners
-			addEventListener( Event.CHANGE, update);
+			addEventListener(Event.CHANGE, update);
 		}
 		
 		override public function set text(value:String):void{
 			if(value != null){
+				trace("whatever");
 				//For Windows and Linux
 				if(value.charAt(value.length - 1) == '\n'){
 					value = value.substr(0,value.length - 1);

@@ -1,6 +1,9 @@
 package Controller
 {
+	import Events.AGORAEvent;
+	
 	import Model.SimpleStatementModel;
+	import Model.StatementModel;
 	
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
@@ -30,7 +33,13 @@ package Controller
 			var dta:DynamicTextArea = new DynamicTextArea;
 			dta.model = simpleStatement;
 			return dta;
-		}		
+		}
+		
+		//--------------- add event handlers to the statement model -----------//
+		public function configureStatementModel(statementModel:StatementModel):void{
+			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, ArgumentController.getInstance().textSaved);
+			statementModel.addEventListener(AGORAEvent.FAULT, ArgumentController.getInstance().onFault);
+		}
 	}
 }
 

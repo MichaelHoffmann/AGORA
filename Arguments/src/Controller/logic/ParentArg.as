@@ -1,30 +1,13 @@
-package logic
+package Controller.logic
 {
-	/**
-	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-	 reflection, critique, deliberation, and creativity in individual argument construction 
-	 and in collaborative or adversarial settings. 
-	 Copyright (C) 2011 Georgia Institute of Technology
-	 
-	 This program is free software: you can redistribute it and/or modify
-	 it under the terms of the GNU Affero General Public License as
-	 published by the Free Software Foundation, either version 3 of the
-	 License, or (at your option) any later version.
-	 
-	 This program is distributed in the hope that it will be useful,
-	 but WITHOUT ANY WARRANTY; without even the implied warranty of
-	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	 GNU Affero General Public License for more details.
-	 
-	 You should have received a copy of the GNU Affero General Public License
-	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	 
-	 */
+	import Model.ArgumentTypeModel;
+	
+	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
 	import components.Inference;
 	
-	import components.ArgSelector;
+	import flash.utils.Dictionary;
 	
 	import flashx.textLayout.operations.SplitParagraphOperation;
 	
@@ -34,22 +17,16 @@ package logic
 	public class ParentArg {
 		
 		private static var instance:ParentArg;
-		private  var _logicHash:Object;
 		
 		
-		public var _isLanguageExp:Boolean;
-		public var myname:String;
-		//This is set by the Inference that creates it.
-		//Each object of ParentArg belongs only to 
-		//one Inference, and it holds a reference to the Inference object.
-		public var inference:Inference;
+		private  var _logicHash:Dictionary;
+		
 		//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
 		//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
-		//public var dbName:String;
 		public var _langTypes:Array;
 		public var dbLangTypeNames:Array;
-		public var multipleReasons:Boolean;
 		public var _expLangTypes:Array;
+		
 		public static var MOD_PON:String = "Modus Ponens";
 		public static var MOD_TOL:String = "Modus Tollens";
 		public static var COND_SYLL:String = "Conditional Syllogism";
@@ -89,7 +66,7 @@ package logic
 		public function ParentArg(){
 			instance = this;
 			//Modus Ponens 
-			/*
+			logicHash = new Dictionary;
 			_logicHash[ParentArg.MPIfThen] = ModusPonens.getInstance();
 			_logicHash[ParentArg.MPimplies]  = ModusPonens.getInstance();
 			_logicHash[ParentArg.MPnecessary] = ModusPonens.getInstance();
@@ -97,6 +74,7 @@ package logic
 			_logicHash[ParentArg.MPsufficient] = ModusPonens.getInstance();
 			_logicHash[ParentArg.MPwhenever] = ModusPonens.getInstance();
 			
+			/*
 			//Modus Tollens
 			_logicHash[ParentArg.MTifthen] = ModusTollens.getInstance();
 			_logicHash[ParentArg.MTimplies] = ModusTollens.getInstance();
@@ -128,16 +106,6 @@ package logic
 			*/
 		}
 		
-		public function get logicHash():Object
-		{
-			return _logicHash;
-		}
-
-		public function set logicHash(value:Object):void
-		{
-			_logicHash = value;
-		}
-
 		public static function getInstance():ParentArg{
 			if(instance == null){
 				instance = new ParentArg;
@@ -145,33 +113,49 @@ package logic
 			return instance;
 		}
 		
-		public function setIsExp():void{
-			if(inference.myschemeSel.selectedType != null){
-				for each(var langType:String in _expLangTypes){
-					if(langType == inference.myschemeSel.selectedType){
-						_isLanguageExp = true;	
-					}
-				}
-			}
-		}
-		
-		public function get dbType():String
+		//---------------- Getters and Setters -------------------//
+		public function get logicHash():Dictionary
 		{
-			for(var i:int=0; i<_langTypes.length; i++)
-			{
-				if(inference.myschemeSel.selectedType == _langTypes[i])
-				{
-					return _dbType+dbLangTypeNames[i];
-				}
-			}
-			return "Unset";
+			return _logicHash;
 		}
-		
-		public function getOption(dbString:String):String
+
+		public function set logicHash(value:Dictionary):void
 		{
-			return "";
+			_logicHash = value;
+		}
+
+		//--------------- Other Public Fucntion --------------------//
+		public function getConstrainedArray(argumentTypeModel:ArgumentTypeModel):Array{
+			var array:Array = new Array;
+			array.concat(argumentTypeModel.logicClass.getLabel);
+			return array;
 		}
 		
+		public function getFullArray():Array{
+			var array:Array = [MOD_PON, MOD_TOL, DIS_SYLL, COND_SYLL, NOT_ALL_SYLL];
+			return array;
+		}
+		
+		public function getPositiveArray():Array{
+			var array:Array = [MOD_PON, DIS_SYLL];
+			return array;
+		}
+		
+		public function getNegativeArray():Array{
+			var array:Array = [MOD_TOL, NOT_ALL_SYLL];
+			return array;
+		}
+		
+		public function getImplicationArray():Array{
+			var array:Array = [MOD_PON, DIS_SYLL, COND_SYLL];
+			return array;
+		}
+		
+		public function getDisjunctionPositiveArray():Array{
+			var array:Array = [MOD_PON, DIS_SYLL];
+			return array;
+		}
+			
 		public function getLanguageType(dbString:String):String
 		{
 			for(var i:int=0;i<dbLangTypeNames.length;i++)
@@ -185,7 +169,9 @@ package logic
 			return "";
 		}
 		
-		public var mySelector:ArgSelector;	// reference to be moved from Inference to here - specific argscheme
+		public function getLabel():String{
+			return "";
+		}
 	
 		public function deleteLinks():void{
 			

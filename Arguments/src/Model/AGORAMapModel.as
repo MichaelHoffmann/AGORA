@@ -30,6 +30,7 @@ package Model
 	{	
 		private var _panelListHash:Dictionary;
 		private var _connectionListHash:Dictionary;
+		private var _textboxListHash:Dictionary;
 		private var _newPanels:ArrayCollection;
 		private var _newConnections:ArrayCollection;
 		
@@ -47,6 +48,8 @@ package Model
 		private var _statementWidth:int;
 		
 		
+		private var _mapConstructedFromArgument:Boolean;
+		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
@@ -59,6 +62,9 @@ package Model
 			
 			//create first claim service
 			createFirstClaim = new HTTPService;
+			//Below statement is enabled when the xml is required for 
+			//debugging
+			//createFirstClaim.resultFormat = "e4x";
 			createFirstClaim.url = AGORAParameters.getInstance().insertURL;
 			createFirstClaim.addEventListener(ResultEvent.RESULT, onAddFirstClaimResult);
 			createFirstClaim.addEventListener(FaultEvent.FAULT, onFault);
@@ -78,6 +84,8 @@ package Model
 			
 			
 			panelListHash = new Dictionary;
+			connectionListHash = new Dictionary;
+			textboxListHash = new Dictionary;
 			
 			newPanels = new ArrayCollection;
 			newConnections = new ArrayCollection;
@@ -88,16 +96,36 @@ package Model
 		//-------------------------Getters and Setters--------------------------------//
 		
 		
+		public function get mapConstructedFromArgument():Boolean
+		{
+			return _mapConstructedFromArgument;
+		}
+		
+		public function set mapConstructedFromArgument(value:Boolean):void
+		{
+			_mapConstructedFromArgument = value;
+		}
+		
+		public function get textboxListHash():Dictionary
+		{
+			return _textboxListHash;
+		}
+		
+		public function set textboxListHash(value:Dictionary):void
+		{
+			_textboxListHash = value;
+		}
+		
 		public function get statementWidth():int
 		{
 			return _statementWidth;
 		}
-
+		
 		public function set statementWidth(value:int):void
 		{
 			_statementWidth = value;
 		}
-
+		
 		public function get connectionListHash():Dictionary
 		{
 			return _connectionListHash;
@@ -178,6 +206,7 @@ package Model
 			_name = value;
 		}
 		
+		
 		//----------------------- Create a New Map --------------------------------------------//
 		public function createMap(mapName:String):void{
 			var xmlForMap:XML = <map id="0" title={mapName}></map>;
@@ -199,46 +228,25 @@ package Model
 									<nodetext/>
 								</node>
 						   </map>;	
-			
 			createFirstClaim.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:mapXML});
 		}
 		
 		protected function onAddFirstClaimResult(event:ResultEvent):void{
 			//create statement model
-			var map:Object = event.result.map;
-			
+			var map:MapValueObject = new MapValueObject(event.result.map, true);
 			try{
-				var statementModel:StatementModel = new StatementModel;
-				
-				//---------node----------//
-				statementModel.ID = map.node.ID;
-				statementModel.complexStatement = false;
+				var statementModel:StatementModel = StatementModel.createStatementFromObject(map.nodeObjects[0]);
 				
 				//-------textboxes & nodetext----------//
 				var simpleStatement:SimpleStatementModel = null;
+				simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textboxes[0], statementModel);
+				//When first statement is created, there will not be any text
+				simpleStatement.hasOwn = true;
+				simpleStatement.forwardList.push(statementModel.statement);
+				statementModel.statements.push(simpleStatement);
+				statementModel.nodeTextIDs.push(map.nodeObjects[0].nodetexts[0].ID);
 				
-				if(map.textbox is ArrayCollection){
-					trace("first claim as complex statement...");//shouldn't occur because there is no use case that allows this.
-					/*
-					for(var i:int=1; i < ArrayCollection(map.textbox).length; i++){
-					simpleStatement = new SimpleStatementModel;
-					simpleStatement.ID = map.textbox[i].ID;
-					simpleStatement.text = map.textbox[i].text;
-					simpleStatement.parent = statementModel;
-					statementModel.statements.push(simpleStatement);
-					statementModel.nodeTextIDs.push(map.node.nodetext[i].ID);
-					}
-					*/
-				}
-				else{
-					simpleStatement = SimpleStatementModel.createSimpleStatementFromObject(map.textbox, statementModel);
-					simpleStatement.text = map.textbox.text;
-					simpleStatement.hasOwn = true;
-					simpleStatement.forwardList.push(statementModel.statement);
-					statementModel.statements.push(simpleStatement);
-					statementModel.nodeTextIDs.push(map.node.nodetext.ID);
-				}
-				statementModel.firstClaim = true;
+				textboxListHash[simpleStatement.ID] = simpleStatement;
 				
 			}catch(error:Error){
 				trace("OnAddFirstClaimResult: Error occurred in reading XML");
@@ -251,6 +259,11 @@ package Model
 			
 			//raise event 
 			dispatchEvent(new AGORAEvent(AGORAEvent.FIRST_CLAIM_ADDED, null, statementModel));	
+		}
+		
+		//----------------------- Notify new statement model -----------------------------//
+		public function newStatementAdded(statementModel:StatementModel):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_ADDED, null, statementModel));
 		}
 		
 		//----------------------- Load New Data ----------------------------------------------//
@@ -293,10 +306,15 @@ package Model
 				}
 				
 				for each(var connection:ArgumentTypeModel in connectionsHash){	
-					newConnections.addItem(connection);
-					connectionListHash[connection.ID] = connection;
+					if(!connectionListHash.hasOwnProperty(connection.ID)){
+						newConnections.addItem(connection);
+						connectionListHash[connection.ID] = connection;
+					}
 				}
 				
+				for each(var textbox:SimpleStatementModel in textboxHash){
+					textboxListHash[textbox.ID] = textbox;
+				}
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
 				
 			}
@@ -304,9 +322,7 @@ package Model
 				trace(error.message);
 				trace("Error in reading update to Map");
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			}
-			
-			
+			}			
 		}
 		
 		//---------------------- Process Node ---------------------------------------------------------//
@@ -316,22 +332,24 @@ package Model
 				if(!nodeVO.deleted){
 					//Set attributes
 					if(!panelListHash.hasOwnProperty(nodeVO.ID)){
-						if(nodeVO.type == "Inference"){
-							statementModel = InferenceModel.createStatementFromObject(nodeVO);
-							(statementModel as InferenceModel).typed =  nodeVO.typed;
-						}else
-						{
-							statementModel = StatementModel.createStatementFromObject(obj);
-						}
+						statementModel = StatementModel.createStatementFromObject(nodeVO);
 					}else{
 						statementModel = panelListHash[nodeVO.ID];
 					}
+					
+					if(nodeVO.type == StatementModel.INFERENCE){
+						statementModel.statementFunction = StatementModel.INFERENCE;
+					}
+					else
+					{
+						statementModel.statementFunction = StatementModel.STATEMENT;	
+					}
+					
 					statementModel.author = nodeVO.author;
 					statementModel.statementType = nodeVO.type;
 					statementModel.xgrid = nodeVO.x;
 					statementModel.ygrid = nodeVO.y;
 					nodeHash[nodeVO.ID] = statementModel;
-					
 					processNodeText(nodeVO, nodeHash, textboxHash);
 				}
 			}
@@ -344,18 +362,14 @@ package Model
 			for each(var nodetextVO:NodetextValueObject in nodeVO.nodetexts){
 				if(!statementModel.hasStatement(nodetextVO.textboxID)){
 					simpleStatement = new SimpleStatementModel;
+					simpleStatement.forwardList.push(statementModel.statement);
 					simpleStatement.ID = nodetextVO.textboxID;
-				}
-				else{
-					simpleStatement = statementModel.getStatement(nodetextVO.textboxID);
-				}
-				
-				if(!statementModel.hasStatement(simpleStatement.ID)){
+					simpleStatement.parent = statementModel;
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(nodetextVO.ID);
+					textboxHash[simpleStatement.ID] = simpleStatement;
 				}
 				
-				textboxHash[simpleStatement.ID] = simpleStatement;
 			}
 			return true;
 		}
@@ -365,17 +379,21 @@ package Model
 			var result:Boolean;
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
-					if(connectionListHash.hasOwnProperty(obj.connID)){
+					if(!connectionListHash.hasOwnProperty(obj.connID)){
 						argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
 					argumentTypeModel.dbType = obj.type;
-					argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+					if(nodeHash.hasOwnProperty(obj.targetnode)){
+						argumentTypeModel.claimModel = nodeHash[obj.targetnode];
+					}
+					else{
+						argumentTypeModel.claimModel = panelListHash[obj.targetnode];
+					}
 					argumentTypeModel.xgrid = obj.x;
 					argumentTypeModel.ygrid = obj.y;
 					connectionsHash[obj.connID] = argumentTypeModel;
-					
 					processSourceNode(obj, connectionsHash, nodeHash);	
 				}
 				
@@ -384,25 +402,29 @@ package Model
 		}
 		
 		protected function processSourceNode(obj:ConnectionValueObject, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
-			var argumentTypeModel:ArgumentTypeModel;
+			var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.connID];
 			for each(var argElements:SourcenodeValueObject in obj.sourcenodes){
 				if(nodeHash.hasOwnProperty(argElements.nodeID)){
-					if(nodeHash[argElements.nodeID] is InferenceModel){
+					if(StatementModel(nodeHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
+						StatementModel(nodeHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 					}
 					else{
 						if(!argumentTypeModel.hasReason(argElements.nodeID)){
 							argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+							StatementModel(nodeHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 						}
 					}
 				}
 				else{ //read earlier
-					if(panelListHash[argElements.nodeID] is InferenceModel){
+					if(StatementModel(panelListHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
+						StatementModel(panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 					}
 					else{
 						if(!argumentTypeModel.hasReason(argElements.nodeID)){
 							argumentTypeModel.reasonModels.push(panelListHash[argElements.nodeID]);
+							StatementModel(	panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 						}
 					}
 				}
@@ -415,11 +437,16 @@ package Model
 			for each(var obj:TextboxValueObject in textboxes){
 				if(!obj.deleted){
 					//fetch simpleStatementModel from Dictionary
-					simpleStatement = textboxHash[obj.ID];
-					//update text
-					simpleStatement.text = obj.text;
-					if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
-						simpleStatement.hasOwn = false;
+					if(textboxHash.hasOwnProperty(obj.ID)){
+						simpleStatement = textboxHash[obj.ID];
+						simpleStatement.text = obj.text;
+						if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
+							simpleStatement.hasOwn = false;
+						}
+					}	
+					else{
+						simpleStatement = textboxListHash[obj.ID];
+						simpleStatement.text = obj.text;
 					}
 				}
 			}
@@ -461,8 +488,7 @@ package Model
 		}
 		
 		//----------------------- Reinitializing the model ----------------------------------//
-		public function reinitializeModel():void{
-			
+		public function reinitializeModel():void{	
 		}
 		
 		//----------------------- Generic Fault Event  Handler-------------------------------//

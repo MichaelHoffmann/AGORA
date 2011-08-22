@@ -13,7 +13,10 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+<<<<<<< HEAD
     <application path="ConfigureScript.mxml"/>
+=======
+>>>>>>> Architect
     <application path="LanguageScript.mxml"/>
     <application path="index.mxml"/>
   </applications>
