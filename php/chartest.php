@@ -21,4 +21,16 @@
 	*/
 	//Used to test handling of special characters in an attempt to solve a bug.
 	
+	$uid = $_REQUEST['uid'];
+	print "User ID: $uid\n<BR>";
+	$xmlin = $_REQUEST['xml'];
+	print htmlspecialchars("Input XML: $xmlin", ENT_QUOTES);
+	print("\n<BR>");
+	try{
+		$xml = new SimpleXMLElement($xmlin);
+	}catch(Exception $e){
+		print "Could not read XML\n<BR>";
+	}
+	$xmlstr = htmlspecialchars($xml->asXML(), ENT_QUOTES);
+	print "XML as read: $xmlstr\n<BR>";
 ?>
