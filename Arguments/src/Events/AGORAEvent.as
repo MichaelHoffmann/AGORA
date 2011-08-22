@@ -23,6 +23,9 @@ package Events
 		public static const MAP_LOADING_FAILED:String = "MapLoadingFailed";
 		public static const STATEMENT_TYPE_TOGGLED:String = "StatementTypeToggled";
 		public static const POSITIONS_UPDATED:String = "PositionsUpdated";
+		public static const TEXT_SAVED:String = "TextSaved";
+		public static const STATEMENT_ADDED:String = "StatementAdded";
+		public static const ARGUMENT_CREATED:String = "ArgumentCreated";
 		
 		public var xmlData:XML;
 		public var eventData:Object;

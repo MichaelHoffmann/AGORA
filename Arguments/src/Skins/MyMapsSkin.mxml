@@ -92,9 +92,13 @@
 		<s:layout>
 			<s:HorizontalLayout paddingLeft="5" paddingRight="5"/>
 		</s:layout>
+<<<<<<< HEAD
 		<s:Button label="{Language.lookup(&quot;Delete&quot;)}" id="deleteBtn" click="hostComponent.deleteMaps(event)">
+=======
+		<s:Button label="Delete" id="deleteBtn" width="80" click="hostComponent.deleteMaps(event)">
+>>>>>>> Architect
 		</s:Button>
-		<s:Button label="{hostComponent.selectString}" id = "selectBtn"  click="hostComponent.makeSelection(event)">
+		<s:Button label="{hostComponent.selectString}" id = "selectBtn"  width="100" click="hostComponent.makeSelection(event)">
 		</s:Button>
 	</s:Group>
 </s:SparkSkin>

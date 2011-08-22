@@ -36,6 +36,7 @@
 				 <!-- itemClick="changeTitle(event)" -->
 		
 		<mx:List id="typeSelector" 
+				 dataProvider="{languageTypes}"
 				 x="{mainSchemes.width}"
 				 rollOverColor="#b2c4e7"
 				 textRollOverColor="#FFFFFF"
@@ -58,39 +59,56 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Model.ArgumentTypeModel;
 			
 			import flash.events.Event;
 			import flash.events.MouseEvent;
 			
-			import logic.*;
+			import Controller.logic.*;
 			
+			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
 			import mx.events.ListEvent;
-			
-			private var _selectedScheme:String;
-			private var _selectedType:String = "";
+		
 			private var _languageTypes:Array;
-			private var _selectedOption:String;
 			private var _scheme:Array;
 			private var _options:Array;
 			
+			private var _argumentTypeModel:ArgumentTypeModel;
 			
-			override protected function commitProperties():void
+			
+			
+			//------------- Getters and Setters -----------------------//
+
+			public function get argumentTypeModel():ArgumentTypeModel
 			{
-					super.commitProperties();
-			}
-			
-			
-			public function get selectedOption():String
-			{
-				return _selectedOption;
+				return _argumentTypeModel;
 			}
 
-			public function set selectedOption(value:String):void
+			public function set argumentTypeModel(value:ArgumentTypeModel):void
 			{
-				_selectedOption = value;
+				_argumentTypeModel = value;
+				//get the infernece and bind it.
+				try{
+					var panelsHash:Dictionary  = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash;
+					var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
+					BindingUtils.bindSetter(setX, inference, ["x"]);
+					BindingUtils.bindSetter(setY, inference, ["y"]);
+				}catch(error:Error){
+					trace("ArgSelector::set argumentTypeModel: Error in applying bind setters");	
+					trace(error.message);
+				}
 			}
 
+			[Bindable]
+			public function get languageTypes():Array{
+				return _languageTypes;
+			}
+			public function set languageTypes(value:Array):void{
+				_languageTypes = value;
+			}
+			
 			[Bindable]
 			public function set scheme(value:Array):void
 			{
@@ -112,45 +130,21 @@
 			{
 				_options = value;
 			}
-
-			public function get selectedType():String
-			{
-				return _selectedType;
-			}
-
-			[Bindable]
-			public function set selectedType(value:String):void
-			{
-				_selectedType = value;
-			}
-
-
-			public function get selectedScheme():String
-			{
-				return _selectedScheme;
-			}
-			
-			[Bindable]
-			public function set selectedScheme(value:String):void
-			{
-				_selectedScheme = value;
-			}
-
-			private var _myclassindex:int;
-			
-			public function get myclassindex():int
-			{
-				return _myclassindex;
-			}
-			
-			public function set myclassindex(value:int):void
-			{
-				_myclassindex = value;
-			}
 			
 			public function init():void{
 				
 			}
+			
+			//------------------ Bind Setters ----------------------------------------------//
+			protected function setX(value:int):void{
+				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
+				x = value + inference.width;
+			}
+			protected function setY(value:int):void{
+				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
+				y = value;
+			}
+			
 		]]>
 	</fx:Script>
 </s:Group>
