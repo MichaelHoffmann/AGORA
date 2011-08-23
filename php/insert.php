@@ -514,9 +514,15 @@ List of variables for insertion:
 		
 		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
 		//Update map last modified time
-		$status = mysql_query("UPDATE maps SET modified_date=NOW() WHERE map_id=$mapClause");
 		
 		if($success===true){
+			$uquery = "UPDATE maps SET modified_date=NOW() WHERE map_id=$mapClause";
+			$status = mysql_query($uquery);
+			if(!$status){
+				updateFailed($output, $uquery);
+				mysql_query("ROLLBACK");
+				rolledBack($output);
+			}
 			mysql_query("COMMIT");
 		}else{
 			mysql_query("ROLLBACK");
