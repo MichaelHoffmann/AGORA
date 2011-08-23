@@ -43,9 +43,9 @@ List of variables for insertion:
 
 */
 	require 'configure.php';
-	require 'checklogin.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	/**
 	*	Function for removing a node from the database.
 	*/

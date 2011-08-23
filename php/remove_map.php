@@ -35,10 +35,10 @@ List of variables for insertion:
 */
 
 	require 'configure.php';
-	require 'checklogin.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
-
+	require 'utilfuncs.php';
+	
 	function removeMap($map, $output, $linkID, $userID){
 		$mapID = $map['id'];
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapID";
