@@ -20,10 +20,10 @@
 	
 	*/
 	//Used to test handling of special characters in an attempt to solve a bug.
-	
+
 	$uid = $_REQUEST['uid'];
 	print "User ID: $uid\n<BR>";
-	$xmlin = $_REQUEST['xml'];
+	$xmlin = iconv('', 'UTF-8', $_REQUEST['xml']);
 	print htmlspecialchars("Input XML: $xmlin", ENT_QUOTES);
 	print("\n<BR>");
 	try{

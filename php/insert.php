@@ -531,7 +531,7 @@ List of variables for insertion:
 		return $output;
 		
 	}
-	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
+	$xmlparam = iconv('', 'UTF-8', $_REQUEST['xml']); //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
 	$output = insert($xmlparam, $userID, $pass_hash); 
