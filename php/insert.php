@@ -531,6 +531,8 @@ List of variables for insertion:
 		return $output;
 		
 	}
+	//Current status: Nothing "breaks" - which is good
+	//Problem: Cyrillic and Japanese don't show properly on exit
 	$xmlparam = to_utf8($_REQUEST['xml']); //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
