@@ -424,7 +424,7 @@ List of variables for insertion:
 	{
 		global $dbName, $version;
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' encoding='UTF-8'?>\n<map version='$version'></map>";
+		$xmlstr = "<?xml version='1.0'?>\n<map version='$version'></map>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
 		if(!$linkID){

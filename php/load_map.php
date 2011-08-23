@@ -22,6 +22,7 @@
 	require 'configure.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	/**
 	*	Function that loads a map from the database.
 	*	Might be worth refactoring this somewhat.
@@ -30,7 +31,7 @@
 		global $dbName, $version;
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
-		$outputstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
+		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<map version='$version'></map>";
 		$output = new SimpleXMLElement($outputstr);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
@@ -155,5 +156,5 @@
 	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
 	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
 	$output = get_map($map_id, $timestamp); 
-	print($output->asXML());
+	print(to_utf8($output->asXML()));
 ?>
