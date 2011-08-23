@@ -35,7 +35,6 @@
 		<![CDATA[
 			import Controller.LayoutController;
 			
-			import classes.ClaimAddedEvent;
 			import classes.UserData;
 			
 			import flash.display.*;

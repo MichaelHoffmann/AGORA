@@ -1,8 +1,7 @@
 package Controller.logic
 {	
-	import components.ArgumentPanel;
-	
 	import components.ArgSelector;
+	import components.ArgumentPanel;
 	
 	import mx.controls.Alert;
 	import mx.messaging.channels.StreamingAMFChannel;
@@ -14,15 +13,13 @@ package Controller.logic
 		
 		
 		public function ModusPonens()
-		{
-			/*
+		{			
+			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
+			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
+			expLangTypes = ["If-then","Whenever","Provided that"];	
+			//myname = MOD_PON;
+			//_dbType = "MP";
 			
-			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
-			dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
-			_expLangTypes = ["If-then","Whenever","Provided that"];	
-			myname = MOD_PON;
-			_dbType = "MP";
-			*/
 		}
 		
 		public static function getInstance():ModusPonens{
@@ -34,7 +31,7 @@ package Controller.logic
 		
 		//------------------- public functions -------------------------//
 		override public function getLabel():String{
-			return MOD_PON;
+			return ParentArg.MOD_PON;
 		}
 		
 	

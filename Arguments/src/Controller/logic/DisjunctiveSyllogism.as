@@ -11,10 +11,10 @@ package Controller.logic
 		
 		public function DisjunctiveSyllogism()
 		{
-			_langTypes = ["Either-or"];
-			_expLangTypes =  ["Either-or"];
-			myname = DIS_SYLL;
-			_dbType = "DisjSyl";
+			langTypes = ["Either-or"];
+			expLangTypes =  ["Either-or"];
+			//myname = DIS_SYLL;
+			//_dbType = "DisjSyl";
 		}
 		
 		public static function getInstance():DisjunctiveSyllogism{

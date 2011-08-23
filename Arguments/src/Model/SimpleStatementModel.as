@@ -56,11 +56,12 @@ package Model
 		}
 		
 		public function set text(value:String):void{
+			_text = value;
 			if(hasOwn){
 				_text = value;
 			}
-			else if(!parent is InferenceModel){
-				
+			else if(parent.statementFunction == StatementModel.INFERENCE){
+				_text = parent.argumentTypeModel.logicClass.formText(parent.argumentTypeModel);
 			}
 			else{
 				_text = "";
@@ -78,13 +79,12 @@ package Model
 						}
 					}
 					else{
+						
 					}
 				}	
 			}
-			trace(this.forwardList.length);
 			for each(var simpleStatement:SimpleStatementModel in forwardList){
 				simpleStatement.text = _text;
-				trace(simpleStatement.text);
 			}
 		}
 		
@@ -103,7 +103,29 @@ package Model
 			_ID = value;              
 		}
 		//------------------ other public functions -----------------------//
-		
+		public function updateStatementTexts():void{
+			for each(var simpleStatement:SimpleStatementModel in forwardList){
+				if(simpleStatement.parent.statements.length > 1 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
+				{
+					if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
+						simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0] + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1]; 
+					}
+					if(parent.connectingString == StatementModel.DISJUNCTION){
+						var vtext:String = parent.statements[0].text;
+						for(var i:int = 1; i < parent.statements.length; i++){
+							vtext = " " + AGORAParameters.getInstance().OR + " " + vtext ;
+						}
+						simpleStatement.text = vtext;
+					}
+				}
+				else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
+					simpleStatement.parent.argumentTypeModel.logicClass.formText(simpleStatement.parent.argumentTypeModel);
+				}
+				else{
+					simpleStatement.text = text;
+				}
+			}
+		}
 		
 		
 		//------------------ get simple statment --------------------------//

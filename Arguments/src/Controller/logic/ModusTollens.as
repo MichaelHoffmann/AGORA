@@ -13,11 +13,11 @@ package Controller.logic
 		
 		public function ModusTollens()
 		{
-			_langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
-			dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
-			_expLangTypes = ["Only if"];	// Expandable with both And and Or
-			myname = MOD_TOL;
-			_dbType = "MT";
+			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
+			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
+			expLangTypes = ["Only if"];	// Expandable with both And and Or
+			///myname = MOD_TOL;
+			//_dbType = "MT";
 		}
 		
 		public static function getInstance():ModusTollens{

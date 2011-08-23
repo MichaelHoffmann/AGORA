@@ -10,10 +10,10 @@ package Controller.logic
 		private static var instance:NotAllSyllogism;
 		public function NotAllSyllogism()
 		{
-			myname = NOT_ALL_SYLL;
-			_dbType = "NotAllSyl";
-			_langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
-			_isLanguageExp = true;
+			//myname = NOT_ALL_SYLL;
+			//_dbType = "NotAllSyl";
+			//langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
+			//sLanguageExp = true;
 		}
 		
 		public static function getInstance():NotAllSyllogism{
@@ -23,9 +23,10 @@ package Controller.logic
 			return instance;
 		}
 		
-		override public function setIsExp():void{
-			_isLanguageExp = true;
+		override public function get hasLanguageTypeOptions():Boolean{
+			return false;
 		}
+	
 		/*
 		override public function get dbType():String
 		{

@@ -15,15 +15,12 @@ package Controller.logic
 	
 		public function ConditionalSyllogism()
 		{
-			/*
-			_langTypes = ["If-then","Implies"];
-			dbLangTypeNames = ["ifthen","implies"];
-			_expLangTypes = ["If-then", "Implies"];
-			myname = COND_SYLL;
-			_dbType = "CS";
-			built = false;
-			*/
-			// Both types here are expandable. like a chain rule
+			langTypes = ["If-then","Implies"];
+			//dbLangTypeNames = ["ifthen","implies"];
+			expLangTypes = ["If-then", "Implies"];
+			//myname = COND_SYLL;
+			//_dbType = "CS";
+			//built = false;
 		}
 		
 		public static function getInstance():ConditionalSyllogism{

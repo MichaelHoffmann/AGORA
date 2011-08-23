@@ -1,6 +1,7 @@
 package Controller
 {
 	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.LogicFetcher;
 	import Controller.logic.ParentArg;
 	
 	import Events.AGORAEvent;
@@ -246,6 +247,45 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
 		}
 		
+		//------------------ Handling events from schemeSelector ------//
+		public function displayLanguageType(argSchemeSelector:ArgSelector, scheme:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			//set the model's logical class
+			argumentTypeModel.logicClass = LogicFetcher.getInstance().logicHash[scheme];
+			//show language options or display text
+			if(argumentTypeModel.logicClass.hasLanguageTypeOptions){
+				if(argumentTypeModel.reasonModels.length > 1){
+					argSchemeSelector.typeSelector.dataProvider = argumentTypeModel.logicClass.expLangTypes;
+				}
+				else{
+					argSchemeSelector.typeSelector.dataProvider = argumentTypeModel.logicClass.langTypes;
+				}
+				argSchemeSelector.typeSelector.x = argSchemeSelector.mainSchemes.width;
+				argSchemeSelector.typeSelector.visible=true;
+			}
+			else{
+				updateEnablerText(argSchemeSelector, null)
+			}
+		}
+		
+		public function updateEnablerText(argSchemeSelector:ArgSelector, language:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			if(language == null){
+				//get inference
+				
+			}else{
+			
+				
+			}
+		}
+		
+		public function setSchemeType(argSchemeSelector:ArgSelector):void{
+			
+		}
+		
+		public function setSchemeLanguageType(argumentTypeModel:ArgumentTypeModel):void{
+			
+		}
 		
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{

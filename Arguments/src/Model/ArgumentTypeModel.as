@@ -19,9 +19,8 @@ package Model
 		private var _inferenceModel:StatementModel;
 		private var _claimModel:StatementModel;
 		private var _reasonModels:Vector.<StatementModel>;
-		private var _logicClass:ParentArg;
 		private var _dbType:String;
-		private var _argumentMenu:ArrayCollection;
+		private var _logicClass:ParentArg;
 		private var _ID:int;
 		private var _xgrid:int;
 		private var _ygrid:int;
@@ -36,6 +35,14 @@ package Model
 		}
 
 		//-------------------- Getters and Setters -----------------------//
+		public function get dbType():String{
+			return _dbType;
+		}
+		
+		public function set dbType(value:String):void{
+			_dbType = value;
+		}
+		
 		public function get reasonsCompleted():Boolean
 		{
 			return _reasonsCompleted;
@@ -44,17 +51,6 @@ package Model
 		public function set reasonsCompleted(value:Boolean):void
 		{
 			_reasonsCompleted = value;
-		}
-
-		public function get dbType():String
-		{
-			return _dbType;
-		}
-
-		public function set dbType(value:String):void
-		{
-			_dbType = value;
-			//logicClass = ParentArg.getInstance().logicHash[_dbType];
 		}
 
 		public function get ygrid():int
@@ -87,15 +83,6 @@ package Model
 			_ID = value;
 		}
 
-		public function get argumentMenu():ArrayCollection
-		{
-			return _argumentMenu;
-		}
-
-		public function set argumentMenu(value:ArrayCollection):void
-		{
-			_argumentMenu = value;
-		}
 
 		public function get logicClass():ParentArg
 		{

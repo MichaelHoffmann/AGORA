@@ -7,11 +7,11 @@ package Controller.logic
 		
 		public function ConstructiveDilemma()
 		{
-			_langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
-			dbLangTypeNames = ["altclaim", "propclaim"];
-			myname = CONST_DILEM;
+			langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
+			//dbLangTypeNames = ["altclaim", "propclaim"];
+			//myname = CONST_DILEM;
 			//dbName = myname;
-			_dbType = "CD";
+			//_dbType = "CD";
 			
 		}
 		
