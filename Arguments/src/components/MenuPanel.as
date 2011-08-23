@@ -61,9 +61,12 @@ package components
 		}
 
 		//------------------ Bind Setters --------------------------//
+		//Buttons must not be enabled when the user is still constructing
+		//the argument
 		protected function enableAddReason(value:Boolean):void{
 			addReasonBtn.enabled = value;
 		}
+		
 		protected function enableChangeScheme(value:Boolean):void{
 			changeSchemeBtn.enabled = value;	
 		}

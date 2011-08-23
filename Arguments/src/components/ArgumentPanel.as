@@ -525,6 +525,7 @@ package components
 				var dta:DynamicTextArea;
 				var simpleStatement:SimpleStatementModel;
 				//check if new statements were added
+				//associate every statement in statments vector with a new dynamc text area
 				if(statementsAddedDF){
 					//clear flag
 					statementsAddedDF = false;
@@ -559,6 +560,7 @@ package components
 					}
 				}
 				
+				//Handle state change between DISPLAY AND EDIT.
 				if(stateDF){
 					stateDF = false;
 					if(state == EDIT){
@@ -586,6 +588,7 @@ package components
 					}
 				}
 			}
+			//If the statement is an enabler.
 			else{
 				//remove all textboxes
 				inputs.splice(0,inputs.length);
@@ -609,6 +612,7 @@ package components
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
+			//Draw the top left box for moving stuff
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			topArea.graphics.beginFill(0xdddddd,1.0);
 			topArea.graphics.drawRect(0,0,40,40);		
