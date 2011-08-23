@@ -38,6 +38,8 @@
 			import spark.components.Group;
 			import spark.components.Label;
 			
+			import classes.Configure;
+			
 			//for future
 			[Bindable]
 			public var mapListXML:XML;
@@ -148,6 +150,33 @@
 				AGORAController.getInstance().deleteSelectedMaps();
 				
 			}
+
+			private function deleteMap(map:MyMapName, mapsMarked:Vector.<MyMapName>):void{
+				var xml:XML = new XML("<map id=\""+ map.mapId +"\" remove=\"1\" />");
+				var urlRequest:URLRequest = new URLRequest;
+				urlRequest.url = Configure.lookup("baseURL") + "remove.php";
+				var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml.toXMLString());
+				urlRequest.data = urlRequestVars;
+				urlRequest.method = URLRequestMethod.GET;
+				var urlLoader:URLLoader = new URLLoader;
+				urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
+					if(mapsMarked.length > 0){
+						var tmpMap:MyMapName = mapsMarked.pop();
+						deleteMap(tmpMap,mapsMarked);
+					}
+					else
+					{
+						CursorManager.removeBusyCursor();
+						FlexGlobals.topLevelApplication.loadMyMapList();
+						FlexGlobals.topLevelApplication.loadMapList();
+						Alert.show("maps deleted ...");
+						
+					}
+				});
+				urlLoader.addEventListener( IOErrorEvent.IO_ERROR, function (event:IOErrorEvent):void{Alert.show("Deleting " + map.mapName + " failed ...");});
+				urlLoader.load(urlRequest);
+			}
+
 		]]>
 	</fx:Script>
 </s:Panel>

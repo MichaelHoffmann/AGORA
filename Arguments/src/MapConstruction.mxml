@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:classes="classes.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()" xmlns:components="components.*">
 		
-	<s:Label text="Welcome to Agora! Please choose one of the following tasks to continue.."
+	<s:Label text="Welcome to AGORA-net! Please choose one of the following tasks to continue.."
 			 x="10" y="10"
 			 fontWeight="bold" 
 			 fontFamily="Verdana"  
@@ -15,14 +35,14 @@
 				  y="67" 
 				  width="191" 
 				  height="45" 
-				  text="What is the main claim of your argument?" 
+				  text="{Language.lookup(&quot;WhatIsMainClaim&quot;)}" 
 				  toolTip="The easiest way to construct an argument"
 				  textAlign="center"
 				  click="startWithClaim()"/>
 	<mx:TextArea id="schemeStart"
 				 x="338" 
 				 y="67" 
-				 text="Click here if you want to use a specific argument scheme" 
+				 text="{Language.lookup(&quot;UseArgScheme&quot;)}" 
 				 textAlign="center" 
 				 width="184"
 				 click="startWithScheme()"/>
@@ -43,10 +63,12 @@
 	</mx:RemoteObject>	 					 -->
 	<fx:Script>
 		<![CDATA[
-			
+	
+
 		public function init():void {
-			argumentPaste.text="Paste an argument or parts of it from your clipboard (under construction)";
-			conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
+			argumentPaste.text=Language.lookup("PasteArgument") + "(under construction)"; 
+			//TODO: construct this and/or get translation for "Under construction" 
+			conceptStart.text=Language.lookup("DivideToSubclaims");
 		}
 		]]>
 	</fx:Script>
