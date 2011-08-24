@@ -23,6 +23,15 @@ package Controller
 		public function updateModelText(dta:DynamicTextArea):void{
 			dta.model.text = dta.text;
 		}
+		public function escapeText(s:String):String{
+			s.replace(/&/g, "&amp");
+			s.replace(/\"/g, "&quot");
+			//s.replace(/'/g, "&apos;"); //This does not appear to be necessary
+			s.replace(/</g, "&lt;");
+			s.replace(/>/g, "&gt;");
+			s.replace(/&/, "%26");
+			return s;
+		}
 	}
 }
 
