@@ -31,18 +31,21 @@
 		%26quot;%26amp;%26lt;%26gt;%26apos;
 		testing漢字Сделанный%?%26quot;%26amp;%26lt;%26gt;'ridiculous
 	*/
+	$text=to_utf8($_REQUEST['text']);
+	if($text){
+		print "Input text: $text";
+	}else{
+		$xmlin = to_utf8($_REQUEST['xml']);
+		print htmlspecialchars("Input XML: $xmlin", ENT_QUOTES);
+		print("\n<BR>");
+		try{
+			$xml = new SimpleXMLElement($xmlin);
+		}catch(Exception $e){
+			print "Could not read XML\n<BR>";
+		}
+		$attr=$xml->attributes();
+		$text=$attr["text"];
+		print "Text: $text \n<BR>";
+	}		
 	
-	$uid = $_REQUEST['uid'];
-	print "User ID is: $uid\n<BR>";
-	$xmlin = to_utf8($_REQUEST['xml']);
-	print htmlspecialchars("Input XML: $xmlin", ENT_QUOTES);
-	print("\n<BR>");
-	try{
-		$xml = new SimpleXMLElement($xmlin);
-	}catch(Exception $e){
-		print "Could not read XML\n<BR>";
-	}
-	$attr=$xml->attributes();
-	$text=$attr["text"];
-	print "Text: $text \n<BR>";
 ?>
