@@ -45,7 +45,7 @@
 		}
 		$attr=$xml->attributes();
 		$text=$attr["text"];
-		print "Text: $text \n<BR>";
+		print "Text from XML: $text \n<BR>";
 	}		
 	
 ?>
