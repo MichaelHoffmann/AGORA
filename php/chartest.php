@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	/**
 	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 			reflection, critique, deliberation, and creativity in individual argument construction 
@@ -19,20 +19,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
-	/**
-	* Check-Login function separated out for widespread use.
-	* Note that error handling is the caller's responsibility.
+	//Used to test handling of special characters in an attempt to solve a bug.
+	require 'utilfuncs.php';
+	
+	/*
+		Example text to try out:
+		testing
+		漢字
+		Сделанный
+		100%?
+		%26quot;%26amp;%26lt;%26gt;%26apos;
+		testing漢字Сделанный%?%26quot;%26amp;%26lt;%26gt;'ridiculous
 	*/
-	function checkLogin($userID, $pass_hash, $linkID)
-	{
-		$userclause = mysql_real_escape_string("$userID");
-		$passclause = mysql_real_escape_string("$pass_hash");
-		$query = "SELECT * FROM users WHERE user_ID='$userID' AND password='$passclause'";
-		$resultID = mysql_query($query, $linkID);
-		if($resultID && mysql_num_rows($resultID)>0){
-			return true;
-		}else{
-			return false;
-		}
+	
+	$uid = $_REQUEST['uid'];
+	print "User ID is: $uid\n<BR>";
+	$xmlin = to_utf8($_REQUEST['xml']);
+	print htmlspecialchars("Input XML: $xmlin", ENT_QUOTES);
+	print("\n<BR>");
+	try{
+		$xml = new SimpleXMLElement($xmlin);
+	}catch(Exception $e){
+		print "Could not read XML\n<BR>";
 	}
+	$attr=$xml->attributes();
+	$text=$attr["text"];
+	print "Text: $text \n<BR>";
 ?>

@@ -20,9 +20,9 @@
 	
 	*/
 	require 'configure.php';
-	require 'checklogin.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	
 	/**
 	*	File for getting the list of maps a specific user has made.
@@ -84,6 +84,7 @@
 			$map->addAttribute("ID", $row['map_id']);
 			$map->addAttribute("title", $row['title']);
 			$map->addAttribute("creator", $row['username']);
+			$map->addAttribute("last_modified", $row['modified_date']);
 		}
 		return $output;
 	}
