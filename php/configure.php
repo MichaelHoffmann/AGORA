@@ -25,5 +25,5 @@
 	/** dirName: name of the current directory */
 	$dirName = "rework";
 	/** version: current version number */
-	$version = "11.8.23"
+	$version = "11.8.24"
 ?>
