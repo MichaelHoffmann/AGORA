@@ -79,7 +79,7 @@
 				$row = mysql_fetch_assoc($resultID);
 				$textbox = $output->addChild("textbox");
 				$textbox->addAttribute("ID", $row['textbox_id']);
-				$textbox->addAttribute("text", $row['text']);
+				$textbox->addAttribute("text", to_utf8($row['text']));
 				$textbox->addAttribute("deleted", $row['is_deleted']);
 			}
 		}
@@ -156,5 +156,5 @@
 	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
 	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
 	$output = get_map($map_id, $timestamp); 
-	print(to_utf8($output->asXML()));
+	print $output->asXML();
 ?>
