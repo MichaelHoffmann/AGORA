@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	/**
 	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 			reflection, critique, deliberation, and creativity in individual argument construction 
@@ -22,8 +22,18 @@
 	//Used to test handling of special characters in an attempt to solve a bug.
 	require 'utilfuncs.php';
 	
+	/*
+		Example text to try out:
+		testing
+		漢字
+		Сделанный
+		100%?
+		%26quot;%26amp;%26lt;%26gt;%26apos;
+		testing漢字Сделанный%?%26quot;%26amp;%26lt;%26gt;'ridiculous
+	*/
+	
 	$uid = $_REQUEST['uid'];
-	print "User ID: $uid\n<BR>";
+	print "User ID is: $uid\n<BR>";
 	$xmlin = to_utf8($_REQUEST['xml']);
 	print htmlspecialchars("Input XML: $xmlin", ENT_QUOTES);
 	print("\n<BR>");
@@ -32,6 +42,7 @@
 	}catch(Exception $e){
 		print "Could not read XML\n<BR>";
 	}
-	$xmlstr = htmlspecialchars($xml->asXML(), ENT_QUOTES);
-	print "XML as read: $xmlstr\n<BR>";
+	$attr=$xml->attributes();
+	$text=$attr["text"];
+	print "Text: $text \n<BR>";
 ?>
