@@ -27,9 +27,13 @@
 		testing
 		漢字
 		Сделанный
-		100%?
+		100%25?
 		%26quot;%26amp;%26lt;%26gt;%26apos;
-		testing漢字Сделанный%?%26quot;%26amp;%26lt;%26gt;'ridiculous
+		
+		
+		testingIñtërnâtiônàlizætiøntesting漢字Сделанный%25?%26quot;%26amp;%26lt;%26gt;'testing
+		is the proper encoding for:
+		testingIñtërnâtiônàlizætiøntesting漢字Сделанный%?"&<>'testing
 	*/
 	$text=to_utf8($_REQUEST['text']);
 	if($text){

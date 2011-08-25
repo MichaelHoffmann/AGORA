@@ -23,13 +23,14 @@ package Controller
 		public function updateModelText(dta:DynamicTextArea):void{
 			dta.model.text = dta.text;
 		}
-		public function escapeText(s:String):String{
-			s.replace(/&/g, "&amp");
-			s.replace(/\"/g, "&quot");
-			//s.replace(/'/g, "&apos;"); //This does not appear to be necessary
-			s.replace(/</g, "&lt;");
-			s.replace(/>/g, "&gt;");
-			s.replace(/&/, "%26");
+		public function XMLescapeText(s:String):String{
+			s = s.replace(/%/g, "%25"); //must be first
+			s = s.replace(/&/g, "&amp;");//must be before the various &s are added in
+			s = s.replace(/\"/g, "&quot;");
+			//s = s.replace(/'/g, "&apos;"); //This does not appear to be necessary
+			s = s.replace(/</g, "&lt;");
+			s = s.replace(/>/g, "&gt;");
+			s = s.replace(/&/g, "%26"); //must be last
 			return s;
 		}
 	}
