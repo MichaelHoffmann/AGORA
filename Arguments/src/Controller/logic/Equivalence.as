@@ -1,5 +1,7 @@
 package Controller.logic
 {
+	import Model.ArgumentTypeModel;
+
 	public class Equivalence extends ParentArg
 	{
 		private static var instance:Equivalence;
@@ -14,6 +16,10 @@ package Controller.logic
 				instance = new Equivalence;
 			}
 			return instance;
+		}
+		
+		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+			
 		}
 	}
 }

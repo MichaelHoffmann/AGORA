@@ -1,5 +1,7 @@
 package Controller.logic
 {
+	import Model.ArgumentTypeModel;
+	
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
 	import components.Inference;
@@ -28,6 +30,10 @@ package Controller.logic
 				instance = new ConditionalSyllogism;
 			}
 			return instance;
+		}
+	
+		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+			
 		}
 		
 /*		

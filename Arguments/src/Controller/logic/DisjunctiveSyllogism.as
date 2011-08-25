@@ -1,6 +1,8 @@
 
 package Controller.logic
 {
+	import Model.ArgumentTypeModel;
+	
 	import components.ArgumentPanel;
 	
 	import mx.controls.Alert;
@@ -22,6 +24,10 @@ package Controller.logic
 				instance = new DisjunctiveSyllogism;
 			}
 			return instance;
+		}
+		
+		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+			
 		}
 		
 /*		

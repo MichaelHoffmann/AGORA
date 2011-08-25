@@ -1,6 +1,8 @@
 
 package Controller.logic
 {
+	import Model.ArgumentTypeModel;
+	
 	import components.ArgumentPanel;
 	
 	import mx.controls.Alert;
@@ -23,9 +25,10 @@ package Controller.logic
 			return instance;
 		}
 		
-		override public function get hasLanguageTypeOptions():Boolean{
-			return false;
+		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+			
 		}
+		
 	
 		/*
 		override public function get dbType():String

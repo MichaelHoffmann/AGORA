@@ -24,6 +24,7 @@ package Model
 		private var _ID:int;
 		private var _xgrid:int;
 		private var _ygrid:int;
+		private var _language:String;
 		//always true for arguments made on other clients
 		private var _reasonsCompleted:Boolean;
 		
@@ -35,6 +36,17 @@ package Model
 		}
 
 		//-------------------- Getters and Setters -----------------------//
+
+		public function get language():String
+		{
+			return _language;
+		}
+
+		public function set language(value:String):void
+		{
+			_language = value;
+		}
+
 		public function get dbType():String{
 			return _dbType;
 		}

@@ -1,6 +1,9 @@
 package Controller.logic
 {
+	import Model.ArgumentTypeModel;
+	
 	import components.ArgumentPanel;
+
 	public class ConstructiveDilemma extends ParentArg
 	{
 		private static var instance:ConstructiveDilemma;
@@ -22,11 +25,14 @@ package Controller.logic
 			return instance;
 		}
 		
+		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+				
+		}
 		
+		/*
 		override public function correctUsage():String {
 			var output:String = "";
 			var i:int;
-			/*
 			switch(index) {
 				case 0: //Either-or with alternative as claim
 					output += "Either " + reason[0].input1.text;
@@ -37,9 +43,10 @@ package Controller.logic
 					break;
 				case 1: //Either-or with one proposition as claim
 			}
-			*/
+		
 			return output;
 			
 		}
+		*/
 	}
 }

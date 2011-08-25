@@ -111,8 +111,8 @@ package Controller.logic
 			return "";
 		}
 		
-		public function formText(argumentTypeModel:ArgumentTypeModel):String{
-			return "";
+		public function formText(argumentTypeModel:ArgumentTypeModel):void{
+	
 		}
 	
 		public function deleteLinks():void{
@@ -123,7 +123,12 @@ package Controller.logic
 			
 		}
 		
-		//inference.implies = true;
-		public function correctUsage():String { return "";}
+		public function hasLanguageOptions():Boolean{
+			if(this is DisjunctiveSyllogism || this is NotAllSyllogism){
+				return false;
+			}else{
+				return true;
+			}
+		}
 	}
 }

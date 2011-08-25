@@ -276,7 +276,7 @@ package Model
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
 			
-			try{
+			//try{
 				//update timestamp
 				timestamp = map.timestamp;
 				
@@ -317,12 +317,12 @@ package Model
 				}
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
 				
-			}
-			catch(error:Error){
-				trace(error.message);
-				trace("Error in reading update to Map");
-				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			}			
+			//}
+			//catch(error:Error){
+			//	trace(error.message);
+			//	trace("Error in reading update to Map");
+			//	dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+			//}			
 		}
 		
 		//---------------------- Process Node ---------------------------------------------------------//
@@ -439,13 +439,17 @@ package Model
 					//fetch simpleStatementModel from Dictionary
 					if(textboxHash.hasOwnProperty(obj.ID)){
 						simpleStatement = textboxHash[obj.ID];
-						simpleStatement.text = obj.text;
 						if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
 							simpleStatement.hasOwn = false;
+						}
+						else{
+							simpleStatement.hasOwn = true;
 						}
 					}	
 					else{
 						simpleStatement = textboxListHash[obj.ID];
+					}
+					if(simpleStatement.hasOwn){
 						simpleStatement.text = obj.text;
 					}
 				}

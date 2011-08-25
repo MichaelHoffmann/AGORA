@@ -141,7 +141,9 @@
 			}
 			
 			protected function onLanguageTypeItemRollOver(event:ListEvent):void{
-				
+				var language:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().updateEnablerText(this, language);
+				trace(language);
 			}
 			
 			

@@ -270,12 +270,12 @@ package Controller
 		
 		public function updateEnablerText(argSchemeSelector:ArgSelector, language:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
-			if(language == null){
-				//get inference
-				
-			}else{
-			
-				
+			argumentTypeModel.language = language;
+			if(argumentTypeModel.logicClass != null){
+				argumentTypeModel.logicClass.formText(argumentTypeModel);
+			}
+			else{
+				trace("This shouldn't get executed... Problem!");
 			}
 		}
 		

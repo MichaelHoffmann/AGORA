@@ -35,57 +35,37 @@ package Model
 		{
 			return _parent;
 		}
-
+		
 		public function set parent(value:StatementModel):void
 		{
 			_parent = value;
 		}
-
+		
 		public function get hasOwn():Boolean
 		{
 			return _hasOwn;
 		}
-
+		
 		public function set hasOwn(value:Boolean):void
 		{
 			_hasOwn = value;
 		}
-
+		
+		public function get positiveText():String{
+			return _text;	
+		}
+		
 		public function get text():String{
-			return _text;
+			if(!parent.negated){
+				return _text;
+			}
+			
+			return "It is not the case that " + _text;
 		}
 		
 		public function set text(value:String):void{
 			_text = value;
-			if(hasOwn){
-				_text = value;
-			}
-			else if(parent.statementFunction == StatementModel.INFERENCE){
-				_text = parent.argumentTypeModel.logicClass.formText(parent.argumentTypeModel);
-			}
-			else{
-				_text = "";
-				if(parent.statements.length == 1){
-					_text = value;
-				}
-				else{
-					if(parent.connectingString == StatementModel.IMPLICATION){
-						_text = AGORAParameters.getInstance().IF + " " + parent.statements[0] + ", " + AGORAParameters.getInstance().THEN + " " + parent.statements[1]; 
-					}
-					if(parent.connectingString == StatementModel.DISJUNCTION){
-						_text = parent.statements[0].text;
-						for(var i:int = 1; i < parent.statements.length; i++){
-							_text =  _text + " " + AGORAParameters.getInstance().OR;
-						}
-					}
-					else{
-						
-					}
-				}	
-			}
-			for each(var simpleStatement:SimpleStatementModel in forwardList){
-				simpleStatement.text = _text;
-			}
+			updateStatementTexts();
 		}
 		
 		public function get forwardList():Vector.<SimpleStatementModel>{
@@ -119,7 +99,9 @@ package Model
 					}
 				}
 				else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
-					simpleStatement.parent.argumentTypeModel.logicClass.formText(simpleStatement.parent.argumentTypeModel);
+					if(simpleStatement.parent.argumentTypeModel.logicClass != null){
+						simpleStatement.parent.argumentTypeModel.logicClass.formText(simpleStatement.parent.argumentTypeModel);
+					}
 				}
 				else{
 					simpleStatement.text = text;

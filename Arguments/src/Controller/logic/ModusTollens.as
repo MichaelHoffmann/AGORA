@@ -1,5 +1,8 @@
 package Controller.logic
 {
+	import Model.ArgumentTypeModel;
+	import Model.StatementModel;
+	
 	import components.ArgumentPanel;
 	
 	import mx.controls.Alert;
@@ -25,6 +28,31 @@ package Controller.logic
 				instance = new ModusTollens;
 			}
 			return instance;
+		}
+		
+		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+			var output:String = "";
+			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
+			var claimModel:StatementModel = argumentTypeModel.claimModel;
+			var i:int;
+			
+			switch(argumentTypeModel.language){
+				case langTypes[0]:
+					output = "If " + claimModel.statement.positiveText + ", then " + reasonModels[0].statement.positiveText;
+					break;
+				case langTypes[1]:
+					output = claimModel.statement.positiveText + " implies " + reasonModels[0].statement.positiveText;
+					break;
+				case langTypes[2]:
+					output = "Whenever " + claimModel.statement.positiveText + ", " + reasonModels[0].statement.positiveText;
+					break;
+				case langTypes[3]:
+					//if many reasons
+					
+					//if one reason
+					 break;
+			}
+			
 		}
 		
 		/*

@@ -2,6 +2,8 @@ package components
 {
 	import Controller.ArgumentController;
 	import Controller.ViewController;
+	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.ParentArg;
 	
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
@@ -20,9 +22,6 @@ package components
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
-	
-	import Controller.logic.ConditionalSyllogism;
-	import Controller.logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -368,10 +367,6 @@ package components
 			}
 		}
 		
-		public function removeEventListeners():void
-		{
-			
-		}
 		
 		protected function optionClicked(event:MouseEvent):void
 		{
@@ -380,13 +375,13 @@ package components
 		protected function hideOption(event:KeyboardEvent):void
 		{
 		}
-	
+		
 		protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
-			 if(menuEvent.label == "add another reason"){
-				 ArgumentController.getInstance().addReason(model.argumentTypeModel);
-			 }else{
-				 ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
-			 }
+			if(menuEvent.label == "add another reason"){
+				ArgumentController.getInstance().addReason(model.argumentTypeModel);
+			}else{
+				ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+			}
 		}
 		
 		public function showMenu():void
@@ -399,17 +394,33 @@ package components
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
-	
+		
 		
 		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
 			if(value == null){
+				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.firstClaim){
 						displayTxt.text = "[Enter your claim here]";
 					}else{
 						displayTxt.text = "[Enter your reason here]";
 					}
+				}
+				else if(model.statementFunction == StatementModel.INFERENCE){
+					displayTxt.text = "[Choose an argument scheme and language type to form the inference text]";
+				}
+			}
+			else if(value.split(" ").join("").length == 0){
+				if(model.statementFunction == StatementModel.STATEMENT){
+					if(model.firstClaim){
+						displayTxt.text = "[Enter your claim here]";
+					}else{
+						displayTxt.text = "[Enter your reason here]";
+					}
+				}else if(model.statementFunction == StatementModel.INFERENCE){
+					displayTxt.text =  "[Choose an argument scheme and language type to form the inference text]";
+				}
 			}
 			else{
 				displayTxt.text = value;
@@ -588,7 +599,7 @@ package components
 					}
 				}
 			}
-			//If the statement is an enabler.
+				//If the statement is an enabler.
 			else{
 				//remove all textboxes
 				inputs.splice(0,inputs.length);
