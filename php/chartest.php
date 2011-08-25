@@ -34,6 +34,10 @@
 		testingIñtërnâtiônàlizætiøntesting漢字Сделанный%25?%26quot;%26amp;%26lt;%26gt;'testing
 		is the proper encoding for:
 		testingIñtërnâtiônàlizætiøntesting漢字Сделанный%?"&<>'testing
+		within XML
+		testingIñtërnâtiônàlizætiøntesting漢字Сделанный%?"%26<>'testing
+		
+		testingIñtërnâtiônàlizætiøntesting漢字Сделанный%?"&<>'testing
 	*/
 	$text=to_utf8($_REQUEST['text']);
 	if($text){

@@ -23,7 +23,7 @@ package Controller
 		public function updateModelText(dta:DynamicTextArea):void{
 			dta.model.text = dta.text;
 		}
-		public function XMLescapeText(s:String):String{
+		public function XMLEscapeText(s:String):String{
 			s = s.replace(/%/g, "%25"); //must be first
 			s = s.replace(/&/g, "&amp;");//must be before the various &s are added in
 			s = s.replace(/\"/g, "&quot;");
@@ -31,6 +31,10 @@ package Controller
 			s = s.replace(/</g, "&lt;");
 			s = s.replace(/>/g, "&gt;");
 			s = s.replace(/&/g, "%26"); //must be last
+			return s;
+		}
+		public function escapeAmpersands(s:String):String{
+			s = s.replace(/&/g, "%26");
 			return s;
 		}
 	}
