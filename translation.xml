@@ -2,17 +2,17 @@
 	<!--INDEX-->
 	<!--There are comments throughout this document which describe the various kinds of text which has been translated.
 	Those kinds are as follows:
-		--BUTTONS, LABELS, AND SINGLE WORDS
-		--SHORT DESCRIPTIONS
-		--NAMES OF ARGUMENTS
-		--ARGUMENT DESCRIPTIONS
-		--HELP TEXT
-		--WALLS OF TEXT
-		--ARGUMENT PIECES
-		--ADD CONTINUATIONS
-		--CONDITIONAL PIECES
-		--APPLY UNDER THEREFORE
-		--SPECIAL
+		-BUTTONS, LABELS, AND SINGLE WORDS
+		-SHORT DESCRIPTIONS
+		-NAMES OF ARGUMENTS
+		-ARGUMENT DESCRIPTIONS
+		-HELP TEXT
+		-WALLS OF TEXT
+		-ARGUMENT PIECES
+		-ADD CONTINUATIONS
+		-CONDITIONAL PIECES
+		-APPLY UNDER THEREFORE
+		-SPECIAL
 	Searching for these will take you directly to that section.
 	
 	
@@ -286,7 +286,7 @@
 	
 	<Version>
 		<EN-US text="Version"/>
-		<RUS text="Version"/> <-- TODO: Translate -->
+		<RUS text="Version"/> <!-- TODO: Translate -->
 		<GER text="Version"/>
 	</Version>
 	
