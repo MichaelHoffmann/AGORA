@@ -5,6 +5,8 @@ package components
 	import Controller.logic.ConditionalSyllogism;
 	import Controller.logic.ParentArg;
 	
+	import Events.AGORAEvent;
+	
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
 	
@@ -332,6 +334,7 @@ package components
 		protected function lblClicked(event:MouseEvent):void
 		{
 			state = EDIT;
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{

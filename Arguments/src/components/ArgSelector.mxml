@@ -133,6 +133,11 @@
 			protected function addEventHandlers(event:FlexEvent):void{
 				mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER, onSchemeItemRollOver);
 				typeSelector.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageTypeItemRollOver);
+				andor.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageSubOptionsItemRollOver);
+				mainSchemes.addEventListener(ListEvent.ITEM_CLICK, onSchemeItemClicked);
+				typeSelector.addEventListener(ListEvent.ITEM_CLICK, onLanguageTypeItemClicked);
+				andor.addEventListener(ListEvent.ITEM_CLICK, onOptionsItemClicked);
+				
 			}
 			
 			protected function onSchemeItemRollOver(event:ListEvent):void{
@@ -143,10 +148,25 @@
 			protected function onLanguageTypeItemRollOver(event:ListEvent):void{
 				var language:String = event.itemRenderer.data.toString();
 				ArgumentController.getInstance().updateEnablerText(this, language);
-				trace(language);
 			}
 			
+			protected function onLanguageSubOptionsItemRollOver(event:ListEvent):void{
+				var option:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().updateEnablerTextWithConjunctions(this, option);
+			}
 			
+			protected function onSchemeItemClicked(event:ListEvent):void{
+				var scheme:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().setSchemeType(this, scheme);
+			}
+			
+			protected function onLanguageTypeItemClicked(event:ListEvent):void{
+				
+			}
+			
+			protected function onOptionsItemClicked(event:ListEvent):void{
+				
+			}
 		
 		]]>
 	</fx:Script>

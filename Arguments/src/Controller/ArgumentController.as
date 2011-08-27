@@ -30,6 +30,7 @@ package Controller
 	import mx.events.MenuEvent;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
+	import mx.skins.spark.DefaultButtonSkin;
 	import mx.states.State;
 	
 	public class ArgumentController
@@ -57,6 +58,23 @@ package Controller
 				instance = new ArgumentController(new SingletonEnforcer);
 			}
 			return instance;
+		}
+		
+		//--------------------- Other public function -------------------//
+		public function removeOption(event:AGORAEvent):void{
+			var argumentPanel:ArgumentPanel = event.eventData as ArgumentPanel;
+			if(argumentPanel.branchControl != null){
+				try{
+					FlexGlobals.topLevelApplication.map.agoraMap.removeChild(argumentPanel.branchControl);
+					//this will not be called again, and 
+					//GC will clean the option component
+					argumentPanel.branchControl = null;
+				}catch(error:Error){
+					//clicking on the Option component itself may remove 
+					//it from map
+					trace("Option component must have already been removed");
+				}
+			}
 		}
 		
 		//---------------------Creating a New Map-----------------------//
@@ -147,28 +165,28 @@ package Controller
 			if(argumentTypeModel.isLanguageTyped()){
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-			//if constructed by argument and first claim is being supported
+				//if constructed by argument and first claim is being supported
 			else if(AGORAModel.getInstance().agoraMapModel.mapConstructedFromArgument && argumentTypeModel.claimModel.firstClaim){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
-			
+				
 			else if(argumentTypeModel.claimModel.firstClaim){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
-			
-			//if simple positive statement
+				
+				//if simple positive statement
 			else if(!argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getPositiveArray();
 			}
-			//if simple negative statement
+				//if simple negative statement
 			else if(argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getNegativeArray();
 			}
-			//if positive implication
+				//if positive implication
 			else if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
 				schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
 			}
-			//if positive disjunction
+				//if positive disjunction
 			else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
 				schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
 			}
@@ -183,7 +201,7 @@ package Controller
 			var model:StatementModel = argumentPanel.model;
 			if(model.firstClaim){
 			}
-			//if reasons Completed
+				//if reasons Completed
 			else if(model.argumentTypeModel.reasonsCompleted){
 			}
 			else{
@@ -250,15 +268,24 @@ package Controller
 		//------------------ Handling events from schemeSelector ------//
 		public function displayLanguageType(argSchemeSelector:ArgSelector, scheme:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			var logicClassController:ParentArg; 
+			//unlink if there had been a class already
+			if(argumentTypeModel.logicClass != null){
+				logicClassController = LogicFetcher.getInstance().logicHash[scheme];
+				logicClassController.deleteLinks(argumentTypeModel);
+			}
 			//set the model's logical class
-			argumentTypeModel.logicClass = LogicFetcher.getInstance().logicHash[scheme];
+			argumentTypeModel.logicClass = scheme;
+			logicClassController = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+			logicClassController.link(argumentTypeModel);
+			
 			//show language options or display text
-			if(argumentTypeModel.logicClass.hasLanguageTypeOptions){
+			if(logicClassController.hasLanguageTypeOptions){
 				if(argumentTypeModel.reasonModels.length > 1){
-					argSchemeSelector.typeSelector.dataProvider = argumentTypeModel.logicClass.expLangTypes;
+					argSchemeSelector.typeSelector.dataProvider = logicClassController.expLangTypes;
 				}
 				else{
-					argSchemeSelector.typeSelector.dataProvider = argumentTypeModel.logicClass.langTypes;
+					argSchemeSelector.typeSelector.dataProvider = logicClassController.langTypes;
 				}
 				argSchemeSelector.typeSelector.x = argSchemeSelector.mainSchemes.width;
 				argSchemeSelector.typeSelector.visible=true;
@@ -272,14 +299,31 @@ package Controller
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 			argumentTypeModel.language = language;
 			if(argumentTypeModel.logicClass != null){
-				argumentTypeModel.logicClass.formText(argumentTypeModel);
+				var logicClassController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				logicClassController.formText(argumentTypeModel);
 			}
 			else{
 				trace("This shouldn't get executed... Problem!");
 			}
 		}
 		
-		public function setSchemeType(argSchemeSelector:ArgSelector):void{
+		public function updateEnablerTextWithConjunctions(argSchemeSelector:ArgSelector, option:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			argumentTypeModel.lSubOption = option;
+		}
+		
+		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			switch(scheme){
+				case ParentArg.DIS_SYLL:
+					argSchemeSelector.visible = false;
+					argumentTypeModel.updateConnection();
+					break;
+				case ParentArg.NOT_ALL_SYLL:
+					argSchemeSelector.visible = false;
+					argumentTypeModel.updateConnection();
+					break;
+			}
 			
 		}
 		

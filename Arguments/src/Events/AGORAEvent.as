@@ -26,6 +26,7 @@ package Events
 		public static const TEXT_SAVED:String = "TextSaved";
 		public static const STATEMENT_ADDED:String = "StatementAdded";
 		public static const ARGUMENT_CREATED:String = "ArgumentCreated";
+		public static const STATEMENT_STATE_TO_EDIT:String = "StatementStateToEdit";
 		
 		public var xmlData:XML;
 		public var eventData:Object;

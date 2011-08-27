@@ -20,11 +20,12 @@ package Model
 		private var _claimModel:StatementModel;
 		private var _reasonModels:Vector.<StatementModel>;
 		private var _dbType:String;
-		private var _logicClass:ParentArg;
+		private var _logicClass:String;
 		private var _ID:int;
 		private var _xgrid:int;
 		private var _ygrid:int;
 		private var _language:String;
+		private var _lSubOption:String;
 		//always true for arguments made on other clients
 		private var _reasonsCompleted:Boolean;
 		
@@ -37,6 +38,13 @@ package Model
 
 		//-------------------- Getters and Setters -----------------------//
 
+		public function get lSubOption():String{
+			return _lSubOption;
+		}
+		public function set lSubOption(value:String):void{
+			_lSubOption = value;
+		}
+		
 		public function get language():String
 		{
 			return _language;
@@ -96,12 +104,11 @@ package Model
 		}
 
 
-		public function get logicClass():ParentArg
-		{
+		public function get logicClass():String{
 			return _logicClass;
 		}
 
-		public function set logicClass(value:ParentArg):void
+		public function set logicClass(value:String):void
 		{
 			_logicClass = value;
 		}
@@ -164,6 +171,11 @@ package Model
 				}
 			}
 			return false;
+		}
+		
+		//-------------------------- Update Connection ---------------------//
+		public function updateConnection():void{
+			
 		}
 		
 		//-------------------------- Creation mehtods ----------------------//

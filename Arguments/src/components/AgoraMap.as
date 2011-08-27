@@ -11,6 +11,8 @@ package components
 	import Controller.logic.NotAllSyllogism;
 	import Controller.logic.ParentArg;
 	
+	import Events.AGORAEvent;
+	
 	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.InferenceModel;
@@ -40,6 +42,10 @@ package components
 	
 	public class AgoraMap extends Canvas
 	{
+		public static const BY_ARGUMENT:String = "ByArgument";
+		public static const BY_CLAIM:String = "ByClaim";
+		
+		public var beganBy:String;
 		public var drawUtility:UIComponent = null;
 		public var ID:int;
 		public var option:Option;
@@ -58,6 +64,8 @@ package components
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			panelsHash = new Dictionary;
 			menuPanelsHash = new Dictionary;
+			//default
+			beganBy = BY_CLAIM;
 		}
 		
 		
@@ -122,6 +130,7 @@ package components
 						var argumentPanel:ArgumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
+						argumentPanel.addEventListener(AGORAEvent.STATEMENT_STATE_TO_EDIT, ArgumentController.getInstance().removeOption);
 						if(model.argumentTypeModel){
 							if(!model.argumentTypeModel.reasonsCompleted)
 							{

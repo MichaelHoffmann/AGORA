@@ -1,5 +1,8 @@
 package Model
 {
+	import Controller.logic.LogicFetcher;
+	import Controller.logic.ParentArg;
+	
 	import ValueObjects.AGORAParameters;
 	
 	import flash.events.EventDispatcher;
@@ -100,7 +103,8 @@ package Model
 				}
 				else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
 					if(simpleStatement.parent.argumentTypeModel.logicClass != null){
-						simpleStatement.parent.argumentTypeModel.logicClass.formText(simpleStatement.parent.argumentTypeModel);
+						var logicController:ParentArg = LogicFetcher.getInstance().logicHash[simpleStatement.parent.argumentTypeModel.logicClass];
+						logicController.formText(simpleStatement.parent.argumentTypeModel);
 					}
 				}
 				else{

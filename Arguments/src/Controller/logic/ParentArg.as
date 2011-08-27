@@ -78,7 +78,8 @@ package Controller.logic
 		//--------------- Other Public Fucntion --------------------//
 		public function getConstrainedArray(argumentTypeModel:ArgumentTypeModel):Array{
 			var array:Array = new Array;
-			array.concat(argumentTypeModel.logicClass.getLabel);
+			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+			array.concat(logicController.getLabel);
 			return array;
 		}
 		
@@ -112,14 +113,18 @@ package Controller.logic
 		}
 		
 		public function formText(argumentTypeModel:ArgumentTypeModel):void{
-	
-		}
-	
-		public function deleteLinks():void{
 			
 		}
 		
-		public function link():void{
+		public function formTextWithSubOption(argumentTypeModel:ArgumentTypeModel):void{
+			
+		}
+	
+		public function deleteLinks(argumentTypeModel:ArgumentTypeModel):void{
+				
+		}
+		
+		public function link(argumentTypeModel:ArgumentTypeModel):void{
 			
 		}
 		
