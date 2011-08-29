@@ -1299,19 +1299,19 @@
 	<ArgImplies>
 		<EN-US text=" implies "/>
 		<RUS text=" подразумевает "/>
-		<GER text=" impliziert "/>
+		<GER text=" impliziert: "/>
 	</ArgImplies>
 	
 	<ArgNecessaryCond>
 		<EN-US text=" is a necessary condition for "/>
 		<RUS text=" - необходимое условие для "/>
-		<GER text=" ist eine notwendige Bedingung für "/>
+		<GER text=" ist eine notwendige Bedingung für: "/>
 	</ArgNecessaryCond>
 	
 	<ArgNecSuf>
 		<EN-US text=" is a necessary and sufficient condition for "/>
 		<RUS text=" - необходимое и достаточное условие для "/>
-		<GER text=" ist eine notwendige und hinreichende Bedingung für "/>
+		<GER text=" ist eine notwendige und hinreichende Bedingung für: "/>
 	</ArgNecSuf>
 	
 	<ArgNotCase>
@@ -1336,13 +1336,13 @@
 	<ArgProvidedThat>
 		<EN-US text=" provided that "/>
 		<RUS text=" при условии, что "/>
-		<GER text=", gegeben dass "/>
+		<GER text=", gegeben dass: "/>
 	</ArgProvidedThat>
 	
 	<ArgSufficientCond>
 		<EN-US text=" is a sufficient condition for "/>
 		<RUS text=" - достаточное условие для "/>
-		<GER text=" ist eine hinreichende Bedingung für "/>
+		<GER text=" ist eine hinreichende Bedingung für: "/>
 	</ArgSufficientCond>
 	
 	<ArgThat>
@@ -1354,7 +1354,7 @@
 	<ArgThen>
 		<EN-US text=" then "/>
 		<RUS text=" то "/>
-		<GER  text=" dann "/>
+		<GER  text=" dann: "/>
 	</ArgThen>
 	
 	<ArgTherefore>
