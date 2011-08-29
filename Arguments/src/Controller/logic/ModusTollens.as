@@ -24,8 +24,6 @@ package Controller.logic
 			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			expLangTypes = ["Only if"];	// Expandable with both And and Or
-			///myname = MOD_TOL;
-			//_dbType = "MT";
 		}
 		
 		public static function getInstance():ModusTollens{
@@ -37,6 +35,7 @@ package Controller.logic
 		
 		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
 			var output:String = "";
+			var reasonText:String = "";
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var argSelector:ArgSelector = MenuPanel(FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID]).schemeSelector;
@@ -44,13 +43,15 @@ package Controller.logic
 			
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
-					output = "If " + claimModel.statement.positiveText + ", then " + reasonModels[0].statement.positiveText;
+					reasonText = reasonModels[0].statement.positiveText;
+					output = "If " + claimModel.statement.positiveText + ", then " + reasonText;
 					break;
 				case langTypes[1]:
 					output = claimModel.statement.positiveText + " implies " + reasonModels[0].statement.positiveText;
 					break;
 				case langTypes[2]:
-					output = "Whenever " + claimModel.statement.positiveText + ", " + reasonModels[0].statement.positiveText;
+					reasonText = reasonModels[0].statement.positiveText;
+					output = "Whenever " + claimModel.statement.positiveText + ", " + reasonText;
 					break;
 				case langTypes[3]:
 					//if many reasons
@@ -60,31 +61,38 @@ package Controller.logic
 						argSelector.andor.visible = true;
 						//if one reason
 					}else if(argumentTypeModel.reasonModels.length == 1){
+						reasonText = reasonModels[0].statement.positiveText;
 						output = claimModel.statement.positiveText + " only if ";
-						output = output + reasonModels[0].statement.positiveText;
+						output = output + reasonText;
 					}else{
-						output = claimModel.statement.positiveText + " only if ";
+						output = claimModel.statement.positiveText + " only if ";	
 						for(i=0; i<reasonModels.length - 1; i++){
-							output = output + reasonModels[i].statement.positiveText + " " + argumentTypeModel.lSubOption + " ";
+							reasonText = reasonText + reasonModels[i].statement.positiveText + " " + argumentTypeModel.lSubOption + " ";
 						}
-						output = output + reasonModels[reasonModels.length - 1].statement.positiveText;
+						reasonText = reasonText + reasonModels[reasonModels.length - 1].statement.positiveText;
+						output = output + reasonText;
 					}
 					break;
 				case langTypes[4]:
 					//provided that
-					output = reasonModels[0].statement.positiveText + " provided that " + claimModel.statement.positiveText;
+					reasonText = reasonModels[0].statement.positiveText ;
+					output = reasonText + " provided that " + claimModel.statement.positiveText;
 					break;
 				case langTypes[5]:
 					//sufficient condition
-					output = claimModel.statement.positiveText + " is a sufficient condition for " + reasonModels[0].statement.positiveText;
+					reasonText = reasonModels[0].statement.positiveText;
+					output = claimModel.statement.positiveText + " is a sufficient condition for " + reasonText;
 					break;
 				case langTypes[6]:
 					//necessary condition
-					output = reasonModels[0].statement.positiveText + " is a necessary condition for " + claimModel.statement.positiveText;
+					reasonText = reasonModels[0].statement.positiveText  
+					output = reasonText + " is a necessary condition for " + claimModel.statement.positiveText;
 					break;
 			}
+		
+			argumentTypeModel.inferenceModel.statements[0].text = claimModel.statement.text;
+			argumentTypeModel.inferenceModel.statements[1].text = reasonText;
 			argumentTypeModel.inferenceModel.statement.text = output;
-			
 		}
 		
 		override public function formTextWithSubOption(argumentTypeModel:ArgumentTypeModel):void{
@@ -106,6 +114,42 @@ package Controller.logic
 			}
 			
 			argumentTypeModel.inferenceModel.statement.text = output;
+		}
+		
+		override public function deleteLinks(argumentTypeModel:ArgumentTypeModel):void{
+			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
+			var claimModel:StatementModel = argumentTypeModel.claimModel;
+			//var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+			//if first claim's argument, then make it non-negative
+			if(claimModel.firstClaim){
+				claimModel.negated = false;
+				//the first inference statement is the one to be removed
+			}
+			removeDependence(claimModel.statement, argumentTypeModel.inferenceModel.statements[0]);
+			//make reason models non-negative
+			for each(var reason:StatementModel in reasonModels){
+				reason.negated = false;
+				removeDependence(reason.statement, argumentTypeModel.inferenceModel.statements[1]);
+			}
+		}
+		
+		override public function link(argumentTypeModel:ArgumentTypeModel):void{
+			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
+			var claimModel:StatementModel = argumentTypeModel.claimModel;
+			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+			
+			if(claimModel.firstClaim){
+				claimModel.negated = true;
+			}
+			
+			inferenceModel.connectingString = StatementModel.IMPLICATION;
+			
+			claimModel.statement.forwardList.push(inferenceModel.statements[0]);
+		
+			for each(var reason:StatementModel in reasonModels){
+				reason.negated = true;
+				reason.statement.forwardList.push(inferenceModel.statements[1]);
+			}
 		}
 		
 		/*

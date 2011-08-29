@@ -201,6 +201,7 @@ package components
 		{
 			_statementNegated = value;
 			statementNegatedDF = true;
+			stateDF = true;
 			
 			invalidateProperties();
 			invalidateSize();
@@ -596,6 +597,11 @@ package components
 						//remove buttons
 						btnG.removeAllElements();
 						//add label
+						//add the changed text.
+						//needed in case if the 
+						//node was changed from positive
+						//to negative
+						setDisplayStatement(model.statement.text);
 						group.addElement(displayTxt);
 						//add button
 						btnG.addElement(bottomHG);

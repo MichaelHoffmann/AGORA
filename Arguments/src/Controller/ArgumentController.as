@@ -33,6 +33,8 @@ package Controller
 	import mx.skins.spark.DefaultButtonSkin;
 	import mx.states.State;
 	
+	import org.osmf.layout.AbsoluteLayoutFacet;
+	
 	public class ArgumentController
 	{
 		private static var instance:ArgumentController;
@@ -128,11 +130,11 @@ package Controller
 				//Find the last grid
 				//Find out the inference
 				var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
-				var inference:ArgumentPanel = this.model.agoraMapModel.panelListHash[inferenceModel.ID];
+				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
 				var xgridInference:int = (inference.x + inference.height) / AGORAParameters.getInstance().gridWidth + 1;
 				//find out hte last reason
 				var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
-				var reason:ArgumentPanel = this.model.agoraMapModel.panelListHash[reasonModel.ID];
+				var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
 				//find the last grid
 				var xgridReason:int = (reason.x + reason.height ) / AGORAParameters.getInstance().gridWidth + 1;
 				//compare and figure out the max
@@ -143,6 +145,7 @@ package Controller
 			//call the function
 			model.addSupportingArgument(nxgrid);
 		}
+		
 		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			LoadController.getInstance().fetchMapData(); 
@@ -271,7 +274,7 @@ package Controller
 			var logicClassController:ParentArg; 
 			//unlink if there had been a class already
 			if(argumentTypeModel.logicClass != null){
-				logicClassController = LogicFetcher.getInstance().logicHash[scheme];
+				logicClassController = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 				logicClassController.deleteLinks(argumentTypeModel);
 			}
 			//set the model's logical class
@@ -280,7 +283,7 @@ package Controller
 			logicClassController.link(argumentTypeModel);
 			
 			//show language options or display text
-			if(logicClassController.hasLanguageTypeOptions){
+			if(logicClassController.hasLanguageOptions()){
 				if(argumentTypeModel.reasonModels.length > 1){
 					argSchemeSelector.typeSelector.dataProvider = logicClassController.expLangTypes;
 				}
@@ -316,19 +319,34 @@ package Controller
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 			switch(scheme){
 				case ParentArg.DIS_SYLL:
-					argSchemeSelector.visible = false;
+					//argSchemeSelector.visible = false;
 					argumentTypeModel.updateConnection();
 					break;
 				case ParentArg.NOT_ALL_SYLL:
-					argSchemeSelector.visible = false;
+					//argSchemeSelector.visible = false;
 					argumentTypeModel.updateConnection();
 					break;
 			}
 			
 		}
 		
-		public function setSchemeLanguageType(argumentTypeModel:ArgumentTypeModel):void{
-			
+		public function setSchemeLanguageType(argSchemeSelector:ArgSelector, language:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			if(argumentTypeModel.language != ParentArg.MOD_TOL){
+				//argSchemeSelector.visible = false;
+				argumentTypeModel.updateConnection();
+			}
+			else{
+				if(argumentTypeModel.reasonModels.length == 1){
+					//argSchemeSelector.visible = false;
+					argumentTypeModel.updateConnection();	
+				}
+			}
+		}
+		
+		public function setSchemeLanguageOptionType(argSchemeSelector:ArgSelector, option:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			argumentTypeModel.updateConnection();
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

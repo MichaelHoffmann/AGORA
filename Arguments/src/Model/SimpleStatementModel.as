@@ -59,11 +59,11 @@ package Model
 		}
 		
 		public function get text():String{
-			if(!parent.negated){
+			if(this.parent.negated && parent.statement === this && parent.statementFunction != StatementModel.INFERENCE){
+				return "It is not the case that " + _text;
+			}else{
 				return _text;
 			}
-			
-			return "It is not the case that " + _text;
 		}
 		
 		public function set text(value:String):void{

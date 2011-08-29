@@ -1,6 +1,7 @@
 package Controller.logic
 {
 	import Model.ArgumentTypeModel;
+	import Model.SimpleStatementModel;
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
@@ -70,9 +71,7 @@ package Controller.logic
 		}
 		
 		//---------------- Getters and Setters ----------------------//
-		public function get hasLanguageTypeOptions():Boolean{
-			return true;
-		}
+
 		
 		
 		//--------------- Other Public Fucntion --------------------//
@@ -126,6 +125,11 @@ package Controller.logic
 		
 		public function link(argumentTypeModel:ArgumentTypeModel):void{
 			
+		}
+		
+		protected function removeDependence(simpleStatementModel:SimpleStatementModel, notNeededStatement:SimpleStatementModel):void{
+			var position:int = simpleStatementModel.forwardList.indexOf(notNeededStatement, 0);
+			simpleStatementModel.forwardList.splice(position, 1);
 		}
 		
 		public function hasLanguageOptions():Boolean{

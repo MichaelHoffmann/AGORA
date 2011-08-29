@@ -183,7 +183,6 @@ package Model
 			}else{
 				return false;
 			}
-			
 		}
 		
 		public function get supportingArguments():Vector.<ArgumentTypeModel>
@@ -339,7 +338,6 @@ package Model
 			}
 			
 			for each(var connection:ConnectionValueObject in map.connections){
-				
 				argumentTypeModel.ID = connection.connID;
 				argumentTypeModel.reasonsCompleted = false;
 			}
@@ -350,10 +348,13 @@ package Model
 				AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
 			}
 			
+			supportingArguments.push(argumentTypeModel);
+			
 			var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
 			
 			AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
 			AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
+			
 			
 			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
 			
@@ -383,6 +384,8 @@ package Model
 		//---------------------- Forming StatmentModels ---------------//
 		public static function createStatementFromObject(obj:NodeValueObject):StatementModel{
 			var statementModel:StatementModel;
+			//will always be false when called from
+			//the function that handles insert.php's response
 			if(obj.type == StatementModel.INFERENCE){
 				statementModel = new StatementModel(INFERENCE);
 			}else{
