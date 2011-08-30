@@ -8,7 +8,10 @@ package Controller.logic
 	import components.DynamicTextArea;
 	import components.Inference;
 	
+	import flash.utils.Dictionary;
+	
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	
 	public class ConditionalSyllogism extends ParentArg
 	{		
@@ -35,6 +38,19 @@ package Controller.logic
 		}
 		
 		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+			var output:String = "";
+			var reasonText:String = "";
+			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
+			var claimModel:StatementModel = argumentTypeModel.claimModel;
+			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+			
+			switch(argumentTypeModel.language){
+				case langTypes[0]:
+					inferenceModel.statement.text = "If " + inferenceModel.statements[0].text + ", then " + inferenceModel.statements[1].text;
+					break;
+				case langTypes[1]:
+					inferenceModel.statement.text = inferenceModel.statements[0].text + " implies " + inferenceModel.statements[1].text;
+			}
 			
 		}
 		
@@ -55,8 +71,7 @@ package Controller.logic
 			for(i=0; i<reasonModels.length - 1; i++){
 				removeDependence(reasonModels[i].statements[1], reasonModels[i+1].statements[0]);
 			}
-			
-	
+		
 			//reason to inference
 			removeDependence(reasonModels[reasonModels.length - 1].statements[1], inferenceModel.statements[0]);
 			
@@ -82,16 +97,25 @@ package Controller.logic
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+			var hashMap:Dictionary = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash;
 			var i:int;
-			
+			var argumentPanel:ArgumentPanel;
 			inferenceModel.connectingString = StatementModel.IMPLICATION;
 			
 			if(claimModel.firstClaim && claimModel.statements.length < 2){
 				claimModel.addTemporaryStatement();
+				if(hashMap.hasOwnProperty(claimModel.ID)){
+					argumentPanel = hashMap[claimModel.ID];
+					argumentPanel.statementsAddedDF = true;
+				}
 			}
 			
 			if(reasonModels[0].statements.length < 2){
 				reasonModels[0].addTemporaryStatement();
+				if(hashMap.hasOwnProperty(reasonModels[0].ID)){
+					argumentPanel = hashMap[reasonModels[0].ID];
+					argumentPanel.statementsAddedDF = true;
+				}
 			}
 			//connect the conclusion of the claim
 			//to the conclusion of the inference
