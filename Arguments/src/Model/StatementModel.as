@@ -268,6 +268,15 @@ package Model
 			}
 			return null;
 		}
+	
+		//does not push new nodetextIDs
+		public function addTemporaryStatement():void{
+			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
+			simpleStatement.parent = this;
+			simpleStatement.ID = SimpleStatementModel.TEMPORARY;
+			simpleStatement.forwardList.push(statement);
+			statements.push(simpleStatement);
+		}
 		
 		//------------------ Toggle Statement Type ------------------------//
 		public function toggleType():void{

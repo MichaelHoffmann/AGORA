@@ -114,6 +114,9 @@ package Model
 			}
 		}
 		
+		public function addDependentStatement(simpleStatement:SimpleStatementModel):void{
+			forwardList.push(simpleStatement);
+		}
 		
 		//------------------ get simple statment --------------------------//
 		public static function createSimpleStatementFromObject(obj:Object, statementModel:StatementModel):SimpleStatementModel{
