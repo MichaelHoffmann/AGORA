@@ -129,7 +129,7 @@ package components
 		//Containers
 		//The logical container that holds the text elements of the statement
 		//that is, input boxes and displayTxt
-		public var group:Group;
+		public var group:VGroup;
 		//multistatement group
 		public var msVGroup:VGroup;
 		//The enabler which makes this statements support a claim
@@ -510,10 +510,10 @@ package components
 			
 			negatedLbl = new Label;
 			negatedLbl.text = "It is not the case that";
-			negatedLbl.visible = false;
+			negatedLbl.visible = true;
 			
 			
-			group = new Group;
+			group = new VGroup;
 			addElement(group);
 			group.addElement(displayTxt);
 			

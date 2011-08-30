@@ -11,6 +11,7 @@ package Model
 	[Bindable]
 	public class SimpleStatementModel extends EventDispatcher
 	{
+		public static const TEMPORARY:int = -1;
 		private var _text:String;
 		private var _forwardList:Vector.<SimpleStatementModel>;
 		

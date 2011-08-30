@@ -294,6 +294,7 @@ package Controller
 				argSchemeSelector.typeSelector.visible=true;
 			}
 			else{
+				argSchemeSelector.typeSelector.visible = false;
 				updateEnablerText(argSchemeSelector, null)
 			}
 		}
