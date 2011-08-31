@@ -24,7 +24,7 @@ SET storage_engine=INNODB;
 -- -----------------------------------------------------
 -- Table agora.users
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS agora.users (
+CREATE TABLE IF NOT EXISTS agora.users (
   user_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   is_deleted TINYINT(1) NULL DEFAULT 0,
   firstname VARCHAR(30) NULL,
@@ -44,7 +44,7 @@ CREATE  TABLE IF NOT EXISTS agora.users (
 -- -----------------------------------------------------
 -- Table agora.maps
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS agora.maps (
+CREATE TABLE IF NOT EXISTS agora.maps (
   map_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NULL,
   title VARCHAR(100) NULL,
@@ -60,6 +60,28 @@ CREATE  TABLE IF NOT EXISTS agora.maps (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
+-- -----------------------------------------------------
+-- Table agora.lastviewed
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS agora.lastviewed (
+	lv_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	user_id INT UNSIGNED NOT NULL,
+	map_id INT UNSIGNED NOT NULL,
+	lv_date DATETIME NOT NULL,
+	PRIMARY KEY (lv_id),
+	INDEX user_id (user_id ASC),
+	INDEX map_id (map_id ASC)
+	FOREIGN KEY (user_id)
+		REFERENCES agora.users (user_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY (map_id)
+		REFERENCES agora.maps (map_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE);
+		
+	
+	
 -- -------------------------------------------------------
 -- Table agora.node_types
 -- -------------------------------------------------------
@@ -156,7 +178,7 @@ CREATE TABLE IF NOT EXISTS agora.nodetext (
 -- -----------------------------------------------------
 -- Table agora.connection_types
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS agora.connection_types (
+CREATE TABLE IF NOT EXISTS agora.connection_types (
   type_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   conn_name VARCHAR(60) NOT NULL,
   description VARCHAR(255) NULL,
@@ -208,7 +230,7 @@ INSERT INTO connection_types(conn_name, description) VALUES ("CDpropclaim",    "
 -- Table agora.connections
 -- -----------------------------------------------------
 
-CREATE  TABLE IF NOT EXISTS agora.connections (
+CREATE TABLE IF NOT EXISTS agora.connections (
   connection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NOT NULL,
