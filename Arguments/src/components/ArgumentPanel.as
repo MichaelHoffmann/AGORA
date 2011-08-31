@@ -539,6 +539,7 @@ package components
 			if(!(panelType == StatementModel.INFERENCE)){
 				var dta:DynamicTextArea;
 				var simpleStatement:SimpleStatementModel;
+				statementsAddedDF = true;
 				//check if new statements were added
 				//associate every statement in statments vector with a new dynamc text area
 				if(statementsAddedDF){

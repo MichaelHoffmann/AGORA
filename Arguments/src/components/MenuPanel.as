@@ -1,5 +1,7 @@
 package components
 {
+	import Controller.ArgumentController;
+	
 	import Model.ArgumentTypeModel;
 	
 	import flash.events.MouseEvent;
@@ -24,7 +26,6 @@ package components
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
-		public var inference:Inference;
 		
 		
 		private var _schemeSelector:ArgSelector;
@@ -59,7 +60,7 @@ package components
 			BindingUtils.bindSetter(this.setX, model, "xgrid");
 			BindingUtils.bindSetter(this.setY, model, "ygrid");
 		}
-
+		
 		//------------------ Bind Setters --------------------------//
 		//Buttons must not be enabled when the user is still constructing
 		//the argument
@@ -69,6 +70,14 @@ package components
 		
 		protected function enableChangeScheme(value:Boolean):void{
 			changeSchemeBtn.enabled = value;	
+		}
+
+		//---------- Event Handlers ---------------------------------//
+		protected function onAddReasonClicked(event:MouseEvent):void{
+			ArgumentController.getInstance().addReason(model);
+		}
+		protected function onChangeSchemeClicked(event:MouseEvent):void{
+			ArgumentController.getInstance().constructArgument(model);
 		}
 		
 		//------------------- Framework methods---------------------//
@@ -94,6 +103,10 @@ package components
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
+			
+			
+			addReasonBtn.addEventListener(MouseEvent.CLICK, onAddReasonClicked);
+			changeSchemeBtn.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);
 			
 			//set bind setters
 			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");

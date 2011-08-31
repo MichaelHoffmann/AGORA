@@ -43,6 +43,9 @@ package Controller.logic
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+		
+			inferenceModel.statements[0].text = reasonModels[reasonModels.length-1].statements[1].text;
+			inferenceModel.statements[1].text = claimModel.statements[1].text;
 			
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
@@ -51,7 +54,6 @@ package Controller.logic
 				case langTypes[1]:
 					inferenceModel.statement.text = inferenceModel.statements[0].text + " implies " + inferenceModel.statements[1].text;
 			}
-			
 		}
 		
 		override public function deleteLinks(argumentTypeModel:ArgumentTypeModel):void{
@@ -61,12 +63,16 @@ package Controller.logic
 			var simpleStatement:SimpleStatementModel;
 			var stmtToBeUnlinked:SimpleStatementModel;
 			var i:int;
+		
+			var claimText:String = claimModel.statement.text;
+			var reasonText:String = reasonModels[0].statement.text;
+			
 			//remove Links normally
 			//claim to first reason
 			removeDependence(claimModel.statements[0], reasonModels[0].statements[0]);
 			//claim to inference
 			removeDependence(claimModel.statements[1], inferenceModel.statements[1]);
-			
+		
 			//reasons
 			for(i=0; i<reasonModels.length - 1; i++){
 				removeDependence(reasonModels[i].statements[1], reasonModels[i+1].statements[0]);
@@ -84,6 +90,8 @@ package Controller.logic
 			}
 			
 			//from reason models
+			//There should be only one reason
+			//iterating is not required
 			for(i=0; i<reasonModels.length; i++){
 				for each(simpleStatement in reasonModels[i].statements){
 					if(simpleStatement.ID == SimpleStatementModel.TEMPORARY){
@@ -91,6 +99,9 @@ package Controller.logic
 					}
 				}
 			}
+			
+			claimModel.statements[0].text = claimText;
+			reasonModels[0].statements[0].text = reasonText;
 		}
 		
 		override public function link(argumentTypeModel:ArgumentTypeModel):void{
@@ -99,24 +110,26 @@ package Controller.logic
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 			var hashMap:Dictionary = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash;
 			var i:int;
+			
 			var argumentPanel:ArgumentPanel;
 			inferenceModel.connectingString = StatementModel.IMPLICATION;
+			claimModel.connectingString = StatementModel.IMPLICATION;
+			reasonModels[i].connectingString = StatementModel.IMPLICATION;
+			
+			for(i = 0; i<reasonModels.length; i++){
+				
+			}
 			
 			if(claimModel.firstClaim && claimModel.statements.length < 2){
 				claimModel.addTemporaryStatement();
-				if(hashMap.hasOwnProperty(claimModel.ID)){
-					argumentPanel = hashMap[claimModel.ID];
-					argumentPanel.statementsAddedDF = true;
-				}
+				claimModel.statements[1].text = "T";
 			}
 			
 			if(reasonModels[0].statements.length < 2){
 				reasonModels[0].addTemporaryStatement();
-				if(hashMap.hasOwnProperty(reasonModels[0].ID)){
-					argumentPanel = hashMap[reasonModels[0].ID];
-					argumentPanel.statementsAddedDF = true;
-				}
+				reasonModels[0].statements[1].text = "W";
 			}
+				
 			//connect the conclusion of the claim
 			//to the conclusion of the inference
 			claimModel.statements[1].addDependentStatement(inferenceModel.statements[1]);
@@ -127,10 +140,13 @@ package Controller.logic
 			//connect subsequent reasons
 			for(i=0; i<reasonModels.length -1; i++){
 				reasonModels[i].statements[1].addDependentStatement(reasonModels[i+1].statements[0]);
+				//
 			}
 			//connect last reason's conclusion to the 
 			//inference's premise
 			reasonModels[reasonModels.length - 1].statements[1].addDependentStatement(inferenceModel.statements[0]);
+			
+			reasonModels[reasonModels.length - 1].connectingString = StatementModel.IMPLICATION;
 		}
 		
 		

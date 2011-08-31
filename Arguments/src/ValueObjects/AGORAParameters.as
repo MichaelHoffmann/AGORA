@@ -12,7 +12,7 @@ package ValueObjects
 		public var loadMapURL:String;
 		
 		public var gridWidth:int;
-		
+		public var version:String;
 		
 		//prompts
 		public var MAP_LOADING_FAILED:String;
@@ -40,6 +40,7 @@ package ValueObjects
 
 			
 			gridWidth = 25;
+			version = "11.8.30";
 			reference = this;
 		}
 		
@@ -49,5 +50,11 @@ package ValueObjects
 			}
 			return reference;
 		}
+		/*
+		public static function reinitialize(String lang){
+			public var AFFILIATION:String = Language.lookup("Affiliation");	
+				
+		}
+		*/
 	}
 }

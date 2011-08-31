@@ -7,10 +7,15 @@ package Model
 	import Controller.logic.NotAllSyllogism;
 	import Controller.logic.ParentArg;
 	
+	import ValueObjects.AGORAParameters;
+	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
 	import mx.collections.ArrayCollection;
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
 	
 	[Bindable]
 	public class ArgumentTypeModel extends EventDispatcher
@@ -29,12 +34,20 @@ package Model
 		//always true for arguments made on other clients
 		private var _reasonsCompleted:Boolean;
 		
+		private var addReasonService:HTTPService;
+		
 		public function ArgumentTypeModel(target:IEventDispatcher=null)
 		{
 			super(target);
 			reasonsCompleted = true;
 			reasonModels = new Vector.<StatementModel>;
+			
+			addReasonService = new HTTPService;
+			addReasonService.url = AGORAParameters.getInstance().insertURL;
+			addReasonService.addEventListener(ResultEvent.RESULT, addReasonServiceResult);
+			addReasonService.addEventListener(FaultEvent.FAULT, onFault);
 		}
+		
 
 		//-------------------- Getters and Setters -----------------------//
 
@@ -142,6 +155,50 @@ package Model
 		public function set inferenceModel(value:StatementModel):void
 		{
 			_inferenceModel = value;
+		}
+		
+		//------------------------ adding a reason ------------------------//
+		public function addReason(x:int):void{
+			var reasonXML:XML;
+			var textboxXML:XML;
+			
+			if(logicClass == null || logicClass.length == 0){
+				trace("ArgumentTypeModel::addReason: no logic class");
+				return;
+			}
+			
+			ygrid = this.reasonModels[0].ygrid;
+			
+			var inputXML:XML = 	<map ID={AGORAModel.getInstance().agoraMapModel.ID}>
+											</map>;
+			
+			if(logicClass == ParentArg.COND_SYLL){
+				inputXML.appendChild(<textbox TID="1" text={SimpleStatementModel.DEPENDENT_TEXT} />);
+			}
+			
+			inputXML.appendChild(<textbox TID="2" text="" />);
+			
+			reasonXML = <node TID= "3" Type="Particular" typed="0" is_positive="1" x={x} y={ygrid}>
+						</node>;
+			
+			
+			if(logicClass == ParentArg.COND_SYLL){
+				reasonXML.appendChild(<nodetext TID="4" textboxTID="1" />);
+			}
+			
+			reasonXML.appendChild(<nodetext TID="5" textboxTID="2" />);
+			
+			inputXML.appendChild(reasonXML);
+			
+		}
+		
+		protected function addReasonServiceResult(event:ResultEvent):void{
+			
+		}
+		
+		//-------------------------- Generic Fault method ----------------//
+		protected function onFault(event:FaultEvent):void{
+			
 		}
 		
 		//-------------------------- other public methods -----------------//

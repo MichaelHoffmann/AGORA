@@ -92,7 +92,7 @@ package Model
 				if(simpleStatement.parent.statements.length > 1 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
 				{
 					if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
-						simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0] + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1]; 
+						simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0].text + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1].text; 
 					}
 					if(parent.connectingString == StatementModel.DISJUNCTION){
 						var vtext:String = parent.statements[0].text;
@@ -100,7 +100,7 @@ package Model
 							vtext = " " + AGORAParameters.getInstance().OR + " " + vtext ;
 						}
 						simpleStatement.text = vtext;
-					}
+					}	
 				}
 				else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
 					if(simpleStatement.parent.argumentTypeModel.logicClass != null){
