@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS agora.lastviewed (
 	lv_date DATETIME NOT NULL,
 	PRIMARY KEY (lv_id),
 	INDEX user_id (user_id ASC),
-	INDEX map_id (map_id ASC)
+	INDEX map_id (map_id ASC),
 	FOREIGN KEY (user_id)
 		REFERENCES agora.users (user_id)
 		ON DELETE CASCADE
