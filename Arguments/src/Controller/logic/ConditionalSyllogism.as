@@ -1,8 +1,11 @@
 package Controller.logic
 {
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
@@ -17,17 +20,17 @@ package Controller.logic
 	{		
 		private static var instance:ConditionalSyllogism;
 		
+		
 		public var built:Boolean;	
+		
 		
 		
 		public function ConditionalSyllogism()
 		{
-			langTypes = ["If-then","Implies"];
-			//dbLangTypeNames = ["ifthen","implies"];
-			expLangTypes = ["If-then", "Implies"];
-			//myname = COND_SYLL;
-			//_dbType = "CS";
-			//built = false;
+			var agoraParameters:AGORAParameters = AGORAParameters.getInstance();
+			langTypes = [agoraParameters.IF_THEN,agoraParameters.IMPLIES];
+			expLangTypes = [agoraParameters.IF_THEN,agoraParameters.IMPLIES];
+			label = AGORAParameters.getInstance().COND_SYLL;
 		}
 		
 		public static function getInstance():ConditionalSyllogism{
@@ -43,7 +46,7 @@ package Controller.logic
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
-		
+			
 			inferenceModel.statements[0].text = reasonModels[reasonModels.length-1].statements[1].text;
 			inferenceModel.statements[1].text = claimModel.statements[1].text;
 			
@@ -63,21 +66,21 @@ package Controller.logic
 			var simpleStatement:SimpleStatementModel;
 			var stmtToBeUnlinked:SimpleStatementModel;
 			var i:int;
-		
-			var claimText:String = claimModel.statement.text;
-			var reasonText:String = reasonModels[0].statement.text;
+			
+			var claimText:String = claimModel.statements[0].text;
+			var reasonText:String = reasonModels[0].statements[0].text;
 			
 			//remove Links normally
 			//claim to first reason
 			removeDependence(claimModel.statements[0], reasonModels[0].statements[0]);
 			//claim to inference
 			removeDependence(claimModel.statements[1], inferenceModel.statements[1]);
-		
+			
 			//reasons
 			for(i=0; i<reasonModels.length - 1; i++){
 				removeDependence(reasonModels[i].statements[1], reasonModels[i+1].statements[0]);
 			}
-		
+			
 			//reason to inference
 			removeDependence(reasonModels[reasonModels.length - 1].statements[1], inferenceModel.statements[0]);
 			
@@ -99,9 +102,10 @@ package Controller.logic
 					}
 				}
 			}
+			//So that changes get reflected in the statement
+			claimModel.statements[0].updateStatementTexts();
+			reasonModels[0].statements[0].updateStatementTexts();
 			
-			claimModel.statements[0].text = claimText;
-			reasonModels[0].statements[0].text = reasonText;
 		}
 		
 		override public function link(argumentTypeModel:ArgumentTypeModel):void{
@@ -129,7 +133,7 @@ package Controller.logic
 				reasonModels[0].addTemporaryStatement();
 				reasonModels[0].statements[1].text = "W";
 			}
-				
+			
 			//connect the conclusion of the claim
 			//to the conclusion of the inference
 			claimModel.statements[1].addDependentStatement(inferenceModel.statements[1]);
@@ -145,7 +149,6 @@ package Controller.logic
 			//connect last reason's conclusion to the 
 			//inference's premise
 			reasonModels[reasonModels.length - 1].statements[1].addDependentStatement(inferenceModel.statements[0]);
-			
 			reasonModels[reasonModels.length - 1].connectingString = StatementModel.IMPLICATION;
 		}
 		

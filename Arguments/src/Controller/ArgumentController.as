@@ -52,6 +52,7 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
+			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_TYPE_ADDED, setArgumentTypeModelEventListeners);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -153,13 +154,24 @@ package Controller
 		
 		//------------------ Adding a Reason -------------------------------------//
 		public function addReason(argumentTypeModel:ArgumentTypeModel):void{
-				
+			var x:int;
+			var y:int;
+			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ID];
+			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 1;
+			y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
+			argumentTypeModel.addReason(x, y);
+		}
+		
+		protected function onReasonAdded(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		//----------------- Construct Argument -----------------------------//
 		public function constructArgument(argumentTypeModel:ArgumentTypeModel):void{
-			//make inference visible
-			argumentTypeModel.reasonsCompleted = true;
+			if(!argumentTypeModel.reasonsCompleted){
+				//make inference visible
+				argumentTypeModel.reasonsCompleted = true;
+			}
 			//get the scheme selector
 			var menuPanel:MenuPanel = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID];
 			var schemeSelector:ArgSelector = menuPanel.schemeSelector;
@@ -173,10 +185,14 @@ package Controller
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
 				
-			else if(argumentTypeModel.claimModel.firstClaim){
+			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
-				
+			else if(argumentTypeModel.claimModel.statements.length > 1){
+				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+					schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
+				}
+			}
 				//if simple positive statement
 			else if(!argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getPositiveArray();
@@ -193,7 +209,6 @@ package Controller
 			else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
 				schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
 			}
-			
 			//show the menu
 			schemeSelector.visible = true;
 		}
@@ -259,13 +274,19 @@ package Controller
 		}
 		
 		//------------------- configuration functions -----------------//
-		public function setEventListeners(statementAddedEvent:AGORAEvent):void{
+		protected function setEventListeners(statementAddedEvent:AGORAEvent):void{
 			//get the statement model
 			var statementModel:StatementModel = statementAddedEvent.eventData as StatementModel;
 			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLED,statementTypeToggled); 
 			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, textSaved);
 			statementModel.addEventListener(AGORAEvent.ARGUMENT_CREATED, onArgumentCreated);
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
+		}
+		
+		protected function setArgumentTypeModelEventListeners(argumentTypeModelAddedEvent:AGORAEvent):void{
+			var argumentTypeModel:ArgumentTypeModel = argumentTypeModelAddedEvent.eventData as ArgumentTypeModel;
+			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDED, onReasonAdded);
+			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
 		}
 		
 		//------------------ Handling events from schemeSelector ------//
@@ -319,11 +340,11 @@ package Controller
 		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 			switch(scheme){
-				case ParentArg.DIS_SYLL:
+				case AGORAParameters.getInstance().DIS_SYLL:
 					//argSchemeSelector.visible = false;
 					argumentTypeModel.updateConnection();
 					break;
-				case ParentArg.NOT_ALL_SYLL:
+				case AGORAParameters.getInstance().NOT_ALL_SYLL:
 					//argSchemeSelector.visible = false;
 					argumentTypeModel.updateConnection();
 					break;
@@ -333,7 +354,7 @@ package Controller
 		
 		public function setSchemeLanguageType(argSchemeSelector:ArgSelector, language:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
-			if(argumentTypeModel.language != ParentArg.MOD_TOL){
+			if(argumentTypeModel.language != AGORAParameters.getInstance().MOD_TOL){
 				//argSchemeSelector.visible = false;
 				argumentTypeModel.updateConnection();
 			}
@@ -348,6 +369,13 @@ package Controller
 		public function setSchemeLanguageOptionType(argSchemeSelector:ArgSelector, option:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 			argumentTypeModel.updateConnection();
+		}
+		
+		//------------------- Scheme Update Functions -----------------//
+		protected function onArgumentSchemeSet(event:AGORAEvent):void{
+			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+			//argumentTypeModel.logicClass
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

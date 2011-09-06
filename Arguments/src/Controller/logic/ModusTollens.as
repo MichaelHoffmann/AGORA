@@ -2,8 +2,11 @@ package Controller.logic
 {
 	import Controller.ArgumentController;
 	
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.StatementModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
@@ -24,6 +27,8 @@ package Controller.logic
 			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			expLangTypes = ["Only if"];	// Expandable with both And and Or
+			label = AGORAParameters.getInstance().MOD_TOL;
+			
 		}
 		
 		public static function getInstance():ModusTollens{

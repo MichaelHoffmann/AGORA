@@ -81,10 +81,7 @@ package Model
 			addArgumentService.addEventListener(ResultEvent.RESULT, onAddArgumentServiceResponse);
 			addArgumentService.addEventListener(FaultEvent.FAULT, onFault);
 			
-			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);
-			
-			
-			
+			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);			
 		}
 		
 		
@@ -319,8 +316,11 @@ package Model
 			
 			addArgumentXML.appendChild(reasonNodeXML);
 			addArgumentXML.appendChild(inferenceXML);
-			addArgumentXML.appendChild(connectionXML);	
+			addArgumentXML.appendChild(connectionXML);
+			trace(addArgumentXML.toXMLString());
 			addArgumentService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:addArgumentXML.toXMLString()});
+			trace(AGORAModel.getInstance().userSessionModel.uid);
+			trace(AGORAModel.getInstance().userSessionModel.passHash);
 		}
 		
 		

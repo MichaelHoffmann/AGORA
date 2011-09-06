@@ -1,10 +1,13 @@
 
 package Controller.logic
 {
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.InferenceModel;
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
@@ -22,6 +25,7 @@ package Controller.logic
 			//_dbType = "NotAllSyl";
 			//langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
 			//sLanguageExp = true;
+			label = AGORAParameters.getInstance().NOT_ALL_SYLL;
 		}
 		
 		public static function getInstance():NotAllSyllogism{

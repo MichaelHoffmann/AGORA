@@ -47,8 +47,8 @@ package Model
 		
 		private var _statementWidth:int;
 		
-		
 		private var _mapConstructedFromArgument:Boolean;
+		
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
@@ -266,6 +266,10 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_ADDED, null, statementModel));
 		}
 		
+		public function newArgumentTypeModelAdded(argumentTypeModel:ArgumentTypeModel):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_TYPE_ADDED, null, argumentTypeModel));
+		}
+		
 		//----------------------- Load New Data ----------------------------------------------//
 		public function loadMapModel():void{
 			loadMapService.send({map_id:ID.toString(),timestamp:timestamp});		
@@ -379,20 +383,26 @@ package Model
 			var result:Boolean;
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
+					
 					if(!connectionListHash.hasOwnProperty(obj.connID)){
 						argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
+					
 					argumentTypeModel.dbType = obj.type;
+					
 					if(nodeHash.hasOwnProperty(obj.targetnode)){
 						argumentTypeModel.claimModel = nodeHash[obj.targetnode];
 					}
 					else{
 						argumentTypeModel.claimModel = panelListHash[obj.targetnode];
 					}
+					
 					argumentTypeModel.xgrid = obj.x;
 					argumentTypeModel.ygrid = obj.y;
+				
+					
 					connectionsHash[obj.connID] = argumentTypeModel;
 					processSourceNode(obj, connectionsHash, nodeHash);	
 				}

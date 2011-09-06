@@ -1,8 +1,11 @@
 package Controller.logic
 {	
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
@@ -21,7 +24,7 @@ package Controller.logic
 			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
 			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			expLangTypes = ["If-then","Whenever","Provided that"];	
-			//myname = MOD_PON;
+			label = AGORAParameters.getInstance().MOD_PON;
 			//_dbType = "MP";
 			
 		}
@@ -35,7 +38,7 @@ package Controller.logic
 		
 		//------------------- public functions -------------------------//
 		override public function getLabel():String{
-			return ParentArg.MOD_PON;
+			return AGORAParameters.getInstance().MOD_PON;
 		}
 		
 		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
@@ -103,11 +106,13 @@ package Controller.logic
 			
 			//push inference into claim's statement
 			var inferenceStatement:SimpleStatementModel = argumentTypeModel.inferenceModel.statements[argumentTypeModel.reasonModels.length - 1];
-			claimModel.statement.forwardList.push(inferenceStatement);
+			//claimModel.statement.forwardList.push(inferenceStatement);
+			claimModel.statement.addDependentStatement(inferenceStatement);
 			//push inference into reasons statement
 			for(var i:int=0; i<reasonModels.length; i++){
 				var reason:StatementModel = reasonModels[i];
-				reason.statement.forwardList.push(inferenceModel.statements[0]);
+				//reason.statement.forwardList.push(inferenceModel.statements[0]);
+				reason.statement.addDependentStatement(inferenceModel.statements[0]);
 			}
 		}
 		

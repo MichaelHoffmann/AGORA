@@ -1,5 +1,9 @@
 package Controller.logic
 {
+	import Model.AGORAModel;
+	
+	import ValueObjects.AGORAParameters;
+	
 	import flash.utils.Dictionary;
 
 	public class LogicFetcher
@@ -12,46 +16,46 @@ package Controller.logic
 		{
 			logicHash = new Dictionary;
 			
-			logicHash[ParentArg.MOD_PON] = ModusPonens.getInstance();
-			logicHash[ParentArg.MPIfThen] = ModusPonens.getInstance();
-			logicHash[ParentArg.MPimplies]  = ModusPonens.getInstance();
-			logicHash[ParentArg.MPnecessary] = ModusPonens.getInstance();
-			logicHash[ParentArg.MPonlyif] = ModusPonens.getInstance();
-			logicHash[ParentArg.MPsufficient] = ModusPonens.getInstance();
-			logicHash[ParentArg.MPwhenever] = ModusPonens.getInstance();
+			logicHash[AGORAParameters.getInstance().MOD_PON] = ModusPonens.getInstance();
+			logicHash[AGORAParameters.getInstance().MPIfThen] = ModusPonens.getInstance();
+			logicHash[AGORAParameters.getInstance().MPimplies]  = ModusPonens.getInstance();
+			logicHash[AGORAParameters.getInstance().MPnecessary] = ModusPonens.getInstance();
+			logicHash[AGORAParameters.getInstance().MPonlyif] = ModusPonens.getInstance();
+			logicHash[AGORAParameters.getInstance().MPsufficient] = ModusPonens.getInstance();
+			logicHash[AGORAParameters.getInstance().MPwhenever] = ModusPonens.getInstance();
 			
 			//Modus Tollens
-			logicHash[ParentArg.MOD_TOL] = ModusTollens.getInstance();
-			logicHash[ParentArg.MTifthen] = ModusTollens.getInstance();
-			logicHash[ParentArg.MTimplies] = ModusTollens.getInstance();
-			logicHash[ParentArg.MTnecessary] = ModusTollens.getInstance();
-			logicHash[ParentArg.MTonlyif] = ModusTollens.getInstance();
-			logicHash[ParentArg.MTonlyiffor] = ModusTollens.getInstance();
-			logicHash[ParentArg.MTsufficient] = ModusTollens.getInstance();
-			logicHash[ParentArg.MTwhenever] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MOD_TOL] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTifthen] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTimplies] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTnecessary] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTonlyif] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTonlyiffor] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTsufficient] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTwhenever] = ModusTollens.getInstance();
 			
 			//Disjunctive Syllogism
-			logicHash[ParentArg.DIS_SYLL] = DisjunctiveSyllogism.getInstance();
-			logicHash[ParentArg.DisjSyl] = DisjunctiveSyllogism.getInstance();
+			logicHash[AGORAParameters.getInstance().DIS_SYLL] = DisjunctiveSyllogism.getInstance();
+			logicHash[AGORAParameters.getInstance().DisjSyl] = DisjunctiveSyllogism.getInstance();
 			
 			//Equivalence
-			logicHash[ParentArg.EQ] = Equivalence.getInstance();
-			logicHash[ParentArg.EQiff] = Equivalence.getInstance();
-			logicHash[ParentArg.EQnecsuf] = Equivalence.getInstance();
+			logicHash[AGORAParameters.getInstance().EQ] = Equivalence.getInstance();
+			logicHash[AGORAParameters.getInstance().EQiff] = Equivalence.getInstance();
+			logicHash[AGORAParameters.getInstance().EQnecsuf] = Equivalence.getInstance();
 			
 			//Not-All Syllogism
-			logicHash[ParentArg.NOT_ALL_SYLL] = NotAllSyllogism.getInstance();
-			logicHash[ParentArg.NotAllSyll] = NotAllSyllogism.getInstance();
+			logicHash[AGORAParameters.getInstance().NOT_ALL_SYLL] = NotAllSyllogism.getInstance();
+			logicHash[AGORAParameters.getInstance().NotAllSyll] = NotAllSyllogism.getInstance();
 			
 			//Conditional Syllogism
-			logicHash[ParentArg.COND_SYLL] = ConditionalSyllogism.getInstance();
-			logicHash[ParentArg.CSifthen] = ConditionalSyllogism.getInstance();
-			logicHash[ParentArg.CSimplies] = ConditionalSyllogism.getInstance();
+			logicHash[AGORAParameters.getInstance().COND_SYLL] = ConditionalSyllogism.getInstance();
+			logicHash[AGORAParameters.getInstance().CSifthen] = ConditionalSyllogism.getInstance();
+			logicHash[AGORAParameters.getInstance().CSimplies] = ConditionalSyllogism.getInstance();
 			
 			//Constructive Dilemma
-			logicHash[ParentArg.CONST_DILEM] = ConstructiveDilemma.getInstance();
-			logicHash[ParentArg.CDaltclaim] = ConstructiveDilemma.getInstance();
-			logicHash[ParentArg.CDpropclaim] = ConstructiveDilemma.getInstance();
+			logicHash[AGORAParameters.getInstance().CONST_DILEM] = ConstructiveDilemma.getInstance();
+			logicHash[AGORAParameters.getInstance().CDaltclaim] = ConstructiveDilemma.getInstance();
+			logicHash[AGORAParameters.getInstance().CDpropclaim] = ConstructiveDilemma.getInstance();
 
 		}
 		

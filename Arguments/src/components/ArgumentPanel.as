@@ -550,7 +550,7 @@ package components
 						try{
 							group.removeElement(dta);
 						}catch(error:Error){
-							trace("error: Trying to remove an element that is not present");
+							//trace("error: Trying to remove an element that is not present");
 						}
 					}
 					inputs.splice(0,inputs.length);

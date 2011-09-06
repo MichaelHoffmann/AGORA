@@ -1,6 +1,9 @@
 package Controller.logic
 {
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgumentPanel;
 
@@ -14,6 +17,7 @@ package Controller.logic
 			//dbLangTypeNames = ["altclaim", "propclaim"];
 			//myname = CONST_DILEM;
 			//dbName = myname;
+			label = AGORAParameters.getInstance().CONST_DILEM;
 			//_dbType = "CD";
 			
 		}

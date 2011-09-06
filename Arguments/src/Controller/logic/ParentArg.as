@@ -1,7 +1,10 @@
 package Controller.logic
 {
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.SimpleStatementModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
@@ -18,51 +21,29 @@ package Controller.logic
 	public class ParentArg {
 		
 		private static var instance:ParentArg;
+		private var _label:String;
 		
 		//In the backend, each of the classes is referred by another name. For example, Modus Ponens is referred to as therefore.
 		//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
 		public var langTypes:Array;
 		public var expLangTypes:Array;
 		
-		public static var MOD_PON:String = "Modus Ponens";
-		public static var MOD_TOL:String = "Modus Tollens";
-		public static var COND_SYLL:String = "Conditional Syllogism";
-		public static var DIS_SYLL:String = "Disjunctive Syllogism";
-		public static var NOT_ALL_SYLL:String = "Not-All Syllogism";
-		public static var CONST_DILEM:String = "Constructive Dilemma";
-		public static var EXP_AND:String = "and";
-		public static var EXP_OR:String = "or";
-		
-		public static const MPIfThen:String = "MPifthen";
-		public static const MPimplies:String = "MPimplies";
-		public static const MPwhenever:String = "MPwhenever";
-		public static const MPonlyif:String = "MPonlyif";
-		public static const MPprovidedthat:String = "MPprovidedthat";
-		public static const MPsufficient:String = "MPsufficient";
-		public static const MPnecessary:String = "MPnecessary";
-		public static const MTifthen:String = "MTifthen";
-		public static const MTimplies:String = "MTimplies";
-		public static const MTwhenever:String = "MTwhenever";
-		public static const MTonlyif:String = "MTonlyif";
-		public static const MTonlyiffor:String = "MTonlyiffor";
-		public static const MTprovidedthat:String = "MTprovidedthat";
-		public static const MTsufficient:String = "MTsufficient";
-		public static const MTnecessary:String = "MTnecessary";
-		public static const DisjSyl:String = "DisjSyl";
-		public static const NotAllSyll:String = "NotAllSyl";
-		public static const EQiff:String = "EQiff";
-		public static const EQnecsuf:String = "EQnecsuf";
-		public static const EQ:String = "EQ";
-		public static const CSifthen:String = "CSifthen";
-		public static const CSimplies:String = "CSimplies";
-		public static const CDaltclaim:String = "CDaltclaim";
-		public static const CDpropclaim:String = "CDpropclaim";
-		public static const Unset:String = "Unset";
+	
 		
 		public function ParentArg(){
 			instance = this;
 		}
 		
+		public function get label():String
+		{
+			return _label;
+		}
+
+		public function set label(value:String):void
+		{
+			_label = value;
+		}
+
 		public static function getInstance():ParentArg{
 			if(instance == null){
 				instance = new ParentArg;
@@ -83,27 +64,27 @@ package Controller.logic
 		}
 		
 		public function getFullArray():Array{
-			var array:Array = [MOD_PON, MOD_TOL, DIS_SYLL, COND_SYLL, NOT_ALL_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().MOD_TOL, AGORAParameters.getInstance().DIS_SYLL, AGORAParameters.getInstance().COND_SYLL, AGORAParameters.getInstance().NOT_ALL_SYLL];
 			return array;
 		}
 		
 		public function getPositiveArray():Array{
-			var array:Array = [MOD_PON, DIS_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL];
 			return array;
 		}
 		
 		public function getNegativeArray():Array{
-			var array:Array = [MOD_TOL, NOT_ALL_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_TOL, AGORAParameters.getInstance().NOT_ALL_SYLL];
 			return array;
 		}
 		
 		public function getImplicationArray():Array{
-			var array:Array = [MOD_PON, DIS_SYLL, COND_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL, AGORAParameters.getInstance().COND_SYLL];
 			return array;
 		}
 		
 		public function getDisjunctionPositiveArray():Array{
-			var array:Array = [MOD_PON, DIS_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL];
 			return array;
 		}
 		

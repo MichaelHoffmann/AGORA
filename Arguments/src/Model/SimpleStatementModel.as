@@ -69,7 +69,9 @@ package Model
 		
 		public function set text(value:String):void{
 			_text = value;
+			trace("gffdzfdzdsz");
 			updateStatementTexts();
+			
 		}
 		
 		public function get forwardList():Vector.<SimpleStatementModel>{
@@ -88,9 +90,13 @@ package Model
 		}
 		//------------------ other public functions -----------------------//
 		public function updateStatementTexts():void{
+			trace("in update statement texts");
+			trace(forwardList.length);
 			for each(var simpleStatement:SimpleStatementModel in forwardList){
-				if(simpleStatement.parent.statements.length > 1 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
+				if(simpleStatement.parent.statements.length >= 2 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
 				{
+					trace("simple wow: " + simpleStatement.text);
+					trace(simpleStatement.parent.statements.length);
 					if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
 						simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0].text + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1].text; 
 					}
@@ -103,19 +109,29 @@ package Model
 					}	
 				}
 				else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
+					trace("what");
 					if(simpleStatement.parent.argumentTypeModel.logicClass != null){
 						var logicController:ParentArg = LogicFetcher.getInstance().logicHash[simpleStatement.parent.argumentTypeModel.logicClass];
 						logicController.formText(simpleStatement.parent.argumentTypeModel);
 					}
 				}
 				else{
+					trace("simple statment: " + simpleStatement.text);
 					simpleStatement.text = text;
+					
 				}
 			}
+			trace("function ends");
 		}
 		
 		public function addDependentStatement(simpleStatement:SimpleStatementModel):void{
 			forwardList.push(simpleStatement);
+		}
+		
+		public function addToDependancyList(simpleStatementModel:SimpleStatementModel):void{
+			if(forwardList.indexOf(simpleStatementModel) == -1){
+				forwardList.push(simpleStatementModel);
+			}
 		}
 		
 		//------------------ get simple statment --------------------------//

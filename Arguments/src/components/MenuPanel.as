@@ -37,41 +37,56 @@ package components
 			width = 150;
 			this.setStyle("chromeColor",uint("0xdddddd"));
 		}
-
-
+		
+		
 		public function get schemeSelector():ArgSelector
 		{
 			return _schemeSelector;
 		}
-
+		
 		public function set schemeSelector(value:ArgSelector):void
 		{
 			_schemeSelector = value;
 		}
-
+		
 		public function get model():ArgumentTypeModel
 		{
 			return _model;
 		}
-
+		
 		public function set model(value:ArgumentTypeModel):void
 		{
 			_model = value;
 			BindingUtils.bindSetter(this.setX, model, "xgrid");
 			BindingUtils.bindSetter(this.setY, model, "ygrid");
+			BindingUtils.bindSetter(this.setSchemeText, model, "logicClass");
+			
 		}
 		
 		//------------------ Bind Setters --------------------------//
 		//Buttons must not be enabled when the user is still constructing
 		//the argument
 		protected function enableAddReason(value:Boolean):void{
-			addReasonBtn.enabled = value;
+			//if(value && schemeSelector.visible == false){
+				addReasonBtn.enabled = value;	
+			//}
 		}
 		
 		protected function enableChangeScheme(value:Boolean):void{
 			changeSchemeBtn.enabled = value;	
 		}
-
+		
+		protected function setSchemeText(value:String):void{
+			//This should happen only after changeSchemeBtn is created
+			if(changeSchemeBtn){
+				if(value == null){
+					changeSchemeBtn.label = "Scheme";
+				}else{
+					changeSchemeBtn.label = value;
+				}
+			}
+		}
+		
 		//---------- Event Handlers ---------------------------------//
 		protected function onAddReasonClicked(event:MouseEvent):void{
 			ArgumentController.getInstance().addReason(model);
@@ -112,7 +127,7 @@ package components
 			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");
 			BindingUtils.bindSetter(enableChangeScheme, model, "reasonsCompleted");
 		}
-				
+		
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{

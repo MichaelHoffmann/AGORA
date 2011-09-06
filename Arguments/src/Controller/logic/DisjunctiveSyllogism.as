@@ -1,9 +1,12 @@
 
 package Controller.logic
 {
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgumentPanel;
 	
@@ -15,10 +18,11 @@ package Controller.logic
 		
 		public function DisjunctiveSyllogism()
 		{
-			langTypes = ["Either-or"];
-			expLangTypes =  ["Either-or"];
+			//langTypes = ["Either-or"];
+			//expLangTypes =  ["Either-or"];
 			//myname = DIS_SYLL;
 			//_dbType = "DisjSyl";
+			label = AGORAParameters.getInstance().DIS_SYLL;
 		}
 		
 		public static function getInstance():DisjunctiveSyllogism{
