@@ -64,11 +64,10 @@ CREATE TABLE IF NOT EXISTS agora.maps (
 -- Table agora.lastviewed
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.lastviewed (
-	lv_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	user_id INT UNSIGNED NOT NULL,
 	map_id INT UNSIGNED NOT NULL,
 	lv_date DATETIME NOT NULL,
-	PRIMARY KEY (lv_id),
+	PRIMARY KEY (user_id, map_id),
 	INDEX user_id (user_id ASC),
 	INDEX map_id (map_id ASC),
 	FOREIGN KEY (user_id)
@@ -79,9 +78,7 @@ CREATE TABLE IF NOT EXISTS agora.lastviewed (
 		REFERENCES agora.maps (map_id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE);
-		
-	
-	
+
 -- -------------------------------------------------------
 -- Table agora.node_types
 -- -------------------------------------------------------
