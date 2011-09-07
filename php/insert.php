@@ -372,6 +372,7 @@ List of variables for insertion:
 				return false;
 			}
 			$connection->addAttribute("ID", $id);
+			$connection->addAttribute("new_type", $typeID);
 		}
 		//Get the source nodes
 		$children = $conn->children();
