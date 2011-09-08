@@ -414,6 +414,7 @@ package Model
 		protected function processSourceNode(obj:ConnectionValueObject, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
 			var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.connID];
 			for each(var argElements:SourcenodeValueObject in obj.sourcenodes){
+				//node read in the current update
 				if(nodeHash.hasOwnProperty(argElements.nodeID)){
 					if(StatementModel(nodeHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
@@ -426,7 +427,7 @@ package Model
 						}
 					}
 				}
-				else{ //read earlier
+				else{ //read earlier and hence in the global hash
 					if(StatementModel(panelListHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
 						StatementModel(panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;

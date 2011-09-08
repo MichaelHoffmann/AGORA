@@ -45,6 +45,8 @@ package Model
 		
 		
 		private var addReasonService:HTTPService;
+		private var updateConnectionService:HTTPService;
+		
 		
 		public function ArgumentTypeModel(target:IEventDispatcher=null)
 		{
@@ -56,6 +58,11 @@ package Model
 			addReasonService.url = AGORAParameters.getInstance().insertURL;
 			addReasonService.addEventListener(ResultEvent.RESULT, addReasonServiceResult);
 			addReasonService.addEventListener(FaultEvent.FAULT, onFault);
+			
+			updateConnectionService = new HTTPService;
+			updateConnectionService.url = AGORAParameters.getInstance().insertURL;
+			updateConnectionService.addEventListener(ResultEvent.RESULT, updateConnectionServiceResult);
+			updateConnectionService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			
 			
@@ -224,7 +231,7 @@ package Model
 			
 			inputXML.appendChild(reasonXML);
 			
-			var connectionXML:XML = <connection ID={ID} type="MPifthen" targetNodeID={claimModel.ID} x={xgrid} y={ygrid}>
+			var connectionXML:XML = <connection ID={ID} type="MPifthen" targetnodeID={claimModel.ID} x={xgrid} y={ygrid}>
 										<sourcenode TID={7} nodeTID="3" />
 									</connection>;
 			
@@ -251,7 +258,7 @@ package Model
 		
 		//-------------------------- Generic Fault method ----------------//
 		protected function onFault(event:FaultEvent):void{
-			
+			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));		
 		}
 		
 		//-------------------------- other public methods -----------------//
@@ -284,10 +291,23 @@ package Model
 		}
 		
 		
+		public function getXML():XML{
+			var inputXML:XML = <connection ID={ID} type={dbType} targetNodeID={claimModel.ID} x={xgrid} y={ygrid} />;
+			return inputXML;
+		}
+		
 		
 		//-------------------------- Update Connection ---------------------//
 		public function updateConnection():void{
-			
+			var inputXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
+			inputXML.appendChild(getXML());
+			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			trace(inputXML.toXMLString());
+			updateConnectionService.send({uid: usm.uid, pass_hash: usm.passHash, xml: inputXML});
+		}
+		
+		protected function updateConnectionServiceResult(event:ResultEvent):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SAVED, null, this));
 		}
 		
 		//-------------------------- Creation mehtods ----------------------//

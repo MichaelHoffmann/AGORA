@@ -287,6 +287,7 @@ package Controller
 			var argumentTypeModel:ArgumentTypeModel = argumentTypeModelAddedEvent.eventData as ArgumentTypeModel;
 			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDED, onReasonAdded);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
+			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVED, onArgumentSaved);
 		}
 		
 		//------------------ Handling events from schemeSelector ------//
@@ -341,11 +342,12 @@ package Controller
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 			switch(scheme){
 				case AGORAParameters.getInstance().DIS_SYLL:
-					//argSchemeSelector.visible = false;
+					CursorManager.setBusyCursor();
 					argumentTypeModel.updateConnection();
 					break;
 				case AGORAParameters.getInstance().NOT_ALL_SYLL:
-					//argSchemeSelector.visible = false;
+					//make cursor busy
+					CursorManager.setBusyCursor();
 					argumentTypeModel.updateConnection();
 					break;
 			}
@@ -354,32 +356,37 @@ package Controller
 		
 		public function setSchemeLanguageType(argSchemeSelector:ArgSelector, language:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
-			if(argumentTypeModel.language != AGORAParameters.getInstance().MOD_TOL){
-				//argSchemeSelector.visible = false;
+			if(argumentTypeModel.language != AGORAParameters.getInstance().ONLY_IF || argumentTypeModel.reasonModels.length == 1){
+				CursorManager.setBusyCursor();
 				argumentTypeModel.updateConnection();
-			}
-			else{
-				if(argumentTypeModel.reasonModels.length == 1){
-					//argSchemeSelector.visible = false;
-					argumentTypeModel.updateConnection();	
-				}
 			}
 		}
 		
 		public function setSchemeLanguageOptionType(argSchemeSelector:ArgSelector, option:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			//make busy cursor
+			CursorManager.setBusyCursor();
 			argumentTypeModel.updateConnection();
 		}
 		
 		//------------------- Scheme Update Functions -----------------//
 		protected function onArgumentSchemeSet(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			//argumentTypeModel.logicClass
 		}
 		
+		protected function onArgumentSaved(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
+			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
+			argumentSelector.visible = false;
+		}
+		
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
 			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
 		
