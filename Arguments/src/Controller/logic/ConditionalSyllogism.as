@@ -16,6 +16,8 @@ package Controller.logic
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	
+	import classes.Language;
+	
 	public class ConditionalSyllogism extends ParentArg
 	{		
 		private static var instance:ConditionalSyllogism;
@@ -52,10 +54,12 @@ package Controller.logic
 			
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
-					inferenceModel.statement.text = "If " + inferenceModel.statements[0].text + ", then " + inferenceModel.statements[1].text;
+					inferenceModel.statement.text = Language.lookup("ArgIfCap") + inferenceModel.statements[0].text + 
+						"," + Language.lookup("ArgThen") + inferenceModel.statements[1].text;
 					break;
 				case langTypes[1]:
-					inferenceModel.statement.text = inferenceModel.statements[0].text + " implies " + inferenceModel.statements[1].text;
+					inferenceModel.statement.text = inferenceModel.statements[0].text + Language.lookup("ArgImplies") +
+						inferenceModel.statements[1].text;
 			}
 		}
 		
