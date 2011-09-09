@@ -1,6 +1,7 @@
 package Controller
 {
 	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.LogicFetcher;
 	import Controller.logic.ParentArg;
 	
 	import Events.AGORAEvent;
@@ -29,7 +30,10 @@ package Controller
 	import mx.events.MenuEvent;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
+	import mx.skins.spark.DefaultButtonSkin;
 	import mx.states.State;
+	
+	import org.osmf.layout.AbsoluteLayoutFacet;
 	
 	public class ArgumentController
 	{
@@ -48,6 +52,7 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
+			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_TYPE_ADDED, setArgumentTypeModelEventListeners);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -56,6 +61,23 @@ package Controller
 				instance = new ArgumentController(new SingletonEnforcer);
 			}
 			return instance;
+		}
+		
+		//--------------------- Other public function -------------------//
+		public function removeOption(event:AGORAEvent):void{
+			var argumentPanel:ArgumentPanel = event.eventData as ArgumentPanel;
+			if(argumentPanel.branchControl != null){
+				try{
+					FlexGlobals.topLevelApplication.map.agoraMap.removeChild(argumentPanel.branchControl);
+					//this will not be called again, and 
+					//GC will clean the option component
+					argumentPanel.branchControl = null;
+				}catch(error:Error){
+					//clicking on the Option component itself may remove 
+					//it from map
+					trace("Option component must have already been removed");
+				}
+			}
 		}
 		
 		//---------------------Creating a New Map-----------------------//
@@ -109,11 +131,11 @@ package Controller
 				//Find the last grid
 				//Find out the inference
 				var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
-				var inference:ArgumentPanel = this.model.agoraMapModel.panelListHash[inferenceModel.ID];
+				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
 				var xgridInference:int = (inference.x + inference.height) / AGORAParameters.getInstance().gridWidth + 1;
 				//find out hte last reason
 				var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
-				var reason:ArgumentPanel = this.model.agoraMapModel.panelListHash[reasonModel.ID];
+				var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
 				//find the last grid
 				var xgridReason:int = (reason.x + reason.height ) / AGORAParameters.getInstance().gridWidth + 1;
 				//compare and figure out the max
@@ -125,19 +147,31 @@ package Controller
 			model.addSupportingArgument(nxgrid);
 		}
 		
+		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			LoadController.getInstance().fetchMapData(); 
 		}
 		
 		//------------------ Adding a Reason -------------------------------------//
 		public function addReason(argumentTypeModel:ArgumentTypeModel):void{
-			
+			var x:int;
+			var y:int;
+			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ID];
+			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 1;
+			y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
+			argumentTypeModel.addReason(x, y);
+		}
+		
+		protected function onReasonAdded(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		//----------------- Construct Argument -----------------------------//
 		public function constructArgument(argumentTypeModel:ArgumentTypeModel):void{
-			//make inference visible
-			argumentTypeModel.reasonsCompleted = true;
+			if(!argumentTypeModel.reasonsCompleted){
+				//make inference visible
+				argumentTypeModel.reasonsCompleted = true;
+			}
 			//get the scheme selector
 			var menuPanel:MenuPanel = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID];
 			var schemeSelector:ArgSelector = menuPanel.schemeSelector;
@@ -146,32 +180,35 @@ package Controller
 			if(argumentTypeModel.isLanguageTyped()){
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-			//if constructed by argument and first claim is being supported
+				//if constructed by argument and first claim is being supported
 			else if(AGORAModel.getInstance().agoraMapModel.mapConstructedFromArgument && argumentTypeModel.claimModel.firstClaim){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
-			
-			else if(argumentTypeModel.claimModel.firstClaim){
+				
+			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
-			
-			//if simple positive statement
+			else if(argumentTypeModel.claimModel.statements.length > 1){
+				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+					schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
+				}
+			}
+				//if simple positive statement
 			else if(!argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getPositiveArray();
 			}
-			//if simple negative statement
+				//if simple negative statement
 			else if(argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getNegativeArray();
 			}
-			//if positive implication
+				//if positive implication
 			else if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
 				schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
 			}
-			//if positive disjunction
+				//if positive disjunction
 			else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
 				schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
 			}
-			
 			//show the menu
 			schemeSelector.visible = true;
 		}
@@ -182,7 +219,7 @@ package Controller
 			var model:StatementModel = argumentPanel.model;
 			if(model.firstClaim){
 			}
-			//if reasons Completed
+				//if reasons Completed
 			else if(model.argumentTypeModel.reasonsCompleted){
 			}
 			else{
@@ -237,7 +274,7 @@ package Controller
 		}
 		
 		//------------------- configuration functions -----------------//
-		public function setEventListeners(statementAddedEvent:AGORAEvent):void{
+		protected function setEventListeners(statementAddedEvent:AGORAEvent):void{
 			//get the statement model
 			var statementModel:StatementModel = statementAddedEvent.eventData as StatementModel;
 			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLED,statementTypeToggled); 
@@ -246,9 +283,110 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
 		}
 		
+		protected function setArgumentTypeModelEventListeners(argumentTypeModelAddedEvent:AGORAEvent):void{
+			var argumentTypeModel:ArgumentTypeModel = argumentTypeModelAddedEvent.eventData as ArgumentTypeModel;
+			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDED, onReasonAdded);
+			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
+			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVED, onArgumentSaved);
+		}
+		
+		//------------------ Handling events from schemeSelector ------//
+		public function displayLanguageType(argSchemeSelector:ArgSelector, scheme:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			var logicClassController:ParentArg; 
+			//unlink if there had been a class already
+			if(argumentTypeModel.logicClass != null){
+				logicClassController = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				logicClassController.deleteLinks(argumentTypeModel);
+			}
+			//set the model's logical class
+			argumentTypeModel.logicClass = scheme;
+			logicClassController = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+			logicClassController.link(argumentTypeModel);
+			
+			//show language options or display text
+			if(logicClassController.hasLanguageOptions()){
+				if(argumentTypeModel.reasonModels.length > 1){
+					argSchemeSelector.typeSelector.dataProvider = logicClassController.expLangTypes;
+				}
+				else{
+					argSchemeSelector.typeSelector.dataProvider = logicClassController.langTypes;
+				}
+				argSchemeSelector.typeSelector.x = argSchemeSelector.mainSchemes.width;
+				argSchemeSelector.typeSelector.visible=true;
+			}
+			else{
+				argSchemeSelector.typeSelector.visible = false;
+				updateEnablerText(argSchemeSelector, null)
+			}
+		}
+		
+		public function updateEnablerText(argSchemeSelector:ArgSelector, language:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			argumentTypeModel.language = language;
+			if(argumentTypeModel.logicClass != null){
+				var logicClassController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				logicClassController.formText(argumentTypeModel);
+			}
+			else{
+				trace("This shouldn't get executed... Problem!");
+			}
+		}
+		
+		public function updateEnablerTextWithConjunctions(argSchemeSelector:ArgSelector, option:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			argumentTypeModel.lSubOption = option;
+		}
+		
+		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			switch(scheme){
+				case AGORAParameters.getInstance().DIS_SYLL:
+					CursorManager.setBusyCursor();
+					argumentTypeModel.updateConnection();
+					break;
+				case AGORAParameters.getInstance().NOT_ALL_SYLL:
+					//make cursor busy
+					CursorManager.setBusyCursor();
+					argumentTypeModel.updateConnection();
+					break;
+			}
+			
+		}
+		
+		public function setSchemeLanguageType(argSchemeSelector:ArgSelector, language:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			if(argumentTypeModel.language != AGORAParameters.getInstance().ONLY_IF || argumentTypeModel.reasonModels.length == 1){
+				CursorManager.setBusyCursor();
+				argumentTypeModel.updateConnection();
+			}
+		}
+		
+		public function setSchemeLanguageOptionType(argSchemeSelector:ArgSelector, option:String):void{
+			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+			//make busy cursor
+			CursorManager.setBusyCursor();
+			argumentTypeModel.updateConnection();
+		}
+		
+		//------------------- Scheme Update Functions -----------------//
+		protected function onArgumentSchemeSet(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
+			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+			//argumentTypeModel.logicClass
+		}
+		
+		protected function onArgumentSaved(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
+			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
+			argumentSelector.visible = false;
+		}
 		
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{
+			CursorManager.removeAllCursors();
 			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
 		

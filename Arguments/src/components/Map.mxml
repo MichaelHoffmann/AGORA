@@ -54,7 +54,7 @@
 	<fx:Script>
 		<![CDATA[
 			import Controller.LayoutController;
-	
+
 			import classes.UserData;
 			
 			import flash.display.*;

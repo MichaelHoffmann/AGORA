@@ -24,6 +24,7 @@ package ValueObjects
 					connID = connectionObject.connID;
 					type = connectionObject.type;
 					targetnode = connectionObject.targetnode;
+					
 					x = connectionObject.x;
 					y = connectionObject.y;
 					deleted = connectionObject.deleted == 1? true:false;

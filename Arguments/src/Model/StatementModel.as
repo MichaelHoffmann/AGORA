@@ -81,10 +81,7 @@ package Model
 			addArgumentService.addEventListener(ResultEvent.RESULT, onAddArgumentServiceResponse);
 			addArgumentService.addEventListener(FaultEvent.FAULT, onFault);
 			
-			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);
-			
-			
-			
+			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);			
 		}
 		
 		
@@ -183,7 +180,6 @@ package Model
 			}else{
 				return false;
 			}
-			
 		}
 		
 		public function get supportingArguments():Vector.<ArgumentTypeModel>
@@ -269,6 +265,15 @@ package Model
 			}
 			return null;
 		}
+	
+		//does not push new nodetextIDs
+		public function addTemporaryStatement():void{
+			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
+			simpleStatement.parent = this;
+			simpleStatement.ID = SimpleStatementModel.TEMPORARY;
+			simpleStatement.forwardList.push(statement);
+			statements.push(simpleStatement);
+		}
 		
 		//------------------ Toggle Statement Type ------------------------//
 		public function toggleType():void{
@@ -311,8 +316,11 @@ package Model
 			
 			addArgumentXML.appendChild(reasonNodeXML);
 			addArgumentXML.appendChild(inferenceXML);
-			addArgumentXML.appendChild(connectionXML);	
+			addArgumentXML.appendChild(connectionXML);
+			trace(addArgumentXML.toXMLString());
 			addArgumentService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:addArgumentXML.toXMLString()});
+			trace(AGORAModel.getInstance().userSessionModel.uid);
+			trace(AGORAModel.getInstance().userSessionModel.passHash);
 		}
 		
 		
@@ -339,7 +347,6 @@ package Model
 			}
 			
 			for each(var connection:ConnectionValueObject in map.connections){
-				
 				argumentTypeModel.ID = connection.connID;
 				argumentTypeModel.reasonsCompleted = false;
 			}
@@ -350,10 +357,13 @@ package Model
 				AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
 			}
 			
+			supportingArguments.push(argumentTypeModel);
+			
 			var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
 			
 			AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
 			AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
+			
 			
 			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
 			
@@ -383,6 +393,8 @@ package Model
 		//---------------------- Forming StatmentModels ---------------//
 		public static function createStatementFromObject(obj:NodeValueObject):StatementModel{
 			var statementModel:StatementModel;
+			//will always be false when called from
+			//the function that handles insert.php's response
 			if(obj.type == StatementModel.INFERENCE){
 				statementModel = new StatementModel(INFERENCE);
 			}else{

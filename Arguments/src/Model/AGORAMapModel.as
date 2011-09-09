@@ -47,8 +47,8 @@ package Model
 		
 		private var _statementWidth:int;
 		
-		
 		private var _mapConstructedFromArgument:Boolean;
+		
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
@@ -266,6 +266,10 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_ADDED, null, statementModel));
 		}
 		
+		public function newArgumentTypeModelAdded(argumentTypeModel:ArgumentTypeModel):void{
+			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_TYPE_ADDED, null, argumentTypeModel));
+		}
+		
 		//----------------------- Load New Data ----------------------------------------------//
 		public function loadMapModel():void{
 			loadMapService.send({map_id:ID.toString(),timestamp:timestamp});		
@@ -276,7 +280,7 @@ package Model
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
 			
-			try{
+			//try{
 				//update timestamp
 				timestamp = map.timestamp;
 				
@@ -317,12 +321,12 @@ package Model
 				}
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
 				
-			}
-			catch(error:Error){
-				trace(error.message);
-				trace("Error in reading update to Map");
-				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			}			
+			//}
+			//catch(error:Error){
+			//	trace(error.message);
+			//	trace("Error in reading update to Map");
+			//	dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+			//}			
 		}
 		
 		//---------------------- Process Node ---------------------------------------------------------//
@@ -379,20 +383,26 @@ package Model
 			var result:Boolean;
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
+					
 					if(!connectionListHash.hasOwnProperty(obj.connID)){
 						argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
+					
 					argumentTypeModel.dbType = obj.type;
+					
 					if(nodeHash.hasOwnProperty(obj.targetnode)){
 						argumentTypeModel.claimModel = nodeHash[obj.targetnode];
 					}
 					else{
 						argumentTypeModel.claimModel = panelListHash[obj.targetnode];
 					}
+					
 					argumentTypeModel.xgrid = obj.x;
 					argumentTypeModel.ygrid = obj.y;
+				
+					
 					connectionsHash[obj.connID] = argumentTypeModel;
 					processSourceNode(obj, connectionsHash, nodeHash);	
 				}
@@ -404,6 +414,7 @@ package Model
 		protected function processSourceNode(obj:ConnectionValueObject, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
 			var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.connID];
 			for each(var argElements:SourcenodeValueObject in obj.sourcenodes){
+				//node read in the current update
 				if(nodeHash.hasOwnProperty(argElements.nodeID)){
 					if(StatementModel(nodeHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
@@ -416,7 +427,7 @@ package Model
 						}
 					}
 				}
-				else{ //read earlier
+				else{ //read earlier and hence in the global hash
 					if(StatementModel(panelListHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
 						argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
 						StatementModel(panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
@@ -439,13 +450,17 @@ package Model
 					//fetch simpleStatementModel from Dictionary
 					if(textboxHash.hasOwnProperty(obj.ID)){
 						simpleStatement = textboxHash[obj.ID];
-						simpleStatement.text = obj.text;
 						if(obj.text == SimpleStatementModel.DEPENDENT_TEXT){
 							simpleStatement.hasOwn = false;
+						}
+						else{
+							simpleStatement.hasOwn = true;
 						}
 					}	
 					else{
 						simpleStatement = textboxListHash[obj.ID];
+					}
+					if(simpleStatement.hasOwn){
 						simpleStatement.text = obj.text;
 					}
 				}

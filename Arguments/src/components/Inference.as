@@ -33,6 +33,9 @@ package components
 	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
 	
+	
+	//This class is no longer used.
+	//This has been merged with ArgumentPanel
 	public class Inference extends ArgumentPanel
 	{
 		

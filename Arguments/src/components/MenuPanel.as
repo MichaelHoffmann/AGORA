@@ -21,8 +21,11 @@ package components
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
+	import Controller.ArgumentController;
 	
-import Model.ArgumentTypeModel;
+	import Model.ArgumentTypeModel;
+	
+	import Model.ArgumentTypeModel;
 
 	import flash.events.MouseEvent;
 	
@@ -46,7 +49,6 @@ import Model.ArgumentTypeModel;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
-		public var inference:Inference;
 		
 		
 		private var _schemeSelector:ArgSelector;
@@ -58,36 +60,62 @@ import Model.ArgumentTypeModel;
 			width = 150;
 			this.setStyle("chromeColor",uint("0xdddddd"));
 		}
-
-
+		
+		
 		public function get schemeSelector():ArgSelector
 		{
 			return _schemeSelector;
 		}
-
+		
 		public function set schemeSelector(value:ArgSelector):void
 		{
 			_schemeSelector = value;
 		}
-
+		
 		public function get model():ArgumentTypeModel
 		{
 			return _model;
 		}
-
+		
 		public function set model(value:ArgumentTypeModel):void
 		{
 			_model = value;
 			BindingUtils.bindSetter(this.setX, model, "xgrid");
 			BindingUtils.bindSetter(this.setY, model, "ygrid");
+			BindingUtils.bindSetter(this.setSchemeText, model, "logicClass");
+			
 		}
-
+		
 		//------------------ Bind Setters --------------------------//
+		//Buttons must not be enabled when the user is still constructing
+		//the argument
 		protected function enableAddReason(value:Boolean):void{
-			addReasonBtn.enabled = value;
+			//if(value && schemeSelector.visible == false){
+				addReasonBtn.enabled = value;	
+			//}
 		}
+		
 		protected function enableChangeScheme(value:Boolean):void{
 			changeSchemeBtn.enabled = value;	
+		}
+		
+		protected function setSchemeText(value:String):void{
+			//This should happen only after changeSchemeBtn is created
+			if(changeSchemeBtn){
+				if(value == null){
+					changeSchemeBtn.label = "Scheme";
+				}else{
+					changeSchemeBtn.label = value;
+				}
+			}
+		}
+		
+		//---------- Event Handlers ---------------------------------//
+		protected function onAddReasonClicked(event:MouseEvent):void{
+			ArgumentController.getInstance().addReason(model);
+		}
+		protected function onChangeSchemeClicked(event:MouseEvent):void{
+			ArgumentController.getInstance().constructArgument(model);
 		}
 		
 		//------------------- Framework methods---------------------//
@@ -114,11 +142,15 @@ import Model.ArgumentTypeModel;
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			
+			
+			addReasonBtn.addEventListener(MouseEvent.CLICK, onAddReasonClicked);
+			changeSchemeBtn.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);
+			
 			//set bind setters
 			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");
 			BindingUtils.bindSetter(enableChangeScheme, model, "reasonsCompleted");
 		}
-				
+		
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{

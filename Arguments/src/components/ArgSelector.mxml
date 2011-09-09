@@ -20,7 +20,8 @@
 -->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400"
+		 creationComplete="addEventHandlers(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -59,16 +60,18 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.ArgumentController;
+			import Controller.logic.*;
+			
 			import Model.ArgumentTypeModel;
 			
 			import flash.events.Event;
 			import flash.events.MouseEvent;
 			
-			import Controller.logic.*;
-			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 		
 			private var _languageTypes:Array;
@@ -145,6 +148,47 @@
 				y = value;
 			}
 			
+			//----------------- Event Handlers --------------------------------------------//
+			protected function addEventHandlers(event:FlexEvent):void{
+				mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER, onSchemeItemRollOver);
+				typeSelector.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageTypeItemRollOver);
+				andor.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageSubOptionsItemRollOver);
+				mainSchemes.addEventListener(ListEvent.ITEM_CLICK, onSchemeItemClicked);
+				typeSelector.addEventListener(ListEvent.ITEM_CLICK, onLanguageTypeItemClicked);
+				andor.addEventListener(ListEvent.ITEM_CLICK, onOptionsItemClicked);
+				
+			}
+			
+			protected function onSchemeItemRollOver(event:ListEvent):void{
+				var scheme:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().displayLanguageType(this, scheme);
+			}
+			
+			protected function onLanguageTypeItemRollOver(event:ListEvent):void{
+				var language:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().updateEnablerText(this, language);
+			}
+			
+			protected function onLanguageSubOptionsItemRollOver(event:ListEvent):void{
+				var option:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().updateEnablerTextWithConjunctions(this, option);
+			}
+			
+			protected function onSchemeItemClicked(event:ListEvent):void{
+				var scheme:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().setSchemeType(this, scheme);
+			}
+			
+			protected function onLanguageTypeItemClicked(event:ListEvent):void{
+				var language:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().setSchemeLanguageType(this, language);
+			}
+			
+			protected function onOptionsItemClicked(event:ListEvent):void{
+				var option:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().setSchemeLanguageOptionType(this, option);
+			}
+		
 		]]>
 	</fx:Script>
 </s:Group>

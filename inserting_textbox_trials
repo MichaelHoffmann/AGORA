@@ -1,0 +1,3 @@
+http://agora.gatech.edu/dev/insert.php?uid=24&pass_hash=fef4af315052d1502f7eed683b920ef0&xml=<map id="0"></map>
+<map id="1420"><textbox TID="1" text="FOO"/><node TID="1" Type="Standard" x="2" y="3" is_positive="1" typed="0"><nodetext TID="1" textboxTID="2" /></node></map>
+<map id="1420"><textbox TID="1" text="Bar" /><node ID="4529" Type="Standard" x="2" y="3" is_positive="1" typed="0"><nodetext ID="7576" textboxID="7700"/> <nodetext TID="2" textboxTID="1" /></node></map>

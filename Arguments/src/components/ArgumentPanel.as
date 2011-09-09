@@ -2,6 +2,10 @@ package components
 {
 	import Controller.ArgumentController;
 	import Controller.ViewController;
+	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.ParentArg;
+	
+	import Events.AGORAEvent;
 	
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
@@ -20,9 +24,6 @@ package components
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
-	
-	import Controller.logic.ConditionalSyllogism;
-	import Controller.logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -128,7 +129,7 @@ package components
 		//Containers
 		//The logical container that holds the text elements of the statement
 		//that is, input boxes and displayTxt
-		public var group:Group;
+		public var group:VGroup;
 		//multistatement group
 		public var msVGroup:VGroup;
 		//The enabler which makes this statements support a claim
@@ -200,6 +201,7 @@ package components
 		{
 			_statementNegated = value;
 			statementNegatedDF = true;
+			stateDF = true;
 			
 			invalidateProperties();
 			invalidateSize();
@@ -333,6 +335,7 @@ package components
 		protected function lblClicked(event:MouseEvent):void
 		{
 			state = EDIT;
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
@@ -368,10 +371,6 @@ package components
 			}
 		}
 		
-		public function removeEventListeners():void
-		{
-			
-		}
 		
 		protected function optionClicked(event:MouseEvent):void
 		{
@@ -380,13 +379,13 @@ package components
 		protected function hideOption(event:KeyboardEvent):void
 		{
 		}
-	
+		
 		protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
-			 if(menuEvent.label == "add another reason"){
-				 ArgumentController.getInstance().addReason(model.argumentTypeModel);
-			 }else{
-				 ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
-			 }
+			if(menuEvent.label == "add another reason"){
+				ArgumentController.getInstance().addReason(model.argumentTypeModel);
+			}else{
+				ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+			}
 		}
 		
 		public function showMenu():void
@@ -399,17 +398,33 @@ package components
 			menu.show(globalPosition.x,globalPosition.y);	
 		}
 		
-	
+		
 		
 		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
 			if(value == null){
+				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.firstClaim){
 						displayTxt.text = "[Enter your claim here]";
 					}else{
 						displayTxt.text = "[Enter your reason here]";
 					}
+				}
+				else if(model.statementFunction == StatementModel.INFERENCE){
+					displayTxt.text = "[Choose an argument scheme and language type to form the inference text]";
+				}
+			}
+			else if(value.split(" ").join("").length == 0){
+				if(model.statementFunction == StatementModel.STATEMENT){
+					if(model.firstClaim){
+						displayTxt.text = "[Enter your claim here]";
+					}else{
+						displayTxt.text = "[Enter your reason here]";
+					}
+				}else if(model.statementFunction == StatementModel.INFERENCE){
+					displayTxt.text =  "[Choose an argument scheme and language type to form the inference text]";
+				}
 			}
 			else{
 				displayTxt.text = value;
@@ -495,10 +510,10 @@ package components
 			
 			negatedLbl = new Label;
 			negatedLbl.text = "It is not the case that";
-			negatedLbl.visible = false;
+			negatedLbl.visible = true;
 			
 			
-			group = new Group;
+			group = new VGroup;
 			addElement(group);
 			group.addElement(displayTxt);
 			
@@ -524,7 +539,9 @@ package components
 			if(!(panelType == StatementModel.INFERENCE)){
 				var dta:DynamicTextArea;
 				var simpleStatement:SimpleStatementModel;
+				statementsAddedDF = true;
 				//check if new statements were added
+				//associate every statement in statments vector with a new dynamc text area
 				if(statementsAddedDF){
 					//clear flag
 					statementsAddedDF = false;
@@ -533,7 +550,7 @@ package components
 						try{
 							group.removeElement(dta);
 						}catch(error:Error){
-							trace("error: Trying to remove an element that is not present");
+							//trace("error: Trying to remove an element that is not present");
 						}
 					}
 					inputs.splice(0,inputs.length);
@@ -559,6 +576,7 @@ package components
 					}
 				}
 				
+				//Handle state change between DISPLAY AND EDIT.
 				if(stateDF){
 					stateDF = false;
 					if(state == EDIT){
@@ -580,12 +598,18 @@ package components
 						//remove buttons
 						btnG.removeAllElements();
 						//add label
+						//add the changed text.
+						//needed in case if the 
+						//node was changed from positive
+						//to negative
+						setDisplayStatement(model.statement.text);
 						group.addElement(displayTxt);
 						//add button
 						btnG.addElement(bottomHG);
 					}
 				}
 			}
+				//If the statement is an enabler.
 			else{
 				//remove all textboxes
 				inputs.splice(0,inputs.length);
@@ -609,6 +633,7 @@ package components
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
+			//Draw the top left box for moving stuff
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			topArea.graphics.beginFill(0xdddddd,1.0);
 			topArea.graphics.drawRect(0,0,40,40);		
