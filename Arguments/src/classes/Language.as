@@ -65,7 +65,7 @@ package classes
 			var lang:XMLList = lbl.descendants(language);
 			var output:String = lang.attribute("text");
 			if(!output){
-				output = "error | ошибка | fehler --- There was a problem getting the text for this item. The label was: " + label;
+				output = "error | ошибка | Fehler --- There was a problem getting the text for this item. The label was: " + label;
 			}
 			trace("Output is: " + output);
 			return output;
