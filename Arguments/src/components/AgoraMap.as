@@ -70,7 +70,7 @@ package components
 		
 		
 		protected function onMapTimer(event:TimerEvent):void{
-			LoadController.getInstance().fetchMapData();
+			//LoadController.getInstance().fetchMapData();
 		}
 		
 		public function getGlobalCoordinates(point:Point):Point

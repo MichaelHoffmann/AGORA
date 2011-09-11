@@ -54,7 +54,7 @@ package Controller.logic
 					for(i=1; i<reasonModels.length; i++){
 						reasonText = reasonText + " and "  + reasonModels[i].statement.text;
 					}
-					output = "If " + reasonModels[0].statement.text;
+					output = "If " + reasonText; 
 					output = output + ", then " + claimModel.statement.text;
 					break;
 				case langTypes[1]:
@@ -62,12 +62,12 @@ package Controller.logic
 					output = reasonText + " implies " + claimModel.statement.text;
 					break;
 				case langTypes[2]:
-						output = "Whenever ";
-						reasonText = reasonModels[0].statement.text;
-						for(i=1; i<reasonModels.length; i++){
-							reasonText = reasonText + " and " + reasonModels[0].statement.text;
-						}
-						output = output + reasonText + ", " + claimModel.statement.text; 
+					output = "Whenever ";
+					reasonText = reasonModels[0].statement.text;
+					for(i=1; i<reasonModels.length; i++){
+						reasonText = reasonText + " and " + reasonModels[i].statement.text;
+					}
+					output = output + reasonText + ", " + claimModel.statement.text; 
 					break;
 				case langTypes[3]:
 					reasonText =  reasonModels[0].statement.text ; 
@@ -90,8 +90,26 @@ package Controller.logic
 					output = claimModel.statement.text + " is a necessary condition for " + reasonText;
 					break;
 			}
+			//trace(reasonText);
 			argumentTypeModel.inferenceModel.statements[0].text = reasonText;
 			argumentTypeModel.inferenceModel.statements[1].text = argumentTypeModel.claimModel.statement.text;
+			if(argumentTypeModel.inferenceModel.statement.forwardList.length > 0){
+				trace("Very good observation");
+				trace(argumentTypeModel.inferenceModel.statement.forwardList[0] == argumentTypeModel.inferenceModel.statements[0]);
+				trace(argumentTypeModel.inferenceModel.statement.forwardList[0].ID == argumentTypeModel.inferenceModel.statements[0].ID);
+				trace(argumentTypeModel.inferenceModel.statement.forwardList[0].ID);
+				trace(argumentTypeModel.inferenceModel.statement.parent.ID);
+				trace('-----');
+				for(i=0; i < argumentTypeModel.inferenceModel.nodeTextIDs.length; i++){
+					trace(argumentTypeModel.inferenceModel.nodeTextIDs[i]);
+					trace(argumentTypeModel.inferenceModel.statements[i].ID);
+					
+				}
+			}
+			
+			else{
+				trace('did not');
+			}
 			argumentTypeModel.inferenceModel.statement.text = output;
 		}
 		
@@ -105,13 +123,11 @@ package Controller.logic
 			inferenceModel.connectingString = StatementModel.IMPLICATION;
 			
 			//push inference into claim's statement
-			var inferenceStatement:SimpleStatementModel = argumentTypeModel.inferenceModel.statements[argumentTypeModel.reasonModels.length - 1];
-			//claimModel.statement.forwardList.push(inferenceStatement);
+			var inferenceStatement:SimpleStatementModel = argumentTypeModel.inferenceModel.statements[1];
 			claimModel.statement.addDependentStatement(inferenceStatement);
 			//push inference into reasons statement
 			for(var i:int=0; i<reasonModels.length; i++){
 				var reason:StatementModel = reasonModels[i];
-				//reason.statement.forwardList.push(inferenceModel.statements[0]);
 				reason.statement.addDependentStatement(inferenceModel.statements[0]);
 			}
 		}
@@ -119,17 +135,17 @@ package Controller.logic
 		override public function deleteLinks(argumentTypeModel:ArgumentTypeModel):void{
 			//remove inference's dependence on claim
 			var statement:SimpleStatementModel = argumentTypeModel.claimModel.statement;
-			var modelToBeRemoved:SimpleStatementModel = argumentTypeModel.inferenceModel.statements[argumentTypeModel.reasonModels.length - 1];
+			var modelToBeRemoved:SimpleStatementModel = argumentTypeModel.inferenceModel.statements[1];
 			try{
 				removeDependence(statement, modelToBeRemoved);
 			}catch(error:Error){
 				trace("ModusPonens::deleteLinks:");
 				trace(error.message);
 			}
-		
+			
 			for(var i:int = 0; i < argumentTypeModel.reasonModels.length; i++){
 				statement =  argumentTypeModel.reasonModels[i].statement;
-				modelToBeRemoved = argumentTypeModel.inferenceModel.statements[i];
+				modelToBeRemoved = argumentTypeModel.inferenceModel.statements[0];
 				removeDependence(statement, modelToBeRemoved);	
 			}
 		}

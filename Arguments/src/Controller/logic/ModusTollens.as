@@ -149,11 +149,13 @@ package Controller.logic
 			
 			inferenceModel.connectingString = StatementModel.IMPLICATION;
 			
-			claimModel.statement.forwardList.push(inferenceModel.statements[0]);
+			//claimModel.statement.forwardList.push(inferenceModel.statements[0]);
+			claimModel.statement.addDependentStatement(inferenceModel.statements[0]);
 		
 			for each(var reason:StatementModel in reasonModels){
 				reason.negated = true;
-				reason.statement.forwardList.push(inferenceModel.statements[1]);
+				//reason.statement.forwardList.push(inferenceModel.statements[1]);
+				reason.statement.addDependentStatement(inferenceModel.statements[1]);
 			}
 		}
 		

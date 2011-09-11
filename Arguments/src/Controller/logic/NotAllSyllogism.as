@@ -21,10 +21,6 @@ package Controller.logic
 		private static var instance:NotAllSyllogism;
 		public function NotAllSyllogism()
 		{
-			//myname = NOT_ALL_SYLL;
-			//_dbType = "NotAllSyl";
-			//langTypes = ["Not-all"]; 	// the sole language type here is expandable. always with And.
-			//sLanguageExp = true;
 			label = AGORAParameters.getInstance().NOT_ALL_SYLL;
 		}
 		
@@ -57,8 +53,6 @@ package Controller.logic
 		}
 		
 		override public function deleteLinks(argumentTypeModel:ArgumentTypeModel):void{
-			
-			
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
@@ -109,11 +103,15 @@ package Controller.logic
 				claimModel.negated = true;
 			}
 			
-			//connect the claim's statement to the finference's first statement
-			claimModel.statement.forwardList.push(inferenceModel.statements[0]);
+			//connect the claim's statement to the inference's first statement
+			//claimModel.statement.forwardList.push(inferenceModel.statements[0]);
+			claimModel.statement.addDependentStatement(inferenceModel.statements[0]);
 			
 			//connect the reason's statement to the infernece's second statement
-			reasonModels[0].statement.forwardList.push(inferenceModel.statements[1]);
+			//reasonModels[0].statement.forwardList.push(inferenceModel.statements[1]);
+			for(var i:int=0; i<reasonModels.length; i++){
+				reasonModels[i].statement.addDependentStatement(inferenceModel.statements[i+1]);
+			}
 		}
 		
 	

@@ -84,9 +84,10 @@ package Controller.logic
 			//make reason negative
 			reasonModels[0].negated = true;
 			
-			
 			claimModel.statement.forwardList.push(inferenceModel.statements[0]);
-			reasonModels[0].statement.forwardList.push(inferenceModel.statements[1]);
+			for(var i:int=0; i<reasonModels.length; i++){
+				reasonModels[i].statement.forwardList.push(inferenceModel.statements[i+1]);	
+			}
 		}
 		
 /*		

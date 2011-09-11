@@ -97,7 +97,7 @@ package Model
 			dbSchemeHashMap[agoraParameters.MOD_PON] = agoraParameters.dbMP;
 			dbSchemeHashMap[agoraParameters.MOD_TOL] = agoraParameters.dbMT;
 			dbSchemeHashMap[agoraParameters.DIS_SYLL] = agoraParameters.dbDisjSyl;
-			dbSchemeHashMap[agoraParameters.COND_SYLL] = agoraParameters.dbCD;
+			dbSchemeHashMap[agoraParameters.COND_SYLL] = agoraParameters.dbCS;
 			dbSchemeHashMap[agoraParameters.NOT_ALL_SYLL] = agoraParameters.dbNotAllSyll;
 			
 			dbLanguageHashMap = new Dictionary;

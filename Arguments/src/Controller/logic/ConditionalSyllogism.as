@@ -40,6 +40,10 @@ package Controller.logic
 			return instance;
 		}
 		
+		override public function getLabel():String{
+			return AGORAParameters.getInstance().COND_SYLL;
+		}
+		
 		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
 			var output:String = "";
 			var reasonText:String = "";
@@ -118,21 +122,22 @@ package Controller.logic
 			var argumentPanel:ArgumentPanel;
 			inferenceModel.connectingString = StatementModel.IMPLICATION;
 			claimModel.connectingString = StatementModel.IMPLICATION;
-			reasonModels[i].connectingString = StatementModel.IMPLICATION;
+			//reasonModels[i].connectingString = StatementModel.IMPLICATION;
 			
-			for(i = 0; i<reasonModels.length; i++){
-				
-			}
-			
+		
 			if(claimModel.firstClaim && claimModel.statements.length < 2){
 				claimModel.addTemporaryStatement();
 				claimModel.statements[1].text = "T";
 			}
-			
-			if(reasonModels[0].statements.length < 2){
-				reasonModels[0].addTemporaryStatement();
-				reasonModels[0].statements[1].text = "W";
+			for(i = 0; i<reasonModels.length; i++){
+				if(reasonModels[i].statements.length < 2){
+					reasonModels[i].addTemporaryStatement();
+					reasonModels[i].statements[1].text = "W" + i;
+					reasonModels[i].connectingString = StatementModel.IMPLICATION;
+				}
 			}
+			
+		
 			
 			//connect the conclusion of the claim
 			//to the conclusion of the inference
@@ -144,12 +149,22 @@ package Controller.logic
 			//connect subsequent reasons
 			for(i=0; i<reasonModels.length -1; i++){
 				reasonModels[i].statements[1].addDependentStatement(reasonModels[i+1].statements[0]);
-				//
 			}
 			//connect last reason's conclusion to the 
 			//inference's premise
 			reasonModels[reasonModels.length - 1].statements[1].addDependentStatement(inferenceModel.statements[0]);
-			reasonModels[reasonModels.length - 1].connectingString = StatementModel.IMPLICATION;
+			
+		
+			
+			//update linked texts
+			claimModel.statements[0].updateStatementTexts();
+			claimModel.statements[1].updateStatementTexts();
+			for each(var reasonModel:StatementModel in reasonModels){
+				reasonModel.statements[0].updateStatementTexts();
+				reasonModel.statements[1].updateStatementTexts();
+				reasonModel.connectingString = StatementModel.IMPLICATION;
+			}
+			
 		}
 		
 		

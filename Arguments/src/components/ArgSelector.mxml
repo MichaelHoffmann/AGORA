@@ -128,7 +128,16 @@
 				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
 				y = value;
 			}
-			
+
+			//----------------- Other public functions -----------------------------------//
+			public function show():void{
+				this.visible = true;
+			}
+			public function hide():void{
+				typeSelector.visible = false;
+				andor.visible = false;
+				this.visible = false;
+			}
 			//----------------- Event Handlers --------------------------------------------//
 			protected function addEventHandlers(event:FlexEvent):void{
 				mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER, onSchemeItemRollOver);

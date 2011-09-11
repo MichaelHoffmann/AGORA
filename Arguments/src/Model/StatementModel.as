@@ -332,17 +332,6 @@ package Model
 			
 			for each(var nodeObject:NodeValueObject in map.nodeObjects){
 				statementModel = StatementModel.createStatementFromObject(nodeObject);
-				/*
-				for each(var nodetext:NodetextValueObject in nodeObject.nodetexts){
-				statementModel.nodeTextIDs.push(nodetext.ID);
-				var simpleStatementModel:SimpleStatementModel = new SimpleStatementModel();
-				simpleStatementModel.ID = nodetext.textboxID;
-				simpleStatementModel.parent = statementModel;
-				simpleStatementModel.forwardList.push(statementModel.statement);
-				statementModel.statements.push(simpleStatementModel);
-				simpleStatementModelHash[simpleStatementModel.ID] = simpleStatementModel;
-				}
-				*/
 				statementModelHash[statementModel.ID] = statementModel;
 			}
 			
@@ -407,7 +396,7 @@ package Model
 		public function getXML():XML{
 			var xml:XML = <node></node>;
 			xml.@ID = ID;
-			xml.@Type = statementType;
+			xml.@Type = statementFunction == StatementModel.INFERENCE? StatementModel.INFERENCE: statementType;
 			xml.@typed = 0;
 			xml.@is_positive = negated? 0 : 1;
 			xml.@x = xgrid;

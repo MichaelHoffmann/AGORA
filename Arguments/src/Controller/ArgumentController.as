@@ -53,6 +53,7 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
 			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_TYPE_ADDED, setArgumentTypeModelEventListeners);
+			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -156,6 +157,20 @@ package Controller
 		public function addReason(argumentTypeModel:ArgumentTypeModel):void{
 			var x:int;
 			var y:int;
+			var flag:int = 0;
+			if(argumentTypeModel.logicClass != null){
+				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				for each(var langType:String in logicController.expLangTypes){
+					if(langType == argumentTypeModel.language){
+						flag = 1;
+						break;
+					}
+				}
+			}
+			if(flag == 0){
+				Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
+				return;
+			}
 			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ID];
 			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 1;
 			y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
@@ -177,14 +192,13 @@ package Controller
 			var schemeSelector:ArgSelector = menuPanel.schemeSelector;
 			//Fill them up
 			//if constrained
-			if(argumentTypeModel.isLanguageTyped()){
+			if(argumentTypeModel.isTyped() && argumentTypeModel.logicClass != null){
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-				//if constructed by argument and first claim is being supported
-			else if(AGORAModel.getInstance().agoraMapModel.mapConstructedFromArgument && argumentTypeModel.claimModel.firstClaim){
-				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
+			
+			else if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-				
 			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
@@ -351,7 +365,6 @@ package Controller
 					argumentTypeModel.updateConnection();
 					break;
 			}
-			
 		}
 		
 		public function setSchemeLanguageType(argSchemeSelector:ArgSelector, language:String):void{
@@ -374,14 +387,22 @@ package Controller
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
-			//argumentTypeModel.logicClass
+			if(logicController != null){
+				logicController.link(argumentTypeModel);
+			}
 		}
 		
 		protected function onArgumentSaved(event:AGORAEvent):void{
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
-			argumentSelector.visible = false;
+			argumentSelector.hide();
+			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				logicController.deleteLinks(argumentTypeModel);
+				AGORAModel.getInstance().agoraMapModel.loadMapModel();
+			}
+		
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

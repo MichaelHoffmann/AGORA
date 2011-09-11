@@ -279,7 +279,6 @@ package Model
 			trace('map loaded');
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
-			
 			//try{
 				//update timestamp
 				timestamp = map.timestamp;
@@ -339,6 +338,13 @@ package Model
 						statementModel = StatementModel.createStatementFromObject(nodeVO);
 					}else{
 						statementModel = panelListHash[nodeVO.ID];
+						if(statementModel.statementFunction == StatementModel.INFERENCE){
+							trace(statementModel.statements.length);
+							trace(statementModel.argumentTypeModel.logicClass);
+						}
+						else{
+							trace(this);
+						}
 					}
 					
 					if(nodeVO.type == StatementModel.INFERENCE){
@@ -366,14 +372,22 @@ package Model
 			for each(var nodetextVO:NodetextValueObject in nodeVO.nodetexts){
 				if(!statementModel.hasStatement(nodetextVO.textboxID)){
 					simpleStatement = new SimpleStatementModel;
-					simpleStatement.forwardList.push(statementModel.statement);
 					simpleStatement.ID = nodetextVO.textboxID;
+					//should not push statement into statements[i], if 
+					// the statement's parent is an Inference rule.
+					//This is because in the formtext function,
+					//both the statement and statements[i] are 
+					//modified simultaneously.
 					simpleStatement.parent = statementModel;
+					if(statementModel.statementFunction != StatementModel.INFERENCE){
+							//simpleStatement.forwardList.push(statementModel.statement);
+							simpleStatement.addDependentStatement(statementModel.statement);
+					}
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(nodetextVO.ID);
 					textboxHash[simpleStatement.ID] = simpleStatement;
-				}
-				
+					
+				}	
 			}
 			return true;
 		}
@@ -389,8 +403,8 @@ package Model
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
-					
-					argumentTypeModel.dbType = obj.type;
+					argumentTypeModel.dbType = obj.type;					
+					dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel));
 					
 					if(nodeHash.hasOwnProperty(obj.targetnode)){
 						argumentTypeModel.claimModel = nodeHash[obj.targetnode];

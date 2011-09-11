@@ -46,7 +46,9 @@ package Model
 		
 		private var addReasonService:HTTPService;
 		private var updateConnectionService:HTTPService;
-		
+		//beware of using it simultaneously with two functions that repeatedly produce
+		//tids
+		private var tid:int;
 		
 		public function ArgumentTypeModel(target:IEventDispatcher=null)
 		{
@@ -207,7 +209,6 @@ package Model
 			
 			if(logicClass == null || logicClass.length == 0){
 				trace("ArgumentTypeModel::addReason: no logic class");
-				return;
 			}
 			
 			var inputXML:XML = 	<map ID={AGORAModel.getInstance().agoraMapModel.ID}>			
@@ -222,20 +223,33 @@ package Model
 			reasonXML = <node TID= "3" Type="Particular" typed="0" is_positive="1" x={x} y={y}>
 						</node>;
 			
-			
 			if(logicClass == AGORAParameters.getInstance().COND_SYLL){
 				reasonXML.appendChild(<nodetext TID="4" textboxTID="1" />);
 			}
 			
 			reasonXML.appendChild(<nodetext TID="5" textboxTID="2" />);
-			
 			inputXML.appendChild(reasonXML);
 			
-			var connectionXML:XML = <connection ID={ID} type="MPifthen" targetnodeID={claimModel.ID} x={xgrid} y={ygrid}>
+			var inferenceXML:XML = inferenceModel.getXML();
+			inferenceXML = getNodeTexts(inferenceModel, inferenceXML);
+			var nodetextXML:XML = <nodetext TID="11" textboxTID="10" />;
+			inferenceXML.appendChild(nodetextXML);
+			var textboxXMLInference:XML = <textbox TID="10" text={SimpleStatementModel.DEPENDENT_TEXT} />;
+			
+			
+			inputXML.appendChild(textboxXMLInference);
+			inputXML.appendChild(inferenceXML);
+			
+			
+			var connectionXML:XML = <connection ID={ID} type={(logicClass == null || logicClass.length == 0)? 'Unset':dbType} targetnodeID={claimModel.ID} x={xgrid} y={ygrid}>
 										<sourcenode TID={7} nodeTID="3" />
 									</connection>;
 			
 			inputXML.appendChild(connectionXML);
+			trace(inputXML.toXMLString());
+			
+			//add a textbox to the inference, if it's unset or if it's either 
+			//disjunctive syllogism or not-all syllogism
 			
 			var userModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			
@@ -247,14 +261,30 @@ package Model
 			var map:MapValueObject = new MapValueObject(event.result.map, true);
 			var statementModel:StatementModel;
 			for each(var nodeVO:NodeValueObject in map.nodeObjects){
-				statementModel = StatementModel.createStatementFromObject(nodeVO);
-				statementModel.argumentTypeModel = this;
-				AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
-				AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
-				reasonModels.push(statementModel);
+				if(!AGORAModel.getInstance().agoraMapModel.panelListHash.hasOwnProperty(nodeVO.ID)){
+					statementModel = StatementModel.createStatementFromObject(nodeVO);
+					statementModel.argumentTypeModel = this;
+					AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
+					AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
+					reasonModels.push(statementModel);		
+				}
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.REASON_ADDED, null, statementModel));
 		}
+		
+		private function getNodeTexts(statementModel:StatementModel, statementModelXML:XML):XML{
+			for(var i:int=0; i<statementModel.nodeTextIDs.length; i++){
+				var xml:XML = <nodetext  ID={statementModel.nodeTextIDs[i]} textboxID={statementModel.statements[i].ID} />;
+				if(statementModelXML != null){
+					statementModelXML.appendChild(xml);
+				}
+				else{
+					trace("Look into the variable");
+				}
+			}
+			
+			return statementModelXML;
+		} 
 		
 		//-------------------------- Generic Fault method ----------------//
 		protected function onFault(event:FaultEvent):void{
@@ -292,22 +322,48 @@ package Model
 		
 		
 		public function getXML():XML{
-			var inputXML:XML = <connection ID={ID} type={dbType} targetNodeID={claimModel.ID} x={xgrid} y={ygrid} />;
+			var inputXML:XML = <connection ID={ID} type={dbType} targetnodeID={claimModel.ID} x={xgrid} y={ygrid} />;
 			return inputXML;
 		}
 		
 		
 		//-------------------------- Update Connection ---------------------//
 		public function updateConnection():void{
-			var inputXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
+			var inputXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID}/>;
+			tid=1;
 			inputXML.appendChild(getXML());
-			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			
+			//convert temporary boxes to proper ones
+			if(logicClass == AGORAParameters.getInstance().COND_SYLL){
+				inputXML = substituteTemporaryBoxes(claimModel, inputXML);
+				for each(var reason:StatementModel in reasonModels){
+					inputXML = substituteTemporaryBoxes(reason, inputXML);
+				}
+			}
 			trace(inputXML.toXMLString());
+			trace(AGORAModel.getInstance().agoraMapModel.ID);
+			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			updateConnectionService.send({uid: usm.uid, pass_hash: usm.passHash, xml: inputXML});
 		}
 		
 		protected function updateConnectionServiceResult(event:ResultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SAVED, null, this));
+		}
+		
+		private function substituteTemporaryBoxes(statementModel:StatementModel, requestXML:XML):XML{
+			var outputXML:XML = statementModel.getXML();
+			for(var i:int=0; i<statementModel.statements.length; i++){
+				if(statementModel.statements[i].ID == SimpleStatementModel.TEMPORARY){
+					requestXML.appendChild(<textbox TID={tid} text={statementModel.statements[i].hasOwn? statementModel.statements[i].text:SimpleStatementModel.DEPENDENT_TEXT} />);
+					outputXML.appendChild(<nodetext TID={tid+1} textboxTID={tid} />	);
+				}
+				else{
+					outputXML.appendChild(<nodetext ID={statementModel.nodeTextIDs[i]} textboxID={statementModel.statements[i].ID} />);
+				}
+				tid = tid + 1;
+			}
+			requestXML.appendChild(outputXML);
+			return requestXML;
 		}
 		
 		//-------------------------- Creation mehtods ----------------------//
