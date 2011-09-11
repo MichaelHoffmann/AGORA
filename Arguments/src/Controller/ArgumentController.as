@@ -167,6 +167,9 @@ package Controller
 					}
 				}
 			}
+			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
+				flag = 1;
+			}
 			if(flag == 0){
 				Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
 				return;
@@ -187,6 +190,7 @@ package Controller
 				//make inference visible
 				argumentTypeModel.reasonsCompleted = true;
 			}
+			trace(argumentTypeModel.claimModel.statements.length);
 			//get the scheme selector
 			var menuPanel:MenuPanel = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID];
 			var schemeSelector:ArgSelector = menuPanel.schemeSelector;
@@ -203,9 +207,18 @@ package Controller
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
 			else if(argumentTypeModel.claimModel.statements.length > 1){
-				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+				//Allowing for constructive dilemma. Even for constructive dilemma
+				//a separate treatment is required
+				//It's not yet incorporated
+				//if positive implication
+				if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
 					schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
 				}
+				//if positive disjunction
+				else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
+					schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
+				}
+
 			}
 				//if simple positive statement
 			else if(!argumentTypeModel.claimModel.negated){
@@ -215,14 +228,9 @@ package Controller
 			else if(argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getNegativeArray();
 			}
-				//if positive implication
-			else if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
-				schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
-			}
-				//if positive disjunction
-			else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
-				schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
-			}
+				
+			
+				
 			//show the menu
 			schemeSelector.visible = true;
 		}
