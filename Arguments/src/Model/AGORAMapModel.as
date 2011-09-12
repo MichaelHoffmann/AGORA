@@ -510,7 +510,7 @@ package Model
 					}
 				}
 				else if(sm.statementFunction == StatementModel.INFERENCE){
-					requestXML = moveSupportingStatements(sm, 0, diffy, requestXML);
+					requestXML = moveSupportingStatements(sm, diffx, 0, requestXML);
 				}
 			}
 			
@@ -519,6 +519,7 @@ package Model
 		}
 		
 		protected function updatePositionServiceResult(event:ResultEvent):void{
+			trace(event.result.toXMLString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.POSITIONS_UPDATED, null, null));
 		}
 		

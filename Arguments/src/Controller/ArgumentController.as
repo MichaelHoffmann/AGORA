@@ -174,8 +174,8 @@ package Controller
 				Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
 				return;
 			}
-			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ID];
-			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 1;
+			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[LayoutController.getInstance().getBottomReason(argumentTypeModel).ID];
+			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 3;
 			y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
 			argumentTypeModel.addReason(x, y);
 		}
@@ -190,7 +190,6 @@ package Controller
 				//make inference visible
 				argumentTypeModel.reasonsCompleted = true;
 			}
-			trace(argumentTypeModel.claimModel.statements.length);
 			//get the scheme selector
 			var menuPanel:MenuPanel = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID];
 			var schemeSelector:ArgSelector = menuPanel.schemeSelector;
@@ -358,6 +357,9 @@ package Controller
 		public function updateEnablerTextWithConjunctions(argSchemeSelector:ArgSelector, option:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 			argumentTypeModel.lSubOption = option;
+			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+			logicController.formText(argumentTypeModel);
+			
 		}
 		
 		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{

@@ -186,9 +186,15 @@ package Model
 			var  dbLanguage:String = AGORAModel.getInstance().dbLanguageHashMap[language];
 			var  dbLanguageSubOption:String = "";
 			if(language == AGORAParameters.getInstance().ONLY_IF){
-				dbLanguageSubOption = AGORAParameters.getInstance().AND;
+				if(lSubOption == AGORAParameters.getInstance().AND){
+					return dbScheme + "onlyiffor";
+				}
+				else{
+					return dbScheme + "onlyif";
+				}
+				
 			}
-			return dbScheme + dbLanguage + dbLanguageSubOption;
+			return dbScheme + (dbLanguage==null?"":dbLanguage) + dbLanguageSubOption;
 		}
 		
 		//------------------------ adding a reason ------------------------//

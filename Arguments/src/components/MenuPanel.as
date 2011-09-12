@@ -131,12 +131,12 @@ package components
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{
-				var dInitiator:MenuPanel = mEvent.currentTarget.parent.parent.parent.parent.parent as MenuPanel;
+				var dInitiator:MenuPanel = this;//mEvent.currentTarget.parent.parent.parent.parent.parent as MenuPanel;
 				var ds:DragSource = new DragSource;
 				ds.addData(dInitiator.mouseX,"x");
 				ds.addData(dInitiator.mouseY,"y");
-				ds.addData(dInitiator.gridX,"gx");
-				ds.addData(dInitiator.gridY,"gy");
+				ds.addData(dInitiator.model.xgrid,"gx");
+				ds.addData(dInitiator.model.ygrid,"gy");
 				DragManager.doDrag(dInitiator,ds,mEvent,null);
 			}catch (e:Error){
 				trace(e);

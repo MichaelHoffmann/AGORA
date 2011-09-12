@@ -97,15 +97,19 @@ package Controller
 			FlexGlobals.topLevelApplication.map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
 		}
 		
-		
-	
-		
-		public function unregister(panel:ArgumentPanel):void
-		{
-			var ind:int = panelList.indexOf(panel);
-			panelList.splice(ind,1);
+		public function getBottomReason(atm:ArgumentTypeModel):StatementModel{
+			var reason:StatementModel;
+			var lastReason:StatementModel;
+			lastReason = atm.reasonModels[0];
+			for each(reason in atm.reasonModels){
+				if(reason.xgrid > lastReason.xgrid){
+					lastReason = reason;
+				}
+			}
+			return lastReason;
 		}
 		
+	
 		public function addSavedPanel(panel:GridPanel):void
 		{
 			panelList.push(panel);
