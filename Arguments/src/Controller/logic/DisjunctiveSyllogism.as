@@ -9,7 +9,8 @@ package Controller.logic
 	import ValueObjects.AGORAParameters;
 	
 	import components.ArgumentPanel;
-	
+	import classes.Language;
+		
 	import mx.controls.Alert;
 	
 	public class DisjunctiveSyllogism extends ParentArg
@@ -40,10 +41,10 @@ package Controller.logic
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 			var i:int;
 			
-			output = "Either ";
+			output = Language.lookup("ArgEitherCap");
 			for(i=0; i<reasonModels.length; i++){
 				inferenceModel.statements[i+1].text = reasonModels[i].statement.positiveText;
-				reasonText = reasonText + reasonModels[i].statement.positiveText + " or "; 
+				reasonText = reasonText + reasonModels[i].statement.positiveText + Language.lookup("ArgOr"); 
 			}
 			
 			inferenceModel.statements[0].text = claimModel.statement.text;

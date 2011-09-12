@@ -10,6 +10,8 @@ package Controller.logic
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	
+	import classes.Language;
+	
 	import mx.controls.Alert;
 	import mx.messaging.channels.StreamingAMFChannel;
 	
@@ -52,42 +54,42 @@ package Controller.logic
 				case langTypes[0]:
 					reasonText = reasonModels[i].statement.text;
 					for(i=1; i<reasonModels.length; i++){
-						reasonText = reasonText + " and "  + reasonModels[i].statement.text;
+						reasonText = reasonText + Language.lookup("ArgAnd") + reasonModels[i].statement.text;
 					}
-					output = "If " + reasonModels[0].statement.text;
-					output = output + ", then " + claimModel.statement.text;
+					output = Language.lookup("ArgIf") + reasonModels[0].statement.text;
+					output = output + Language.lookup("ArgThen") + claimModel.statement.text;
 					break;
 				case langTypes[1]:
 					reasonText =  reasonModels[0].statement.text;
-					output = reasonText + " implies " + claimModel.statement.text;
+					output = reasonText + Language.lookup("ArgImplies") + claimModel.statement.text;
 					break;
 				case langTypes[2]:
-						output = "Whenever ";
+						output = Language.lookup("ArgWhenever");
 						reasonText = reasonModels[0].statement.text;
 						for(i=1; i<reasonModels.length; i++){
-							reasonText = reasonText + " and " + reasonModels[0].statement.text;
+							reasonText = reasonText + Language.lookup("ArgAnd") + reasonModels[0].statement.text;
 						}
 						output = output + reasonText + ", " + claimModel.statement.text; 
 					break;
 				case langTypes[3]:
 					reasonText =  reasonModels[0].statement.text ; 
-					output = reasonText + " only if " + claimModel.statement.text;
+					output = reasonText + Language.lookup("ArgOnlyIf") + claimModel.statement.text;
 					break;
 				case langTypes[4]:
-					output = claimModel.statement.text + " provided that ";
+					output = claimModel.statement.text + Language.lookup("ArgProvidedThat");
 					reasonText = reasonModels[0].statement.text;
 					for(i=1; i < reasonModels.length; i++){
-						reasonText = reasonText + " and " + reasonModels[i].statement.text;
+						reasonText = reasonText + Language.lookup("ArgAnd") + reasonModels[i].statement.text;
 					}
 					output = output + reasonText;
 					break;
 				case langTypes[5]:
 					reasonText = reasonModels[0].statement.text; 
-					output =  reasonText + " is a sufficient condition for " + claimModel.statement.text;
+					output =  reasonText + Language.lookup("ArgSufficientCond") + claimModel.statement.text;
 					break;
 				case langTypes[6]:
 					reasonText = reasonModels[0].statement.text;
-					output = claimModel.statement.text + " is a necessary condition for " + reasonText;
+					output = claimModel.statement.text + Language.lookup("ArgNecessaryCond") + reasonText;
 					break;
 			}
 			argumentTypeModel.inferenceModel.statements[0].text = reasonText;

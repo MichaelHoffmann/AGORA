@@ -1332,7 +1332,6 @@
 		<GER text=" oder "/>
 	</ArgOr>
 	
-	
 	<ArgProvidedThat>
 		<EN-US text=" provided that "/>
 		<RUS text=" при условии, что "/>
@@ -1352,9 +1351,9 @@
 	</ArgThat>	
 	
 	<ArgThen>
-		<EN-US text=" then "/>
-		<RUS text=" то "/>
-		<GER  text=" dann: "/>
+		<EN-US text=", then "/>
+		<RUS text=", то "/>
+		<GER  text=", dann: "/>
 	</ArgThen>
 	
 	<ArgTherefore>
