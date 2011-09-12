@@ -101,42 +101,29 @@ package Model
 		}
 		//------------------ other public functions -----------------------//
 		public function updateStatementTexts():void{
-			trace("forward list");
-			trace(forwardList.length);
-			trace(parent.statementFunction);
-			
-			if(forwardList.length > 0){
-				for each(var simpleStatement:SimpleStatementModel in forwardList){
-					trace("Does it work");
-					if(parent.statement == this && parent.statementFunction == StatementModel.INFERENCE){
-						trace(forwardList.length);
-						trace(forwardList[0].parent.statementFunction);
-						trace("why is it this happening");		
-					}		
-					trace(simpleStatement.parent.statementFunction);
-					if(simpleStatement.parent.statements.length >= 2 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
-					{
-						if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
-							simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0].text + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1].text; 
+			for each(var simpleStatement:SimpleStatementModel in forwardList){
+				if(simpleStatement.parent.statements.length >= 2 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
+				{
+					if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
+						simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0].text + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1].text; 
+					}
+					if(parent.connectingString == StatementModel.DISJUNCTION){
+						var vtext:String = parent.statements[0].text;
+						for(var i:int = 1; i < parent.statements.length; i++){
+							vtext = " " + AGORAParameters.getInstance().OR + " " + vtext ;
 						}
-						if(parent.connectingString == StatementModel.DISJUNCTION){
-							var vtext:String = parent.statements[0].text;
-							for(var i:int = 1; i < parent.statements.length; i++){
-								vtext = " " + AGORAParameters.getInstance().OR + " " + vtext ;
-							}
-							simpleStatement.text = vtext;
-						}	
+						simpleStatement.text = vtext;
+					}	
+				}
+				else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
+					if(simpleStatement.parent.argumentTypeModel.logicClass != null){
+						var logicController:ParentArg = LogicFetcher.getInstance().logicHash[simpleStatement.parent.argumentTypeModel.logicClass];
+						logicController.formText(simpleStatement.parent.argumentTypeModel);
 					}
-					else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
-						if(simpleStatement.parent.argumentTypeModel.logicClass != null){
-							var logicController:ParentArg = LogicFetcher.getInstance().logicHash[simpleStatement.parent.argumentTypeModel.logicClass];
-							logicController.formText(simpleStatement.parent.argumentTypeModel);
-						}
-					}
-					else{
-						simpleStatement.text = text;
-						
-					}
+				}
+				else{
+					simpleStatement.text = text;
+					
 				}
 			}
 		}

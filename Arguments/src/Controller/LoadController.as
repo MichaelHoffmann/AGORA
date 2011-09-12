@@ -51,6 +51,7 @@ package Controller
 	
 		public function mapUpdateCleanUp():void{
 			//####### Should be modified
+			//model should be asked to do this
 			var newPanels:ArrayCollection = model.agoraMapModel.newPanels;
 			newPanels.removeAll();
 			var newConnections:ArrayCollection = model.agoraMapModel.newConnections;

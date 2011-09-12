@@ -91,17 +91,6 @@ package Model
 			_language = value;
 		}
 		
-		/*
-		public function get dbType():String{
-		return _dbType;
-		}
-		
-		public function set dbType(value:String):void{
-		_dbType = value;
-		dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, this));
-		}
-		*/
-		
 		public function get reasonsCompleted():Boolean
 		{
 			return _reasonsCompleted;
@@ -247,9 +236,6 @@ package Model
 			
 			inputXML.appendChild(connectionXML);
 			trace(inputXML.toXMLString());
-			
-			//add a textbox to the inference, if it's unset or if it's either 
-			//disjunctive syllogism or not-all syllogism
 			
 			var userModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			
