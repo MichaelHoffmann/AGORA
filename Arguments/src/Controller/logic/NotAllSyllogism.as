@@ -12,6 +12,7 @@ package Controller.logic
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.MenuPanel;
+	import classes.Language;
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
