@@ -44,10 +44,11 @@ package Controller.logic
 			var argSelector:ArgSelector = MenuPanel(FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID]).schemeSelector;
 			var i:int;
 			
-			output = "It cannot be the case, at the same time, that ";
+			output = Language.lookup("ArgCannotBe");
 			
 			for(i=0; i<reasonModels.length; i++){
-				reasonText = reasonText +  reasonModels[i].statement.text + " and that ";
+				reasonText = reasonText +  reasonModels[i].statement.text +
+						Language.lookup("ArgAnd") + Language.lookup("ArgThat");
 				argumentTypeModel.inferenceModel.statements[i+1].text = reasonModels[i].statement.text;
 			}
 			
