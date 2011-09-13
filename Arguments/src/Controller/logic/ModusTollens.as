@@ -12,6 +12,8 @@ package Controller.logic
 	import components.ArgumentPanel;
 	import components.MenuPanel;
 	
+	import classes.Language;
+	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	
@@ -49,28 +51,29 @@ package Controller.logic
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
 					reasonText = reasonModels[0].statement.positiveText;
-					output = "If " + claimModel.statement.positiveText + ", then " + reasonText;
+					output = Language.lookup("ArgIf") + claimModel.statement.positiveText + 
+						Language.lookup("ArgThen") + reasonText;
 					break;
 				case langTypes[1]:
-					output = claimModel.statement.positiveText + " implies " + reasonModels[0].statement.positiveText;
+					output = claimModel.statement.positiveText + Language.lookup("ArgImplies") + reasonModels[0].statement.positiveText;
 					break;
 				case langTypes[2]:
 					reasonText = reasonModels[0].statement.positiveText;
-					output = "Whenever " + claimModel.statement.positiveText + ", " + reasonText;
+					output = Language.lookup("ArgWhenever") + claimModel.statement.positiveText + ", " + reasonText;
 					break;
 				case langTypes[3]:
 					//if many reasons
 					if(argumentTypeModel.reasonModels.length > 1){
-						output = "Select how you want to connect the reasons";
+						output = "Select how you want to connect the reasons"; //TODO: Translate
 						argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
 						argSelector.andor.visible = true;
 						//if one reason
 					}else if(argumentTypeModel.reasonModels.length == 1){
 						reasonText = reasonModels[0].statement.positiveText;
-						output = claimModel.statement.positiveText + " only if ";
+						output = claimModel.statement.positiveText + Language.lookup("ArgOnlyIf");
 						output = output + reasonText;
 					}else{
-						output = claimModel.statement.positiveText + " only if ";	
+						output = claimModel.statement.positiveText + Language.lookup("ArgOnlyIf");	
 						for(i=0; i<reasonModels.length - 1; i++){
 							reasonText = reasonText + reasonModels[i].statement.positiveText + " " + argumentTypeModel.lSubOption + " ";
 						}
@@ -81,17 +84,17 @@ package Controller.logic
 				case langTypes[4]:
 					//provided that
 					reasonText = reasonModels[0].statement.positiveText ;
-					output = reasonText + " provided that " + claimModel.statement.positiveText;
+					output = reasonText + Language.lookup("ArgProvidedThat") + claimModel.statement.positiveText;
 					break;
 				case langTypes[5]:
 					//sufficient condition
 					reasonText = reasonModels[0].statement.positiveText;
-					output = claimModel.statement.positiveText + " is a sufficient condition for " + reasonText;
+					output = claimModel.statement.positiveText + Language.lookup("ArgSufficientCond") + reasonText;
 					break;
 				case langTypes[6]:
 					//necessary condition
 					reasonText = reasonModels[0].statement.positiveText  
-					output = reasonText + " is a necessary condition for " + claimModel.statement.positiveText;
+					output = reasonText + Language.lookup("ArgNecessaryCond") + claimModel.statement.positiveText;
 					break;
 			}
 		
@@ -109,7 +112,7 @@ package Controller.logic
 			var i:int;
 			
 			if(argumentTypeModel.language == langTypes[4]){
-				output = claimModel.statement.positiveText + " only if " + reasonModels[0].statement.positiveText;
+				output = claimModel.statement.positiveText + Language.lookup("ArgOnlyIf") + reasonModels[0].statement.positiveText;
 				for(i=1; i < reasonModels.length; i++){
 					output = " " + argumentTypeModel.lSubOption + " " + reasonModels[i].statement.positiveText;
 				}
