@@ -81,6 +81,14 @@ package Controller
 			}
 		}
 		
+		//-------------------- Load Map --------------------------------//
+		public function loadMap(id:String):void{
+			AGORAModel.getInstance().agoraMapModel.ID = int(id);
+			FlexGlobals.topLevelApplication.agoraMenu.visible = false;
+			FlexGlobals.topLevelApplication.map.visible = true;
+			LoadController.getInstance().fetchMapData();
+		}
+		
 		//---------------------Creating a New Map-----------------------//
 		public function createMap(mapName:String):void{
 			model.agoraMapModel.createMap(mapName);	
@@ -133,12 +141,12 @@ package Controller
 				//Find out the inference
 				var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
-				var xgridInference:int = (inference.x + inference.height) / AGORAParameters.getInstance().gridWidth + 1;
+				var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + 2;
 				//find out hte last reason
 				var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
 				var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
 				//find the last grid
-				var xgridReason:int = (reason.x + reason.height ) / AGORAParameters.getInstance().gridWidth + 1;
+				var xgridReason:int = (reason.y + reason.height ) / AGORAParameters.getInstance().gridWidth + 2;
 				//compare and figure out the max
 				var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
 			}else{
@@ -166,6 +174,8 @@ package Controller
 						break;
 					}
 				}
+			}{
+				flag = 1;
 			}
 			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
 				flag = 1;
@@ -198,11 +208,10 @@ package Controller
 			if(argumentTypeModel.isTyped() && argumentTypeModel.logicClass != null){
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-			
 			else if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1){
+			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1 && argumentTypeModel.claimModel.supportingArguments.length == 1){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
 			else if(argumentTypeModel.claimModel.statements.length > 1){
@@ -213,11 +222,11 @@ package Controller
 				if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
 					schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
 				}
-				//if positive disjunction
+					//if positive disjunction
 				else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
 					schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
 				}
-
+				
 			}
 				//if simple positive statement
 			else if(!argumentTypeModel.claimModel.negated){
@@ -227,9 +236,9 @@ package Controller
 			else if(argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getNegativeArray();
 			}
-				
 			
-				
+			
+			
 			//show the menu
 			schemeSelector.visible = true;
 		}
@@ -400,6 +409,8 @@ package Controller
 			if(logicController != null){
 				logicController.link(argumentTypeModel);
 			}
+			
+			
 		}
 		
 		protected function onArgumentSaved(event:AGORAEvent):void{
@@ -412,7 +423,7 @@ package Controller
 				logicController.deleteLinks(argumentTypeModel);
 				AGORAModel.getInstance().agoraMapModel.loadMapModel();
 			}
-		
+			
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

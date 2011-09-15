@@ -10,6 +10,7 @@ package components
 	import mx.containers.Panel;
 	import mx.controls.Label;
 	import mx.core.DragSource;
+	import mx.core.FlexBitmap;
 	import mx.core.IUIComponent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
@@ -111,7 +112,7 @@ package components
 			addReasonBtn.percentWidth = 100;
 			
 			changeSchemeBtn = new Button;
-			changeSchemeBtn.label = "Scheme";
+			changeSchemeBtn.label =  (model != null)?(model.logicClass != null? model.logicClass: 'Scheme') : 'Scheme';
 			changeSchemeBtn.percentWidth = 100;
 			titleDisplay.setStyle("textAlign","center");
 			title = "Therefore";

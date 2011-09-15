@@ -8,7 +8,7 @@
 	</fx:Declarations>
 	<s:VGroup id="container" paddingBottom="10" paddingTop="10">			
 		<s:HGroup id="topPanel" gap="10">
-			<s:Button id="gotoMenuBtn" label="Home" width="150">
+			<s:Button id="gotoMenuBtn" label="Home" width="150" click="discardChanges(event)">
 			</s:Button>
 			<s:Button id="saveAsBtn" label="Save Map As" visible="true" width="150">
 			</s:Button>
@@ -33,6 +33,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
 			import Controller.LayoutController;
 			
 			import classes.UserData;
@@ -56,16 +57,14 @@
 			
 			public function hideMap():void
 			{
-				var canvas:Canvas = Canvas(this.parent.getChildByName("agoraMenu"));
-				canvas.visible = true;
-				Group(this.parent).removeElement(this);
-				FlexGlobals.topLevelApplication.loadMapList();
-				FlexGlobals.topLevelApplication.loadMyMapList();
+				//var group:Group = Group(this.parent.getChildByName("agoraMenu"));
+				//group.visible = true;
+				//Group(this.parent).removeElement(this);
 			}
 			
 			public function discardChanges(event:Event):void
 			{
-				hideMap();	
+				AGORAController.getInstance().hideMap();
 			}
 			
 			public function setWidth(event: Event):void

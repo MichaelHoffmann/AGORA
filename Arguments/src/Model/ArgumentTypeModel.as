@@ -294,11 +294,15 @@ package Model
 		}
 		
 		public function isTyped():Boolean{
-			if(reasonModels.length > 1 || claimModel.supportingArguments.length > 1){		
+			if(reasonModels.length > 1){		
 				return true;
-			}else{
-				return false;
 			}
+			for each(var reason:StatementModel in reasonModels){
+				if(reason.supportingArguments.length > 0){
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		public function isLanguageTyped():Boolean{
@@ -332,8 +336,6 @@ package Model
 					inputXML = substituteTemporaryBoxes(reason, inputXML);
 				}
 			}
-			trace(inputXML.toXMLString());
-			trace(AGORAModel.getInstance().agoraMapModel.ID);
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			updateConnectionService.send({uid: usm.uid, pass_hash: usm.passHash, xml: inputXML});
 		}

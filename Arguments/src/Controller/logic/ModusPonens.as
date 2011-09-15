@@ -90,26 +90,8 @@ package Controller.logic
 					output = claimModel.statement.text + " is a necessary condition for " + reasonText;
 					break;
 			}
-			//trace(reasonText);
 			argumentTypeModel.inferenceModel.statements[0].text = reasonText;
 			argumentTypeModel.inferenceModel.statements[1].text = argumentTypeModel.claimModel.statement.text;
-			if(argumentTypeModel.inferenceModel.statement.forwardList.length > 0){
-				trace("Very good observation");
-				trace(argumentTypeModel.inferenceModel.statement.forwardList[0] == argumentTypeModel.inferenceModel.statements[0]);
-				trace(argumentTypeModel.inferenceModel.statement.forwardList[0].ID == argumentTypeModel.inferenceModel.statements[0].ID);
-				trace(argumentTypeModel.inferenceModel.statement.forwardList[0].ID);
-				trace(argumentTypeModel.inferenceModel.statement.parent.ID);
-				trace('-----');
-				for(i=0; i < argumentTypeModel.inferenceModel.nodeTextIDs.length; i++){
-					trace(argumentTypeModel.inferenceModel.nodeTextIDs[i]);
-					trace(argumentTypeModel.inferenceModel.statements[i].ID);
-					
-				}
-			}
-			
-			else{
-				trace('did not');
-			}
 			argumentTypeModel.inferenceModel.statement.text = output;
 		}
 		
@@ -143,10 +125,14 @@ package Controller.logic
 				trace(error.message);
 			}
 			
+			try{
 			for(var i:int = 0; i < argumentTypeModel.reasonModels.length; i++){
 				statement =  argumentTypeModel.reasonModels[i].statement;
 				modelToBeRemoved = argumentTypeModel.inferenceModel.statements[0];
 				removeDependence(statement, modelToBeRemoved);	
+			}
+			}catch(error:Error){
+				trace(error.message);
 			}
 		}
 		

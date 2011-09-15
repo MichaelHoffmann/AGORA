@@ -275,6 +275,16 @@ package Model
 			statements.push(simpleStatement);
 		}
 		
+		public function hasArgument(argumentTypeModel:ArgumentTypeModel):Boolean{
+			for each(var object:Object in supportingArguments){
+				if(object == argumentTypeModel){
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
 		//------------------ Toggle Statement Type ------------------------//
 		public function toggleType():void{
 			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
@@ -309,7 +319,7 @@ package Model
 											<nodetext TID="8" textboxTID="11"/>
 									</node>;
 			
-			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid + 12} targetnodeID={ID}>
+			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid +12} targetnodeID={ID}>
 										<sourcenode TID="12" nodeTID="6" />
 										<sourcenode TID="13" nodeTID="4" />
 									 </connection>;

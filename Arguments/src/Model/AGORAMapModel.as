@@ -73,6 +73,7 @@ package Model
 			//create load map service
 			loadMapService = new HTTPService();
 			loadMapService.url = AGORAParameters.getInstance().loadMapURL;
+		//	loadMapService.resultFormat="e4x";
 			loadMapService.addEventListener(ResultEvent.RESULT, onLoadMapModelResult);
 			loadMapService.addEventListener(FaultEvent.FAULT, onFault);
 			
@@ -84,14 +85,7 @@ package Model
 			updatePositionsService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			
-			
-			panelListHash = new Dictionary;
-			connectionListHash = new Dictionary;
-			textboxListHash = new Dictionary;
-			
-			newPanels = new ArrayCollection;
-			newConnections = new ArrayCollection;
-			timestamp = "0";
+			reinitializeModel();
 			statementWidth = 8;
 		}
 		
@@ -279,6 +273,7 @@ package Model
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{
 			trace('map loaded');
+			//trace(event.result.toXMLString());
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
 			//try{
@@ -392,14 +387,13 @@ package Model
 			var result:Boolean;
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
-					
 					if(!connectionListHash.hasOwnProperty(obj.connID)){
 						argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
 					argumentTypeModel.dbType = obj.type;					
-					dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel));
+					
 					
 					if(nodeHash.hasOwnProperty(obj.targetnode)){
 						argumentTypeModel.claimModel = nodeHash[obj.targetnode];
@@ -408,12 +402,18 @@ package Model
 						argumentTypeModel.claimModel = panelListHash[obj.targetnode];
 					}
 					
+					if(!argumentTypeModel.claimModel.hasArgument(argumentTypeModel)){
+						argumentTypeModel.claimModel.supportingArguments.push(argumentTypeModel);
+					}
+					
 					argumentTypeModel.xgrid = obj.x;
 					argumentTypeModel.ygrid = obj.y;
 					
 					
 					connectionsHash[obj.connID] = argumentTypeModel;
-					processSourceNode(obj, connectionsHash, nodeHash);	
+					processSourceNode(obj, connectionsHash, nodeHash);
+					dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel));
+					
 				}
 				
 			}
@@ -565,7 +565,16 @@ package Model
 		}
 		
 		//----------------------- Reinitializing the model ----------------------------------//
-		public function reinitializeModel():void{	
+		public function reinitializeModel():void{
+			
+			panelListHash = new Dictionary;
+			connectionListHash = new Dictionary;
+			textboxListHash = new Dictionary;
+			
+			newPanels = new ArrayCollection;
+			newConnections = new ArrayCollection;
+			
+			timestamp = "0";
 		}
 		
 		//----------------------- Generic Fault Event  Handler-------------------------------//

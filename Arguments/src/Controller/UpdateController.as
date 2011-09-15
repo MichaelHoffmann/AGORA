@@ -34,11 +34,6 @@ package Controller
 			return instance;
 		}
 		
-		//-------------------------Create Map-------------------------//
-		public function createMap(mapName:String):void{
-			
-		}
-		
 		//------------------------Creating a Map---------------//
 		public function displayMapInfoBox():void{
 			var agoraModel:AGORAModel = AGORAModel.getInstance();

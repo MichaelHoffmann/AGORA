@@ -109,7 +109,18 @@ package Controller
 			return lastReason;
 		}
 		
-	
+		public function getBottomArgument(sm:StatementModel):ArgumentTypeModel{
+			var atm:ArgumentTypeModel;
+			var lastATM:ArgumentTypeModel = sm.supportingArguments[0];
+			for each(atm in sm.supportingArguments){
+				if(atm.xgrid > lastATM.xgrid){
+					lastATM = atm;
+				}
+			}
+			return lastATM;
+		}	
+		
+		
 		public function addSavedPanel(panel:GridPanel):void
 		{
 			panelList.push(panel);

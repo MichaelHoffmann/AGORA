@@ -56,9 +56,6 @@ package Controller.logic
 			//remove negativity of the reason
 			reasonModels[0].negated = false;
 			
-			//There is only one reason
-			//claim is already positive
-			
 			//remove links from reason to inference
 			var simpleStatement:SimpleStatementModel;
 			var stmtToBeUnlinked:SimpleStatementModel;
@@ -76,12 +73,11 @@ package Controller.logic
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 			
-			//make reason negative
-			reasonModels[0].negated = true;
 			
 			claimModel.statement.forwardList.push(inferenceModel.statements[0]);
 			for(var i:int=0; i<reasonModels.length; i++){
-				reasonModels[i].statement.forwardList.push(inferenceModel.statements[i+1]);	
+				reasonModels[i].statement.forwardList.push(inferenceModel.statements[i+1]);
+				reasonModels[i].negated = true;
 			}	
 			inferenceModel.connectingString = StatementModel.DISJUNCTION;
 		}
