@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
@@ -22,6 +41,7 @@
 								<mx:htmlText>
 									<![CDATA[<u>Support:</u><br /> <br />Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")
 									]]>
+									<!-- Todo: how does syntax work for changing this? -->
 								</mx:htmlText>
 							</mx:Text>
 						</mx:Canvas>
@@ -49,6 +69,8 @@
 			
 			import spark.components.Group;
 			import spark.primitives.Graphic;
+			
+			
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:LayoutController;
@@ -71,6 +93,22 @@
 				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 50;
 			}
 			
+			
+			public function updateSize(event:Event):void
+			{
+				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+			}
+			
+			public function initApp():void
+			{
+				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+				this.stage.addEventListener(Event.RESIZE, updateSize);	
+				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
+				ArgumentPanel.parentMap = agoraMap;			
+				dispatchEvent(new Event("created",true,false));
+			}
 		]]>
 	</fx:Script>
 </mx:Canvas>

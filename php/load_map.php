@@ -1,29 +1,75 @@
 <?php
+	/**
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+	*/
+	require 'configure.php';
+	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	/**
 	*	Function that loads a map from the database.
 	*	Might be worth refactoring this somewhat.
 	*/
 	function get_map($mapID, $timestamp){
-		//Standard SQL connection stuff
-		$linkID= establishLink();
-		mysql_select_db("agora", $linkID) or die ("Could not find database");
-		$whereclause = mysql_real_escape_string("$mapID");
-		$timeclause = mysql_real_escape_string("$timestamp");
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause";
-		$resultID = mysql_query($query, $linkID) or die("Data not found."); 
+		global $dbName, $version;
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<map></map>";
-		$xml = new SimpleXMLElement($xmlstr);
-		$row = mysql_fetch_assoc($resultID);
-		$xml->addAttribute("ID", $row['map_id']);
-		$xml->addAttribute("username", $row['username']);
+		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<map version='$version'></map>";
+		$output = new SimpleXMLElement($outputstr);
+		//Standard SQL connection stuff
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
 		
-		$timeID = mysql_query("SELECT NOW()", $linkID) or die ("Could not get timestamp from server.");
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
+		$whereclause = mysql_real_escape_string("$mapID");
+		$timeclause = mysql_real_escape_string("$timestamp");
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause AND maps.is_deleted = 0";
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		if(mysql_num_rows($resultID)==0){
+			nonexistent($output, $query);
+			return $output;
+		}
+		
+		$row = mysql_fetch_assoc($resultID);
+		$output->addAttribute("ID", $row['map_id']);
+		$output->addAttribute("username", $row['username']);
+		
+		$timeID = mysql_query("SELECT NOW()", $linkID);
+		if(!$timeID){
+			noTime($output);
+			return $output;
+		}
 		$timerow = mysql_fetch_assoc($timeID);
 		$now = $timerow['NOW()'];
-		$xml->addAttribute("timestamp", "$now");
+		$output->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
 		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY textbox_id";
@@ -31,36 +77,45 @@
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
-				$textbox = $xml->addChild("textbox");
+				$textbox = $output->addChild("textbox");
 				$textbox->addAttribute("ID", $row['textbox_id']);
-				$textbox->addAttribute("text", $row['text']);
+				$textbox->addAttribute("text", to_utf8($row['text']));
 				$textbox->addAttribute("deleted", $row['is_deleted']);
 			}
 		}
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes NATURAL JOIN node_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+		$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
+			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
 				$node_id = $row['node_id'];
-				$node = $xml->addChild("node");
+				$node = $output->addChild("node");
 				$node->addAttribute("ID", $node_id);
 				$node->addAttribute("Type", $row['type']);
-				$node->addAttribute("Author", $row['user_id']);
+				$node->addAttribute("Author", $row['username']);
 				$node->addAttribute("x", $row['x_coord']);
 				$node->addAttribute("y", $row['y_coord']);
+				$node->addAttribute("typed", $row['typed']);
+				$node->addAttribute("positive", $row['is_positive']);
+				$node->addAttribute("connected_by", $row['connected_by']);				
 				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
-				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in nodetext lookup."); 
+				$resultID2 = mysql_query($innerQuery, $linkID);
+				if(!$resultID2){
+					dataNotFound($output, $innerQuery);
+					return $output;
+				}
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$nodetext = $node->addChild("nodetext");
 					$innerRow=mysql_fetch_assoc($resultID2);
 					$nodetext->addAttribute("ID", $innerRow['nodetext_id']);
 					$nodetext->addAttribute("textboxID", $innerRow['textbox_id']);
+					$nodetext->addAttribute("targetNodeID", $innerRow['target_node_id']);
 					$nodetext->addAttribute("deleted", $innerRow['is_deleted']);
 				}			
 			}
@@ -73,7 +128,7 @@
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
 				$conn_id=$row['connection_id'];
-				$connection = $xml->addChild("connection");
+				$connection = $output->addChild("connection");
 				$connection->addAttribute("connID", $conn_id);
 				$connection->addAttribute("type", $row['conn_name']);
 				$connection->addAttribute("targetnode", $row['node_id']);
@@ -82,7 +137,11 @@
 				$connection->addAttribute("deleted", $row['is_deleted']);
 				//Set up the inner query to find the source nodes
 				$innerQuery="SELECT * FROM sourcenodes WHERE connection_id=$conn_id";
-				$resultID2 = mysql_query($innerQuery, $linkID) or die("Data not found in connection lookup");
+				$resultID2 = mysql_query($innerQuery, $linkID);
+				if(!$resultID2){
+					dataNotFound($output, $innerQuery);
+					return $output;
+				}
 				for($y=0; $y<mysql_num_rows($resultID2); $y++){
 					$sourcenode = $connection->addChild("sourcenode");
 					$innerRow=mysql_fetch_assoc($resultID2);
@@ -92,10 +151,10 @@
 				}	
 			}
 		}
-		return $xml;
+		return $output;
 	}
 	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
 	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
-	$xml = get_map($map_id, $timestamp); 
-	print($xml->asXML());
+	$output = get_map($map_id, $timestamp); 
+	print $output->asXML();
 ?>

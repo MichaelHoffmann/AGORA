@@ -37,6 +37,8 @@
 			import spark.components.Group;
 			import spark.components.Label;
 			
+			import classes.Configure;
+			
 			//for future
 			[Bindable]
 			public var mapListXML:XML;
@@ -147,6 +149,7 @@
 				AGORAController.getInstance().deleteSelectedMaps();
 				
 			}
+
 		]]>
 	</fx:Script>
 </s:Panel>
