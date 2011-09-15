@@ -9,8 +9,6 @@ package components
 	
 	import Model.SimpleStatementModel;
 	
-	import classes.UpdateEvent;
-	
 	import com.adobe.utils.StringUtil;
 	
 	import flash.events.Event;

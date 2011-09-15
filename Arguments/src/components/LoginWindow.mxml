@@ -21,7 +21,6 @@
 			
 			import ValueObjects.UserDataVO;
 			
-			import classes.UserData;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;

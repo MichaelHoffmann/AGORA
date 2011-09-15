@@ -25,8 +25,6 @@
 			
 			import Model.AGORAModel;
 			
-			import classes.UserData;
-			
 			import components.AgoraMap;
 			import components.ArgumentPanel;
 			import components.LAMWorld;

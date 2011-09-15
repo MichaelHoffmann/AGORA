@@ -7,14 +7,13 @@ package components
 	
 	import Events.AGORAEvent;
 	
+	import Model.AGORAModel;
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
 	
-	import classes.AButton;
 	import classes.Language;
-	import classes.UserData;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -83,11 +82,11 @@ package components
 		//control elements
 		public var topArea:UIComponent;
 		//doneButton
-		public var doneBtn:AButton;
+		public var doneBtn:Button;
 		//add button
-		public var addBtn:AButton;
+		public var addBtn:Button;
 		//delete button
-		public var deleteBtn:AButton;
+		public var deleteBtn:Button;
 		//banch option control
 		public var branchControl:Option;
 		
@@ -470,7 +469,7 @@ package components
 			
 			bottomHG = new HGroup();
 			doneHG = new HGroup;
-			doneBtn = new AButton;
+			doneBtn = new Button;
 			doneBtn.label = "Done";
 			doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
 			doneHG.addElement(doneBtn);
@@ -505,7 +504,7 @@ package components
 			stmtInfoVG.addElement(userIdLbl);
 			
 			userIdLbl.text = "AU: " + author;
-			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
+			var userInfoStr:String = "User Name: " + AGORAModel.getInstance().userSessionModel.firstName + "\n" + "User ID: " + AGORAModel.getInstance().userSessionModel.uid
 			userIdLbl.toolTip = userInfoStr;
 			
 			negatedLbl = new Label;
@@ -522,11 +521,11 @@ package components
 			btnG.addElement(bottomHG);
 			doneHG = new HGroup;
 			doneHG.addElement(doneBtn);
-			addBtn = new AButton;
+			addBtn = new Button;
 			addBtn.label = "add...";
 			
 			bottomHG.addElement(addBtn);
-			deleteBtn = new AButton;
+			deleteBtn = new Button;
 			deleteBtn.label = "delete...";
 			deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
 			bottomHG.addElement(deleteBtn);

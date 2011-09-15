@@ -21,7 +21,6 @@
 			import Model.AGORAModel;
 			
 			import Model.MapMetaData;
-			import classes.UserData;
 			
 			import flash.net.URLLoader;
 			import flash.net.URLRequest;
