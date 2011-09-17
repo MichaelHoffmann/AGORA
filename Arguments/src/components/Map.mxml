@@ -27,9 +27,9 @@
 	</fx:Declarations>
 	<s:VGroup id="container" paddingBottom="10" paddingTop="10">			
 		<s:HGroup id="topPanel" gap="10">
-			<s:Button id="gotoMenuBtn" label="Home" width="150" click="discardChanges(event)">
+			<s:Button id="gotoMenuBtn" label="Save and Home" width="150" click="discardChanges(event)">
 			</s:Button>
-			<s:Button id="saveAsBtn" label="Save Map As" visible="true" width="150">
+			<s:Button id="saveAsBtn" label="Save Map As" toolTip="When you save this map under a new name, a copy of the map will be produced in which every statement is assigned to you as the author of this statement, even if the map has been produced in collaboration or by other people. This way you acquire all the permissions necessary to change whatever you want. If you don't change a statement, the name of the original author will pop when the mouse is moved over 'AU' (for 'author')." visible="true" width="150" click="Alert.show('This feature is under construction.');">
 			</s:Button>
 		</s:HGroup>
 		<s:Scroller id="agora">	
