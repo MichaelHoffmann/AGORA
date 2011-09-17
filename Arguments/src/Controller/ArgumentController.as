@@ -83,10 +83,14 @@ package Controller
 		
 		//-------------------- Load Map --------------------------------//
 		public function loadMap(id:String):void{
-			AGORAModel.getInstance().agoraMapModel.ID = int(id);
-			FlexGlobals.topLevelApplication.agoraMenu.visible = false;
-			FlexGlobals.topLevelApplication.map.visible = true;
-			LoadController.getInstance().fetchMapData();
+			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+				AGORAModel.getInstance().agoraMapModel.ID = int(id);
+				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
+				FlexGlobals.topLevelApplication.map.visible = true;
+				LoadController.getInstance().fetchMapData();
+			}else{
+				Alert.show("Please sign in into AGORA before loading a map.");
+			}
 		}
 		
 		//---------------------Creating a New Map-----------------------//
