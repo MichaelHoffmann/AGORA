@@ -19,10 +19,10 @@
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
+			import Controller.ArgumentController;
 			
 			import Model.AGORAModel;
 			import Model.MapListModel;
-			
 			import Model.MapMetaData;
 			
 			import mx.core.FlexGlobals;
@@ -76,7 +76,7 @@
 			}
 			
 			protected function onMapObjectClicked(event:MouseEvent):void{
-				
+				ArgumentController.getInstance().loadMap(event.target.name);					
 			}
 
 		]]>

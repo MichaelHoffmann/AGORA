@@ -67,6 +67,7 @@ package Controller
 				AGORAModel.getInstance().myMapsModel.requestMapList();
 			}
 			else{
+				trace(AGORAModel.getInstance().userSessionModel.uid);
 				Alert.show("The user has not signed in yet...");
 			}
 		}
