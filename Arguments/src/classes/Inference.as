@@ -473,7 +473,7 @@ package classes
 			menu.addEventListener(MenuEvent.ITEM_CLICK, function (event:MenuEvent):void {
 				if(schemeSelected != true)
 				{
-					Alert.show("Complete the enabler before adding further reasons");
+					Alert.show(Language.lookup("CompleteEnablerFirst"));
 					return;
 				}
 				if(myArg._isLanguageExp || (myArg is ModusTollens && reasonAddable == true && myschemeSel.selectedType == myArg._expLangTypes[0]))
@@ -484,12 +484,12 @@ package classes
 				{	
 					if(myArg is ModusTollens && myschemeSel.selectedType == myArg._expLangTypes[0])
 					{
-						Alert.show("Select the language type that determines how the reasons are combined: 'or' or 'and'");
+						Alert.show(Language.lookup("SelectLanguageType"));
 						reasonAddable = true;	
 					}
 					else
 					{
-						Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason");
+						Alert.show("The current language scheme does not allow multiple reasons. Please choose an expandable language type before adding a reason"); //TODO: translate
 					}
 				}
 			});
@@ -525,7 +525,7 @@ package classes
 				setRuleState();
 				if(myschemeSel.scheme.length == 0)
 				{
-					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding...");
+					Alert.show("This lanugage type cannot be supported by an argument. Please choose a suitable language type before proceeding..."); //TODO: translate
 					return;
 				}
 			}

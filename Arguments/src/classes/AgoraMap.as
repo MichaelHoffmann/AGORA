@@ -577,7 +577,7 @@ package classes
 				for each(var nodetext:XML in nodetextList)
 				{
 					var string:String = textbox_map[nodetext.@textboxID];
-					var ind:int = string.indexOf("#$#$#$",0);
+					var ind:int = string.indexOf("#$#$#$",0); //TODO: get rid of this
 					if(ind != -1)
 					{
 						string = string.substr(6,string.length -1);
