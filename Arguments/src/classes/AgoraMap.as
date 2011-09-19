@@ -316,7 +316,7 @@ package classes
 					currXML.@ID = currTextBox.ID;
 					if(argumentPanel.statementNegated)
 					{
-						currXML.@text = "#$#$#$"+currTextBox.text;
+						currXML.@text = "#$#$#$"+currTextBox.text;  //TODO: This needs to be gotten rid of
 					}
 					else{
 						currXML.@text = currTextBox.text;
