@@ -52,7 +52,7 @@
 	
 	<ArgMaps>
 		<EN-US text="Argument Maps"/>
-		<RUS text="Argument Maps"/> <!-- TODO: Translate -->
+		<RUS text="Карта Аргументов"/>
 		<GER text="Argumentationen"/>
 	</ArgMaps>
 		
@@ -124,13 +124,13 @@
 
 	<Enabler>
 		<EN-US text="Enabler"/>
-		<RUS text="Enabler"/> <!-- TODO: translate -->
+		<RUS text="гарант"/>
 		<GER text="Garant"/>
 	</Enabler>
 	
 	<Error>
 		<EN-US text="Error"/>
-		<RUS text="ошибка"/> <!-- TODO: confirm -->
+		<RUS text="ошибка"/>
 		<GER text="Fehler"/>
 	</Error>
 	
@@ -196,7 +196,7 @@
 	
 	<ProjectPP>
 		<EN-US text="Projects (password protected)"/>
-		<RUS text="Projects (password protected)"/> <!-- TODO: Translate-->
+		<RUS text="(Защищённые паролем) проекты"/>
 		<GER text="Projekte (Passwort geschützt)"/>
 	</ProjectPP>
 	
@@ -226,13 +226,13 @@
 	
 	<SelectAll>
 		<EN-US text="Select All"/>
-		<RUS text="Select All"/> <!-- TODO: Translate-->
+		<RUS text="Выбрать все"/>
 		<GER text="Wähle alle aus"/>
 	</SelectAll>
 	
 	<SelectNone>
 		<EN-US text="Select None"/>
-		<RUS text="Select None"/> <!-- TODO: Translate-->
+		<RUS text="Не выбирать ничего"/>
 		<GER text="Wähle nichts aus"/>
 	</SelectNone>
 	
@@ -286,7 +286,7 @@
 	
 	<Version>
 		<EN-US text="Version"/>
-		<RUS text="Version"/> <!-- TODO: Translate -->
+		<RUS text="версия"/>
 		<GER text="Version"/>
 	</Version>
 	
@@ -294,13 +294,13 @@
 	
 	<AddArgument>
 		<EN-US text="add an argument for this statement"/>
-		<RUS text="add an argument for this statement"/> <!-- TODO: Translate-->
+		<RUS text="добавьте аргумент для этого утверждения"/>
 		<GER text="verteidige diese Behauptung durch ein Argument"/>
 	</AddArgument>
 	
 	<AddReason>
 		<EN-US text="add another reason"/>
-		<RUS text="add another reason"/> <!-- TODO: Translate-->
+		<RUS text="Добавить другую причину"/>
 		<GER text="führe einen weiteren Grund an"/>	
 	</AddReason>
 	
@@ -390,13 +390,13 @@
 	
 	<ClickToView>
 		<EN-US text="Click on a map to view it."/>
-		<RUS text="Click on a map to view it."/> <!-- TODO: Translate-->
+		<RUS text="Щелкните  по карте, чтобы просмотреть ее"/>
 		<GER text="Klicke auf eine Argumentation um sie anzusehen."/>
 	</ClickToView>
 	
 	<CommunicationError>
 		<EN-US text="A communication error occurred during interaction with server. Please try again."/>
-		<RUS text="A communication error occurred during interaction with server. Please try again."/> <!-- TODO: Translate-->
+		<RUS text="Коммуникационная ошибка произошла во время взаимодействия с сервером. Пожалуйста, попробуйте еще раз."/>
 		<GER text="In der Kommunikation mit dem Server ist ein Fehler aufgetreten. Bitte versuch's noch einmal."/>
 	</CommunicationError>
 
@@ -456,7 +456,7 @@
 	
 	<EasiestWay>
 		<EN-US text="The easiest way to construct an argument"/>
-		<RUS text="The easiest way to construct an argument"/> <!-- TODO: Translate-->
+		<RUS text="Самый легкий способ создать аргумент"/>
 		<GER text="Der einfachste Weg, ein Argument zu konstruieren"/>
 	</EasiestWay>
 		
@@ -468,7 +468,7 @@
 
 	<EnterMapName>
 		<EN-US text="Enter a name for your map"/>
-		<RUS text="Enter a name for your map"/> <!-- TODO: Translate-->
+		<RUS text="Введите имя Вашей карты"/>
 		<GER text="Gebe einen Namen für deine Argumentation ein"/>
 	</EnterMapName>
 	
@@ -516,7 +516,7 @@
 	
 	<GenericError>
 		<EN-US text="Sorry. Something has gone wrong with the software. Please try again."/>
-		<RUS text="Sorry. Something has gone wrong with the software. Please try again."/> <!-- TODO: Translate-->
+		<RUS text="Извините. Что-то пошло не так, как надо с программным обеспечением. Пожалуйста, попробуйте еще раз."/>
 		<GER text="Entschuldigung. Ein Software-Fehler ist aufgetreten. Bitte versuch’s noch einmal."/>
 	</GenericError>
 	
@@ -564,43 +564,43 @@
 	
 	<LoginFailed>
 		<EN-US text="Login failed. Please try again."/>
-		<RUS text="Login failed. Please try again."/> <!-- TODO: Translate-->
+		<RUS text="Ошибка регистрации. Пожалуйста, попробуйте еще раз."/>
 		<GER text="Log-in ist fehlgeschlagen. Bitte versuch's noch einmal."/>
 	</LoginFailed>
 	
 	<MapSaveError>
 		<EN-US text="An error occurred when saving the map."/>
-		<RUS text="An error occurred when saving the map."/> <!-- TODO: Translate-->
+		<RUS text="Произошла ошибка  при сохранении карты"/>
 		<GER text="Ein Fehler ist beim Speichern aufgetreten."/>
 	</MapSaveError>
 	
 	<MapsDeleted>
 		<EN-US text="Maps successfully deleted"/>
-		<RUS text="Maps successfully deleted"/> <!-- TODO: Translate-->
+		<RUS text="Карта успешно удалена"/>
 		<GER text="Argumentationen wurden gelöscht"/>
 	</MapsDeleted>
 	
 	<MyMaps>
 		<EN-US text="My Maps"/>
-		<RUS text="Мои карты"/> <!-- TODO: Confirm-->
+		<RUS text="Мои карты"/>
 		<GER text="Meine Argumente"/>
 	</MyMaps>
 	
 	<MyMapsEtc>
 		<EN-US text="My maps and those to which I contributed"/>
-		<RUS text="Мои карты и те, в которых я участвовал(а)"/> <!-- TODO: Confirm-->
+		<RUS text="Мои карты и те, которым я способствовал"/>
 		<GER text="Meine Argumente und solche, an denen ich mitgewirkt habe"/>
 	</MyMapsEtc>
 	
 	<MyPPProjects>
 		<EN-US text="My Password Protected Projects"/>
-		<RUS text="My Password Protected Projects"/> <!-- TODO: Translate-->
+		<RUS text="Мои Защищённые паролем Проекты"/>
 		<GER text="Meine Passwort-geschützten Projekte"/>
 	</MyPPProjects>
 	
 	<NetworkError>
 		<EN-US text="Network error"/>
-		<RUS text="Network error"/> <!-- TODO: Translate -->
+		<RUS text="сетевая ошибка"/>
 		<GER text="Netzwerk-Fehler"/>
 	</NetworkError>
 	
@@ -612,10 +612,9 @@
 	
 	<NewMapInProj>
 		<EN-US text="Create a new argument map within this password-protected project space"/>
-		<RUS text="Create a new argument map within this password-protected project space"/> <!-- TODO: Translate-->
+		<RUS text="Создать новую карту аргумента в пределах этого защищённого паролем проектного пространства"/>
 		<GER text="Beginne eine neue Argumentation innerhalb von diesem Passwort-geschützten Projektbereich"/>
 	</NewMapInProj>
-	
 	
 	<NewProject>
 		<EN-US text="Create a password-protected project space"/>
@@ -637,7 +636,7 @@
 	
 	<NotYet>
 		<EN-US text="this feature is not yet functional and is in development."/>
-		<RUS text="this feature is not yet functional and is in development"/> <!-- TODO: Translate -->
+		<RUS text="эта особенность еще не функциональна и находится в разработке"/>
 		<GER text="Diese Funktion ist noch nicht verfügbar"/>
 	</NotYet>	
 
@@ -661,7 +660,7 @@
 	
 	<PassMismatch>
 		<EN-US text="Error: your passwords do not match"/>
-		<RUS text="Error: your passwords do not match."/> <!-- TODO: Translate-->
+		<RUS text="Ошибка: Ваши пароли не соответствуют"/>
 		<GER text="Fehler: Deine beiden Passwort-Eingaben sind nicht identisch."/>
 	</PassMismatch>
 	
@@ -685,7 +684,7 @@
 	
 	<ProjName>
 		<EN-US text="Project name (required)"/>
-		<RUS text="Желаемое Название проекта"/> <!-- TODO: update-->
+		<RUS text="Название проекта (требуется)"/>
 		<GER text="Projektname (muss eingegeben werden)"/>
 	</ProjName>
 	
@@ -697,43 +696,43 @@
 	
 	<ProjPass>
 		<EN-US text="Enter your project password:"/>
-		<RUS text="Enter your project password:"/> <!-- TODO: Update-->
+		<RUS text="Введите свой пароль проекта:"/>
 		<GER text="Gib dein Projekt-Passwort ein:"/>
 	</ProjPass>
 	
 	<ProjPassCreate>
 		<EN-US text="Project password, different from your user password (required)"/>
-		<RUS text="Пароль Проекта"/> <!-- TODO: Update-->
+		<RUS text="Пароль проекта, отличающийся от Вашего пользовательского пароля, (требуется)"/>
 		<GER text="Projekt-Passwort (muss eingegeben werden und muss verschieden von deinem Benutzer-Passwort sein)"/>
 	</ProjPassCreate>
 	
 	<ProjPassRequest>
 		<EN-US text="Click here if you want to request the password for this project from the project administrator. In this case, the AGORA system will send an automatically created e-mail to the administrator which contains your user name and e-mail address."/>
-		<RUS text="Click here if you want to request the password for this project from the project administrator. In this case, the AGORA system will send an automatically created e-mail to the administrator which contains your user name and e-mail address."/> <!-- TODO: Update-->
+		<RUS text="Щелкните здесь, если Вы хотите просить пароль для этого проекта от администратора проекта. В этом случае, система АГОРЫ пошлет автоматически создаваемое электронное письмо администратору, которое содержит Ваше имя пользователя и адрес электронной почты."/>
 		<GER text="Klicke hier falls du das Passwort zu diesem Projekt vom Projekt Administrator erhalten willst. In diesem Fall wird das AGORA System dem Administrator eine automatisch generierte e-mail senden, welche deinen Benutzernamen und e-mail Addresse enthält."/>
 	</ProjPassRequest>
 	
 	<PublicMaps>
 		<EN-US text="Publicly Accessible Argument Maps"/>
-		<RUS text="Publicly Accessible Argument Maps"/> <!-- TODO: Translate-->
+		<RUS text="Публично Доступные Карты Аргументов"/>
 		<GER text="Öffentlich zugängliche Argumentationen"/>
 	</PublicMaps>
 	
 	<PublicMyMaps>	
 		<EN-US text="My Publicly Accessible Maps and those to which I contributed"/>
-		<RUS text="My Publicly Accessible Maps and those to which I contributed"/> <!-- TODO: Translate-->
+		<RUS text="Мои Публично Доступные Карты и те, которым я способствовал"/>
 		<GER text="Meine öffentlich zugänglichen Argumentationen und solche, zu denen ich beigetragen habe"/>
 	</PublicMyMaps>
 	
 	<PublicUserMaps>	
 		<EN-US text="Publicly Accessible Maps"/>
-		<RUS text="Publicly Accessible Maps"/> <!-- TODO: Translate-->
+		<RUS text="Публично Доступные Карты"/> <!-- NOTE: username comes AFTER in Russian -->
 		<GER text="öffentlich zugängliche Argumentationen"/>
 	</PublicUserMaps>
 	
 	<PublicUserProj>
 		<EN-US text="Password Protected Projects"/>
-		<RUS text="Password Protected Projects"/> <!-- TODO: Translate-->
+		<RUS text="Защищённые паролем Проекты"/> <!-- NOTE: username comes AFTER in Russian -->
 		<GER text="Passwort-geschützte Projekte"/>
 	</PublicUserProj>
 	
@@ -769,13 +768,13 @@
 	
 	<RegisterFailed>
 		<EN-US text="Error: Registration Failed. Please try again."/>
-		<RUS text="Error: Registration Failed. Please try again."/> <!-- TODO: Translate-->
+		<RUS text="Ошибка: Неудавшаяся Регистрация. Пожалуйста, попробуйте еще раз."/>
 		<GER text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch's noch einmal."/>
 	</RegisterFailed>
 
 	<RegisterSuccess>
 		<EN-US text="Registration successful. You may now log in."/>
-		<RUS text="Registration successful. You may now log in."/> <!-- TODO: Translate-->
+		<RUS text="Успешная регистрация. Вы можете теперь Войти в систему."/>
 		<GER text="Anmeldung erfolgreich. Du kannst dich jetzt einloggen."/>
 	</RegisterSuccess>
 
@@ -805,7 +804,7 @@
 
 	<SignInToViewProj>
 		<EN-US text="Sign in to view your projects"/>
-		<RUS text="Sign in to view your projects"/> <!-- TODO: Translate-->
+		<RUS text="Регистрируйтесь, чтобы просмотреть Ваши проекты"/>
 		<GER text="Log dich ein um deine Projekte zu sehen"/>
 	</SignInToViewProj>
 	
@@ -859,7 +858,7 @@
 	
 	<UseCheckboxes>
 		<EN-US text="Please use the checkbox to select maps for deletion"/>
-		<RUS text="Please use the checkbox to select maps for deletion"/> <!-- TODO: Translate-->
+		<RUS text="Пожалуйста, используйте флажок, чтобы выбрать карты для удаления"/>
 		<GER text="Bitte markiere die entsprechenden Kästchen um Argumentationen zu löschen"/>
 	</UseCheckboxes>
 	
@@ -877,13 +876,13 @@
 	
 	<Welcome>
 		<EN-US text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/>
-		<RUS text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/> <!-- TODO: Translate-->
+		<RUS text="Добро пожаловать в СЕТЬ АГОРЫ! Пожалуйста, выберите одну из следующих задач для продолжения..."/>
 		<GER text="Willkommen im AGORA-net! Wähle eine der folgenden Aufgaben aus um fortzufahren..."/>
 	</Welcome>
 	
 	<WelcomeShort>
 		<EN-US text="Welcome to AGORA-net!"/>
-		<RUS text="Welcome to AGORA-net!"/> <!-- TODO: Translate-->
+		<RUS text="Добро пожаловать в СЕТЬ АГОРЫ!"/>
 		<GER text="Willkommen im AGORA-net!"/>
 	</WelcomeShort>
 	
@@ -1231,9 +1230,9 @@
 		<EN-US text="Send the project name and the password to those who you would like to invite to your project. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps.\n
 		To get access to your project, select it from &quot;My Password Protected Projects.&quot;\n
 		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/>
-		<RUS text="Send the project name and the password to those who you would like to invite to your project. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps.\n
-		To get access to your project, select it from &quot;My Password Protected Projects.&quot;\n
-		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/> <!-- TODO: Translate-->
+		<RUS text="Послать  название проекта и пароль тем, которых Вы хотели бы пригласить в Ваш проект. Каждый участник проекта  может создать карты в пределах Вашего проектного пространства, которые видимы только другим участникам проекта Конечно, Вы можете использовать проектное пространство только для вас непосредственно, чтобы защитить Ваши карты.\n
+	Чтобы получить доступ к Вашему проекту, выберите   из &quot;Моих Защищённых паролем Проектов.&quot;\n
+	Только название Вашего проекта будет публично видимо. Но все могут запросить доступ к Вашему проекту. В этом случае, система АГОРЫ пошлет автоматически создаваемое электронное письмо Вам. Эта электронная почта будет содержать имя пользователя и адрес электронной почты этого человека так, чтобы Вы могли решить, хотите ли Вы предоставить данные для  доступа этому человеку или нет."/>
 		<GER text="Schicke Projektname und Passwort denen, die du zu deinem Projekt einladen willst. Jedes Mitglied eines Projektes kann Argumentationen innerhalb deines Projektbereiches schaffen, die nur für andere Mitglieder sichtbar sind. Natürlich kannst du einen Projektbereich auch nur für dich selbst benutzen um deine Argumentationen zu schützen.\n
 		Um Zugang zu deinem Projekt zu erhalten, wähle es aus &quot;Meine Passwort-geschützten Projekte&quot; aus.\n
 		Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
