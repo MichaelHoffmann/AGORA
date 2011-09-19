@@ -67,14 +67,9 @@ package Controller.logic
 					break;
 				case langTypes[3]:
 					//if many reasons
-<<<<<<< HEAD
-					if(argumentTypeModel.reasonModels.length > 1){
-						output = "Select how you want to connect the reasons"; //TODO: Translate
-=======
 					var params:AGORAParameters = AGORAParameters.getInstance();
 					if(argumentTypeModel.reasonModels.length > 1 && argumentTypeModel.lSubOption == null){
 						output = "Select how you want to connect the reasons";
->>>>>>> ab3ad67409fc862e89b120320e0ec04ce3153aee
 						argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
 						argSelector.andor.dataProvider = [params.AND, params.OR];
 						argSelector.andor.visible = argSelector.typeSelector.visible;
