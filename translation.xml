@@ -605,9 +605,9 @@
 	</NetworkError>
 	
 	<NewMap>
-		<EN-US text="Create a new argument map (public)"/>
+		<EN-US text="Create a new argument map"/>
 		<RUS text="Создайте новую карту аргумента"/>
-		<GER text="Beginne eine neue Argumentation (öffentlich)"/>
+		<GER text="Beginne eine neue Argumentation"/>
 	</NewMap>
 	
 	<NewMapInProj>
@@ -880,6 +880,12 @@
 		<RUS text="Welcome to AGORA-net! Please choose one of the following tasks to continue..."/> <!-- TODO: Translate-->
 		<GER text="Willkommen im AGORA-net! Wähle eine der folgenden Aufgaben aus um fortzufahren..."/>
 	</Welcome>
+	
+	<WelcomeShort>
+		<EN-US text="Welcome to AGORA-net!"/>
+		<RUS text="Welcome to AGORA-net!"/> <!-- TODO: Translate-->
+		<GER text="Willkommen im AGORA-net!"/>
+	</WelcomeShort>
 	
 	<WhatIsMainClaim>
 		<EN-US text="What is the main claim of your argument?"/>

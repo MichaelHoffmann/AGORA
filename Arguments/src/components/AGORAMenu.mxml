@@ -16,6 +16,8 @@
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
+			import classes.Language;
+			
 			public var timer:Timer = new Timer(10000);
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
@@ -58,34 +60,34 @@
 		<s:HGroup 
 			paddingLeft="25" paddingTop="25">
 			<s:Label 
-				text="Welcome to AGORA...">
+				text="{Language.lookup(&quot;WelcomeShort&quot;)}">
 			</s:Label>	
 		</s:HGroup>
 		<s:HGroup id="mainPanel" 
 				  paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
 			<components:MapListPanel 
 				id="mapList" 
-				title="List of Maps" 
+				title="{Language.lookup(&quot;ListMaps&quot;)}" 
 				width="200" height="400"
 				>
 			</components:MapListPanel>
 			<components:MyMapsPanel id="myMaps" 
-									title="My Maps" 
+									title="{Language.lookup(&quot;MyMaps&quot;)}" 
 									skinClass="Skins.MyMapsSkin">
 			</components:MyMapsPanel>
 			<s:Panel  id="projects" 
-					  title="Projects" 
+					  title="{Language.lookup(&quot;ProjectPP&quot;)}" 
 					  width="200" minHeight="400">	
 			</s:Panel>
 		</s:HGroup>
 		<s:HGroup paddingLeft="25" paddingTop="25">
 			
 			<s:Button id="createMapBtn"
-					  label="Create Map" click="createMapBtn_clickHandler(event)">
+					  label="{Language.lookup(&quot;NewMap&quot;)}" click="createMapBtn_clickHandler(event)">
 			</s:Button >
 			
 			<s:Button id="createProjectBtn" 
-					  label="Create Project" click="Alert.show('This feature is not yet functional and is in the development process ...');">
+					  label="{Language.lookup(&quot;NewProject&quot;)}" click="Alert.show(Language.lookup(&quot;NotYet&quot;));">
 			</s:Button>
 			
 			<s:Button id="signInBtn"
@@ -93,7 +95,7 @@
 					  click="signInBtn_clickHandler(event)" />
 			
 			<s:Button id="registerBtn"
-					  label="Register"
+					  label="{Language.lookup(&quot;RegisterAsNew&quot;)}"
 					  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
 					  click="registerBtn_clickHandler(event)" />
 		</s:HGroup>
