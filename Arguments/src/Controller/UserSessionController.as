@@ -78,7 +78,7 @@ package Controller
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{
 			trace("User Authentication Failed");	
-			Alert.show("Invalid username/password");
+			Alert.show(Language.lookup("LoginFailed"));
 		}
 		
 		//----------------Registration Function--------------------//
@@ -89,11 +89,11 @@ package Controller
 		
 		protected function onRegistrationRequestSuccess(event:AGORAEvent):void{
 			removeRegistrationBox();
-			Alert.show("Registration Successful. You may use your username/password to participate in AGORA.");
+			Alert.show(Language.lookup("RegisterSuccess"));
 		}
 		
 		protected function onRegistrationRequestFailure(event:AGORAEvent):void{
-			Alert.show("Registration Failed");
+			Alert.show(Language.lookup("RegisterFailed"));
 		}
 		
 		//---------------Generic Network Fault----------------------//

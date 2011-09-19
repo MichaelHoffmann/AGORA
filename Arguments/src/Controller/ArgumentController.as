@@ -186,6 +186,7 @@ package Controller
 			}
 			if(flag == 0){
 				Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
+				//TODO: translate above line
 				return;
 			}
 			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[LayoutController.getInstance().getBottomReason(argumentTypeModel).ID];

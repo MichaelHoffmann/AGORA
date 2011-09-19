@@ -928,7 +928,7 @@
 	
 	<EitherWay>
 		<EN-US text="either way"/>
-		<RUS text="either way (untranslated)"/> <!-- TODO: This should be translated-->
+		<RUS text="either way"/> <!-- TODO: This should be translated-->
 		<GER text="Wie-auch-immer"/>
 	</EitherWay>
 	

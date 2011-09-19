@@ -44,7 +44,7 @@ package Controller
 				PopUpManager.centerPopUp(mapNameDialog);
 			}
 			else{
-				Alert.show("Only registered users can created a map. If you had already registered, click Sign In.");
+				Alert.show("Only registered users can create a map. If you had already registered, click Sign In.");
 			}
 		}
 		

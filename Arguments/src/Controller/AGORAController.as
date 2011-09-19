@@ -137,7 +137,7 @@ package Controller
 		
 		//--------------------Generic Fault Event ----------------------//
 		protected function onFault(event:AGORAEvent):void{
-			Alert.show("Network error occurred. Please make sure you are connected to the internet");
+			Alert.show(Language.lookup("NetworkError"));
 		}
 		
 		//--------------------Application Complete---------------------//

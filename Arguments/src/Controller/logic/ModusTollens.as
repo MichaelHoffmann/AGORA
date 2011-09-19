@@ -69,7 +69,7 @@ package Controller.logic
 					//if many reasons
 					var params:AGORAParameters = AGORAParameters.getInstance();
 					if(argumentTypeModel.reasonModels.length > 1 && argumentTypeModel.lSubOption == null){
-						output = "Select how you want to connect the reasons";
+						output = "Select how you want to connect the reasons"; //TODO: Translate
 						argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
 						argSelector.andor.dataProvider = [params.AND, params.OR];
 						argSelector.andor.visible = argSelector.typeSelector.visible;
