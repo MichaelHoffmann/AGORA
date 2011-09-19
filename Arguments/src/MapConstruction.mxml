@@ -24,7 +24,7 @@
 			   xmlns:classes="classes.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="init()" xmlns:components="components.*">
 		
-	<s:Label text="Welcome to AGORA-net! Please choose one of the following tasks to continue.."
+	<s:Label text="{Language.lookup(&quot;Welcome&quot;)}"
 			 x="10" y="10"
 			 fontWeight="bold" 
 			 fontFamily="Verdana"  
@@ -36,7 +36,7 @@
 				  width="191" 
 				  height="45" 
 				  text="{Language.lookup(&quot;WhatIsMainClaim&quot;)}" 
-				  toolTip="The easiest way to construct an argument"
+				  toolTip="{Language.lookup(&quot;EasiestWay&quot;)}"
 				  textAlign="center"
 				  click="startWithClaim()"/>
 	<mx:TextArea id="schemeStart"
