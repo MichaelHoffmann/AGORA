@@ -7,6 +7,7 @@ package Model
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import classes.Language;
 	
 	[Bindable]
 	public class SimpleStatementModel extends EventDispatcher
@@ -73,7 +74,7 @@ package Model
 		
 		public function get text():String{
 			if(this.parent.negated && parent.statement === this && parent.statementFunction != StatementModel.INFERENCE){
-				return "It is not the case that " + _text;
+				return Language.lookup("ArgNotCase") + _text;
 			}else{
 				return _text;
 			}

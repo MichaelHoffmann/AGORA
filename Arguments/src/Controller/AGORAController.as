@@ -11,6 +11,8 @@ package Controller
 	import components.MyMapName;
 	import components.MyMapsPanel;
 	
+	import classes.Language;
+	
 	import flash.events.Event;
 	
 	import mx.collections.ArrayCollection;

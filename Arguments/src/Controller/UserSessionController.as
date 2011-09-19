@@ -9,6 +9,7 @@ package Controller
 	
 	import components.LoginWindow;
 	import components.RegisterPanel;
+	import classes.Language;
 	
 	import flash.display.DisplayObject;
 	

@@ -46,6 +46,7 @@ package Model
 				requestMapsService.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash});
 			}else{
 				Alert.show("Attempting to fetch my maps when the user is not logged in... Please report this error...");
+				//TODO: Translate above error
 			}
 		}
 	
