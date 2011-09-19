@@ -1,6 +1,7 @@
 package Model
 {
 	import Controller.LoadController;
+	import Controller.UserSessionController;
 	
 	import Events.AGORAEvent;
 	
@@ -72,24 +73,19 @@ package Model
 			//create load map service
 			loadMapService = new HTTPService();
 			loadMapService.url = AGORAParameters.getInstance().loadMapURL;
+		//	loadMapService.resultFormat="e4x";
 			loadMapService.addEventListener(ResultEvent.RESULT, onLoadMapModelResult);
 			loadMapService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			//create update positions service
 			updatePositionsService = new HTTPService();
 			updatePositionsService.url = AGORAParameters.getInstance().insertURL;
+			updatePositionsService.resultFormat = "e4x";
 			updatePositionsService.addEventListener(ResultEvent.RESULT, updatePositionServiceResult);
 			updatePositionsService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			
-			
-			panelListHash = new Dictionary;
-			connectionListHash = new Dictionary;
-			textboxListHash = new Dictionary;
-			
-			newPanels = new ArrayCollection;
-			newConnections = new ArrayCollection;
-			timestamp = "0";
+			reinitializeModel();
 			statementWidth = 8;
 		}
 		
@@ -277,50 +273,50 @@ package Model
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{
 			trace('map loaded');
+			//trace(event.result.toXMLString());
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
-			
 			//try{
-				//update timestamp
-				timestamp = map.timestamp;
-				
-				//Form a map of nodes
-				var obj:Object;
-				var nodeHash:Dictionary = new Dictionary;
-				var textboxHash:Dictionary = new Dictionary;
-				
-				//read nodes and create Statment Models
-				//parseNode(map, nodeHash, textboxHash);
-				processNode(map.nodeObjects,nodeHash, textboxHash);
-				
-				//Form a map of connections
-				var connectionsHash:Dictionary = new Dictionary;
-				//parseConnection(map, connectionsHash, nodeHash);
-				processConnection(map.connections, connectionsHash, nodeHash);
-				
-				//read and set text - This should be performed after links are created
-				processTextbox(map.textboxes, textboxHash);
-				
-				//add new elements to Model
-				for each(var node:StatementModel in nodeHash){
-					if(!panelListHash.hasOwnProperty(node.ID)){
-						newPanels.addItem(node);
-						panelListHash[node.ID] = node;				
-					}
+			//update timestamp
+			timestamp = map.timestamp;
+			
+			//Form a map of nodes
+			var obj:Object;
+			var nodeHash:Dictionary = new Dictionary;
+			var textboxHash:Dictionary = new Dictionary;
+			
+			//read nodes and create Statment Models
+			//parseNode(map, nodeHash, textboxHash);
+			processNode(map.nodeObjects,nodeHash, textboxHash);
+			
+			//Form a map of connections
+			var connectionsHash:Dictionary = new Dictionary;
+			//parseConnection(map, connectionsHash, nodeHash);
+			processConnection(map.connections, connectionsHash, nodeHash);
+			
+			//read and set text - This should be performed after links are created
+			processTextbox(map.textboxes, textboxHash);
+			
+			//add new elements to Model
+			for each(var node:StatementModel in nodeHash){
+				if(!panelListHash.hasOwnProperty(node.ID)){
+					newPanels.addItem(node);
+					panelListHash[node.ID] = node;				
 				}
-				
-				for each(var connection:ArgumentTypeModel in connectionsHash){	
-					if(!connectionListHash.hasOwnProperty(connection.ID)){
-						newConnections.addItem(connection);
-						connectionListHash[connection.ID] = connection;
-					}
+			}
+			
+			for each(var connection:ArgumentTypeModel in connectionsHash){	
+				if(!connectionListHash.hasOwnProperty(connection.ID)){
+					newConnections.addItem(connection);
+					connectionListHash[connection.ID] = connection;
 				}
-				
-				for each(var textbox:SimpleStatementModel in textboxHash){
-					textboxListHash[textbox.ID] = textbox;
-				}
-				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
-				
+			}
+			
+			for each(var textbox:SimpleStatementModel in textboxHash){
+				textboxListHash[textbox.ID] = textbox;
+			}
+			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
+			
 			//}
 			//catch(error:Error){
 			//	trace(error.message);
@@ -366,14 +362,22 @@ package Model
 			for each(var nodetextVO:NodetextValueObject in nodeVO.nodetexts){
 				if(!statementModel.hasStatement(nodetextVO.textboxID)){
 					simpleStatement = new SimpleStatementModel;
-					simpleStatement.forwardList.push(statementModel.statement);
 					simpleStatement.ID = nodetextVO.textboxID;
+					//should not push statement into statements[i], if 
+					// the statement's parent is an Inference rule.
+					//This is because in the formtext function,
+					//both the statement and statements[i] are 
+					//modified simultaneously.
 					simpleStatement.parent = statementModel;
+					if(statementModel.statementFunction != StatementModel.INFERENCE){
+						//simpleStatement.forwardList.push(statementModel.statement);
+						simpleStatement.addDependentStatement(statementModel.statement);
+					}
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(nodetextVO.ID);
 					textboxHash[simpleStatement.ID] = simpleStatement;
-				}
-				
+					
+				}	
 			}
 			return true;
 		}
@@ -383,14 +387,13 @@ package Model
 			var result:Boolean;
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
-					
 					if(!connectionListHash.hasOwnProperty(obj.connID)){
 						argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
+					argumentTypeModel.dbType = obj.type;					
 					
-					argumentTypeModel.dbType = obj.type;
 					
 					if(nodeHash.hasOwnProperty(obj.targetnode)){
 						argumentTypeModel.claimModel = nodeHash[obj.targetnode];
@@ -399,12 +402,18 @@ package Model
 						argumentTypeModel.claimModel = panelListHash[obj.targetnode];
 					}
 					
+					if(!argumentTypeModel.claimModel.hasArgument(argumentTypeModel)){
+						argumentTypeModel.claimModel.supportingArguments.push(argumentTypeModel);
+					}
+					
 					argumentTypeModel.xgrid = obj.x;
 					argumentTypeModel.ygrid = obj.y;
-				
+					
 					
 					connectionsHash[obj.connID] = argumentTypeModel;
-					processSourceNode(obj, connectionsHash, nodeHash);	
+					processSourceNode(obj, connectionsHash, nodeHash);
+					dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel));
+					
 				}
 				
 			}
@@ -468,42 +477,104 @@ package Model
 			return true;
 		}
 		
-		//----------------------- Updating position -----------------------------------------//
-		public function updatePosition(model:Object, xgridDiff:int, ygridDiff:int):void{
-			//get the current model
-			var statementModel:StatementModel;
-			var inferenceModel:InferenceModel;
-			var argumentTypeModel:ArgumentTypeModel;
-			
-			var xmlRequest:XML = <map ID={ID} />;
-			var queue:Vector.<Object> = new Vector.<Object>;
-			queue.push(model);
-			
-			while(queue.length > 0){
-				model = queue.pop();
-				if(model is InferenceModel){
-					inferenceModel = InferenceModel(model);		
+		//----------------------- Updating position -----------------------------------------// 
+		public function moveStatement(model:Object, diffx:int, diffy:int):void{
+			var requestXML:XML = <map ID={ID} />;
+			if(model is ArgumentTypeModel){
+				var atm:ArgumentTypeModel = ArgumentTypeModel(model);
+				var claimModel:StatementModel = atm.claimModel;
+				if( atm == claimModel.supportingArguments[0] ){
+					requestXML = moveSupportingStatements(atm, 0, diffy, requestXML);
+				}else{
+					requestXML = moveSupportingStatements(atm, diffx, diffy, requestXML);
 				}
-				else if(model is StatementModel){
-					statementModel = StatementModel(model);
-					var xmlChild:XML = statementModel.getXML();
-					xmlChild.@x = int(xmlChild.@x) + xgridDiff;
-					xmlChild.@y = int(xmlChild.@y) + ygridDiff;
-					xmlRequest.appendChild(xmlChild);
+			}else if(model is StatementModel){
+				var sm:StatementModel = StatementModel(model);
+				var argumentTypeModel:ArgumentTypeModel = sm.argumentTypeModel;
+				if(sm.statementFunction == StatementModel.STATEMENT){
+					if(argumentTypeModel != null){
+						for each(var reason:StatementModel in argumentTypeModel.reasonModels){
+							if(reason == sm ){
+								if(reason != argumentTypeModel.reasonModels[0])
+								{
+									requestXML = moveSupportingStatements(reason, diffx, diffy, requestXML);	
+								}else{
+									requestXML = moveSupportingStatements(reason, 0, diffy, requestXML);
+								}
+							}else{
+								requestXML = moveSupportingStatements(reason, 0, diffy, requestXML); 
+							}
+						}
+					}else{
+						requestXML = moveSupportingStatements(sm, diffx, diffy, requestXML);
+					}
 				}
-				else if(model is ArgumentTypeModel){
-					argumentTypeModel = ArgumentTypeModel(model);
+				else if(sm.statementFunction == StatementModel.INFERENCE){
+					requestXML = moveSupportingStatements(sm, diffx, 0, requestXML);
 				}
-				updatePositionsService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash, xml:xmlRequest});
 			}
+			
+			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			updatePositionsService.send({uid: usm.uid, pass_hash: usm.passHash, xml:requestXML});
 		}
 		
-		protected function updatePositionServiceResult(result:ResultEvent):void{
-			dispatchEvent(new AGORAEvent(AGORAEvent.POSITIONS_UPDATED));
+		protected function updatePositionServiceResult(event:ResultEvent):void{
+			trace(event.result.toXMLString());
+			dispatchEvent(new AGORAEvent(AGORAEvent.POSITIONS_UPDATED, null, null));
+		}
+		
+		protected function moveSupportingStatements(model:Object, diffx:int, diffy:int, requestXML:XML):XML{
+			var list:Vector.<Object> = new Vector.<Object>;
+			list.push(model);
+			var atm:ArgumentTypeModel;
+			var reason:StatementModel;
+			var inferenceModel:StatementModel;
+			var statementModel:StatementModel;
+			
+			var xml:XML;
+			//forming xml for requesting update in positions
+			//argument map considered as a tree, and a 
+			//depth first traversal is done
+			while(list.length > 0){
+				var object:Object = list.pop();
+				if(object is ArgumentTypeModel){
+					atm = ArgumentTypeModel(object);
+					xml = atm.getXML();
+					xml.@x = int(xml.@x) + diffx;
+					xml.@y = int(xml.@y) + diffy;
+					requestXML.appendChild(xml);
+					list.push(atm.inferenceModel);
+					for each(reason in atm.reasonModels){
+						list.push(reason);
+					}
+				}else if(object is StatementModel){
+					statementModel = StatementModel(object);
+					xml = statementModel.getXML();
+					for(var i:int=0; i<statementModel.nodeTextIDs.length; i++){
+						xml.appendChild(<nodetext ID={statementModel.nodeTextIDs[i]} textboxID={statementModel.statements[i].ID} />);
+					}
+					xml.@x = int(xml.@x) + diffx;
+					xml.@y = int(xml.@y) + diffy;
+					requestXML.appendChild(xml);
+					for each(atm in statementModel.supportingArguments){
+						list.push(atm);
+					}
+				}
+			}
+			return requestXML;
 		}
 		
 		//----------------------- Reinitializing the model ----------------------------------//
-		public function reinitializeModel():void{	
+		public function reinitializeModel():void{
+			
+			panelListHash = new Dictionary;
+			connectionListHash = new Dictionary;
+			textboxListHash = new Dictionary;
+			
+			newPanels = new ArrayCollection;
+			newConnections = new ArrayCollection;
+			
+			timestamp = "0";
 		}
 		
 		//----------------------- Generic Fault Event  Handler-------------------------------//

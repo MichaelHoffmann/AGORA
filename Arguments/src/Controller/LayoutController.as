@@ -39,6 +39,7 @@ package Controller
 	
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
+	import mx.controls.Menu;
 	import mx.controls.Text;
 	import mx.core.FlexGlobals;
 	import mx.core.INavigatorContent;
@@ -73,6 +74,8 @@ package Controller
 			
 			model = AGORAModel.getInstance();
 			
+			model.agoraMapModel.addEventListener(AGORAEvent.POSITIONS_UPDATED, onPositionsUpdated);
+			
 		}
 		
 		//-------------------------- get instance ----------------------//
@@ -94,7 +97,19 @@ package Controller
 			return instance;
 		}
 		
+		//------------------------- Moving Panels around -----------------------//
+		public function movePanel(gridPanel:GridPanel, diffx:int, diffy:int):void{
+			if(gridPanel is MenuPanel){
+				AGORAModel.getInstance().agoraMapModel.moveStatement(MenuPanel(gridPanel).model, diffx, diffy);
+			}
+			else if(gridPanel is ArgumentPanel){
+				AGORAModel.getInstance().agoraMapModel.moveStatement(ArgumentPanel(gridPanel).model, diffx, diffy);
+			}
+		}
 		
+		protected function onPositionsUpdated(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
+		}
 		
 		//------------------------- other public functions --------------------//
 		public function setApplicationLayoutProperties():void{
@@ -103,73 +118,29 @@ package Controller
 			FlexGlobals.topLevelApplication.map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
 		}
 		
-		
-		
-		/*
-		public function alignReasons(reason:ArgumentPanel,tmpY:int):void
-		{
-			//two conditions
-			var i:int;
-			var claim:ArgumentPanel = reason.inference.claim;
-			var inference:Inference = reason.inference;
-			var currX:int = inference.argType.gridX;
-			
-			for(i=0;i< inference.reasons.length;i++)
-			{
-				
-				var currReason:ArgumentPanel = inference.reasons[i];
-				var oldGridX:int = currReason.gridX;
-				var oldGridY:int = currReason.gridY;
-				currReason.gridY = tmpY;
-				currReason.gridX = currX;
-				currX = currX + getGridSpan(currReason.height) + 1;
-				if(currReason.rules.length > 0)
-					moveConnectedPanels(currReason,currReason.gridX - oldGridX, currReason.gridY - oldGridY);
-			}
-			layoutComponents();
-		}
-		*/
-		
-		public function unregister(panel:ArgumentPanel):void
-		{
-			var ind:int = panelList.indexOf(panel);
-			panelList.splice(ind,1);
-		}
-		
-		public function moveConnectedPanels(claim:ArgumentPanel,diffX:int, diffY:int):void
-		{
-			/*
-			if(claim is Inference){
-				var inference:Inference = claim as Inference;
-				alignReasons(inference.reasons[0],inference.reasons[0].gridY + diffY);
-
-				for( var n:int =0; n < inference.rules.length; n++)
-				{
-					var currInference:Inference = inference.rules[n];
-					currInference.gridX = currInference.gridX + diffX;
-					currInference.gridY = currInference.gridY + diffY;
-					currInference.argType.gridX = currInference.argType.gridX + diffX;
-					currInference.argType.gridY = currInference.argType.gridY + diffY;
-					moveConnectedPanels(currInference,diffX,diffY);
-				}
-	
-			}
-			else{
-				for(var m:int=0; m<claim.rules.length;m++){		
-					inference = claim.rules[m];	
-					inference.gridX = inference.gridX + diffX;
-					inference.gridY = inference.gridY + diffY;	
-					inference.argType.gridX = inference.argType.gridX + diffX;
-					inference.argType.gridY = inference.argType.gridY + diffY;
-						moveConnectedPanels(inference,diffX,diffY);
-						
-						
+		public function getBottomReason(atm:ArgumentTypeModel):StatementModel{
+			var reason:StatementModel;
+			var lastReason:StatementModel;
+			lastReason = atm.reasonModels[0];
+			for each(reason in atm.reasonModels){
+				if(reason.xgrid > lastReason.xgrid){
+					lastReason = reason;
 				}
 			}
-
-			layoutComponents();
-			*/
+			return lastReason;
 		}
+		
+		public function getBottomArgument(sm:StatementModel):ArgumentTypeModel{
+			var atm:ArgumentTypeModel;
+			var lastATM:ArgumentTypeModel = sm.supportingArguments[0];
+			for each(atm in sm.supportingArguments){
+				if(atm.xgrid > lastATM.xgrid){
+					lastATM = atm;
+				}
+			}
+			return lastATM;
+		}	
+		
 		
 		public function addSavedPanel(panel:GridPanel):void
 		{

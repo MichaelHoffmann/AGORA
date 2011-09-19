@@ -33,6 +33,7 @@ package components
 	import mx.containers.Panel;
 	import mx.controls.Label;
 	import mx.core.DragSource;
+	import mx.core.FlexBitmap;
 	import mx.core.IUIComponent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
@@ -134,7 +135,7 @@ package components
 			addReasonBtn.percentWidth = 100;
 			
 			changeSchemeBtn = new Button;
-			changeSchemeBtn.label = "Scheme";
+			changeSchemeBtn.label =  (model != null)?(model.logicClass != null? model.logicClass: 'Scheme') : 'Scheme';
 			changeSchemeBtn.percentWidth = 100;
 			titleDisplay.setStyle("textAlign","center");
 			//title = Language.lookup("Therefore");
@@ -154,12 +155,12 @@ package components
 		public function beginDrag( mEvent:MouseEvent):void
 		{
 			try{
-				var dInitiator:MenuPanel = mEvent.currentTarget.parent.parent.parent.parent.parent as MenuPanel;
+				var dInitiator:MenuPanel = this;//mEvent.currentTarget.parent.parent.parent.parent.parent as MenuPanel;
 				var ds:DragSource = new DragSource;
 				ds.addData(dInitiator.mouseX,"x");
 				ds.addData(dInitiator.mouseY,"y");
-				ds.addData(dInitiator.gridX,"gx");
-				ds.addData(dInitiator.gridY,"gy");
+				ds.addData(dInitiator.model.xgrid,"gx");
+				ds.addData(dInitiator.model.ygrid,"gy");
 				DragManager.doDrag(dInitiator,ds,mEvent,null);
 			}catch (e:Error){
 				trace(e);

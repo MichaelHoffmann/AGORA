@@ -275,6 +275,16 @@ package Model
 			statements.push(simpleStatement);
 		}
 		
+		public function hasArgument(argumentTypeModel:ArgumentTypeModel):Boolean{
+			for each(var object:Object in supportingArguments){
+				if(object == argumentTypeModel){
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
 		//------------------ Toggle Statement Type ------------------------//
 		public function toggleType():void{
 			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
@@ -309,7 +319,7 @@ package Model
 											<nodetext TID="8" textboxTID="11"/>
 									</node>;
 			
-			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid + 12} targetnodeID={ID}>
+			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid +12} targetnodeID={ID}>
 										<sourcenode TID="12" nodeTID="6" />
 										<sourcenode TID="13" nodeTID="4" />
 									 </connection>;
@@ -332,17 +342,6 @@ package Model
 			
 			for each(var nodeObject:NodeValueObject in map.nodeObjects){
 				statementModel = StatementModel.createStatementFromObject(nodeObject);
-				/*
-				for each(var nodetext:NodetextValueObject in nodeObject.nodetexts){
-				statementModel.nodeTextIDs.push(nodetext.ID);
-				var simpleStatementModel:SimpleStatementModel = new SimpleStatementModel();
-				simpleStatementModel.ID = nodetext.textboxID;
-				simpleStatementModel.parent = statementModel;
-				simpleStatementModel.forwardList.push(statementModel.statement);
-				statementModel.statements.push(simpleStatementModel);
-				simpleStatementModelHash[simpleStatementModel.ID] = simpleStatementModel;
-				}
-				*/
 				statementModelHash[statementModel.ID] = statementModel;
 			}
 			
@@ -407,7 +406,7 @@ package Model
 		public function getXML():XML{
 			var xml:XML = <node></node>;
 			xml.@ID = ID;
-			xml.@Type = statementType;
+			xml.@Type = statementFunction == StatementModel.INFERENCE? StatementModel.INFERENCE: statementType;
 			xml.@typed = 0;
 			xml.@is_positive = negated? 0 : 1;
 			xml.@x = xgrid;

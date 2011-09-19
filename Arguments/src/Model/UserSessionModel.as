@@ -78,17 +78,20 @@ package Model
 			var loginRequestService:HTTPService = new HTTPService;
 			passHash = MD5.hash(userData.password + _salt);
 			loginRequestService.url = AGORAParameters.getInstance().loginURL;
-			loginRequestService.request['username'] = userData.userName;
-			loginRequestService.request['pass_hash'] = passHash;
+			//loginRequestService.request['username'] = userData.userName;
+			//loginRequestService.request['pass_hash'] = passHash;
+			trace(userData.userName);
+			trace(passHash);
 			loginRequestService.addEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			loginRequestService.addEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
-			loginRequestService.send();
+			loginRequestService.send({username: userData.userName, pass_hash: passHash});
 		}
 		
 		protected function onLoginRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
 			try{
+				//trace(event.result.toXMLString());
 				uid = event.result.login.ID;
 				firstName = event.result.login.firstname;
 				lastName = event.result.login.lastname;
@@ -123,7 +126,7 @@ package Model
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
-			if(event.result.AGORA.login.hasOwnProperty("created")){
+			if(event.result.login.hasOwnProperty("created")){
 				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_SUCCEEDED));
 			}else{
 				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED));
@@ -131,6 +134,7 @@ package Model
 		}
 		
 		protected function onRegistrationRequestServiceFault(event:ResultEvent):void{
+			trace(event.result.toXMLString());
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));

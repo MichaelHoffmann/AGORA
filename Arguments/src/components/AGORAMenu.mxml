@@ -22,7 +22,7 @@
 			{
 				timer.addEventListener(TimerEvent.TIMER, timerFired);
 				//temporarily commented due to extremely slow internet connection
-				timer.start();
+				//timer.start();
 			}
 			
 			protected function timerFired(event:TimerEvent):void{

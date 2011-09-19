@@ -17,6 +17,8 @@ package Model
 		
 		private var _ID:int;
 		
+		private var _TID:int;
+		
 		private var _hasOwn:Boolean;
 		
 		private var _parent:StatementModel;
@@ -34,6 +36,16 @@ package Model
 		}
 		
 		//------------------------Getters/Setters-------------------------//
+		
+		public function get TID():int
+		{
+			return _TID;
+		}
+		
+		public function set TID(value:int):void
+		{
+			_TID = value;
+		}
 		
 		public function get parent():StatementModel
 		{
@@ -69,7 +81,6 @@ package Model
 		
 		public function set text(value:String):void{
 			_text = value;
-			trace("gffdzfdzdsz");
 			updateStatementTexts();
 			
 		}
@@ -90,13 +101,9 @@ package Model
 		}
 		//------------------ other public functions -----------------------//
 		public function updateStatementTexts():void{
-			trace("in update statement texts");
-			trace(forwardList.length);
 			for each(var simpleStatement:SimpleStatementModel in forwardList){
 				if(simpleStatement.parent.statements.length >= 2 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
 				{
-					trace("simple wow: " + simpleStatement.text);
-					trace(simpleStatement.parent.statements.length);
 					if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
 						simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0].text + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1].text; 
 					}
@@ -109,25 +116,34 @@ package Model
 					}	
 				}
 				else if(simpleStatement.parent.statementFunction == StatementModel.INFERENCE){
-					trace("what");
 					if(simpleStatement.parent.argumentTypeModel.logicClass != null){
 						var logicController:ParentArg = LogicFetcher.getInstance().logicHash[simpleStatement.parent.argumentTypeModel.logicClass];
 						logicController.formText(simpleStatement.parent.argumentTypeModel);
 					}
 				}
 				else{
-					trace("simple statment: " + simpleStatement.text);
 					simpleStatement.text = text;
 					
 				}
 			}
-			trace("function ends");
 		}
 		
 		public function addDependentStatement(simpleStatement:SimpleStatementModel):void{
+			//push it only if it's not already there.
+			/*
+			for each(var simpleStatementModel:SimpleStatementModel in forwardList){
+			if(simpleStatementModel == simpleStatement){
+			return;
+			}
+			}
 			forwardList.push(simpleStatement);
+			*/
+			if(forwardList.indexOf(simpleStatement) == -1){
+				forwardList.push(simpleStatement);
+			}
 		}
 		
+		//redundant. Should be removed
 		public function addToDependancyList(simpleStatementModel:SimpleStatementModel):void{
 			if(forwardList.indexOf(simpleStatementModel) == -1){
 				forwardList.push(simpleStatementModel);

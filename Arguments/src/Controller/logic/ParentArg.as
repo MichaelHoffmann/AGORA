@@ -57,9 +57,9 @@ package Controller.logic
 		
 		//--------------- Other Public Fucntion --------------------//
 		public function getConstrainedArray(argumentTypeModel:ArgumentTypeModel):Array{
-			var array:Array = new Array;
+			//var array:Array = new Array;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
-			array.concat(logicController.getLabel);
+			var array:Array = [logicController.getLabel()];
 			return array;
 		}
 		

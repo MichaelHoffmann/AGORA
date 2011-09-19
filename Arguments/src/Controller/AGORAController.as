@@ -2,6 +2,7 @@ package Controller
 {
 	import Events.AGORAEvent;
 	
+	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.MapListModel;
 	
@@ -44,6 +45,7 @@ package Controller
 			return instance;
 		}
 		
+		
 		//--------------------Fetch Map List------------------------------//
 		public function fetchDataMapList():void{
 			var mapListModel:MapListModel = AGORAModel.getInstance().mapListModel;
@@ -65,6 +67,7 @@ package Controller
 				AGORAModel.getInstance().myMapsModel.requestMapList();
 			}
 			else{
+				trace(AGORAModel.getInstance().userSessionModel.uid);
 				Alert.show("The user has not signed in yet...");
 			}
 		}
@@ -146,6 +149,22 @@ package Controller
 		{
 			FlexGlobals.topLevelApplication.map.agora.height = FlexGlobals.topLevelApplication.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 10;
 			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.stage.stageWidth;
+		}
+		
+		
+		public function hideMap():void{
+			AGORAModel.getInstance().state = AGORAModel.MENU;
+			FlexGlobals.topLevelApplication.map.visible = false;
+			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
+			
+			//Remove components from map
+			FlexGlobals.topLevelApplication.map.agoraMap.removeAllChildren();
+			
+			//Empty Map Model
+			AGORAModel.getInstance().agoraMapModel.reinitializeModel();
+			
+			AGORAController.getInstance().fetchDataMapList();
+			AGORAController.getInstance().fetchDataMyMaps();
 		}
 	}
 }

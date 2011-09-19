@@ -53,6 +53,7 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
 			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_TYPE_ADDED, setArgumentTypeModelEventListeners);
+			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -77,6 +78,18 @@ package Controller
 					//it from map
 					trace("Option component must have already been removed");
 				}
+			}
+		}
+		
+		//-------------------- Load Map --------------------------------//
+		public function loadMap(id:String):void{
+			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+				AGORAModel.getInstance().agoraMapModel.ID = int(id);
+				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
+				FlexGlobals.topLevelApplication.map.visible = true;
+				LoadController.getInstance().fetchMapData();
+			}else{
+				Alert.show("Please sign in into AGORA before loading a map.");
 			}
 		}
 		
@@ -132,12 +145,12 @@ package Controller
 				//Find out the inference
 				var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
-				var xgridInference:int = (inference.x + inference.height) / AGORAParameters.getInstance().gridWidth + 1;
+				var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + 2;
 				//find out hte last reason
 				var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
 				var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
 				//find the last grid
-				var xgridReason:int = (reason.x + reason.height ) / AGORAParameters.getInstance().gridWidth + 1;
+				var xgridReason:int = (reason.y + reason.height ) / AGORAParameters.getInstance().gridWidth + 2;
 				//compare and figure out the max
 				var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
 			}else{
@@ -156,8 +169,27 @@ package Controller
 		public function addReason(argumentTypeModel:ArgumentTypeModel):void{
 			var x:int;
 			var y:int;
-			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ID];
-			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 1;
+			var flag:int = 0;
+			if(argumentTypeModel.logicClass != null){
+				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				for each(var langType:String in logicController.expLangTypes){
+					if(langType == argumentTypeModel.language){
+						flag = 1;
+						break;
+					}
+				}
+			}{
+				flag = 1;
+			}
+			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
+				flag = 1;
+			}
+			if(flag == 0){
+				Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
+				return;
+			}
+			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[LayoutController.getInstance().getBottomReason(argumentTypeModel).ID];
+			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 3;
 			y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
 			argumentTypeModel.addReason(x, y);
 		}
@@ -177,21 +209,28 @@ package Controller
 			var schemeSelector:ArgSelector = menuPanel.schemeSelector;
 			//Fill them up
 			//if constrained
-			if(argumentTypeModel.isLanguageTyped()){
+			if(argumentTypeModel.isTyped() && argumentTypeModel.logicClass != null){
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-				//if constructed by argument and first claim is being supported
-			else if(AGORAModel.getInstance().agoraMapModel.mapConstructedFromArgument && argumentTypeModel.claimModel.firstClaim){
-				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
+			else if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
-				
-			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1){
+			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1 && argumentTypeModel.claimModel.supportingArguments.length == 1){
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
 			else if(argumentTypeModel.claimModel.statements.length > 1){
-				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+				//Allowing for constructive dilemma. Even for constructive dilemma
+				//a separate treatment is required
+				//It's not yet incorporated
+				//if positive implication
+				if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
 					schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
 				}
+					//if positive disjunction
+				else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
+					schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
+				}
+				
 			}
 				//if simple positive statement
 			else if(!argumentTypeModel.claimModel.negated){
@@ -201,14 +240,9 @@ package Controller
 			else if(argumentTypeModel.claimModel.negated){
 				schemeSelector.scheme = ParentArg.getInstance().getNegativeArray();
 			}
-				//if positive implication
-			else if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
-				schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
-			}
-				//if positive disjunction
-			else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
-				schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
-			}
+			
+			
+			
 			//show the menu
 			schemeSelector.visible = true;
 		}
@@ -336,6 +370,9 @@ package Controller
 		public function updateEnablerTextWithConjunctions(argSchemeSelector:ArgSelector, option:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 			argumentTypeModel.lSubOption = option;
+			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+			logicController.formText(argumentTypeModel);
+			
 		}
 		
 		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{
@@ -351,7 +388,6 @@ package Controller
 					argumentTypeModel.updateConnection();
 					break;
 			}
-			
 		}
 		
 		public function setSchemeLanguageType(argSchemeSelector:ArgSelector, language:String):void{
@@ -374,14 +410,24 @@ package Controller
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
-			//argumentTypeModel.logicClass
+			if(logicController != null){
+				logicController.link(argumentTypeModel);
+			}
+			
+			
 		}
 		
 		protected function onArgumentSaved(event:AGORAEvent):void{
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
-			argumentSelector.visible = false;
+			argumentSelector.hide();
+			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				logicController.deleteLinks(argumentTypeModel);
+				AGORAModel.getInstance().agoraMapModel.loadMapModel();
+			}
+			
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

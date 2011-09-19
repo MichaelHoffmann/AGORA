@@ -38,9 +38,9 @@
 		<![CDATA[
 			import Controller.UserSessionController;
 			
+			
 			import ValueObjects.UserDataVO;
 			
-			import classes.UserData;
 			import classes.Language;
 			
 			import mx.controls.Alert;

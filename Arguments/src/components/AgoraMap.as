@@ -34,6 +34,7 @@ package components
 	import mx.collections.ArrayCollection;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
+	import mx.controls.Menu;
 	import mx.core.DragSource;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
@@ -70,7 +71,7 @@ package components
 		
 		
 		protected function onMapTimer(event:TimerEvent):void{
-			LoadController.getInstance().fetchMapData();
+			//LoadController.getInstance().fetchMapData();
 		}
 		
 		public function getGlobalCoordinates(point:Point):Point
@@ -105,12 +106,12 @@ package components
 			var tmpy:int = int(dragSource.dataForFormat("y"));
 			tmpx = currentStage.mouseX - tmpx;
 			tmpy = currentStage.mouseY - tmpy;
-			
 			var toxgrid:int = Math.floor(tmpy/AGORAParameters.getInstance().gridWidth);
 			var toygrid:int = Math.floor(tmpx/AGORAParameters.getInstance().gridWidth);
-			
 			var diffx:int = toxgrid - int(dragSource.dataForFormat("gx"));
 			var diffy:int = toygrid - int(dragSource.dataForFormat("gy"));
+			
+			LayoutController.getInstance().movePanel(gridPanel,diffx, diffy);
 			
 		}
 		
@@ -154,8 +155,6 @@ package components
 				menuPanel.schemeSelector = new ArgSelector;
 				menuPanel.schemeSelector.visible = false;
 				menuPanel.schemeSelector.argumentTypeModel = argumentTypeModel;
-				
-				
 				menuPanelsHash[menuPanel.model.ID] =  menuPanel;
 				addChild(menuPanel);
 				addChild(menuPanel.schemeSelector);
@@ -179,16 +178,73 @@ package components
 				return true;
 		}
 		
-		
-		
-		
 		public function connectRelatedPanels():void
 		{
 			var panelList:Dictionary = panelsHash;			
 			drawUtility.depth = this.numChildren;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
+			var gridWidth:int = AGORAParameters.getInstance().gridWidth;
+			var layoutController:LayoutController = LayoutController.getInstance();
+			var statementModel:StatementModel;
+			var argumentTypeModel:ArgumentTypeModel;
 			//code for the connecting arrows
+			
+			for each(var model:StatementModel in AGORAModel.getInstance().agoraMapModel.panelListHash){
+				if(model.supportingArguments.length > 0){
+					//First Vertical Line Starting Point
+					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
+					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
+					var fvlspy:int = argumentPanel.y + 30;
+					//First Vertical Line Finishing Point
+					var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
+					var fvlfpy:int = (lastMenuPanel.y + 30);
+					//draw a line
+					drawUtility.graphics.moveTo(fvlspx, fvlspy);
+					drawUtility.graphics.lineTo(fvlspx, fvlfpy);
+					
+					//Line from claim to vertical line starting point
+					var firstMenuPanel:MenuPanel = menuPanelsHash[model.supportingArguments[0].ID];
+					drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
+					drawUtility.graphics.lineTo(fvlspx, firstMenuPanel.y + 30);
+					
+					//for each argument
+					for each(argumentTypeModel in model.supportingArguments){
+						//get the point one grid before the first reason horizontally.
+						var rspx:int = (argumentTypeModel.reasonModels[0].ygrid - 1) * gridWidth;
+						var rspy:int = argumentTypeModel.reasonModels[0].xgrid * gridWidth + 30;
+						//get the point in front of the last reason
+						var rfpy:int = layoutController.getBottomReason(argumentTypeModel).xgrid * gridWidth + 30;
+						
+						//draw a line
+						drawUtility.graphics.moveTo(rspx, rspy);
+						drawUtility.graphics.lineTo(rspx, rfpy);
+						
+						var menuPanel:MenuPanel = menuPanelsHash[argumentTypeModel.ID];
+						//Line from menu Panel to the starting point of reason vertical line
+						drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width, menuPanel.y + 30);
+						drawUtility.graphics.lineTo(rspx, menuPanel.y + 30);
+						
+						//Line from first vertical line to menu Panel
+						drawUtility.graphics.moveTo(fvlspx, menuPanel.y + 30);
+						drawUtility.graphics.lineTo(menuPanel.x, menuPanel.y + 30);
+						
+						//Line from menuPanel to Inference
+						var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
+						if(inferencePanel.visible){
+							drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height);
+							drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2, inferencePanel.y);
+						}
+						for each(statementModel in argumentTypeModel.reasonModels){
+							//hline
+							var poReason:int = statementModel.xgrid * gridWidth + 30;
+							drawUtility.graphics.moveTo(rspx, poReason);
+							drawUtility.graphics.lineTo(statementModel.ygrid * gridWidth, poReason);
+						}
+					}
+					
+				} 
+			}
 		}		
 	}
 }
