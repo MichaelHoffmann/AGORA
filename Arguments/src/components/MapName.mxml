@@ -17,6 +17,8 @@
 			import mx.events.FlexEvent;
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
+			import classes.Language;
+			
 			public function map_name():void{
 				AGORAController.getInstance().freeze();
 				ArgumentController.getInstance().createMap(mapName.text);
@@ -45,7 +47,7 @@
 		]]>
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="Enter a name for your map">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;EnterMapName&quot;)}">
 			<s:TextInput id="mapName">
 			</s:TextInput>
 		</mx:FormItem>

@@ -97,7 +97,7 @@
 				if(xml.@created.length() == 0)
 				{
 					if( XMLList(xml.@exists).length() == 1){
-						Alert.show("Username exists. Please choose a different user name");
+						Alert.show(Language.lookup("RegisterFailed"));
 					}
 					else{
 						Alert.show(xml.toXMLString());
@@ -105,7 +105,7 @@
 				}
 				else if(xml.@created.length() == 1)
 				{
-					Alert.show("Registration Successful. You may now Login");
+					Alert.show(Language.lookup("RegisterSuccess"));
 				}
 				PopUpManager.removePopUp(this);
 			}
