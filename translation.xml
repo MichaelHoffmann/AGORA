@@ -280,7 +280,7 @@
 	
 	<Username>
 		<EN-US text="Username"/>
-		<RUS text="ьзователя"/>
+		<RUS text="Имя пользователя"/>
 		<GER text="Benutzername"/>
 	</Username>
 	
