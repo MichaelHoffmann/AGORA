@@ -76,7 +76,7 @@
 	
 	<CAPTCHA>
 		<EN-US text="Enter CAPTCHA"/>
-		<RUS text="Введите  CAPTCHA"/>
+		<RUS text="Введите CAPTCHA"/>
 		<GER text="Gib die folgenden Zeichen ein"/>
 	</CAPTCHA>
 	
@@ -390,7 +390,7 @@
 	
 	<ClickToView>
 		<EN-US text="Click on a map to view it."/>
-		<RUS text="Щелкните  по карте, чтобы просмотреть ее"/>
+		<RUS text="Щелкните по карте, чтобы просмотреть ее"/>
 		<GER text="Klicke auf eine Argumentation um sie anzusehen."/>
 	</ClickToView>
 	
@@ -414,13 +414,13 @@
 
 	<ConnectViaAndOr>
 		<EN-US text="Connect your reasons by &quot;and&quot; | &quot;or&quot;"/>
-		<RUS text="Соедините свои причины с помощью  &quot;и&quot; | &quot;или&quot;"/>
+		<RUS text="Соедините свои причины с помощью&quot;и&quot; | &quot;или&quot;"/>
 		<GER text="Verküpfe deinen Grund durch &quot;und&quot; | &quot;oder&quot;"/>
 	</ConnectViaAndOr>
 	
 	<Construct>
 		<EN-US text="construct argument"/>
-		<RUS text="конструктивный  аргумент"/>
+		<RUS text="конструктивный аргумент"/>
 		<GER text="konstruiere das Argument"/>
 	</Construct>
 
@@ -486,7 +486,7 @@
 
 	<EnterURL>
 		<EN-US text="Enter URL"/>
-		<RUS text="Введите  URL"/>
+		<RUS text="Введите URL"/>
 		<GER text="Gebe URL ein"/>
 	</EnterURL>
 
@@ -504,7 +504,7 @@
 	
 	<FriendlyAmend>
 		<EN-US text="Enter a suggestion to improve the formulation of this statement"/>
-		<RUS text="Введите предложение, чтобы улучшить  формулировку этого заявления"/>
+		<RUS text="Введите предложение, чтобы улучшить формулировку этого заявления"/>
 		<GER text="Gib einen Vorschlag zur Verbesserung dieser Behauptung ein"/>
 	</FriendlyAmend>
 		
@@ -570,7 +570,7 @@
 	
 	<MapSaveError>
 		<EN-US text="An error occurred when saving the map."/>
-		<RUS text="Произошла ошибка  при сохранении карты"/>
+		<RUS text="Произошла ошибка при сохранении карты"/>
 		<GER text="Ein Fehler ist beim Speichern aufgetreten."/>
 	</MapSaveError>
 	
@@ -654,7 +654,7 @@
 	
 	<PasswordProtected>
 		<EN-US text="This project is password protected. Do you want to sign up for this project?"/>
-		<RUS text="Этот проект  защищен паролем. Вы хотите подписаться на этот проект?"/>
+		<RUS text="Этот проект защищен паролем. Вы хотите подписаться на этот проект?"/>
 		<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
 	</PasswordProtected>
 	
@@ -780,7 +780,7 @@
 
 	<SeeObjection>
 		<EN-US text="See the following objection against this claim in another argument map"/>
-		<RUS text="См.  следующее возражение против этого заявления в другой карте аргумента"/>
+		<RUS text="См. следующее возражение против этого заявления в другой карте аргумента"/>
 		<GER text="Siehe den folgenden Einwand, der in einem anderen Argument verteidigt wird"/>
 	</SeeObjection>
 
@@ -834,7 +834,7 @@
 	
 	<Subclaim1>
 		<EN-US text="Enter first sub-claim"/>
-		<RUS text="Введите  первое подзаявление"/>
+		<RUS text="Введите первое подзаявление"/>
 		<GER text="Gib die erste Teilbehauptung ein"/>
 	</Subclaim1>
 	
@@ -1030,7 +1030,7 @@
 					p v q\n
 					not p\n
 					Therefore, q"/>
-		<GER text="Disjunktiver  Syllogism:\n
+		<GER text="Disjunktiver Syllogism:\n
 					p v q\n
 					nicht p\n
 					Deshalb, q"/>
@@ -1106,7 +1106,7 @@
 
 	<CannotAddReason>
 		<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
-		<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens  аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
+		<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
 		<GER text="Entschuldigung, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: „Wenn P, dann Q“; „Immer wenn P, Q“; „Q, gegeben dass P“. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form „P allein dann, wenn Q“ ersetzt."/>
 	</CannotAddReason>
 
@@ -1124,7 +1124,7 @@
 	
 	<DisSylDetails>
 		<EN-US text="In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
-		<RUS text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое  истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
+		<RUS text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
 		<GER text="Im disjunktiven Syllogismus ist die Bedeutung des Wortes „oder“ inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst „Ich kaufe Brot oder Milch“, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem „exklusivem oder“ wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
 	</DisSylDetails>
 
@@ -1155,7 +1155,7 @@
 	
 	<NotAllHelp>
 		<EN-US text="This syllogism has been created to infer a negative statement from one or more positive statements. If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false. See how it works!"/>
-		<RUS text="Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их  больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
+		<RUS text="Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
 		<GER text="Dieser Syllogismus wurde geschaffen um eine negative Aussage von einer oder mehreren positiven Aussagen zu erschließen. Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss. Probiere aus wie das geht!"/>
 	</NotAllHelp>
 	
@@ -1173,7 +1173,7 @@
 		Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on the &quot;+&quot; button under that statement to which you want to add a supporting argument. If you want to add another independent argument (with its own enabler) to your claim, click on the &quot;+&quot; there. NOTE: The main difference between adding an independent argument and adding another reason to an existing argument is the following: If only one of the reasons in the latter case can be defeated, then the entire argument breaks down. If you have two independent arguments, then your claim is still justified by the remaining argument if one is defeated. However, sometimes only the combination of several reasons can justify the claim.\n
 		To improve your argument, you might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger.
 		"/>
-		<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+		<RUS text="Действительно ли каждая из Ваших предпосылок является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
 		<GER text="Ist es notwendig, einen weiteren Grund zu diesem Argument hinzuzufügen so dass allein die Kombination beider Gründe die Behauptung rechtfertigen kann? Wenn das so ist, klicke auf &quot;+&quot; unter &quot;deshalb&quot;.\n
 		Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf das &quot;+&quot; Symbol unter derjenigen Behauptung zu der du ein unterstützendes Argument hinzufügen willst. Wenn du ein weiteres unabhänges Argument zu deiner deiner Behauptung hinzufügen willst (mit seinem eigenen Garanten), klick dort auf &quot;+&quot;. BEACHTE: Der Hauptunterschied zwischen der Hinzufügung eines unabhängigen Argumentes und eines weiteren Grundes für ein existierendes Argument ist der folgende: Wenn im letzteren Fall allein einer der Gründe widerlegt werden kann, dann bricht das ganze Argument zusammen. Wenn du jedoch zwei unabhängige Argumente hast, dann ist deine Behauptung immer noch durch das zweite Argument gerechtfertigt wenn das andere widerlegt ist. Allerdings kann manchmal allein die Kombination mehrerer Gründe eine Behauptung rechtfertigen.\n
 		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen "/>
@@ -1190,14 +1190,14 @@
 		"/>
 		<RUS text="	Выберите схему и затем языковую форму для этой схемы. Затем введите свою причину и/или заявление. Вы можете изменить схему аргументов, или язык формируют любое время, щелкая по названию схемы аргумента.\n
 		---\n
-		Ваш ввод создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки - истинны. Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает  Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы  не сможете принять истинность «гаранта» и всех Ваших причин.\n
+		Ваш ввод создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки - истинны. Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы не сможете принять истинность «гаранта» и всех Ваших причин.\n
 		---\n
-		Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может  быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.\n
+		Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.\n
 		---\n
 		Чтобы сделать Ваш аргумент столь же сильным, ясным, сколь и убедительным насколько возможно, попытайтесь разобраться в структуре и формулировках, и выбрать ту схему аргумента, которая подходит лучше всего к тому, что Вы хотите обсудить."/>
 		<GER text="Wähle ein Schema aus und dann eine sprachliche Form für dieses Schema. Dann gib deinen Grund und/oder deine Behauptung ein. Du kannst das Argumentschema oder die sprachliche Form jederzeit wechseln, wenn Du auf den Namen des Schemas klickst.\n
 		Deine Texteingabe wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind. Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird „Garant“ genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.\n
-		Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten  zu unterstützen. Da  jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie „wahrscheinlich“, „gewöhnlich“, „unter normalen Umständen“ oder „möglicherweise“ abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen.\n
+		Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten zu unterstützen. Da jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie „wahrscheinlich“, „gewöhnlich“, „unter normalen Umständen“ oder „möglicherweise“ abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen.\n
 		Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
 	</Intro>
 	
@@ -1230,9 +1230,9 @@
 		<EN-US text="Send the project name and the password to those who you would like to invite to your project. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps.\n
 		To get access to your project, select it from &quot;My Password Protected Projects.&quot;\n
 		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/>
-		<RUS text="Послать  название проекта и пароль тем, которых Вы хотели бы пригласить в Ваш проект. Каждый участник проекта  может создать карты в пределах Вашего проектного пространства, которые видимы только другим участникам проекта Конечно, Вы можете использовать проектное пространство только для вас непосредственно, чтобы защитить Ваши карты.\n
-	Чтобы получить доступ к Вашему проекту, выберите   из &quot;Моих Защищённых паролем Проектов.&quot;\n
-	Только название Вашего проекта будет публично видимо. Но все могут запросить доступ к Вашему проекту. В этом случае, система АГОРЫ пошлет автоматически создаваемое электронное письмо Вам. Эта электронная почта будет содержать имя пользователя и адрес электронной почты этого человека так, чтобы Вы могли решить, хотите ли Вы предоставить данные для  доступа этому человеку или нет."/>
+		<RUS text="Послать название проекта и пароль тем, которых Вы хотели бы пригласить в Ваш проект. Каждый участник проекта может создать карты в пределах Вашего проектного пространства, которые видимы только другим участникам проекта Конечно, Вы можете использовать проектное пространство только для вас непосредственно, чтобы защитить Ваши карты.\n
+	Чтобы получить доступ к Вашему проекту, выберите из &quot;Моих Защищённых паролем Проектов.&quot;\n
+	Только название Вашего проекта будет публично видимо. Но все могут запросить доступ к Вашему проекту. В этом случае, система АГОРЫ пошлет автоматически создаваемое электронное письмо Вам. Эта электронная почта будет содержать имя пользователя и адрес электронной почты этого человека так, чтобы Вы могли решить, хотите ли Вы предоставить данные для доступа этому человеку или нет."/>
 		<GER text="Schicke Projektname und Passwort denen, die du zu deinem Projekt einladen willst. Jedes Mitglied eines Projektes kann Argumentationen innerhalb deines Projektbereiches schaffen, die nur für andere Mitglieder sichtbar sind. Natürlich kannst du einen Projektbereich auch nur für dich selbst benutzen um deine Argumentationen zu schützen.\n
 		Um Zugang zu deinem Projekt zu erhalten, wähle es aus &quot;Meine Passwort-geschützten Projekte&quot; aus.\n
 		Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
@@ -1358,7 +1358,7 @@
 	<ArgThen>
 		<EN-US text=", then "/>
 		<RUS text=", то "/>
-		<GER  text=", dann: "/>
+		<GER text=", dann: "/>
 	</ArgThen>
 	
 	<ArgTherefore>
@@ -1534,7 +1534,7 @@
 	<!-- SPECIAL -->
 	<!--POSSESSIVE
 		ENGLISH: <Name>'s <object>
-		RUSSIAN: ???
+		RUSSIAN: <ИМЯ> <объекта>
 		GERMAN: <Name>s <object>
 	-->
 	
