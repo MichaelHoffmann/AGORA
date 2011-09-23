@@ -378,7 +378,7 @@
 	
 	<ChooseToLearn>
 		<EN-US text="Choose this option if you want to use a scheme that is not available otherwise or to learn more about how argument schemes work (play around and see what happens)"/>
-		<RUS text="Выберите эту опцию, если Вы хотите использовать схему, которая не доступна иначе или узнать больше,  о том как схемы аргументов работают (проиграть и посмотреть, что происходит),"/>
+		<RUS text="Выберите эту опцию, если Вы хотите использовать схему, которая не доступна иначе или узнать больше, о том как схемы аргументов работают (проиграть и посмотреть, что происходит),"/>
 		<GER text="Wähle diese Option wenn du ein Schema nutzen willst, das sonst nicht verfügbar ist, oder um mehr darüber zu erfahren, wie Argumentschemata funktionieren (Spiel herum und schau was passiert)"/>
 	</ChooseToLearn>
 		
@@ -406,6 +406,12 @@
 		<GER text="In der Kommunikation mit dem Server ist ein Fehler aufgetreten. Bitte versuch's noch einmal."/>
 	</CommunicationError>
 
+	<CompleteArgOneReason>
+		<EN-US text="complete your argument with just one reason"/>
+		<RUS text="завершите свой аргумент еще одной причиной"/>
+		<GER text="Vervollständige dein Argument mit allein einem Grund"/>
+	</CompleteArgOneReason>
+	
 	<CompleteEnablerFirst>
 		<EN-US text="Complete the enabler before adding further reasons."/>
 		<RUS text="Complete the enabler before adding further reasons."/> <!-- TODO: Translate-->
@@ -982,7 +988,7 @@
 	<NotAllSyl>
 		<EN-US text="not-all syllogism"/>
 		<RUS text="«не – весь» силлогизм"/>
-		<GER text="Nicht-alle Syllogism"/>
+		<GER text="Nicht-alle Syllogismus"/>
 	</NotAllSyl>
 
 	<SpecifyConn>
@@ -1110,6 +1116,13 @@
 	
 	<!--HELP TEXT-->
 
+	<AnotherReasonHelp>
+		<EN-US text="Add another reason if only the combination of two or more &quot;linked reasons&quot; can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light,&quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of linked reasons to get to your conclusion or whether you have several independent reasons for the same conclusion."/>
+		<RUS text="Добавляйте другие причины если только комбинация двух и более «связанных причин» может обеспечить Ваше 
+Например, в аргументе &quot;Помидоры Питера вырастут, потому что он регулярно поливает их, и они получают достаточно солнечного света&quot; и обе причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно солнечного света&quot; должны быть истиной, чтобы вывести заключение. Важно различать, нуждаетесь ли Вы в комбинации связанных причин чтобы получить Ваше заключение или у Вас есть несколько независимых причин для того же самого заключения."/>
+		<GER text="Füge einen weiteren Grund an wenn allein die Verbindung von zwei oder mehr &quot;verknüpften Gründen&quot; deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Gründe für dieselbe Schlussfolderung hast."/>
+	</AnotherReasonHelp>
+	
 	<CannotAddReason>
 		<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
 		<RUS text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;"/>
@@ -1134,7 +1147,7 @@
 		<GER text="Im disjunktiven Syllogismus ist die Bedeutung des Wortes &quot;oder&quot; inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst &quot;Ich kaufe Brot oder Milch&quot;, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem &quot;exklusivem oder&quot; wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen."/>
 	</DisSylDetails>
 
-	
+
 	<Enabler>
 		<EN-US text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid."/>
 		<RUS text=" Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив."/>
