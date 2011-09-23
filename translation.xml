@@ -268,7 +268,7 @@
 	
 	<URL>
 		<EN-US text="URL (Optional)"/>
-		<RUS text="URL(опционально)"/>
+		<RUS text="URL (опционально)"/>
 		<GER text="URL (optional)"/>
 	</URL>
 	
@@ -375,6 +375,12 @@
 		<RUS text="выберите файл"/>
 		<GER text="Wähle eine Datei aus"/>
 	</ChooseFile>
+	
+	<ChooseToLearn>
+		<EN-US text="Choose this option if you want to use a scheme that is not available otherwise or to learn more about how argument schemes work (play around and see what happens)"/>
+		<RUS text="Выберите эту опцию, если Вы хотите использовать схему, которая не доступна иначе или узнать больше,  о том как схемы аргументов работают (проиграть и посмотреть, что происходит),"/>
+		<GER text="Wähle diese Option wenn du ein Schema nutzen willst, das sonst nicht verfügbar ist, oder um mehr darüber zu erfahren, wie Argumentschemata funktionieren (Spiel herum und schau was passiert)"/>
+	</ChooseToLearn>
 		
 	<ClaimInNewWithLink>
 		<EN-US text="claim in a new map, and create a link between this map and the new one"/>
