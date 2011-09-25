@@ -111,8 +111,6 @@ package components
 			var toygrid:int = Math.floor(tmpx/AGORAParameters.getInstance().gridWidth);
 			var diffx:int = toxgrid - int(dragSource.dataForFormat("gx"));
 			var diffy:int = toygrid - int(dragSource.dataForFormat("gy"));
-			
-			//gridPanel.depth = numChildren - 1;
 			setChildIndex(gridPanel, numChildren - 1);
 			LayoutController.getInstance().movePanel(gridPanel,diffx, diffy);
 			
@@ -181,7 +179,6 @@ package components
 		protected function connectRelatedPanels():void
 		{
 			var panelList:Dictionary = panelsHash;			
-			//drawUtility.depth = this.numChildren;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			var gridWidth:int = AGORAParameters.getInstance().gridWidth;

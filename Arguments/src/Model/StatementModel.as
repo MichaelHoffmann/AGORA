@@ -51,6 +51,7 @@ package Model
 		private var toggleStatementTypeService:HTTPService;
 		private var saveTextService:HTTPService;
 		private var addArgumentService:HTTPService;
+		private var deleteStatements:HTTPService;
 		
 		public function StatementModel(modelType:String=STATEMENT, target:IEventDispatcher=null)
 		{
@@ -79,7 +80,13 @@ package Model
 			addArgumentService = new HTTPService;
 			addArgumentService.url = AGORAParameters.getInstance().insertURL;
 			addArgumentService.addEventListener(ResultEvent.RESULT, onAddArgumentServiceResponse);
-			addArgumentService.addEventListener(FaultEvent.FAULT, onFault);
+			addArgumentService.addEventListener(FaultEvent	.FAULT, onFault);
+			
+			//delete statements service
+			deleteStatements = new HTTPService;
+			deleteStatements.url = AGORAParameters.getInstance().deleteURL;
+			deleteStatements.addEventListener(ResultEvent.RESULT, onDeleteStatementsResult);
+			deleteStatements.addEventListener(FaultEvent.FAULT, onFault);
 			
 			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);			
 		}
@@ -281,8 +288,11 @@ package Model
 					return true;
 				}
 			}
-			
 			return false;
+		}
+		//------------------ Delete Function ------------------------------//
+		public function deleteMe():void{
+			
 		}
 		
 		//------------------ Toggle Statement Type ------------------------//

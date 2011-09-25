@@ -4,6 +4,7 @@ package Controller
 	
 	import Model.AGORAModel;
 	
+	import components.GridPanel;
 	import components.LAMWorld;
 	import components.MapName;
 	
@@ -23,6 +24,11 @@ package Controller
 		{
 			instance = this;
 			view = DisplayObject(FlexGlobals.topLevelApplication);
+		}
+		
+		//----------------deleting nodes from the map --------------//
+		public function deleteNodes(gridPanel:GridPanel):void{
+			
 		}
 		
 		//----------------get Instance ----------------------------//
