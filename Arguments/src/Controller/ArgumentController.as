@@ -141,9 +141,8 @@ package Controller
 		
 		//----------------- Adding an Argument -------------------------------//
 		public function addSupportingArgument(model:StatementModel):void{
-			if(model.argumentTypeModel == null){//first claim
+			if(model.firstClaim){//first claim
 				if(model.supportingArguments.length == 0){
-					//remove the text
 					FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
 				}
 			}
@@ -263,8 +262,10 @@ package Controller
 			//if first claim
 			var model:StatementModel = argumentPanel.model;
 			if(model.firstClaim){
+				//add an argument
+				addSupportingArgument(model);
 			}
-				//if reasons Completed
+			//if reasons Completed
 			else if(model.argumentTypeModel.reasonsCompleted){
 			}
 			else{
@@ -308,8 +309,6 @@ package Controller
 			statementModel.saveTexts();
 			CursorManager.setBusyCursor();
 		}
-		
-		
 		protected function textSaved(event:AGORAEvent):void{
 			var statementModel:StatementModel = StatementModel(event.eventData);
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];

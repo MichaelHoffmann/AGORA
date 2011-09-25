@@ -181,7 +181,6 @@ package Model
 		
 		public function get firstClaim():Boolean
 		{
-			//return _firstClaim;
 			if(argumentTypeModel == null){
 				return true;
 			}else{
