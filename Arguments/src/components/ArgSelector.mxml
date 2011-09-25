@@ -156,10 +156,12 @@
 			}
 			
 			public function hide():void{
+				//also hide the map's(parent's help text)
 				typeSelector.visible = false;
 				andor.visible = false;
 				this.visible = false;
 			}
+			
 			//----------------- Event Handlers --------------------------------------------//
 			protected function addEventHandlers(event:FlexEvent):void{
 				this.addEventListener(MouseEvent.ROLL_OVER, onRollOver);

@@ -50,6 +50,7 @@ package components
 		public var drawUtility:UIComponent = null;
 		public var ID:int;
 		public var helpText:HelpText;
+		public var firstClaimHelpText:FirstClaimHelpText;
 		private static var _tempID:int;
 		public var timer:Timer;
 		
@@ -64,7 +65,6 @@ package components
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			panelsHash = new Dictionary;
 			menuPanelsHash = new Dictionary;
-			//default
 			beganBy = BY_CLAIM;
 		}
 		
@@ -88,10 +88,12 @@ package components
 			drawUtility = new UIComponent();
 			this.addChild(drawUtility);
 			drawUtility.depth = 0;
-			
 			helpText = new HelpText;
 			addChild(helpText);
 			helpText.visible = false;
+			firstClaimHelpText = new FirstClaimHelpText;
+			addChild(firstClaimHelpText);
+			firstClaimHelpText.visible = false;
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -121,10 +123,18 @@ package components
 			try{
 				removeChild(drawUtility);
 			}catch(e:Error){
-				trace("First map of this session is loaded");
 			}
 			addChild(drawUtility);
-			
+			try{
+				removeChild(helpText);
+			}catch(e:Error){
+			}
+			addChild(helpText);
+			try{
+				removeChild(firstClaimHelpText);
+			}catch(e:Error){
+			}
+			addChild(firstClaimHelpText);
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
 				if(StatementModel(newPanels[i]).statementFunction == StatementModel.INFERENCE){
@@ -189,8 +199,13 @@ package components
 			
 			for each(var model:StatementModel in AGORAModel.getInstance().agoraMapModel.panelListHash){
 				if(model.supportingArguments.length > 0){
+					
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
+					//draw an array
+					drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 35);
+					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
+					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 25);
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
 					var fvlspy:int = argumentPanel.y + 30;
 					//First Vertical Line Finishing Point
@@ -239,7 +254,6 @@ package components
 							drawUtility.graphics.lineTo(statementModel.ygrid * gridWidth, poReason);
 						}
 					}
-					
 				} 
 			}
 		}		

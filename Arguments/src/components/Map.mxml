@@ -36,15 +36,6 @@
 			<s:Group>
 				<mx:Canvas>
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
-						<mx:Canvas id="canvas" width="150" visible="false">
-							<mx:Text width="150" height="140" id="helpTxt">
-								<mx:htmlText>
-									<![CDATA[<u>Support:</u><br /> <br />Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")
-									]]>
-									<!-- Todo: how does syntax work for changing this? -->
-								</mx:htmlText>
-							</mx:Text>
-						</mx:Canvas>
 					</components:AgoraMap>	
 				</mx:Canvas>
 			</s:Group>

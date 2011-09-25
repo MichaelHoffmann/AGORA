@@ -85,7 +85,7 @@ package Model
 			//delete statements service
 			deleteStatements = new HTTPService;
 			deleteStatements.url = AGORAParameters.getInstance().deleteURL;
-			deleteStatements.addEventListener(ResultEvent.RESULT, onDeleteStatementsResult);
+			//deleteStatements.addEventListener(ResultEvent.RESULT, onDeleteStatementsResult);
 			deleteStatements.addEventListener(FaultEvent.FAULT, onFault);
 			
 			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);			

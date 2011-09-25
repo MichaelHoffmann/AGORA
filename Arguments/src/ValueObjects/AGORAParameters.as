@@ -10,7 +10,7 @@ package ValueObjects
 		public var mapRemoveURL:String;
 		public var insertURL:String;
 		public var loadMapURL:String;
-		
+		public var deleteURL:String;
 		public var gridWidth:int;
 		public var version:String;
 		

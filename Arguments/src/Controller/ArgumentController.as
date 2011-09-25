@@ -122,6 +122,10 @@ package Controller
 		
 		//-------------------Add First Claim------------------------------//
 		public function addFirstClaim():void{
+			//Set the coordinates of the help text
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = true;
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.y = 2 * AGORAParameters.getInstance().gridWidth;
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.x = 3 * AGORAParameters.getInstance().gridWidth + 180 + 25;
 			//instruct the model to add a first claim to itself
 			model.agoraMapModel.addFirstClaim();
 		}
@@ -137,6 +141,12 @@ package Controller
 		
 		//----------------- Adding an Argument -------------------------------//
 		public function addSupportingArgument(model:StatementModel):void{
+			if(model.argumentTypeModel == null){//first claim
+				if(model.supportingArguments.length == 0){
+					//remove the text
+					FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
+				}
+			}
 			//tell the statement to support itself with an argument. Supply the position.
 			//figure out the position
 			//find out the last menu panel
@@ -382,11 +392,13 @@ package Controller
 				case AGORAParameters.getInstance().DIS_SYLL:
 					CursorManager.setBusyCursor();
 					argumentTypeModel.updateConnection();
+					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 					break;
 				case AGORAParameters.getInstance().NOT_ALL_SYLL:
 					//make cursor busy
 					CursorManager.setBusyCursor();
 					argumentTypeModel.updateConnection();
+					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 					break;
 			}
 		}
@@ -396,6 +408,7 @@ package Controller
 			if(argumentTypeModel.language != AGORAParameters.getInstance().ONLY_IF || argumentTypeModel.reasonModels.length == 1){
 				CursorManager.setBusyCursor();
 				argumentTypeModel.updateConnection();
+				FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 			}
 		}
 		
@@ -404,6 +417,7 @@ package Controller
 			//make busy cursor
 			CursorManager.setBusyCursor();
 			argumentTypeModel.updateConnection();
+			FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 		}
 		
 		//------------------- Scheme Update Functions -----------------//
