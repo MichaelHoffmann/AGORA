@@ -660,7 +660,7 @@
 	
 	<OrStartWithScheme>
 		<EN-US text="... or do you want to start with a certain argument scheme? Click here!"/>
-		<RUS text="... или Вы хотите начать с определенной схемы аргумента?"/> <!-- TODO: add "Click here"-->
+		<RUS text="... или Вы хотите начать с определенной схемы аргумента? Щелкните здесь!"/>
 		<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen? Klicke hier!"/>
 	</OrStartWithScheme>
 	
@@ -939,7 +939,7 @@
 	
 	<EitherWay>
 		<EN-US text="either way"/>
-		<RUS text="either way"/> <!-- TODO: This should be translated-->
+		<RUS text="так или иначе"/>
 		<GER text="Wie-auch-immer"/>
 	</EitherWay>
 	
@@ -1005,10 +1005,10 @@
 					p --> q\n
 					q --> r\n
 					Therefore, p --> r"/>
-		<RUS text="Conditional Syllogism (untranslated):\n
+		<RUS text="Условный силлогизм:\n
 					p --> q\n
 					q --> r\n
-					Therefore, p --> r"/> <!-- TODO: This should be translated-->
+					Поэтому, p --> r"/>
 		<GER text="Konditionaler Syllogismus:\n
 					p --> q\n
 					q --> r\n
@@ -1021,11 +1021,11 @@
 					p --> r\n
 					q --> s\n
 					Therefore, s v t"/>
-		<RUS text="Constructive dilemma (untranslated):\n
+		<RUS text="Конструктивная дилемма:\n
 					p v q\n
 					p --> r\n
 					q --> s\n
-					Therefore, s v t"/> <!-- TODO: This should be translated-->
+					Поэтому, s v t"/>
 		<GER text="Konstruktives Dilemma:\n
 					p v q\n
 					p --> r\n
@@ -1038,10 +1038,10 @@
 					p v q\n
 					not p\n
 					Therefore, q"/>
-		<RUS text="Disjunctive Syllogism (untranslated):\n
+		<RUS text="Дизъюнктивный силлогизм:\n
 					p v q\n
 					not p\n
-					Therefore, q"/>
+					Поэтому , q"/>
 		<GER text="Disjunktiver Syllogism:\n
 					p v q\n
 					nicht p\n
@@ -1054,11 +1054,11 @@
 					p --> r\n
 					q --> r\n
 					Therefore, r"/>
-		<RUS text="Either way (untranslated):\n
+		<RUS text="Так или иначе:\n
 					p v q\n
 					p --> r\n
 					q --> r\n
-					Therefore, r"/> <!-- TODO: This should be translated-->
+					Поэтому, r"/>
 		<GER text="Wie-auch-immer:\n
 					p v q\n
 					p --> r\n
@@ -1089,10 +1089,10 @@
 					p --> q\n
 					p\n
 					Therefore, q\n"/>
-		<RUS text="Modus ponens (untranslated):\n
+		<RUS text="Модус поненс:\n
 					p --> q\n
 					p\n
-					Therefore, q\n"/> <!-- TODO: This should be translated-->
+					Поэтому, q\n"/>
 		<GER text="Modus ponens:\n
 					p --> q\n
 					p\n
@@ -1104,15 +1104,21 @@
 					p --> q\n
 					not q\n
 					Therefore, not p"/>
-		<RUS text="Modus tollens (untranslated):\n
+		<RUS text="Модус толленс:\n
 					p --> q\n
-					not q\n
-					Therefore, not p"/> <!-- TODO: This should be translated-->
+					не q\n
+					Поэтому, не p"/>
 		<GER text="Modus tollens:\n
 					p --> q\n
 					nicht q\n
 					Deshalb, not p"/>
 	</MTDesc>
+	
+	<NotAllDesc>
+		<EN-US text="Not-all syllogism: This syllogism has been created to infer a negative statement from one or more positive statements. If you know that one of your statements in the enabler is true--or all but one are true if you have more than two--then you can infer that the remaining statement must be false. See how it works!"/>
+		<RUS text="Не - весь силлогизм: Этот силлогизм был создан, чтобы вывести отрицательное утверждение из одного или более положительных утверждений. Если Вы знаете, что одно из Ваших утверждений в &quot;гаранте&quot; - истина - или все кроме одного - истина, если у Вас есть их больше чем два - тогда Вы можете вывести, что остающееся утверждение должно быть ложным."/>
+		<GER text="Nicht-alle-Syllogismus: Dieser Syllogismus wurde geschaffen um eine negative Aussage von einer oder mehreren positiven Aussagen zu erschließen. Wenn Du weißt, dass eine der Aussagen im Garanten wahr ist—oder alle außer einem wahr sind wenn Du mehr als zwei hast—dann kannst Du erschließen, dass die übrig bleibende Aussage falsch sein muss. Probiere aus wie das geht!"/>
+	</NotAllDesc>
 	
 	<!--HELP TEXT-->
 
@@ -1188,14 +1194,15 @@
 	<!--WALLS OF TEXT-->
 		
 	<ArgComplete>
-		<EN-US text="Do you need to add another reason to this argument so that only the combination of all reasons justifies the claim? If so, click on the &quot;+&quot; button under &quot;therefore.&quot;\n
-		Is each of your premises acceptable, or does one of them need additional support by further arguments? If so, click on the &quot;+&quot; button under that statement to which you want to add a supporting argument. If you want to add another independent argument (with its own enabler) to your claim, click on the &quot;+&quot; there. NOTE: The main difference between adding an independent argument and adding another reason to an existing argument is the following: If only one of the reasons in the latter case can be defeated, then the entire argument breaks down. If you have two independent arguments, then your claim is still justified by the remaining argument if one is defeated. However, sometimes only the combination of several reasons can justify the claim.\n
-		To improve your argument, you might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger.
-		"/>
-		<RUS text="Действительно ли каждая из Ваших предпосылок является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если так, нажмите, &quot;добавить...&quot; Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными. Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
-		<GER text="Ist es notwendig, einen weiteren Grund zu diesem Argument hinzuzufügen so dass allein die Kombination beider Gründe die Behauptung rechtfertigen kann? Wenn das so ist, klicke auf &quot;+&quot; unter &quot;deshalb&quot;.\n
-		Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente? Wenn dies der Fall ist, klicke auf das &quot;+&quot; Symbol unter derjenigen Behauptung zu der du ein unterstützendes Argument hinzufügen willst. Wenn du ein weiteres unabhänges Argument zu deiner deiner Behauptung hinzufügen willst (mit seinem eigenen Garanten), klick dort auf &quot;+&quot;. BEACHTE: Der Hauptunterschied zwischen der Hinzufügung eines unabhängigen Argumentes und eines weiteren Grundes für ein existierendes Argument ist der folgende: Wenn im letzteren Fall allein einer der Gründe widerlegt werden kann, dann bricht das ganze Argument zusammen. Wenn du jedoch zwei unabhängige Argumente hast, dann ist deine Behauptung immer noch durch das zweite Argument gerechtfertigt wenn das andere widerlegt ist. Allerdings kann manchmal allein die Kombination mehrerer Gründe eine Behauptung rechtfertigen.\n
-		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen "/>
+		<EN-US text="Is each of your premises acceptable, or does one of them need additional support by further arguments?\n
+		If so, click on the &quot;add...&quot; button under that statement to which you want to add a supporting argument. If you want to add another independent argument (with its own enabler) to your claim, click on the &quot;add ...&quot; under your conclusion. NOTE: The main difference between adding an independent argument and adding another reason to an existing argument by using the &quot;add ...&quot; under &quot;therefore&quot; is the following: If only one of the reasons in the latter case can be defeated, then the entire argument breaks down. If you have two independent arguments, then your claim is still justified by the remaining argument if one is defeated. However, sometimes only the combination of several reasons can justify the claim.\n
+		To improve your argument, you might also add possible objections against your premises that you can then refute in the next step, or you can reformulate your statements to make them stronger."/>
+		<RUS text="Действительно ли каждая из Ваших предпосылок  является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами?\n
+		Если так, щелкните, кнопку &quot;добавить ...&quot;  в соответствии с тем заявлением, к которому Вы хотите добавить параметр поддержки. Если Вы хотите добавить другой независимый аргумент (с его собственным гарантом) к Вашему заявлению, щелкнуть, &quot;добавить ...&quot; в соответствии с Вашим заключением. ЗАМЕЧАНИЕ: основным различием между добавлением независимого аргумента и добавлением другой причины для существующего аргумента при использовании, &quot;добавить ...&quot; под &quot;поэтому&quot;, является следующее: Если только одна из причин в последнем случае может быть оспорена, то весь аргумент ломается. Если у Вас есть два независимых аргумента, то Ваше заявление все еще поддерживается остающимся аргументом , если другой  оспорен. Однако, иногда только комбинация нескольких причин может подтвердить заявление.\n
+	Чтобы подтвердить Ваш аргумент, Вы могли бы также добавить возможные возражения против своих предпосылок, что Вы можете тогда опровергнуть в следующем шаге, или Вы можете повторно сформулировать свои заявления, чтобы сделать их более сильными."/>
+		<GER text="Ist jede deiner Prämissen akzeptabel oder benötigt eine von ihnen Unterstützung durch weitere Argumente?\n
+		Wenn dies der Fall ist, klicke auf das &quot;füge hinzu ...&quot; Symbol unter derjenigen Behauptung zu der du ein unterstützendes Argument hinzufügen willst. Wenn du ein weiteres unabhänges Argument zu deiner deiner Behauptung hinzufügen willst (mit seinem eigenen Garanten), klick auf &quot;füge hinzu ...&quot; unter deiner Schlussfolgerung. BEACHTE: Der Hauptunterschied zwischen der Hinzufügung eines unabhängigen Argumentes und eines weiteren Grundes für ein existierendes Argument mittels &quot;füge hinzu ...&quot; unter dem &quot;deshalb&quot; ist der folgende: Wenn im letzteren Fall allein einer der Gründe widerlegt werden kann, dann bricht das ganze Argument zusammen. Wenn du jedoch zwei unabhängige Argumente hast, dann ist deine Behauptung immer noch durch das zweite Argument gerechtfertigt wenn das andere widerlegt ist. Allerdings kann manchmal allein die Kombination mehrerer Gründe eine Behauptung rechtfertigen.\n
+		Um dein Argument zu verbesser kanns du auch Einwände hinzufügen, die Du dann im nächsten Schritt widerlegst, oder Du kannst Sätze umformulieren um sie überzeugender zu machen."/>
 	</ArgComplete>
 	
 	<Intro>
@@ -1234,14 +1241,14 @@
 	</ParticularOrUniversal>
 
 	<ParticularUniversalClarification>
-		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement &quot;All birds can fly” can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments."/>
+		<EN-US text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement &quot;All birds can fly&quot; can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments."/>
 		<RUS text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания."/>
 		<GER text="Eine &quot;universelle Aussage&quot; ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie &quot;man sollte&quot;, &quot;man muss&quot; und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als &quot;Einzelaussagen&quot; behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments &quot;widerlegt&quot; ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur &quot;kritisiert&quot; ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern."/>
 	</ParticularUniversalClarification>
 	
 	<PartUnivReq>
 		<EN-US text="You need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme any time by clicking on &quot;ArgScheme.&quot;"/>
-		<RUS text="Дополнительно, Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
+		<RUS text="Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;."/>
 		<GER text="Du musst bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf &quot;ArgSchema&quot; klickst, kannst Du das Argumentations-Schema jederzeit wechseln."/>
 	</PartUnivReq>
 	
