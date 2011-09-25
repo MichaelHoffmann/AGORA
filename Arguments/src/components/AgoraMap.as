@@ -49,7 +49,6 @@ package components
 		public var beganBy:String;
 		public var drawUtility:UIComponent = null;
 		public var ID:int;
-		public var option:Option;
 		public var helpText:HelpText;
 		private static var _tempID:int;
 		public var timer:Timer;
@@ -71,7 +70,7 @@ package components
 		
 		
 		protected function onMapTimer(event:TimerEvent):void{
-			//LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		public function getGlobalCoordinates(point:Point):Point
@@ -79,14 +78,16 @@ package components
 			return localToGlobal(point);
 		}
 		
+		public function initializeMapStructures():void{
+			
+		}
+		
 		override protected function createChildren():void
 		{
 			super.createChildren();
 			drawUtility = new UIComponent();
-			this.parent.addChild(drawUtility);
-			option = new Option;
-			addChild(option);
-			option.visible = false;
+			this.addChild(drawUtility);
+			drawUtility.depth = 0;
 			
 			helpText = new HelpText;
 			addChild(helpText);
@@ -111,12 +112,21 @@ package components
 			var diffx:int = toxgrid - int(dragSource.dataForFormat("gx"));
 			var diffy:int = toygrid - int(dragSource.dataForFormat("gy"));
 			
+			//gridPanel.depth = numChildren - 1;
+			setChildIndex(gridPanel, numChildren - 1);
 			LayoutController.getInstance().movePanel(gridPanel,diffx, diffy);
 			
 		}
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
+			try{
+				removeChild(drawUtility);
+			}catch(e:Error){
+				trace("First map of this session is loaded");
+			}
+			addChild(drawUtility);
+			
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
 				if(StatementModel(newPanels[i]).statementFunction == StatementModel.INFERENCE){
@@ -159,9 +169,7 @@ package components
 				addChild(menuPanel);
 				addChild(menuPanel.schemeSelector);
 			}
-			
 			LoadController.getInstance().mapUpdateCleanUp();
-			
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -170,18 +178,10 @@ package components
 			connectRelatedPanels();
 		}
 		
-		public function addable():Boolean
-		{
-			if(option.visible == true)
-				return false;
-			else
-				return true;
-		}
-		
-		public function connectRelatedPanels():void
+		protected function connectRelatedPanels():void
 		{
 			var panelList:Dictionary = panelsHash;			
-			drawUtility.depth = this.numChildren;
+			//drawUtility.depth = this.numChildren;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			var gridWidth:int = AGORAParameters.getInstance().gridWidth;

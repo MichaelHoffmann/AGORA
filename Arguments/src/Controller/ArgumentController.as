@@ -87,6 +87,7 @@ package Controller
 				AGORAModel.getInstance().agoraMapModel.ID = int(id);
 				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
 				FlexGlobals.topLevelApplication.map.visible = true;
+				FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
 				LoadController.getInstance().fetchMapData();
 			}else{
 				Alert.show("Please sign in into AGORA before loading a map.");
