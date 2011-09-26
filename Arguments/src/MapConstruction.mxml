@@ -66,7 +66,7 @@
 	
 
 		public function init():void {
-			argumentPaste.text=Language.lookup("PasteArgument") + "(under construction)"; 
+			argumentPaste.text=Language.lookup("PasteArgument") + Language.lookup("under construction"); 
 			//TODO: construct this and/or get translation for "Under construction" 
 			conceptStart.text=Language.lookup("DivideToSubclaims");
 		}

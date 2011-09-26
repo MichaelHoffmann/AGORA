@@ -253,6 +253,12 @@
 		<RUS text="поддерживает"/>
 		<GER text="unterstützt"/>
 	</Supports>
+
+	<UnderConstruction>
+		<EN-US text="(under construction)"/>
+		<RUS text="(в разработке)"/>
+		<GER text="(noch nicht verfügbar)"/>
+	</UnderConstruction>
 	
 	<Universal>
 		<EN-US text="Universal Statement"/>
@@ -462,7 +468,7 @@
 	
 	<DivideToSubclaims>
 		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case (under construction)"/>
-		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая (under construction)"/>
+		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая (в разработке)"/>
 		<GER text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können(noch nicht verfügbar)"/>
 	</DivideToSubclaims>
 	
