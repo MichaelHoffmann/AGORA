@@ -366,7 +366,5 @@ package Model
 			argumentTypeModel.ID = obj.connID;
 			return argumentTypeModel;
 		}
-		
-		
 	}
 }
