@@ -562,7 +562,7 @@ package classes
 			{
 				var aPanel:ArgumentPanel = nodes_map[node.@ID];
 				aPanel.ID = node.@ID;
-				aPanel.userIdLbl.text = "AU: " +  node.@Author;
+				aPanel.userIdLbl.text = Language.lookup("AU") + ": " +  node.@Author;
 				if(node.@Type == "Universal" || aPanel is Inference){
 					aPanel.state = 1;
 					aPanel.toggleType();
