@@ -295,9 +295,7 @@ CREATE TRIGGER nodedel AFTER UPDATE ON nodes
 	BEGIN
 		IF NEW.is_deleted = 1 THEN
 			UPDATE nodetext SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
-			IF NEW.nodetype_id=7 THEN
-				UPDATE connections SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
-			END IF;
+			UPDATE connections SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
 			UPDATE sourcenodes SET is_deleted=1, modified_date=NOW() WHERE node_id=NEW.node_id;
 		END IF;
 	END;
