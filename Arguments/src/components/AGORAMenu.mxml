@@ -92,7 +92,7 @@
 			
 			<s:Button id="signInBtn"
 					  label="{AGORAModel.getInstance().userSessionModel.uid? 
-					  	Language.lookup('SignOut'): Language.lookup('Sign In')}"
+					  	Language.lookup('SignOut'): Language.lookup('SignIn')}"
 					  click="signInBtn_clickHandler(event)" />
 			
 			<s:Button id="registerBtn"
