@@ -235,6 +235,18 @@
 		<RUS text="Не выбирать ничего"/>
 		<GER text="Wähle nichts aus"/>
 	</SelectNone>
+
+	<SignIn>
+		<EN-US text="Sign In"/>
+		<RUS text="Sign In"/> <!-- TODO: Translate -->
+		<GER text="Sign In"/> <!-- TODO: Translate -->
+	</SignIn>
+	
+	<SignOut>
+		<EN-US text="Sign Out"/>
+		<RUS text="Sign Out"/> <!-- TODO: Translate -->
+		<GER text="Sign Out"/> <!-- TODO: Translate -->
+	</SignOut>
 	
 	<Submit>
 		<EN-US text="Submit"/>

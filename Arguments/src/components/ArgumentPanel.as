@@ -405,9 +405,9 @@ package components
 			if(value == null){
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.firstClaim){
-						displayTxt.text = "[Enter your claim here]";
+						displayTxt.text = "[" + Language.lookup("EnterClaim") +"]";
 					}else{
-						displayTxt.text = "[Enter your reason here]";
+						displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
 					}
 				}
 				else if(model.statementFunction == StatementModel.INFERENCE){
@@ -417,9 +417,9 @@ package components
 			else if(value.split(" ").join("").length == 0){
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.firstClaim){
-						displayTxt.text = "[Enter your claim here]";
+						displayTxt.text = "[" + Language.lookup("EnterClaim") +"]";
 					}else{
-						displayTxt.text = "[Enter your reason here]";
+						displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
 					}
 				}else if(model.statementFunction == StatementModel.INFERENCE){
 					displayTxt.text =  "[Choose an argument scheme and language type to form the inference text]";
