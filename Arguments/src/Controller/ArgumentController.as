@@ -296,7 +296,13 @@ package Controller
 		//--------------------- delete Map -------------------------------//
 		public function deleteNodes(gridPanel:GridPanel):void{
 			var model:StatementModel = (gridPanel as ArgumentPanel).model;
-			model.deleteMe();
+			if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0) && (model.argumentTypeModel.reasonModels[0] != model)){
+				model.deleteMe();
+			}
+			else{
+				Alert.show("You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim");
+			}
+			
 		}
 		
 		public function onStatementDeleted(event:AGORAEvent):void{
