@@ -3,8 +3,13 @@ package Controller
 	import Events.AGORAEvent;
 	
 	import Model.AGORAModel;
+	import Model.ArgumentTypeModel;
+	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
+	
+	import components.AgoraMap;
+	import components.GridPanel;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -39,6 +44,25 @@ package Controller
 		
 		protected function onMapLoaded(event:AGORAEvent):void{
 			trace("map loaded");
+			var agoraMap:AgoraMap = FlexGlobals.topLevelApplication.map.agoraMap;
+			//get the vector of elements to be removed, and then remove
+			//them from map
+			var gridPanel:GridPanel;
+			for each(var object:Object in model.agoraMapModel.deletedList){
+				if(object is ArgumentTypeModel){
+					var atm:ArgumentTypeModel = object as ArgumentTypeModel;
+					gridPanel = agoraMap.menuPanelsHash[atm.ID];
+				}
+				else if(object is StatementModel){
+					var sm:StatementModel = object as StatementModel;
+					gridPanel = agoraMap.panelsHash[sm.ID];
+				}
+				agoraMap.removeChild(gridPanel);
+			}
+			
+			//empty the list
+			model.agoraMapModel.deletedList.splice(0, model.agoraMapModel.deletedList.length);
+			
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.stop();

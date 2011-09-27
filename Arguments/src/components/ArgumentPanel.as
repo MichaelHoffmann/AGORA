@@ -319,7 +319,7 @@ package components
 		}
 		
 		protected function onDeleteBtnClicked(event:MouseEvent):void{
-			//ArgumentController.getInstance().deleteNodes(this);
+			ArgumentController.getInstance().deleteNodes(this);
 		}
 		
 		protected function onStmtTypeClicked(event:MouseEvent):void{
