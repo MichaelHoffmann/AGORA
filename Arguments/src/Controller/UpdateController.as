@@ -3,7 +3,9 @@ package Controller
 	import Events.AGORAEvent;
 	
 	import Model.AGORAModel;
+	import Model.StatementModel;
 	
+	import components.ArgumentPanel;
 	import components.GridPanel;
 	import components.LAMWorld;
 	import components.MapName;
@@ -27,9 +29,7 @@ package Controller
 		}
 		
 		//----------------deleting nodes from the map --------------//
-		public function deleteNodes(gridPanel:GridPanel):void{
-			
-		}
+		
 		
 		//----------------get Instance ----------------------------//
 		public static function getInstance():UpdateController{

@@ -16,6 +16,7 @@ package Controller
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
+	import components.GridPanel;
 	import components.Inference;
 	import components.LAMWorld;
 	import components.Map;
@@ -170,7 +171,6 @@ package Controller
 			model.addSupportingArgument(nxgrid);
 		}
 		
-		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			LoadController.getInstance().fetchMapData(); 
 		}
@@ -293,6 +293,16 @@ package Controller
 			CursorManager.removeBusyCursor();
 		}
 		
+		//--------------------- delete Map -------------------------------//
+		public function deleteNodes(gridPanel:GridPanel):void{
+			var model:StatementModel = (gridPanel as ArgumentPanel).model;
+			model.deleteMe();
+		}
+		
+		public function onStatementDeleted(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
+		}
+		
 		//------------------ Building by Argument Scheme ------------------//
 		public function buildByArgumentScheme(option:Option):void{
 			//remove option
@@ -325,6 +335,7 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, textSaved);
 			statementModel.addEventListener(AGORAEvent.ARGUMENT_CREATED, onArgumentCreated);
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
+			statementModel.addEventListener(AGORAEvent.STATEMENTS_DELETED, onStatementDeleted);
 		}
 		
 		protected function setArgumentTypeModelEventListeners(argumentTypeModelAddedEvent:AGORAEvent):void{
@@ -382,7 +393,6 @@ package Controller
 			argumentTypeModel.lSubOption = option;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			logicController.formText(argumentTypeModel);
-			
 		}
 		
 		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{
@@ -441,7 +451,6 @@ package Controller
 				logicController.deleteLinks(argumentTypeModel);
 				AGORAModel.getInstance().agoraMapModel.loadMapModel();
 			}
-			
 		}
 		
 		//-------------------Generic Fault Handler---------------------//
@@ -449,7 +458,6 @@ package Controller
 			CursorManager.removeAllCursors();
 			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
-		
 	}
 }
 

@@ -1,6 +1,5 @@
 package Model
 {
-	
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
@@ -45,7 +44,7 @@ package Model
 		private var _nodeTextIDs:Vector.<int>;
 		private var _xgrid:int;
 		private var _ygrid:int;		
-		
+		private var _deleteState:Boolean;
 		private var _enablerVisible:Boolean;
 		
 		private var toggleStatementTypeService:HTTPService;
@@ -62,7 +61,7 @@ package Model
 			statement.parent = this;
 			nodeTextIDs = new Vector.<int>(0,false);
 			statementFunction = modelType;
-			
+			deleteState = true;
 			
 			//create toggleStatementTypeService
 			toggleStatementTypeService = new HTTPService;
@@ -85,7 +84,8 @@ package Model
 			//delete statements service
 			deleteStatements = new HTTPService;
 			deleteStatements.url = AGORAParameters.getInstance().deleteURL;
-			//deleteStatements.addEventListener(ResultEvent.RESULT, onDeleteStatementsResult);
+			deleteStatements.resultFormat = "e4x";
+			deleteStatements.addEventListener(ResultEvent.RESULT, onDeleteStatementResult);
 			deleteStatements.addEventListener(FaultEvent.FAULT, onFault);
 			
 			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);			
@@ -93,19 +93,26 @@ package Model
 		
 		
 		//--------------------Getters and Setters------------------//
+		public function get deleteState():Boolean
+		{
+			return _deleteState;
+		}
 		
+		public function set deleteState(value:Boolean):void
+		{
+			_deleteState = value;
+		}
 		
-	
 		public function get argumentTypeModel():ArgumentTypeModel
 		{
 			return _argumentTypeModel;
 		}
-
+		
 		public function set argumentTypeModel(value:ArgumentTypeModel):void
 		{
 			_argumentTypeModel = value;
 		}
-
+		
 		public function get statementFunction():String
 		{
 			return _statementFunction;
@@ -187,6 +194,7 @@ package Model
 				return false;
 			}
 		}
+		
 		
 		public function get supportingArguments():Vector.<ArgumentTypeModel>
 		{
@@ -271,7 +279,7 @@ package Model
 			}
 			return null;
 		}
-	
+		
 		//does not push new nodetextIDs
 		public function addTemporaryStatement():void{
 			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
@@ -289,9 +297,39 @@ package Model
 			}
 			return false;
 		}
+		
+		public function setDeleteState():void{
+			if(supportingArguments.length > 0 || (argumentTypeModel && argumentTypeModel.inferenceModel.supportingArguments.length > 0)){
+				deleteState = false;
+			}else{
+				deleteState = true;
+			}
+		}
+		
+		public function addToSupportingArguments(atm:ArgumentTypeModel):void{
+			supportingArguments.push(atm);
+		}
+		
+		public function removeFromSupportingArguments(atm:ArgumentTypeModel):void{
+			var index:int = supportingArguments.indexOf(atm);
+			if(index != -1){
+				supportingArguments.splice(index, 1);
+			}
+			setDeleteState();
+		}
+		
 		//------------------ Delete Function ------------------------------//
 		public function deleteMe():void{
-			
+			var inputXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
+			var statementXML:XML = <node ID={ID} />;
+			inputXML.appendChild(statementXML);
+			trace(inputXML.toXMLString());
+			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			deleteStatements.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash,xml:inputXML});
+		}
+		protected function onDeleteStatementResult(event:ResultEvent):void{
+			trace(event.result.toXMLString());
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENTS_DELETED, null, null));
 		}
 		
 		//------------------ Toggle Statement Type ------------------------//
@@ -365,8 +403,6 @@ package Model
 				AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
 			}
 			
-			supportingArguments.push(argumentTypeModel);
-			
 			var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
 			
 			AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
@@ -374,7 +410,6 @@ package Model
 			
 			
 			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
-			
 		}
 		
 		
@@ -395,6 +430,7 @@ package Model
 		
 		//----------------- Generic Fault Handler -------------------------//
 		protected function onFault( fault:FaultEvent):void{
+			trace(fault.message.body.toString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 		

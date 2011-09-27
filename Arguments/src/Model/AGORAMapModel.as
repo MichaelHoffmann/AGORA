@@ -403,7 +403,7 @@ package Model
 					}
 					
 					if(!argumentTypeModel.claimModel.hasArgument(argumentTypeModel)){
-						argumentTypeModel.claimModel.supportingArguments.push(argumentTypeModel);
+						argumentTypeModel.claimModel.addToSupportingArguments(argumentTypeModel);
 					}
 					
 					argumentTypeModel.xgrid = obj.x;

@@ -31,6 +31,7 @@ package Model
 		public static const MENU:int = 0;
 		public  static const MAP:int = 1;
 		
+		private var _leafDelete:Boolean;
 		
 		//-------------------------------------Constructor------------------------------------------------------//
 		public function AGORAModel(singletonEnforcement:SingletonEnforcementClass, target:IEventDispatcher=null)
@@ -44,6 +45,8 @@ package Model
 			
 			state = MENU;
 			reference = this;
+		
+			leafDelete = true;
 			
 			initializeHashMaps();
 			
@@ -51,6 +54,17 @@ package Model
 		
 		
 		//-----------------------------Getters and Setters--------------------------------------------------------//
+
+		public function get leafDelete():Boolean
+		{
+			return _leafDelete;
+		}
+
+		public function set leafDelete(value:Boolean):void
+		{
+			_leafDelete = value;
+		}
+
 		public function get state():int
 		{
 			return _state;

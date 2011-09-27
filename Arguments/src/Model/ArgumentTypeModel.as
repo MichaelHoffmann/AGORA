@@ -356,6 +356,7 @@ package Model
 				}
 				tid = tid + 1;
 			}
+			
 			requestXML.appendChild(outputXML);
 			return requestXML;
 		}

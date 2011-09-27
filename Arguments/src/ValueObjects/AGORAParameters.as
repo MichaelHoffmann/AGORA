@@ -94,7 +94,7 @@ package ValueObjects
 			loginURL = "http://agora.gatech.edu/dev/login.php";
 			registrationURL = "http://agora.gatech.edu/dev/register.php";
 			mapRemoveURL = "http://agora.gatech.edu/dev/remove_map.php";
-			deleteURL = "http://agora.gatech.edu/dev/remove.php";
+			deleteURL = "http://agora.gatech.edu/rework/remove.php";
 			insertURL = "http://agora.gatech.edu/dev/insert.php";
 			loadMapURL = "http://agora.gatech.edu/dev/load_map.php";
 			
