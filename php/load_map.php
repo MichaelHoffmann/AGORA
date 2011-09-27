@@ -86,7 +86,11 @@
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
+		/*$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
+			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+		*/
+		$query = "SELECT nodes.node_id, nodes.nodetype_id, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type
+			FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
 			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
@@ -101,7 +105,7 @@
 				$node->addAttribute("y", $row['y_coord']);
 				$node->addAttribute("typed", $row['typed']);
 				$node->addAttribute("positive", $row['is_positive']);
-				$node->addAttribute("connected_by", $row['connected_by']);				
+				$node->addAttribute("connected_by", $row['connected_by']);
 				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
