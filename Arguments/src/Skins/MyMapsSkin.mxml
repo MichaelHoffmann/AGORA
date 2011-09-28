@@ -67,7 +67,7 @@
 	<s:Label id="titleDisplay" 
 			 paddingLeft="15" paddingRight="15" paddingTop="15"
 			 fontWeight="bold"
-			 text.notLoggedIn="My Maps"
+			 text.notLoggedIn="{Language.lookup(&quot;MyMaps&quot;)}"
 			 />
 	
 	<s:Scroller width="100%" top="40" height="300">

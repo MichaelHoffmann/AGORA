@@ -103,7 +103,7 @@ package ValueObjects
 
 			
 			gridWidth = 25;
-			version = "11.8.30";
+			version = "11.9.28";
 			reference = this;
 		}
 		
