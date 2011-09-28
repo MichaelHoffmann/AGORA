@@ -43,6 +43,8 @@ package components
 	import spark.components.HGroup;
 	import spark.components.VGroup;
 	
+	import classes.Language;
+	
 	public class MenuPanel extends GridPanel
 	{
 		private var _model:ArgumentTypeModel;
@@ -129,7 +131,7 @@ package components
 			hgroup = new HGroup;
 			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
-			addReasonBtn.label = "add..";
+			addReasonBtn.label = Language.lookup("Add")+"...";
 			hgroup.gap = 0;
 			vgroup.percentWidth = 100;
 			addReasonBtn.percentWidth = 100;
