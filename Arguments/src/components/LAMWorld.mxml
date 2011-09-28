@@ -38,7 +38,7 @@
 				  width="191" 
 				  height="45" 
 				  text="{Language.lookup(&quot;WhatIsMainClaim&quot;)}"
-				  toolTip="The easiest way to construct an argument"
+				  toolTip="{Language.lookup(&quot;EasiestWay&quot;)}"
 				  textAlign="center"
 				  click="startWithClaim()"/>
 	<mx:TextArea id="schemeStart"
