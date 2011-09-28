@@ -112,7 +112,7 @@
 			
 			public function errorHandler(event: IOErrorEvent):void
 			{
-				Alert.show("Error occurred when contacting server");
+				Alert.show(Language.lookup("CommunicationError"));
 			}
 			
 			public function clear_form():void
@@ -124,7 +124,7 @@
 			{
 				if(pass_hash.text != pass_hash_dup.text)
 				{
-					Alert.show("Passwords do not match");
+					Alert.show(Language.lookup("PassMismatch"));
 					return;
 				}
 				
@@ -158,27 +158,27 @@
 		
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="Username" required="true">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}" required="true">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Password" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}" required="true">
 			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Confirm Password" required="true" >
+		<mx:FormItem  label="{Language.lookup(&quot;PassRepeat&quot;)}" required="true" >
 			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="First Name" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}" required="true">
 			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Last Name" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}" required="true">
 			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Email" required="true">
+		<mx:FormItem  label="{Language.lookup(&quot;Email&quot;)}" required="true">
 			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>
