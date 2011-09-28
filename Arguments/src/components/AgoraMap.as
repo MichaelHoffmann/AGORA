@@ -53,6 +53,7 @@ package components
 		public var firstClaimHelpText:FirstClaimHelpText;
 		private static var _tempID:int;
 		public var timer:Timer;
+		private var _removePreviousElements:Boolean;
 		
 		public var panelsHash:Dictionary;
 		public var menuPanelsHash:Dictionary;
@@ -61,13 +62,22 @@ package components
 		{	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
+			initializeMapStructures();
 			timer = new Timer(30000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
-			panelsHash = new Dictionary;
-			menuPanelsHash = new Dictionary;
 			beganBy = BY_CLAIM;
+			removePreviousElements = false;
 		}
 		
+		//--------------------- getters and setters -------------------//
+		public function get removePreviousElements():Boolean{
+			return _removePreviousElements;
+		}
+		public function set removePreviousElements(value:Boolean):void{
+			_removePreviousElements = value;
+			invalidateProperties();
+			invalidateDisplayList();
+		}
 		
 		protected function onMapTimer(event:TimerEvent):void{
 			LoadController.getInstance().fetchMapData();
@@ -79,7 +89,9 @@ package components
 		}
 		
 		public function initializeMapStructures():void{
-			
+			panelsHash = new Dictionary;
+			menuPanelsHash = new Dictionary;
+			removePreviousElements = true;
 		}
 		
 		override protected function createChildren():void
@@ -120,6 +132,10 @@ package components
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
+			if(removePreviousElements){
+				removeAllChildren();
+				_removePreviousElements = false;
+			}
 			try{
 				removeChild(drawUtility);
 			}catch(e:Error){

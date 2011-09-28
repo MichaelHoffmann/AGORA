@@ -40,17 +40,18 @@ package Model
 		private var createFirstClaim: HTTPService;
 		private var loadMapService: HTTPService;
 		private var updatePositionsService:HTTPService;
-		
+
 		private var _name:String;
 		private var _description:String;
 		private var _timestamp:String;
 		private var _ID:int;
-		
 		private var _statementWidth:int;
+		private var _deletedList:Vector.<Object>;
 		
 		private var _mapConstructedFromArgument:Boolean;
 		
-		private var _deletedList:Vector.<Object>;
+		
+		
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
@@ -91,8 +92,7 @@ package Model
 		}
 		
 		//-------------------------Getters and Setters--------------------------------//
-		
-		
+
 		public function get deletedList():Vector.<Object>
 		{
 			return _deletedList;

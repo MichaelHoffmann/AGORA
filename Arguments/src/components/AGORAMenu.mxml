@@ -10,9 +10,7 @@
 			import Controller.AGORAController;
 			import Controller.UpdateController;
 			import Controller.UserSessionController;
-			
 			import Model.AGORAModel;
-			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			

@@ -118,6 +118,7 @@ package Controller
 			}
 		}
 		
+		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
 			fetchDataMapList();
@@ -156,12 +157,6 @@ package Controller
 			AGORAModel.getInstance().state = AGORAModel.MENU;
 			FlexGlobals.topLevelApplication.map.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
-			
-			//Remove components from map
-			FlexGlobals.topLevelApplication.map.agoraMap.removeAllChildren();
-			
-			//Empty Map Model
-			AGORAModel.getInstance().agoraMapModel.reinitializeModel();
 			
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();

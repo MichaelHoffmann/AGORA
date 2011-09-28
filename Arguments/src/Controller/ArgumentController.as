@@ -85,10 +85,15 @@ package Controller
 		//-------------------- Load Map --------------------------------//
 		public function loadMap(id:String):void{
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+				//initialize the model
+				AGORAModel.getInstance().agoraMapModel.reinitializeModel();
 				AGORAModel.getInstance().agoraMapModel.ID = int(id);
+				//hide and show view components
 				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
 				FlexGlobals.topLevelApplication.map.visible = true;
+				//reinitialize map view
 				FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
+				//fetch data
 				LoadController.getInstance().fetchMapData();
 			}else{
 				Alert.show("Please sign in into AGORA before loading a map.");
@@ -261,7 +266,7 @@ package Controller
 		public function onTextEntered(argumentPanel:ArgumentPanel):void{
 			//if first claim
 			var model:StatementModel = argumentPanel.model;
-			if(model.firstClaim){
+			if(model.firstClaim && model.supportingArguments.length == 0){
 				//add an argument
 				addSupportingArgument(model);
 			}
