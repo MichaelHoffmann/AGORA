@@ -319,3 +319,14 @@ CREATE TRIGGER conndel AFTER UPDATE ON connections
 		END IF;
 	END;
 //
+
+CREATE TRIGGER sndel AFTER UPDATE ON sourcenodes
+	FOR EACH ROW
+	BEGIN
+		IF NEW.is_deleted = 1 THEN
+			IF (SELECT COUNT(*) FROM sourcenodes WHERE is_deleted=0 AND connection_id=NEW.connection_id) = 0 THEN
+				UPDATE connections SET is_deleted=1, modified_date=NOW() WHERE connection_id=NEW.connection_id ;
+			END IF;			
+		END IF;
+	END;
+//
