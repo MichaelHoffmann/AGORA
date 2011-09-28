@@ -38,6 +38,7 @@
 			import spark.components.Label;
 			
 			import classes.Configure;
+			import classes.Language;
 			
 			//for future
 			[Bindable]
@@ -58,8 +59,8 @@
 			[SkinPart(required="true")]
 			public var deleteBtn:Button;
 			
-			public static const MARK_ALL:String = "Select All";
-			public static const UNMARK_ALL:String = "Select None";
+			public static const MARK_ALL:String = Language.lookup("SelectAll");
+			public static const UNMARK_ALL:String = Language.lookup("SelectNone");
 			
 			[Bindable]
 			public var selectString:String;

@@ -75,6 +75,8 @@
 			public var numComponentsY:int;
 			public var layoutManager:LayoutController;
 			
+			import classes.Language;
+			
 			public function hideMap():void
 			{
 				//var group:Group = Group(this.parent.getChildByName("agoraMenu"));
