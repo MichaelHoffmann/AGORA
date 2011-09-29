@@ -57,6 +57,7 @@ package Model
 			reasonModels = new Vector.<StatementModel>;
 			
 			addReasonService = new HTTPService;
+			
 			addReasonService.url = AGORAParameters.getInstance().insertURL;
 			addReasonService.addEventListener(ResultEvent.RESULT, addReasonServiceResult);
 			addReasonService.addEventListener(FaultEvent.FAULT, onFault);
@@ -251,7 +252,13 @@ package Model
 		}
 		
 		protected function addReasonServiceResult(event:ResultEvent):void{
+			if(event.result.map.hasOwnProperty("error")){
+				dispatchEvent(new AGORAEvent(AGORAEvent.REASON_ADDITION_NOT_ALLOWED, null, null));
+				return;
+			}
 			var map:MapValueObject = new MapValueObject(event.result.map, true);
+			//trace(event.result.toXMLString());
+			
 			var statementModel:StatementModel;
 			for each(var nodeVO:NodeValueObject in map.nodeObjects){
 				if(!AGORAModel.getInstance().agoraMapModel.panelListHash.hasOwnProperty(nodeVO.ID)){

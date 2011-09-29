@@ -354,6 +354,7 @@ package Controller
 			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDED, onReasonAdded);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVED, onArgumentSaved);
+			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDITION_NOT_ALLOWED, reasonAdditionNotAllowedFault);
 		}
 		
 		//------------------ Handling events from schemeSelector ------//
@@ -464,11 +465,17 @@ package Controller
 			}
 		}
 		
+		//-------------------Event Handlers---------------------------//
+		protected function reasonAdditionNotAllowedFault(event:AGORAEvent):void{
+			Alert.show("You are not allowed to add a reason to another user's argument");
+		}
+		
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{
 			CursorManager.removeAllCursors();
 			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
+		
 	}
 }
 

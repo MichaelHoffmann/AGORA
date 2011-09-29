@@ -40,7 +40,7 @@ package Model
 		private var createFirstClaim: HTTPService;
 		private var loadMapService: HTTPService;
 		private var updatePositionsService:HTTPService;
-
+		
 		private var _name:String;
 		private var _description:String;
 		private var _timestamp:String;
@@ -92,7 +92,7 @@ package Model
 		}
 		
 		//-------------------------Getters and Setters--------------------------------//
-
+		
 		public function get deletedList():Vector.<Object>
 		{
 			return _deletedList;
@@ -288,27 +288,32 @@ package Model
 			//trace(event.result.toXMLString());
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
-			//try{
-			//update timestamp
-			timestamp = map.timestamp;
-			
-			//Form a map of nodes
-			var obj:Object;
-			var nodeHash:Dictionary = new Dictionary;
-			var textboxHash:Dictionary = new Dictionary;
-			
-			//read nodes and create Statment Models
-			//parseNode(map, nodeHash, textboxHash);
-			processNode(map.nodeObjects,nodeHash, textboxHash);
-			
-			//Form a map of connections
-			var connectionsHash:Dictionary = new Dictionary;
-			//parseConnection(map, connectionsHash, nodeHash);
-			processConnection(map.connections, connectionsHash, nodeHash);
-			
-			//read and set text - This should be performed after links are created
-			processTextbox(map.textboxes, textboxHash);
-			
+			try{
+				//update timestamp
+				timestamp = map.timestamp;
+				
+				//Form a map of nodes
+				var obj:Object;
+				var nodeHash:Dictionary = new Dictionary;
+				var textboxHash:Dictionary = new Dictionary;
+				
+				//read nodes and create Statment Models
+				//parseNode(map, nodeHash, textboxHash);
+				processNode(map.nodeObjects,nodeHash, textboxHash);
+				
+				//Form a map of connections
+				var connectionsHash:Dictionary = new Dictionary;
+				//parseConnection(map, connectionsHash, nodeHash);
+				processConnection(map.connections, connectionsHash, nodeHash);
+				
+				//read and set text - This should be performed after links are created
+				processTextbox(map.textboxes, textboxHash);
+			}
+			catch(error:Error){
+				trace(error.message);
+				trace("Error in reading update to Map");
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+			}
 			//add new elements to Model
 			for each(var node:StatementModel in nodeHash){
 				if(!panelListHash.hasOwnProperty(node.ID)){
@@ -328,13 +333,6 @@ package Model
 				textboxListHash[textbox.ID] = textbox;
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
-			
-			//}
-			//catch(error:Error){
-			//	trace(error.message);
-			//	trace("Error in reading update to Map");
-			//	dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			//}			
 		}
 		
 		//---------------------- Process Node ---------------------------------------------------------//
