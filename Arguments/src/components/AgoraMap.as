@@ -240,7 +240,7 @@ package components
 					for each(argumentTypeModel in model.supportingArguments){
 						//get the point one grid before the first reason horizontally.
 						var rspx:int = (argumentTypeModel.reasonModels[0].ygrid - 1) * gridWidth;
-						var rspy:int = argumentTypeModel.reasonModels[0].xgrid * gridWidth + 30;
+						var rspy:int = argumentTypeModel.xgrid * gridWidth + 30;
 						//get the point in front of the last reason
 						var rfpy:int = layoutController.getBottomReason(argumentTypeModel).xgrid * gridWidth + 30;
 						
