@@ -68,6 +68,7 @@ package Model
 			
 			
 			
+			
 			AGORAModel.getInstance().agoraMapModel.newArgumentTypeModelAdded(this);
 		}
 		

@@ -322,14 +322,19 @@ package Model
 		public function deleteMe():void{
 			var inputXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
 			var statementXML:XML = <node ID={ID} />;
+			
+			if(this.statementFunction == INFERENCE){
+				for each(var stmt:StatementModel in argumentTypeModel.reasonModels){
+					inputXML.appendChild(<node ID={stmt.ID} />);
+				}
+			}
 			inputXML.appendChild(statementXML);
-			trace(inputXML.toXMLString());
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			deleteStatements.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash,xml:inputXML});
 		}
+		
 		protected function onDeleteStatementResult(event:ResultEvent):void{
-			trace(event.result.toXMLString());
-			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENTS_DELETED, null, null));
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENTS_DELETED, null, this));
 		}
 		
 		//------------------ Toggle Statement Type ------------------------//
