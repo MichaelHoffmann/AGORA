@@ -301,7 +301,7 @@ package Controller
 		//--------------------- delete Map -------------------------------//
 		public function deleteNodes(gridPanel:GridPanel):void{
 			var model:StatementModel = (gridPanel as ArgumentPanel).model;
-			if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0) && (model.argumentTypeModel.reasonModels[0] != model)){
+			if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
 				model.deleteMe();
 			}
 			else{

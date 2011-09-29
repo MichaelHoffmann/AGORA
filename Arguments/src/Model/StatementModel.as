@@ -328,6 +328,9 @@ package Model
 					inputXML.appendChild(<node ID={stmt.ID} />);
 				}
 			}
+			else if(this.argumentTypeModel.reasonModels.length == 1){
+				inputXML.appendChild(<node ID = {argumentTypeModel.inferenceModel.ID} />);
+			}
 			inputXML.appendChild(statementXML);
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			deleteStatements.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash,xml:inputXML});
