@@ -31,6 +31,8 @@ package Events
 		public static const ARGUMENT_TYPE_ADDED:String = "ArgumentTypeAdded";
 		public static const ARGUMENT_SCHEME_SET:String = "ArgumentSchemeSet";
 		public static const ARGUMENT_SAVED:String = "ArgumentSaved";
+		public static const STATEMENTS_DELETED:String = "StatementsDeleted";
+		public static const REASON_ADDITION_NOT_ALLOWED:String = "ReasonAdditionNotAllowed";
 		
 		public var xmlData:XML;
 		public var eventData:Object;

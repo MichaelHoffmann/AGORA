@@ -1,6 +1,7 @@
 package components
 {
 	import Controller.ArgumentController;
+	import Controller.UpdateController;
 	import Controller.ViewController;
 	import Controller.logic.ConditionalSyllogism;
 	import Controller.logic.ParentArg;
@@ -239,11 +240,9 @@ package components
 				BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
 				BindingUtils.bindProperty(this, "panelType", model, ["statementFunction"]);
 				BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
-				
+			
 				author = model.author;
-				
 				statementsAddedDF = true;
-				
 				invalidateProperties();
 				invalidateSize();
 				invalidateDisplayList();
@@ -320,7 +319,7 @@ package components
 		}
 		
 		protected function onDeleteBtnClicked(event:MouseEvent):void{
-			
+			ArgumentController.getInstance().deleteNodes(this);
 		}
 		
 		protected function onStmtTypeClicked(event:MouseEvent):void{
@@ -437,6 +436,19 @@ package components
 				}
 				else{
 					this.visible = true;
+				}
+			}
+		}
+		
+		//-------------------- Other Public Methods ----------------------------//
+		public function enableDelete():void{
+			//remove button
+			if(AGORAModel.getInstance().leafDelete){
+				
+				if(model.supportingArguments.length != 0 || ( model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length != 0)){
+					if(deleteBtn){
+						deleteBtn.enabled = false;
+					}			
 				}
 			}
 		}

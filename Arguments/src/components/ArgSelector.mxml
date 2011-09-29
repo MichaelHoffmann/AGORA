@@ -71,6 +71,7 @@
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 		
@@ -150,15 +151,20 @@
 
 			//----------------- Other public functions -----------------------------------//
 			public function show():void{
+				this.parent.setChildIndex(this, parent.numChildren - 1);
 				this.visible = true;
 			}
+			
 			public function hide():void{
+				//also hide the map's(parent's help text)
 				typeSelector.visible = false;
 				andor.visible = false;
 				this.visible = false;
 			}
+			
 			//----------------- Event Handlers --------------------------------------------//
 			protected function addEventHandlers(event:FlexEvent):void{
+				this.addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 				mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER, onSchemeItemRollOver);
 				typeSelector.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageTypeItemRollOver);
 				andor.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageSubOptionsItemRollOver);
@@ -196,6 +202,10 @@
 			protected function onOptionsItemClicked(event:ListEvent):void{
 				var option:String = event.itemRenderer.data.toString();
 				ArgumentController.getInstance().setSchemeLanguageOptionType(this, option);
+			}
+			
+			protected function onRollOver(event:MouseEvent):void{
+				this.parent.setChildIndex(this, parent.numChildren - 1);
 			}
 		
 		]]>

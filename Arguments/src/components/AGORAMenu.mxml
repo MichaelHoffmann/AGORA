@@ -10,9 +10,7 @@
 			import Controller.AGORAController;
 			import Controller.UpdateController;
 			import Controller.UserSessionController;
-			
 			import Model.AGORAModel;
-			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
@@ -23,8 +21,7 @@
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				timer.addEventListener(TimerEvent.TIMER, timerFired);
-				//temporarily commented due to extremely slow internet connection
-				//timer.start();
+				timer.start();
 			}
 			
 			protected function timerFired(event:TimerEvent):void{

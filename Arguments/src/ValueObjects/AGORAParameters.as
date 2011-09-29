@@ -10,7 +10,7 @@ package ValueObjects
 		public var mapRemoveURL:String;
 		public var insertURL:String;
 		public var loadMapURL:String;
-		
+		public var deleteURL:String;
 		public var gridWidth:int;
 		public var version:String;
 		
@@ -94,8 +94,9 @@ package ValueObjects
 			loginURL = "http://agora.gatech.edu/dev/login.php";
 			registrationURL = "http://agora.gatech.edu/dev/register.php";
 			mapRemoveURL = "http://agora.gatech.edu/dev/remove_map.php";
+			deleteURL = "http://agora.gatech.edu/rework/remove.php";
 			insertURL = "http://agora.gatech.edu/dev/insert.php";
-			loadMapURL = "http://agora.gatech.edu/dev/load_map.php";
+			loadMapURL = "http://agora.gatech.edu/rework/load_map.php";
 			
 			MAP_LOADING_FAILED = "Error occured when loading map";
 			STATEMENT_TOGGLE_FAILED = "Error occurred when trying to toggle the type of statement";

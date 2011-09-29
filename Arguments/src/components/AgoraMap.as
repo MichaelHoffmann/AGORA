@@ -49,10 +49,11 @@ package components
 		public var beganBy:String;
 		public var drawUtility:UIComponent = null;
 		public var ID:int;
-		public var option:Option;
 		public var helpText:HelpText;
+		public var firstClaimHelpText:FirstClaimHelpText;
 		private static var _tempID:int;
 		public var timer:Timer;
+		private var _removePreviousElements:Boolean;
 		
 		public var panelsHash:Dictionary;
 		public var menuPanelsHash:Dictionary;
@@ -61,17 +62,25 @@ package components
 		{	
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
-			timer = new Timer(30000);
+			initializeMapStructures();
+			timer = new Timer(5000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
-			panelsHash = new Dictionary;
-			menuPanelsHash = new Dictionary;
-			//default
 			beganBy = BY_CLAIM;
+			removePreviousElements = false;
 		}
 		
+		//--------------------- getters and setters -------------------//
+		public function get removePreviousElements():Boolean{
+			return _removePreviousElements;
+		}
+		public function set removePreviousElements(value:Boolean):void{
+			_removePreviousElements = value;
+			invalidateProperties();
+			invalidateDisplayList();
+		}
 		
 		protected function onMapTimer(event:TimerEvent):void{
-			//LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		public function getGlobalCoordinates(point:Point):Point
@@ -79,18 +88,24 @@ package components
 			return localToGlobal(point);
 		}
 		
+		public function initializeMapStructures():void{
+			panelsHash = new Dictionary;
+			menuPanelsHash = new Dictionary;
+			removePreviousElements = true;
+		}
+		
 		override protected function createChildren():void
 		{
 			super.createChildren();
 			drawUtility = new UIComponent();
-			this.parent.addChild(drawUtility);
-			option = new Option;
-			addChild(option);
-			option.visible = false;
-			
+			this.addChild(drawUtility);
+			drawUtility.depth = 0;
 			helpText = new HelpText;
 			addChild(helpText);
 			helpText.visible = false;
+			firstClaimHelpText = new FirstClaimHelpText;
+			addChild(firstClaimHelpText);
+			firstClaimHelpText.visible = false;
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -110,13 +125,32 @@ package components
 			var toygrid:int = Math.floor(tmpx/AGORAParameters.getInstance().gridWidth);
 			var diffx:int = toxgrid - int(dragSource.dataForFormat("gx"));
 			var diffy:int = toygrid - int(dragSource.dataForFormat("gy"));
-			
+			setChildIndex(gridPanel, numChildren - 1);
 			LayoutController.getInstance().movePanel(gridPanel,diffx, diffy);
 			
 		}
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
+			if(removePreviousElements){
+				removeAllChildren();
+				_removePreviousElements = false;
+			}
+			try{
+				removeChild(drawUtility);
+			}catch(e:Error){
+			}
+			addChild(drawUtility);
+			try{
+				removeChild(helpText);
+			}catch(e:Error){
+			}
+			addChild(helpText);
+			try{
+				removeChild(firstClaimHelpText);
+			}catch(e:Error){
+			}
+			addChild(firstClaimHelpText);
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
 				if(StatementModel(newPanels[i]).statementFunction == StatementModel.INFERENCE){
@@ -159,9 +193,7 @@ package components
 				addChild(menuPanel);
 				addChild(menuPanel.schemeSelector);
 			}
-			
 			LoadController.getInstance().mapUpdateCleanUp();
-			
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -170,18 +202,9 @@ package components
 			connectRelatedPanels();
 		}
 		
-		public function addable():Boolean
-		{
-			if(option.visible == true)
-				return false;
-			else
-				return true;
-		}
-		
-		public function connectRelatedPanels():void
+		protected function connectRelatedPanels():void
 		{
 			var panelList:Dictionary = panelsHash;			
-			drawUtility.depth = this.numChildren;
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
 			var gridWidth:int = AGORAParameters.getInstance().gridWidth;
@@ -192,8 +215,13 @@ package components
 			
 			for each(var model:StatementModel in AGORAModel.getInstance().agoraMapModel.panelListHash){
 				if(model.supportingArguments.length > 0){
+					
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
+					//draw an array
+					drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 35);
+					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
+					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 25);
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
 					var fvlspy:int = argumentPanel.y + 30;
 					//First Vertical Line Finishing Point
@@ -242,7 +270,6 @@ package components
 							drawUtility.graphics.lineTo(statementModel.ygrid * gridWidth, poReason);
 						}
 					}
-					
 				} 
 			}
 		}		

@@ -25,8 +25,6 @@ package components
 	
 	import Model.ArgumentTypeModel;
 	
-	import Model.ArgumentTypeModel;
-
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
@@ -34,6 +32,7 @@ package components
 	import mx.controls.Label;
 	import mx.core.DragSource;
 	import mx.core.FlexBitmap;
+	import mx.core.FlexGlobals;
 	import mx.core.IUIComponent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
@@ -118,6 +117,13 @@ package components
 			ArgumentController.getInstance().addReason(model);
 		}
 		protected function onChangeSchemeClicked(event:MouseEvent):void{
+			var helpText:HelpText = FlexGlobals.topLevelApplication.map.agoraMap.helpText;
+			helpText.visible = true;
+			helpText.parent.setChildIndex(helpText, numChildren -1);
+			//get the first reason
+			var firstReason:ArgumentPanel = AgoraMap(helpText.parent).panelsHash[model.reasonModels[0].ID];
+			helpText.x = firstReason.x + firstReason.width + 30;
+			helpText.y = firstReason.y;
 			ArgumentController.getInstance().constructArgument(model);
 		}
 		

@@ -16,6 +16,7 @@ package Controller
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
+	import components.GridPanel;
 	import components.Inference;
 	import components.LAMWorld;
 	import components.Map;
@@ -84,9 +85,15 @@ package Controller
 		//-------------------- Load Map --------------------------------//
 		public function loadMap(id:String):void{
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+				//initialize the model
+				AGORAModel.getInstance().agoraMapModel.reinitializeModel();
 				AGORAModel.getInstance().agoraMapModel.ID = int(id);
+				//hide and show view components
 				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
 				FlexGlobals.topLevelApplication.map.visible = true;
+				//reinitialize map view
+				FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
+				//fetch data
 				LoadController.getInstance().fetchMapData();
 			}else{
 				Alert.show("Please sign in into AGORA before loading a map.");
@@ -95,7 +102,9 @@ package Controller
 		
 		//---------------------Creating a New Map-----------------------//
 		public function createMap(mapName:String):void{
+			model.agoraMapModel.reinitializeModel();
 			model.agoraMapModel.createMap(mapName);	
+			FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
 		}
 		
 		protected function onMapCreated(event:AGORAEvent):void{
@@ -121,6 +130,10 @@ package Controller
 		
 		//-------------------Add First Claim------------------------------//
 		public function addFirstClaim():void{
+			//Set the coordinates of the help text
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = true;
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.y = 2 * AGORAParameters.getInstance().gridWidth;
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.x = 3 * AGORAParameters.getInstance().gridWidth + 180 + 25;
 			//instruct the model to add a first claim to itself
 			model.agoraMapModel.addFirstClaim();
 		}
@@ -136,6 +149,11 @@ package Controller
 		
 		//----------------- Adding an Argument -------------------------------//
 		public function addSupportingArgument(model:StatementModel):void{
+			if(model.firstClaim){//first claim
+				if(model.supportingArguments.length == 0){
+					FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
+				}
+			}
 			//tell the statement to support itself with an argument. Supply the position.
 			//figure out the position
 			//find out the last menu panel
@@ -159,7 +177,6 @@ package Controller
 			//call the function
 			model.addSupportingArgument(nxgrid);
 		}
-		
 		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			LoadController.getInstance().fetchMapData(); 
@@ -252,7 +269,9 @@ package Controller
 		public function onTextEntered(argumentPanel:ArgumentPanel):void{
 			//if first claim
 			var model:StatementModel = argumentPanel.model;
-			if(model.firstClaim){
+			if(model.firstClaim && model.supportingArguments.length == 0){
+				//add an argument
+				addSupportingArgument(model);
 			}
 				//if reasons Completed
 			else if(model.argumentTypeModel.reasonsCompleted){
@@ -282,6 +301,37 @@ package Controller
 			CursorManager.removeBusyCursor();
 		}
 		
+		//--------------------- delete Map -------------------------------//
+		public function deleteNodes(gridPanel:GridPanel):void{
+			var model:StatementModel = (gridPanel as ArgumentPanel).model;
+			if(model.statementFunction == StatementModel.STATEMENT){
+				if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
+					model.deleteMe();
+				}
+				else{
+					Alert.show("You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim.");
+				}
+			}
+			else if(model.statementFunction == StatementModel.INFERENCE){
+				if(model.supportingArguments.length > 0){
+					Alert.show("You cannot delete a statement that is supported.");
+					return;
+				}
+				for each(var stmt:StatementModel in model.argumentTypeModel.reasonModels){
+					if(stmt.supportingArguments.length > 0){
+						Alert.show("One of the reasons among the reasons, together with this enabler, that support the claim is supported by further arguments. Therefore, you cannot delete this enabler because it requires the supported reason to be deleted. No supported statement could be deleted.");
+						return;
+					}
+				}
+				model.deleteMe();
+			}
+			
+		}
+		
+		public function onStatementDeleted(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
+		}
+		
 		//------------------ Building by Argument Scheme ------------------//
 		public function buildByArgumentScheme(option:Option):void{
 			//remove option
@@ -298,8 +348,6 @@ package Controller
 			statementModel.saveTexts();
 			CursorManager.setBusyCursor();
 		}
-		
-		
 		protected function textSaved(event:AGORAEvent):void{
 			var statementModel:StatementModel = StatementModel(event.eventData);
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
@@ -316,6 +364,7 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, textSaved);
 			statementModel.addEventListener(AGORAEvent.ARGUMENT_CREATED, onArgumentCreated);
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
+			statementModel.addEventListener(AGORAEvent.STATEMENTS_DELETED, onStatementDeleted);
 		}
 		
 		protected function setArgumentTypeModelEventListeners(argumentTypeModelAddedEvent:AGORAEvent):void{
@@ -323,6 +372,7 @@ package Controller
 			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDED, onReasonAdded);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVED, onArgumentSaved);
+			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDITION_NOT_ALLOWED, reasonAdditionNotAllowedFault);
 		}
 		
 		//------------------ Handling events from schemeSelector ------//
@@ -373,7 +423,6 @@ package Controller
 			argumentTypeModel.lSubOption = option;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			logicController.formText(argumentTypeModel);
-			
 		}
 		
 		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{
@@ -382,11 +431,13 @@ package Controller
 				case AGORAParameters.getInstance().DIS_SYLL:
 					CursorManager.setBusyCursor();
 					argumentTypeModel.updateConnection();
+					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 					break;
 				case AGORAParameters.getInstance().NOT_ALL_SYLL:
 					//make cursor busy
 					CursorManager.setBusyCursor();
 					argumentTypeModel.updateConnection();
+					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 					break;
 			}
 		}
@@ -396,6 +447,7 @@ package Controller
 			if(argumentTypeModel.language != AGORAParameters.getInstance().ONLY_IF || argumentTypeModel.reasonModels.length == 1){
 				CursorManager.setBusyCursor();
 				argumentTypeModel.updateConnection();
+				FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 			}
 		}
 		
@@ -404,6 +456,7 @@ package Controller
 			//make busy cursor
 			CursorManager.setBusyCursor();
 			argumentTypeModel.updateConnection();
+			FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 		}
 		
 		//------------------- Scheme Update Functions -----------------//
@@ -428,7 +481,11 @@ package Controller
 				logicController.deleteLinks(argumentTypeModel);
 				AGORAModel.getInstance().agoraMapModel.loadMapModel();
 			}
-			
+		}
+		
+		//-------------------Event Handlers---------------------------//
+		protected function reasonAdditionNotAllowedFault(event:AGORAEvent):void{
+			Alert.show("You are not allowed to add a reason to another user's argument");
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

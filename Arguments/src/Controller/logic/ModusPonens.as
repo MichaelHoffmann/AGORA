@@ -139,9 +139,5 @@ package Controller.logic
 				trace(error.message);
 			}
 		}
-		
-		
-		
-	}
-	
+	}	
 }

@@ -45,10 +45,12 @@ package Model
 		private var _description:String;
 		private var _timestamp:String;
 		private var _ID:int;
-		
 		private var _statementWidth:int;
+		private var _deletedList:Vector.<Object>;
 		
 		private var _mapConstructedFromArgument:Boolean;
+		
+		
 		
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
@@ -73,7 +75,7 @@ package Model
 			//create load map service
 			loadMapService = new HTTPService();
 			loadMapService.url = AGORAParameters.getInstance().loadMapURL;
-		//	loadMapService.resultFormat="e4x";
+			//	loadMapService.resultFormat="e4x";
 			loadMapService.addEventListener(ResultEvent.RESULT, onLoadMapModelResult);
 			loadMapService.addEventListener(FaultEvent.FAULT, onFault);
 			
@@ -91,6 +93,15 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get deletedList():Vector.<Object>
+		{
+			return _deletedList;
+		}
+		
+		public function set deletedList(value:Vector.<Object>):void
+		{
+			_deletedList = value;
+		}
 		
 		public function get mapConstructedFromArgument():Boolean
 		{
@@ -273,30 +284,36 @@ package Model
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{
 			trace('map loaded');
+			deletedList = new Vector.<Object>;
 			//trace(event.result.toXMLString());
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
-			//try{
-			//update timestamp
-			timestamp = map.timestamp;
-			
-			//Form a map of nodes
-			var obj:Object;
-			var nodeHash:Dictionary = new Dictionary;
-			var textboxHash:Dictionary = new Dictionary;
-			
-			//read nodes and create Statment Models
-			//parseNode(map, nodeHash, textboxHash);
-			processNode(map.nodeObjects,nodeHash, textboxHash);
-			
-			//Form a map of connections
-			var connectionsHash:Dictionary = new Dictionary;
-			//parseConnection(map, connectionsHash, nodeHash);
-			processConnection(map.connections, connectionsHash, nodeHash);
-			
-			//read and set text - This should be performed after links are created
-			processTextbox(map.textboxes, textboxHash);
-			
+			try{
+				//update timestamp
+				timestamp = map.timestamp;
+				
+				//Form a map of nodes
+				var obj:Object;
+				var nodeHash:Dictionary = new Dictionary;
+				var textboxHash:Dictionary = new Dictionary;
+				
+				//read nodes and create Statment Models
+				//parseNode(map, nodeHash, textboxHash);
+				processNode(map.nodeObjects,nodeHash, textboxHash);
+				
+				//Form a map of connections
+				var connectionsHash:Dictionary = new Dictionary;
+				//parseConnection(map, connectionsHash, nodeHash);
+				processConnection(map.connections, connectionsHash, nodeHash);
+				
+				//read and set text - This should be performed after links are created
+				processTextbox(map.textboxes, textboxHash);
+			}
+			catch(error:Error){
+				trace(error.message);
+				trace("Error in reading update to Map");
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+			}
 			//add new elements to Model
 			for each(var node:StatementModel in nodeHash){
 				if(!panelListHash.hasOwnProperty(node.ID)){
@@ -316,13 +333,6 @@ package Model
 				textboxListHash[textbox.ID] = textbox;
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
-			
-			//}
-			//catch(error:Error){
-			//	trace(error.message);
-			//	trace("Error in reading update to Map");
-			//	dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			//}			
 		}
 		
 		//---------------------- Process Node ---------------------------------------------------------//
@@ -351,6 +361,19 @@ package Model
 					statementModel.ygrid = nodeVO.y;
 					nodeHash[nodeVO.ID] = statementModel;
 					processNodeText(nodeVO, nodeHash, textboxHash);
+				}
+				else{
+					if(panelListHash.hasOwnProperty(nodeVO.ID)){
+						var statementM:StatementModel = panelListHash[nodeVO.ID];
+						if(statementM.statementFunction == StatementModel.STATEMENT){
+							if(!statementM.firstClaim){
+								var index:int = statementM.argumentTypeModel.reasonModels.indexOf(statementM);
+								statementM.argumentTypeModel.reasonModels.splice(index, 1);
+							}
+						}
+						deletedList.push(statementM);
+						delete panelListHash[nodeVO.ID];
+					}
 				}
 			}
 			return true;
@@ -403,7 +426,7 @@ package Model
 					}
 					
 					if(!argumentTypeModel.claimModel.hasArgument(argumentTypeModel)){
-						argumentTypeModel.claimModel.supportingArguments.push(argumentTypeModel);
+						argumentTypeModel.claimModel.addToSupportingArguments(argumentTypeModel);
 					}
 					
 					argumentTypeModel.xgrid = obj.x;
@@ -415,6 +438,16 @@ package Model
 					dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel));
 					
 				}
+				else{
+					if(connectionListHash.hasOwnProperty(obj.connID)){
+						var argumentTypeM:ArgumentTypeModel = connectionListHash[obj.connID];
+						var claimModel:StatementModel = argumentTypeM.claimModel;
+						var index:int = claimModel.supportingArguments.indexOf(argumentTypeM);
+						claimModel.supportingArguments.splice(index, 1);
+						deletedList.push(argumentTypeM);
+						delete connectionListHash[obj.connID];
+					}
+				}
 				
 			}
 			return true;
@@ -423,28 +456,30 @@ package Model
 		protected function processSourceNode(obj:ConnectionValueObject, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
 			var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.connID];
 			for each(var argElements:SourcenodeValueObject in obj.sourcenodes){
-				//node read in the current update
-				if(nodeHash.hasOwnProperty(argElements.nodeID)){
-					if(StatementModel(nodeHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
-						argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
-						StatementModel(nodeHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
-					}
-					else{
-						if(!argumentTypeModel.hasReason(argElements.nodeID)){
-							argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+				if(!argElements.deleted){
+					//node read in the current update
+					if(nodeHash.hasOwnProperty(argElements.nodeID)){
+						if(StatementModel(nodeHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
+							argumentTypeModel.inferenceModel = nodeHash[argElements.nodeID];
 							StatementModel(nodeHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
 						}
+						else{
+							if(!argumentTypeModel.hasReason(argElements.nodeID)){
+								argumentTypeModel.reasonModels.push(nodeHash[argElements.nodeID]);
+								StatementModel(nodeHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
+							}
+						}
 					}
-				}
-				else{ //read earlier and hence in the global hash
-					if(StatementModel(panelListHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
-						argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
-						StatementModel(panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
-					}
-					else{
-						if(!argumentTypeModel.hasReason(argElements.nodeID)){
-							argumentTypeModel.reasonModels.push(panelListHash[argElements.nodeID]);
-							StatementModel(	panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
+					else{ //read earlier and hence in the global hash
+						if(StatementModel(panelListHash[argElements.nodeID]).statementFunction == StatementModel.INFERENCE){
+							argumentTypeModel.inferenceModel = panelListHash[argElements.nodeID];
+							StatementModel(panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
+						}
+						else{
+							if(!argumentTypeModel.hasReason(argElements.nodeID)){
+								argumentTypeModel.reasonModels.push(panelListHash[argElements.nodeID]);
+								StatementModel(	panelListHash[argElements.nodeID]).argumentTypeModel = argumentTypeModel;
+							}
 						}
 					}
 				}
@@ -471,6 +506,11 @@ package Model
 					}
 					if(simpleStatement.hasOwn){
 						simpleStatement.text = obj.text;
+					}
+				}
+				else{
+					if(textboxListHash.hasOwnProperty(obj.ID)){
+						delete textboxListHash[obj.ID];
 					}
 				}
 			}
