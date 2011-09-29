@@ -102,7 +102,9 @@ package Controller
 		
 		//---------------------Creating a New Map-----------------------//
 		public function createMap(mapName:String):void{
+			model.agoraMapModel.reinitializeModel();
 			model.agoraMapModel.createMap(mapName);	
+			FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
 		}
 		
 		protected function onMapCreated(event:AGORAEvent):void{
@@ -270,7 +272,7 @@ package Controller
 				//add an argument
 				addSupportingArgument(model);
 			}
-			//if reasons Completed
+				//if reasons Completed
 			else if(model.argumentTypeModel.reasonsCompleted){
 			}
 			else{
@@ -301,11 +303,26 @@ package Controller
 		//--------------------- delete Map -------------------------------//
 		public function deleteNodes(gridPanel:GridPanel):void{
 			var model:StatementModel = (gridPanel as ArgumentPanel).model;
-			if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
-				model.deleteMe();
+			if(model.statementFunction == StatementModel.STATEMENT){
+				if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
+					model.deleteMe();
+				}
+				else{
+					Alert.show("You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim.");
+				}
 			}
-			else{
-				Alert.show("You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim");
+			else if(model.statementFunction == StatementModel.INFERENCE){
+				if(model.supportingArguments.length > 0){
+					Alert.show("You cannot delete a statement that is supported.");
+					return;
+				}
+				for each(var stmt:StatementModel in model.argumentTypeModel.reasonModels){
+					if(stmt.supportingArguments.length > 0){
+						Alert.show("One of the reasons among the reasons, together with this enabler, that support the claim is supported by further arguments. Therefore, you cannot delete this enabler because it requires the supported reason to be deleted. No supported statement could be deleted.");
+						return;
+					}
+				}
+				model.deleteMe();
 			}
 			
 		}
