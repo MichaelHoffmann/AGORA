@@ -245,7 +245,7 @@
 	<SignOut>
 		<EN-US text="Sign Out"/>
 		<RUS text="Sign Out"/> <!-- TODO: Translate -->
-		<GER text="Sign Out"/> <!-- TODO: Translate -->
+		<GER text="Abmelden"/>
 	</SignOut>
 	
 	<Submit>
