@@ -218,7 +218,7 @@ package components
 					
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
-					//draw an array
+					//draw an arrow
 					drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 35);
 					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
 					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 25);
@@ -234,7 +234,7 @@ package components
 					//Line from claim to vertical line starting point
 					var firstMenuPanel:MenuPanel = menuPanelsHash[model.supportingArguments[0].ID];
 					drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
-					drawUtility.graphics.lineTo(fvlspx, firstMenuPanel.y + 30);
+					drawUtility.graphics.lineTo(fvlspx, argumentPanel.y + 30);
 					
 					//for each argument
 					for each(argumentTypeModel in model.supportingArguments){
