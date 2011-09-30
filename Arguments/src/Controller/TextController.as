@@ -23,6 +23,7 @@ package Controller
 		public function updateModelText(dta:DynamicTextArea):void{
 			dta.model.text = dta.text;
 		}
+		
 		public function XMLEscapeText(s:String):String{
 			s = s.replace(/%/g, "%25"); //must be first
 			s = s.replace(/&/g, "&amp;");//must be before the various &s are added in

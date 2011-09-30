@@ -28,6 +28,7 @@ package Model
 		
 		
 		private var _state:int;
+		private var _requested:Boolean;
 		public static const MENU:int = 0;
 		public  static const MAP:int = 1;
 		
@@ -54,6 +55,16 @@ package Model
 		
 		
 		//-----------------------------Getters and Setters--------------------------------------------------------//
+
+		public function get requested():Boolean
+		{
+			return _requested;
+		}
+
+		public function set requested(value:Boolean):void
+		{
+			_requested = value;
+		}
 
 		public function get leafDelete():Boolean
 		{

@@ -130,55 +130,59 @@ package Controller
 		
 		//-------------------Add First Claim------------------------------//
 		public function addFirstClaim():void{
-			//Set the coordinates of the help text
-			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = true;
-			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.y = 2 * AGORAParameters.getInstance().gridWidth;
-			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.x = 3 * AGORAParameters.getInstance().gridWidth + 180 + 25;
-			//instruct the model to add a first claim to itself
-			model.agoraMapModel.addFirstClaim();
+			if(!model.requested){
+				//Set the coordinates of the help text
+				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = true;
+				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.y = 2 * AGORAParameters.getInstance().gridWidth;
+				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.x = 3 * AGORAParameters.getInstance().gridWidth + 180 + 25;
+				//instruct the model to add a first claim to itself
+				model.requested = true;
+				model.agoraMapModel.addFirstClaim();
+			}
 		}
 		
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
+			model.requested = false;
 			LoadController.getInstance().fetchMapData();
-			//Edit: Delay the below invalidation until next update
-			//invalidate component, so that they get updated during the validation  cycle of the Flex architecture
-			//FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
-			//FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 		}
 		
 		//----------------- Adding an Argument -------------------------------//
 		public function addSupportingArgument(model:StatementModel):void{
-			if(model.firstClaim){//first claim
-				if(model.supportingArguments.length == 0){
-					FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
+			if(!AGORAModel.getInstance().requested){
+				if(model.firstClaim){//first claim
+					if(model.supportingArguments.length == 0){
+						FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
+					}
 				}
+				//tell the statement to support itself with an argument. Supply the position.
+				//figure out the position
+				//find out the last menu panel
+				if(model.supportingArguments.length > 0){
+					var argumentTypeModel:ArgumentTypeModel = model.supportingArguments[model.supportingArguments.length - 1];
+					//Find the last grid
+					//Find out the inference
+					var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+					var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
+					var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + 2;
+					//find out hte last reason
+					var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
+					var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
+					//find the last grid
+					var xgridReason:int = (reason.y + reason.height ) / AGORAParameters.getInstance().gridWidth + 2;
+					//compare and figure out the max
+					var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
+				}else{
+					nxgrid = model.xgrid;
+				}
+				//call the function
+				AGORAModel.getInstance().requested = true;
+				model.addSupportingArgument(nxgrid);
 			}
-			//tell the statement to support itself with an argument. Supply the position.
-			//figure out the position
-			//find out the last menu panel
-			if(model.supportingArguments.length > 0){
-				var argumentTypeModel:ArgumentTypeModel = model.supportingArguments[model.supportingArguments.length - 1];
-				//Find the last grid
-				//Find out the inference
-				var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
-				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
-				var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + 2;
-				//find out hte last reason
-				var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
-				var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
-				//find the last grid
-				var xgridReason:int = (reason.y + reason.height ) / AGORAParameters.getInstance().gridWidth + 2;
-				//compare and figure out the max
-				var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
-			}else{
-				nxgrid = model.xgrid;
-			}
-			//call the function
-			model.addSupportingArgument(nxgrid);
 		}
 		
 		protected function onArgumentCreated(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested = false;
 			LoadController.getInstance().fetchMapData(); 
 		}
 		
@@ -187,31 +191,35 @@ package Controller
 			var x:int;
 			var y:int;
 			var flag:int = 0;
-			if(argumentTypeModel.logicClass != null){
-				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
-				for each(var langType:String in logicController.expLangTypes){
-					if(langType == argumentTypeModel.language){
-						flag = 1;
-						break;
+			if(!AGORAModel.getInstance().requested){
+				if(argumentTypeModel.logicClass != null){
+					var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+					for each(var langType:String in logicController.expLangTypes){
+						if(langType == argumentTypeModel.language){
+							flag = 1;
+							break;
+						}
 					}
+				}{
+					flag = 1;
 				}
-			}{
-				flag = 1;
+				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
+					flag = 1;
+				}
+				if(flag == 0){
+					Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
+					return;
+				}
+				var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[LayoutController.getInstance().getBottomReason(argumentTypeModel).ID];
+				x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 3;
+				y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
+				AGORAModel.getInstance().requested = true;
+				argumentTypeModel.addReason(x, y);
 			}
-			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
-				flag = 1;
-			}
-			if(flag == 0){
-				Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
-				return;
-			}
-			var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[LayoutController.getInstance().getBottomReason(argumentTypeModel).ID];
-			x = (lastReason.y + lastReason.height)/AGORAParameters.getInstance().gridWidth + 3;
-			y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
-			argumentTypeModel.addReason(x, y);
 		}
 		
 		protected function onReasonAdded(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested = false;
 			LoadController.getInstance().fetchMapData();
 		}
 		
@@ -284,17 +292,21 @@ package Controller
 		public function changeType(ID:int):void{
 			try{
 				//Busy Cursor
-				CursorManager.setBusyCursor();
-				//Find out the model class
-				var sModel:StatementModel = model.agoraMapModel.panelListHash[ID];
-				//Change the model
-				sModel.toggleType();
+				if(!AGORAModel.getInstance().requested){
+					CursorManager.setBusyCursor();
+					//Find out the model class
+					var sModel:StatementModel = model.agoraMapModel.panelListHash[ID];
+					//Change the model
+					AGORAModel.getInstance().requested = true;
+					sModel.toggleType();
+				}
 			}catch(error:Error){
 				Alert.show(AGORAParameters.getInstance().STATEMENT_TOGGLE_FAILED);
 			}
 		}
 		
 		protected function statementTypeToggled(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested = false;
 			var sModel:StatementModel = AGORAModel.getInstance().agoraMapModel.panelListHash[event.eventData as int];
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[event.eventData as int];
 			CursorManager.removeBusyCursor();
@@ -302,32 +314,36 @@ package Controller
 		
 		//--------------------- delete Map -------------------------------//
 		public function deleteNodes(gridPanel:GridPanel):void{
-			var model:StatementModel = (gridPanel as ArgumentPanel).model;
-			if(model.statementFunction == StatementModel.STATEMENT){
-				if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
-					model.deleteMe();
-				}
-				else{
-					Alert.show("You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim.");
-				}
-			}
-			else if(model.statementFunction == StatementModel.INFERENCE){
-				if(model.supportingArguments.length > 0){
-					Alert.show("You cannot delete a statement that is supported.");
-					return;
-				}
-				for each(var stmt:StatementModel in model.argumentTypeModel.reasonModels){
-					if(stmt.supportingArguments.length > 0){
-						Alert.show("One of the reasons among the reasons, together with this enabler, that support the claim is supported by further arguments. Therefore, you cannot delete this enabler because it requires the supported reason to be deleted. No supported statement could be deleted.");
-						return;
+			if(!AGORAModel.getInstance().requested){
+				var model:StatementModel = (gridPanel as ArgumentPanel).model;
+				if(model.statementFunction == StatementModel.STATEMENT){
+					if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
+						AGORAModel.getInstance().requested = true;
+						model.deleteMe();
+					}
+					else{
+						Alert.show("You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim.");
 					}
 				}
-				model.deleteMe();
+				else if(model.statementFunction == StatementModel.INFERENCE){
+					if(model.supportingArguments.length > 0){
+						Alert.show("You cannot delete a statement that is supported.");
+						return;
+					}
+					for each(var stmt:StatementModel in model.argumentTypeModel.reasonModels){
+						if(stmt.supportingArguments.length > 0){
+							Alert.show("One of the reasons among the reasons, together with this enabler, that support the claim is supported by further arguments. Therefore, you cannot delete this enabler because it requires the supported reason to be deleted. No supported statement could be deleted.");
+							return;
+						}
+					}
+					AGORAModel.getInstance().requested = true;
+					model.deleteMe();
+				}
 			}
-			
 		}
 		
 		public function onStatementDeleted(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested = false;
 			LoadController.getInstance().fetchMapData();
 		}
 		
@@ -343,11 +359,15 @@ package Controller
 		
 		//------------------ Saving Text -----------------------------------//
 		public function saveText(statementModel:StatementModel):void{
-			//call the model's update text function
-			statementModel.saveTexts();
-			CursorManager.setBusyCursor();
+			if(!AGORAModel.getInstance().requested){
+				//call the model's update text function
+				AGORAModel.getInstance().requested = true;
+				statementModel.saveTexts();
+				CursorManager.setBusyCursor();
+			}
 		}
 		protected function textSaved(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested = false;
 			var statementModel:StatementModel = StatementModel(event.eventData);
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
 			argumentPanel.state = ArgumentPanel.DISPLAY;
@@ -426,40 +446,51 @@ package Controller
 		
 		public function setSchemeType(argSchemeSelector:ArgSelector, scheme:String):void{
 			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
-			switch(scheme){
-				case AGORAParameters.getInstance().DIS_SYLL:
-					CursorManager.setBusyCursor();
-					argumentTypeModel.updateConnection();
-					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
-					break;
-				case AGORAParameters.getInstance().NOT_ALL_SYLL:
-					//make cursor busy
-					CursorManager.setBusyCursor();
-					argumentTypeModel.updateConnection();
-					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
-					break;
+			if(!AGORAModel.getInstance().requested){
+				switch(scheme){
+					case AGORAParameters.getInstance().DIS_SYLL:
+						CursorManager.setBusyCursor();
+						AGORAModel.getInstance().requested = true;
+						argumentTypeModel.updateConnection();
+						FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
+						break;
+					case AGORAParameters.getInstance().NOT_ALL_SYLL:
+						//make cursor busy
+						CursorManager.setBusyCursor();
+						AGORAModel.getInstance().requested = true;
+						argumentTypeModel.updateConnection();
+						FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
+						break;
+				}
 			}
 		}
 		
 		public function setSchemeLanguageType(argSchemeSelector:ArgSelector, language:String):void{
-			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
-			if(argumentTypeModel.language != AGORAParameters.getInstance().ONLY_IF || argumentTypeModel.reasonModels.length == 1){
+			if(!AGORAModel.getInstance().requested){
+				var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+				if(argumentTypeModel.language != AGORAParameters.getInstance().ONLY_IF || argumentTypeModel.reasonModels.length == 1){
+					CursorManager.setBusyCursor();
+					AGORAModel.getInstance().requested = true;
+					argumentTypeModel.updateConnection();
+					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
+				}
+			}
+		}
+		
+		public function setSchemeLanguageOptionType(argSchemeSelector:ArgSelector, option:String):void{
+			if(!AGORAModel.getInstance().requested){
+				var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
+				//make busy cursor
 				CursorManager.setBusyCursor();
+				AGORAModel.getInstance().requested = true;
 				argumentTypeModel.updateConnection();
 				FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 			}
 		}
 		
-		public function setSchemeLanguageOptionType(argSchemeSelector:ArgSelector, option:String):void{
-			var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
-			//make busy cursor
-			CursorManager.setBusyCursor();
-			argumentTypeModel.updateConnection();
-			FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
-		}
-		
 		//------------------- Scheme Update Functions -----------------//
 		protected function onArgumentSchemeSet(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested = false;
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
@@ -471,6 +502,7 @@ package Controller
 		}
 		
 		protected function onArgumentSaved(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested=false;
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
@@ -490,6 +522,7 @@ package Controller
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{
 			CursorManager.removeAllCursors();
+			model.requested = false;
 			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
 		

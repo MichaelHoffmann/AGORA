@@ -79,17 +79,17 @@ package Controller
 		}
 		
 		//-------------------------- get instance ----------------------//
-
+		
 		public function get model():AGORAModel
 		{
 			return _model;
 		}
-
+		
 		public function set model(value:AGORAModel):void
 		{
 			_model = value;
 		}
-
+		
 		public static function getInstance():LayoutController{
 			if(instance == null){
 				instance = new LayoutController;
@@ -99,15 +99,20 @@ package Controller
 		
 		//------------------------- Moving Panels around -----------------------//
 		public function movePanel(gridPanel:GridPanel, diffx:int, diffy:int):void{
-			if(gridPanel is MenuPanel){
-				AGORAModel.getInstance().agoraMapModel.moveStatement(MenuPanel(gridPanel).model, diffx, diffy);
-			}
-			else if(gridPanel is ArgumentPanel){
-				AGORAModel.getInstance().agoraMapModel.moveStatement(ArgumentPanel(gridPanel).model, diffx, diffy);
+			if(!model.requested){
+				if(gridPanel is MenuPanel){
+					model.requested = true;
+					AGORAModel.getInstance().agoraMapModel.moveStatement(MenuPanel(gridPanel).model, diffx, diffy);
+				}
+				else if(gridPanel is ArgumentPanel){
+					model.requested = true;
+					AGORAModel.getInstance().agoraMapModel.moveStatement(ArgumentPanel(gridPanel).model, diffx, diffy);
+				}
 			}
 		}
 		
 		protected function onPositionsUpdated(event:AGORAEvent):void{
+			model.requested = false;
 			LoadController.getInstance().fetchMapData();
 		}
 		
@@ -149,7 +154,7 @@ package Controller
 		
 		public function getGridPositionX(tmpY :int):int
 		{
-				return (Math.floor(tmpY/uwidth));
+			return (Math.floor(tmpY/uwidth));
 		}
 		
 		public function getGridPositionY(tmpX:int):int
@@ -176,7 +181,7 @@ package Controller
 				{
 					//registerPanel(Inference(panel1).argType);
 				}
-			//This module is for a reason added to an existing argument
+					//This module is for a reason added to an existing argument
 				else if(panel1 is ArgumentPanel)
 				{
 					

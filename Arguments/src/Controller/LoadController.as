@@ -14,7 +14,7 @@ package Controller
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
-
+	
 	public class LoadController
 	{
 		private static var instance:LoadController;
@@ -39,11 +39,14 @@ package Controller
 		
 		//-----------------Update Map -----------------------------------//
 		public function fetchMapData():void{
-			model.agoraMapModel.loadMapModel();
+			if(!model.requested){
+				model.requested = true;
+				model.agoraMapModel.loadMapModel();
+			}
 		}
 		
 		protected function onMapLoaded(event:AGORAEvent):void{
-			trace("map loaded");
+			
 			var agoraMap:AgoraMap = FlexGlobals.topLevelApplication.map.agoraMap;
 			//get the vector of elements to be removed, and then remove
 			//them from map
@@ -67,12 +70,15 @@ package Controller
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.stop();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.start();
+			
+			model.requested = false;
 		}
 		
 		protected function onMapLoadingFailed(event:AGORAEvent):void{
+			model.requested = false;
 			Alert.show(AGORAParameters.getInstance().MAP_LOADING_FAILED);
 		}
-	
+		
 		public function mapUpdateCleanUp():void{
 			//####### Should be modified
 			//model should be asked to do this
@@ -81,7 +87,7 @@ package Controller
 			var newConnections:ArrayCollection = model.agoraMapModel.newConnections;
 			newConnections.removeAll();
 		}
-
+		
 	}
 }
 

@@ -28,8 +28,6 @@ package Controller
 			view = DisplayObject(FlexGlobals.topLevelApplication);
 		}
 		
-		//----------------deleting nodes from the map --------------//
-		
 		
 		//----------------get Instance ----------------------------//
 		public static function getInstance():UpdateController{
