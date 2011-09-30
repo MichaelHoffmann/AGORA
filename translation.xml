@@ -239,7 +239,7 @@
 	<SignIn>
 		<EN-US text="Sign In"/>
 		<RUS text="Sign In"/> <!-- TODO: Translate -->
-		<GER text="Sign In"/> <!-- TODO: Translate -->
+		<GER text="Anmelden"/>
 	</SignIn>
 	
 	<SignOut>
@@ -831,6 +831,12 @@
 		<RUS text="самоопределенная связь"/>
 		<GER text="Selbst-definierte Verknüpfung "/>
 	</SelfDefConn>
+	
+	<SignInToViewMaps>
+		<EN-US text="Sign in to view your maps"/>
+		<RUS text="Sign in to view your maps"/> <!-- TODO: Translate -->
+		<GER text="Melde dich an um deine Argumentationen zu sehen"/>
+	</SignInToViewMaps>
 
 	<SignInToViewProj>
 		<EN-US text="Sign in to view your projects"/>
@@ -1141,11 +1147,17 @@
 	<!--HELP TEXT-->
 
 	<AnotherReasonHelp>
-		<EN-US text="Add another reason if only the combination of two or more &quot;linked reasons&quot; can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light,&quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of linked reasons to get to your conclusion or whether you have several independent reasons for the same conclusion."/>
-		<RUS text="Добавляйте другие причины если только комбинация двух и более «связанных причин» может обеспечить Ваше 
-Например, в аргументе &quot;Помидоры Питера вырастут, потому что он регулярно поливает их, и они получают достаточно солнечного света&quot; и обе причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно солнечного света&quot; должны быть истиной, чтобы вывести заключение. Важно различать, нуждаетесь ли Вы в комбинации связанных причин чтобы получить Ваше заключение или у Вас есть несколько независимых причин для того же самого заключения."/>
-		<GER text="Füge einen weiteren Grund an wenn allein die Verbindung von zwei oder mehr &quot;verknüpften Gründen&quot; deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Gründe für dieselbe Schlussfolderung hast."/>
+		<EN-US text="Add another reason if only the combination of two or more &quot;linked reasons&quot; can support your conclusion."/>
+		<RUS text="Добавляйте другие причины если только комбинация двух и более «связанных причин» может обеспечить."/>
+		<GER text="Füge einen weiteren Grund an wenn allein die Verbindung von zwei oder mehr &quot;verknüpften Gründen&quot; deine Schlussfolgerung rechtfertigen kann."/>
 	</AnotherReasonHelp>
+	
+	<AnotherReasonHelp2>
+		<EN-US text="For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light,&quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of linked reasons to get to your conclusion or whether you have several independent reasons for the same conclusion."/>
+		<RUS text="Ваше Например, в аргументе &quot;Помидоры Питера вырастут, потому что он регулярно поливает их, и они получают достаточно солнечного света&quot; и обе причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно солнечного света&quot; должны быть истиной, чтобы вывести заключение. Важно различать, нуждаетесь ли Вы в комбинации связанных причин чтобы получить Ваше заключение или у Вас есть несколько независимых причин для того же самого заключения."/>
+		<GER text="In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Gründe für dieselbe Schlussfolderung hast."/>
+		
+	</AnotherReasonHelp2>
 	
 	<CannotAddReason>
 		<EN-US text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;"/>
@@ -1226,7 +1238,7 @@
 	<Intro>
 		<EN-US text="Select a scheme and then a language form for this scheme. Then enter your reason and/or claim. You can change the argument scheme or the language form any time by clicking on the name of the argument scheme.\n
 		---\n
-		Your input will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true. The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.\n
+		Your selection will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true. The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.\n
 		---\n
 		The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated argument in AGORA is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances&quot; or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.\n
 		---\n
