@@ -29,38 +29,101 @@
 	*	File for searching maps.
 	*/
 	
-	function search_by_name($text){
+	function search_by_title($text){
+		print "in search";
 		global $dbName, $version;
-		header("Content-type: text/xml");	
-		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
-		$output = new SimpleXMLElement($outputstr);
+		//basic XML output initialization
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$output = new SimpleXMLElement($xmlstr);
+		//Standard SQL connection stuff
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
+		
+		$query = "SELECT * FROM maps WHERE title LIKE '%$text%'";
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		$row = mysql_fetch_assoc($resultID);
+		if(mysql_num_rows($resultID)==0){
+			$output->addAttribute("map_count", "0");
+			//This is a better alternative than reporting an error.
+			return $output;
+		}else{
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+				$row = mysql_fetch_assoc($resultID);
+				if($row['is_deleted']){
+					accessDeleted($output);
+				}else{				
+					$map = $output->addChild("map");
+					$map->addAttribute("ID", $row['map_id']);
+					$map->addAttribute("title", $row['title']);
+					$map->addAttribute("creator", $row['username']);
+					$map->addAttribute("last_modified", $row['modified_date']);
+				}
+			}
+		}
 		
 		return $output;
 	}
 	
 	function search_by_text($text){
 		global $dbName, $version;
-		header("Content-type: text/xml");	
-		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
-		$output = new SimpleXMLElement($outputstr);
-		
+		//basic XML output initialization
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$output = new SimpleXMLElement($xmlstr);
+		//Standard SQL connection stuff
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
 		return $output;
 	}
 	
 	function search_by_user($text){
 		global $dbName, $version;
-		header("Content-type: text/xml");	
-		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
-		$output = new SimpleXMLElement($outputstr);
-		
+		//basic XML output initialization
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$output = new SimpleXMLElement($xmlstr);
+		//Standard SQL connection stuff
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
 		return $output;
 	}
 	
 	function search($sType, $sQuery){
+		print "in func";
 		switch($sType){
 			//This makes it simple enough to add more types later on.
-			case "name":
-				return search_by_name($sQuery);
+			case "title":
+				print "in case";
+				return search_by_title($sQuery);
 				break;
 				
 			case "text":
@@ -75,7 +138,8 @@
 	
 	$sType = mysql_real_escape_string($_REQUEST['type']);  //TODO: Change this back to a GET when all testing is done.
 	$sQuery = mysql_real_escape_string($_REQUEST['query']);  //TODO: Change this back to a GET when all testing is done.
-	
+	$output = search($sType, $sQuery);
+	print $output;
 	
 	
 	
