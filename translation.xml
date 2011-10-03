@@ -1414,7 +1414,7 @@
 	<ArgThen>
 		<EN-US text=", then "/>
 		<RUS text=", то "/>
-		<GER text=", dann: "/>
+		<GER text=", dann "/>
 	</ArgThen>
 	
 	<ArgTherefore>
