@@ -71,6 +71,7 @@ package Model
 			
 			//create save text service
 			saveTextService = new HTTPService;
+			saveTextService.resultFormat = "e4x";
 			saveTextService.url = AGORAParameters.getInstance().insertURL;
 			saveTextService.addEventListener(ResultEvent.RESULT, onSaveTextServiceResult);
 			saveTextService.addEventListener(FaultEvent.FAULT, onFault);
@@ -390,37 +391,34 @@ package Model
 		
 		
 		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
-			if(!event.result.map.hasOwnProperty("error")){
-				var map:MapValueObject = new MapValueObject(event.result.map, true);
-				var statementModelHash:Dictionary = new Dictionary;
-				var simpleStatementModelHash:Dictionary = new Dictionary;
-				var argumentTypeModel:ArgumentTypeModel = new ArgumentTypeModel;
-				
-				for each(var nodeObject:NodeValueObject in map.nodeObjects){
-					statementModel = StatementModel.createStatementFromObject(nodeObject);
-					statementModelHash[statementModel.ID] = statementModel;
-				}
-				
-				for each(var connection:ConnectionValueObject in map.connections){
-					argumentTypeModel.ID = connection.connID;
-					argumentTypeModel.reasonsCompleted = false;
-				}
-				
-				for each(var statementModel:StatementModel in statementModelHash)
-				{
-					AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
-					AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
-				}
-				
-				var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
-				
-				AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
-				AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
-				dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
+			var map:MapValueObject = new MapValueObject(event.result.map, true);
+			var statementModelHash:Dictionary = new Dictionary;
+			var simpleStatementModelHash:Dictionary = new Dictionary;
+			var argumentTypeModel:ArgumentTypeModel = new ArgumentTypeModel;
+			
+			for each(var nodeObject:NodeValueObject in map.nodeObjects){
+				statementModel = StatementModel.createStatementFromObject(nodeObject);
+				statementModelHash[statementModel.ID] = statementModel;
 			}
-			else{
-				dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATION_FAILED, null, null));
+			
+			for each(var connection:ConnectionValueObject in map.connections){
+				argumentTypeModel.ID = connection.connID;
+				argumentTypeModel.reasonsCompleted = false;
 			}
+			
+			for each(var statementModel:StatementModel in statementModelHash)
+			{
+				AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
+				AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
+			}
+			
+			var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
+			
+			AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
+			AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
+			
+			
+			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
 		}
 		
 		
@@ -436,6 +434,7 @@ package Model
 			
 		}
 		protected function onSaveTextServiceResult(event:ResultEvent):void{
+			trace(event.result.toXMLString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.TEXT_SAVED, null, this));
 		}
 		

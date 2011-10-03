@@ -4,7 +4,7 @@ package Events
 	
 	public class AGORAEvent extends Event
 	{
-		static public  const FAULT:String = "Fault";
+		static public const FAULT:String = "Fault";
 		static public const MAP_LIST_FETCHED:String = "MapListFetched";
 		static public const MY_MAPS_LIST_FETCHED:String = "MyMapsListFetched";
 		public static const AUTHENTICATED:String = "Authenticated";
@@ -17,7 +17,6 @@ package Events
 		public static const SINGNED_OUT:String = "SignedOut";
 		public static const LOGIN_STATUS_SET:String = "LogInStatus";
 		public static const MAP_CREATED:String = "MapCreated";
-		public static const ARGUMENT_CREATION_FAILED = "ArgumentCreationFailed";
 		public static const MAP_CREATION_FAILED:String = "MapCreationFailed";
 		public static const FIRST_CLAIM_ADDED:String = "FirstClaimAdded";
 		public static const MAP_LOADED:String = "MapLoaded";
@@ -25,6 +24,7 @@ package Events
 		public static const STATEMENT_TYPE_TOGGLED:String = "StatementTypeToggled";
 		public static const POSITIONS_UPDATED:String = "PositionsUpdated";
 		public static const TEXT_SAVED:String = "TextSaved";
+		public static const TEXT_SAVE_FAILED:String = "TextSaveFailed";
 		public static const STATEMENT_ADDED:String = "StatementAdded";
 		public static const ARGUMENT_CREATED:String = "ArgumentCreated";
 		public static const STATEMENT_STATE_TO_EDIT:String = "StatementStateToEdit";
@@ -33,6 +33,7 @@ package Events
 		public static const ARGUMENT_SCHEME_SET:String = "ArgumentSchemeSet";
 		public static const ARGUMENT_SAVED:String = "ArgumentSaved";
 		public static const STATEMENTS_DELETED:String = "StatementsDeleted";
+		public static const STATEMENTS_DELETED_FAILED:String = "StatementsDeletedFailed";
 		public static const REASON_ADDITION_NOT_ALLOWED:String = "ReasonAdditionNotAllowed";
 		
 		public var xmlData:XML;

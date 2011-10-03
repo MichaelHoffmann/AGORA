@@ -282,6 +282,7 @@ package Controller
 			}
 				//if reasons Completed
 			else if(model.argumentTypeModel.reasonsCompleted){
+				
 			}
 			else{
 				argumentPanel.showMenu();
@@ -382,7 +383,6 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLED,statementTypeToggled); 
 			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, textSaved);
 			statementModel.addEventListener(AGORAEvent.ARGUMENT_CREATED, onArgumentCreated);
-			statementModel.addEventListener(AGORAEvent.ARGUMENT_CREATION_FAILED, onArgumentCreationFailed);
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
 			statementModel.addEventListener(AGORAEvent.STATEMENTS_DELETED, onStatementDeleted);
 		}
@@ -518,10 +518,6 @@ package Controller
 		//-------------------Event Handlers---------------------------//
 		protected function reasonAdditionNotAllowedFault(event:AGORAEvent):void{
 			Alert.show("You are not allowed to add a reason to another user's argument");
-		}
-		
-		protected function onArgumentCreationFailed(event:AGORAEvent):void{
-			Alert.show("Argument creation failed");
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

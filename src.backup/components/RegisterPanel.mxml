@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"  
+		  preinitialize="setProperties();" 
+		  creationComplete="init();"
+		  keyDown="panel1_keyDownHandler(event)" xmlns:components="components.*">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:EmailValidator id="emailValidator" 
+						   source="{email}" property="text">
+		</mx:EmailValidator>
+		
+		<mx:StringValidator id="firstnameValidator"
+							source="{firstname}"
+							property="text">			
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="lastnameValidator"
+							source="{lastname}"
+							property="text">
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="passwordValidator"
+							source="{pass_hash}"
+							property="text">
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="passwordDupValidator"
+							source="{pass_hash_dup}"
+							property="text">
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="usernameValidator"
+							source="{username}"
+							property="text">
+		</mx:StringValidator>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import ValueObjects.UserDataVO;
+			
+			import com.adobe.crypto.MD5;
+			
+			import mx.controls.Alert;
+			import mx.events.ValidationResultEvent;
+			import mx.managers.FocusManager;
+			import mx.managers.PopUpManager;
+			
+			import org.osmf.layout.AbsoluteLayoutFacet;
+			
+			import classes.Configure;
+			import classes.Language;
+			
+			private static var _salt:String = "AGORA";
+			
+			public static function get salt():String{
+				return _salt;
+			}
+			
+			public function init():void
+			{
+				focusManager.setFocus(username);
+			}
+			
+			public function setProperties():void
+			{
+				title=Language.lookup("Register");
+			}
+			
+			private function displayStatus(event:Event):void
+			{
+				var xml:XML = XML(event.target.data);
+				if(xml.@created.length() == 0)
+				{
+					if( XMLList(xml.@exists).length() == 1){
+						Alert.show("Username exists. Please choose a different user name");
+					}
+					else{
+						Alert.show(xml.toXMLString());
+					}
+				}
+				else if(xml.@created.length() == 1)
+				{
+					Alert.show("Registration Successful. You may now Login");
+				}
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function errorHandler(event: IOErrorEvent):void
+			{
+				Alert.show("Error occurred when contacting server");
+			}
+			
+			public function clear_form():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function submit_form():void
+			{
+				if(pass_hash.text != pass_hash_dup.text)
+				{
+					Alert.show("Passwords do not match");
+					return;
+				}
+				
+				var userDataVO:UserDataVO = new UserDataVO;
+				userDataVO.firstName = firstname.text;
+				userDataVO.lastName = lastname.text;
+				userDataVO.userName = username.text;
+				userDataVO.password = pass_hash.text;
+				userDataVO.email = email.text;
+				userDataVO.URL = url.text;
+				
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.register(userDataVO);
+			}
+
+			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
+			{
+				Alert.show("Enter a valid email address...");
+				email.text = "";
+			}
+
+
+			protected function panel1_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.ENTER){
+					submit_form();
+				}
+			}
+
+		]]>
+		
+	</fx:Script>
+	<mx:Form id="form">
+		<mx:FormItem tabIndex="1" label="Username" required="true">
+			<s:TextInput id="username">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="Password" required="true">
+			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem  label="Confirm Password" required="true" >
+			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="First Name" required="true">
+			<s:TextInput tabIndex="4" id="firstname">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="Last Name" required="true">
+			<s:TextInput tabIndex="5" id="lastname">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem  label="Email" required="true">
+			<s:TextInput tabIndex="6" id="email">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}">
+			<s:TextInput tabIndex="6" id="url">
+			</s:TextInput>
+		</mx:FormItem>
+
+		<mx:FormItem>
+			<s:HGroup>
+				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="7" id="submit_btn" click="submit_form();">		
+				</s:Button>
+				<s:Button label="{Language.lookup(&quot;Back&quot;)}"  tabIndex="8" id="back_btn" click="clear_form();">		
+				</s:Button>
+			</s:HGroup>		
+			
+		</mx:FormItem>
+	</mx:Form>
+</mx:Panel>

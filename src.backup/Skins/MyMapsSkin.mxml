@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="400">
+	<fx:Script>
+		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import mx.core.FlexGlobals;
+			import classes.Language;
+
+			protected function userInfoTxt_clickHandler(event:MouseEvent):void
+			{
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.showSignInBox();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="normal" />
+		<s:State name ="disabled" />
+		<s:State name="notLoggedIn" />
+		<s:State name="loggedIn" />
+	</s:states>
+	
+	<fx:Metadata>
+		[HostComponent("components.MyMapsPanel")]
+	</fx:Metadata>
+	
+	<s:BorderContainer color="0xaaaaaa" 
+					   width="100%" height="100%"
+					   alpha="0.5">
+		
+		<s:Rect width="100%" height="30" 
+				top="0" x="0">
+			<s:fill>
+				<s:SolidColor color="0xbbbbbb">
+				</s:SolidColor>
+			</s:fill>
+			<s:stroke>
+				<s:SolidColorStroke color="0xdddddd">
+				</s:SolidColorStroke>
+			</s:stroke>
+		</s:Rect>
+		
+		<s:Rect width="100%" height="100%" 
+				top="60">
+			<s:fill>
+				<s:SolidColor color="0xffffff">
+				</s:SolidColor>
+			</s:fill>
+		</s:Rect>
+		
+		<s:Rect width="100%" height="60"
+				bottom="0">
+			<s:fill>
+				<s:SolidColor color="0xffffff">
+				</s:SolidColor>
+			</s:fill>
+		</s:Rect>
+	</s:BorderContainer>
+	
+	<s:Label id="titleDisplay" 
+			 paddingLeft="15" paddingRight="15" paddingTop="15"
+			 fontWeight="bold"
+			 text.notLoggedIn="My Maps"
+			 />
+	
+	<s:Scroller width="100%" top="40" height="300">
+		<s:Group id="contentGroup" bottom="30">
+			<s:Group id="mapsGroup" 
+					 visible.notLoggedIn="false"
+					 width="160">
+				<s:layout>
+					<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0"/>
+				</s:layout>	
+			</s:Group>
+			<s:Group id="labelGroup" visible.loggedIn="false" visible.notLoggedIn= "true">
+				<s:Label id="userInfoTxt" x="28" y="118" visible.loggedIn="false" visible.notLoggedIn="true"  click="userInfoTxt_clickHandler(event)" textDecoration="underline">
+					<s:text>Sign In to view your maps</s:text>
+				</s:Label>
+				
+			</s:Group>
+		</s:Group>
+	</s:Scroller>
+	
+	<s:Group id="controlBarGroup" bottom="10" visible.loggedIn="true" visible.notLoggedIn="false">
+		<s:layout>
+			<s:HorizontalLayout paddingLeft="5" paddingRight="5"/>
+		</s:layout>
+
+		<s:Button label="{Language.lookup(&quot;Delete&quot;)}" id="deleteBtn" click="hostComponent.deleteMaps(event)">
+		</s:Button>
+		<s:Button label="{hostComponent.selectString}" id = "selectBtn"  width="100" click="hostComponent.makeSelection(event)">
+		</s:Button>
+	</s:Group>
+</s:SparkSkin>

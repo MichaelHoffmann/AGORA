@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!--
+This stage is where the user starts developing with an entire argument scheme
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:classes="classes.*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="1440" minHeight="900" creationComplete="initApp()" xmlns:components="components.*">
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	
+	<s:VGroup>			
+		<mx:Canvas id="agora" width="1400" height="650">
+			<components:AgoraMap id="agoraMap" backgroundColor="0xaaaaaa" width="5000" height="6000" >	
+			</components:AgoraMap>
+		</mx:Canvas>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.LayoutController;
+			import components.ArgumentPanel;
+			
+			import flash.display.*;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.controls.Alert;
+			import mx.core.UIComponent;
+			
+			import spark.primitives.Graphic;
+			//public var drawUtility:UIComponent;
+			public var numComponentsX:int;
+			public var numComponentsY:int;
+			public var layoutManager:LayoutController;
+			
+			public function setWidth(event: Event):void
+			{
+				//agora.height = agoraMap.stage.width;
+				//agora.width = agoraMap.stage.height;
+			}
+			
+			public function initApp():void
+			{
+				
+				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
+				ArgumentPanel.parentMap = agoraMap;
+				var argumentPanel:ArgumentPanel = new ArgumentPanel();
+				//argumentPanel.gridX = 2;
+				//argumentPanel.gridY = 3;
+				agoraMap.addElement(argumentPanel);
+				agoraMap.layoutManager.registerPanel(argumentPanel);
+				
+				// Simulating a button click to make the Inference + reason appear directly alongwith the claim
+				var simulatedClick:MouseEvent = new MouseEvent(MouseEvent.CLICK);
+				argumentPanel.argschemeBtn.dispatchEvent(simulatedClick);
+				
+				//var urlLoader:URLLoader = new URLLoader;
+				//var data:XML = new XML();
+				//urlLoader.addEventListener(Event.COMPLETE,agoraMap.load);
+				//urlLoader.load(new URLRequest("http://localhost:8888/exampleLAM.xml"));				
+				
+			}
+		]]>
+	</fx:Script>
+	
+</s:Application>
