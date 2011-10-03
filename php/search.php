@@ -47,7 +47,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0 ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -89,7 +89,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%$text%')";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%$text%') ORDER BY maps.title";
 
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
@@ -102,6 +102,7 @@
 			//This is a better alternative than reporting an error.
 			return $output;
 		}else{
+			$output->addAttribute("map_count", mysql_num_rows($resultID));
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
 				$map = $output->addChild("map");
@@ -132,7 +133,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0"; //TODO: Replace this query with a query on usernames
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE users.username LIKE '%$text%' OR users.firstname LIKE '%$text%' OR users.lastname LIKE '%$text%' ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
