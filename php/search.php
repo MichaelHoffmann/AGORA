@@ -66,7 +66,6 @@
 				$map->addAttribute("title", $row['title']);
 				$map->addAttribute("creator", $row['username']);
 				$map->addAttribute("last_modified", $row['modified_date']);
-				}
 			}
 		}
 		return $output;
@@ -90,7 +89,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0"; //TODO: Replace this query with a query on text
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%$text%')";
 
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
@@ -110,7 +109,6 @@
 				$map->addAttribute("title", $row['title']);
 				$map->addAttribute("creator", $row['username']);
 				$map->addAttribute("last_modified", $row['modified_date']);
-				}
 			}
 		}
 		return $output;
@@ -153,7 +151,6 @@
 				$map->addAttribute("title", $row['title']);
 				$map->addAttribute("creator", $row['username']);
 				$map->addAttribute("last_modified", $row['modified_date']);
-				}
 			}
 		}
 		return $output;
