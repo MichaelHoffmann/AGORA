@@ -47,7 +47,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%'";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -61,14 +61,11 @@
 		}else{
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
-				if($row['is_deleted']){
-					accessDeleted($output);
-				}else{
-					$map = $output->addChild("map");
-					$map->addAttribute("ID", $row['map_id']);
-					$map->addAttribute("title", $row['title']);
-					$map->addAttribute("creator", $row['username']);
-					$map->addAttribute("last_modified", $row['modified_date']);
+				$map = $output->addChild("map");
+				$map->addAttribute("ID", $row['map_id']);
+				$map->addAttribute("title", $row['title']);
+				$map->addAttribute("creator", $row['username']);
+				$map->addAttribute("last_modified", $row['modified_date']);
 				}
 			}
 		}
@@ -92,6 +89,29 @@
 			databaseNotFound($output);
 			return $output;
 		}
+		
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0";
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		$row = mysql_fetch_assoc($resultID);
+		if(mysql_num_rows($resultID)==0){
+			$output->addAttribute("map_count", "0");
+			//This is a better alternative than reporting an error.
+			return $output;
+		}else{
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+				$row = mysql_fetch_assoc($resultID);
+				$map = $output->addChild("map");
+				$map->addAttribute("ID", $row['map_id']);
+				$map->addAttribute("title", $row['title']);
+				$map->addAttribute("creator", $row['username']);
+				$map->addAttribute("last_modified", $row['modified_date']);
+				}
+			}
+		}
 		return $output;
 	}
 	
@@ -111,6 +131,29 @@
 		if(!$status){
 			databaseNotFound($output);
 			return $output;
+		}
+		
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0";
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		$row = mysql_fetch_assoc($resultID);
+		if(mysql_num_rows($resultID)==0){
+			$output->addAttribute("map_count", "0");
+			//This is a better alternative than reporting an error.
+			return $output;
+		}else{
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+				$row = mysql_fetch_assoc($resultID);
+				$map = $output->addChild("map");
+				$map->addAttribute("ID", $row['map_id']);
+				$map->addAttribute("title", $row['title']);
+				$map->addAttribute("creator", $row['username']);
+				$map->addAttribute("last_modified", $row['modified_date']);
+				}
+			}
 		}
 		return $output;
 	}
