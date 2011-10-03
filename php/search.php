@@ -47,7 +47,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps WHERE title LIKE '%$text%'";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -63,7 +63,7 @@
 				$row = mysql_fetch_assoc($resultID);
 				if($row['is_deleted']){
 					accessDeleted($output);
-				}else{				
+				}else{
 					$map = $output->addChild("map");
 					$map->addAttribute("ID", $row['map_id']);
 					$map->addAttribute("title", $row['title']);
@@ -72,7 +72,6 @@
 				}
 			}
 		}
-		
 		return $output;
 	}
 	
@@ -136,7 +135,7 @@
 	$sType = mysql_real_escape_string($_REQUEST['type']);  //TODO: Change this back to a GET when all testing is done.
 	$sQuery = mysql_real_escape_string($_REQUEST['query']);  //TODO: Change this back to a GET when all testing is done.
 	$output = search($sType, $sQuery);
-	print $output;
+	print $output->asXML();
 	
 	
 	
