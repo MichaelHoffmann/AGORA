@@ -100,6 +100,10 @@ List of variables for insertion:
 	function remove($xmlin, $userID, $pass_hash)
 	{
 		global $dbName, $version;
+		//basic XML output initialization
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+		$output = new SimpleXMLElement($xmlstr);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		if(!$linkID){
@@ -111,10 +115,7 @@ List of variables for insertion:
 			databaseNotFound($output);
 			return $output;
 		}
-		//basic XML output initialization
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
-		$output = new SimpleXMLElement($xmlstr);
+
 		
 		if(!checkLogin($userID, $pass_hash, $linkID)){
 			incorrectLogin($output);
