@@ -90,7 +90,8 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0"; //TODO: Replace this query with a query on text
+
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -133,7 +134,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0"; //TODO: Replace this query with a query on usernames
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
