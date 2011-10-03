@@ -34,6 +34,7 @@
 		header("Content-type: text/xml");	
 		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 		$output = new SimpleXMLElement($outputstr);
+		
 		return $output;
 	}
 	
@@ -42,6 +43,7 @@
 		header("Content-type: text/xml");	
 		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 		$output = new SimpleXMLElement($outputstr);
+		
 		return $output;
 	}
 	
@@ -50,7 +52,31 @@
 		header("Content-type: text/xml");	
 		$outputstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 		$output = new SimpleXMLElement($outputstr);
+		
 		return $output;
 	}
+	
+	function search($sType, $sQuery){
+		switch($sType){
+			//This makes it simple enough to add more types later on.
+			case "name":
+				return search_by_name($sQuery);
+				break;
+				
+			case "text":
+				return search_by_text($sQuery);
+				break;
+			
+			case "user":
+				return search_by_user($sQuery);
+				break;
+		}	
+	}
+	
+	$sType = mysql_real_escape_string($_REQUEST['type']);  //TODO: Change this back to a GET when all testing is done.
+	$sQuery = mysql_real_escape_string($_REQUEST['query']);  //TODO: Change this back to a GET when all testing is done.
+	
+	
+	
 	
 ?>
