@@ -27,6 +27,11 @@
 	
 	/**
 	*	File for searching maps.
+	*	HTTP Query variables:
+	*	type: the type of search that can be performed.
+	*			Current options are: title, text, user
+	*	query: the text to use as the search query. Case-insensitive.
+	*
 	*/
 	
 	function search_by_title($text){
