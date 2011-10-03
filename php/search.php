@@ -30,7 +30,6 @@
 	*/
 	
 	function search_by_title($text){
-		print "in search";
 		global $dbName, $version;
 		//basic XML output initialization
 		header("Content-type: text/xml");
@@ -118,11 +117,9 @@
 	}
 	
 	function search($sType, $sQuery){
-		print "in func";
 		switch($sType){
 			//This makes it simple enough to add more types later on.
 			case "title":
-				print "in case";
 				return search_by_title($sQuery);
 				break;
 				
