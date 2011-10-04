@@ -65,7 +65,9 @@
 			So, combine the list of maps a person's contributed to (owns a node) with a list of his own maps...
 			Then select all those maps from the maps table and get the full user info as well and order them by title.
 		*/
-		$query = "SELECT * FROM maps LEFT JOIN lastviewed ON lastviewed.map_id=maps.map_id LEFT JOIN users ON maps.user_id=users.user_id WHERE users.user_id=$userID AND maps.is_deleted=0 ORDER BY title, maps.map_id";
+		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date, lastviewed.lv_date 
+		FROM maps LEFT JOIN lastviewed ON lastviewed.map_id=maps.map_id LEFT JOIN users ON maps.user_id=users.user_id 
+		WHERE users.user_id=$userID AND maps.is_deleted=0 ORDER BY title, maps.map_id";
 				
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
