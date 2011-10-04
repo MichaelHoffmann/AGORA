@@ -84,10 +84,8 @@ package Model
 			//delete statements service
 			deleteStatements = new HTTPService;
 			deleteStatements.url = AGORAParameters.getInstance().deleteURL;
-			deleteStatements.resultFormat = "e4x";
 			deleteStatements.addEventListener(ResultEvent.RESULT, onDeleteStatementResult);
 			deleteStatements.addEventListener(FaultEvent.FAULT, onFault);
-			
 			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);			
 		}
 		
@@ -337,6 +335,7 @@ package Model
 		}
 		
 		protected function onDeleteStatementResult(event:ResultEvent):void{
+			//trace(event.result.toXMLString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENTS_DELETED, null, this));
 		}
 		
