@@ -32,7 +32,7 @@ package Model
 			
 			//remove Maps Service
 			removeMapsService = new HTTPService;
-			removeMapsService.resultFormat = "text";
+			removeMapsService.resultFormat ="e4x";
 			removeMapsService.url = AGORAParameters.getInstance().mapRemoveURL;
 			removeMapsService.addEventListener(ResultEvent.RESULT, onRemoveMapsServiceResult);
 			removeMapsService.addEventListener(FaultEvent.FAULT, onServiceFault);
@@ -57,10 +57,12 @@ package Model
 		//------------------------Requesting to remove maps-------------------------//
 		public function removeMaps(xmlIn:XML):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			trace(xmlIn.toXMLString());
 			removeMapsService.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash, xml:xmlIn})	;
 		}
 		
 		protected function onRemoveMapsServiceResult(event:ResultEvent):void{
+			trace(event.result.toXMLString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAPS_DELETED));
 		}
 
