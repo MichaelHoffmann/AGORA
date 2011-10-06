@@ -216,6 +216,9 @@ package Controller
 				AGORAModel.getInstance().requested = true;
 				argumentTypeModel.addReason(x, y);
 			}
+			else{
+				Alert.show("Please wait, the server is busy.");
+			}
 		}
 		
 		protected function onReasonAdded(event:AGORAEvent):void{
@@ -266,8 +269,6 @@ package Controller
 				schemeSelector.scheme = ParentArg.getInstance().getNegativeArray();
 			}
 			
-			
-			
 			//show the menu
 			schemeSelector.visible = true;
 		}
@@ -281,10 +282,16 @@ package Controller
 				addSupportingArgument(model);
 			}
 				//if reasons Completed
-			else if(model.argumentTypeModel.reasonsCompleted){
-			}
-			else{
-				argumentPanel.showMenu();
+				/*
+				else if(!model.firstClaim && model.argumentTypeModel.reasonsCompleted){
+				if(model.argumentTypeModel.reasonsCompleted){
+				}
+				}
+				*/
+			else if (!model.firstClaim){
+				if(!model.argumentTypeModel.reasonsCompleted){
+					argumentPanel.showMenu();
+				}
 			}
 		}
 		

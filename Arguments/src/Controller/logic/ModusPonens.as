@@ -96,7 +96,6 @@ package Controller.logic
 		}
 		
 		override public function link(argumentTypeModel:ArgumentTypeModel):void{
-			
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;

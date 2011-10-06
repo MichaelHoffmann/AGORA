@@ -18,7 +18,7 @@ package ValueObjects
 		public var MAP_LOADING_FAILED:String;
 		public var STATEMENT_TOGGLE_FAILED:String;
 		public var NETWORK_ERROR:String;
-		
+		public var EDIT_OTHER:String;
 		
 		
 		public var IF:String = "If";
@@ -89,7 +89,7 @@ package ValueObjects
 		
 		public function AGORAParameters()
 		{
-			listMapsURL = "http://agora.gatech.edu/rework/list_maps.php";
+			listMapsURL = "http://agora.gatech.edu/dev/list_maps.php";
 			myMapsURL = "http://agora.gatech.edu/rework/my_maps.php";
 			loginURL = "http://agora.gatech.edu/dev/login.php";
 			registrationURL = "http://agora.gatech.edu/dev/register.php";
@@ -101,7 +101,7 @@ package ValueObjects
 			MAP_LOADING_FAILED = "Error occured when loading map";
 			STATEMENT_TOGGLE_FAILED = "Error occurred when trying to toggle the type of statement";
 			NETWORK_ERROR = "Unable to reach server. Please check your Internet connection...";
-
+			EDIT_OTHER = "You do not have the permission to edit statements created by other users";
 			
 			gridWidth = 25;
 			version = "11.8.30";

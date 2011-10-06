@@ -332,9 +332,9 @@ package components
 		
 		protected function lblClicked(event:MouseEvent):void
 		{
-			state = EDIT;
-			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
+			ViewController.getInstance().changeToEdit(this);	
 		}
+		
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
 			ArgumentController.getInstance().saveText(model);
@@ -386,15 +386,7 @@ package components
 			}
 		}
 		
-		public function showMenu():void
-		{
-			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>; 
-			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
-			menu.labelField = "@label";
-			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
-			var globalPosition:Point = localToGlobal(new Point(0,this.height));
-			menu.show(globalPosition.x,globalPosition.y);	
-		}
+	
 		
 		
 		
@@ -451,6 +443,21 @@ package components
 					}			
 				}
 			}
+		}
+		
+		public function showMenu():void
+		{
+			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>; 
+			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
+			menu.labelField = "@label";
+			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
+			var globalPosition:Point = localToGlobal(new Point(0,this.height));
+			menu.show(globalPosition.x,globalPosition.y);	
+		}
+		
+		public function toEditState():void{
+			state = EDIT;
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
 		}
 		
 		//----------------------- Life Cycle Methods -------------------------------------------//
