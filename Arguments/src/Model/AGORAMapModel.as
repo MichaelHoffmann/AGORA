@@ -393,7 +393,6 @@ package Model
 					//modified simultaneously.
 					simpleStatement.parent = statementModel;
 					if(statementModel.statementFunction != StatementModel.INFERENCE){
-						//simpleStatement.forwardList.push(statementModel.statement);
 						simpleStatement.addDependentStatement(statementModel.statement);
 					}
 					statementModel.statements.push(simpleStatement);

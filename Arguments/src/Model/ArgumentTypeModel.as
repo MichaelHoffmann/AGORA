@@ -193,8 +193,7 @@ package Model
 				}
 				else{
 					return dbScheme + "onlyif";
-				}
-				
+				}	
 			}
 			return dbScheme + (dbLanguage==null?"":dbLanguage) + dbLanguageSubOption;
 		}
@@ -243,12 +242,9 @@ package Model
 									</connection>;
 			
 			inputXML.appendChild(connectionXML);
-			trace(inputXML.toXMLString());
-			
+			trace(inputXML.toXMLString());	
 			var userModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			
 			addReasonService.send({uid: userModel.uid, pass_hash: userModel.passHash, xml: inputXML});
-			
 		}
 		
 		protected function addReasonServiceResult(event:ResultEvent):void{

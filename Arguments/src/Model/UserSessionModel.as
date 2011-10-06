@@ -23,6 +23,7 @@ package Model
 	[Bindable]
 	public class UserSessionModel extends EventDispatcher
 	{
+		private var _username:String;
 		public var firstName:String;
 		public var lastName:String;
 		public var _uid:int;
@@ -42,6 +43,17 @@ package Model
 		}
 		
 		//Getters and setters
+
+		public function get username():String
+		{
+			return _username;
+		}
+
+		public function set username(value:String):void
+		{
+			_username = value;
+		}
+
 		public function get valueObject():UserDataVO
 		{
 			_valueObject.firstName = this.firstName;
@@ -82,6 +94,7 @@ package Model
 			//loginRequestService.request['pass_hash'] = passHash;
 			trace(userData.userName);
 			trace(passHash);
+			username = userData.userName;
 			loginRequestService.addEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			loginRequestService.addEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
 			loginRequestService.send({username: userData.userName, pass_hash: passHash});
@@ -134,7 +147,7 @@ package Model
 		}
 		
 		protected function onRegistrationRequestServiceFault(event:ResultEvent):void{
-			trace(event.result.toXMLString());
+			//trace(event.result.toXMLString());
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
