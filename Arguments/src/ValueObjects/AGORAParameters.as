@@ -91,12 +91,13 @@ package ValueObjects
 		{
 			listMapsURL = "http://agora.gatech.edu/dev/list_maps.php";
 			myMapsURL = "http://agora.gatech.edu/rework/my_maps.php";
+
 			loginURL = "http://agora.gatech.edu/dev/login.php";
 			registrationURL = "http://agora.gatech.edu/dev/register.php";
-			mapRemoveURL = "http://agora.gatech.edu/rework/remove_map.php";
-			deleteURL = "http://agora.gatech.edu/rework/remove.php";
-			insertURL = "http://agora.gatech.edu/rework/insert.php";
-			loadMapURL = "http://agora.gatech.edu/rework/load_map.php";
+			mapRemoveURL = "http://agora.gatech.edu/release/remove_map.php";
+			deleteURL = "http://agora.gatech.edu/release/remove.php";
+			insertURL = "http://agora.gatech.edu/release/insert.php";
+			loadMapURL = "http://agora.gatech.edu/release/load_map.php";
 			
 			MAP_LOADING_FAILED = "Error occured when loading map";
 			STATEMENT_TOGGLE_FAILED = "Error occurred when trying to toggle the type of statement";
