@@ -49,7 +49,9 @@
 			return $output;
 		}
 
-		$query = "SELECT * FROM maps LEFT JOIN lastviewed ON lastviewed.map_id=maps.map_id LEFT JOIN users ON maps.user_id=users.user_id WHERE users.user_id=$userID AND maps.is_deleted=0 ORDER BY title, maps.map_id";
+		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date, lastviewed.lv_date 
+		FROM maps LEFT JOIN lastviewed ON lastviewed.map_id=maps.map_id LEFT JOIN users ON maps.user_id=users.user_id 
+		WHERE users.user_id=$userID AND maps.is_deleted=0 ORDER BY title, maps.map_id";
 				
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){

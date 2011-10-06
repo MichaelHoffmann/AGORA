@@ -15,8 +15,9 @@ package Events
 		public static const MAPS_DELETION_FAILED:String = "MapsDeletionFailed";
 		public static const APP_STATE_SET:String = "AppStateSet";
 		public static const SINGNED_OUT:String = "SignedOut";
-		public static  const LOGIN_STATUS_SET:String = "LogInStatus";
+		public static const LOGIN_STATUS_SET:String = "LogInStatus";
 		public static const MAP_CREATED:String = "MapCreated";
+		public static const ARGUMENT_CREATION_FAILED:String = "ArgumentCreationFailed";
 		public static const MAP_CREATION_FAILED:String = "MapCreationFailed";
 		public static const FIRST_CLAIM_ADDED:String = "FirstClaimAdded";
 		public static const MAP_LOADED:String = "MapLoaded";

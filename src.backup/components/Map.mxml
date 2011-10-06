@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:classes="classes.*" xmlns:components="components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:VGroup id="container" paddingBottom="10" paddingTop="10">			
+		<s:HGroup id="topPanel" gap="10">
+			<s:Button id="gotoMenuBtn" label="Save and Home" width="150" click="discardChanges(event)">
+			</s:Button>
+			<s:Button id="saveAsBtn" label="Save Map As" toolTip="When you save this map under a new name, a copy of the map will be produced in which every statement is assigned to you as the author of this statement, even if the map has been produced in collaboration or by other people. This way you acquire all the permissions necessary to change whatever you want. If you don't change a statement, the name of the original author will pop when the mouse is moved over 'AU' (for 'author')." visible="true" width="150" click="Alert.show('This feature is under construction.');">
+			</s:Button>
+		</s:HGroup>
+		<s:Scroller id="agora">	
+			<s:Group>
+				<mx:Canvas>
+					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
+					</components:AgoraMap>	
+				</mx:Canvas>
+			</s:Group>
+		</s:Scroller>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.LayoutController;
+			
+			import flash.display.*;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.controls.Alert;
+			import mx.controls.Label;
+			import mx.controls.Text;
+			import mx.core.Application;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Group;
+			import spark.primitives.Graphic;
+			
+			
+			public var numComponentsX:int;
+			public var numComponentsY:int;
+			public var layoutManager:LayoutController;
+			
+			public function hideMap():void
+			{
+				//var group:Group = Group(this.parent.getChildByName("agoraMenu"));
+				//group.visible = true;
+				//Group(this.parent).removeElement(this);
+			}
+			
+			public function discardChanges(event:Event):void
+			{
+				AGORAController.getInstance().hideMap();
+			}
+			
+			public function setWidth(event: Event):void
+			{
+				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 50;
+				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 50;
+			}
+			
+			
+			public function updateSize(event:Event):void
+			{
+				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+			}
+			
+			public function initApp():void
+			{
+				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
+				agora.width = this.stage.stageWidth;
+				this.stage.addEventListener(Event.RESIZE, updateSize);	
+				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
+				ArgumentPanel.parentMap = agoraMap;			
+				dispatchEvent(new Event("created",true,false));
+			}
+		]]>
+	</fx:Script>
+</mx:Canvas>
