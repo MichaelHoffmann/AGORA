@@ -94,9 +94,9 @@ package ValueObjects
 
 			loginURL = "http://agora.gatech.edu/dev/login.php";
 			registrationURL = "http://agora.gatech.edu/dev/register.php";
-			mapRemoveURL = "http://agora.gatech.edu/release/remove_map.php";
+			mapRemoveURL = "http://agora.gatech.edu/rework/remove_map.php";
 			deleteURL = "http://agora.gatech.edu/rework/remove.php";
-			insertURL = "http://agora.gatech.edu/dev/insert.php";
+			insertURL = "http://agora.gatech.edu/rework/insert.php";
 			loadMapURL = "http://agora.gatech.edu/rework/load_map.php";
 			
 			MAP_LOADING_FAILED = "Error occured when loading map";
