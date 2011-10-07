@@ -80,6 +80,12 @@
 		<GER text="Gib die folgenden Zeichen ein"/>
 	</CAPTCHA>
 	
+	<ChangeRegData>
+		<EN-US text="Change your registration data"/>
+		<RUS text="Измените свои регистрационные данные"/>
+		<GER text="Ändere deine Registrierungsdaten"/>
+	</ChangeRegData>
+	
 	<Claim>
 		<EN-US text="What is your claim? "/>
 		<RUS text="Каково Ваше заявление? "/>
@@ -92,6 +98,12 @@
 		<GER text="Vergiss nicht, dass es deskriptive (&quot;es ist der Fall, dass ...&quot;) und normative (z.B. &quot;wir sollten x tun&quot;) Behauptungen gibt."/>
 	</ClaimReminder>
 
+	<CombineSearch>
+		<EN-US text="Combine your search with &quot;and&quot; or &quot;or&quot;"/>
+		<RUS text="Объедините свой поиск с &quot;и&quot; или &quot;или&quot;"/>
+		<GER text="Verbinde deine Suche mit &quot;und&quot; oder &quot;oder&quot;"/>
+	</CombineSearch>
+	
 	<Comments>
 		<EN-US text="comments"/>
 		<RUS text="комментарии"/>
@@ -176,6 +188,12 @@
 		<GER text="Login"/>
 	</Login>	
 	
+	<MapName>
+		<EN-US text="Map name"/>
+		<RUS text="Имя карты"/>
+		<GER text="Name der Argumentation"/>
+	</MapName>
+	
 	<Negates>
 		<EN-US text="negates"/>
 		<RUS text="отрицает"/>
@@ -187,6 +205,12 @@
 		<RUS text="Нет"/>
 		<GER text="Nein"/>
 	</No>
+	
+	<OnAnyMap>
+		<EN-US text="On any map"/>
+		<RUS text="На любой карте"/>
+		<GER text="In irgendeiner Argumentation"/>
+	</OnAnyMap>
 	
 	<Particular>
 		<EN-US text="Particular Statement"/>
@@ -224,6 +248,12 @@
 		<GER text="Datei:"/>
 	</Resource>
 
+	<Search>
+		<EN-US text="Search"/>
+		<RUS text="Поиск"/>
+		<GER text="Suche"/>
+	</Search>
+	
 	<SeeAlso>
 		<EN-US text="See also ... "/>
 		<RUS text="См. также... "/>
@@ -244,13 +274,13 @@
 
 	<SignIn>
 		<EN-US text="Sign In"/>
-		<RUS text="Sign In"/> <!-- TODO: Translate -->
+		<RUS text="Зарегистрироваться Подписаться"/>
 		<GER text="Anmelden"/>
 	</SignIn>
 	
 	<SignOut>
 		<EN-US text="Sign Out"/>
-		<RUS text="Sign Out"/> <!-- TODO: Translate -->
+		<RUS text="Выписаться Отказаться от подписки"/>
 		<GER text="Abmelden"/>
 	</SignOut>
 	
@@ -394,6 +424,12 @@
 		<GER text="Dieses Argument-Schema kann nicht in einem Argument für eine negierte Aussage verwendet werden (das heißt: eine Aussage, welche mit &quot;es ist nicht der Fall, dass ...&quot; beginnt)."/>
 	</CannotBeNegative>
 	
+	<CannotModify>
+		<EN-US text="Sorry, on public maps you cannot modify a text or an argument that has been created by another user. You can only add additional and independent arguments."/>
+		<GER text="Sorry, in öffentlichen Argumentationen ist es nicht erlaubt, den Text oder die Struktur eines Argumentes zu verändern, das jemand anderes konstruiert hat. Du kannst nur zusätzliche und unabhängige Argumente hinzufügen."/>
+		<RUS text="Извините, на общественных картах Вы не можете изменить текст или аргумент, который был создан другим пользователем. Вы можете только добавить дополнительные и независимые аргументы."/>
+	</CannotModify>
+	
 	<ChangeInfo>
 		<EN-US text="Change Personal Information"/>
 		<RUS text="Измените Личную Информацию"/>
@@ -532,6 +568,12 @@
 		<GER text="Gebe URL ein"/>
 	</EnterURL>
 
+	<EnterValidEmail>
+		<EN-US text="Enter a valid email address."/>
+		<RUS text="Введите допустимый адрес электронной почты."/>
+		<GER text="Gib eine gültige e-mail Adresse ein."/>
+	</EnterValidEmail>
+	
 	<ForgotPass>
 		<EN-US text="Forgot your password?"/>
 		<RUS text="Забыл Ваш пароль?"/>
