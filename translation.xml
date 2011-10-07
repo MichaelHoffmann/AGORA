@@ -121,7 +121,13 @@
 		<RUS text="Удалить"/>
 		<GER text="Lösche"/>
 	</Delete>
-
+	
+	<Description>
+		<EN-US text="Description"/>
+		<RUS text="Описание"/>
+		<GER text="Beschreibung"/>
+	</Description>
+	
 	<Done>
 		<EN-US text="Done"/>
 		<RUS text="Сделанный"/>
@@ -188,11 +194,23 @@
 		<GER text="Login"/>
 	</Login>	
 	
+	<MapInfo>
+		<EN-US text="Map info"/>
+		<RUS text="Информация карты"/>
+		<GER text="Map info"/>
+	</MapInfo>
+	
 	<MapName>
 		<EN-US text="Map name"/>
 		<RUS text="Имя карты"/>
 		<GER text="Name der Argumentation"/>
 	</MapName>
+	
+	<Name>
+		<EN-US text="Name"/>
+		<RUS text="Имя"/>
+		<GER text="Name"/>
+	</Name>
 	
 	<Negates>
 		<EN-US text="negates"/>
@@ -248,6 +266,18 @@
 		<GER text="Datei:"/>
 	</Resource>
 
+	<SaveAndHome>
+		<EN-US text="Save and Home"/>
+		<RUS text="Сохранить и вернуться к Началу"/>
+		<GER text="Ab nach Hause (mit speichern)"/>
+	</SaveAndHome>
+	
+	<SaveMapAs>
+		<EN-US text="Save Map As"/>
+		<RUS text="Сохраните Карту Как"/>
+		<GER text="Speichere Argumentation als"/>
+	</SaveMapAs>
+	
 	<Search>
 		<EN-US text="Search"/>
 		<RUS text="Поиск"/>
@@ -307,6 +337,12 @@
 		<RUS text="(в разработке)"/>
 		<GER text="(noch nicht verfügbar)"/>
 	</UnderConstruction>
+	
+	<UnderConstructionLong>
+		<EN-US text="This feature is under construction."/>
+		<RUS text="Эта особенность находится в разработке."/>
+		<GER text="Diese Funktion ist derzeit noch nicht verfügbar."/>
+	</UnderConstructionLong>
 	
 	<Universal>
 		<EN-US text="Universal Statement"/>
@@ -737,9 +773,9 @@
 	</OrStartWithScheme>
 	
 	<PasswordProtected>
-		<EN-US text="This project is password protected. Do you want to sign up for this project?"/>
-		<RUS text="Этот проект защищен паролем. Вы хотите подписаться на этот проект?"/>
-		<GER text="Dieses Projekt ist Passwort-geschützt. Willst Du an diesem Projekt teilnehmen?"/>
+		<EN-US text="Password protected. Click to request access."/>
+		<RUS text="Защищённые паролем. Щелкните, чтобы запросить доступ."/>
+		<GER text="Passwort geschützt. Klicke um Zugang zu erbitten."/>
 	</PasswordProtected>
 	
 	<PassMismatch>
@@ -1360,10 +1396,16 @@
 		Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
 	</ProjectExplanation>
 
+	<SaveAsClarification>
+		<EN-US text="When you save this map under a new name, a copy of the map will be produced in which every statement is assigned to you as the author of this statement, even if the map has been produced in collaboration or by other people. This way you acquire all the permissions necessary to change whatever you want. If you don't change a statement, the name of the original author will pop when the mouse is moved over &quot;AU&quot; (for &quot;author&quot;)."/>
+		<RUS text="Когда Вы сохраните эту карту под новым именем, копия карты будет произведена, в которой каждое утверждение назначено на Вас как автора этого утверждение, даже если карта была произведена в сотрудничестве или другими людьми. Этим путем Вы приобретаете все разрешения, необходимые, чтобы измениться независимо от того, что Вы хотите. Если Вы не измените утверждение, то имя оригинального автора появится, когда мышь будет отодвинута от &quot;AU&quot; (для &quot;автора&quot;)."/>
+		<GER text="Wenn du diese Argumentation unter einem neuen Namen speicherst wird eine Kopie erstellt in welcher jede Behauptung DIR als Autor zugesprochen wird, selbst dann, wenn die Argumentation in Kollaboration mit anderen, oder von anderen Leuten, erstellt wurde. Auf diese Weise erhälst du alle Rechte die notwendig sind, um all das zu verändern, was du ändern willst. Allerdings, wenn du eine Behauptung nicht veränderst, wird der Name des ursprünglichen Autors jedesmal dann auftauchen, wenn die Maus über &quot;AU&quot; (für &quot;Autor&quot;) bewegt wird."/>
+	</SaveAsClarification>
+	
 	<WhyRegister>
 		<EN-US text="NOTE: Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. Additionally, the following information will become visible by hovering over the username: first name; last name; URL (if provided). Later, we plan to add a function &quot;Send e-mail to [username]&quot; which will also be accessible by moving the mouse over the username. This function is useful because certain operations such as deleting a textbox or changing its content can only be performed by the creator of this box. Your e-mail address will never be given out publicly. It will be used only for this contact-function and for the AGORA system to provide you with a replacement password in the event you forget your current one. Please read the Privacy Policy which is accessible here."/>
-		<GER text="Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. Außerdem werden die folgenden Informationen sichtbar wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). Wir planen später eine Funktion &quot;Sende eine e-mail an [Benutzername]&quot; hinzuzufügen, welche durch die gleiche Mausbewegung verfügbar wird. Diese Funktion ist nützlich, weil bestimmte Operationen wie das Löschen einer Textbox oder die Veränderung ihres Inhaltes allein durch den Autor dieser Textbox erfolgen kann. Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für die Kontakt-Funktion genutzt und für den Fall, dass dir ein Ersatz-Passwort zugeschickt werden muss. Bitte lese auch unsere &quot;Privacy Policy&quot;, welche hier verfügbar ist."/>
 		<RUS text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя автора, потому что должно быть ясно, кто требует что. Дополнительно, следующая информация станет видимой, нависая над именем пользователя: имя; фамилия; URL (если предоставлен). Позже, мы планируем добавить  функцию &quot;Послать электронное письмо [имени пользователя]&quot;, которая также будет доступна, при перемещении мыши через имя пользователя. Эта функция полезна, потому что определенные операции, такие как удаление текстового поля или изменение его контента могут быть выполнены только создателем этого поля. Ваш адрес электронной почты никогда не будет выделяться публично. Он будет использоваться только для функции контакта, и для системы АГОРЫ, чтобы предоставить Вам пароль замены в конечном счете, если  Вы забываете свой текущий. Пожалуйста, прочитайте Политику конфиденциальности, которая доступна здесь."/>
+		<GER text="Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. Außerdem werden die folgenden Informationen sichtbar wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). Wir planen später eine Funktion &quot;Sende eine e-mail an [Benutzername]&quot; hinzuzufügen, welche durch die gleiche Mausbewegung verfügbar wird. Diese Funktion ist nützlich, weil bestimmte Operationen wie das Löschen einer Textbox oder die Veränderung ihres Inhaltes allein durch den Autor dieser Textbox erfolgen kann. Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für die Kontakt-Funktion genutzt und für den Fall, dass dir ein Ersatz-Passwort zugeschickt werden muss. Bitte lese auch unsere &quot;Privacy Policy&quot;, welche hier verfügbar ist."/>
 	</WhyRegister>
 	
 	
