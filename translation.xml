@@ -406,6 +406,24 @@
 		<GER text="... füge URL hinzu"/>
 	</AddURL>
 	
+	<AGORAInvite>
+		<EN-US text="[username] wants to invite you to the AGORA project [project name]. If you accept, please go to http://agora.gatech.edu/, select the project [project name] from the list &quot;Projects&quot; after logging-in, and use the password [project password] to get access to this project."/>
+		<RUS text="[имя пользователя] хочет пригласить Вас в проект АГОРЫ [название проекта]. Если Вы принимаете, пожалуйста, пойдите в http://agora.gatech.edu/, выберите проект [название проекта] из списка &quot;Проекты&quot; после вхождения в систему, и используйте пароль [проектный пароль], чтобы получить доступ к этому проекту."/>
+		<GER text="[username] möchte dich zu dem AGORA Projekt [project name] einladen. Falls Du akzeptierst, geh zu http://agora.gatech.edu/, wähle das Projekt [project name] aus der Liste „Projekte“ aus und verwende das Passwort [project password] um Zugang zu diesem Projektbereich zu erhalten."/>
+	</AGORAInvite>
+	
+	<AGORANetReq>
+		<EN-US text="AGORA-net request"/>
+		<RUS text="запрос АГОРЫ"/>
+		<GER text="AGORA-net Anfrage"/>
+	</AGORANetReq>
+	
+	<AGORANetReqCont>
+		<EN-US text="[username] requests participation in your AGORA project [project name]. If you accept the request, please send an e-mail with the project password to [e-mail of requesting user]"/>
+		<RUS text="[имя пользователя] просит участие в Вашем проекте АГОРЫ [название проекта]. Если Вы принимаете запрос, пожалуйста, пошлите электронное письмо с паролем проекта к [электронная почта требования пользователя]"/>
+		<GER text="[username] bittet um Teilnahme an deinem AGORA Projekt [project name]. Bitte sende eine e-mail mit dem Projekt Passwort an [e-mail of requesting user], falls du die Bitte akzeptierst."/>
+	</AGORANetReqCont>
+	
 	<AGORAPass>
 		<EN-US text="AGORA password"/>
 		<RUS text="Пароль АГОРЫ"/>
@@ -562,6 +580,12 @@
 		<GER text="widerlegt durch Gegenbeispiel"/>
 	</DefeatsByCounterEx>
 	
+	<DescriptionSupport>
+		<EN-US text="Here you can enter a description of the map that then appears on the top of you map"/>
+		<RUS text="Здесь Вы можете ввести описание карты, которое  появляется  в начале Вашей карты"/>
+		<GER text="Hier kannst du eine Beschreibung eingeben, die dann oben auf der Seite erscheint."/>
+	</DescriptionSupport>
+	
 	<DivideToSubclaims>
 		<EN-US text="Click here if you want to divide a claim into sub-claims so that arguments or objections can be developed for each case (under construction)"/>
 		<RUS text="Щелкните здесь, если Вы хотите разделить заявление на подзаявления так, чтобы аргументы или возражения могли быть развиты для каждого случая (в разработке)"/>
@@ -663,6 +687,12 @@
 		<RUS text="Выберите схему аргумента для нового аргумента справа:"/>
 		<GER text="Wähle für dein neues Argument auf der rechten Seite ein Argument-Schema aus:"/>
 	</InterArgScheme>
+	
+	<InviteToProj>
+		<EN-US text="Invite other users to participate in this project."/>
+		<RUS text="Пригласите других пользователей участвовать в этом проекте."/>
+		<GER text="Lade andere AGORA-Mitglieder ein, an deinem Projekt teilzunehmen."/>
+	</InviteToProj>
 	
 	<LeadsToQ>
 		<EN-US text="leads to the question"/>
@@ -778,6 +808,12 @@
 		<GER text="Passwort geschützt. Klicke um Zugang zu erbitten."/>
 	</PasswordProtected>
 	
+	<PasswordProtected2>
+		<EN-US text="This project is password protected. Click here if you want to sign up for this project."/>
+		<RUS text="Этот проект защищен паролем. Щелкните здесь, если Вы хотите подписаться на этот проект?"/>
+		<GER text="Dieses Projekt ist Passwort-geschützt. Klicke hier wenn du an diesem Projekt teilnehmen willst."/>
+	</PasswordProtected2>
+	
 	<PassMismatch>
 		<EN-US text="Error: your passwords do not match"/>
 		<RUS text="Ошибка: Ваши пароли не соответствуют"/>
@@ -808,6 +844,12 @@
 		<GER text="Projektname (muss eingegeben werden)"/>
 	</ProjName>
 	
+	<ProjNameDes>
+		<EN-US text="Desired Project name"/>
+		<RUS text="Желаемое Название проекта"/>
+		<GER text="Erwünschter Projekt-Name"/>
+	</ProjNameDes>
+	
 	<ProjNameTaken>
 		<EN-US text="This Project name is already taken! Try another Project name."/>
 		<RUS text="Это Имя проекта уже взято! Попробуйте другое Имя проекта"/>
@@ -815,16 +857,34 @@
 	</ProjNameTaken>
 	
 	<ProjPass>
-		<EN-US text="Enter your project password:"/>
-		<RUS text="Введите свой пароль проекта:"/>
-		<GER text="Gib dein Projekt-Passwort ein:"/>
+		<EN-US text="Enter your project password or..."/>
+		<RUS text="Введите свой проектный пароль или..."/>
+		<GER text="Gib dein Projekt-Passwort ein oder..."/>
 	</ProjPass>
+	
+	<ProjPassEmail>
+		<EN-US text="send a system-generated e-mail with your user name and your e-mail address to the project administrator."/>
+		<RUS text="послать сгенерированное системой электронное письмо со своим именем пользователя и адресом электронной почты администратору проекта."/>
+		<GER text="sende eine vom AGORA-System generierte e-mail mit deinem Benutzernamen und deiner e-mail Adresse an den Projekt-Administrator."/>
+	</ProjPassEmail>
+	
+	<ProjPassEmailConf>
+		<EN-US text="E-mail has been sent! Now you have to wait for the project administrator’s response. Check your regular e-mail."/>
+		<RUS text="Электронное письмо было послано! Теперь Вы должны ждать ответа администратора проекта. Проверьте свою регулярную электронную почту."/>
+		<GER text="E-mail wurde gesandt! Jetzt musst du auf die Antwort des Projekt-Administrators warten. Checke deine reguläre e-mail."/>
+	</ProjPassEmailConf>
 	
 	<ProjPassCreate>
 		<EN-US text="Project password, different from your user password (required)"/>
 		<RUS text="Пароль проекта, отличающийся от Вашего пользовательского пароля, (требуется)"/>
 		<GER text="Projekt-Passwort (muss eingegeben werden und muss verschieden von deinem Benutzer-Passwort sein)"/>
 	</ProjPassCreate>
+	
+	<ProjPassIs>
+		<EN-US text="The password for this project is:"/>
+		<RUS text="Пароль для этого проекта -"/>
+		<GER text="Passwort für dieses Project ist:"/>
+	</ProjPassIs>
 	
 	<ProjPassRequest>
 		<EN-US text="Click here if you want to request the password for this project from the project administrator. In this case, the AGORA system will send an automatically created e-mail to the administrator which contains your user name and e-mail address."/>
@@ -904,6 +964,12 @@
 		<GER text="Siehe den folgenden Einwand, der in einem anderen Argument verteidigt wird"/>
 	</SeeObjection>
 
+	<SelectArgSchemeAndLangForm>
+		<EN-US text="[Select an argument scheme and a language form from the menu on the right]"/>
+		<RUS text="[Выберите схему аргумента и языковую форму из меню справа]"/>
+		<GER text="[Wähle ein Argumentschema und eine sprachliche Form von dem Menü auf der rechten Seite aus]"/>
+	</SelectArgSchemeAndLangForm>
+	
 	<SelectLanguageForm>
 		<EN-US text="Select the form you need from the list on your right to complete your argument"/>
 		<RUS text="Select the form you need from the list on your right to complete your argument"/>
@@ -1292,6 +1358,12 @@
 		<GER text="Der Satz in dieser Textbox wird &quot;Garant&quot; gennant. Der &quot;Garant&quot; ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der &quot;Garant&quot; ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist."/>
 	</Enabler>
 	
+	<InviteHelp>
+		<EN-US text="Send the project name and the password to those who you selected. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps."/>
+		<RUS text="Пошлите название проекта и пароль тем, которых Вы выбрали. Каждый участник проекта может создать карты в пределах Вашего проектного пространства, которые видимы только другим участникам проекта. Конечно, Вы можете использовать проектное пространство только для Вас непосредственно, чтобы защитить Ваши карты"/>
+		<GER text="Sende den Projektnamen zusammen mit dem Passwort denen zu, die du ausgewählt hast. Jedes Mitglied eines Projektes kann Argumentationen innerhalb deines Projektbereiches erstellen, welche allein für andere Projektmitglieder sichtbar sind. Natürlich kannst du einen Projektbereich allein für dich selbst verwenden um deine Argumentationen zu schützen."/>
+	</InviteHelp>
+	
 	<MTAndOrHelp>
 		<EN-US text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided."/>
 		<RUS text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин."/>
@@ -1338,25 +1410,21 @@
 	</ArgComplete>
 	
 	<Intro>
-		<EN-US text="Select a scheme and then a language form for this scheme. Then enter your reason and/or claim. You can change the argument scheme or the language form any time by clicking on the name of the argument scheme.\n
-		---\n
-		Your selection will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true. The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.\n
-		---\n
-		The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated argument in AGORA is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances&quot; or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.\n
-		---\n
-		To make your argument as powerful, clear, and convincing as possible, try to get the structure and the formulations right, and select that argument scheme that fits best to what you want to argue.
-		"/>
-		<RUS text="	Выберите схему и затем языковую форму для этой схемы. Затем введите свою причину и/или заявление. Вы можете изменить схему аргументов, или язык формируют любое время, щелкая по названию схемы аргумента.\n
-		---\n
-		Ваш ввод создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки - истинны. Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы не сможете принять истинность «гаранта» и всех Ваших причин.\n
-		---\n
-		Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.\n
-		---\n
-		Чтобы сделать Ваш аргумент столь же сильным, ясным, сколь и убедительным насколько возможно, попытайтесь разобраться в структуре и формулировках, и выбрать ту схему аргумента, которая подходит лучше всего к тому, что Вы хотите обсудить."/>
-		<GER text="Wähle ein Schema aus und dann eine sprachliche Form für dieses Schema. Dann gib deinen Grund und/oder deine Behauptung ein. Du kannst das Argumentschema oder die sprachliche Form jederzeit wechseln, wenn Du auf den Namen des Schemas klickst.\n
-		Deine Texteingabe wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind. Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird &quot;Garant&quot; genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.\n
-		Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten zu unterstützen. Da jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie &quot;wahrscheinlich&quot;, &quot;gewöhnlich&quot;, &quot;unter normalen Umständen&quot; oder &quot;möglicherweise&quot; abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen.\n
-		Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
+		<EN-US text="Select a scheme and then a language form for this scheme. Then enter your reason and/or claim. You can change the argument scheme or the language form any time by clicking on the name of the argument scheme.\n
+---\n
+	Your selection will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true. The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.\n
+---\n
+	The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated argument in AGORA is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.\n
+---\n
+	To make your argument as powerful, clear, and convincing as possible, try to get the structure and the formulations right, and select that argument scheme that fits best to what you want to argue."/>
+		<RUS text="Ваш выбор создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки - истинны. Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает  Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы  не сможете принять истинность «гаранта» и всех Ваших причин.\n
+---\n
+	Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может  быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot; &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.\n
+---\n
+	Чтобы сделать Ваш аргумент столь же сильным, ясным, сколь и убедительным насколько возможно, попытайтесь разобраться в структуре и формулировках, и выбрать ту схему аргумента, которая подходит лучше всего к тому, что Вы хотите обсудить."/>
+		<GER text="Deine Auswahl wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind. Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird &quot;Garant&quot; genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.\n
+	Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten  zu unterstützen. Da  jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie &quot;wahrscheinlich&quot;, &quot;gewöhnlich&quot;, &quot;unter normalen Umständen&quot; oder &quot;möglicherweise&quot; abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen.\n
+	Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
 	</Intro>
 	
 	<ParticularOrUniversal>
@@ -1385,15 +1453,9 @@
 	</PartUnivReq>
 	
 	<ProjectExplanation>
-		<EN-US text="Send the project name and the password to those who you would like to invite to your project. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps.\n
-		To get access to your project, select it from &quot;My Password Protected Projects.&quot;\n
-		Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/>
-		<RUS text="Послать название проекта и пароль тем, которых Вы хотели бы пригласить в Ваш проект. Каждый участник проекта может создать карты в пределах Вашего проектного пространства, которые видимы только другим участникам проекта Конечно, Вы можете использовать проектное пространство только для вас непосредственно, чтобы защитить Ваши карты.\n
-	Чтобы получить доступ к Вашему проекту, выберите из &quot;Моих Защищённых паролем Проектов.&quot;\n
-	Только название Вашего проекта будет публично видимо. Но все могут запросить доступ к Вашему проекту. В этом случае, система АГОРЫ пошлет автоматически создаваемое электронное письмо Вам. Эта электронная почта будет содержать имя пользователя и адрес электронной почты этого человека так, чтобы Вы могли решить, хотите ли Вы предоставить данные для доступа этому человеку или нет."/>
-		<GER text="Schicke Projektname und Passwort denen, die du zu deinem Projekt einladen willst. Jedes Mitglied eines Projektes kann Argumentationen innerhalb deines Projektbereiches schaffen, die nur für andere Mitglieder sichtbar sind. Natürlich kannst du einen Projektbereich auch nur für dich selbst benutzen um deine Argumentationen zu schützen.\n
-		Um Zugang zu deinem Projekt zu erhalten, wähle es aus &quot;Meine Passwort-geschützten Projekte&quot; aus.\n
-		Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
+		<EN-US text="Only the name of your project will be publicly visible. But everyone can request access to your project. In this case, the AGORA system will send an automatically created e-mail to you. This e-mail will contain the user name and e-mail address of this person so that you can decide whether you want to provide the access data to this person or not."/>
+		<RUS text="Только название Вашего проекта будет публично видимо. Но все могут запросить доступ к Вашему проекту. В этом случае, система АГОРЫ пошлет автоматически создаваемое электронное письмо Вам. Эта электронная почта будет содержать имя пользователя и адрес электронной почты этого человека так, чтобы Вы могли решить, хотите ли Вы предоставить данные для доступа этому человеку или нет."/>
+		<GER text="Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
 	</ProjectExplanation>
 
 	<SaveAsClarification>
