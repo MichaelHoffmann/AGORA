@@ -182,6 +182,12 @@
 		<GER text="negiert"/>
 	</Negates>
 	
+	<No>
+		<EN-US text="No"/>
+		<RUS text="Нет"/>
+		<GER text="Nein"/>
+	</No>
+	
 	<Particular>
 		<EN-US text="Particular Statement"/>
 		<RUS text="особое утверждение"/>
@@ -308,6 +314,12 @@
 		<GER text="Version"/>
 	</Version>
 	
+	<Yes>
+		<EN-US text="Yes"/>
+		<RUS text="Да"/>
+		<GER text="Ja"/>
+	</Yes>
+	
 	<!--SHORT DESCRIPTIONS-->
 	
 	<AddArgument>
@@ -431,9 +443,9 @@
 	</CompleteArgOneReason>
 	
 	<CompleteEnablerFirst>
-		<EN-US text="Complete the enabler before adding further reasons."/>
-		<RUS text="Complete the enabler before adding further reasons."/> <!-- TODO: Translate-->
-		<GER text="Vervollständige den Garanten bevor du weitere Gründe hinzufügst."/>
+		<EN-US text="Complete the argument by selecting an appropriate argument scheme before adding further reasons."/>
+		<RUS text="Завершите аргумент, выбирая соответствующую схему аргумента прежде, чем добавить дальнейшие причины."/>
+		<GER text="Vervollständige das Argument durch die Auswahl eines passenden Argument-Schemas bevor du weitere Gründe hinzufügst."/>
 	</CompleteEnablerFirst>
 	
 	<ConnectionToReason>
@@ -820,17 +832,23 @@
 		<GER text="Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen."/>
 	</SelectLanguageForm>
 	
-	<SelectLanguageType>
-		<EN-US text="Select the language type that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/>
-		<RUS text="Select the language type that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/> <!-- TODO: Translate-->
+	<SelectLanguageForm>
+		<EN-US text="Select the language form that determines how the reasons are combined: &quot;or&quot; or &quot;and&quot;?"/>
+		<RUS text="Выберите языковую форму, которая определяет, как причины объединены: &quot;или&quot; или &quot;и&quot;?"/>
 		<GER text="Durch welche Formulierung sollen deine Gründe verbunden werden? Durch &quot;oder&quot; oder durch &quot;und&quot;?"/>
-	</SelectLanguageType>
+	</SelectLanguageForm>
 	
 	<SelfDefConn>
 		<EN-US text="self-defined connection"/>
 		<RUS text="самоопределенная связь"/>
 		<GER text="Selbst-definierte Verknüpfung "/>
 	</SelfDefConn>
+	
+	<SendEmail> <!-- Note: This is followed by the username -->
+		<EN-US text="Send e-mail to"/>
+		<RUS text="Послать электронное письмо"/>
+		<GER text="Sende eine e-mail an"/>
+	</SendEmail>
 	
 	<SignInToViewMaps>
 		<EN-US text="Sign in to view your maps"/>
@@ -1177,6 +1195,12 @@
 		<GER text="Entschuldigung, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden"/>
 	</CannotChangeScheme>
 	
+	<ConfirmDelete>
+		<EN-US text="Do you really want to delete this box and everything that leads to it?"/>
+		<RUS text="Вы действительно хотите удалить это поле и все, что приводит к нему?"/>
+		<GER text="Willst du wirklich diese Textbox und alles, das zu ihr führt, löschen?"/>
+	</ConfirmDelete>
+	
 	<DisSylDetails>
 		<EN-US text="In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones."/>
 		<RUS text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных."/>
@@ -1294,7 +1318,11 @@
 		Allein der Name deines Projektes wird öffentlich sichtbar sein. Aber jeder kann Zugang zu deinem Projekt beantragen. In diesem Fall wird das AGORA System dir eine automatisch generierte e-mail senden. Diese e-mail wird den Benutzernamen und die e-mail dieser Person enthalten so dass du selbst entscheiden kannst ob du Zugang gewähren willst oder nicht."/>
 	</ProjectExplanation>
 
-
+	<WhyRegister>
+		<EN-US text="NOTE: Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. Additionally, the following information will become visible by hovering over the username: first name; last name; URL (if provided). Later, we plan to add a function &quot;Send e-mail to [username]&quot; which will also be accessible by moving the mouse over the username. This function is useful because certain operations such as deleting a textbox or changing its content can only be performed by the creator of this box. Your e-mail address will never be given out publicly. It will be used only for this contact-function and for the AGORA system to provide you with a replacement password in the event you forget your current one. Please read the Privacy Policy which is accessible here."/>
+		<GER text="Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. Außerdem werden die folgenden Informationen sichtbar wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). Wir planen später eine Funktion &quot;Sende eine e-mail an [Benutzername]&quot; hinzuzufügen, welche durch die gleiche Mausbewegung verfügbar wird. Diese Funktion ist nützlich, weil bestimmte Operationen wie das Löschen einer Textbox oder die Veränderung ihres Inhaltes allein durch den Autor dieser Textbox erfolgen kann. Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für die Kontakt-Funktion genutzt und für den Fall, dass dir ein Ersatz-Passwort zugeschickt werden muss. Bitte lese auch unsere &quot;Privacy Policy&quot;, welche hier verfügbar ist."/>
+		<RUS text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя автора, потому что должно быть ясно, кто требует что. Дополнительно, следующая информация станет видимой, нависая над именем пользователя: имя; фамилия; URL (если предоставлен). Позже, мы планируем добавить  функцию &quot;Послать электронное письмо [имени пользователя]&quot;, которая также будет доступна, при перемещении мыши через имя пользователя. Эта функция полезна, потому что определенные операции, такие как удаление текстового поля или изменение его контента могут быть выполнены только создателем этого поля. Ваш адрес электронной почты никогда не будет выделяться публично. Он будет использоваться только для функции контакта, и для системы АГОРЫ, чтобы предоставить Вам пароль замены в конечном счете, если  Вы забываете свой текущий. Пожалуйста, прочитайте Политику конфиденциальности, которая доступна здесь."/>
+	</WhyRegister>
 	
 	
 
