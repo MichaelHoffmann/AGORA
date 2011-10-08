@@ -288,7 +288,7 @@ package Model
 			//trace(event.result.toXMLString());
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
-			try{
+			//try{
 				//update timestamp
 				timestamp = map.timestamp;
 				
@@ -308,12 +308,12 @@ package Model
 				
 				//read and set text - This should be performed after links are created
 				processTextbox(map.textboxes, textboxHash);
-			}
-			catch(error:Error){
-				trace(error.message);
-				trace("Error in reading update to Map");
-				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			}
+			//}
+			//catch(error:Error){
+			//	trace(error.message);
+			//	trace("Error in reading update to Map");
+			//	dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+			//}
 			//add new elements to Model
 			for each(var node:StatementModel in nodeHash){
 				if(!panelListHash.hasOwnProperty(node.ID)){
@@ -414,6 +414,7 @@ package Model
 					}else{
 						argumentTypeModel = connectionListHash[obj.connID];
 					}
+					
 					argumentTypeModel.dbType = obj.type;					
 					
 					
