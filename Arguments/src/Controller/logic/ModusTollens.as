@@ -27,10 +27,8 @@ package Controller.logic
 		public function ModusTollens()
 		{
 			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
-			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			expLangTypes = ["Only if"];	// Expandable with both And and Or
-			label = AGORAParameters.getInstance().MOD_TOL;
-			
+			label = AGORAParameters.getInstance().MOD_TOL;	
 		}
 		
 		public static function getInstance():ModusTollens{

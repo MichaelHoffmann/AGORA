@@ -335,7 +335,6 @@ package Model
 		}
 		
 		protected function onDeleteStatementResult(event:ResultEvent):void{
-			//trace(event.result.toXMLString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENTS_DELETED, null, this));
 		}
 		

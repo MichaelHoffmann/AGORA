@@ -504,9 +504,7 @@ package Controller
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			if(logicController != null){
 				logicController.link(argumentTypeModel);
-			}
-			
-			
+			}	
 		}
 		
 		protected function onArgumentSaved(event:AGORAEvent):void{
@@ -537,7 +535,6 @@ package Controller
 			model.requested = false;
 			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
-		
 	}
 }
 

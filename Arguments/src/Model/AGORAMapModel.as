@@ -2,6 +2,8 @@ package Model
 {
 	import Controller.LoadController;
 	import Controller.UserSessionController;
+	import Controller.logic.LogicFetcher;
+	import Controller.logic.ParentArg;
 	
 	import Events.AGORAEvent;
 	
@@ -26,6 +28,7 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
+	import mx.states.State;
 	
 	public class AGORAMapModel extends EventDispatcher
 	{	
@@ -230,9 +233,9 @@ package Model
 		//-----------------------Add First Claim---------------------------------------------//
 		public function addFirstClaim():void{
 			var mapXML:XML=<map id={ID}>
-								<textbox text=""/>
+								<textbox TID="10" text=""/>
 								<node TID="1" Type={StatementModel.PARTICULAR} typed="0" is_positive="1"  x="2" y="3">
-									<nodetext/>
+									<nodetext TID="2" textboxTID="10" />
 								</node>
 						   </map>;	
 			createFirstClaim.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:mapXML});
@@ -332,6 +335,20 @@ package Model
 			for each(var textbox:SimpleStatementModel in textboxHash){
 				textboxListHash[textbox.ID] = textbox;
 			}
+			
+			//update enablers after deletion
+			for each(var deletedObject:Object in deletedList){
+				if(deletedObject is StatementModel){
+					var sm:StatementModel = deletedObject as StatementModel;
+					var aTM:ArgumentTypeModel = sm.argumentTypeModel;
+					if(aTM.reasonModels.length > 0){
+						//aTM.reasonModels[0].statements[0].updateStatementTexts();
+						var logicController:ParentArg = LogicFetcher.getInstance().logicHash[aTM.logicClass];
+						logicController.formText(aTM);
+					}
+				}
+			}
+			
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
 		}
 		
@@ -398,7 +415,6 @@ package Model
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(nodetextVO.ID);
 					textboxHash[simpleStatement.ID] = simpleStatement;
-					
 				}	
 			}
 			return true;
