@@ -74,7 +74,7 @@ package Controller.logic
 					//if many reasons
 					var params:AGORAParameters = AGORAParameters.getInstance();
 					if(argumentTypeModel.reasonModels.length > 1 && argumentTypeModel.lSubOption == null){
-						output = "Select how you want to connect the reasons";
+						output = "Select how you want to connect the reasons by clicking on \"modus tollens\" above, then \"only if,\" and then select \"and\" or \"or.\" ";
 						if(argSelector != null){//if the view is created
 							argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
 							argSelector.andor.dataProvider = [params.AND, params.OR];
