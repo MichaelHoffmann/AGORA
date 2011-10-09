@@ -267,7 +267,7 @@ package Model
 			panelListHash[statementModel.ID] = statementModel;
 			newPanels.addItem(statementModel);
 			
-			//raise event 
+			//raise event
 			dispatchEvent(new AGORAEvent(AGORAEvent.FIRST_CLAIM_ADDED, null, statementModel));	
 		}
 		

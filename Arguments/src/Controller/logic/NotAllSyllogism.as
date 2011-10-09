@@ -37,7 +37,6 @@ package Controller.logic
 			var reasonText:String = "";
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
-			var argSelector:ArgSelector = MenuPanel(FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID]).schemeSelector;
 			var i:int;
 			
 			output = "It cannot be the case, at the same time, that ";
