@@ -52,7 +52,7 @@ package Controller.logic
 				case langTypes[0]:
 					reasonText = reasonModels[i].statement.text;
 					for(i=1; i<reasonModels.length; i++){
-						reasonText = reasonText + " and "  + reasonModels[i].statement.text;
+						reasonText = reasonText + " and if "  + reasonModels[i].statement.text;
 					}
 					output = "If " + reasonText; 
 					output = output + ", then " + claimModel.statement.text;

@@ -86,7 +86,7 @@ package Controller.logic
 					}else{
 						output = claimModel.statement.positiveText + " only if ";	
 						for(i=0; i<reasonModels.length - 1; i++){
-							reasonText = reasonText + reasonModels[i].statement.positiveText + " " + argumentTypeModel.lSubOption + " ";
+							reasonText = reasonText + reasonModels[i].statement.positiveText + " " + argumentTypeModel.lSubOption + " if ";
 						}
 						reasonText = reasonText + reasonModels[reasonModels.length - 1].statement.positiveText;
 						output = output + reasonText;
