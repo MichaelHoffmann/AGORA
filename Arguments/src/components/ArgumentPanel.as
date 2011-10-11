@@ -402,7 +402,7 @@ package components
 					}
 				}
 				else if(model.statementFunction == StatementModel.INFERENCE){
-					displayTxt.text = "[Choose an argument scheme and language type to form the inference text]";
+					displayTxt.text = AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
 				}
 			}
 			else if(value.split(" ").join("").length == 0){
@@ -413,7 +413,7 @@ package components
 						displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
 					}
 				}else if(model.statementFunction == StatementModel.INFERENCE){
-					displayTxt.text =  "[Choose an argument scheme and language type to form the inference text]";
+					displayTxt.text =  AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
 				}
 			}
 			else{

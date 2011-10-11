@@ -25,6 +25,8 @@ package components
 	
 	import Model.ArgumentTypeModel;
 	
+	import ValueObjects.AGORAParameters;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
@@ -47,6 +49,7 @@ package components
 	public class MenuPanel extends GridPanel
 	{
 		private var _model:ArgumentTypeModel;
+		private var _agoraConstants:AGORAParameters;
 		public var vgroup:VGroup;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
@@ -61,9 +64,21 @@ package components
 			minHeight = 20;
 			width = 150;
 			this.setStyle("chromeColor",uint("0xdddddd"));
+			agoraConstants = AGORAParameters.getInstance();
+			this.title = agoraConstants.THEREFORE;
 		}
 		
 		
+		public function get agoraConstants():AGORAParameters
+		{
+			return _agoraConstants;
+		}
+
+		public function set agoraConstants(value:AGORAParameters):void
+		{
+			_agoraConstants = value;
+		}
+
 		public function get schemeSelector():ArgSelector
 		{
 			return _schemeSelector;

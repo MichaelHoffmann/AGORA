@@ -203,23 +203,13 @@ package Controller
 				}{
 					flag = 1;
 				}
-<<<<<<< HEAD
-			}{
-				flag = 1;
-			}
-			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
-				flag = 1;
-			}
-			if(flag == 0){
-				Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
-				//TODO: translate above line
-				return;
-=======
+
 				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
 					flag = 1;
 				}
 				if(flag == 0){
 					Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
+					//TODO: translate above line
 					return;
 				}
 				var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[LayoutController.getInstance().getBottomReason(argumentTypeModel).ID];
@@ -227,7 +217,6 @@ package Controller
 				y = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1].ygrid;
 				AGORAModel.getInstance().requested = true;
 				argumentTypeModel.addReason(x, y);
->>>>>>> 0e46430085794d3a5104c80e05b6d942df3b79bb
 			}
 			else{
 				Alert.show("Please wait, the server is busy.");
@@ -517,9 +506,7 @@ package Controller
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			if(logicController != null){
 				logicController.link(argumentTypeModel);
-			}
-			
-			
+			}	
 		}
 		
 		protected function onArgumentSaved(event:AGORAEvent):void{
@@ -550,7 +537,6 @@ package Controller
 			model.requested = false;
 			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
 		}
-		
 	}
 }
 

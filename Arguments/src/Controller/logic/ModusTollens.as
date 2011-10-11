@@ -11,8 +11,8 @@ package Controller.logic
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.MenuPanel;
-	
 	import classes.Language;
+	import flash.utils.Dictionary;
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
@@ -27,10 +27,8 @@ package Controller.logic
 		public function ModusTollens()
 		{
 			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
-			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			expLangTypes = ["Only if"];	// Expandable with both And and Or
-			label = AGORAParameters.getInstance().MOD_TOL;
-			
+			label = AGORAParameters.getInstance().MOD_TOL;	
 		}
 		
 		public static function getInstance():ModusTollens{
@@ -48,8 +46,14 @@ package Controller.logic
 			var output:String = "";
 			var reasonText:String = "";
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
+			var hash:Dictionary = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
-			var argSelector:ArgSelector = MenuPanel(FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID]).schemeSelector;
+			//At this point argSelector may not
+			//have been created
+			var argSelector:ArgSelector = null;
+			if(hash.hasOwnProperty(argumentTypeModel.ID)){
+				argSelector = MenuPanel(hash[argumentTypeModel.ID]).schemeSelector;
+			}
 			var i:int;
 			
 			switch(argumentTypeModel.language){
@@ -70,9 +74,11 @@ package Controller.logic
 					var params:AGORAParameters = AGORAParameters.getInstance();
 					if(argumentTypeModel.reasonModels.length > 1 && argumentTypeModel.lSubOption == null){
 						output = Language.lookup("SelectLanguageType");
-						argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
-						argSelector.andor.dataProvider = [params.AND, params.OR];
-						argSelector.andor.visible = argSelector.typeSelector.visible;
+						if(argSelector != null){//if the view is created
+							argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
+							argSelector.andor.dataProvider = [params.AND, params.OR];
+							argSelector.andor.visible = argSelector.typeSelector.visible;
+						}
 						//if one reason
 					}else if(argumentTypeModel.reasonModels.length == 1){
 						reasonText = reasonModels[0].statement.positiveText;
@@ -81,13 +87,15 @@ package Controller.logic
 					}else{
 						output = claimModel.statement.positiveText + Language.lookup("ArgOnlyIf");	
 						for(i=0; i<reasonModels.length - 1; i++){
-							reasonText = reasonText + reasonModels[i].statement.positiveText + " " + argumentTypeModel.lSubOption + " ";
+							reasonText = reasonText + reasonModels[i].statement.positiveText + " " + argumentTypeModel.lSubOption + " if ";
 						}
 						reasonText = reasonText + reasonModels[reasonModels.length - 1].statement.positiveText;
 						output = output + reasonText;
-						argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
-						argSelector.andor.dataProvider = [params.AND, params.OR];
-						argSelector.andor.visible = argSelector.typeSelector.visible;
+						if(argSelector != null){
+							argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
+							argSelector.andor.dataProvider = [params.AND, params.OR];
+							argSelector.andor.visible = argSelector.typeSelector.visible;
+						}
 					}
 					break;
 				case langTypes[4]:
@@ -106,7 +114,7 @@ package Controller.logic
 					output = reasonText + Language.lookup("ArgNecessaryCond") + claimModel.statement.positiveText;
 					break;
 			}
-		
+			
 			argumentTypeModel.inferenceModel.statements[0].text = claimModel.statement.text;
 			argumentTypeModel.inferenceModel.statements[1].text = reasonText;
 			argumentTypeModel.inferenceModel.statement.text = output;
@@ -163,7 +171,7 @@ package Controller.logic
 			
 			//claimModel.statement.forwardList.push(inferenceModel.statements[0]);
 			claimModel.statement.addDependentStatement(inferenceModel.statements[0]);
-		
+			
 			for each(var reason:StatementModel in reasonModels){
 				reason.negated = true;
 				//reason.statement.forwardList.push(inferenceModel.statements[1]);

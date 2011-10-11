@@ -21,7 +21,10 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
-		   xmlns:classes="classes.*" xmlns:components="components.*">
+		   xmlns:classes="classes.*" 
+		   xmlns:components="components.*"
+		   xmlns:value_objects="ValueObjects.*"
+		   creationComplete="onCreationComplete">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -29,7 +32,8 @@
 		<s:HGroup id="topPanel" gap="10">
 			<s:Button id="gotoMenuBtn" label="Save and Home" width="150" click="discardChanges(event)">
 			</s:Button>
-			<s:Button id="saveAsBtn" label="Save Map As" toolTip="When you save this map under a new name, a copy of the map will be produced in which every statement is assigned to you as the author of this statement, even if the map has been produced in collaboration or by other people. This way you acquire all the permissions necessary to change whatever you want. If you don't change a statement, the name of the original author will pop when the mouse is moved over 'AU' (for 'author')." visible="true" width="150" click="Alert.show(Language.lookup('UnderConstruction'));">
+			<s:Button id="saveAsBtn" label="Save Map As" visible="true" width="150" 
+					  click="Alert.show(Language.lookup('UnderConstruction'));">
 			</s:Button>
 		</s:HGroup>
 		<s:Scroller id="agora">	
@@ -46,6 +50,8 @@
 		<![CDATA[
 			import Controller.AGORAController;
 			import Controller.LayoutController;
+			
+			import ValueObjects.AGORAParameters;
 			
 			import flash.display.*;
 			
@@ -85,8 +91,7 @@
 				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 50;
 				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 50;
 			}
-			
-			
+						
 			public function updateSize(event:Event):void
 			{
 				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
@@ -101,6 +106,11 @@
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;			
 				dispatchEvent(new Event("created",true,false));
+			}
+			
+			//------------------------- EVENT LISTENERS -----------------------//
+			protected function onCreationComplete(event:FlexEvent):void{
+				saveAsBtn.toolTip = AGORAParameters.getInstance().SUPPORT_SAVEAS;
 			}
 		]]>
 	</fx:Script>
