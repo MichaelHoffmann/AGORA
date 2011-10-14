@@ -283,6 +283,43 @@ CREATE TABLE IF NOT EXISTS agora.sourcenodes (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 	
+CREATE TABLE IF NOT EXISTS agora.projects (
+  proj_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id INT UNSIGNED NOT NULL, 
+  is_hostile TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (proj_id),
+  INDEX user_id (user_id ASC),
+  FOREIGN KEY (user_id)
+    REFERENCES agora.users (user_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
+
+CREATE TABLE IF NOT EXISTS agora.projusers (
+  pu_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  proj_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (pu_id),
+  INDEX proj_id (proj_id ASC),
+  INDEX user_id (user_id ASC),
+  FOREIGN KEY (proj_id)
+    REFERENCES agora.projects (proj_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+  FOREIGN KEY (user_id)
+    REFERENCES agora.users (user_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
+
+CREATE TABLE IF NOT EXISTS agora.projmaps (
+  pm_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  map_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (pm_id),
+  INDEX map_id (map_id ASC),
+  FOREIGN KEY (map_id)
+    REFERENCES agora.maps (map_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
+	
 -- -----------------------------------------------------
 -- Triggers
 -- -----------------------------------------------------
