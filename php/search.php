@@ -52,13 +52,12 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0 ORDER BY maps.title";
-		$resultID = mysql_query($query, $linkID); 
+		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0 ORDER BY maps.title";
+		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;
 		}
-		$row = mysql_fetch_assoc($resultID);
 		if(mysql_num_rows($resultID)==0){
 			$output->addAttribute("map_count", "0");
 			//This is a better alternative than reporting an error.
