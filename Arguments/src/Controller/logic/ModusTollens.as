@@ -73,7 +73,8 @@ package Controller.logic
 					//if many reasons
 					var params:AGORAParameters = AGORAParameters.getInstance();
 					if(argumentTypeModel.reasonModels.length > 1 && argumentTypeModel.lSubOption == null){
-						output = Language.lookup("SelectLanguageType");
+						//output = Language.lookup("SelectLanguageType");
+						output = "Select how you want to connect the reasons  by  clicking 'Modus Tollens' above, then clicking 'only if', and then selecting 'and' or 'or'";
 						if(argSelector != null){//if the view is created
 							argSelector.andor.x = argSelector.typeSelector.x + argSelector.typeSelector.width;
 							argSelector.andor.dataProvider = [params.AND, params.OR];

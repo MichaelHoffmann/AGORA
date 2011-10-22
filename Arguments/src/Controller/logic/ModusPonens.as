@@ -54,7 +54,7 @@ package Controller.logic
 				case langTypes[0]:
 					reasonText = reasonModels[i].statement.text;
 					for(i=1; i<reasonModels.length; i++){
-						reasonText = reasonText + Language.lookup("ArgAndIf") + reasonModels[i].statement.text;
+						reasonText = reasonText + " " + Language.lookup("ArgAndIf") + " "+ reasonModels[i].statement.text;
 					}
 
 					output = Language.lookup("ArgIf") + reasonText; 

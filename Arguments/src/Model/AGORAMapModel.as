@@ -292,25 +292,25 @@ package Model
 			var mapXMLRawObject:Object = event.result.map;
 			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
 			//try{
-				//update timestamp
-				timestamp = map.timestamp;
-				
-				//Form a map of nodes
-				var obj:Object;
-				var nodeHash:Dictionary = new Dictionary;
-				var textboxHash:Dictionary = new Dictionary;
-				
-				//read nodes and create Statment Models
-				//parseNode(map, nodeHash, textboxHash);
-				processNode(map.nodeObjects,nodeHash, textboxHash);
-				
-				//Form a map of connections
-				var connectionsHash:Dictionary = new Dictionary;
-				//parseConnection(map, connectionsHash, nodeHash);
-				processConnection(map.connections, connectionsHash, nodeHash);
-				
-				//read and set text - This should be performed after links are created
-				processTextbox(map.textboxes, textboxHash);
+			//update timestamp
+			timestamp = map.timestamp;
+			
+			//Form a map of nodes
+			var obj:Object;
+			var nodeHash:Dictionary = new Dictionary;
+			var textboxHash:Dictionary = new Dictionary;
+			
+			//read nodes and create Statment Models
+			//parseNode(map, nodeHash, textboxHash);
+			processNode(map.nodeObjects,nodeHash, textboxHash);
+			
+			//Form a map of connections
+			var connectionsHash:Dictionary = new Dictionary;
+			//parseConnection(map, connectionsHash, nodeHash);
+			processConnection(map.connections, connectionsHash, nodeHash);
+			
+			//read and set text - This should be performed after links are created
+			processTextbox(map.textboxes, textboxHash);
 			//}
 			//catch(error:Error){
 			//	trace(error.message);
@@ -520,8 +520,14 @@ package Model
 					else{
 						simpleStatement = textboxListHash[obj.ID];
 					}
-					if(simpleStatement.hasOwn){
-						simpleStatement.text = obj.text;
+					if(simpleStatement){
+						if(simpleStatement.hasOwn){
+							simpleStatement.text = obj.text;
+						}			
+					}
+					else{
+						trace(obj.ID);
+						trace('notify');
 					}
 				}
 				else{
