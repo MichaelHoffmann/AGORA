@@ -30,7 +30,9 @@ package Controller.logic
 			logicHash[AGORAParameters.getInstance().MTimplies] = ModusTollens.getInstance();
 			logicHash[AGORAParameters.getInstance().MTnecessary] = ModusTollens.getInstance();
 			logicHash[AGORAParameters.getInstance().MTonlyif] = ModusTollens.getInstance();
-			logicHash[AGORAParameters.getInstance().MTonlyiffor] = ModusTollens.getInstance();
+			//logicHash[AGORAParameters.getInstance().MTonlyiffor] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTonlyifand] = ModusTollens.getInstance();
+			logicHash[AGORAParameters.getInstance().MTonlyifor] = ModusTollens.getInstance();
 			logicHash[AGORAParameters.getInstance().MTsufficient] = ModusTollens.getInstance();
 			logicHash[AGORAParameters.getInstance().MTwhenever] = ModusTollens.getInstance();
 			

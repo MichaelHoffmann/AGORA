@@ -188,12 +188,17 @@ package Model
 			var  dbLanguage:String = AGORAModel.getInstance().dbLanguageHashMap[language];
 			var  dbLanguageSubOption:String = "";
 			if(language == AGORAParameters.getInstance().ONLY_IF){
-				if(lSubOption == AGORAParameters.getInstance().AND){
-					return dbScheme + "onlyiffor";
+				if(reasonModels.length > 1){
+					if(lSubOption == AGORAParameters.getInstance().AND){
+						return dbScheme + "onlyifand";
+					}
+					else{
+						return dbScheme + "onlyifor";
+					}	
 				}
-				else{
-					return dbScheme + "onlyif";
-				}	
+			}
+			else{
+				return dbScheme + "onlyif";
 			}
 			return dbScheme + (dbLanguage==null?"":dbLanguage) + dbLanguageSubOption;
 		}
@@ -332,7 +337,7 @@ package Model
 			var inputXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID}/>;
 			tid=1;
 			inputXML.appendChild(getXML());
-			
+			//trace(inputXML.toXMLString());
 			//convert temporary boxes to proper ones
 			if(logicClass == AGORAParameters.getInstance().COND_SYLL){
 				inputXML = substituteTemporaryBoxes(claimModel, inputXML);
@@ -343,7 +348,6 @@ package Model
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			updateConnectionService.send({uid: usm.uid, pass_hash: usm.passHash, xml: inputXML});
 		}
-		
 		protected function updateConnectionServiceResult(event:ResultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SAVED, null, this));
 		}

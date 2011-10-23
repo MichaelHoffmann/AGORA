@@ -64,7 +64,8 @@ package ValueObjects
 		public const MTimplies:String = "MTimplies";
 		public const MTwhenever:String = "MTwhenever";
 		public const MTonlyif:String = "MTonlyif";
-		public const MTonlyiffor:String = "MTonlyiffor";
+		public const MTonlyifand:String = "MTonlyifand";
+		public const MTonlyifor:String = "MTonlyifor";
 		public const MTprovidedthat:String = "MTprovidedthat";
 		public const MTsufficient:String = "MTsufficient";
 		public const MTnecessary:String = "MTnecessary";

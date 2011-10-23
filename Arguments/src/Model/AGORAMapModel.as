@@ -423,6 +423,7 @@ package Model
 		protected function processConnection(objs:Vector.<ConnectionValueObject>, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
 			var argumentTypeModel:ArgumentTypeModel;
 			var result:Boolean;
+			
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
 					if(!connectionListHash.hasOwnProperty(obj.connID)){
@@ -526,8 +527,7 @@ package Model
 						}			
 					}
 					else{
-						trace(obj.ID);
-						trace('notify');
+						trace(obj.ID + ' is not deleted and not associated with any node');
 					}
 				}
 				else{

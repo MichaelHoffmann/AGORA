@@ -106,7 +106,8 @@ package Model
 			schemeAndLanguage[agoraParameters.MTimplies] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.IMPLIES);
 			schemeAndLanguage[agoraParameters.MTnecessary] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.NECESSARY_CONDITION);
 			schemeAndLanguage[agoraParameters.MTonlyif] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.ONLY_IF);
-			schemeAndLanguage[agoraParameters.MTonlyiffor] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.ONLY_IF);
+			schemeAndLanguage[agoraParameters.MTonlyifor] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.ONLY_IF_OR);
+			schemeAndLanguage[agoraParameters.MTonlyifand] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.ONLY_IF_AND);
 			schemeAndLanguage[agoraParameters.MTprovidedthat] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.PROVIDED_THAT);
 			schemeAndLanguage[agoraParameters.MTsufficient] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.SUFFICIENT_CONDITION);
 			schemeAndLanguage[agoraParameters.MTwhenever] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.WHENEVER);
