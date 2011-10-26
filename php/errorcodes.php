@@ -152,4 +152,10 @@
 		$fail->addAttribute("code", 308);
 	}
 	
+	function meaninglessQueryVariables($output, $string){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "The query variables have a meaningless term in them. $string");
+		$fail->addAttribute("code", 309);
+	}
+	
 ?>
