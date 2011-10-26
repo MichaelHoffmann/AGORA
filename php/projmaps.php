@@ -55,7 +55,25 @@
 		}
 		//Basic boilerplate is done. Next step is to add the map to the project.
 		
+		//First, we check whether the user has authority to move the map into the project. To prevent abuse, only the map's creator can move the map into the project, and then only if he is a user of the project.
 		
+		//check currently omitted for testing purposes: can't be done until projusers exists
+		//TODO: add check once projusers is working properly
+		
+		$query = "INSERT INTO projmaps (proj_id, map_id) VALUES ($projID, $mapID)";
+		$success = mysql_query($query, $linkID);
+		if($success){
+			$map=$output->addChild("map");
+			$map->addAttribute("ID", $mapID);
+			$map->addAttribute("added", true);
+			return $output;
+		}else{
+			$map=$output->addChild("map");
+			$map->addAttribute("ID", $mapID);
+			$map->addAttribute("added", false);
+			updateFailed($output, $query);
+			return $output;
+		}
 		
 		return $output;
 	}
@@ -81,7 +99,28 @@
 			return $output;
 		}
 		//Basic boilerplate is done. Next step is to remove the map from the project.
+		//First, we check whether the user has authority to move the map out of the project. To prevent abuse, only the map's creator or a project administrator can move the map out of the project. The owner can do this even if he is no longer a user of the project. (Thinking: you can't kick me out of a project to take away my ability to work on my map.)
 		
+		//check currently omitted for testing purposes: can't be done until projusers exists
+		//TODO: add check once projusers is working properly
+		
+		$query = "DELETE FROM projmaps WHERE proj_id=$projID AND map_id=$mapID";
+		
+		$success = mysql_query($query, $linkID);
+		if($success){
+			$map=$output->addChild("map");
+			$map->addAttribute("ID", $mapID);
+			$map->addAttribute("deleted", true);
+			return $output;
+		}else{
+			$map=$output->addChild("map");
+			$map->addAttribute("ID", $mapID);
+			$map->addAttribute("deleted", false);
+			updateFailed($output, $query);
+			return $output;
+		}
+		
+		return $output;
 		
 		
 		
