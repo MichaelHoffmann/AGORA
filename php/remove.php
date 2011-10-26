@@ -205,8 +205,8 @@ List of variables for insertion:
 	}
 
 	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
-	$userID = $_REQUEST['uid'];
-	$pass_hash = $_REQUEST['pass_hash'];
+	$userID = mysql_real_escape_string($_REQUEST['uid']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$output = remove($xmlparam, $userID, $pass_hash); 
-	print($output->asXML()); //TODO: turn this back on when output XML is set up
+	print($output->asXML());
 ?>

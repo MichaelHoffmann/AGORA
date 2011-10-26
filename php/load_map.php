@@ -157,8 +157,8 @@
 		}
 		return $output;
 	}
-	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
-	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
+	$map_id = mysql_real_escape_string($_REQUEST['map_id']);  //TODO: Change this back to a GET when all testing is done.
+	$timestamp = mysql_real_escape_string($_REQUEST['timestamp']);  //TODO: Change this back to a GET when all testing is done.
 	$output = get_map($map_id, $timestamp); 
 	print $output->asXML();
 ?>
