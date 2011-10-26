@@ -53,7 +53,7 @@
 			incorrectLogin($output);
 			return $output;
 		}
-		//Basic boilerplate is done. Next step is to create a new project with the various attributes.
+		//Basic boilerplate is done. Next step is to add the map to the project.
 		
 		
 		
@@ -80,7 +80,9 @@
 			incorrectLogin($output);
 			return $output;
 		}
-		//Basic boilerplate is done. Next step is to create a new project with the various attributes.
+		//Basic boilerplate is done. Next step is to remove the map from the project.
+		
+		
 		
 		
 		
