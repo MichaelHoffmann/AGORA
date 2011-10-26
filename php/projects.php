@@ -57,7 +57,7 @@
 		}
 	}
 	
-	function editProject($userID, $pass_hash, $proj_pass, $title, $is_hostile){
+	function editProject($userID, $pass_hash, $projID, $proj_pass, $title, $is_hostile){
 		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
@@ -87,7 +87,7 @@
 	if(!$projID){
 		$output = createProject($userID, $pass_hash, $proj_pass, $title, $is_hostile);
 	}else{
-		$output = editProject($userID, $pass_hash, $proj_pass, $title, $is_hostile);
+		$output = editProject($userID, $pass_hash, $projID, $proj_pass, $title, $is_hostile);
 	}
 	print($output->asXML());
 ?>
