@@ -25,7 +25,7 @@
 		uid: ID number for the user
 		pass_hash: The hash of the user's password
 		projID: If any value PHP treats as false (use 0 for neatness), we are creating a new project. Otherwise, we're updating a project.
-		proj_pass: The hash of the project's password. Only needed for creating a project with one, or updating a project's password. Can be left blank, in which case the project's password will be NULL and people cannot use it to join a project.
+		newpass: The hash of the project's password. Only needed for creating a project with one, or updating a project's password. When left blank, it means that the project's password is set to NULL, which makes it so that the only way in is for the administrator to explicitly add users in the project/user management system (rather than e-mailing everyone the password so they can add themselves).
 		title: Title of the project. Only needed for creating a project or changing the project's title.
 		is_hostile: If 1, then the project is a "debate" project - maps behave the same as a normal map; the project is effectively an access-limiting tool. If the project is a "collabortive" project, then anyone can edit anything.
 		
@@ -43,7 +43,7 @@
 		return $row['LAST_INSERT_ID()'];
 	}
 	
-	function createProject($userID, $pass_hash, $proj_pass, $title, $is_hostile){
+	function createProject($userID, $pass_hash, $newpass, $title, $is_hostile){
 		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
@@ -65,11 +65,11 @@
 		//Basic boilerplate is done. Next step is to create a new project with the various attributes.
 		
 		//Make sure the password is set to be NULL if it's nonexistent.
-		if(!$proj_pass){
-			$proj_pass="NULL";
+		if(!$newpass){
+			$newpass="NULL";
 		}
 		$query = "INSERT INTO projects (user_id, title, password, is_hostile) VALUES
-										($userID, '$title', $proj_pass, $is_hostile)";
+										($userID, '$title', $newpass, $is_hostile)";
 		mysql_query($query, $linkID);
 		$projID = getLastInsert($linkID);
 		if(!$projID){
@@ -81,7 +81,7 @@
 		return $output;
 	}
 	
-	function editProject($userID, $pass_hash, $projID, $proj_pass, $title, $is_hostile){
+	function editProject($userID, $pass_hash, $projID, $newpass, $title, $is_hostile){
 		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
@@ -100,18 +100,55 @@
 			incorrectLogin($output);
 			return $output;
 		}
+		//Basic boilerplate complete. Next step is to verify that the user is the owner of the project.
+		
+		$query = "SELECT * FROM projects INNER JOIN users ON 
+			users.user_id = projects.user_id WHERE proj_id = $projID";
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		$row = mysql_fetch_assoc($resultID);
+		if(!$row['proj_id']){
+			nonexistent($output, $query);
+			return $output;
+		}
+		$UID = $row['user_id'];
+		if($UID!=$userID){
+			modifyOther($output);
+			return $output;
+		}
+		
+		//If we get here, we know that the user is the owner of the project.
+		
+		$query = "UPDATE projects SET title='$title', password=$newpass, is_hostile=$is_hostile WHERE proj_id=$projID";
+		$success = mysql_query($query, $linkID);
+		if($success){
+			$proj=$output->addChild("project");
+			$proj->addAttribute("ID", $projID);
+			$proj->addAttribute("updated", true);
+			return $output;
+		}else{
+			$proj=$output->addChild("project");
+			$proj->addAttribute("ID", $projID);
+			$proj->addAttribute("updated", false);
+			updateFailed($output, $query);
+			return $output;
+		}
 	}
 	
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$projID = mysql_real_escape_string($_REQUEST['projID']);
-	$proj_pass = mysql_real_escape_string($_REQUEST['proj_pass']);
+	$newpass = mysql_real_escape_string($_REQUEST['newpass']);
+	$newpass = mysql_real_escape_string($_REQUEST['newpass']);
 	$title = mysql_real_escape_string($_REQUEST['title']);
 	$is_hostile = mysql_real_escape_string($_REQUEST['is_hostile']);
 	if(!$projID){
-		$output = createProject($userID, $pass_hash, $proj_pass, $title, $is_hostile);
+		$output = createProject($userID, $pass_hash, $newpass, $title, $is_hostile);
 	}else{
-		$output = editProject($userID, $pass_hash, $projID, $proj_pass, $title, $is_hostile);
+		$output = editProject($userID, $pass_hash, $projID, $newpass, $title, $is_hostile);
 	}
 	print($output->asXML());
 ?>
