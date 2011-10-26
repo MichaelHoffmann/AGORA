@@ -33,11 +33,58 @@
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
-	function addMap($mapID, $projID, $userID, $pass_hash){
-	
+	function addMap($mapID, $projID, $userID, $pass_hash, $output){
+		$output->addAttribute("ID", $projID);
+		global $dbName, $version;
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
+		$output = new SimpleXMLElement($xmlstr);
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			 databaseNotFound($output);
+			 return $output;
+		}
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			incorrectLogin($output);
+			return $output;
+		}
+		//Basic boilerplate is done. Next step is to create a new project with the various attributes.
+		
+		
+		
+		return $output;
 	}
 	
-	function removeMap($mapID, $projID, $userID, $pass_hash){
+	function removeMap($mapID, $projID, $userID, $pass_hash, $output){
+		$output->addAttribute("ID", $projID);
+		global $dbName, $version;
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
+		$output = new SimpleXMLElement($xmlstr);
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			 databaseNotFound($output);
+			 return $output;
+		}
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			incorrectLogin($output);
+			return $output;
+		}
+		//Basic boilerplate is done. Next step is to create a new project with the various attributes.
+		
+		
+		
+		return $output;
 	}
 
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
@@ -46,15 +93,17 @@
 	$mapID =  mysql_real_escape_string($_REQUEST['mapID']);
 	$action = $_REQUEST['action'];
 	
-	$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
+	header("Content-type: text/xml");
+	$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
 	$output = new SimpleXMLElement($xmlstr);
-		
+
 	if($action=="add"){
-		addMap($mapID, $projID, $userID, $pass_hash);
+		$output=addMap($mapID, $projID, $userID, $pass_hash, $output);
 	}else if($action=="remove"){
-		removeMap($mapID, $projID, $userID, $pass_hash);
+		$output=removeMap($mapID, $projID, $userID, $pass_hash, $output);
 	}else{
-		meaninglessQueryVariables($output, "The 'action' variable must be set to either add or remove.")
+		meaninglessQueryVariables($output, "The 'action' variable must be set to either add or remove.");
 	}
+	print $output->asXML();
 	
 ?>
