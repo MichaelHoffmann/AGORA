@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS agora.sourcenodes (
 CREATE TABLE IF NOT EXISTS agora.projects (
   proj_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NOT NULL, 
-  title VARCHAR(255) NULL,
+  title VARCHAR(255) NOT NULL,
   password VARCHAR(255) NULL,
   is_hostile TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (proj_id),
