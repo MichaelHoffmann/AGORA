@@ -318,9 +318,15 @@ CREATE TABLE IF NOT EXISTS agora.projusers (
 
 CREATE TABLE IF NOT EXISTS agora.projmaps (
   pm_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  proj_id INT UNSIGNED NOT NULL,
   map_id INT UNSIGNED NOT NULL,
   PRIMARY KEY (pm_id),
+  INDEX proj_id (proj_id ASC),
   INDEX map_id (map_id ASC),
+  FOREIGN KEY (proj_id)
+    REFERENCES agora.projects (proj_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
   FOREIGN KEY (map_id)
     REFERENCES agora.maps (map_id)
 	ON DELETE CASCADE
