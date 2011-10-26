@@ -304,6 +304,7 @@ CREATE TABLE IF NOT EXISTS agora.projusers (
   pu_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   proj_id INT UNSIGNED NOT NULL,
   user_id INT UNSIGNED NOT NULL,
+  user_level TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user, 9 = Administrator',
   PRIMARY KEY (pu_id),
   INDEX proj_id (proj_id ASC),
   INDEX user_id (user_id ASC),
