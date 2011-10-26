@@ -35,6 +35,13 @@
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
+	function getLastInsert($linkID)
+	{
+		$query = "SELECT LAST_INSERT_ID()";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		return $row['LAST_INSERT_ID()'];
+	}
 	
 	function createProject($userID, $pass_hash, $proj_pass, $title, $is_hostile){
 		global $dbName, $version;
@@ -55,6 +62,23 @@
 			incorrectLogin($output);
 			return $output;
 		}
+		//Basic boilerplate is done. Next step is to create a new project with the various attributes.
+		
+		//Make sure the password is set to be NULL if it's nonexistent.
+		if(!$proj_pass){
+			$proj_pass="NULL";
+		}
+		$query = "INSERT INTO projects (user_id, title, password, is_hostile) VALUES
+										($userID, '$title', $proj_pass, $is_hostile)";
+		mysql_query($query, $linkID);
+		$projID = getLastInsert($linkID);
+		if(!$projID){
+			insertFailed($output, $query);
+			return $output;
+		}
+		$proj = $output->addChild("project");
+		$proj->addAttribute("ID", $projID);
+		return $output;
 	}
 	
 	function editProject($userID, $pass_hash, $projID, $proj_pass, $title, $is_hostile){
@@ -78,12 +102,12 @@
 		}
 	}
 	
-	$userID = $_REQUEST['uid'];
-	$pass_hash = $_REQUEST['pass_hash'];
-	$projID = $_REQUEST['projID'];
-	$proj_pass = $_REQUEST['proj_pass']
-	$title = $_REQUEST['title'];
-	$is_hostile = $_REQUEST['is_hostile'];
+	$userID = mysql_real_escape_string($_REQUEST['uid']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$projID = mysql_real_escape_string($_REQUEST['projID']);
+	$proj_pass = mysql_real_escape_string($_REQUEST['proj_pass']);
+	$title = mysql_real_escape_string($_REQUEST['title']);
+	$is_hostile = mysql_real_escape_string($_REQUEST['is_hostile']);
 	if(!$projID){
 		$output = createProject($userID, $pass_hash, $proj_pass, $title, $is_hostile);
 	}else{
