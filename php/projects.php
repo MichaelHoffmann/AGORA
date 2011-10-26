@@ -121,7 +121,9 @@
 		}
 		
 		//If we get here, we know that the user is the owner of the project.
-		
+		if(!$newpass){
+			$newpass="NULL";
+		}
 		$query = "UPDATE projects SET title='$title', password=$newpass, is_hostile=$is_hostile WHERE proj_id=$projID";
 		$success = mysql_query($query, $linkID);
 		if($success){
