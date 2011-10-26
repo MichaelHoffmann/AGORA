@@ -42,9 +42,7 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		$userclause = mysql_real_escape_string("$username");
-		$passclause = mysql_real_escape_string("$pass_hash");
-		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$passclause'";
+		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
 
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){

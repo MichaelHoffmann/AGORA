@@ -41,15 +41,8 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		$userclause = mysql_real_escape_string("$username");
-		$passclause = mysql_real_escape_string("$pass_hash");
-		$fnclause = mysql_real_escape_string("$firstname");
-		$lnclause = mysql_real_escape_string("$lastname");
-		$mailclause = mysql_real_escape_string("$email");
-		$urlclause = mysql_real_escape_string("$url");
-		
 			
-		$equery = "SELECT * FROM users WHERE email='$mailclause'";
+		$equery = "SELECT * FROM users WHERE email='$email'";
 		$eResultID = mysql_query($equery, $linkID); 
 		if(!$eResultID){
 			dataNotFound($output, $equery);
@@ -60,7 +53,7 @@
 			repeatEmail($output);
 			return $output;
 		}
-		$query = "SELECT * FROM users WHERE username='$userclause'";
+		$query = "SELECT * FROM users WHERE username='$username'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -71,7 +64,7 @@
 		if($row['user_id']=="") // If user doesn't exist...
 		{
 			//insert into the database
-			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$fnclause', '$lnclause', '$userclause', '$passclause', '$mailclause', '$urlclause', 1, NOW(), NOW())";
+			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$firstname', '$lastname', '$username', '$pass_hash', '$email', '$url', 1, NOW(), NOW())";
 			$insID = mysql_query($iquery, $linkID); 
 			if(!$insID){
 				insertFailed($output, $iquery);

@@ -45,14 +45,7 @@
 			return $output;
 		}
 		
-		$userclause = mysql_real_escape_string("$username");
-		$passclause = mysql_real_escape_string("$pass_hash");
-		$fnclause = mysql_real_escape_string("$firstname");
-		$lnclause = mysql_real_escape_string("$lastname");
-		$mailclause = mysql_real_escape_string("$email");
-		$urlclause = mysql_real_escape_string("$url");
-		$npclause = mysql_real_escape_string("$newpass");
-		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$pass_hash'";
+		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -66,15 +59,17 @@
 			$login->addAttribute("modified", false);
 		}else{
 			//update the database
-			if($npclause!="")
+			if($newpass!="")
 			{
-				$iquery= "UPDATE users SET firstname='$fnclause', lastname='$lnclause',	password='$npclause',
-						email='$mailclause', url='$urlclause', last_login=NOW() WHERE user_id=$uid";
+				$iquery= "UPDATE users SET firstname='$firstname', 
+				lastname='$lastname', password='$newpass', email='$email', 
+				url='$url', last_login=NOW() WHERE user_id=$uid";
 			}
 			else
 			{
-				$iquery = "UPDATE users SET firstname='$fnclause', lastname='$lnclause', email='$mailclause', 
-						url='$urlclause', last_login=NOW() WHERE user_id=$uid";
+				$iquery = "UPDATE users SET firstname='$firstname', 
+				lastname='$lastname', email='$email', url='$url', 
+				last_login=NOW() WHERE user_id=$uid";
 			}
 
 			$insID = mysql_query($iquery, $linkID);

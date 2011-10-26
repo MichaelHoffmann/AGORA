@@ -41,8 +41,7 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		$userclause = mysql_real_escape_string("$username");
-		$query = "SELECT * FROM users WHERE username='$userclause'";
+		$query = "SELECT * FROM users WHERE username='$username'";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);

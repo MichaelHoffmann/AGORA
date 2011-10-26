@@ -45,9 +45,7 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		$whereclause = mysql_real_escape_string("$mapID");
-		$timeclause = mysql_real_escape_string("$timestamp");
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause AND maps.is_deleted = 0";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapID AND maps.is_deleted = 0";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -72,7 +70,7 @@
 		$output->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY textbox_id";
+		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>'$timestamp' ORDER BY textbox_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -158,7 +156,7 @@
 		return $output;
 	}
 	$map_id = mysql_real_escape_string($_REQUEST['map_id']);  //TODO: Change this back to a GET when all testing is done.
-	$timestamp = mysql_real_escape_string($_REQUEST['timestamp']);  //TODO: Change this back to a GET when all testing is done.
+	$timestamp = mysql_real_escape_string($_REQUEST['timestamp']);
 	$output = get_map($map_id, $timestamp); 
 	print $output->asXML();
 ?>
