@@ -283,6 +283,9 @@ CREATE TABLE IF NOT EXISTS agora.sourcenodes (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 	
+-- -----------------------------------------------------
+-- Table agora.projects (and related tables)
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS agora.projects (
   proj_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NOT NULL, 
