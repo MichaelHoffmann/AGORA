@@ -39,7 +39,7 @@
 	function updateMapInfo($userID, $pass_hash, $mapID, $title, $desc, $lang){
 	global $dbName, $version;
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0'?>\n<mapinfo version='$version'></project>";
+		$xmlstr = "<?xml version='1.0'?>\n<mapinfo version='$version'/>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
 		if(!$linkID){
@@ -95,6 +95,7 @@
 			$map->addAttribute("ID", $mapID);
 			$map->addAttribute("modified", true);
 		}
+		return $output;
 
 	}
 	
