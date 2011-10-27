@@ -58,6 +58,7 @@
 		
 		$row = mysql_fetch_assoc($resultID);
 		$output->addAttribute("ID", $row['map_id']);
+		$output->addAttribute("title", $row['title']);
 		$output->addAttribute("username", $row['username']);
 		
 		$timeID = mysql_query("SELECT NOW()", $linkID);
