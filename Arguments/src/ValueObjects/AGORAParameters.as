@@ -118,6 +118,7 @@ package ValueObjects
 		public var SUPPORT_ADD_OBJECTION:String;
 		public var SUPPORT_SELECT_ARG_SCHEME:String;
 		
+		public var DONE:String;
 		
 		public function AGORAParameters()
 		{
@@ -162,6 +163,7 @@ package ValueObjects
 			PROMPT_MT_ONLY_IF = "Select the language form that determines how the reasons are combined: \"or\" or \"and\"?";
 			THEREFORE = "Therefore";
 			SUPPORT_SELECT_ARG_SCHEME = "[Select an argument scheme and a language form from the menu on the right]";
+			DONE = "Done";
 		}
 		
 		public static function getInstance():AGORAParameters{

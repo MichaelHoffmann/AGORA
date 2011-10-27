@@ -144,15 +144,7 @@ package Controller
 		}
 		
 		//--------------------Application Complete---------------------//
-		public function viewCreated():void{
-			FlexGlobals.topLevelApplication.stage.addEventListener(Event.RESIZE, updateSize);	
-		}
 		
-		protected function updateSize(event:Event):void
-		{
-			FlexGlobals.topLevelApplication.map.agora.height = FlexGlobals.topLevelApplication.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 10;
-			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.stage.stageWidth;
-		}
 		
 		
 		public function hideMap():void{

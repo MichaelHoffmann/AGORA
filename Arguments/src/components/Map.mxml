@@ -24,7 +24,7 @@
 		   xmlns:classes="classes.*" 
 		   xmlns:components="components.*"
 		   xmlns:value_objects="ValueObjects.*"
-		   creationComplete="onCreationComplete">
+		   creationComplete="onCreationComplete(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -36,6 +36,10 @@
 					  click="Alert.show(Language.lookup('UnderConstruction'));">
 			</s:Button>
 		</s:HGroup>
+		
+		<components:TitleDisplay id = "title" width="100%" height="50">
+		</components:TitleDisplay>
+	
 		<s:Scroller id="agora">	
 			<s:Group>
 				<mx:Canvas>
@@ -88,21 +92,12 @@
 			
 			public function setWidth(event: Event):void
 			{
-				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 50;
+				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap * 2 - FlexGlobals.topLevelApplication.map.title.height - 30;
 				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 50;
-			}
-						
-			public function updateSize(event:Event):void
-			{
-				agora.height = stage.stageHeight - topPanel.height - container.gap - 10;
-				agora.width = this.stage.stageWidth;
 			}
 			
 			public function initApp():void
-			{
-				agora.height = this.stage.stageHeight - topPanel.height - container.gap - 10;
-				agora.width = this.stage.stageWidth;
-				this.stage.addEventListener(Event.RESIZE, updateSize);	
+			{	
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;			
 				dispatchEvent(new Event("created",true,false));

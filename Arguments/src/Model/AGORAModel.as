@@ -27,6 +27,7 @@ package Model
 		public var agoraMapModel:AGORAMapModel;
 		
 		
+		
 		private var _state:int;
 		private var _requested:Boolean;
 		public static const MENU:int = 0;

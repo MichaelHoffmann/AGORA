@@ -60,6 +60,8 @@
 			
 			protected function onLoadMapClicked(event:MouseEvent):void{
 				ArgumentController.getInstance().loadMap(event.target.name);
+				FlexGlobals.topLevelApplication.map.title.title = mapName;
+				trace(mapName);
 			}
 
 			protected function panel_creationCompleteHandler(event:FlexEvent):void

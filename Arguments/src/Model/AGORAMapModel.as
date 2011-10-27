@@ -227,6 +227,7 @@ package Model
 		protected function onMapCreated(resultEvent:ResultEvent):void{
 			var mapMetaData:MapMetaData = new MapMetaData;
 			mapMetaData.mapID = resultEvent.result.map.ID;
+			mapMetaData.mapName = resultEvent.result.map.title;
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
 		}
 		
@@ -294,7 +295,7 @@ package Model
 			//try{
 			//update timestamp
 			timestamp = map.timestamp;
-			
+			name = map.title;
 			//Form a map of nodes
 			var obj:Object;
 			var nodeHash:Dictionary = new Dictionary;

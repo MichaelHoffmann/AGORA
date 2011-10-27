@@ -84,6 +84,7 @@ package components
 				lineHeight = lineHeight + this.mx_internal::getTextField().getLineMetrics(i).height;
 			}
 			this.measuredHeight = lineHeight;
+			trace("in measure: " + measuredHeight);
 			this.verticalScrollPolicy = "off";
 		}
 		
