@@ -24,6 +24,7 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
+	import mx.rpc.xml.SchemaTypeRegistry;
 	
 	[Bindable]
 	public class ArgumentTypeModel extends EventDispatcher
@@ -187,7 +188,7 @@ package Model
 			var  dbScheme:String = AGORAModel.getInstance().dbSchemeHashMap[logicClass];
 			var  dbLanguage:String = AGORAModel.getInstance().dbLanguageHashMap[language];
 			var  dbLanguageSubOption:String = "";
-			if(language == AGORAParameters.getInstance().ONLY_IF){
+			if((language == AGORAParameters.getInstance().ONLY_IF) && logicClass == AGORAParameters.getInstance().MOD_TOL){
 				if(reasonModels.length > 1){
 					if(lSubOption == AGORAParameters.getInstance().AND){
 						return dbScheme + "onlyifand";
@@ -196,10 +197,11 @@ package Model
 						return dbScheme + "onlyifor";
 					}	
 				}
+				else{
+					return dbScheme + "onlyif";
+				}
 			}
-			else{
-				return dbScheme + "onlyif";
-			}
+			
 			return dbScheme + (dbLanguage==null?"":dbLanguage) + dbLanguageSubOption;
 		}
 		
@@ -337,7 +339,6 @@ package Model
 			var inputXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID}/>;
 			tid=1;
 			inputXML.appendChild(getXML());
-			//trace(inputXML.toXMLString());
 			//convert temporary boxes to proper ones
 			if(logicClass == AGORAParameters.getInstance().COND_SYLL){
 				inputXML = substituteTemporaryBoxes(claimModel, inputXML);
