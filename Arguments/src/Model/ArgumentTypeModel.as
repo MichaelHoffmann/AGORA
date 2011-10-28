@@ -350,6 +350,11 @@ package Model
 			updateConnectionService.send({uid: usm.uid, pass_hash: usm.passHash, xml: inputXML});
 		}
 		protected function updateConnectionServiceResult(event:ResultEvent):void{
+			//error is a child of map
+			if(event.result.map.hasOwnProperty("error")){
+				dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SAVE_FAILED, null, this));
+				return;
+			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SAVED, null, this));
 		}
 		

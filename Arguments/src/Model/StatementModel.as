@@ -421,7 +421,6 @@ package Model
 			}
 		}
 		
-		
 		//---------------- save statement Texts --------------------------//
 		public function saveTexts():void{
 			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;

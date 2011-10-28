@@ -18,6 +18,9 @@ package ValueObjects
 		
 		
 		
+		//Error Codes TODO: Enter these in the Languages.xml
+		public var ERROR_106:String;
+		public var ERROR_103:String;
 		
 		public var IF:String = "If";
 		public var THEN:String = "then";
@@ -164,6 +167,8 @@ package ValueObjects
 			THEREFORE = "Therefore";
 			SUPPORT_SELECT_ARG_SCHEME = "[Select an argument scheme and a language form from the menu on the right]";
 			DONE = "Done";
+			ERROR_106 = "Couldn't update the connection";
+			ERROR_103 = "Changes have been rolled back";
 		}
 		
 		public static function getInstance():AGORAParameters{

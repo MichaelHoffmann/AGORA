@@ -41,13 +41,14 @@ package Controller
 		private static var instance:ArgumentController;
 		private var view:DisplayObject;
 		private var model:AGORAModel;
+		private var agoraParameters:AGORAParameters;
 		
 		public function ArgumentController(singletonEnforcer:SingletonEnforcer)
 		{
 			instance = this;	
 			view = DisplayObject(FlexGlobals.topLevelApplication);
 			model = AGORAModel.getInstance();
-			
+			agoraParameters = AGORAParameters.getInstance();	
 			//Event handlers
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
@@ -385,6 +386,9 @@ package Controller
 			CursorManager.removeAllCursors();
 			onTextEntered(argumentPanel);
 		}
+		protected function textNotSaved(event:AGORAEvent):void{
+			
+		}
 		
 		//------------------- configuration functions -----------------//
 		protected function setEventListeners(statementAddedEvent:AGORAEvent):void{
@@ -403,6 +407,7 @@ package Controller
 			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDED, onReasonAdded);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVED, onArgumentSaved);
+			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVE_FAILED, onArgumentSaveFailed);
 			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDITION_NOT_ALLOWED, reasonAdditionNotAllowedFault);
 		}
 		
@@ -522,6 +527,21 @@ package Controller
 				logicController.deleteLinks(argumentTypeModel);
 				AGORAModel.getInstance().agoraMapModel.loadMapModel();
 			}
+		}
+		
+		protected function onArgumentSaveFailed(event:AGORAEvent):void{
+			AGORAModel.getInstance().requested = false;
+			CursorManager.removeAllCursors();
+			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
+			argumentSelector.hide();
+			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				logicController.deleteLinks(argumentTypeModel);
+				AGORAModel.getInstance().agoraMapModel.loadMapModel();
+			}
+			Alert.show(agoraParameters.ERROR_106);
+			Alert.show(agoraParameters.ERROR_103);
 		}
 		
 		//-------------------Event Handlers---------------------------//

@@ -31,7 +31,8 @@ package Events
 		public static const REASON_ADDED:String = "ReasonAdded";
 		public static const ARGUMENT_TYPE_ADDED:String = "ArgumentTypeAdded";
 		public static const ARGUMENT_SCHEME_SET:String = "ArgumentSchemeSet";
-		public static const ARGUMENT_SAVED:String = "ArgumentSaved";
+		public static const ARGUMENT_SAVED:String = "ArgumentSaved"; //dispatched when an argument scheme is set.
+		public static const ARGUMENT_SAVE_FAILED:String = "ArgumentSaveFailed";//dispatched when selecting an argument scheme fails.
 		public static const STATEMENTS_DELETED:String = "StatementsDeleted";
 		public static const REASON_ADDITION_NOT_ALLOWED:String = "ReasonAdditionNotAllowed";
 		
