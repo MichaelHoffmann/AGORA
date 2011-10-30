@@ -13,6 +13,7 @@ package ValueObjects
 		public var insertURL:String;
 		public var loadMapURL:String;
 		public var deleteURL:String;
+		public var nameUpdateURL:String;
 		public var gridWidth:int;
 		public var version:String;
 		
@@ -21,6 +22,9 @@ package ValueObjects
 		//Error Codes TODO: Enter these in the Languages.xml
 		public var ERROR_106:String;
 		public var ERROR_103:String;
+		
+		//TODO: Update these in languages.xml
+		public var UPDATE_MAP_INFO_FAILED:String;
 		
 		public var IF:String = "If";
 		public var THEN:String = "then";
@@ -123,6 +127,8 @@ package ValueObjects
 		
 		public var DONE:String;
 		
+
+		
 		public function AGORAParameters()
 		{
 			listMapsURL = "http://agora.gatech.edu/rework/list_maps.php";
@@ -134,6 +140,7 @@ package ValueObjects
 			deleteURL = "http://agora.gatech.edu/rework/remove.php";
 			insertURL = "http://agora.gatech.edu/rework/insert.php";
 			loadMapURL = "http://agora.gatech.edu/rework/load_map.php";
+			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
 			
 			initialize();
 			
@@ -169,7 +176,9 @@ package ValueObjects
 			DONE = "Done";
 			ERROR_106 = "Couldn't update the connection";
 			ERROR_103 = "Changes have been rolled back";
+			UPDATE_MAP_INFO_FAILED = "Map info was not updated. Changes were rolled back";
 		}
+		
 		
 		public static function getInstance():AGORAParameters{
 			if(!reference){

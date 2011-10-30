@@ -1,10 +1,14 @@
 package components
 {
+	import Controller.UpdateController;
+	
 	import Model.AGORAModel;
 	
 	import ValueObjects.AGORAParameters;
 	
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Keyboard;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Button;
@@ -34,6 +38,7 @@ package components
 			state = DISPLAY;
 			//title = "Title";
 			this.addEventListener(MouseEvent.CLICK, toEdit);
+			this.addEventListener(KeyboardEvent.KEY_DOWN, onEnter);
 		}
 
 		public function get doneBtn():Button
@@ -103,11 +108,22 @@ package components
 		
 		protected function onDoneClick(event:MouseEvent):void{
 			state = DISPLAY;
+			UpdateController.getInstance().updateMapInfo(textField.text);
 		}
 		
 		protected function toEdit(event:MouseEvent):void{
-			if(event.target != doneBtn)
+			if(event.target != doneBtn){
+				textField.text = title;
 				state = EDIT;
+			}
+		}
+		protected function onEnter(event:KeyboardEvent):void{
+			if(event.keyCode == Keyboard.ENTER){
+				textField.text = textField.text.replace("\n","");
+				textField.text = textField.text.replace("\r","");
+				state = DISPLAY;
+				UpdateController.getInstance().updateMapInfo(textField.text);
+			}
 		}
 
 		override protected function createChildren():void{
@@ -115,15 +131,13 @@ package components
 			if(!textField){
 				textField = new TextArea;
 				textField.verticalScrollPolicy = "on";
-				textField.percentWidth = 90;
 				textField.height = 30;
-				BindingUtils.bindProperty(textField, 'text',this, 'title');
 				addChild(textField);
 			}	
 			
 			if(!textDisplay){
 				textDisplay = new Text;
-				
+				textDisplay.height = 30;
 				BindingUtils.bindProperty(textDisplay, 'text', this, 'title');
 				addChild(textDisplay);
 			}
@@ -187,7 +201,7 @@ package components
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			if(state == DISPLAY){
-				textDisplay.setActualSize(this.measuredWidth - 100, 30);
+				textDisplay.setActualSize(this.width - doneBtn.measuredWidth - 20, 30);
 				textDisplay.move(10,10);
 			}
 			else if(state == EDIT){

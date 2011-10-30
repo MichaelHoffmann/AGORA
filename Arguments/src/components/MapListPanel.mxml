@@ -76,8 +76,6 @@
 			}
 			
 			protected function onMapObjectClicked(event:MouseEvent):void{
-				//temp
-				FlexGlobals.topLevelApplication.map.title.title = event.target.label;
 				ArgumentController.getInstance().loadMap(event.target.name);					
 			}
 

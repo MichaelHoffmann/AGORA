@@ -105,8 +105,6 @@ package Controller
 		public function createMap(mapName:String):void{
 			model.agoraMapModel.reinitializeModel();
 			model.agoraMapModel.createMap(mapName);	
-			//temp
-			FlexGlobals.topLevelApplication.map.title.title = mapName;
 			FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
 		}
 		

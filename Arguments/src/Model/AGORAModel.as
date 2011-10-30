@@ -13,6 +13,7 @@ package Model
 	{
 		private static var reference:AGORAModel;
 		
+		private var _language:String;
 		public var schemeAndLanguage:Dictionary;
 		public var dbSchemeHashMap:Dictionary;
 		public var dbLanguageHashMap:Dictionary;
@@ -50,12 +51,24 @@ package Model
 		
 			leafDelete = true;
 			
+			language = 'EN-US';
+			
 			initializeHashMaps();
 			
 		}
 		
 		
 		//-----------------------------Getters and Setters--------------------------------------------------------//
+
+		public function get language():String
+		{
+			return _language;
+		}
+
+		public function set language(value:String):void
+		{
+			_language = value;
+		}
 
 		public function get requested():Boolean
 		{

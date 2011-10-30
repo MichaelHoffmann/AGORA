@@ -43,6 +43,7 @@ package Model
 		private var createFirstClaim: HTTPService;
 		private var loadMapService: HTTPService;
 		private var updatePositionsService:HTTPService;
+		private var updateMapInfoService:HTTPService;
 		
 		private var _name:String;
 		private var _description:String;
@@ -89,6 +90,11 @@ package Model
 			updatePositionsService.addEventListener(ResultEvent.RESULT, updatePositionServiceResult);
 			updatePositionsService.addEventListener(FaultEvent.FAULT, onFault);
 			
+			//create update map info service
+			updateMapInfoService = new HTTPService;
+			updateMapInfoService.url = AGORAParameters.getInstance().nameUpdateURL;
+			updateMapInfoService.addEventListener(ResultEvent.RESULT, onMapInfoUpdated);
+			updateMapInfoService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			reinitializeModel();
 			statementWidth = 8;
@@ -217,6 +223,21 @@ package Model
 		}
 		
 		
+		//---------------------- Update map info ---------------------------------------------//
+		public function updateMapInfo(newTitle:String):void{
+			var userModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			updateMapInfoService.send({uid: userModel.uid, pass_hash:userModel.passHash, map_id:ID, title:newTitle, desc: "no", lang:AGORAModel.getInstance().language});
+		}
+
+		protected function onMapInfoUpdated(event:ResultEvent):void{
+			if(event.result.mapinfo.hasOwnProperty("error")){
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_INFO_UPDATE_FAILED, null, null));
+			}else{
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_INFO_UPDATED, null, null));
+			}
+			
+		}
+			
 		//----------------------- Create a New Map --------------------------------------------//
 		public function createMap(mapName:String):void{
 			var xmlForMap:XML = <map id="0" title={mapName}></map>;

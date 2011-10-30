@@ -21,7 +21,7 @@ package ValueObjects
 			if(!inserted){
 				ID = mapObject.ID;
 				deleted = mapObject.deleted == 0? false:true;
-				//title = mapObject.title;
+				title = mapObject.title;
 				username = mapObject.username;
 				timestamp = mapObject.timestamp;
 			}

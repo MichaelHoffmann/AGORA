@@ -35,6 +35,8 @@ package Events
 		public static const ARGUMENT_SAVE_FAILED:String = "ArgumentSaveFailed";//dispatched when selecting an argument scheme fails.
 		public static const STATEMENTS_DELETED:String = "StatementsDeleted";
 		public static const REASON_ADDITION_NOT_ALLOWED:String = "ReasonAdditionNotAllowed";
+		public static const MAP_INFO_UPDATED:String = "MapInfoUpdated";
+		public static const MAP_INFO_UPDATE_FAILED:String = "MapInfoUpdateFailed";
 		
 		public var xmlData:XML;
 		public var eventData:Object;

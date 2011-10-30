@@ -1,27 +1,20 @@
 package Controller
 {
 	import Events.AGORAEvent;
-	
 	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.MapListModel;
-	
 	import ValueObjects.UserDataVO;
-	
 	import components.MyMapName;
 	import components.MyMapsPanel;
-	
 	import classes.Language;
-	
 	import flash.events.Event;
-	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.CursorManager;
-	
 	import spark.components.Group;
-	
+
 	public class AGORAController
 	{
 		private static var instance:AGORAController;
