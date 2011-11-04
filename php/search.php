@@ -29,7 +29,7 @@
 	*	File for searching maps.
 	*	HTTP Query variables:
 	*	type: the type of search that can be performed.
-	*			Current options are: title, text, user
+	*			Current options are: title, text, titleandtext, user
 	*	query: the text to use as the search query. Case-insensitive.
 	*
 	*/
