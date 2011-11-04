@@ -34,7 +34,7 @@
 	*
 	*/
 	
-	function search_by_title($text){
+	function search_db($query){
 		global $dbName, $version;
 		//basic XML output initialization
 		header("Content-type: text/xml");
@@ -52,7 +52,7 @@
 			return $output;
 		}
 		
-		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0 ORDER BY maps.title";
+		//Query passed in gets used here.
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -75,90 +75,24 @@
 		return $output;
 	}
 	
+	function search_by_title($text){	
+		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0 ORDER BY maps.title";
+		return search_db($query);
+	}
+	
 	function search_by_text($text){
-		global $dbName, $version;
-		//basic XML output initialization
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
-		$output = new SimpleXMLElement($xmlstr);
-		//Standard SQL connection stuff
-		$linkID= establishLink();
-		if(!$linkID){
-			badDBLink($output);
-			return $output;
-		}
-		$status=mysql_select_db($dbName, $linkID);
-		if(!$status){
-			databaseNotFound($output);
-			return $output;
-		}
-		
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%$text%') ORDER BY maps.title";
-
-		$resultID = mysql_query($query, $linkID); 
-		if(!$resultID){
-			dataNotFound($output, $query);
-			return $output;
-		}
-		$row = mysql_fetch_assoc($resultID);
-		if(mysql_num_rows($resultID)==0){
-			$output->addAttribute("map_count", "0");
-			//This is a better alternative than reporting an error.
-			return $output;
-		}else{
-			$output->addAttribute("map_count", mysql_num_rows($resultID));
-			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
-				$row = mysql_fetch_assoc($resultID);
-				$map = $output->addChild("map");
-				$map->addAttribute("ID", $row['map_id']);
-				$map->addAttribute("title", $row['title']);
-				$map->addAttribute("creator", $row['username']);
-				$map->addAttribute("last_modified", $row['modified_date']);
-			}
-		}
-		return $output;
+		return search_db($query);
+	}
+	
+	function search_by_title_and_text($text){
+		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%$text%') UNION SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0 ORDER BY title";
+		return search_db($query);
 	}
 	
 	function search_by_user($text){
-		global $dbName, $version;
-		//basic XML output initialization
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<AGORA version='$version'/>";
-		$output = new SimpleXMLElement($xmlstr);
-		//Standard SQL connection stuff
-		$linkID= establishLink();
-		if(!$linkID){
-			badDBLink($output);
-			return $output;
-		}
-		$status=mysql_select_db($dbName, $linkID);
-		if(!$status){
-			databaseNotFound($output);
-			return $output;
-		}
-		
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE users.username LIKE '%$text%' OR users.firstname LIKE '%$text%' OR users.lastname LIKE '%$text%' ORDER BY maps.title";
-		$resultID = mysql_query($query, $linkID); 
-		if(!$resultID){
-			dataNotFound($output, $query);
-			return $output;
-		}
-		$row = mysql_fetch_assoc($resultID);
-		if(mysql_num_rows($resultID)==0){
-			$output->addAttribute("map_count", "0");
-			//This is a better alternative than reporting an error.
-			return $output;
-		}else{
-			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
-				$row = mysql_fetch_assoc($resultID);
-				$map = $output->addChild("map");
-				$map->addAttribute("ID", $row['map_id']);
-				$map->addAttribute("title", $row['title']);
-				$map->addAttribute("creator", $row['username']);
-				$map->addAttribute("last_modified", $row['modified_date']);
-			}
-		}
-		return $output;
+		return search_db($query);
 	}
 	
 	function search($sType, $sQuery){
@@ -170,6 +104,10 @@
 				
 			case "text":
 				return search_by_text($sQuery);
+				break;
+			
+			case "titleandtext":
+				return search_by_title_and_text($sQuery);
 				break;
 			
 			case "user":
