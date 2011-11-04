@@ -86,7 +86,11 @@
 	}
 	
 	function search_by_title_and_text($text){
-		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%$text%') UNION SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%$text%' AND maps.is_deleted=0 ORDER BY title";
+		$query = "SELECT maps.map_id, maps.title, maps.modified_date, maps.user_id FROM maps INNER JOIN users ON users.user_id=maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%t%') OR title LIKE '%t%' AND maps.is_deleted=0 ORDER BY title";
+		
+		/*
+		SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id IN (SELECT DISTINCT map_id FROM `textboxes` WHERE text LIKE '%t%') UNION SELECT maps.map_id, maps.title, users.username, maps.modified_date FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE title LIKE '%t%' AND maps.is_deleted=0 ORDER BY title
+		*/
 		return search_db($query);
 	}
 	
