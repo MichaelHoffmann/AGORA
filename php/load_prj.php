@@ -35,7 +35,27 @@
 	*	Function that loads a project from the database.
 	*/
 	function load_prj($userID, $pass_hash, $projID){
-	
+	global $dbName, $version;
+		//Usual boilerplate follows
+		header("Content-type: text/xml");
+		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<map version='$version'></map>";
+		$output = new SimpleXMLElement($outputstr);
+		//Standard SQL connection stuff
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			databaseNotFound($output);
+			return $output;
+		}
+		//End of boilerplate
+		
+		
+		
+		return $output;
 	}
 	
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
