@@ -38,7 +38,7 @@
 	global $dbName, $version;
 		//Usual boilerplate follows
 		header("Content-type: text/xml");
-		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<map version='$version'></map>";
+		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<list version='$version'></list>";
 		$output = new SimpleXMLElement($outputstr);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
@@ -51,10 +51,60 @@
 			databaseNotFound($output);
 			return $output;
 		}
+		//checking login for accuracy
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			incorrectLogin($output);
+			return $output;
+		}
 		//End of boilerplate
 		
 		
+		//First step: find out if user has access to the project
+		$squery = "SELECT
+				projects.proj_id, projusers.user_id
+				FROM projects 
+					INNER JOIN projusers ON projects.proj_id = projusers.proj_id
+				WHERE 
+					projects.proj_id = $projID AND projusers.user_id = $userID";
+		$resultID = mysql_query($squery, $linkID);						
+		if(!$resultID){
+			dataNotFound($output, $squery);
+			return $output;
+		}
+		if(mysql_num_rows($resultID)==0){
+			notInProject($output, $squery);
+			return $output;
+		}
+		//If we make it this far, the project contains the user.
 		
+		//Second step: get the maps in that project
+		$query = "SELECT
+				projects.proj_id, maps.map_id, maps.title, maps.username, maps.modified_date
+				FROM projects 
+					INNER JOIN projmaps ON projects.proj_id = projmaps.proj_id
+					INNER JOIN maps ON projmaps.map_id = maps.map_id
+				WHERE 
+					projects.proj_id = $projID AND maps.is_deleted=0
+				ORDER BY maps.title";
+		$resultID = mysql_query($query, $linkID);						
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		if(mysql_num_rows($resultID)==0){
+			//This is not an error. This simply means there are no maps in the project.
+			$output->addAttribute("map_count", "0");
+			return $output;
+		}else{
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+				$row = mysql_fetch_assoc($resultID);
+				$map = $output->addChild("map");
+				$map->addAttribute("ID", $row['map_id']);
+				$map->addAttribute("title", $row['title']);
+				$map->addAttribute("creator", $row['username']);
+				$map->addAttribute("last_modified", $row['modified_date']);
+			}
+		}
 		return $output;
 	}
 	
