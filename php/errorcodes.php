@@ -158,4 +158,9 @@
 		$fail->addAttribute("code", 309);
 	}
 	
+	function notInProject($output, $string){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "This user was not in the queried project. $string");
+		$fail->addAttribute("code", 309);
+	}
 ?>
