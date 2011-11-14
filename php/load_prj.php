@@ -38,8 +38,9 @@
 	global $dbName, $version;
 		//Usual boilerplate follows
 		header("Content-type: text/xml");
-		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<list version='$version'></list>";
+		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<project version='$version'></project>";
 		$output = new SimpleXMLElement($outputstr);
+		$output->addAttribute("ID", $projID);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
 		if(!$linkID){
