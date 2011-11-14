@@ -59,14 +59,10 @@
 		//End of boilerplate
 		
 		
-		//First step: find out if user has access to the project
-		$squery = "SELECT
-				projects.proj_id, projusers.user_id
-				FROM projects 
-					INNER JOIN projusers ON projects.proj_id = projusers.proj_id
-				WHERE 
-					projects.proj_id = $projID AND projusers.user_id = $userID";
-		$resultID = mysql_query($squery, $linkID);						
+		//First step: find out if user has access to the project at all
+		$squery = "SELECT * FROM projusers WHERE 
+			proj_id = $projID AND projusers.user_id = $userID";
+		$resultID = mysql_query($squery, $linkID);		
 		if(!$resultID){
 			dataNotFound($output, $squery);
 			return $output;
@@ -79,10 +75,11 @@
 		
 		//Second step: get the maps in that project
 		$query = "SELECT
-				projects.proj_id, maps.map_id, maps.title, maps.username, maps.modified_date
+				maps.map_id, maps.title, projects.user_id, maps.modified_date, users.username
 				FROM projects 
 					INNER JOIN projmaps ON projects.proj_id = projmaps.proj_id
 					INNER JOIN maps ON projmaps.map_id = maps.map_id
+					INNER JOIN users ON projects.user_id = users.user_id
 				WHERE 
 					projects.proj_id = $projID AND maps.is_deleted=0
 				ORDER BY maps.title";
@@ -103,6 +100,35 @@
 				$map->addAttribute("title", $row['title']);
 				$map->addAttribute("creator", $row['username']);
 				$map->addAttribute("last_modified", $row['modified_date']);
+			}
+		}
+		//third step: get all the users from the project
+		$uquery = "SELECT
+				users.user_id, users.username, projusers.user_level
+				FROM projects 
+					INNER JOIN projusers ON projects.proj_id = projusers.proj_id
+					INNER JOIN users ON projusers.user_id = users.user_id
+				WHERE 
+					projects.proj_id = $projID";
+		$resultID = mysql_query($uquery, $linkID);						
+		if(!$resultID){
+			dataNotFound($output, $uquery);
+			return $output;
+		}
+		if(mysql_num_rows($resultID)==0){
+			//This is not an error. This simply means there are no users in the project.
+			//(Remember that the project creator doesn't have to be in the user list)
+			$output->addAttribute("user_count", "0");
+			return $output;
+		}else{
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+				$row = mysql_fetch_assoc($resultID);
+				$user = $output->addChild("user");
+				$user->addAttribute("ID", $row['user_id']);
+				$user->addAttribute("username", $row['username']);
+				//Following piece of data could be made more presentable
+				//However, doing so now robs us of flexibility later on.
+				$user->addAttribute("level", $row['user_level']);
 			}
 		}
 		return $output;
