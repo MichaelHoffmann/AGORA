@@ -139,10 +139,13 @@ package Model
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
-			if(event.result.AGORA.login.hasOwnProperty("created")){
-				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_SUCCEEDED));
+			if(event.result.AGORA.hasOwnProperty("error")){
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED, <error text={event.result.AGORA.error.text} />, null));
+			}
+			else if(event.result.AGORA.login.hasOwnProperty("created")){
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_SUCCEEDED, null,null));
 			}else{
-				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED));
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED, <error text={AGORAParameters.getInstance().REGISTRATION_FAILED_MESSAGE}/>, null));
 			}
 		}
 		

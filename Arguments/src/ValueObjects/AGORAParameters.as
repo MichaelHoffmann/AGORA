@@ -25,6 +25,7 @@ package ValueObjects
 		
 		//TODO: Update these in languages.xml
 		public var UPDATE_MAP_INFO_FAILED:String;
+		public var REGISTRATION_FAILED_MESSAGE:String;
 		
 		public var IF:String = "If";
 		public var THEN:String = "then";
@@ -177,6 +178,7 @@ package ValueObjects
 			ERROR_106 = "Couldn't update the connection";
 			ERROR_103 = "Changes have been rolled back";
 			UPDATE_MAP_INFO_FAILED = "Map info was not updated. Changes were rolled back";
+			REGISTRATION_FAILED_MESSAGE = "Registration failed because of an unknown reason";
 		}
 		
 		

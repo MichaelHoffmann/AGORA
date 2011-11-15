@@ -94,6 +94,9 @@ package Controller
 		}
 		
 		protected function onRegistrationRequestFailure(event:AGORAEvent):void{
+			//TODO: Get the appropriate text from the XML
+			trace(event.xmlData.text);
+			Alert.show(event.xmlData.@text);
 			Alert.show(Language.lookup("RegisterFailed"));
 		}
 		
