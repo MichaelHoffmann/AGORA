@@ -2,6 +2,7 @@ package ValueObjects
 {
 	import classes.Language;
 
+	[Bindable]
 	public class AGORAParameters
 	{
 		public static var reference:AGORAParameters;
@@ -33,6 +34,9 @@ package ValueObjects
 		public var AND:String = "and";
 		
 		public var THEREFORE:String;	
+		
+		//Labels
+		public var READ_REGISTRATION_NOTE:String;
 		
 		//constants
 		public var MOD_PON:String = "Modus Ponens";
@@ -128,7 +132,10 @@ package ValueObjects
 		
 		public var DONE:String;
 		
-
+		
+		//agreements
+		public var REGISTRATION_NOTE:String;
+		
 		
 		public function AGORAParameters()
 		{
@@ -141,10 +148,8 @@ package ValueObjects
 			deleteURL = "http://agora.gatech.edu/rework/remove.php";
 			insertURL = "http://agora.gatech.edu/rework/insert.php";
 			loadMapURL = "http://agora.gatech.edu/rework/load_map.php";
-			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
-			
-			initialize();
-			
+			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";	
+			initialize();		
 		}
 		
 		public function initialize():void{
@@ -156,6 +161,7 @@ package ValueObjects
 			gridWidth = 25;
 			version = "11.9.28";
 			reference = this;
+			
 			PROMPT_DELETE_SUPPORTED_STATEMENT = "Do you really want to delete this box and everything that leads to it? Yes / No";
 			PROMPT_REGISTRATION_INFO = "NOTE: Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. Additionally, the following information will become visible by hovering over the username: first name; last name; URL (if provided). Later, we plan to add a function \"Send e-mail to [username]\" which will also be accessible by moving the mouse over the username. This function is useful because certain operations such as deleting a textbox or changing its content can only be performed by the creator of this box. +\n Your e-mail address will never be given out publicly. It will be used only for this contact-function and for the AGORA system to provide you with a replacement password in the event you forget your current one. \nPlease read the Privacy Policy which is accessible here.";
 			SUPPORT_SAVEAS = "When you save this map under a new name, a copy of the map will be produced in which every statement is assigned to you as the author of this statement, even if the map has been produced in collaboration or by other people. This way you acquire all the permissions necessary to change whatever you want. If you don\'t change a statement, the name of the original author will pop when the mouse is moved over \'AU\' (for \'author\').";
@@ -171,21 +177,24 @@ package ValueObjects
 				"For example, in the argument \"Peter's tomatoes will grow because he waters them regularly and they get enough sun light,\" both the reasons \"he waters them regularly\" and \"they get enough sun light\" need to be true to infer the conclusion. It is important to distinguish whether you need a combination of linked reasons to get to your conclusion or whether you have several independent reasons for the same conclusion.";
 			PROMPT_UNIVERSAL_PARTICULAR = "Determine whether this\nstatement is a\n--particular statement\n--universal statement";
 			SUPPORT_CHANGE_ARG_SCHEME = "Click to change your argument scheme";
-			PROMPT_MT_ONLY_IF = "Select the language form that determines how the reasons are combined: \"or\" or \"and\"?";
-			THEREFORE = "Therefore";
-			SUPPORT_SELECT_ARG_SCHEME = "[Select an argument scheme and a language form from the menu on the right]";
-			DONE = "Done";
-			ERROR_106 = "Couldn't update the connection";
-			ERROR_103 = "Changes have been rolled back";
-			UPDATE_MAP_INFO_FAILED = "Map info was not updated. Changes were rolled back";
-			REGISTRATION_FAILED_MESSAGE = "Registration failed because of an unknown reason";
+			PROMPT_MT_ONLY_IF = Language.lookup('SelectLanguageForm');
+			THEREFORE = Language.lookup('Therefore');
+			SUPPORT_SELECT_ARG_SCHEME = Language.lookup('InterArgScheme');
+			DONE = Language.lookup('Done');
+			ERROR_106 = Language.lookup('Error106');
+			ERROR_103 = Language.lookup('Error103');
+			UPDATE_MAP_INFO_FAILED = Language.lookup('UpdateMapInfoFailed');
+			REGISTRATION_FAILED_MESSAGE = Language.lookup('RegistrationFailed');
+			REGISTRATION_NOTE = Language.lookup('RegistrationNote');
+			READ_REGISTRATION_NOTE = Language.lookup('ReadRegistrationNote');
+			trace(READ_REGISTRATION_NOTE);
 		}
-		
 		
 		public static function getInstance():AGORAParameters{
 			if(!reference){
 				reference = new AGORAParameters;
 			}
+			
 			return reference;
 		}
 	}

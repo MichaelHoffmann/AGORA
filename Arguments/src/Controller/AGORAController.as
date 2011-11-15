@@ -48,7 +48,6 @@ package Controller
 		}
 		
 		protected function onMapListFetched(event : AGORAEvent):void{
-			trace("Map List Fetched");
 			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateSkinState();
 			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateDisplayList();

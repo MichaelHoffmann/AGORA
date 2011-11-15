@@ -24,6 +24,16 @@
 		  preinitialize="setProperties();" 
 		  creationComplete="init();"
 		  keyDown="panel1_keyDownHandler(event)" xmlns:components="components.*">
+
+	<fx:Script>
+		<![CDATA[
+			protected function registrationNote_clickHandler(event:MouseEvent):void
+			{
+				Alert.show(agoraConstants.REGISTRATION_NOTE);
+			}
+		]]>
+	</fx:Script>
+
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -61,7 +71,11 @@
 		<![CDATA[
 			import Controller.UserSessionController;
 			
+			import ValueObjects.AGORAParameters;
 			import ValueObjects.UserDataVO;
+			
+			import classes.Configure;
+			import classes.Language;
 			
 			import com.adobe.crypto.MD5;
 			
@@ -72,18 +86,18 @@
 			
 			import org.osmf.layout.AbsoluteLayoutFacet;
 			
-			import classes.Configure;
-			import classes.Language;
-			
 			private static var _salt:String = "AGORA";
+			[Bindable]
+			private var agoraConstants:AGORAParameters;
 			
 			public static function get salt():String{
 				return _salt;
 			}
-			
+				
 			public function init():void
 			{
 				focusManager.setFocus(username);
+				agoraConstants = AGORAParameters.getInstance();
 			}
 			
 			public function setProperties():void
@@ -157,6 +171,7 @@
 		]]>
 		
 	</fx:Script>
+	
 	<mx:Form id="form">
 		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}" required="true">
 			<s:TextInput id="username">
@@ -186,7 +201,9 @@
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
-
+		<mx:FormItem>
+			<s:Label textDecoration="underline" text="{agoraConstants.READ_REGISTRATION_NOTE}" id="registrationNote" click="registrationNote_clickHandler(event)" />
+		</mx:FormItem>
 		<mx:FormItem>
 			<s:HGroup>
 				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="7" id="submit_btn" click="submit_form();">		
@@ -194,7 +211,6 @@
 				<s:Button label="{Language.lookup(&quot;Back&quot;)}"  tabIndex="8" id="back_btn" click="clear_form();">		
 				</s:Button>
 			</s:HGroup>		
-			
 		</mx:FormItem>
 	</mx:Form>
 </mx:Panel>

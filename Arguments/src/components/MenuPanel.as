@@ -27,6 +27,8 @@ package components
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
@@ -44,8 +46,6 @@ package components
 	import spark.components.HGroup;
 	import spark.components.VGroup;
 	
-	import classes.Language;
-	
 	public class MenuPanel extends GridPanel
 	{
 		private var _model:ArgumentTypeModel;
@@ -54,6 +54,7 @@ package components
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
+		
 		
 		
 		private var _schemeSelector:ArgSelector;
@@ -161,7 +162,6 @@ package components
 			changeSchemeBtn.label =  (model != null)?(model.logicClass != null? model.logicClass: 'Scheme') : 'Scheme';
 			changeSchemeBtn.percentWidth = 100;
 			titleDisplay.setStyle("textAlign","center");
-			//title = Language.lookup("Therefore");
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
