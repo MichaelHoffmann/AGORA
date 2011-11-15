@@ -236,6 +236,13 @@
 		<GER text="Einzelaussage"/>
 	</Particular>
 	
+	<Therefore>
+		<EN-US text="Therefore" />
+		<RUS text="Therefore" /> <!--TODO: Translate-->
+		<GER text="Therefore" /> <!--TODO: Translate-->
+	</Therefore>
+		
+	
 	<Password>
 		<EN-US text="Password"/>
 		<RUS text="Пароль"/>
@@ -386,6 +393,12 @@
 		<GER text="Ja"/>
 	</Yes>
 	
+	<OK>
+		<EN-US text="OK"/>
+		<RUS text="Да"/> <!--TODO:Translate -->
+		<GER text="Ja"/><!--TODO:Translate -->
+	</OK>
+	
 	<!--SHORT DESCRIPTIONS-->
 	
 	<AddArgument>
@@ -453,6 +466,8 @@
 		<RUS text="Выберите схему аргумента:"/>
 		<GER text="Wähle ein Argument-Schema aus:"/>
 	</ArgSchemeSelect>
+	
+	
 	
 	<ArrowDirChange>
 		<EN-US text="change the arrow direction"/>
@@ -1077,6 +1092,12 @@
 		<RUS text="Добро пожаловать в СЕТЬ АГОРЫ! Пожалуйста, выберите одну из следующих задач для продолжения..."/>
 		<GER text="Willkommen im AGORA-net! Wähle eine der folgenden Aufgaben aus um fortzufahren..."/>
 	</Welcome>
+		
+	<Note>
+		<EN-US text="Note"/>
+		<RUS text="" /> <!--TODO: Translate -->
+		<GER text="" /> <!--TODO: Translate -->
+	</Note>
 	
 	<WelcomeShort>
 		<EN-US text="Welcome to AGORA-net!"/>
@@ -1089,6 +1110,42 @@
 		<RUS text="Каково главное заявление Вашего аргумента?"/>
 		<GER text="Was ist die zentrale Behauptung deines Argumentes?"/>
 	</WhatIsMainClaim>
+	
+	<RegistrationNote>
+		<EN-US text="NOTE: Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. Additionally, the following information will become visible (only for registered users) by hovering over the username: first name; last name; URL (if provided). Later, we plan to add a function &quot;Send e-mail to [username]&quot; which will also be accessible by moving the mouse over the username. This function is useful because certain operations such as deleting a textbox or changing its content can only be performed by the creator of this box. Please do not use your Georgia Tech or other passwords. You might choose a username that does not reveal your identity.Your e-mail address will never be given out publicly. It will be used only for this contact-function and for the AGORA system to provide you with a replacement password in the event you forget your current one. Please read the Privacy Policy which is accessible here [soon to come]." />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</RegistrationNote>
+	
+	<ReadRegistrationNote>
+		<EN-US text="Click here to read the privacy policy" />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</ReadRegistrationNote>
+	
+	<RegistrationFailed>
+		<EN-US text="Registration failed because of an unknown reason" /> <!-- very unlikely-->
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</RegistrationFailed>
+	
+	<UpdateMapInfoFailed>
+		<EN-US text="Map info was not updated. Changes were rolled back" />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</UpdateMapInfoFailed>
+	
+	<Error103>
+		<EN-US text="Changes have been rolled back" />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</Error103>
+	
+	<Error106>
+		<EN-US text="Couldn't update the connection" />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</Error106>
 	
 	<!--NAMES OF ARGUMENTS-->
 			

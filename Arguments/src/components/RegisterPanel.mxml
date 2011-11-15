@@ -29,7 +29,9 @@
 		<![CDATA[
 			protected function registrationNote_clickHandler(event:MouseEvent):void
 			{
-				Alert.show(agoraConstants.REGISTRATION_NOTE);
+				var registrationNote:RegistrationNote = new RegistrationNote;
+				PopUpManager.addPopUp(registrationNote, this.parent);
+				PopUpManager.centerPopUp(registrationNote);
 			}
 		]]>
 	</fx:Script>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400"
+		 creationComplete="init(event)"
+>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+
+			protected function OK_btn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				PopUpManager.removePopUp(this);
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.binding.utils.BindingUtils;
+			import mx.events.FlexEvent;
+			import ValueObjects.AGORAParameters;
+			[Bindable]
+			private var agoraConstants:AGORAParameters = AGORAParameters.getInstance();
+			
+			private function init(event:FlexEvent):void{
+				BindingUtils.bindProperty(this,'title', agoraConstants,['NOTE']);
+			}
+		]]>
+	</fx:Script>
+	<s:VGroup paddingBottom="10" paddingLeft="10" paddingTop="10" gap="20">
+		<mx:Text id="helpTxt" width="350" htmlText="{agoraConstants.REGISTRATION_NOTE}" />
+		<s:Button id="OK_btn" click="OK_btn_clickHandler(event)" label="{agoraConstants.OK}" />		
+	</s:VGroup>
+</s:Panel>

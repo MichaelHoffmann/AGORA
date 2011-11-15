@@ -67,7 +67,7 @@ package Controller
 		}
 		
 		protected function onMyMapsListFetched(event:AGORAEvent):void{
-			trace("My Maps List Fetched");
+			
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapListXML = event.xmlData;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
 			FlexGlobals.topLevelApplication.invalidateProperties();

@@ -131,7 +131,8 @@ package ValueObjects
 		public var SUPPORT_SELECT_ARG_SCHEME:String;
 		
 		public var DONE:String;
-		
+		public var NOTE:String;
+		public var OK:String;
 		
 		//agreements
 		public var REGISTRATION_NOTE:String;
@@ -187,7 +188,8 @@ package ValueObjects
 			REGISTRATION_FAILED_MESSAGE = Language.lookup('RegistrationFailed');
 			REGISTRATION_NOTE = Language.lookup('RegistrationNote');
 			READ_REGISTRATION_NOTE = Language.lookup('ReadRegistrationNote');
-			trace(READ_REGISTRATION_NOTE);
+			NOTE = Language.lookup('Note');
+			OK = Language.lookup('OK');
 		}
 		
 		public static function getInstance():AGORAParameters{
