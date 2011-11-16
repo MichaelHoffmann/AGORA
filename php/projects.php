@@ -144,7 +144,6 @@
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$projID = mysql_real_escape_string($_REQUEST['projID']);
 	$newpass = mysql_real_escape_string($_REQUEST['newpass']);
-	$newpass = mysql_real_escape_string($_REQUEST['newpass']);
 	$title = mysql_real_escape_string($_REQUEST['title']);
 	$is_hostile = mysql_real_escape_string($_REQUEST['is_hostile']);
 	if(!$projID){
