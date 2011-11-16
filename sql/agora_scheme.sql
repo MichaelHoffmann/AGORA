@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS agora.maps (
   is_deleted TINYINT(1) NULL DEFAULT 0,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
+  proj_id INT NULL DEFAULT NULL,
   lang VARCHAR(10) NOT NULL,
   PRIMARY KEY (map_id),
   INDEX user_id (user_id ASC),
@@ -314,22 +315,6 @@ CREATE TABLE IF NOT EXISTS agora.projusers (
 	ON UPDATE CASCADE,
   FOREIGN KEY (user_id)
     REFERENCES agora.users (user_id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE);
-
-CREATE TABLE IF NOT EXISTS agora.projmaps (
-  pm_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  proj_id INT UNSIGNED NOT NULL,
-  map_id INT UNSIGNED NOT NULL,
-  PRIMARY KEY (pm_id),
-  INDEX proj_id (proj_id ASC),
-  INDEX map_id (map_id ASC),
-  FOREIGN KEY (proj_id)
-    REFERENCES agora.projects (proj_id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-  FOREIGN KEY (map_id)
-    REFERENCES agora.maps (map_id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE);
 	
