@@ -55,11 +55,25 @@
 		}
 		//Basic boilerplate is done. Next step is to add the map to the project.
 		
-		//First, we check whether the user has authority to move the map into the project. To prevent abuse, only the map's creator can move the map into the project, and then only if he is a user of the project.
+		//First, we check whether the user has authority to move the map into the project. To prevent abuse, only the map's creator can move the map into the project...
+		$checkQuery = "SELECT user_id FROM maps WHERE map_id=$mapID";
+		$resultID = mysql_query($checkQuery, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$uid = $row['user_id'];
+		if($userID!=$uid){
+			//User is attempting to move someone else's map.
+			modifyOther($output);
+			return $output;
+		}
+		//...and then only if he is a user of the project.
+		$puQuery = "SELECT user_id FROM projusers WHERE proj_id=$projID AND user_id=$userID";
+		$resultID = mysql_query($puQuery, $linkID);
+		if(mysql_num_rows($resultID)==0){
+			//User is attempting to move map into a project he is not a member of
+			notInProject($output, $puQuery);
+			return $output;
+		}
 		
-		//check currently omitted for testing purposes: can't be done until projusers exists
-		//TODO: add check once projusers is working properly
-		//TODO: add check for checking that project/map relationship doesn't already exist. If it does, nothing to do here.
 		
 		$query = "UPDATE maps SET proj_id=$projID WHERE map_id=$mapID";
 		$success = mysql_query($query, $linkID);
