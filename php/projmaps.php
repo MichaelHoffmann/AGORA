@@ -61,7 +61,7 @@
 		//TODO: add check once projusers is working properly
 		//TODO: add check for checking that project/map relationship doesn't already exist. If it does, nothing to do here.
 		
-		$query = "INSERT INTO projmaps (proj_id, map_id) VALUES ($projID, $mapID)";
+		$query = "UPDATE maps SET proj_id=$projID WHERE map_id=$mapID";
 		$success = mysql_query($query, $linkID);
 		if($success){
 			$map=$output->addChild("map");
@@ -105,7 +105,7 @@
 		//check currently omitted for testing purposes: can't be done until projusers exists
 		//TODO: add check once projusers is working properly
 		
-		$query = "DELETE FROM projmaps WHERE proj_id=$projID AND map_id=$mapID";
+		$query = "UPDATE maps SET proj_id=NULL WHERE map_id=$mapID";
 		
 		$success = mysql_query($query, $linkID);
 		if($success){
