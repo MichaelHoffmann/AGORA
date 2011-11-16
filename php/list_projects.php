@@ -59,7 +59,7 @@
 				$proj->addAttribute("title", $row['title']);
 				$proj->addAttribute("creator", $row['username']);
 				$proj->addAttribute("last_modified", $row['modified_date']);
-				}
+			
 			}
 		}
 		return $output;
