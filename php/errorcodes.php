@@ -163,4 +163,10 @@
 		$fail->addAttribute("text", "This user was not in the queried project. $string");
 		$fail->addAttribute("code", 309);
 	}
+	
+	function wrongPassword($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "The attempted project join password was incorrect.");
+		$fail->addAttribute("code", 310);
+	}
 ?>

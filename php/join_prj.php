@@ -62,23 +62,27 @@
 		}
 		$row = mysql_fetch_assoc($resultID);
 		if($projPass=$row['password']){
-			$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $otheruserID, 1)";
-		$success = mysql_query($query, $linkID);
-		if($success){
-			$otheruser=$output->addChild("user");
-			$otheruser->addAttribute("ID", $otheruserID);
-			$otheruser->addAttribute("added", true);
-			return $output;
+			//password is correct
+			$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $userID, 1)";
+			$success = mysql_query($query, $linkID);
+			if($success){
+				$user=$output->addChild("user");
+				$user->addAttribute("ID", $userID);
+				$user->addAttribute("added", true);
+				return $output;
+			}else{
+				$user=$output->addChild("user");
+				$user->addAttribute("ID", $userID);
+				$user->addAttribute("added", false);
+				updateFailed($output, $query);
+				return $output;
+			}
 		}else{
-			$otheruser=$output->addChild("user");
-			$otheruser->addAttribute("ID", $otheruserID);
-			$otheruser->addAttribute("added", false);
-			updateFailed($output, $query);
+			//password is incorrect
+			wrongPassword($output);
 			return $output;
 		}
-		
-		
-		}		
+		return $output;
 	}
 	
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
