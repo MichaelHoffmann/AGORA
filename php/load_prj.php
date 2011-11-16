@@ -78,11 +78,10 @@
 		$query = "SELECT
 				maps.map_id, maps.title, projects.user_id, maps.modified_date, users.username
 				FROM projects 
-					INNER JOIN projmaps ON projects.proj_id = projmaps.proj_id
-					INNER JOIN maps ON projmaps.map_id = maps.map_id
+					INNER JOIN maps ON maps.proj_id = projects.proj_id
 					INNER JOIN users ON projects.user_id = users.user_id
 				WHERE 
-					projects.proj_id = $projID AND maps.is_deleted=0
+					maps.proj_id = $projID AND maps.is_deleted=0
 				ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID);						
 		if(!$resultID){
@@ -110,7 +109,7 @@
 					INNER JOIN projusers ON projects.proj_id = projusers.proj_id
 					INNER JOIN users ON projusers.user_id = users.user_id
 				WHERE 
-					projects.proj_id = $projID";
+					projects.proj_id = $projID AND users.is_deleted = 0";
 		$resultID = mysql_query($uquery, $linkID);						
 		if(!$resultID){
 			dataNotFound($output, $uquery);
