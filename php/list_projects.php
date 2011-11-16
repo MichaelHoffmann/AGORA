@@ -41,7 +41,7 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id  AND projects.is_deleted=0 ORDER BY projects.title";
+		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id ORDER BY projects.title";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -54,14 +54,11 @@
 		}else{
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
-				if($row['is_deleted']){
-					accessDeleted($output);
-				}else{				
-					$proj = $output->addChild("proj");
-					$proj->addAttribute("ID", $row['proj_id']);
-					$proj->addAttribute("title", $row['title']);
-					$proj->addAttribute("creator", $row['username']);
-					$proj->addAttribute("last_modified", $row['modified_date']);
+				$proj = $output->addChild("proj");
+				$proj->addAttribute("ID", $row['proj_id']);
+				$proj->addAttribute("title", $row['title']);
+				$proj->addAttribute("creator", $row['username']);
+				$proj->addAttribute("last_modified", $row['modified_date']);
 				}
 			}
 		}
