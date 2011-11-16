@@ -57,9 +57,7 @@
 				$proj = $output->addChild("proj");
 				$proj->addAttribute("ID", $row['proj_id']);
 				$proj->addAttribute("title", $row['title']);
-				$proj->addAttribute("creator", $row['username']);
-				$proj->addAttribute("last_modified", $row['modified_date']);
-			
+				$proj->addAttribute("creator", $row['username']);			
 			}
 		}
 		return $output;
