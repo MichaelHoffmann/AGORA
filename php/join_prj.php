@@ -32,7 +32,7 @@
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
-	function editProject($userID, $pass_hash, $projID, $projPass){
+	function joinProject($userID, $pass_hash, $projID, $projPass){
 		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
@@ -89,6 +89,6 @@
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$projID = mysql_real_escape_string($_REQUEST['projID']);
 	$projPass = mysql_real_escape_string($_REQUEST['projPass']);
-	$output = joinProject($userID, $pass_hash, $projID, $projPass)
+	$output = joinProject($userID, $pass_hash, $projID, $projPass);
 	print($output->asXML());
 ?>
