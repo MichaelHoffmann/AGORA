@@ -61,7 +61,7 @@
 			$output->addAttribute("proj_id", $projID);
 		}
 		$row = mysql_fetch_assoc($resultID);
-		if($projPass=$row['password']){
+		if($projPass==$row['password']){
 			//password is correct
 			$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $userID, 1)";
 			$success = mysql_query($query, $linkID);
