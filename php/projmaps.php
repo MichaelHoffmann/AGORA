@@ -26,14 +26,22 @@
 		pass_hash: The hash of the user's password
 		projID: The ID of the project.
 		mapID: The ID of the map.
-		action: "add" or "remove". Pretty self-explanatory, really. Right now, there's no "create a new map as part of a project" function on the server, and doesn't actually need to be: the client can have a button which automatically calls insert.php followed by projmaps.php?action=add when it gets a successful result from insert.php.		
+		type: whether the map is a "debate" or "cooperate" map. 
+			All maps are "debate"...UNLESS they're in a project, where they can be either.
+		action: "add" or "remove". Pretty self-explanatory, really. 
+			Right now, there's no "create a new map as part of a project" function on the server, and doesn't actually need to be: the client can have a button which automatically calls insert.php followed by projmaps.php?action=add when it gets a successful result from insert.php.
+			"modify" exists, but does the same thing as "add" (in fact, it just calls addMap).
 	**/
 	require 'configure.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
-	function addMap($mapID, $projID, $userID, $pass_hash, $output){
+	function modifyMap($mapID, $projID, $userID, $pass_hash, $type, $output){
+		return addMap($mapID, $projID, $userID, $pass_hash, $type, $output);	
+	}
+	
+	function addMap($mapID, $projID, $userID, $pass_hash, $type, $output){
 		$output->addAttribute("ID", $projID);
 		global $dbName, $version;
 		header("Content-type: text/xml");
@@ -73,14 +81,18 @@
 			notInProject($output, $puQuery);
 			return $output;
 		}
+		//Sanity check here
+		if($type != "debate" && $type != "cooperate"){
+			$type="debate";
+		}
 		
-		
-		$query = "UPDATE maps SET proj_id=$projID WHERE map_id=$mapID";
+		$query = "UPDATE maps SET proj_id=$projID, map_type='$type' WHERE map_id=$mapID";
 		$success = mysql_query($query, $linkID);
 		if($success){
 			$map=$output->addChild("map");
 			$map->addAttribute("ID", $mapID);
 			$map->addAttribute("added", true);
+			$map->addAttribute("type", $type);
 			return $output;
 		}else{
 			$map=$output->addChild("map");
@@ -89,7 +101,6 @@
 			updateFailed($output, $query);
 			return $output;
 		}
-		
 		return $output;
 	}
 	
@@ -114,31 +125,37 @@
 			return $output;
 		}
 		//Basic boilerplate is done. Next step is to remove the map from the project.
-		//First, we check whether the user has authority to move the map out of the project. To prevent abuse, only the map's creator or a project administrator can move the map out of the project. The owner can do this even if he is no longer a user of the project. (Thinking: you can't kick me out of a project to take away my ability to work on my map.)
+		/*First, we check whether the user has authority to move the map out of the project. 
+		To prevent abuse, only the map's creator or a project administrator can move the map out of the project.
+		The owner can do this even if he is no longer a user of the project.
+		This does NOT delete the map.
+		(Thinking: you can't kick me out of a project to take away my ability to work on my map.)
+		*/
 		
-		//check currently omitted for testing purposes: can't be done until projusers exists
-		//TODO: add check once projusers is working properly
+		//If he's the map's owner, or an admin of the project, he can move the map out of the project.
+		$query = "SELECT user_id FROM maps WHERE map_id=$mapID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$uid = $row['user_id'];
+		if($userID!=$uid && !checkForAdmin($projID, $userID, $linkID)){
+				notProjectAdmin($output);
+				return $output;
+		}
 		
-		$query = "UPDATE maps SET proj_id=NULL WHERE map_id=$mapID";
-		
+		$query = "UPDATE maps SET proj_id=NULL, map_type='debate' WHERE map_id=$mapID";
 		$success = mysql_query($query, $linkID);
 		if($success){
 			$map=$output->addChild("map");
 			$map->addAttribute("ID", $mapID);
-			$map->addAttribute("deleted", true);
+			$map->addAttribute("removed", true);
 			return $output;
 		}else{
 			$map=$output->addChild("map");
 			$map->addAttribute("ID", $mapID);
-			$map->addAttribute("deleted", false);
+			$map->addAttribute("removed", false);
 			updateFailed($output, $query);
 			return $output;
 		}
-		
-		return $output;
-		
-		
-		
 		
 		return $output;
 	}
@@ -147,6 +164,8 @@
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$projID = mysql_real_escape_string($_REQUEST['projID']);
 	$mapID =  mysql_real_escape_string($_REQUEST['mapID']);
+	$type = mysql_real_escape_string($_REQUEST['type']);
+	//Type must be one of "debate" or "cooperate". If calling remove, this is ignored.
 	$action = $_REQUEST['action'];
 	
 	header("Content-type: text/xml");
@@ -154,9 +173,11 @@
 	$output = new SimpleXMLElement($xmlstr);
 
 	if($action=="add"){
-		$output=addMap($mapID, $projID, $userID, $pass_hash, $output);
+		$output=addMap($mapID, $projID, $userID, $pass_hash, $type, $output);
 	}else if($action=="remove"){
 		$output=removeMap($mapID, $projID, $userID, $pass_hash, $output);
+	}else if($action=="modify"){
+		$output=modifyMap($mapID, $projID, $userID, $pass_hash, $type, $output);
 	}else{
 		meaninglessQueryVariables($output, "The 'action' variable must be set to either add or remove.");
 	}

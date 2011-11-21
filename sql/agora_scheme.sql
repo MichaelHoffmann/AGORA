@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS agora.maps (
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
   proj_id INT NULL DEFAULT NULL,
+  map_type ENUM('debate', 'cooperate') NOT NULL DEFAULT 'debate',
   lang VARCHAR(10) NOT NULL,
   PRIMARY KEY (map_id),
   INDEX user_id (user_id ASC),
