@@ -153,18 +153,18 @@
 		//check currently omitted for testing purposes: can't be done until projusers exists
 		//TODO: add check once projusers is working properly
 		
-		$query = "UPDATE projusers SET level=$level WHERE proj_id=$projID AND user_id=$otheruserID";
+		$query = "UPDATE projusers SET user_level=$level WHERE proj_id=$projID AND user_id=$otheruserID";
 		
 		$success = mysql_query($query, $linkID);
 		if($success){
 			$otheruser=$output->addChild("user");
 			$otheruser->addAttribute("ID", $otheruserID);
-			$otheruser->addAttribute("removed", true);
+			$otheruser->addAttribute("modified", true);
 			return $output;
 		}else{
 			$otheruser=$output->addChild("user");
 			$otheruser->addAttribute("ID", $otheruserID);
-			$otheruser->addAttribute("removed", false);
+			$otheruser->addAttribute("modified", false);
 			updateFailed($output, $query);
 			return $output;
 		}		
