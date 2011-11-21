@@ -35,27 +35,6 @@
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
-	function checkForAdmin($projID, $userID, $linkID){
-		//There are two ways a person can be an "admin" of a project.
-		//The first is that the person is the owner of the project ($userID==projects.user_id)
-		$query = "SELECT user_id FROM projects WHERE proj_id=$projID";
-		$resultID = mysql_query($query, $linkID);
-		$row = mysql_fetch_assoc($resultID);
-		if($userID == $row['user_id']){
-			return true;
-		}
-		//The other is that the person is an administrator of the project.
-		//(9 = projusers.user_level WHERE project=$projID AND user_id=$userID)
-		$query = "SELECT user_level FROM projusers WHERE proj_id=$projID AND user_id=$userID";
-		$resultID = mysql_query($query, $linkID);
-		$row = mysql_fetch_assoc($resultID);
-		if(9 == $row['user_level']){
-			return true;
-		}
-		
-		return false;
-	}
-	
 	function addUser($otheruserID, $projID, $userID, $level, $pass_hash, $output){
 		$output->addAttribute("ID", $projID);
 		global $dbName, $version;
