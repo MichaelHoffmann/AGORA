@@ -35,6 +35,12 @@
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
+	function checkForAdmin($projID, $userID){
+	
+		
+		return false;
+	}
+	
 	function addUser($otheruserID, $projID, $userID, $level, $pass_hash, $output){
 		$output->addAttribute("ID", $projID);
 		global $dbName, $version;
@@ -62,9 +68,12 @@
 		
 		//First, we check whether the user has authority to move the other user into the project. To prevent abuse, only the project's administrators can move the other user into the project
 		
-		//check currently omitted for testing purposes: can't be done until projusers has level management working
-		//TODO: add check once projusers is working properly
-		//TODO: add check for checking that project/user relationship doesn't already exist. If it does, bail.
+		if(!checkForAdmin($projID, $userID)){
+			notProjectAdmin($output);
+			return $output;
+		}
+		
+		
 		$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $otheruserID, $level)";
 		$success = mysql_query($query, $linkID);
 		if($success){
@@ -77,6 +86,7 @@
 			$otheruser->addAttribute("ID", $otheruserID);
 			$otheruser->addAttribute("added", false);
 			updateFailed($output, $query);
+			//Note that the UNIQUE pu_combo field ensures that a user can't be added to a project twice.
 			return $output;
 		}
 		

@@ -154,13 +154,13 @@
 	
 	function meaninglessQueryVariables($output, $string){
 		$fail=$output->addChild("error");
-		$fail->addAttribute("text", "The query variables have a meaningless term in them. $string");
+		$fail->addAttribute("text", "The query variables have a meaningless term in them. Query was: $string");
 		$fail->addAttribute("code", 309);
 	}
 	
 	function notInProject($output, $string){
 		$fail=$output->addChild("error");
-		$fail->addAttribute("text", "This user was not in the queried project. $string");
+		$fail->addAttribute("text", "This user was not in the queried project. Query was: $string");
 		$fail->addAttribute("code", 309);
 	}
 	
@@ -168,5 +168,11 @@
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "The attempted project join password was incorrect.");
 		$fail->addAttribute("code", 310);
+	}
+	
+	function notProjectAdmin($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "You are not an administrator of this project.");
+		$fail->addAttribute("code", 311);
 	}
 ?>
