@@ -35,8 +35,23 @@
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
-	function checkForAdmin($projID, $userID){
-	
+	function checkForAdmin($projID, $userID, $linkID){
+		//There are two ways a person can be an "admin" of a project.
+		//The first is that the person is the owner of the project ($userID==projects.user_id)
+		$query = "SELECT user_id FROM projects WHERE proj_id=$projID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		if($userID == $row['user_id']){
+			return true;
+		}
+		//The other is that the person is an administrator of the project.
+		//(9 = projusers.user_level WHERE project=$projID AND user_id=$userID)
+		$query = "SELECT user_level FROM projusers WHERE proj_id=$projID AND user_id=$userID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		if(9 == $row['user_level']){
+			return true;
+		}
 		
 		return false;
 	}
@@ -64,16 +79,12 @@
 			incorrectLogin($output);
 			return $output;
 		}
-		//Basic boilerplate is done. Next step is to add the user to the project.
-		
-		//First, we check whether the user has authority to move the other user into the project. To prevent abuse, only the project's administrators can move the other user into the project
-		
-		if(!checkForAdmin($projID, $userID)){
+		//Basic boilerplate is done.
+
+		if(!checkForAdmin($projID, $userID, $linkID)){
 			notProjectAdmin($output);
 			return $output;
 		}
-		
-		
 		$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $otheruserID, $level)";
 		$success = mysql_query($query, $linkID);
 		if($success){
@@ -113,12 +124,11 @@
 			incorrectLogin($output);
 			return $output;
 		}
-		//Basic boilerplate is done. Next step is to remove the user from the project.
-		//First, we check whether the user has authority to move the user out of the project.
-		
-		//check currently omitted for testing purposes: can't be done until projusers exists
-		//TODO: add check once projusers is working properly
-		
+		//Basic boilerplate is done.
+		if(!checkForAdmin($projID, $userID, $linkID)){
+			notProjectAdmin($output);
+			return $output;
+		}
 		$query = "DELETE FROM projusers WHERE proj_id=$projID AND user_id=$otheruserID";
 		
 		$success = mysql_query($query, $linkID);
@@ -157,12 +167,11 @@
 			incorrectLogin($output);
 			return $output;
 		}
-		//Basic boilerplate is done. Next step is to remove the user from the project.
-		//First, we check whether the user has authority to move the user out of the project.
-		
-		//check currently omitted for testing purposes: can't be done until projusers exists
-		//TODO: add check once projusers is working properly
-		
+		//Basic boilerplate is done.
+		if(!checkForAdmin($projID, $userID, $linkID)){
+			notProjectAdmin($output);
+			return $output;
+		}
 		$query = "UPDATE projusers SET user_level=$level WHERE proj_id=$projID AND user_id=$otheruserID";
 		
 		$success = mysql_query($query, $linkID);
