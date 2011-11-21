@@ -309,6 +309,7 @@ CREATE TABLE IF NOT EXISTS agora.projusers (
   PRIMARY KEY (pu_id),
   INDEX proj_id (proj_id ASC),
   INDEX user_id (user_id ASC),
+  UNIQUE pu_combo (proj_id, user_id),
   FOREIGN KEY (proj_id)
     REFERENCES agora.projects (proj_id)
 	ON DELETE CASCADE
