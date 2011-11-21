@@ -64,7 +64,7 @@
 		
 		//check currently omitted for testing purposes: can't be done until projusers has level management working
 		//TODO: add check once projusers is working properly
-		//TODO: add check for checking that project/user relationship doesn't already exist. If it does, update instead.
+		//TODO: add check for checking that project/user relationship doesn't already exist. If it does, bail.
 		$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $otheruserID, $level)";
 		$success = mysql_query($query, $linkID);
 		if($success){
@@ -123,16 +123,55 @@
 			$otheruser->addAttribute("removed", false);
 			updateFailed($output, $query);
 			return $output;
-		}
-		
-		return $output;
-		
-		
-		
-		
+		}		
 		return $output;
 	}
 
+	function modifyUser($otheruserID, $projID, $userID, $level, $pass_hash, $output){
+		$output->addAttribute("ID", $projID);
+		global $dbName, $version;
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
+		$output = new SimpleXMLElement($xmlstr);
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			 databaseNotFound($output);
+			 return $output;
+		}
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			incorrectLogin($output);
+			return $output;
+		}
+		//Basic boilerplate is done. Next step is to remove the user from the project.
+		//First, we check whether the user has authority to move the user out of the project.
+		
+		//check currently omitted for testing purposes: can't be done until projusers exists
+		//TODO: add check once projusers is working properly
+		
+		$query = "UPDATE projusers SET level=$level WHERE proj_id=$projID AND user_id=$otheruserID";
+		
+		$success = mysql_query($query, $linkID);
+		if($success){
+			$otheruser=$output->addChild("user");
+			$otheruser->addAttribute("ID", $otheruserID);
+			$otheruser->addAttribute("removed", true);
+			return $output;
+		}else{
+			$otheruser=$output->addChild("user");
+			$otheruser->addAttribute("ID", $otheruserID);
+			$otheruser->addAttribute("removed", false);
+			updateFailed($output, $query);
+			return $output;
+		}		
+		return $output;
+	}
+	
+	
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$projID = mysql_real_escape_string($_REQUEST['projID']);
@@ -148,6 +187,8 @@
 		$output=addUser($otheruserID, $projID, $userID, $level, $pass_hash, $output);
 	}else if($action=="remove"){
 		$output=removeUser($otheruserID, $projID, $userID, $pass_hash, $output);
+	}else if($action=="modify"){
+		$output=modifyUser($otheruserID, $projID, $userID, $level, $pass_hash, $output);
 	}else{
 		meaninglessQueryVariables($output, "The 'action' variable must be set to either add or remove.");
 	}
