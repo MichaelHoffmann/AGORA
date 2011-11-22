@@ -71,7 +71,7 @@
 		$output->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>'$timestamp' ORDER BY textbox_id";
+		$query = "SELECT * FROM textboxes WHERE map_id = $mapID AND modified_date>'$timestamp' ORDER BY textbox_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -86,11 +86,11 @@
 
 		// Nodes take a bit more work.
 		/*$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
-			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+			WHERE map_id = $mapID AND modified_date>\"$timestamp\" ORDER BY node_id";
 		*/
 		$query = "SELECT nodes.node_id, nodes.nodetype_id, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type
 			FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
-			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+			WHERE map_id = $mapID AND modified_date>\"$timestamp\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -125,7 +125,7 @@
 		}
 
 		// sourcenodes will take a lot more work.
-		$query = "SELECT * FROM connections NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\"";
+		$query = "SELECT * FROM connections NATURAL JOIN connection_types WHERE map_id = $mapID AND modified_date>\"$timestamp\"";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
