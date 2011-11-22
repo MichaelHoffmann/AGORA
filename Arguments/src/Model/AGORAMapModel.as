@@ -256,7 +256,7 @@ package Model
 		public function addFirstClaim():void{
 			var mapXML:XML=<map id={ID}>
 								<textbox TID="10" text=""/>
-								<node TID="1" Type={StatementModel.PARTICULAR} typed="0" is_positive="1"  x="2" y="3">
+								<node TID="1" Type={StatementModel.PARTICULAR} typed="0" is_positive="1"  x="8" y="3">
 									<nodetext TID="2" textboxTID="10" />
 								</node>
 						   </map>;	

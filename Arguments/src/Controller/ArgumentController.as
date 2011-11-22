@@ -14,6 +14,7 @@ package Controller
 	
 	import ValueObjects.AGORAParameters;
 	
+	import components.AgoraMap;
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.GridPanel;
@@ -515,16 +516,37 @@ package Controller
 		}
 		
 		protected function onArgumentSaved(event:AGORAEvent):void{
+			var agoraMap:AgoraMap = FlexGlobals.topLevelApplication.map.agoraMap;
 			AGORAModel.getInstance().requested=false;
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
-			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
+			var argumentSelector:ArgSelector = agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
 			argumentSelector.hide();
 			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
 				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 				logicController.deleteLinks(argumentTypeModel);
 				AGORAModel.getInstance().agoraMapModel.loadMapModel();
 			}
+			
+			//infobox beside enabler
+			var inference:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
+			inference.addArgumentsInfo.x =  inference.x + inference.width + 20;
+			inference.addArgumentsInfo.y = inference.y;
+			inference.addArgumentsInfo.depth = inference.parent.numChildren;
+			inference.addArgumentsInfo.visible = true;
+			//infobox on top of the claim and the reason
+			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
+			if(claim.statementType != StatementModel.INFERENCE){
+				claim.changeTypeInfo.x = claim.x;
+				claim.changeTypeInfo.y = claim.y - claim.changeTypeInfo.getExplicitOrMeasuredHeight() - 10;
+				claim.changeTypeInfo.depth = claim.parent.numChildren;
+				claim.changeTypeInfo.visible = true;
+			}
+			var reason:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.reasonModels[0].ID];
+			reason.changeTypeInfo.x = reason.x;
+			reason.changeTypeInfo.y = reason.y - reason.changeTypeInfo.getExplicitOrMeasuredHeight() - 10;
+			reason.changeTypeInfo.visible = true;
+			reason.changeTypeInfo.depth = reason.parent.numChildren;
 		}
 		
 		protected function onArgumentSaveFailed(event:AGORAEvent):void{

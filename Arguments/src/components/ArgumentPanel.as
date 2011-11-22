@@ -123,6 +123,9 @@ package components
 		public static const DISPLAY:String = "Display";
 		
 		//References to other objects
+		public var addArgumentsInfo:InfoBox;
+		public var changeTypeInfo:InfoBox;
+		
 		//A reference to the current map diplayed to the user
 		public static var parentMap:AgoraMap;
 		

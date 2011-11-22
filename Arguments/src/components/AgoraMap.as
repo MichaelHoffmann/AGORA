@@ -20,6 +20,8 @@ package components
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -151,6 +153,8 @@ package components
 			}catch(e:Error){
 			}
 			addChild(firstClaimHelpText);
+			
+			
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
 				if(StatementModel(newPanels[i]).statementFunction == StatementModel.INFERENCE){
@@ -158,6 +162,13 @@ package components
 					inference.model = newPanels[i];
 					panelsHash[inference.model.ID] = inference;
 					addChild(inference);
+					
+					//add the next infobox
+					inference.addArgumentsInfo = new InfoBox;
+					inference.addArgumentsInfo.visible = false;
+					inference.addArgumentsInfo.text = Language.lookup('ArgComplete');
+					inference.addArgumentsInfo.boxWidth = 500;
+					addChild(inference.addArgumentsInfo);
 				}
 				else if(newPanels[i] is StatementModel){
 					if(newPanels[i] is StatementModel){
@@ -179,9 +190,16 @@ package components
 							}
 						}
 						addChild(argumentPanel);
+						argumentPanel.changeTypeInfo = new InfoBox;
+						argumentPanel.changeTypeInfo.visible = false;
+						argumentPanel.changeTypeInfo.text = Language.lookup('PartUnivReq');
+						argumentPanel.changeTypeInfo.boxWidth = argumentPanel.getExplicitOrMeasuredWidth();
+						addChild(argumentPanel.changeTypeInfo);
 					}
 				}
 			}
+			
+			
 			var newMenuPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newConnections;
 			for each(var argumentTypeModel:ArgumentTypeModel in newMenuPanels){
 				var menuPanel:MenuPanel = new MenuPanel;
