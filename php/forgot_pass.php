@@ -72,8 +72,6 @@
 		}
 		//We need to change password and email user afterwards.
 		//If changing password fails, we need to reset to the old password in case user finally remembers.
-		$psw=$output->addChild("password");
-		$psw->addAttribute("text", "$password");
 		
 		//First thing first: create the Hash of the password - that's what we store.
 		//Salt the password:
@@ -88,6 +86,12 @@
 		if(!$resultID){
 			updateFailed($output, $uquery);
 			return $output;
+		}else{
+			$psw=$output->addChild("password");
+			$psw->addAttribute("changed", true);
+			//The following line is for debugging purposes ONLY. It IS NOT SECURE! Do NOT enable this on a live release!
+			//$psw->addAttribute("text", "$password");
+		
 		}
 		$message = wordwrap("Your new password for the AGORA system is: $password \n
 							Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: $password \n
