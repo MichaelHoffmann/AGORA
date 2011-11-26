@@ -114,17 +114,17 @@ package Controller
 			AGORAController.getInstance().unfreeze();
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
 			AGORAModel.getInstance().agoraMapModel.ID = map.mapID;
-			FlexGlobals.topLevelApplication.lamWorld.visible = true;
+			FlexGlobals.topLevelApplication.map.visible = true;
+			FlexGlobals.topLevelApplication.map.lamWorld.visible = true;
 			FlexGlobals.topLevelApplication.agoraMenu.visible = false;
 		}
 		
 		//-------------------Start with Claim----------------------------//
 		public function startWithClaim():void{
 			//remove Lam world
-			FlexGlobals.topLevelApplication.lamWorld.visible = false;
-			
+			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
 			//display map
-			FlexGlobals.topLevelApplication.map.visible = true;
+			FlexGlobals.topLevelApplication.map.agora.visible = true;
 			
 			//ask controller to add the first claim
 			addFirstClaim();

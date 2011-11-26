@@ -136,11 +136,9 @@ package Controller
 		}
 		
 		//--------------------Application Complete---------------------//
-		
-		
-		
 		public function hideMap():void{
 			AGORAModel.getInstance().state = AGORAModel.MENU;
+			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
 			FlexGlobals.topLevelApplication.map.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
 			

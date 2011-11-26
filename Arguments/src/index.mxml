@@ -34,8 +34,6 @@
 	</fx:Declarations>
 	<components:AGORAMenu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
 	</components:AGORAMenu>
-	<components:LAMWorld id="lamWorld" visible="false">
-	</components:LAMWorld>
 	<components:Map id="map" visible="false">
 	</components:Map>
 	

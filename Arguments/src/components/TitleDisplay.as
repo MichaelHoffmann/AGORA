@@ -114,7 +114,11 @@ package components
 		protected function toEdit(event:MouseEvent):void{
 			if(event.target != doneBtn){
 				textField.text = title;
+				textField.selectionBeginIndex = 0;
+				textField.selectionEndIndex = textField.text.length;
 				state = EDIT;
+				//stage.focus = textField;
+				focusManager.setFocus(textField);
 			}
 		}
 		protected function onEnter(event:KeyboardEvent):void{
@@ -208,7 +212,7 @@ package components
 				textField.setActualSize(this.width - doneBtn.measuredWidth - 20,30);
 				textField.move(10,0);
 				doneBtn.move(textField.x + textField.width + 10,0);
-				doneBtn.setActualSize(doneBtn.measuredWidth, doneBtn.measuredHeight);
+				doneBtn.setActualSize(doneBtn.measuredWidth,30);
 			}
 		}
 	}
