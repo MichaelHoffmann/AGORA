@@ -134,7 +134,7 @@ package Controller
 			if(!model.requested){
 				//Set the coordinates of the help text
 				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = true;
-				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.y = 2 * AGORAParameters.getInstance().gridWidth;
+				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.y = 8 * AGORAParameters.getInstance().gridWidth;
 				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.x = 3 * AGORAParameters.getInstance().gridWidth + 180 + 25;
 				//instruct the model to add a first claim to itself
 				model.requested = true;
