@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</s:Button>
 		</s:HGroup>
 		-->
-		<components:TopPanel id="topPanel">
+		<components:TopPanel id="topPanel" width="100%" height="40">
 		</components:TopPanel>
 		<s:Group>
 			<s:Scroller id="agora" visible="false">	
@@ -97,6 +97,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			{
 				FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap * 2 - FlexGlobals.topLevelApplication.map.title.height - 30;
 				FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 50;
+				FlexGlobals.topLevelApplication.map.topPanel.width = FlexGlobals.topLevelApplication.map.stage.stageWidth;
+			
 			}
 			
 			public function initApp():void

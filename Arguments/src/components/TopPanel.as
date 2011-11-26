@@ -6,6 +6,7 @@ package components
 	
 	import classes.Language;
 	
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
@@ -18,7 +19,9 @@ package components
 		public var saveAsBtn:Button;
 		public var title:TitleDisplay;
 		
+		
 		private var agoraConstants:AGORAParameters;
+		private var background:Sprite;
 		
 		public function TopPanel()
 		{
@@ -28,6 +31,11 @@ package components
 		
 		override protected function createChildren():void{
 			super.createChildren();
+			
+			if(!background){
+				background = new Sprite;
+				addChild(background);
+			}
 			
 			if(!gotoMenuBtn){
 				gotoMenuBtn = new Button;
@@ -59,6 +67,10 @@ package components
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			background.graphics.clear();
+			background.graphics.beginFill(0xF7F7F7);
+			background.graphics.drawRect(0,0, this.getExplicitOrMeasuredWidth(), 40);
+			background.graphics.endFill();
 			gotoMenuBtn.setActualSize(gotoMenuBtn.getExplicitOrMeasuredWidth(), 30);
 			gotoMenuBtn.move(15,5);
 			saveAsBtn.setActualSize(saveAsBtn.getExplicitOrMeasuredWidth(), 30);

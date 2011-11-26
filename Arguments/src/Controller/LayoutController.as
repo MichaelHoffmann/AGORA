@@ -120,6 +120,8 @@ package Controller
 			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap * 2 - 30;
 			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 30;
 			FlexGlobals.topLevelApplication.map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
+			
+			FlexGlobals.topLevelApplication.map.topPanel.width = FlexGlobals.topLevelApplication.map.stage.stageWidth;
 		}
 		
 		public function getBottomReason(atm:ArgumentTypeModel):StatementModel{
