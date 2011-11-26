@@ -135,8 +135,6 @@ package components
 		public var group:VGroup;
 		//multistatement group
 		public var msVGroup:VGroup;
-		//The enabler which makes this statements support a claim
-		public var inference:Inference;
 		//contains the add and the delete button
 		public var bottomHG:HGroup;
 		//the logical container that contains everything above the group container
@@ -164,9 +162,7 @@ package components
 			
 			inputs = new Vector.<DynamicTextArea>;
 			changeWatchers = new Vector.<ChangeWatcher>;
-			
-			//will be set by the object that creates this
-			inference = null;
+
 			width = 180;
 			minHeight = 100;
 			

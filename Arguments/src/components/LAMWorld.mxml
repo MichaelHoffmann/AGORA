@@ -78,13 +78,7 @@
 			}
 			
 			public function startWithScheme():void {
-				
-/* 				var map:Map = new Map;
-				var group:Group = Group(this.parent);
-				group.addElement(map);
-				map.addEventListener("created",function(event:Event):void{map.addEmptyArgument();});	
-				group.removeElement(this);
- */			}
+			}
 			
 			public function init():void {
 				argumentPaste.text=Language.lookup("PasteArgument");

@@ -133,6 +133,8 @@ package ValueObjects
 		public var DONE:String;
 		public var NOTE:String;
 		public var OK:String;
+		public var SAVE_AND_HOME:String;
+		public var SAVE_AS: String;
 		
 		//agreements
 		public var REGISTRATION_NOTE:String;
@@ -190,6 +192,8 @@ package ValueObjects
 			READ_REGISTRATION_NOTE = Language.lookup('ReadRegistrationNote');
 			NOTE = Language.lookup('Note');
 			OK = Language.lookup('OK');
+			SAVE_AND_HOME = Language.lookup('SaveAndHome');
+			SAVE_AS = Language.lookup('SaveMapAs');
 		}
 		
 		public static function getInstance():AGORAParameters{

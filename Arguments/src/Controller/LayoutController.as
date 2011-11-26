@@ -30,7 +30,6 @@ package Controller
 	
 	import components.ArgumentPanel;
 	import components.GridPanel;
-	import components.Inference;
 	import components.Map;
 	import components.MenuPanel;
 	
@@ -118,7 +117,7 @@ package Controller
 		
 		//------------------------- other public functions --------------------//
 		public function setApplicationLayoutProperties():void{
-			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap * 2 - FlexGlobals.topLevelApplication.map.title.height - 30;
+			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap * 2 - 30;
 			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 30;
 			FlexGlobals.topLevelApplication.map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
 		}
@@ -162,38 +161,6 @@ package Controller
 			return (Math.floor(tmpX/uwidth));
 		}
 		
-		public function tempArrange(panel1:ArgumentPanel):void {
-			var currReason:ArgumentPanel = panel1 as ArgumentPanel;
-			
-			var currClaim:ArgumentPanel = currReason.inference.claim;
-			
-			currReason.gridY = currClaim.gridY + Math.ceil(currClaim.width / uwidth ) + 2;
-			
-			currReason.gridX = currClaim.gridX;	
-			
-		}
-		
-		
-		public function registerPanel(panel1:GridPanel):void
-		{
-			try{
-				if(panel1 is Inference)
-				{
-					//registerPanel(Inference(panel1).argType);
-				}
-					//This module is for a reason added to an existing argument
-				else if(panel1 is ArgumentPanel)
-				{
-					
-				}
-			}
-			catch(e:Error)
-			{
-				Alert.show(e.toString());
-			}
-			panelList.push(panel1);
-			//components.Map(ArgumentPanel.parentMap.parent.parent.parent.parent.parent).update();
-		}
 		
 		public function getGridSpan(pixels:int):int
 		{

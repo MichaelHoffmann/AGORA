@@ -34,9 +34,8 @@ package components
 		public function TitleDisplay()
 		{
 			super();
-			percentWidth = 100;
 			state = DISPLAY;
-			//title = "Title";
+			width = 500;
 			this.addEventListener(MouseEvent.CLICK, toEdit);
 			this.addEventListener(KeyboardEvent.KEY_DOWN, onEnter);
 		}
@@ -199,14 +198,15 @@ package components
 		
 		override protected function measure():void{
 			super.measure();
-			measuredMinHeight = 50;
+			measuredHeight = 30;
+			measuredWidth  = width;
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			if(state == DISPLAY){
 				textDisplay.setActualSize(this.width - doneBtn.measuredWidth - 20, 30);
-				textDisplay.move(10,10);
+				textDisplay.move(10,5);
 			}
 			else if(state == EDIT){
 				textField.setActualSize(this.width - doneBtn.measuredWidth - 20,30);

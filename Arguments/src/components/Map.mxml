@@ -18,18 +18,21 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
+
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
 		   xmlns:classes="classes.*" 
 		   xmlns:components="components.*"
 		   xmlns:value_objects="ValueObjects.*"
-		   creationComplete="onCreationComplete(event)">
+		 >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<s:VGroup id="container" paddingBottom="10" paddingTop="10">			
+	<s:VGroup id="container" paddingBottom="10" paddingTop="10">
+		<!--
 		<s:HGroup id="topPanel" gap="10">
 			<s:Button id="gotoMenuBtn" label="Save and Home" width="150" click="discardChanges(event)">
 			</s:Button>
@@ -37,8 +40,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					  click="Alert.show(Language.lookup('UnderConstruction'));">
 			</s:Button>
 		</s:HGroup>
-		<components:TitleDisplay id = "title" width="100%" height="50">
-		</components:TitleDisplay>
+		-->
+		<components:TopPanel id="topPanel">
+		</components:TopPanel>
 		<s:Group>
 			<s:Scroller id="agora" visible="false">	
 				<s:Group>
@@ -84,13 +88,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			import classes.Language;
 			
-			public function hideMap():void
-			{
-				//var group:Group = Group(this.parent.getChildByName("agoraMenu"));
-				//group.visible = true;
-				//Group(this.parent).removeElement(this);
-			}
-			
 			public function discardChanges(event:Event):void
 			{
 				AGORAController.getInstance().hideMap();
@@ -107,11 +104,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				agoraMap.addEventListener(Event.ADDED_TO_STAGE, setWidth);
 				ArgumentPanel.parentMap = agoraMap;			
 				dispatchEvent(new Event("created",true,false));
-			}
-			
-			//------------------------- EVENT LISTENERS -----------------------//
-			protected function onCreationComplete(event:FlexEvent):void{
-				saveAsBtn.toolTip = AGORAParameters.getInstance().SUPPORT_SAVEAS;
 			}
 		]]>
 	</fx:Script>

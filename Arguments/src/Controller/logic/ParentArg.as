@@ -9,7 +9,6 @@ package Controller.logic
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
-	import components.Inference;
 	
 	import flash.utils.Dictionary;
 	
