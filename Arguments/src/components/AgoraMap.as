@@ -142,7 +142,7 @@ package components
 				removeChild(drawUtility);
 			}catch(e:Error){
 			}
-			addChild(drawUtility);
+			addChildAt(drawUtility, 0);
 			try{
 				removeChild(helpText);
 			}catch(e:Error){
@@ -153,6 +153,7 @@ package components
 			}catch(e:Error){
 			}
 			addChild(firstClaimHelpText);
+		
 			
 			
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 

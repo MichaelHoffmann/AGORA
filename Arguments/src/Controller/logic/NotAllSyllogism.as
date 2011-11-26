@@ -9,10 +9,11 @@ package Controller.logic
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.MenuPanel;
-	import classes.Language;
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
@@ -89,6 +90,10 @@ package Controller.logic
 			//the number of statements in the inference is going to be
 			//only two, which is the default.
 			
+		}
+		
+		override public function getLabel():String{
+			return AGORAParameters.getInstance().NOT_ALL_SYLL;
 		}
 		
 		override public function link(argumentTypeModel:ArgumentTypeModel):void{

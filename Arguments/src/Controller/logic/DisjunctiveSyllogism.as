@@ -8,9 +8,10 @@ package Controller.logic
 	
 	import ValueObjects.AGORAParameters;
 	
-	import components.ArgumentPanel;
 	import classes.Language;
-		
+	
+	import components.ArgumentPanel;
+	
 	import mx.controls.Alert;
 	
 	public class DisjunctiveSyllogism extends ParentArg
@@ -81,6 +82,9 @@ package Controller.logic
 				reasonModels[i].negated = true;
 			}	
 			inferenceModel.connectingString = StatementModel.DISJUNCTION;
+		}
+		override public function getLabel():String{
+			return AGORAParameters.getInstance().DIS_SYLL;
 		}
 	}
 }

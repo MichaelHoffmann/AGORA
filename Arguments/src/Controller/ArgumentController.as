@@ -205,7 +205,7 @@ package Controller
 				}{
 					flag = 1;
 				}
-
+				
 				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
 					flag = 1;
 				}
@@ -274,7 +274,9 @@ package Controller
 			}
 			
 			//show the menu
-			schemeSelector.visible = true;
+			//if(argumentTypeModel.logicClass != agoraParameters.DIS_SYLL && argumentTypeModel.logicClass != agoraParameters.NOT_ALL_SYLL){
+				schemeSelector.visible = true;
+			//}
 		}
 		
 		//----------------- After done button is clicked --------------------//
