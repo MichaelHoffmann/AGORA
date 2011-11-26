@@ -92,6 +92,7 @@ package Controller
 				//hide and show view components
 				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
 				FlexGlobals.topLevelApplication.map.visible = true;
+				FlexGlobals.topLevelApplication.map.agora.visible = true;
 				//reinitialize map view
 				FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
 				//fetch data

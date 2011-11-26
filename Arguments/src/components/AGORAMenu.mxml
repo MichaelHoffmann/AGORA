@@ -27,7 +27,6 @@
 			protected function timerFired(event:TimerEvent):void{
 				AGORAController.getInstance().onTimer();
 			}
-			
 
 			protected function createMapBtn_clickHandler(event:MouseEvent):void
 			{
