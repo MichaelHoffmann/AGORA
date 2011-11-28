@@ -27,7 +27,7 @@
 	*	Function that loads a map from the database.
 	*	Might be worth refactoring this somewhat.
 	*/
-	function get_map($mapID, $timestamp){
+	function get_map($userID, $mapID, $timestamp){
 		global $dbName, $version;
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
@@ -55,6 +55,20 @@
 			nonexistent($output, $query);
 			return $output;
 		}
+		
+		//TODO: test this stuff
+		if($row[proj_id]){
+			//Map is in a project.
+			//Confirm that the project allows the user to open a map
+			if(isUserInMapProject($userID, $mapID, $linkID)){
+				//Nothing needs to be done, the logic will continue as normal
+			}else{
+				//Bail!
+				notInProject($output, "User ID: $userID and Map ID: $mapID");
+			}
+		}
+		//If map isn't in a project, continue as normal.
+		//END TODO
 		
 		$row = mysql_fetch_assoc($resultID);
 		$output->addAttribute("ID", $row['map_id']);
@@ -156,8 +170,9 @@
 		}
 		return $output;
 	}
+	$user_id = mysql_real_escape_string($_REQUEST['uid']);
 	$map_id = mysql_real_escape_string($_REQUEST['map_id']);  //TODO: Change this back to a GET when all testing is done.
 	$timestamp = mysql_real_escape_string($_REQUEST['timestamp']);
-	$output = get_map($map_id, $timestamp); 
+	$output = get_map($user_id, $map_id, $timestamp); 
 	print $output->asXML();
 ?>
