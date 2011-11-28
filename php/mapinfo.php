@@ -70,9 +70,13 @@
 		//Map exists. Let's look at its information.
 		$mapOwner = $row['user_id'];
 		if($mapOwner!=$userID){
-			//You can't modify someone else's map information!
-			modifyOther($output);
-			return $output;
+			if(isUserInMapProject($userID, $mapID, $linkID)){
+				//Okay, user's in a project, he can edit the map's info
+			}else{
+				//You can't modify someone else's map information!
+				modifyOther($output);
+				return $output;
+			}
 		}
 		//User has permission to modify this map.
 		//$title, $desc, $lang - any of these being false/0/null means "no change"
