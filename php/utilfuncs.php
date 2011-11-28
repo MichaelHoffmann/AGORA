@@ -73,8 +73,25 @@
 		$row = mysql_fetch_assoc($resultID);
 		if(9 == $row['user_level']){
 			return true;
-		}
+		}	
+		return false;
+	}
+	
+	/**
+		A function which will check whether:
+		1. The map is in a project
+		2. If 1 is true, then it checks if the user is in the corresponding project's user list
+		It returns false if:
+		-The map is not in a project at all 
+		-The user is not in the project the map is in
+		It returns true if:
+		-The map is in a project
+		AND
+		-The user in question is also in a project.
+	*/
+	function isUserInMapProject($userID, $mapID, $linkID){
 		
 		return false;
 	}
+	
 ?>
