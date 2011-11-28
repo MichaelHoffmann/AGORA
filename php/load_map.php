@@ -55,12 +55,13 @@
 			nonexistent($output, $query);
 			return $output;
 		}
+		$row = mysql_fetch_assoc($resultID);
 		
 		//TODO: test this stuff
-		if($row[proj_id]){
+		if($row['proj_id']){
 			//Map is in a project.
 			//Confirm that the project allows the user to open a map
-			if(isUserInMapProject($userID, $mapID, $linkID)){
+			if(isUserInMapProject($userID, $mapID, $output, $linkID)){
 				//Nothing needs to be done, the logic will continue as normal
 			}else{
 				//Bail!
@@ -70,7 +71,7 @@
 		//If map isn't in a project, continue as normal.
 		//END TODO
 		
-		$row = mysql_fetch_assoc($resultID);
+		
 		$output->addAttribute("ID", $row['map_id']);
 		$output->addAttribute("title", $row['title']);
 		$output->addAttribute("username", $row['username']);
