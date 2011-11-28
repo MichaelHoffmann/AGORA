@@ -27,7 +27,7 @@
 	*	Function that loads a map from the database.
 	*	Might be worth refactoring this somewhat.
 	*/
-	function get_map($userID, $mapID, $timestamp){
+	function get_map($userID, $pass_hash, $mapID, $timestamp){
 		global $dbName, $version;
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
@@ -39,12 +39,18 @@
 			badDBLink($output);
 			return $output;
 		}
-		
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			databaseNotFound($output);
 			return $output;
 		}
+		if(!$userID){
+			//Don't have to check login info here
+		}else if(!checkLogin($userID, $pass_hash, $linkID)){
+				incorrectLogin($output);
+				return $output;
+		}			
+		
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapID AND maps.is_deleted = 0";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
@@ -61,11 +67,12 @@
 		if($row['proj_id']){
 			//Map is in a project.
 			//Confirm that the project allows the user to open a map
-			if(isUserInMapProject($userID, $mapID, $output, $linkID)){
+			if(isUserInMapProject($userID, $mapID, $linkID)){
 				//Nothing needs to be done, the logic will continue as normal
 			}else{
 				//Bail!
 				notInProject($output, "User ID: $userID and Map ID: $mapID");
+				return $output;
 			}
 		}
 		//If map isn't in a project, continue as normal.
@@ -75,6 +82,7 @@
 		$output->addAttribute("ID", $row['map_id']);
 		$output->addAttribute("title", $row['title']);
 		$output->addAttribute("username", $row['username']);
+		$output->addAttribute("project", $row['proj_id']);
 		
 		$timeID = mysql_query("SELECT NOW()", $linkID);
 		if(!$timeID){
@@ -171,9 +179,10 @@
 		}
 		return $output;
 	}
-	$user_id = mysql_real_escape_string($_REQUEST['uid']);
-	$map_id = mysql_real_escape_string($_REQUEST['map_id']);  //TODO: Change this back to a GET when all testing is done.
+	$userID = mysql_real_escape_string($_REQUEST['uid']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$mapID = mysql_real_escape_string($_REQUEST['map_id']);  //TODO: Change this back to a GET when all testing is done.
 	$timestamp = mysql_real_escape_string($_REQUEST['timestamp']);
-	$output = get_map($user_id, $map_id, $timestamp); 
+	$output = get_map($userID, $pass_hash, $mapID, $timestamp); 
 	print $output->asXML();
 ?>

@@ -25,6 +25,7 @@
 	*/
 	function checkLogin($userID, $pass_hash, $linkID)
 	{
+
 		$query = "SELECT * FROM users WHERE user_ID='$userID' AND password='$pass_hash'";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID && mysql_num_rows($resultID)>0){
