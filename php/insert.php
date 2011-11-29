@@ -92,7 +92,7 @@ List of variables for insertion:
 	/**
 	*	Takes a textbox and gets the necessary information from XML into the DB.
 	*/
-	function textboxToDB($tb, $mapID, $linkID, $userID, $output)
+	function textboxToDB($tb, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
 	{
 		global $tbTIDarray;
 		$attr = $tb->attributes();
@@ -103,7 +103,7 @@ List of variables for insertion:
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			if($userID == $dbUID){
+			if($userID == $dbUID or $mapType=='cooperate'){
 				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
 				$status = mysql_query($uquery, $linkID);
 			}else{
@@ -132,7 +132,7 @@ List of variables for insertion:
 	/**
 	*	Takes a nodetext link and inserts it into the database.
 	*/
-	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $output)
+	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $ownmap, $mapType, $output)
 	{
 		global $tbTIDarray; //use the global variable
 		$attr = $nt->attributes();
@@ -208,7 +208,7 @@ List of variables for insertion:
 	/**
 	*	Takes a node from XML and puts it in the database.
 	*/
-	function nodeToDB($node, $mapID, $linkID, $userID, $output)
+	function nodeToDB($node, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
 	{
 		global $nodeTIDarray;
 		$nodeOut = null; // Done for later scoping
@@ -280,7 +280,7 @@ List of variables for insertion:
 		{
 			$pos++;
 			//$nodeOut is still in scope here because PHP's scoping rules are relaxed.
-			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $nodeOut);
+			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $ownmap, $mapType, $nodeOut);
 			
 			//Note that this won't be done if the owner check failed on an UPDATE
 			//because the update will return false.
@@ -294,7 +294,7 @@ List of variables for insertion:
 	/**
 	*	Links between nodes and connections in the DB.
 	*/
-	function sourceNodeToDB($source, $connID, $linkID, $output)
+	function sourceNodeToDB($source, $connID, $linkID, $ownmap, $mapType, $output)
 	{	
 		global $nodeTIDarray;
 		//Source Nodes don't have to worry about being updated.
@@ -326,7 +326,7 @@ List of variables for insertion:
 	/**
 	*	Defines the "argument" part of a connection in the DB.
 	*/
-	function connectionToDB($conn, $mapID, $linkID, $userID, $output)
+	function connectionToDB($conn, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
 	{
 		global $nodeTIDarray;
 		$connection = $output->addChild("connection");
@@ -378,7 +378,7 @@ List of variables for insertion:
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
-			sourceNodeToDB($child, $id, $linkID, $connection);
+			sourceNodeToDB($child, $id, $linkID, $ownmap, $mapType, $connection);
 		}
 		return true;
 	}
@@ -388,7 +388,7 @@ List of variables for insertion:
 	*	Separated out for clarity.
 	*	Order doesn't matter, so long as there's nothing referencing things that don't exist yet.
 	*/
-	function xmlToDB($xml, $mapID, $linkID, $userID, $output)
+	function xmlToDB($xml, $mapClause, $linkID, $userID, $ownmap, $mapType, $output)
 	{
 		$children = $xml->children();
 		foreach ($children as $child)
@@ -396,19 +396,19 @@ List of variables for insertion:
 			switch($child->getName())
 			{
 				case "textbox":
-					$success = textboxToDB($child, $mapID, $linkID, $userID, $output);
+					$success = textboxToDB($child, $mapID, $linkID, $userID, $ownmap, $mapType, $output);
 					if(!$success){
 						return false;
 					}
 					break;
 				case "node":
-					$success = nodeToDB($child, $mapID, $linkID, $userID, $output);
+					$success = nodeToDB($child, $mapID, $linkID, $userID, $ownmap, $mapType, $output);
 					if(!$success){
 						return false;
 					}
 					break;
 				case "connection":
-					$success = connectionToDB($child, $mapID, $linkID, $userID, $output);
+					$success = connectionToDB($child, $mapID, $linkID, $userID, $ownmap, $mapType, $output);
 					if(!$success){
 						return false;
 					}
@@ -498,6 +498,8 @@ List of variables for insertion:
 		//If so, $ownMap is set to true.
 		
 		$author = $row['user_id'];
+		$mapType = $row['map_type'];
+		
 		$ownMap = false;
 		if($author == $userID){
 			$ownMap=true;
@@ -509,10 +511,16 @@ List of variables for insertion:
 			//(Note that UPDATES are checked against ownership of that individual thing)
 		}
 		
+		if(!isUserInMapProject($userID, $mapID, $linkID)){
+			//You can't do anything if the map is in a project and you're not in it!
+			notInProject($output, "User $userID is not in Project $row['proj_id']");
+			return $output; 
+		}
+		
 		//This part neatly handles all possibilities of failure. All we have to do is chain back "false" returns.
 		mysql_query("START TRANSACTION");
 		
-		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
+		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $ownmap, $mapType, $output);
 		//Update map last modified time
 		
 		if($success===true){
