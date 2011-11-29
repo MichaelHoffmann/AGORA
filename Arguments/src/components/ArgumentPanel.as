@@ -385,11 +385,6 @@ package components
 			}
 		}
 		
-	
-		
-		
-		
-		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
 			if(value == null){

@@ -35,6 +35,7 @@
 				BindingUtils.bindProperty(this,'title', agoraConstants,['NOTE']);
 			}
 		]]>
+		
 	</fx:Script>
 	<s:VGroup paddingBottom="10" paddingLeft="10" paddingTop="10" gap="20">
 		<mx:Text id="helpTxt" width="350" htmlText="{agoraConstants.REGISTRATION_NOTE}" />

@@ -30,7 +30,7 @@
 
 			protected function createMapBtn_clickHandler(event:MouseEvent):void
 			{
-				UpdateController.getInstance().displayMapInfoBox();
+				AGORAController.getInstance().displayMapInfoBox();
 			}
 
 

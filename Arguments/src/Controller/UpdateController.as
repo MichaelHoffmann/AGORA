@@ -22,6 +22,9 @@ package Controller
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 	
+	
+	//Recording map meta data into the database.
+	//For e.g., map title
 	public class UpdateController
 	{
 		private static var instance:UpdateController;
@@ -37,8 +40,6 @@ package Controller
 			mapModel = AGORAModel.getInstance().agoraMapModel;
 			mapModel.addEventListener(AGORAEvent.MAP_INFO_UPDATE_FAILED, onMapInfoUpdateFailed);
 			mapModel.addEventListener(AGORAEvent.MAP_INFO_UPDATED, onMapInfoUpdated);
-			
-			
 		}
 		
 		
@@ -49,21 +50,6 @@ package Controller
 				
 			}
 			return instance;
-		}
-		
-		//check if this function is called to create a map.
-		//------------------------Creating a Map---------------//
-		public function displayMapInfoBox():void{
-			var agoraModel:AGORAModel = AGORAModel.getInstance();
-			if(agoraModel.userSessionModel.loggedIn()){
-				FlexGlobals.topLevelApplication.mapNameBox = new MapName;
-				var mapNameDialog:MapName = FlexGlobals.topLevelApplication.mapNameBox;
-				PopUpManager.addPopUp(mapNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
-				PopUpManager.centerPopUp(mapNameDialog);
-			}
-			else{
-				Alert.show("Only registered users can create a map. If you had already registered, click Sign In.");
-			}
 		}
 		
 		//---------------------- Updating Map info --------------//

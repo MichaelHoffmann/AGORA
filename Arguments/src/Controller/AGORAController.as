@@ -1,18 +1,28 @@
 package Controller
 {
 	import Events.AGORAEvent;
+	
 	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.MapListModel;
+	
 	import ValueObjects.UserDataVO;
+	
+	import classes.Language;
+	
+	import components.MapName;
 	import components.MyMapName;
 	import components.MyMapsPanel;
-	import classes.Language;
+	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
+	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.CursorManager;
+	import mx.managers.PopUpManager;
+	
 	import spark.components.Group;
 
 	public class AGORAController
@@ -29,7 +39,6 @@ package Controller
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETION_FAILED, onMyMapsDeletionFailed);
 			AGORAModel.getInstance().addEventListener(AGORAEvent.APP_STATE_SET, onAppStateSet);
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.FAULT, onFault);
-			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.FAULT, onFault);
 		}
 		
 		//----------------------Get Instance------------------------------//
@@ -52,8 +61,6 @@ package Controller
 			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateDisplayList();
 		}
-		
-		
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
@@ -135,15 +142,29 @@ package Controller
 			Alert.show(Language.lookup("NetworkError"));
 		}
 		
-		//--------------------Application Complete---------------------//
+		
+		//----------- other public functions --------------------//
 		public function hideMap():void{
 			AGORAModel.getInstance().state = AGORAModel.MENU;
 			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
 			FlexGlobals.topLevelApplication.map.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
-			
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
+		}
+		
+		//------------------------Creating a Map---------------//
+		public function displayMapInfoBox():void{
+			var agoraModel:AGORAModel = AGORAModel.getInstance();
+			if(agoraModel.userSessionModel.loggedIn()){
+				FlexGlobals.topLevelApplication.mapNameBox = new MapName;
+				var mapNameDialog:MapName = FlexGlobals.topLevelApplication.mapNameBox;
+				PopUpManager.addPopUp(mapNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
+				PopUpManager.centerPopUp(mapNameDialog);
+			}
+			else{
+				Alert.show("Only registered users can create a map. If you had already registered, click Sign In.");
+			}
 		}
 	}
 }

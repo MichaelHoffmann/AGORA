@@ -14,6 +14,7 @@ package Controller
 	
 	import ValueObjects.AGORAParameters;
 	
+	import components.AGORAMenu;
 	import components.AgoraMap;
 	import components.ArgSelector;
 	import components.ArgumentPanel;
@@ -42,12 +43,16 @@ package Controller
 		private var view:DisplayObject;
 		private var model:AGORAModel;
 		private var agoraParameters:AGORAParameters;
-		
+		private var map:Map;
+		private var menu:AGORAMenu;
 		public function ArgumentController(singletonEnforcer:SingletonEnforcer)
 		{
 			instance = this;	
 			view = DisplayObject(FlexGlobals.topLevelApplication);
 			model = AGORAModel.getInstance();
+			map = FlexGlobals.topLevelApplication.map;
+			menu = FlexGlobals.topLevelApplication.agoraMenu;
+			
 			agoraParameters = AGORAParameters.getInstance();	
 			//Event handlers
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
@@ -71,7 +76,7 @@ package Controller
 			var argumentPanel:ArgumentPanel = event.eventData as ArgumentPanel;
 			if(argumentPanel.branchControl != null){
 				try{
-					FlexGlobals.topLevelApplication.map.agoraMap.removeChild(argumentPanel.branchControl);
+					map.agoraMap.removeChild(argumentPanel.branchControl);
 					//this will not be called again, and 
 					//GC will clean the option component
 					argumentPanel.branchControl = null;
@@ -83,18 +88,18 @@ package Controller
 			}
 		}
 		
-		//-------------------- Load Map --------------------------------//
+		//-------------------- Load a saved Map --------------------------------//
 		public function loadMap(id:String):void{
-			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+			if(model.userSessionModel.loggedIn()){
 				//initialize the model
-				AGORAModel.getInstance().agoraMapModel.reinitializeModel();
-				AGORAModel.getInstance().agoraMapModel.ID = int(id);
+				model.agoraMapModel.reinitializeModel();
+				model.agoraMapModel.ID = int(id);
 				//hide and show view components
-				FlexGlobals.topLevelApplication.agoraMenu.visible = false;
-				FlexGlobals.topLevelApplication.map.visible = true;
-				FlexGlobals.topLevelApplication.map.agora.visible = true;
+				menu.visible = false;
+				map.visible = true;
+				map.agora.visible = true;
 				//reinitialize map view
-				FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
+				map.agoraMap.initializeMapStructures();
 				//fetch data
 				LoadController.getInstance().fetchMapData();
 			}else{
@@ -106,25 +111,25 @@ package Controller
 		public function createMap(mapName:String):void{
 			model.agoraMapModel.reinitializeModel();
 			model.agoraMapModel.createMap(mapName);	
-			FlexGlobals.topLevelApplication.map.agoraMap.initializeMapStructures();
+			map.agoraMap.initializeMapStructures();
 		}
 		
 		protected function onMapCreated(event:AGORAEvent):void{
-			var map:MapMetaData = event.eventData as MapMetaData;
+			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
 			AGORAController.getInstance().unfreeze();
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
-			AGORAModel.getInstance().agoraMapModel.ID = map.mapID;
-			FlexGlobals.topLevelApplication.map.visible = true;
-			FlexGlobals.topLevelApplication.map.lamWorld.visible = true;
-			FlexGlobals.topLevelApplication.agoraMenu.visible = false;
+			AGORAModel.getInstance().agoraMapModel.ID = mapMetaData.mapID;
+			map.visible = true;
+			map.lamWorld.visible = true;
+			menu.visible = false;
 		}
 		
 		//-------------------Start with Claim----------------------------//
 		public function startWithClaim():void{
 			//remove Lam world
-			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
+			map.lamWorld.visible = false;
 			//display map
-			FlexGlobals.topLevelApplication.map.agora.visible = true;
+			map.agora.visible = true;
 			
 			//ask controller to add the first claim
 			addFirstClaim();
@@ -134,9 +139,9 @@ package Controller
 		public function addFirstClaim():void{
 			if(!model.requested){
 				//Set the coordinates of the help text
-				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = true;
-				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.y = 8 * AGORAParameters.getInstance().gridWidth;
-				FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.x = 3 * AGORAParameters.getInstance().gridWidth + 180 + 25;
+				map.agoraMap.firstClaimHelpText.visible = true;
+				map.agoraMap.firstClaimHelpText.y = 8 * agoraParameters.gridWidth;
+				map.agoraMap.firstClaimHelpText.x = 3 * agoraParameters.gridWidth + 180 + 25;
 				//instruct the model to add a first claim to itself
 				model.requested = true;
 				model.agoraMapModel.addFirstClaim();
@@ -150,18 +155,18 @@ package Controller
 		}
 		
 		//----------------- Adding an Argument -------------------------------//
-		public function addSupportingArgument(model:StatementModel):void{
+		public function addSupportingArgument(statementModel:StatementModel):void{
 			if(!AGORAModel.getInstance().requested){
-				if(model.firstClaim){//first claim
-					if(model.supportingArguments.length == 0){
-						FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
+				if(statementModel.firstClaim){//first claim
+					if(statementModel.supportingArguments.length == 0){
+						map.agoraMap.firstClaimHelpText.visible = false;
 					}
 				}
 				//tell the statement to support itself with an argument. Supply the position.
 				//figure out the position
 				//find out the last menu panel
-				if(model.supportingArguments.length > 0){
-					var argumentTypeModel:ArgumentTypeModel = model.supportingArguments[model.supportingArguments.length - 1];
+				if(statementModel.supportingArguments.length > 0){
+					var argumentTypeModel:ArgumentTypeModel = statementModel.supportingArguments[statementModel.supportingArguments.length - 1];
 					//Find the last grid
 					//Find out the inference
 					var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
@@ -171,20 +176,20 @@ package Controller
 					var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
 					var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
 					//find the last grid
-					var xgridReason:int = (reason.y + reason.height ) / AGORAParameters.getInstance().gridWidth + 2;
+					var xgridReason:int = (reason.y + reason.height ) / agoraParameters.gridWidth + 2;
 					//compare and figure out the max
 					var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
 				}else{
-					nxgrid = model.xgrid;
+					nxgrid = statementModel.xgrid;
 				}
 				//call the function
 				AGORAModel.getInstance().requested = true;
-				model.addSupportingArgument(nxgrid);
+				statementModel.addSupportingArgument(nxgrid);
 			}
 		}
 		
 		protected function onArgumentCreated(event:AGORAEvent):void{
-			AGORAModel.getInstance().requested = false;
+			model.requested = false;
 			LoadController.getInstance().fetchMapData(); 
 		}
 		
@@ -193,7 +198,7 @@ package Controller
 			var x:int;
 			var y:int;
 			var flag:int = 0;
-			if(!AGORAModel.getInstance().requested){
+			if(!model.requested){
 				if(argumentTypeModel.logicClass != null){
 					var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 					for each(var langType:String in logicController.expLangTypes){

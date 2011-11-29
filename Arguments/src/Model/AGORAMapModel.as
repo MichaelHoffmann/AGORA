@@ -650,14 +650,11 @@ package Model
 		
 		//----------------------- Reinitializing the model ----------------------------------//
 		public function reinitializeModel():void{
-			
 			panelListHash = new Dictionary;
 			connectionListHash = new Dictionary;
 			textboxListHash = new Dictionary;
-			
 			newPanels = new ArrayCollection;
 			newConnections = new ArrayCollection;
-			
 			timestamp = "0";
 		}
 		

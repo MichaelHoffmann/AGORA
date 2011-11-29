@@ -26,10 +26,9 @@ package Model
 		public var userSessionModel:UserSessionModel;
 		
 		public var agoraMapModel:AGORAMapModel;
-		
-		
-		
 		private var _state:int;
+		//makes sure that at a time, there is only one
+		//pending request
 		private var _requested:Boolean;
 		public static const MENU:int = 0;
 		public  static const MAP:int = 1;

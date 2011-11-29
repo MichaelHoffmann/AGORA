@@ -32,17 +32,12 @@ package Controller
 			return instance;
 		}
 	
+		
 		//---------------- Bind a new dta to a simpleStatementModel------------//
 		public function getNewDynamicTextArea(simpleStatement:SimpleStatementModel, changeWatcher:ChangeWatcher):DynamicTextArea{
 			var dta:DynamicTextArea = new DynamicTextArea;
 			dta.model = simpleStatement;
 			return dta;
-		}
-		
-		//--------------- add event handlers to the statement model -----------//
-		public function configureStatementModel(statementModel:StatementModel):void{
-			//statementModel.addEventListener(AGORAEvent.TEXT_SAVED, ArgumentController.getInstance().textSaved);
-			//statementModel.addEventListener(AGORAEvent.FAULT, ArgumentController.getInstance().onFault);
 		}
 		
 		//---------------------------- Editing Text -------------------------------------//

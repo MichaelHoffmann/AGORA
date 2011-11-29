@@ -24,7 +24,6 @@ package Controller
 		{
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.MAP_LOADED, onMapLoaded);
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.MAP_LOADING_FAILED, onMapLoadingFailed);
-			
 			instance = this;
 			model = AGORAModel.getInstance();
 		}
@@ -73,7 +72,6 @@ package Controller
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.stop();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.start();
-			
 			model.requested = false;
 		}
 		
@@ -89,8 +87,7 @@ package Controller
 			newPanels.removeAll();
 			var newConnections:ArrayCollection = model.agoraMapModel.newConnections;
 			newConnections.removeAll();
-		}
-		
+		}	
 	}
 }
 

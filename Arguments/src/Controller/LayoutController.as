@@ -53,10 +53,10 @@ package Controller
 	
 	public class LayoutController
 	{
-		//public var listOfPanels:Vector.<ArgumentPanel>;
 		
 		private static var instance: LayoutController
 		private var _model:AGORAModel;
+		private var map:Map;
 		
 		public var panelList:Vector.<GridPanel>;
 		public var uwidth:int;
@@ -74,6 +74,7 @@ package Controller
 			model = AGORAModel.getInstance();
 			
 			model.agoraMapModel.addEventListener(AGORAEvent.POSITIONS_UPDATED, onPositionsUpdated);
+			map = FlexGlobals.topLevelApplication.map;
 			
 		}
 		
@@ -117,11 +118,10 @@ package Controller
 		
 		//------------------------- other public functions --------------------//
 		public function setApplicationLayoutProperties():void{
-			FlexGlobals.topLevelApplication.map.agora.height =  FlexGlobals.topLevelApplication.map.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap * 2 - 30;
-			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.map.stage.stageWidth - 30;
-			FlexGlobals.topLevelApplication.map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
-			
-			FlexGlobals.topLevelApplication.map.topPanel.width = FlexGlobals.topLevelApplication.map.stage.stageWidth;
+			map.agora.height =  map.stage.stageHeight - map.topPanel.height - map.container.gap * 2 - 30;
+			map.agora.width = map.stage.stageWidth - 30;
+			map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
+			map.topPanel.width = map.stage.stageWidth;
 		}
 		
 		public function getBottomReason(atm:ArgumentTypeModel):StatementModel{
