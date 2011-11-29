@@ -233,7 +233,7 @@ List of variables for insertion:
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			if($userID == $dbUID){
+			if($userID == $dbUID or $mapType=='cooperate'){
 				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y, 
 							typed=$typed, is_positive=$positivity, connected_by='$cBy'
 							WHERE node_id=$nodeID";
@@ -365,14 +365,21 @@ List of variables for insertion:
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the connection is targeting.
-			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
-			$success=mysql_query($uquery, $linkID);
-			if(!$success){
-				updateFailed($output, $uquery);
+			$dbUID = $row["user_id"];
+			if($userID == $dbUID or $mapType=='cooperate'){
+				$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
+				$success=mysql_query($uquery, $linkID);
+				if(!$success){
+					updateFailed($output, $uquery);
+					return false;
+				}
+				$connection->addAttribute("ID", $id);
+				$connection->addAttribute("new_type", $typeID);
+			}else{
+				modifyOther($output);
 				return false;
 			}
-			$connection->addAttribute("ID", $id);
-			$connection->addAttribute("new_type", $typeID);
+
 		}
 		//Get the source nodes
 		$children = $conn->children();
