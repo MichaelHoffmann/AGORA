@@ -90,6 +90,7 @@
 		-The user in question is also in a project.
 	*/
 	function isUserInMapProject($userID, $mapID, $linkID){
+
 		//Some of the basic SQL error handling will be omitted.
 		//Queries should not fail at this point.
 		$query = "SELECT proj_id FROM maps WHERE map_id = $mapID";

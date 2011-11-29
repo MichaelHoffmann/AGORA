@@ -395,7 +395,7 @@ List of variables for insertion:
 	*	Separated out for clarity.
 	*	Order doesn't matter, so long as there's nothing referencing things that don't exist yet.
 	*/
-	function xmlToDB($xml, $mapClause, $linkID, $userID, $ownmap, $mapType, $output)
+	function xmlToDB($xml, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
 	{
 		$children = $xml->children();
 		foreach ($children as $child)
@@ -489,10 +489,8 @@ List of variables for insertion:
 				insertFailed($output, $iquery);
 				return $output;
 			}
-			
-			$output->addAttribute("ID", $mapClause);
 		}
-
+		$output->addAttribute("ID", $mapClause);
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
@@ -518,16 +516,17 @@ List of variables for insertion:
 			//(Note that UPDATES are checked against ownership of that individual thing)
 		}
 		
-		if(!isUserInMapProject($userID, $mapID, $linkID)){
+		if(!$mapID && !isUserInMapProject($userID, $mapID, $linkID)){
+			$projID = $row['proj_id'];
 			//You can't do anything if the map is in a project and you're not in it!
-			notInProject($output, "User $userID is not in Project $row['proj_id']");
+			notInProject($output, "User $userID is not in Project $projID!");
 			return $output; 
 		}
 		
 		//This part neatly handles all possibilities of failure. All we have to do is chain back "false" returns.
 		mysql_query("START TRANSACTION");
 		
-		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $ownmap, $mapType, $output);
+		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $ownMap, $mapType, $output);
 		//Update map last modified time
 		
 		if($success===true){
