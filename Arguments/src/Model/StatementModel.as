@@ -28,6 +28,7 @@ package Model
 		public static const STATEMENT:String = "Statement";
 		public static const UNIVERSAL:String = "Universal";
 		public static const PARTICULAR:String = "Particular";
+		public static const OBJECTION:String = "Objection";
 		
 		private var _author:String;
 		private var _statementFunction:String;
@@ -51,10 +52,17 @@ package Model
 		private var saveTextService:HTTPService;
 		private var addArgumentService:HTTPService;
 		private var deleteStatements:HTTPService;
+		private var addObjection:HTTPService;
+		
+		
+		private var mapModel:AGORAMapModel;
+		public var objections:Vector.<StatementModel>;
 		
 		public function StatementModel(modelType:String=STATEMENT, target:IEventDispatcher=null)
 		{
 			super(target);
+			mapModel = AGORAModel.getInstance().agoraMapModel;
+			objections = new Vector.<StatementModel>;
 			statements = new Vector.<SimpleStatementModel>(0,false);
 			supportingArguments = new Vector.<ArgumentTypeModel>(0,false);
 			statement = new SimpleStatementModel;
@@ -86,7 +94,14 @@ package Model
 			deleteStatements.url = AGORAParameters.getInstance().deleteURL;
 			deleteStatements.addEventListener(ResultEvent.RESULT, onDeleteStatementResult);
 			deleteStatements.addEventListener(FaultEvent.FAULT, onFault);
-			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);			
+			AGORAModel.getInstance().agoraMapModel.newStatementAdded(this);	
+			
+			
+			//add an objection
+			addObjection = new HTTPService;
+			addObjection.url = AGORAParameters.getInstance().insertURL;
+			addObjection.addEventListener(ResultEvent.RESULT, onObjectionAdded);
+			addObjection.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
 		
@@ -411,7 +426,6 @@ package Model
 				}
 				
 				var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
-				
 				AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
 				AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
 				dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
@@ -438,7 +452,6 @@ package Model
 		
 		//----------------- Generic Fault Handler -------------------------//
 		protected function onFault( fault:FaultEvent):void{
-			trace(fault.message.body.toString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 		
@@ -454,6 +467,27 @@ package Model
 			}
 			statementModel.ID = obj.ID;
 			return statementModel;
+		}
+		
+		//------------------- Objections -----------------------------//
+		public function object():void{
+				var requestXML:XML = <map ID={mapModel.ID}><node TID="1" Type="Objection" typed="0" is_positive="0" x={xgrid} y={ygrid + 5} /></map>;
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
+				addObjection.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
+		}
+		
+		protected function onObjectionAdded(event:ResultEvent):void{
+			var map:MapValueObject = new MapValueObject(event.result, true);
+			if(map.hasOwnProperty('error')){
+				dispatchEvent(new AGORAEvent(AGORAEvent.CREATING_OBJECTION_FAILED, null, this));
+				return;
+			}
+			var objection:StatementModel = StatementModel.createStatementFromObject(map.nodeObjects[0]);
+			objection.statementType = StatementModel.OBJECTION;
+			mapModel.newPanels.addItem(objection);
+			mapModel.panelListHash[objection.ID] = objection;
+			objections.push(objection);
+			dispatchEvent(new AGORAEvent(AGORAEvent.OBJECTION_CREATED, null, this));
 		}
 		
 		public function getXML():XML{

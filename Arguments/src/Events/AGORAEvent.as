@@ -37,6 +37,8 @@ package Events
 		public static const REASON_ADDITION_NOT_ALLOWED:String = "ReasonAdditionNotAllowed";
 		public static const MAP_INFO_UPDATED:String = "MapInfoUpdated";
 		public static const MAP_INFO_UPDATE_FAILED:String = "MapInfoUpdateFailed";
+		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
+		public static const OBJECTION_CREATED:String = "ObjectionCreated";
 		
 		public var xmlData:XML;
 		public var eventData:Object;

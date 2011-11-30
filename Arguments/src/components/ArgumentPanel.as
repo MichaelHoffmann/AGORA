@@ -62,6 +62,8 @@ package components
 		[Bindable]
 		private var _model:StatementModel;
 		
+		private var agoraLabels:AGORAParameters;
+		
 		//Input boxes
 		public var inputs:Vector.<DynamicTextArea>;
 		public var changeWatchers:Vector.<ChangeWatcher>;
@@ -157,18 +159,14 @@ package components
 		public function ArgumentPanel()
 		{
 			super();
-			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
-			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;		
-			
+			agoraLabels = AGORAParameters.getInstance();
+			addMenuData = <root><menuitem label={agoraLabels.ADD_SUPPORTING_STATEMENT} type="TopLevel" /><menuitem label={agoraLabels.ADD_OBJECTION} type="TopLevel" /></root>;
+			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
 			inputs = new Vector.<DynamicTextArea>;
 			changeWatchers = new Vector.<ChangeWatcher>;
-
 			width = 180;
 			minHeight = 100;
-			
 			state = DISPLAY;
-			
-			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
@@ -326,14 +324,21 @@ package components
 		}
 		
 		protected function onAddBtnClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().addSupportingArgument(model);
+			//ArgumentController.getInstance().addSupportingArgument(model);
+			var addMenu:Menu = Menu.createMenu(this.parent, addMenuData, false);
+			addMenu.labelField = "@label";
+			var point:Point = new Point;
+			point.x = 0;
+			point.y = this.height;
+			point = localToGlobal(point);
+			addMenu.show(point.x, point.y);
+			addMenu.addEventListener(MenuEvent.ITEM_CLICK, addMenuClicked);
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
 		{
 			ViewController.getInstance().changeToEdit(this);	
 		}
-		
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
 			ArgumentController.getInstance().saveText(model);
@@ -452,6 +457,14 @@ package components
 		public function toEditState():void{
 			state = EDIT;
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
+		}
+		
+		protected function addMenuClicked(event:MenuEvent):void{
+			if(event.label == agoraLabels.ADD_SUPPORTING_STATEMENT){
+				ArgumentController.getInstance().addSupportingArgument(model);
+			}else if(event.label == agoraLabels.ADD_OBJECTION){
+				ArgumentController.getInstance().addAnObjection(model);
+			}
 		}
 		
 		//----------------------- Life Cycle Methods -------------------------------------------//
@@ -621,7 +634,12 @@ package components
 					}
 				}
 			}
-				//If the statement is an enabler.
+			else if(panelType == StatementModel.OBJECTION){
+				group.removeAllElements();
+				state = DISPLAY;
+				group.addElement(displayTxt);
+			}
+			//If the statement is an enabler.
 			else{
 				//remove all textboxes
 				inputs.splice(0,inputs.length);

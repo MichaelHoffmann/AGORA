@@ -130,11 +130,14 @@ package ValueObjects
 		public var SUPPORT_ADD_OBJECTION:String;
 		public var SUPPORT_SELECT_ARG_SCHEME:String;
 		
+		//labels
 		public var DONE:String;
 		public var NOTE:String;
 		public var OK:String;
 		public var SAVE_AND_HOME:String;
 		public var SAVE_AS: String;
+		public var ADD_SUPPORTING_STATEMENT:String;
+		public var ADD_OBJECTION:String;
 		
 		//agreements
 		public var REGISTRATION_NOTE:String;
@@ -194,6 +197,8 @@ package ValueObjects
 			OK = Language.lookup('OK');
 			SAVE_AND_HOME = Language.lookup('SaveAndHome');
 			SAVE_AS = Language.lookup('SaveMapAs');
+			ADD_SUPPORTING_STATEMENT = Language.lookup('AddArgument');
+			ADD_OBJECTION = Language.lookup('AddObjection');
 		}
 		
 		public static function getInstance():AGORAParameters{

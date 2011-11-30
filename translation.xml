@@ -278,6 +278,8 @@
 		<RUS text="Сохранить и вернуться к Началу"/>
 		<GER text="Ab nach Hause (mit speichern)"/>
 	</SaveAndHome>
+
+
 	
 	<SaveMapAs>
 		<EN-US text="Save Map As"/>
@@ -402,10 +404,17 @@
 	<!--SHORT DESCRIPTIONS-->
 	
 	<AddArgument>
-		<EN-US text="add an argument for this statement"/>
+		<EN-US text="an argument for this statement"/>
 		<RUS text="добавьте аргумент для этого утверждения"/>
 		<GER text="verteidige diese Behauptung durch ein Argument"/>
 	</AddArgument>
+
+	<AddObjection>
+		<EN-US text="an objection"/>
+		<RUS text=""/><!--TODO: Translate -->
+		<GER text=""/><!--TODO: Translate -->
+	</AddObjection>
+	
 	
 	<AddReason>
 		<EN-US text="add another reason"/>

@@ -42,6 +42,7 @@ package components
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
+	import mx.states.State;
 	
 	public class AgoraMap extends Canvas
 	{
@@ -171,10 +172,12 @@ package components
 					inference.addArgumentsInfo.boxWidth = 500;
 					addChild(inference.addArgumentsInfo);
 				}
+				
 				else if(newPanels[i] is StatementModel){
-					if(newPanels[i] is StatementModel){
-						var model:StatementModel = newPanels[i];
-						var argumentPanel:ArgumentPanel = new ArgumentPanel;
+					var argumentPanel:ArgumentPanel;
+					var model:StatementModel = newPanels[i];
+					if(model.statementType != StatementModel.OBJECTION){
+						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
 						argumentPanel.addEventListener(AGORAEvent.STATEMENT_STATE_TO_EDIT, ArgumentController.getInstance().removeOption);
@@ -197,7 +200,14 @@ package components
 						argumentPanel.changeTypeInfo.boxWidth = argumentPanel.getExplicitOrMeasuredWidth();
 						addChild(argumentPanel.changeTypeInfo);
 					}
+					else{
+						argumentPanel = new ArgumentPanel;
+						argumentPanel.model = model;
+						panelsHash[model.ID] = argumentPanel;
+						addChild(argumentPanel);
+					}
 				}
+				
 			}
 			
 			

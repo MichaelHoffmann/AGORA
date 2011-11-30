@@ -392,9 +392,6 @@ package Controller
 			CursorManager.removeAllCursors();
 			onTextEntered(argumentPanel);
 		}
-		protected function textNotSaved(event:AGORAEvent):void{
-			
-		}
 		
 		//------------------- configuration functions -----------------//
 		protected function setEventListeners(statementAddedEvent:AGORAEvent):void{
@@ -406,6 +403,8 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.ARGUMENT_CREATION_FAILED, onArgumentCreationFailed);
 			statementModel.addEventListener(AGORAEvent.FAULT, onFault);
 			statementModel.addEventListener(AGORAEvent.STATEMENTS_DELETED, onStatementDeleted);
+			statementModel.addEventListener(AGORAEvent.OBJECTION_CREATED, onObjectionCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_OBJECTION_FAILED, onObjectionCreationFailed);
 		}
 		
 		protected function setArgumentTypeModelEventListeners(argumentTypeModelAddedEvent:AGORAEvent):void{
@@ -415,6 +414,18 @@ package Controller
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVED, onArgumentSaved);
 			argumentTypeModel.addEventListener(AGORAEvent.ARGUMENT_SAVE_FAILED, onArgumentSaveFailed);
 			argumentTypeModel.addEventListener(AGORAEvent.REASON_ADDITION_NOT_ALLOWED, reasonAdditionNotAllowedFault);
+		}
+		
+		//------------------ Objections -------------------------------//
+		public function addAnObjection(model:StatementModel):void{
+			model.object();
+		}
+		protected function onObjectionCreated(event:AGORAEvent):void{
+			
+		}
+		
+		protected function onObjectionCreationFailed(event:AGORAEvent):void{
+			
 		}
 		
 		//------------------ Handling events from schemeSelector ------//
