@@ -147,6 +147,22 @@ package Controller
 			return lastATM;
 		}	
 		
+		public function getBottomObjection(sm:StatementModel):StatementModel{
+			if(sm == null){
+				return null;
+			}
+			if(sm.objections.length == 0){
+				return null;
+			}
+			var lastObj:StatementModel = sm.objections[0];
+			for each(var obj:StatementModel in sm.objections){
+				if(obj.xgrid > lastObj.xgrid){
+					lastObj = obj;
+				}
+			}
+			return lastObj;
+		}
+		
 		
 		public function addSavedPanel(panel:GridPanel):void
 		{

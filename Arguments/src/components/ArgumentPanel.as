@@ -149,8 +149,6 @@ package components
 		public var btnG:Group;
 		
 		//Menu data
-		//XML string holding the menu data for the add button
-		public var addMenuData:XML;
 		//XML string holding the menu data for the menu that pops up when user hits the done button
 		public var constructArgData:XML;
 		
@@ -160,7 +158,6 @@ package components
 		{
 			super();
 			agoraLabels = AGORAParameters.getInstance();
-			addMenuData = <root><menuitem label={agoraLabels.ADD_SUPPORTING_STATEMENT} type="TopLevel" /><menuitem label={agoraLabels.ADD_OBJECTION} type="TopLevel" /></root>;
 			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
 			inputs = new Vector.<DynamicTextArea>;
 			changeWatchers = new Vector.<ChangeWatcher>;
@@ -230,7 +227,12 @@ package components
 			if(model == null){
 				_model = value;
 				//bind variables
-				BindingUtils.bindProperty(this, "statementType", this, ["model","statementType"]);
+				if(value.statementFunction == StatementModel.STATEMENT || value.statementFunction == StatementModel.INFERENCE){ 
+					BindingUtils.bindProperty(this, "statementType", this, ["model","statementType"]);
+				}
+				else if(value.statementFunction == StatementModel.OBJECTION){
+					BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+				}
 				BindingUtils.bindProperty(this, "statementNegated", model, ["negated"]);
 				BindingUtils.bindProperty(this, "gridX", model, ["xgrid"]);
 				BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
@@ -324,15 +326,7 @@ package components
 		}
 		
 		protected function onAddBtnClicked(event:MouseEvent):void{
-			//ArgumentController.getInstance().addSupportingArgument(model);
-			var addMenu:Menu = Menu.createMenu(this.parent, addMenuData, false);
-			addMenu.labelField = "@label";
-			var point:Point = new Point;
-			point.x = 0;
-			point.y = this.height;
-			point = localToGlobal(point);
-			addMenu.show(point.x, point.y);
-			addMenu.addEventListener(MenuEvent.ITEM_CLICK, addMenuClicked);
+			ArgumentController.getInstance().showAddMenu(this);
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
@@ -446,7 +440,7 @@ package components
 		
 		public function showMenu():void
 		{
-			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>; 
+			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
 			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
 			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
@@ -459,7 +453,7 @@ package components
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
 		}
 		
-		protected function addMenuClicked(event:MenuEvent):void{
+		public function addMenuClicked(event:MenuEvent):void{
 			if(event.label == agoraLabels.ADD_SUPPORTING_STATEMENT){
 				ArgumentController.getInstance().addSupportingArgument(model);
 			}else if(event.label == agoraLabels.ADD_OBJECTION){

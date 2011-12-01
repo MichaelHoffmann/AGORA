@@ -7,6 +7,7 @@
 		-NAMES OF ARGUMENTS
 		-ARGUMENT DESCRIPTIONS
 		-HELP TEXT
+		-PROMPTS
 		-WALLS OF TEXT
 		-ARGUMENT PIECES
 		-ADD CONTINUATIONS
@@ -1460,6 +1461,19 @@
 		<GER text="Da diese Behauptung durch ein logisch gültiges Argument gerechtfertig ist, kannst Du Einwände oder eine Unterscheidung verschiedener Fälle ausschließlich an die &quot;offenen Enden&quot; dieser Argumentation anfügen, die nicht durch weitere Argumente gerechtfertigt sind. Wenn Du diese Option hier auswählst, dann wird eine neue Argumentation begonnen welche mit dieser Behauptung hier verknüpft wird. Du solltest aber auf jeden Fall die &quot;offenen Enden&quot; dieser Argumentation kritisieren, wenn Du der Schlussfolgerung nicht zustimmst."/>
 	</ObjectionHelp>
 	
+	<!--PROMPTS-->
+	<ObjectionFailed>
+		<EN-US text="Adding an Objection Failed" />
+		<RUS text="" /> <!--TODO: Translate-->
+		<GER text="" /> <!--TODO: Translate-->
+	</ObjectionFailed>
+		
+	<FirstClaimFailed>
+		<EN-US text="Adding the first claim failed. Please delete this map, and start with a new one." />
+		<RUS text="" /> <!--TODO: Translate-->
+		<GER text="" /> <!--TODO: Translate-->
+	</FirstClaimFailed>
+
 	
 	<!--WALLS OF TEXT-->
 		

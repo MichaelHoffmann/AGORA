@@ -14,6 +14,8 @@ package Controller
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import components.AGORAMenu;
 	import components.AgoraMap;
 	import components.ArgSelector;
@@ -25,6 +27,7 @@ package Controller
 	import components.Option;
 	
 	import flash.display.DisplayObject;
+	import flash.geom.Point;
 	
 	import mx.controls.Alert;
 	import mx.controls.Menu;
@@ -123,6 +126,8 @@ package Controller
 			map.lamWorld.visible = true;
 			menu.visible = false;
 		}
+
+		
 		
 		//-------------------Start with Claim----------------------------//
 		public function startWithClaim():void{
@@ -151,6 +156,11 @@ package Controller
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
 			model.requested = false;
+			LoadController.getInstance().fetchMapData();
+		}
+		
+		protected function onFirstClaimFailed(event:AGORAEvent):void{
+			Alert.show(Language.lookup('FirstClaimFailed'));
 			LoadController.getInstance().fetchMapData();
 		}
 		
@@ -299,7 +309,7 @@ package Controller
 				}
 				}
 				*/
-			else if (!model.firstClaim){
+			else if (!model.firstClaim && model.statementFunction == StatementModel.STATEMENT){
 				if(!model.argumentTypeModel.reasonsCompleted){
 					argumentPanel.showMenu();
 				}
@@ -418,14 +428,21 @@ package Controller
 		
 		//------------------ Objections -------------------------------//
 		public function addAnObjection(model:StatementModel):void{
-			model.object();
+			var obj:StatementModel = LayoutController.getInstance().getBottomObjection(model);
+			if(obj != null){
+				var bottomObjection: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.object(obj.xgrid + bottomObjection.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				model.object(model.xgrid);
+			}
 		}
 		protected function onObjectionCreated(event:AGORAEvent):void{
-			
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		protected function onObjectionCreationFailed(event:AGORAEvent):void{
-			
+			Alert.show(Language.lookup('ObjectionFailed'));
 		}
 		
 		//------------------ Handling events from schemeSelector ------//
@@ -589,6 +606,23 @@ package Controller
 		
 		protected function onArgumentCreationFailed(event:AGORAEvent):void{
 			Alert.show("Argument creation failed");
+			LoadController.getInstance().fetchMapData();
+		}
+		
+		//------------------ other public functions ----------------------//
+		public function showAddMenu(argumentPanel:ArgumentPanel):void{
+			var addMenuData:XML = <root><menuitem label={agoraParameters.ADD_SUPPORTING_STATEMENT} type="TopLevel" /></root>;
+			if(argumentPanel.model.supportingArguments.length == 0){
+				addMenuData.appendChild(<menuitem label={agoraParameters.ADD_OBJECTION} type="TopLevel"/>);
+			}
+			var addMenu:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
+			addMenu.labelField = "@label";
+			var point:Point = new Point;
+			point.x = 0;
+			point.y = argumentPanel.height;
+			point = argumentPanel.localToGlobal(point);
+			addMenu.show(point.x, point.y);
+			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addMenuClicked);
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

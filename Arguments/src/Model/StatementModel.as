@@ -31,6 +31,7 @@ package Model
 		public static const OBJECTION:String = "Objection";
 		
 		private var _author:String;
+		//Enabler, Objection or a generic statement - Statement is the default option
 		private var _statementFunction:String;
 		private var _statement:SimpleStatementModel;
 		private var _statements:Vector.<SimpleStatementModel>;
@@ -40,6 +41,7 @@ package Model
 		private var _supportingArguments:Vector.<ArgumentTypeModel>;
 		private var _argumentTypeModel:ArgumentTypeModel;
 		private var _firstClaim:Boolean;
+		//Universal or Particular
 		private var _statementType:String;
 		private var _ID:int;
 		private var _nodeTextIDs:Vector.<int>;
@@ -47,6 +49,7 @@ package Model
 		private var _ygrid:int;		
 		private var _deleteState:Boolean;
 		private var _enablerVisible:Boolean;
+		private var _parentStatement:StatementModel;
 		
 		private var toggleStatementTypeService:HTTPService;
 		private var saveTextService:HTTPService;
@@ -62,6 +65,7 @@ package Model
 		{
 			super(target);
 			mapModel = AGORAModel.getInstance().agoraMapModel;
+			statementFunction = STATEMENT;
 			objections = new Vector.<StatementModel>;
 			statements = new Vector.<SimpleStatementModel>(0,false);
 			supportingArguments = new Vector.<ArgumentTypeModel>(0,false);
@@ -106,6 +110,17 @@ package Model
 		
 		
 		//--------------------Getters and Setters------------------//
+
+		public function get parentStatement():StatementModel
+		{
+			return _parentStatement;
+		}
+
+		public function set parentStatement(value:StatementModel):void
+		{
+			_parentStatement = value;
+		}
+
 		public function get deleteState():Boolean
 		{
 			return _deleteState;
@@ -201,7 +216,7 @@ package Model
 		
 		public function get firstClaim():Boolean
 		{
-			if(argumentTypeModel == null){
+			if(argumentTypeModel == null && statementFunction==STATEMENT){
 				return true;
 			}else{
 				return false;
@@ -391,16 +406,12 @@ package Model
 										<sourcenode TID="12" nodeTID="6" />
 										<sourcenode TID="13" nodeTID="4" />
 									 </connection>;
-			
+
 			addArgumentXML.appendChild(reasonNodeXML);
 			addArgumentXML.appendChild(inferenceXML);
 			addArgumentXML.appendChild(connectionXML);
-			trace(addArgumentXML.toXMLString());
 			addArgumentService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:addArgumentXML.toXMLString()});
-			trace(AGORAModel.getInstance().userSessionModel.uid);
-			trace(AGORAModel.getInstance().userSessionModel.passHash);
 		}
-		
 		
 		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
 			if(!event.result.map.hasOwnProperty("error")){
@@ -418,13 +429,11 @@ package Model
 					argumentTypeModel.ID = connection.connID;
 					argumentTypeModel.reasonsCompleted = false;
 				}
-				
 				for each(var statementModel:StatementModel in statementModelHash)
 				{
 					AGORAModel.getInstance().agoraMapModel.panelListHash[statementModel.ID] = statementModel;
 					AGORAModel.getInstance().agoraMapModel.newPanels.addItem(statementModel);
 				}
-				
 				var mapModel:AGORAMapModel = AGORAModel.getInstance().agoraMapModel;
 				AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
 				AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
@@ -444,7 +453,6 @@ package Model
 				}
 			}
 			saveTextService.send({uid: AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash, xml:requestXML});
-			
 		}
 		protected function onSaveTextServiceResult(event:ResultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.TEXT_SAVED, null, this));
@@ -470,8 +478,8 @@ package Model
 		}
 		
 		//------------------- Objections -----------------------------//
-		public function object():void{
-				var requestXML:XML = <map ID={mapModel.ID}><node TID="1" Type="Objection" typed="0" is_positive="0" x={xgrid} y={ygrid + 5} /></map>;
+		public function object(x:int):void{
+				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text={SimpleStatementModel.DEPENDENT_TEXT} /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x} y={ygrid + 10} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 				addObjection.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
@@ -482,18 +490,32 @@ package Model
 				dispatchEvent(new AGORAEvent(AGORAEvent.CREATING_OBJECTION_FAILED, null, this));
 				return;
 			}
-			var objection:StatementModel = StatementModel.createStatementFromObject(map.nodeObjects[0]);
-			objection.statementType = StatementModel.OBJECTION;
-			mapModel.newPanels.addItem(objection);
-			mapModel.panelListHash[objection.ID] = objection;
-			objections.push(objection);
 			dispatchEvent(new AGORAEvent(AGORAEvent.OBJECTION_CREATED, null, this));
+		}
+		
+		public function addObjectionStatement(objection:StatementModel):void{
+			for each(var objectionStatement:StatementModel in objections){
+				if(objectionStatement == objection){
+					return;
+				}
+			}
+			objections.push(objection);
 		}
 		
 		public function getXML():XML{
 			var xml:XML = <node></node>;
 			xml.@ID = ID;
-			xml.@Type = statementFunction == StatementModel.INFERENCE? StatementModel.INFERENCE: statementType;
+			switch(statementFunction){
+				case INFERENCE:
+				xml.@Type = INFERENCE;
+				break;
+				case OBJECTION:
+				xml.@Type = OBJECTION;
+				break;
+				case STATEMENT:
+				xml.@Type = statementType;
+				break;
+			};
 			xml.@typed = 0;
 			xml.@is_positive = negated? 0 : 1;
 			xml.@x = xgrid;

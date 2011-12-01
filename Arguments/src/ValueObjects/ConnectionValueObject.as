@@ -28,15 +28,17 @@ package ValueObjects
 					x = connectionObject.x;
 					y = connectionObject.y;
 					deleted = connectionObject.deleted == 1? true:false;
+					var sourcenode:SourcenodeValueObject;
 					if(connectionObject.hasOwnProperty("sourcenode")){
 						sourcenodes = new Vector.<SourcenodeValueObject>;
 						if(connectionObject.sourcenode is ArrayCollection){
 							for each(var obj:Object in connectionObject.sourcenode){
-								var  sourcenode:SourcenodeValueObject = new SourcenodeValueObject(obj, inserted);
+								sourcenode = new SourcenodeValueObject(obj, inserted);
 								sourcenodes.push(sourcenode);
 							}
 						}else{
-							trace("ConnectionValueObject::Constructor: Error. A connection cannot exist with only one node. ConnID: " + connID);
+							sourcenode = new SourcenodeValueObject(connectionObject.sourcenode, inserted);
+							sourcenodes.push(sourcenode);
 						}
 					}
 				}

@@ -154,7 +154,7 @@ package components
 			}catch(e:Error){
 			}
 			addChild(firstClaimHelpText);
-		
+			
 			
 			
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
@@ -172,7 +172,7 @@ package components
 					inference.addArgumentsInfo.boxWidth = 500;
 					addChild(inference.addArgumentsInfo);
 				}
-				
+					
 				else if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel;
 					var model:StatementModel = newPanels[i];
@@ -243,8 +243,7 @@ package components
 			//code for the connecting arrows
 			
 			for each(var model:StatementModel in AGORAModel.getInstance().agoraMapModel.panelListHash){
-				if(model.supportingArguments.length > 0){
-					
+				if(model.supportingArguments.length > 0 || model.objections.length > 0){
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
 					//draw an arrow
@@ -253,53 +252,77 @@ package components
 					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 25);
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
 					var fvlspy:int = argumentPanel.y + 30;
-					//First Vertical Line Finishing Point
-					var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
-					var fvlfpy:int = (lastMenuPanel.y + 30);
-					//draw a line
-					drawUtility.graphics.moveTo(fvlspx, fvlspy);
-					drawUtility.graphics.lineTo(fvlspx, fvlfpy);
-					
-					//Line from claim to vertical line starting point
-					var firstMenuPanel:MenuPanel = menuPanelsHash[model.supportingArguments[0].ID];
-					drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
-					drawUtility.graphics.lineTo(fvlspx, argumentPanel.y + 30);
-					
-					//for each argument
-					for each(argumentTypeModel in model.supportingArguments){
-						//get the point one grid before the first reason horizontally.
-						var rspx:int = (argumentTypeModel.reasonModels[0].ygrid - 1) * gridWidth;
-						var rspy:int = argumentTypeModel.xgrid * gridWidth + 30;
-						//get the point in front of the last reason
-						var rfpy:int = layoutController.getBottomReason(argumentTypeModel).xgrid * gridWidth + 30;
-						
+					if(model.supportingArguments.length > 0){	
+						//First Vertical Line Finishing Point
+						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
+						var fvlfpy:int = (lastMenuPanel.y + 30);
 						//draw a line
-						drawUtility.graphics.moveTo(rspx, rspy);
-						drawUtility.graphics.lineTo(rspx, rfpy);
+						drawUtility.graphics.moveTo(fvlspx, fvlspy);
+						drawUtility.graphics.lineTo(fvlspx, fvlfpy);
 						
-						var menuPanel:MenuPanel = menuPanelsHash[argumentTypeModel.ID];
-						//Line from menu Panel to the starting point of reason vertical line
-						drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width, menuPanel.y + 30);
-						drawUtility.graphics.lineTo(rspx, menuPanel.y + 30);
-						
-						//Line from first vertical line to menu Panel
-						drawUtility.graphics.moveTo(fvlspx, menuPanel.y + 30);
-						drawUtility.graphics.lineTo(menuPanel.x, menuPanel.y + 30);
-						
-						//Line from menuPanel to Inference
-						var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
-						if(inferencePanel.visible){
-							drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height);
-							drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2, inferencePanel.y);
-						}
-						for each(statementModel in argumentTypeModel.reasonModels){
-							//hline
-							var poReason:int = statementModel.xgrid * gridWidth + 30;
-							drawUtility.graphics.moveTo(rspx, poReason);
-							drawUtility.graphics.lineTo(statementModel.ygrid * gridWidth, poReason);
+						//Line from claim to vertical line starting point
+						var firstMenuPanel:MenuPanel = menuPanelsHash[model.supportingArguments[0].ID];
+						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
+						drawUtility.graphics.lineTo(fvlspx, argumentPanel.y + 30);
+						//for each argument
+						for each(argumentTypeModel in model.supportingArguments){
+							//get the point one grid before the first reason horizontally.
+							var rspx:int = (argumentTypeModel.reasonModels[0].ygrid - 1) * gridWidth;
+							var rspy:int = argumentTypeModel.xgrid * gridWidth + 30;
+							//get the point in front of the last reason
+							var rfpy:int = layoutController.getBottomReason(argumentTypeModel).xgrid * gridWidth + 30;
+							
+							//draw a line
+							drawUtility.graphics.moveTo(rspx, rspy);
+							drawUtility.graphics.lineTo(rspx, rfpy);
+							
+							var menuPanel:MenuPanel = menuPanelsHash[argumentTypeModel.ID];
+							//Line from menu Panel to the starting point of reason vertical line
+							drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width, menuPanel.y + 30);
+							drawUtility.graphics.lineTo(rspx, menuPanel.y + 30);
+							
+							//Line from first vertical line to menu Panel
+							drawUtility.graphics.moveTo(fvlspx, menuPanel.y + 30);
+							drawUtility.graphics.lineTo(menuPanel.x, menuPanel.y + 30);
+							
+							//Line from menuPanel to Inference
+							var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
+							if(inferencePanel.visible){
+								drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height);
+								drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2, inferencePanel.y);
+							}
+							for each(statementModel in argumentTypeModel.reasonModels){
+								//hline
+								var poReason:int = statementModel.xgrid * gridWidth + 30;
+								drawUtility.graphics.moveTo(rspx, poReason);
+								drawUtility.graphics.lineTo(statementModel.ygrid * gridWidth, poReason);
+							}
 						}
 					}
-				} 
+					if(model.objections.length > 0){
+						argumentPanel = panelsHash[model.ID];
+						var lastObjection:StatementModel = layoutController.getBottomObjection(model);
+						if(lastObjection != null){
+							var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
+							fvlfpy = bottomObjection.y + 30;
+							//draw a line from the first objection to the last objection
+							drawUtility.graphics.moveTo(fvlspx, fvlspy);
+							drawUtility.graphics.lineTo(fvlspx, fvlfpy);
+							//draw a line from the claim to the first vertical oint
+							drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth(), fvlspy);
+							drawUtility.graphics.lineTo(fvlspx, fvlspy);
+							for each(var obj:StatementModel in model.objections){
+								//horizontal line from the vertical line to the objection
+								if(panelsHash.hasOwnProperty(obj.ID)){
+									var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
+									drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +30);
+									drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y + 30);
+								}
+							}
+						}
+						
+					}
+				}
 			}
 		}		
 	}

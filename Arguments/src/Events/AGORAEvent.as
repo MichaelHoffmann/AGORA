@@ -20,6 +20,7 @@ package Events
 		public static const ARGUMENT_CREATION_FAILED:String = "ArgumentCreationFailed";
 		public static const MAP_CREATION_FAILED:String = "MapCreationFailed";
 		public static const FIRST_CLAIM_ADDED:String = "FirstClaimAdded";
+		public static const FIRST_CLAIM_FAILED:String = "FirstClaimFailed";
 		public static const MAP_LOADED:String = "MapLoaded";
 		public static const MAP_LOADING_FAILED:String = "MapLoadingFailed";
 		public static const STATEMENT_TYPE_TOGGLED:String = "StatementTypeToggled";
@@ -39,6 +40,9 @@ package Events
 		public static const MAP_INFO_UPDATE_FAILED:String = "MapInfoUpdateFailed";
 		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
+	
+		//ERROR EVENTS
+		public static const ILLEGAL_MAP:String = "IllegalMap";
 		
 		public var xmlData:XML;
 		public var eventData:Object;
