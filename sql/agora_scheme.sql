@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS agora.node_types (
   type VARCHAR(30) NOT NULL,
   PRIMARY KEY (nodetype_id));
 
-INSERT INTO node_types (type) VALUES ("Particular"), ("Universal"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment"), ("Definition"), ("Citation");
+INSERT INTO node_types (nodetype_id, type) VALUES (1, 'Standard'), (2, 'Inference'), (3, 'Objection'), (4, 'Question'), (5, 'Amendment'), (6, 'Comment'), (7, 'Particular'), (8, 'Universal'), (9, 'Definition'), (10, 'Citation');
 -- All inferences are universal statements, but not all universal statements are inferences. As such, these are being separated.
 -- It's possible we will want to add more types later.
 
