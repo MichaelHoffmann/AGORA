@@ -100,6 +100,7 @@
 				$map->addAttribute("title", $row['title']);
 				$map->addAttribute("creator", $row['username']);
 				$map->addAttribute("last_modified", $row['modified_date']);
+				$map->addAttribute("type", $row['map_type']);
 			}
 		}
 		//third step: get all the users from the project
