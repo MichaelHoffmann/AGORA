@@ -62,4 +62,8 @@ REMOVE.PHP: The file for removing a map (deprecated but still available) and rem
 REMOVE_MAP.PHP: A file which allows removal of multiple maps.
 SEARCH.PHP: A file for searching maps.
 TESTERRORS.PHP: Not really useful any more, but was useful for testing that errorcodes.php worked.
-USERINFO.PHP: A file for getting the publicly-available information on a user.
+USERINFO.PHP: A file for getting the publicly-available information on a user. E-mail info is not given out publicly to protect users from spam. You may uncomment the relevant line if you want to disregard that protection for your users.
+UTILFUNCS.PHP: A collection of utility functions for use in various aspects of this software.
+
+===SAMPLE FILES===
+Used for testing purposes. Update ID numbers as needed and paste them into XML portions of queries.
