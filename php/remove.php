@@ -49,7 +49,7 @@ List of variables for insertion:
 	/**
 	*	Function for removing a node from the database.
 	*/
-	function removeNode($node, $mapID, $output, $linkID, $userID)
+	function removeNode($node, $mapID, $output, $linkID, $userID, $mapType)
 	{
 		$attr = $node->attributes();
 		$nID = mysql_real_escape_string($attr["ID"]);
@@ -60,7 +60,7 @@ List of variables for insertion:
 			return false;
 		}
 		$row = mysql_fetch_assoc($resultID);
-		if($userID == $row["user_id"]){
+		if($userID == $row["user_id"] or $mapType=='cooperate'){
 			$uquery = "UPDATE nodes SET modified_date=NOW(), is_deleted=1 WHERE node_id=$nID";
 			$retval = mysql_query($uquery, $linkID);
 			if(!$retval){
@@ -85,6 +85,16 @@ List of variables for insertion:
 	*/
 	function xmlToDB($xml, $mapID, $output, $linkID, $userID)	
 	{
+		$query = "SELECT map_type FROM maps";
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			dataNotFound($output, $query);
+			return $output;
+		}
+		$row = mysql_fetch_assoc($resultID);
+		$mapType = $row['map_type'];
+		
+		
 		$children = $xml->children();
 		$retval = true;
 		foreach ($children as $child)
@@ -95,7 +105,7 @@ List of variables for insertion:
 					//textboxToDB($child, $mapID, $linkID, $userID);
 					break;
 				case "node":
-					$retval = removeNode($child, $mapID, $output, $linkID, $userID);
+					$retval = removeNode($child, $mapID, $output, $linkID, $userID, $mapType);
 					break;
 				case "connection":
 					//connectionToDB($child, $mapID, $linkID, $userID);
