@@ -37,7 +37,7 @@ In this diagram, Q is the claim, P is the reason, and "If P, then Q" is the enab
 
 * a SOURCENODE is a mapping between CONNECTIONS and the NODEs which are the "source" of this argument. They have a N:1 mapping to CONNECTIONS - any SOURCENODE can point to only one CONNECTION, but a CONNECTION can have multiple SOURCENODES. As in the above diagram, the default "argument" has 2 sourcenodes for one connection - this is typical (though by no means mandatory!). Something like an Objection would have 1 sourcenode - the objection node itself. (In theory, this could be a column in the NODE table to ensure N:1 mapping, but in practice I felt that making it a separate table was cleaner.)
 
-# PROJECTS
+## PROJECTS
 As this system was designed for use in a classroom environment, an additional feature was desired for restricting access to maps and allowing greater flexibility.
 
 Projects offer two capabilities. One is to restrict access to maps to only a limited number of people (either added by hand, or self-joining by means of a shared password). The other is to allow "cooperate" maps rather than "debate" maps - maps which let people edit each others' stuff. (Normally, people cannot edit their own stuff.)
@@ -48,7 +48,9 @@ Projects offer two capabilities. One is to restrict access to maps to only a lim
 
 * a "debate" map is a normal map. Any map not in a project is a "debate" map, and project maps default to "debate" mode. Cooperative maps override the requirement that I be the one to edit my own stuff.
 
-# FILE BY FILE
+# SERVERSIDE INFORMATION
+
+## FILE BY FILE
 
 CHANGEINFO.PHP: lets a user change his personal information, including password. If the "newpass" field is left blank, the system will leave the password alone.
 
@@ -106,5 +108,11 @@ USERINFO.PHP: A file for getting the publicly-available information on a user. E
 
 UTILFUNCS.PHP: A collection of utility functions for use in various aspects of this software.
 
-# SAMPLE FILES
+## SAMPLE FILES
 Used for testing purposes. Update ID numbers as needed and paste them into XML portions of queries.
+
+# CLIENTSIDE INFORMATION
+
+The client is a Flash application. It uses a pile of XML to handle multilingual capabilities (see translation.xml). This is basically "in-place" translation. A mock-up of more robust translation was placed in translation_schemes.xml, but never implemented because it was not necessary.
+
+Message Arun ("arunkumarchithanar" on Github) if you have questions regarding any part of the client-side code.
