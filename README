@@ -46,4 +46,20 @@ INSERT.PHP: The file for handling inserting/updating parts of maps, as well as f
 JOIN_PRJ.PHP: The file for joining projects via shared password.
 LASTVIEWED.PHP: If the client sends stuff here, the server will track the last time a user has viewed any particular map. This can be compared to the last time a map has been modified to allow the client to highlight maps with new content.
 LIST_MAPS.PHP: Lists all maps not in a project.
-LIST_PROJECTS.PHP: Lists all projects
+LIST_PROJECTS.PHP: Lists all projects.
+(Both of the above have a MY_ version which takes in a user ID and password, and returns a list of all the ones belonging to that user.)
+LOAD_MAP.PHP: Returns an XML version of the map.
+LOAD_PRJ.PHP: Returns an XML version of the project - all its maps and users.
+LOGIN.PHP: Upon logging into this with a username and password, you get back the user ID. All access to user-specific functions is done with the user ID later on.
+MAPINFO.PHP: This file handles changing map information - its title, description, etc.
+MY_MAPS.PHP: Lists all maps a particular user owns or has participated in, but not the ones in a project.
+MY_PROJECTS.PHP: Lists all projects a user is part of.
+PROJECTS.PHP: The file for creating and editing projects.
+PROJMAPS.PHP: The file for controlling which maps are part of a project. Maps cannot be "created in" a project - they are created, then added to a project. (From the server's POV - the client can of course roll this into one function if it chooses.)
+PROJUSERS.PHP: The file for manually adding, removing, and editing user levels within a project.
+REGISTER.PHP: New users come here to register.
+REMOVE.PHP: The file for removing a map (deprecated but still available) and removing things from a map.
+REMOVE_MAP.PHP: A file which allows removal of multiple maps.
+SEARCH.PHP: A file for searching maps.
+TESTERRORS.PHP: Not really useful any more, but was useful for testing that errorcodes.php worked.
+USERINFO.PHP: A file for getting the publicly-available information on a user.
