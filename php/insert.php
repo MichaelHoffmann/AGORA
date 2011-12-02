@@ -504,23 +504,14 @@ List of variables for insertion:
 		
 		$author = $row['user_id'];
 		$mapType = $row['map_type'];
-		
+		$projID = $row['proj_id'];
 		$ownMap = false;
 		if($author == $userID){
 			$ownMap=true;
-			//TODO: Use this to determine if the INSERTIONS are legal
-			//We need to establish a clear policy on what insertions *are* legal, though.
-			//That will be done on the Node and Connection levels.
-			//It hinges on the TYPES of nodes and connections, which haven't been fully established yet.
-			
-			//(Note that UPDATES are checked against ownership of that individual thing)
-		}
-		
-		if(!$mapID && !isUserInMapProject($userID, $mapID, $linkID)){
-			$projID = $row['proj_id'];
+		}else if (!$proj_id && !$mapID && !isUserInMapProject($userID, $mapID, $linkID)){
 			//You can't do anything if the map is in a project and you're not in it!
 			notInProject($output, "User $userID is not in Project $projID!");
-			return $output; 
+			return $output;
 		}
 		
 		//This part neatly handles all possibilities of failure. All we have to do is chain back "false" returns.

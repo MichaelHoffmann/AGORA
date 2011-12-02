@@ -35,6 +35,20 @@
 	require 'establish_link.php';
 	require 'utilfuncs.php';
 	
+	/**
+	* Convenience function.
+	* Selects the last auto-generated ID (AUTO_INCREMENT) from the Database.
+	* See the following for the function that this uses:
+	* http://php.net/manual/en/function.mysql-insert-id.php
+	*/
+	function getLastInsert($linkID)
+	{
+		$query = "SELECT LAST_INSERT_ID()";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		return $row['LAST_INSERT_ID()'];
+	}
+	
 	function addUser($otheruserID, $projID, $userID, $level, $pass_hash, $output){
 		$output->addAttribute("ID", $projID);
 		global $dbName, $version;
@@ -108,19 +122,42 @@
 			notProjectAdmin($output);
 			return $output;
 		}
+		mysql_query("START TRANSACTION");
 		$query = "DELETE FROM projusers WHERE proj_id=$projID AND user_id=$otheruserID";
 		
 		$success = mysql_query($query, $linkID);
 		if($success){
+			//Remove all of this user's maps from the project and make a new project for them.
+			
+			$query = "INSERT INTO projects (user_id, title, password, is_hostile) VALUES
+										($otheruserID, 'Automatically created project', NULL, 1)";
+			$status = mysql_query($query, $linkID);
+			$newID = getLastInsert($linkID);
+			if(!$status){
+				mysql_query("ROLLBACK");
+				rolledBack($output);
+				return $output;
+			}
+			
+			$uquery = "UPDATE maps SET proj_id=$newID WHERE user_id=$otheruserID AND proj_id=$projID";
+			$status = mysql_query($uquery, $linkID);
+			if(!$status){
+				mysql_query("ROLLBACK");
+				rolledBack($output);
+				return $output;
+			}
 			$otheruser=$output->addChild("user");
 			$otheruser->addAttribute("ID", $otheruserID);
 			$otheruser->addAttribute("removed", true);
+			mysql_query("COMMIT");
 			return $output;
 		}else{
 			$otheruser=$output->addChild("user");
 			$otheruser->addAttribute("ID", $otheruserID);
 			$otheruser->addAttribute("removed", false);
 			updateFailed($output, $query);
+			mysql_query("ROLLBACK");
+			rolledBack($output);
 			return $output;
 		}		
 		return $output;
