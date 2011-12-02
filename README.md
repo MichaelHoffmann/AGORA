@@ -40,11 +40,11 @@ CHANGEINFO.PHP: lets a user change his personal information, including password.
 
 CHARTEST.PHP: A file for testing out storage/retrieval of unicode text to make sure our system could handle foreign characters. If you see a bunch of boxes in the file, your text editor doesn't handle it well; try notepad++ or emacs.
 
-CONFIGURE.PHP: A file which the programs use to see which database to hit. We only had one server for both development and production, so to keep our test stuff from clogging up the public map list, we created a development database which was a copy of the production database. ***MAKE SURE THAT $dbName POINTS TO THE CORRECT DATABASE!!*** The other variables don't actually DO anything, though $version does get echoed in places.
+CONFIGURE.PHP: A file which the programs use to see which database to hit. We only had one server for both development and production, so to keep our test stuff from clogging up the public map list, we created a development database which was a copy of the production database. ***MAKE SURE THAT $dbName POINTS TO THE CORRECT DATABASE!*** The other variables don't actually DO anything, though $version does get echoed in places.
 
 ERRORCODES.PHP: A file for standardizing error messages.
 
-ESTABLISH_LINK.PHP: A file for centralizing the database connection so that the actual password wouldn't have to be placed everywhere. ***MAKE SURE TO EDIT THE mysql_connect FUNCTION TO USE THE PROPER USERNAME AND PASSWORD"
+ESTABLISH_LINK.PHP: A file for centralizing the database connection so that the actual password wouldn't have to be placed everywhere. ***MAKE SURE TO EDIT THE mysql_connect FUNCTION TO USE THE PROPER USERNAME AND PASSWORD!***
 
 FORGOT_PASS.PHP: A file for handling forgotten passwords. This creates a new password, e-mails it to the user in 3 languages, and stores the hash in the server. If your server cannot e-mail users, then this file should not be placed on your server.
 
