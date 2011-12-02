@@ -79,7 +79,7 @@
 		return $output;
 	}
 	
-	$username = mysql_real_escape_string($_REQUEST['username']);  //TODO: Change this back to a GET when all testing is done.
+	$username = mysql_real_escape_string($_REQUEST['username']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$firstname = mysql_real_escape_string($_REQUEST['firstname']);
 	$lastname = mysql_real_escape_string($_REQUEST['lastname']);

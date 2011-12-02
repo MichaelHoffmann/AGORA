@@ -107,7 +107,7 @@
 		return $output;
 	}
 	
-	$username = mysql_real_escape_string($_REQUEST['username']);  //TODO: Change this back to a GET when all testing is done.
+	$username = mysql_real_escape_string($_REQUEST['username']);
 	$output=forgot_pass($username);
 	print $output->asXML();
 ?>

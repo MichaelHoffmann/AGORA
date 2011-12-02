@@ -63,7 +63,6 @@
 		}
 		$row = mysql_fetch_assoc($resultID);
 		
-		//TODO: test this stuff
 		if($row['proj_id']){
 			//Map is in a project.
 			//Confirm that the project allows the user to open a map
@@ -76,8 +75,6 @@
 			}
 		}
 		//If map isn't in a project, continue as normal.
-		//END TODO
-		
 		
 		$output->addAttribute("ID", $row['map_id']);
 		$output->addAttribute("title", $row['title']);
@@ -181,7 +178,7 @@
 	}
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
-	$mapID = mysql_real_escape_string($_REQUEST['map_id']);  //TODO: Change this back to a GET when all testing is done.
+	$mapID = mysql_real_escape_string($_REQUEST['map_id']);
 	$timestamp = mysql_real_escape_string($_REQUEST['timestamp']);
 	$output = get_map($userID, $pass_hash, $mapID, $timestamp); 
 	print $output->asXML();

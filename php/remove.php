@@ -214,7 +214,7 @@ List of variables for insertion:
 		return $output;
 	}
 
-	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
+	$xmlparam = $_REQUEST['xml'];
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$output = remove($xmlparam, $userID, $pass_hash); 
