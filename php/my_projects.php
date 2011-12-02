@@ -22,6 +22,7 @@
 	require 'configure.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	/**
 	*	Function for getting the project list.
 	*/
