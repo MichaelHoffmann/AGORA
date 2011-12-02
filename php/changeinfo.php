@@ -77,7 +77,7 @@
 				updateFailed($login, $iquery);
 				return $output;
 			}else{
-				$login->addAttribute("modified", true); // Successfully created the username.
+				$login->addAttribute("modified", true); // Successfully modified the user info.
 			}
 		}
 		return $output;
