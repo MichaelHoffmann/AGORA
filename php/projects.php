@@ -68,7 +68,7 @@
 		if(!$newpass){
 			$newpass="NULL";
 		}
-		$query = "INSERT INTO projects (user_id, title, password, is_hostile) VALUES
+		$query = "INSERT INTO projects (user_id, title, passwd, is_hostile) VALUES
 										($userID, '$title', $newpass, $is_hostile)";
 		mysql_query($query, $linkID);
 		$projID = getLastInsert($linkID);
@@ -124,7 +124,7 @@
 		if(!$newpass){
 			$newpass="NULL";
 		}
-		$query = "UPDATE projects SET title='$title', password=$newpass, is_hostile=$is_hostile WHERE proj_id=$projID";
+		$query = "UPDATE projects SET title='$title', passwd=$newpass, is_hostile=$is_hostile WHERE proj_id=$projID";
 		$success = mysql_query($query, $linkID);
 		if($success){
 			$proj=$output->addChild("project");
