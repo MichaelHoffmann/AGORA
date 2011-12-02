@@ -73,7 +73,7 @@
 				$output->addAttribute("username", $row['username']);
 				$output->addAttribute("firstname", $row['firstname']);
 				$output->addAttribute("lastname", $row['lastname']);
-				$output->addAttribute("email", $row['email']);
+				//$output->addAttribute("email", $row['email']);
 				$output->addAttribute("ID", $row['user_id']);
 			}
 		}
