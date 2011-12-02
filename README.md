@@ -39,10 +39,14 @@ In this diagram, Q is the claim, P is the reason, and "If P, then Q" is the enab
 
 # PROJECTS
 As this system was designed for use in a classroom environment, an additional feature was desired for restricting access to maps and allowing greater flexibility.
+
 Projects offer two capabilities. One is to restrict access to maps to only a limited number of people (either added by hand, or self-joining by means of a shared password). The other is to allow "cooperate" maps rather than "debate" maps - maps which let people edit each others' stuff. (Normally, people cannot edit their own stuff.)
--a PROJECT is the actual project itself. The user_id is the owner of the project.
--a PROJUSER is a mapping between projects and users. This is a N:N relationship, obviously - any user can be in multiple projects, and any project can have multiple users.
--a "debate" map is a normal map. Any map not in a project is a "debate" map, and project maps default to "debate" mode. Cooperative maps override the requirement that I be the one to edit my own stuff.
+
+* a PROJECT is the actual project itself. The user_id is the owner of the project.
+
+* a PROJUSER is a mapping between projects and users. This is a N:N relationship, obviously - any user can be in multiple projects, and any project can have multiple users.
+
+* a "debate" map is a normal map. Any map not in a project is a "debate" map, and project maps default to "debate" mode. Cooperative maps override the requirement that I be the one to edit my own stuff.
 
 # FILE BY FILE
 
