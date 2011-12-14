@@ -78,6 +78,9 @@
 			insertFailed($output, $query);
 			return $output;
 		}
+		$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES $projID, $userID, 9";
+		mysql_query($query $linkID);
+		//This is a lame hack that shouldn't be needed, but it'll work.
 		$proj = $output->addChild("project");
 		$proj->addAttribute("ID", $projID);
 		return $output;
