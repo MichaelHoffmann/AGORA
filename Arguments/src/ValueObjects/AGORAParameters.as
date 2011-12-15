@@ -148,13 +148,13 @@ package ValueObjects
 			listMapsURL = "http://agora.gatech.edu/rework/list_maps.php";
 			myMapsURL = "http://agora.gatech.edu/rework/my_maps.php";
 			
-			loginURL = "http://agora.gatech.edu/dev/login.php";
+			loginURL = "http://agora.gatech.edu/rework/login.php";
 			registrationURL = "http://agora.gatech.edu/rework/register.php";
 			mapRemoveURL = "http://agora.gatech.edu/rework/remove_map.php";
 			deleteURL = "http://agora.gatech.edu/rework/remove.php";
 			insertURL = "http://agora.gatech.edu/rework/insert.php";
 			loadMapURL = "http://agora.gatech.edu/rework/load_map.php";
-			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";	
+			nameUpdateURL = "http://agora.gatech.edu/rework/mapinfo.php";	
 			initialize();		
 		}
 		
@@ -205,7 +205,6 @@ package ValueObjects
 			if(!reference){
 				reference = new AGORAParameters;
 			}
-			
 			return reference;
 		}
 	}

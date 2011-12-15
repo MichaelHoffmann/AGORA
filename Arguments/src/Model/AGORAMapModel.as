@@ -302,7 +302,8 @@ package Model
 		
 		//----------------------- Load New Data ----------------------------------------------//
 		public function loadMapModel():void{
-			loadMapService.send({map_id:ID.toString(),timestamp:timestamp});		
+			var userInfo:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			loadMapService.send({map_id:ID.toString(),timestamp:timestamp, uid:userInfo.uid, pass_hash:userInfo.passHash });		
 		}
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{

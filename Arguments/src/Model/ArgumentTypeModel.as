@@ -181,28 +181,36 @@ package Model
 				logicClass = object.scheme;
 				language = object.language;
 				lSubOption = object.aslConnector;
+			}else{
+				logicClass = null;
+				language = null;
+				lSubOption = null;
 			}
 		}
 		
 		public function get dbType():String{
-			var  dbScheme:String = AGORAModel.getInstance().dbSchemeHashMap[logicClass];
-			var  dbLanguage:String = AGORAModel.getInstance().dbLanguageHashMap[language];
-			var  dbLanguageSubOption:String = "";
-			if((language == AGORAParameters.getInstance().ONLY_IF) && logicClass == AGORAParameters.getInstance().MOD_TOL){
-				if(reasonModels.length > 1){
-					if(lSubOption == AGORAParameters.getInstance().AND){
-						return dbScheme + "onlyifand";
+			if(logicClass != null){
+				var  dbScheme:String = AGORAModel.getInstance().dbSchemeHashMap[logicClass];
+				var  dbLanguage:String = AGORAModel.getInstance().dbLanguageHashMap[language];
+				var  dbLanguageSubOption:String = "";
+				if((language == AGORAParameters.getInstance().ONLY_IF) && logicClass == AGORAParameters.getInstance().MOD_TOL){
+					if(reasonModels.length > 1){
+						if(lSubOption == AGORAParameters.getInstance().AND){
+							return dbScheme + "onlyifand";
+						}
+						else{
+							return dbScheme + "onlyifor";
+						}	
 					}
 					else{
-						return dbScheme + "onlyifor";
-					}	
+						return dbScheme + "onlyif";
+					}
 				}
-				else{
-					return dbScheme + "onlyif";
-				}
+				
+				return dbScheme + (dbLanguage==null?"":dbLanguage) + dbLanguageSubOption;
+			}else{
+				return 'Unset';
 			}
-			
-			return dbScheme + (dbLanguage==null?"":dbLanguage) + dbLanguageSubOption;
 		}
 		
 		//------------------------ adding a reason ------------------------//
