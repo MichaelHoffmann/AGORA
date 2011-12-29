@@ -606,7 +606,12 @@ package Model
 				var atm:ArgumentTypeModel = ArgumentTypeModel(model);
 				var claimModel:StatementModel = atm.claimModel;
 				if( atm == claimModel.supportingArguments[0] ){
-					requestXML = moveSupportingStatements(atm, 0, diffy, requestXML);
+					if(claimModel.xgrid == atm.xgrid){
+						requestXML = moveSupportingStatements(atm, 0, diffy, requestXML);
+					}
+					else{
+						requestXML = moveSupportingStatements(atm, diffx, diffy, requestXML);
+					}
 				}else{
 					requestXML = moveSupportingStatements(atm, diffx, diffy, requestXML);
 				}
@@ -621,7 +626,11 @@ package Model
 								{
 									requestXML = moveSupportingStatements(reason, diffx, diffy, requestXML);	
 								}else{
-									requestXML = moveSupportingStatements(reason, 0, diffy, requestXML);
+									if(reason.xgrid == argumentTypeModel.claimModel.xgrid){
+										requestXML = moveSupportingStatements(reason, 0, diffy, requestXML);
+									}else{
+										requestXML = moveSupportingStatements(reason, diffx, diffy, requestXML);
+									}
 								}
 							}else{
 								requestXML = moveSupportingStatements(reason, 0, diffy, requestXML); 
