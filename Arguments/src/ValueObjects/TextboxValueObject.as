@@ -7,17 +7,24 @@ package ValueObjects
 		public var deleted: Boolean;
 		public function TextboxValueObject(textboxObject:Object, inserted:Boolean = false)
 		{
-			//no value must be undefined
-			try{
-				trace(textboxObject);
+			if(textboxObject.hasOwnProperty("ID")){
 				ID = textboxObject.ID;
-				if(!inserted){
-					text = textboxObject.text;
+			}else{
+				throw new PropNotFoundError("textbox object doesn't have property 'ID'");
+			}
+			if(!inserted){
+				if(textboxObject.hasOwnProperty("text")){
+					text = textboxObject.text;	
+				}else{
+					throw new PropNotFoundError("textboxObject does not have property 'text'");
+				}
+				if(textboxObject.hasOwnProperty("deleted")){
 					deleted = textboxObject.deleted == 1? true:false;
 				}
-			}catch(error:Error){
-				trace("TextboxValueObject::Constructor: Error reading textboxObject.");	
-			}	
+				else{
+					throw new PropNotFoundError("textboxObject does not have property 'deleted'");
+				}
+			}
 		}
 	}
 }

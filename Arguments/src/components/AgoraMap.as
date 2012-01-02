@@ -155,8 +155,6 @@ package components
 			}
 			addChild(firstClaimHelpText);
 			
-			
-			
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
 				if(StatementModel(newPanels[i]).statementFunction == StatementModel.INFERENCE){
@@ -164,7 +162,6 @@ package components
 					inference.model = newPanels[i];
 					panelsHash[inference.model.ID] = inference;
 					addChild(inference);
-					
 					//add the next infobox
 					inference.addArgumentsInfo = new InfoBox;
 					inference.addArgumentsInfo.visible = false;

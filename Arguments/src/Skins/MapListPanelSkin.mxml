@@ -44,13 +44,14 @@
 			 fontWeight="bold"
 			 text = "{Language.lookup(&quot;ListMaps&quot;)}"
 			 />
-	<s:Scroller width="100%" top="40" height="300">
+	<s:Scroller width="100%" top="56" height="300">
 		<s:Group id="contentGroup">
 			<s:VGroup id="mapsGroup" paddingLeft="10" paddingTop="5"> 
 			</s:VGroup>
 		</s:Group>
 	</s:Scroller>
 	
+	<mx:Text id="loadingDisplay" width = "100%" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
 	<mx:Text width="100%" bottom ="10" textAlign="center" text="{Language.lookup(&quot;ClickToView&quot;)}">
 	</mx:Text>
 	<fx:Script>

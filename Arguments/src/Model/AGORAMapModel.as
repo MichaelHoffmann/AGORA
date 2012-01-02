@@ -307,37 +307,42 @@ package Model
 		}
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{
-			trace('map loaded');
 			deletedList = new Vector.<Object>;
-			//trace(event.result.toXMLString());
 			var mapXMLRawObject:Object = event.result.map;
-			var map:MapValueObject = new MapValueObject(mapXMLRawObject);
-			//try{
-			//update timestamp
-			timestamp = map.timestamp;
-			name = map.title;
-			//Form a map of nodes
-			var obj:Object;
-			var nodeHash:Dictionary = new Dictionary;
-			var textboxHash:Dictionary = new Dictionary;
-			
-			//read nodes and create Statment Models
-			//parseNode(map, nodeHash, textboxHash);
-			processNode(map.nodeObjects,nodeHash, textboxHash);
-			
-			//Form a map of connections
-			var connectionsHash:Dictionary = new Dictionary;
-			//parseConnection(map, connectionsHash, nodeHash);
-			processConnection(map.connections, connectionsHash, nodeHash);
-			
-			//read and set text - This should be performed after links are created
-			processTextbox(map.textboxes, textboxHash);
-			//}
-			//catch(error:Error){
-			//	trace(error.message);
-			//	trace("Error in reading update to Map");
-			//	dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
-			//}
+			try{
+				var map:MapValueObject = new MapValueObject(mapXMLRawObject);
+			}catch(propNotFoundError:Error){
+				trace("Fatal Error: XML is malformed");
+				trace(String(propNotFoundError.message));
+				dispatchEvent(new AGORAEvent(AGORAEvent.ILLEGAL_MAP, null, null)); 
+			}
+			try{
+				//update timestamp
+				timestamp = map.timestamp;
+				name = map.title;
+				
+				//Form a map of nodes
+				var obj:Object;
+				var nodeHash:Dictionary = new Dictionary;
+				var textboxHash:Dictionary = new Dictionary;
+				
+				//read nodes and create Statment Models
+				processNode(map.nodeObjects,nodeHash, textboxHash);
+				
+				//Form a map of connections
+				var connectionsHash:Dictionary = new Dictionary;
+				
+				//parseConnection(map, connectionsHash, nodeHash);
+				processConnection(map.connections, connectionsHash, nodeHash);
+				
+				//read and set text - This should be performed after links are created
+				processTextbox(map.textboxes, textboxHash);
+			}
+			catch(error:Error){
+				trace(error.message);
+				trace("Error in reading update to Map");
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
+			}
 			//add new elements to Model
 			for each(var node:StatementModel in nodeHash){
 				if(!panelListHash.hasOwnProperty(node.ID)){
@@ -626,7 +631,7 @@ package Model
 								{
 									requestXML = moveSupportingStatements(reason, diffx, diffy, requestXML);	
 								}else{
-									if(reason.xgrid == argumentTypeModel.claimModel.xgrid){
+									if(reason.xgrid == argumentTypeModel.xgrid){
 										requestXML = moveSupportingStatements(reason, 0, diffy, requestXML);
 									}else{
 										requestXML = moveSupportingStatements(reason, diffx, diffy, requestXML);
@@ -673,7 +678,6 @@ package Model
 		}
 		
 		protected function updatePositionServiceResult(event:ResultEvent):void{
-			trace(event.result.toXMLString());
 			dispatchEvent(new AGORAEvent(AGORAEvent.POSITIONS_UPDATED, null, null));
 		}
 		

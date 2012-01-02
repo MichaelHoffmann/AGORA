@@ -5,11 +5,14 @@ package Controller
 	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.MapListModel;
+	import Model.UserSessionModel;
 	
 	import ValueObjects.UserDataVO;
 	
 	import classes.Language;
 	
+	import components.AGORAMenu;
+	import components.Map;
 	import components.MapName;
 	import components.MyMapName;
 	import components.MyMapsPanel;
@@ -24,11 +27,15 @@ package Controller
 	import mx.managers.PopUpManager;
 	
 	import spark.components.Group;
-
+	
 	public class AGORAController
 	{
 		private static var instance:AGORAController;
-			
+		private var menu:AGORAMenu;
+		private var map:Map;
+		
+		private var userSession:UserSessionModel;
+		
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
@@ -39,6 +46,12 @@ package Controller
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETION_FAILED, onMyMapsDeletionFailed);
 			AGORAModel.getInstance().addEventListener(AGORAEvent.APP_STATE_SET, onAppStateSet);
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.FAULT, onFault);
+			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.ILLEGAL_MAP, handleIllegalMap);
+			
+			menu = FlexGlobals.topLevelApplication.agoraMenu;
+			map = FlexGlobals.topLevelApplication.map;
+			userSession = AGORAModel.getInstance().userSessionModel;
+			
 		}
 		
 		//----------------------Get Instance------------------------------//
@@ -52,29 +65,37 @@ package Controller
 		
 		//--------------------Fetch Map List------------------------------//
 		public function fetchDataMapList():void{
+			var statusNE:String = Language.lookup("NetworkError");
+			if(statusNE == menu.mapList.loadingDisplay.text){
+				menu.mapList.loadingDisplay.text = Language.lookup("Loading");
+			}
+			menu.mapList.loadingDisplay.visible = true;
 			var mapListModel:MapListModel = AGORAModel.getInstance().mapListModel;
 			mapListModel.requestMapList();
 		}
 		
 		protected function onMapListFetched(event : AGORAEvent):void{
-			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateSkinState();
-			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateProperties();
-			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateDisplayList();
+			menu.mapList.loadingDisplay.visible = false;
+			menu.mapList.invalidateSkinState();
+			menu.mapList.invalidateProperties();
+			menu.mapList.invalidateSize();
+			menu.mapList.invalidateDisplayList();
 		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
 			if(AGORAModel.getInstance().userSessionModel.uid){
+				var statusNE:String = Language.lookup("NetworkError");
+				if(menu.myMaps.loadingDisplay.text == statusNE){
+					menu.myMaps.loadingDisplay.text = Language.lookup("Loading");
+				}
+				FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = true;
 				AGORAModel.getInstance().myMapsModel.requestMapList();
-			}
-			else{
-				trace(AGORAModel.getInstance().userSessionModel.uid);
-				Alert.show("The user has not signed in yet...");
 			}
 		}
 		
 		protected function onMyMapsListFetched(event:AGORAEvent):void{
-			
+			FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapListXML = event.xmlData;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
 			FlexGlobals.topLevelApplication.invalidateProperties();
@@ -137,9 +158,20 @@ package Controller
 			CursorManager.removeBusyCursor();
 		}
 		
+		//-------------------- Illegal Map--------------------------------//
+		protected function handleIllegalMap(event:AGORAEvent):void{
+			Alert.show(Language.lookup("IllegalMap"));
+			hideMap();
+		}
+		
 		//--------------------Generic Fault Event ----------------------//
 		protected function onFault(event:AGORAEvent):void{
-			Alert.show(Language.lookup("NetworkError"));
+			//If loading had been displayed, remove it
+			//For the Map List box
+			menu.mapList.loadingDisplay.text = Language.lookup("NetworkError");
+			if(userSession.uid){
+				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
+			}
 		}
 		
 		
@@ -147,8 +179,12 @@ package Controller
 		public function hideMap():void{
 			AGORAModel.getInstance().state = AGORAModel.MENU;
 			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
+			FlexGlobals.topLevelApplication.map.agoraMap.removeAllChildren();
+			FlexGlobals.topLevelApplication.map.agoraMap.removeAllElements();
 			FlexGlobals.topLevelApplication.map.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
+			FlexGlobals.topLevelApplication.map.agoraMap.timer.reset();
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
 		}

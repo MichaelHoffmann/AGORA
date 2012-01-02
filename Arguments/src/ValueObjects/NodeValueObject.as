@@ -18,16 +18,43 @@ package ValueObjects
 		public function NodeValueObject(nodeObject:Object, inserted:Boolean = false)
 		{
 			try{
-				ID = nodeObject.ID;
+				if(nodeObject.hasOwnProperty("ID"))
+					ID = nodeObject.ID;
+				else
+					throw new PropNotFoundError("node object does not have property 'ID'");
 				if(!inserted){
-					type = nodeObject.Type;
-					author = nodeObject.Author;
-					x = nodeObject.x;
-					y = nodeObject.y;
-					typed = nodeObject.typed == 0? false : true;
-					positive = nodeObject.positive == 1? true : false;
-					connectedBy = nodeObject.connected_by;
-					deleted = nodeObject.deleted == 1? true: false; 
+					if(nodeObject.hasOwnProperty("Type"))
+						type = nodeObject.Type;
+					else
+						throw new PropNotFoundError("node object does not have property 'Type'");
+					if(nodeObject.hasOwnProperty('Author'))
+						author = nodeObject.Author;
+					else
+						throw new PropNotFoundError("node object does not have property 'Author'");
+					if(nodeObject.hasOwnProperty("x"))
+						x = nodeObject.x;
+					else
+						throw new PropNotFoundError("node object does not have property 'x'");
+					if(nodeObject.hasOwnProperty('y'))
+						y = nodeObject.y;
+					else
+						throw new PropNotFoundError("node object does not have property 'y'");
+					if(nodeObject.hasOwnProperty('typed'))
+						typed = nodeObject.typed == 0? false : true;
+					else
+						throw new PropNotFoundError("node object does not have property 'type'");
+					if(nodeObject.hasOwnProperty('positive'))
+						positive = nodeObject.positive == 1? true : false;
+					else
+						throw new PropNotFoundError("node object does not have property 'positive'");
+					if(nodeObject.hasOwnProperty("connected_by"))
+						connectedBy = nodeObject.connected_by;
+					else
+						throw new PropNotFoundError("node object does not have property 'connected_by'");
+					if(nodeObject.hasOwnProperty("deleted"))
+						deleted = nodeObject.deleted == 1? true: false;
+					else
+						throw new PropNotFoundError("node object does not have property 'deleted'");
 				}
 				if(nodeObject.hasOwnProperty("nodetext")){
 					nodetexts = new Vector.<NodetextValueObject>;
@@ -38,9 +65,11 @@ package ValueObjects
 					}else{
 						nodetexts.push(new NodetextValueObject(nodeObject.nodetext, inserted));
 					}
+				}else{
+					throw new PropNotFoundError("node object does not have nodetext");
 				}
-			}catch(error:Error){
-				trace("NodeValueObject::Constructor: Error reading nodeObject");
+			}catch(error:PropNotFoundError){
+				throw error;
 			}
 		}
 	}

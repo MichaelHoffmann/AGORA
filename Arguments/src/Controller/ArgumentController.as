@@ -571,7 +571,7 @@ package Controller
 			inference.addArgumentsInfo.visible = true;
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
-			if(claim.statementType != StatementModel.INFERENCE){
+			if(claim.panelType != StatementModel.INFERENCE){
 				claim.changeTypeInfo.x = claim.x;
 				claim.changeTypeInfo.y = claim.y - claim.changeTypeInfo.getExplicitOrMeasuredHeight() - 10;
 				claim.changeTypeInfo.depth = claim.parent.numChildren;

@@ -67,10 +67,9 @@ package Controller
 			
 			//set the title
 			FlexGlobals.topLevelApplication.map.topPanel.title.title = model.agoraMapModel.name;
-			//trace(model.agoraMapModel.name);
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
-			FlexGlobals.topLevelApplication.map.agoraMap.timer.stop();
+			FlexGlobals.topLevelApplication.map.agoraMap.timer.reset();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.start();
 			model.requested = false;
 		}

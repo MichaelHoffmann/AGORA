@@ -25,6 +25,7 @@
 			import Model.MapListModel;
 			import Model.MapMetaData;
 			
+			import mx.controls.Label;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			
@@ -33,6 +34,9 @@
 			
 			[SkinPart(required="true")]
 			public var mapsGroup:VGroup;
+			
+			[SkinPart(required="true")]
+			public var loadingDisplay:Label;
 			
 			protected override function commitProperties():void{
 				super.commitProperties();
@@ -57,6 +61,7 @@
 						mapMetaData.mapName = map.attribute("title"); 
 						mapMetaDataVector.push(mapMetaData);						
 					}
+					
 					mapMetaDataVector.sort(MapMetaData.isGreater);
 					for each(var mapMetaData:MapMetaData in mapMetaDataVector){
 						var mapButton:Button = new Button;

@@ -1108,6 +1108,14 @@
 		<RUS text="ЗАМЕЧАНИЕ" />
 		<GER text="Beachte" />
 	</Note>
+
+	<Loading>
+		<EN-US text="Loading..."/>
+		<GER text="" /><!--TODO: Translate-->
+		<RUS text="" /><!--TODO: Translate-->
+	</Loading>
+
+
 	
 	<WelcomeShort>
 		<EN-US text="Welcome to AGORA-net!"/>
@@ -1138,7 +1146,8 @@
 		<RUS text="Ошибка: Неудавшаяся Регистрация. Пожалуйста, попробуйте еще раз." />
 		<GER text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch’s noch einmal."/>
 	</RegistrationFailed>
-	
+
+
 	<UpdateMapInfoFailed>
 		<EN-US text="Map info was not updated. Changes were rolled back" />
 		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
@@ -1156,7 +1165,13 @@
 		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
 		<GER text="Yet to be translated"/><!-- TODO: Translate -->
 	</Error106>
-	
+
+	<IllegalMap>
+		<EN-US text="The map is corrupted. Please try loading it again, or creating a new one" />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</IllegalMap>
+
 	<!--NAMES OF ARGUMENTS-->
 			
 	<ConSyl>

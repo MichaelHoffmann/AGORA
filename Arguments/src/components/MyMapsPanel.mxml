@@ -19,8 +19,10 @@
 			import Controller.AGORAController;
 			
 			import Model.AGORAModel;
-			
 			import Model.MapMetaData;
+			
+			import classes.Configure;
+			import classes.Language;
 			
 			import flash.net.URLLoader;
 			import flash.net.URLRequest;
@@ -29,16 +31,14 @@
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.controls.Label;
+			import spark.components.Label;
 			import mx.controls.Text;
 			import mx.core.FlexGlobals;
 			import mx.managers.CursorManager;
 			
 			import spark.components.Button;
 			import spark.components.Group;
-			import spark.components.Label;
-			
-			import classes.Configure;
-			import classes.Language;
 			
 			//for future
 			[Bindable]
@@ -51,13 +51,16 @@
 			public var labelGroup:Group;
 			
 			[SkinPart(required="true")]
-			public var userInfoTxt:Label;
+			public var userInfoTxt:spark.components.Label;
 			
 			[SkinPart(required="true")]
 			public var  selectBtn:Button;
 			
 			[SkinPart(required="true")]
 			public var deleteBtn:Button;
+			
+			[SkinPart(required="true")]
+			public var loadingDisplay:mx.controls.Label;
 			
 			public static const MARK_ALL:String = Language.lookup("SelectAll");
 			public static const UNMARK_ALL:String = Language.lookup("SelectNone");

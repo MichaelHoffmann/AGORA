@@ -24,11 +24,8 @@ package Controller.logic
 		public function ModusPonens()
 		{			
 			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
-			//dbLangTypeNames = ["ifthen","implies","whenever","onlyif","providedthat","sufficient","necessary"];
 			expLangTypes = ["If-then","Whenever","Provided that"];	
 			label = AGORAParameters.getInstance().MOD_PON;
-			//_dbType = "MP";
-			
 		}
 		
 		public static function getInstance():ModusPonens{
@@ -103,10 +100,8 @@ package Controller.logic
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
-			
 			//the inference is an implication
 			inferenceModel.connectingString = StatementModel.IMPLICATION;
-			
 			//push inference into claim's statement
 			var inferenceStatement:SimpleStatementModel = argumentTypeModel.inferenceModel.statements[1];
 			claimModel.statement.addDependentStatement(inferenceStatement);

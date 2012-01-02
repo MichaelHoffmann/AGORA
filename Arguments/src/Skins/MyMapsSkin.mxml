@@ -70,7 +70,9 @@
 			 text.notLoggedIn="{Language.lookup(&quot;MyMaps&quot;)}"
 			 />
 	
-	<s:Scroller width="100%" top="40" height="300">
+	<mx:Label id="loadingDisplay" width = "100%" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
+	
+	<s:Scroller width="100%" top="56" height="300">
 		<s:Group id="contentGroup" bottom="30">
 			<s:Group id="mapsGroup" 
 					 visible.notLoggedIn="false"
@@ -87,6 +89,7 @@
 			</s:Group>
 		</s:Group>
 	</s:Scroller>
+	
 	
 	<s:Group id="controlBarGroup" bottom="10" visible.loggedIn="true" visible.notLoggedIn="false">
 		<s:layout>
