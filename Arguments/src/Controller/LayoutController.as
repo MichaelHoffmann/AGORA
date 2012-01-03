@@ -118,7 +118,7 @@ package Controller
 		
 		//------------------------- other public functions --------------------//
 		public function setApplicationLayoutProperties():void{
-			map.agora.height =  map.stage.stageHeight - map.topPanel.height - map.container.gap * 2 - 30;
+			map.agora.height =  map.stage.stageHeight - map.topPanel.height - 10 * 2 - 30;
 			map.agora.width = map.stage.stageWidth - 30;
 			map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
 			map.topPanel.width = map.stage.stageWidth;

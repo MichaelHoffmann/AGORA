@@ -25,6 +25,7 @@ package Controller
 	import components.Map;
 	import components.MenuPanel;
 	import components.Option;
+	import components.StatusBar;
 	
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
@@ -48,6 +49,8 @@ package Controller
 		private var agoraParameters:AGORAParameters;
 		private var map:Map;
 		private var menu:AGORAMenu;
+		private var sbar:StatusBar;
+		
 		public function ArgumentController(singletonEnforcer:SingletonEnforcer)
 		{
 			instance = this;	
@@ -629,7 +632,7 @@ package Controller
 		protected function onFault(event:AGORAEvent):void{
 			CursorManager.removeAllCursors();
 			model.requested = false;
-			Alert.show(AGORAParameters.getInstance().NETWORK_ERROR);
+			sbar.displayError();
 		}
 	}
 }

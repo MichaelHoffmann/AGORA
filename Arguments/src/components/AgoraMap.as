@@ -22,10 +22,13 @@ package components
 	
 	import classes.Language;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.text.TextField;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	import flash.utils.getDefinitionByName;
@@ -36,6 +39,7 @@ package components
 	import mx.collections.ArrayCollection;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
+	import mx.controls.Label;
 	import mx.controls.Menu;
 	import mx.core.DragSource;
 	import mx.core.UIComponent;
@@ -109,6 +113,7 @@ package components
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
 			firstClaimHelpText.visible = false;
+		
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -137,12 +142,15 @@ package components
 			super.commitProperties();
 			if(removePreviousElements){
 				removeAllChildren();
+				removeAllElements();
 				_removePreviousElements = false;
 			}
+			
 			try{
 				removeChild(drawUtility);
 			}catch(e:Error){
 			}
+			
 			addChildAt(drawUtility, 0);
 			try{
 				removeChild(helpText);
@@ -204,7 +212,6 @@ package components
 						addChild(argumentPanel);
 					}
 				}
-				
 			}
 			
 			
@@ -316,11 +323,10 @@ package components
 									drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y + 30);
 								}
 							}
-						}
-						
+						}	
 					}
 				}
 			}
-		}		
+		}
 	}
 }

@@ -10,6 +10,7 @@ package Controller
 	
 	import components.AgoraMap;
 	import components.GridPanel;
+	import components.StatusBar;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -19,13 +20,16 @@ package Controller
 	{
 		private static var instance:LoadController;
 		private var model:AGORAModel;
+		private var agoraMap:AgoraMap;
+		private var sbar:StatusBar;
 		
 		public function LoadController(singletonEnforcer:SingletonEnforcer)
-		{
+		{	sbar = FlexGlobals.topLevelApplication.map.sBar;
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.MAP_LOADED, onMapLoaded);
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.MAP_LOADING_FAILED, onMapLoadingFailed);
 			instance = this;
 			model = AGORAModel.getInstance();
+			agoraMap = FlexGlobals.topLevelApplication.map.agoraMap;
 		}
 		
 		//----------------------Get Instance------------------------------//
@@ -39,14 +43,14 @@ package Controller
 		//-----------------Update Map -----------------------------------//
 		public function fetchMapData():void{
 			if(!model.requested){
+				sbar.displayLoading();
 				model.requested = true;
 				model.agoraMapModel.loadMapModel();
 			}
 		}
 		
 		protected function onMapLoaded(event:AGORAEvent):void{
-			
-			var agoraMap:AgoraMap = FlexGlobals.topLevelApplication.map.agoraMap;
+			sbar.hideStatus();
 			//get the vector of elements to be removed, and then remove
 			//them from map
 			var gridPanel:GridPanel;

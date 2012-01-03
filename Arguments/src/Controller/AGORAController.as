@@ -35,6 +35,7 @@ package Controller
 		private var map:Map;
 		
 		private var userSession:UserSessionModel;
+		private var mapModel:AGORAMapModel;
 		
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
@@ -51,7 +52,7 @@ package Controller
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
 			userSession = AGORAModel.getInstance().userSessionModel;
-			
+			mapModel = AGORAModel.getInstance().agoraMapModel;
 		}
 		
 		//----------------------Get Instance------------------------------//
@@ -126,7 +127,6 @@ package Controller
 		}
 		
 		protected function onMyMapsDeletionFailed(event:AGORAEvent):void{
-			
 		}
 		
 		//--------------------On App State Set--------------------------//
@@ -174,13 +174,15 @@ package Controller
 			}
 		}
 		
-		
 		//----------- other public functions --------------------//
 		public function hideMap():void{
 			AGORAModel.getInstance().state = AGORAModel.MENU;
 			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
-			FlexGlobals.topLevelApplication.map.agoraMap.removeAllChildren();
-			FlexGlobals.topLevelApplication.map.agoraMap.removeAllElements();
+			//reinitializes the map model
+			mapModel.reinitializeModel();
+			//initlizes the children hash map, and 
+			//sets the flag to delete all children
+			map.agoraMap.initializeMapStructures();
 			FlexGlobals.topLevelApplication.map.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
 			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
