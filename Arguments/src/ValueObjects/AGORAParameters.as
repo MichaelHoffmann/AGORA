@@ -153,7 +153,8 @@ package ValueObjects
 			deleteURL = "http://agora.gatech.edu/release/remove.php";
 			insertURL = "http://agora.gatech.edu/release/insert.php";
 			loadMapURL = "http://agora.gatech.edu/release/load_map.php";
-			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";	
+			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
+			
 			initialize();		
 		}
 		

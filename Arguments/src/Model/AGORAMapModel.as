@@ -51,11 +51,8 @@ package Model
 		private var _ID:int;
 		private var _statementWidth:int;
 		private var _deletedList:Vector.<Object>;
-		
 		private var _mapConstructedFromArgument:Boolean;
-		
-		
-		
+		private var _argUnderConstruction:Boolean;
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
@@ -102,6 +99,16 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get argUnderConstruction():Boolean
+		{
+			return _argUnderConstruction;
+		}
+
+		public function set argUnderConstruction(value:Boolean):void
+		{
+			_argUnderConstruction = value;
+		}
+
 		public function get deletedList():Vector.<Object>
 		{
 			return _deletedList;
@@ -445,7 +452,6 @@ package Model
 					statementModel.statements.push(simpleStatement);
 					statementModel.nodeTextIDs.push(nodetextVO.ID);
 					textboxHash[simpleStatement.ID] = simpleStatement;
-					
 				}	
 			}
 			return true;
@@ -464,6 +470,9 @@ package Model
 							argumentTypeModel = connectionListHash[obj.connID];
 						}
 						
+						
+						dispatchEvent(new AGORAEvent(AGORAEvent.UNLINK_SCHEME, null, argumentTypeModel));
+						
 						argumentTypeModel.dbType = obj.type;					
 						
 						
@@ -481,27 +490,30 @@ package Model
 						argumentTypeModel.xgrid = obj.x;
 						argumentTypeModel.ygrid = obj.y;
 						
-						
 						connectionsHash[obj.connID] = argumentTypeModel;
 						processSourceNode(obj, connectionsHash, nodeHash);
-						dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel)); //takes care of linking
+						dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel)); //takes care of linking	
 					}else if(obj.type == StatementModel.OBJECTION){
 						processSourceNode(obj, connectionsHash, nodeHash);
 						//linking could be done directly
-					}
-					
+					}	
 				}
 				else{
 					if(connectionListHash.hasOwnProperty(obj.connID)){
 						var argumentTypeM:ArgumentTypeModel = connectionListHash[obj.connID];
 						var claimModel:StatementModel = argumentTypeM.claimModel;
 						var index:int = claimModel.supportingArguments.indexOf(argumentTypeM);
+						//raise an event -- Controller will unlink the statements
+						dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_DELETED, null, argumentTypeM));
+						//delete it from claim's list of supporting arguments
 						claimModel.supportingArguments.splice(index, 1);
+						//add it to deleted list, so that corresponding view components can 
+						//be removed from the map view.
 						deletedList.push(argumentTypeM);
+						//delete it from the hash map of present connections
 						delete connectionListHash[obj.connID];
 					}
 				}
-				
 			}
 			return true;
 		}
@@ -625,20 +637,21 @@ package Model
 				var argumentTypeModel:ArgumentTypeModel = sm.argumentTypeModel;
 				if(sm.statementFunction == StatementModel.STATEMENT){
 					if(argumentTypeModel != null){
+						var newY:int = sm.ygrid + diffy;
 						for each(var reason:StatementModel in argumentTypeModel.reasonModels){
 							if(reason == sm ){
 								if(reason != argumentTypeModel.reasonModels[0])
 								{
-									requestXML = moveSupportingStatements(reason, diffx, diffy, requestXML);	
+									requestXML = moveSupportingStatements(reason, diffx, newY - reason.ygrid, requestXML);	
 								}else{
 									if(reason.xgrid == argumentTypeModel.xgrid){
-										requestXML = moveSupportingStatements(reason, 0, diffy, requestXML);
+										requestXML = moveSupportingStatements(reason, 0, newY - reason.ygrid, requestXML);
 									}else{
-										requestXML = moveSupportingStatements(reason, diffx, diffy, requestXML);
+										requestXML = moveSupportingStatements(reason, diffx, newY - reason.ygrid, requestXML);
 									}
 								}
 							}else{
-								requestXML = moveSupportingStatements(reason, 0, diffy, requestXML); 
+								requestXML = moveSupportingStatements(reason, 0, newY - reason.ygrid, requestXML); 
 							}
 						}
 					}else{
@@ -711,8 +724,15 @@ package Model
 					for(var i:int=0; i<statementModel.nodeTextIDs.length; i++){
 						xml.appendChild(<nodetext ID={statementModel.nodeTextIDs[i]} textboxID={statementModel.statements[i].ID} />);
 					}
+					
+					if(statementModel.statementFunction == StatementModel.INFERENCE){
+						var argTM:ArgumentTypeModel = statementModel.argumentTypeModel;
+						xml.@y = argTM.ygrid + diffy;
+					}
+					else{
+						xml.@y = int(xml.@y) + diffy;
+					}
 					xml.@x = int(xml.@x) + diffx;
-					xml.@y = int(xml.@y) + diffy;
 					requestXML.appendChild(xml);
 					for each(atm in statementModel.supportingArguments){
 						list.push(atm);
@@ -733,6 +753,7 @@ package Model
 			newPanels = new ArrayCollection;
 			newConnections = new ArrayCollection;
 			timestamp = "0";
+			argUnderConstruction = false;
 		}
 		
 		//----------------------- Generic Fault Event  Handler-------------------------------//

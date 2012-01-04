@@ -89,7 +89,6 @@
 			
 			override protected function commitProperties():void{
 				super.commitProperties();
-				trace(" In MyMapsPanel: commitProperties" + skin.currentState);
 				if( skin.currentState == "loggedIn")
 				{ 
 					titleDisplay.text = AGORAModel.getInstance().userSessionModel.firstName+ "'s" + " maps";

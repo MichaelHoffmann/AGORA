@@ -24,6 +24,7 @@ package Events
 		public static const MAP_LOADED:String = "MapLoaded";
 		public static const MAP_LOADING_FAILED:String = "MapLoadingFailed";
 		public static const STATEMENT_TYPE_TOGGLED:String = "StatementTypeToggled";
+		public static const STATEMENT_TYPE_TOGGLE_FAILED:String = "StatementTypeToggleFailed";
 		public static const POSITIONS_UPDATED:String = "PositionsUpdated";
 		public static const TEXT_SAVED:String = "TextSaved";
 		public static const STATEMENT_ADDED:String = "StatementAdded";
@@ -40,7 +41,8 @@ package Events
 		public static const MAP_INFO_UPDATE_FAILED:String = "MapInfoUpdateFailed";
 		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
-	
+		public static const UNLINK_SCHEME:String = "UnlinkScheme";
+		public static const ARGUMENT_DELETED:String = "ArgumentDeleted";
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
 		

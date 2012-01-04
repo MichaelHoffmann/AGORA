@@ -56,20 +56,23 @@ package Controller.logic
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 			
 			//remove negativity of the reason
-			reasonModels[0].negated = false;
-			
-			//remove links from reason to inference
-			var simpleStatement:SimpleStatementModel;
-			var stmtToBeUnlinked:SimpleStatementModel;
-			
-			simpleStatement = reasonModels[0].statement;
-			stmtToBeUnlinked = inferenceModel.statements[1];
-			removeDependence(simpleStatement, stmtToBeUnlinked);
+			for each(var reasonM:StatementModel in argumentTypeModel.reasonModels){
+				reasonM.negated = false;
+				
+				//remove links from reason to inference
+				var simpleStatement:SimpleStatementModel;
+				var stmtToBeUnlinked:SimpleStatementModel;
+				
+				simpleStatement = reasonM.statement;
+				stmtToBeUnlinked = inferenceModel.statements[1];
+				removeDependence(simpleStatement, stmtToBeUnlinked);
+			}
 			
 			simpleStatement = claimModel.statement;
 			stmtToBeUnlinked = inferenceModel.statements[0];
 			removeDependence(simpleStatement, stmtToBeUnlinked);	
 		}
+		
 		override public function link(argumentTypeModel:ArgumentTypeModel):void{
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;

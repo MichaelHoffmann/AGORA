@@ -49,11 +49,11 @@ package Controller.logic
 			
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
-					reasonText = reasonModels[i].statement.text;
+					reasonText = reasonModels[0].statement.text;
 					for(i=1; i<reasonModels.length; i++){
 						reasonText = reasonText + " " + Language.lookup("ArgAndIf") + " "+ reasonModels[i].statement.text;
 					}
-
+					
 					output = Language.lookup("ArgIf") + reasonText; 
 					output = output + Language.lookup("ArgThen") + claimModel.statement.text;
 					break;
@@ -62,7 +62,7 @@ package Controller.logic
 					output = reasonText + Language.lookup("ArgImplies") + claimModel.statement.text;
 					break;
 				case langTypes[2]:
-
+					
 					output = Language.lookup("ArgWhenever");
 					reasonText = reasonModels[0].statement.text;
 					for(i=1; i<reasonModels.length; i++){
@@ -122,13 +122,12 @@ package Controller.logic
 				trace("ModusPonens::deleteLinks:");
 				trace(error.message);
 			}
-			
 			try{
-			for(var i:int = 0; i < argumentTypeModel.reasonModels.length; i++){
-				statement =  argumentTypeModel.reasonModels[i].statement;
-				modelToBeRemoved = argumentTypeModel.inferenceModel.statements[0];
-				removeDependence(statement, modelToBeRemoved);	
-			}
+				for(var i:int = 0; i < argumentTypeModel.reasonModels.length; i++){
+					statement =  argumentTypeModel.reasonModels[i].statement;
+					modelToBeRemoved = argumentTypeModel.inferenceModel.statements[0];
+					removeDependence(statement, modelToBeRemoved);	
+				}
 			}catch(error:Error){
 				trace(error.message);
 			}

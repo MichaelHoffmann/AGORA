@@ -25,6 +25,7 @@ package Controller
 	import mx.core.FlexGlobals;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
+	import mx.states.State;
 	
 	import spark.components.Group;
 	
@@ -36,11 +37,13 @@ package Controller
 		
 		private var userSession:UserSessionModel;
 		private var mapModel:AGORAMapModel;
+		private var model:AGORAModel;
 		
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
 			instance = this;
+			model = AGORAModel.getInstance();
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.MAP_LIST_FETCHED, onMapListFetched);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MY_MAPS_LIST_FETCHED, onMyMapsListFetched);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETED, onMyMapsDeleted);
@@ -133,9 +136,11 @@ package Controller
 		protected function onAppStateSet(event:AGORAEvent):void{
 			//stop timer for AGORA Menu
 			if(AGORAModel.getInstance().state == AGORAModel.MAP){
-				FlexGlobals.topLevelApplication.agoraMenu.timer.stop();
+				FlexGlobals.topLevelApplication.agoraMenu.timer.reset();
+				map.agoraMap.timer.start();
 			}
 			else{
+				map.agoraMap.timer.reset();
 				FlexGlobals.topLevelApplication.agoraMenu.timer.start();
 			}
 		}
@@ -183,12 +188,25 @@ package Controller
 			//initlizes the children hash map, and 
 			//sets the flag to delete all children
 			map.agoraMap.initializeMapStructures();
-			FlexGlobals.topLevelApplication.map.visible = false;
+			map.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
 			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
-			FlexGlobals.topLevelApplication.map.agoraMap.timer.reset();
+			map.agoraMap.helpText.visible = false;
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
+		}
+		
+		public function showMap():void{
+			model.state = AGORAModel.MAP;
+			model.agoraMapModel.reinitializeModel();
+			//hide and show view components
+			menu.visible = false;
+			map.visible = true;
+			map.agora.visible = true;
+			//reinitialize map view
+			map.agoraMap.initializeMapStructures();
+			//fetch data
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		//------------------------Creating a Map---------------//

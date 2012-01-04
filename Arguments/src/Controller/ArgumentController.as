@@ -21,6 +21,7 @@ package Controller
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.GridPanel;
+	import components.HelpText;
 	import components.LAMWorld;
 	import components.Map;
 	import components.MenuPanel;
@@ -67,6 +68,8 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
 			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_TYPE_ADDED, setArgumentTypeModelEventListeners);
 			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
+			model.agoraMapModel.addEventListener(AGORAEvent.UNLINK_SCHEME, onUnlinkScheme);
+			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_DELETED, onUnlinkScheme);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -76,6 +79,9 @@ package Controller
 			}
 			return instance;
 		}
+		
+		
+		
 		
 		//--------------------- Other public function -------------------//
 		public function removeOption(event:AGORAEvent):void{
@@ -129,7 +135,7 @@ package Controller
 			map.lamWorld.visible = true;
 			menu.visible = false;
 		}
-
+		
 		
 		
 		//-------------------Start with Claim----------------------------//
@@ -169,6 +175,9 @@ package Controller
 		
 		//----------------- Adding an Argument -------------------------------//
 		public function addSupportingArgument(statementModel:StatementModel):void{
+			if(checkArgUnderConstruction()){
+				return;
+			}
 			if(!AGORAModel.getInstance().requested){
 				if(statementModel.firstClaim){//first claim
 					if(statementModel.supportingArguments.length == 0){
@@ -197,6 +206,7 @@ package Controller
 				}
 				//call the function
 				AGORAModel.getInstance().requested = true;
+				model.agoraMapModel.argUnderConstruction = true;
 				statementModel.addSupportingArgument(nxgrid);
 			}
 		}
@@ -206,7 +216,20 @@ package Controller
 			LoadController.getInstance().fetchMapData(); 
 		}
 		
+		protected function onArgumentCreationFailed(event:AGORAEvent):void{
+			Alert.show(Language.lookup( "ArgumentAdditionFailed"));
+			model.agoraMapModel.argUnderConstruction = false;
+			LoadController.getInstance().fetchMapData();
+		}
+		
 		//------------------ Adding a Reason -------------------------------------//
+		public function addReasonToExistingArgument(argumentTypeModel:ArgumentTypeModel):void{
+			if(checkArgUnderConstruction()){
+				return;
+			}
+			addReason(argumentTypeModel);
+		}
+		
 		public function addReason(argumentTypeModel:ArgumentTypeModel):void{
 			var x:int;
 			var y:int;
@@ -249,6 +272,20 @@ package Controller
 		}
 		
 		//----------------- Construct Argument -----------------------------//
+		public function initiateArgumentConstruction(argumentTypeModel:ArgumentTypeModel):void{
+			if(checkArgUnderConstruction()){
+				return;
+			}
+			var helpText:HelpText = map.agoraMap.helpText;
+			helpText.visible = true;
+			helpText.parent.setChildIndex(helpText, map.agoraMap.numChildren -1);
+			//get the first reason
+			var firstReason:ArgumentPanel = AgoraMap(helpText.parent).panelsHash[ argumentTypeModel.reasonModels[0].ID];
+			helpText.x = firstReason.x + firstReason.width + 30;
+			helpText.y = firstReason.y;
+			constructArgument(argumentTypeModel);
+		} 
+		
 		public function constructArgument(argumentTypeModel:ArgumentTypeModel):void{
 			if(!argumentTypeModel.reasonsCompleted){
 				//make inference visible
@@ -293,7 +330,7 @@ package Controller
 			
 			//show the menu
 			//if(argumentTypeModel.logicClass != agoraParameters.DIS_SYLL && argumentTypeModel.logicClass != agoraParameters.NOT_ALL_SYLL){
-				schemeSelector.visible = true;
+			schemeSelector.visible = true;
 			//}
 		}
 		
@@ -343,13 +380,21 @@ package Controller
 			CursorManager.removeBusyCursor();
 		}
 		
+		protected function onStatementTogglingFailed(event:AGORAEvent):void{
+			Alert.show(Language.lookup("StatementToggleFailed"));
+		}
+		
 		//--------------------- delete Map -------------------------------//
 		public function deleteNodes(gridPanel:GridPanel):void{
+			if(checkArgUnderConstruction()){
+				return;
+			}
 			if(!AGORAModel.getInstance().requested){
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
 						AGORAModel.getInstance().requested = true;
+						map.sBar.displayLoading();
 						model.deleteMe();
 					}
 					else{
@@ -368,6 +413,7 @@ package Controller
 						}
 					}
 					AGORAModel.getInstance().requested = true;
+					map.sBar.displayLoading();
 					model.deleteMe();
 				}
 			}
@@ -375,7 +421,13 @@ package Controller
 		
 		public function onStatementDeleted(event:AGORAEvent):void{
 			AGORAModel.getInstance().requested = false;
+			map.sBar.hideStatus();
 			LoadController.getInstance().fetchMapData();
+		}
+		
+		protected function onArgumentDeleted(event:AGORAEvent):void{
+			var argTM:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			
 		}
 		
 		//------------------ Building by Argument Scheme ------------------//
@@ -394,16 +446,18 @@ package Controller
 				//call the model's update text function
 				AGORAModel.getInstance().requested = true;
 				statementModel.saveTexts();
-				CursorManager.setBusyCursor();
+				map.sBar.displayLoading();
 			}
 		}
 		protected function textSaved(event:AGORAEvent):void{
 			AGORAModel.getInstance().requested = false;
+			map.sBar.hideStatus();
 			var statementModel:StatementModel = StatementModel(event.eventData);
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
 			argumentPanel.state = ArgumentPanel.DISPLAY;
 			CursorManager.removeAllCursors();
 			onTextEntered(argumentPanel);
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		//------------------- configuration functions -----------------//
@@ -418,6 +472,7 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.STATEMENTS_DELETED, onStatementDeleted);
 			statementModel.addEventListener(AGORAEvent.OBJECTION_CREATED, onObjectionCreated);
 			statementModel.addEventListener(AGORAEvent.CREATING_OBJECTION_FAILED, onObjectionCreationFailed);
+			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLE_FAILED, onStatementTogglingFailed);
 		}
 		
 		protected function setArgumentTypeModelEventListeners(argumentTypeModelAddedEvent:AGORAEvent):void{
@@ -503,15 +558,14 @@ package Controller
 			if(!AGORAModel.getInstance().requested){
 				switch(scheme){
 					case AGORAParameters.getInstance().DIS_SYLL:
-						CursorManager.setBusyCursor();
 						AGORAModel.getInstance().requested = true;
+						map.sBar.displayLoading();
 						argumentTypeModel.updateConnection();
 						FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 						break;
 					case AGORAParameters.getInstance().NOT_ALL_SYLL:
-						//make cursor busy
-						CursorManager.setBusyCursor();
 						AGORAModel.getInstance().requested = true;
+						map.sBar.displayLoading();
 						argumentTypeModel.updateConnection();
 						FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 						break;
@@ -523,8 +577,8 @@ package Controller
 			if(!AGORAModel.getInstance().requested){
 				var argumentTypeModel:ArgumentTypeModel = argSchemeSelector.argumentTypeModel;
 				if(argumentTypeModel.language != AGORAParameters.getInstance().ONLY_IF || argumentTypeModel.reasonModels.length == 1){
-					CursorManager.setBusyCursor();
 					AGORAModel.getInstance().requested = true;
+					map.sBar.displayLoading();
 					argumentTypeModel.updateConnection();
 					FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
 				}
@@ -544,8 +598,6 @@ package Controller
 		
 		//------------------- Scheme Update Functions -----------------//
 		protected function onArgumentSchemeSet(event:AGORAEvent):void{
-			AGORAModel.getInstance().requested = false;
-			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			if(logicController != null){
@@ -553,10 +605,19 @@ package Controller
 			}	
 		}
 		
+		protected function onUnlinkScheme(event:AGORAEvent):void{
+			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			if(argumentTypeModel.logicClass != null){
+				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
+				logicController.deleteLinks(argumentTypeModel);
+			}
+		}
+		
 		protected function onArgumentSaved(event:AGORAEvent):void{
 			var agoraMap:AgoraMap = FlexGlobals.topLevelApplication.map.agoraMap;
 			AGORAModel.getInstance().requested=false;
-			CursorManager.removeAllCursors();
+			model.agoraMapModel.argUnderConstruction = false;
+			map.sBar.hideStatus();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var argumentSelector:ArgSelector = agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
 			argumentSelector.hide();
@@ -580,7 +641,12 @@ package Controller
 				claim.changeTypeInfo.depth = claim.parent.numChildren;
 				claim.changeTypeInfo.visible = true;
 			}
-			var reason:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.reasonModels[0].ID];
+			try{
+				var reason:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.reasonModels[0].ID];
+			}catch(typeError:TypeError){
+				recover();
+				return;
+			}
 			reason.changeTypeInfo.x = reason.x;
 			reason.changeTypeInfo.y = reason.y - reason.changeTypeInfo.getExplicitOrMeasuredHeight() - 10;
 			reason.changeTypeInfo.visible = true;
@@ -598,8 +664,8 @@ package Controller
 				logicController.deleteLinks(argumentTypeModel);
 				AGORAModel.getInstance().agoraMapModel.loadMapModel();
 			}
-			Alert.show(agoraParameters.ERROR_106);
-			Alert.show(agoraParameters.ERROR_103);
+			Alert.show(Language.lookup("ArgumentSaveFailed"));
+			fetchCompleteMap();
 		}
 		
 		//-------------------Event Handlers---------------------------//
@@ -607,10 +673,6 @@ package Controller
 			Alert.show("You are not allowed to add a reason to another user's argument");
 		}
 		
-		protected function onArgumentCreationFailed(event:AGORAEvent):void{
-			Alert.show("Argument creation failed");
-			LoadController.getInstance().fetchMapData();
-		}
 		
 		//------------------ other public functions ----------------------//
 		public function showAddMenu(argumentPanel:ArgumentPanel):void{
@@ -633,6 +695,30 @@ package Controller
 			CursorManager.removeAllCursors();
 			model.requested = false;
 			sbar.displayError();
+		}
+		
+		//----------------- Utility Functions -----------------//
+		protected function checkArgUnderConstruction():Boolean{
+			if(model.agoraMapModel.argUnderConstruction){
+				Alert.show(Language.lookup("ArgUnderConstruction"));
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		private function fetchCompleteMap():void{
+			model.agoraMapModel.timestamp = "0";
+			LoadController.getInstance().fetchMapData();
+		}
+		
+		protected function recover():void{
+			//reinitialize the map model
+			//reinitialize the map view
+			//load the map
+			model.agoraMapModel.reinitializeModel();
+			map.agoraMap.initializeMapStructures();
+			LoadController.getInstance().fetchMapData();
 		}
 	}
 }

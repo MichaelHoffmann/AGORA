@@ -14,6 +14,7 @@ package Controller.logic
 	
 	import flashx.textLayout.operations.SplitParagraphOperation;
 	
+	import mx.controls.Alert;
 	import mx.utils.ObjectUtil;
 	
 	

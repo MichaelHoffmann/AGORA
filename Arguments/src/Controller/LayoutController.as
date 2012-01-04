@@ -70,16 +70,12 @@ package Controller
 			yPadding = 0;
 			yArgDistances = 10;
 			yArgDisplay  = 7;
-			
 			model = AGORAModel.getInstance();
-			
 			model.agoraMapModel.addEventListener(AGORAEvent.POSITIONS_UPDATED, onPositionsUpdated);
 			map = FlexGlobals.topLevelApplication.map;
-			
 		}
 		
 		//-------------------------- get instance ----------------------//
-		
 		public function get model():AGORAModel
 		{
 			return _model;
@@ -102,10 +98,12 @@ package Controller
 			if(!model.requested){
 				if(gridPanel is MenuPanel){
 					model.requested = true;
+					map.sBar.displayLoading();
 					AGORAModel.getInstance().agoraMapModel.moveStatement(MenuPanel(gridPanel).model, diffx, diffy);
 				}
 				else if(gridPanel is ArgumentPanel){
 					model.requested = true;
+					map.sBar.displayLoading();
 					AGORAModel.getInstance().agoraMapModel.moveStatement(ArgumentPanel(gridPanel).model, diffx, diffy);
 				}
 			}
@@ -113,6 +111,7 @@ package Controller
 		
 		protected function onPositionsUpdated(event:AGORAEvent):void{
 			model.requested = false;
+			map.sBar.hideStatus();
 			LoadController.getInstance().fetchMapData();
 		}
 		

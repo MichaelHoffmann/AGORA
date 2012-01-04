@@ -379,6 +379,13 @@ package Model
 		
 		protected function onToggleTypeServiceResult(event:ResultEvent):void{
 			//check for error
+			if(event.result.hasOwnProperty("map")){
+				if(event.result.map.hasOwnProperty("error")){
+					dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_TYPE_TOGGLE_FAILED, null, this));
+				}
+			}else{
+				trace("server's code might have changed...");
+			}
 			statementType = statementType == UNIVERSAL? PARTICULAR: UNIVERSAL;
 			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_TYPE_TOGGLED, null, ID));
 		}

@@ -58,11 +58,11 @@ package Controller.logic
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
 					inferenceModel.statement.text = Language.lookup("ArgIfCap") + inferenceModel.statements[0].text + 
-						Language.lookup("ArgThen") + inferenceModel.statements[1].text;
+					Language.lookup("ArgThen") + inferenceModel.statements[1].text;
 					break;
 				case langTypes[1]:
 					inferenceModel.statement.text = inferenceModel.statements[0].text + Language.lookup("ArgImplies") +
-						inferenceModel.statements[1].text;
+					inferenceModel.statements[1].text;
 			}
 		}
 		
@@ -75,21 +75,18 @@ package Controller.logic
 			var i:int;
 			
 			var claimText:String = claimModel.statements[0].text;
-			var reasonText:String = reasonModels[0].statements[0].text;
-			
-			//remove Links normally
-			//claim to first reason
-			removeDependence(claimModel.statements[0], reasonModels[0].statements[0]);
-			//claim to inference
-			removeDependence(claimModel.statements[1], inferenceModel.statements[1]);
-			
-			//reasons
-			for(i=0; i<reasonModels.length - 1; i++){
-				removeDependence(reasonModels[i].statements[1], reasonModels[i+1].statements[0]);
+			if(reasonModels.length > 0){
+				var reasonText:String = reasonModels[0].statements[0].text;
+				removeDependence(claimModel.statements[0], reasonModels[0].statements[0]);
+				for(i=0; i<reasonModels.length - 1; i++){
+					removeDependence(reasonModels[i].statements[1], reasonModels[i+1].statements[0]);
+				}
+				//reason to inference
+				removeDependence(reasonModels[reasonModels.length - 1].statements[1], inferenceModel.statements[0]);
 			}
 			
-			//reason to inference
-			removeDependence(reasonModels[reasonModels.length - 1].statements[1], inferenceModel.statements[0]);
+			//claim to inference
+			removeDependence(claimModel.statements[1], inferenceModel.statements[1]);
 			
 			//remove temporary boxes
 			//from claim
@@ -99,9 +96,6 @@ package Controller.logic
 				}
 			}
 			
-			//from reason models
-			//There should be only one reason
-			//iterating is not required
 			for(i=0; i<reasonModels.length; i++){
 				for each(simpleStatement in reasonModels[i].statements){
 					if(simpleStatement.ID == SimpleStatementModel.TEMPORARY){
@@ -109,10 +103,12 @@ package Controller.logic
 					}
 				}
 			}
+			
 			//So that changes get reflected in the statement
 			claimModel.statements[0].updateStatementTexts();
-			reasonModels[0].statements[0].updateStatementTexts();
-			
+			if(reasonModels.length > 0){
+				reasonModels[0].statements[0].updateStatementTexts();
+			}
 		}
 		
 		override public function link(argumentTypeModel:ArgumentTypeModel):void{
@@ -127,7 +123,7 @@ package Controller.logic
 			claimModel.connectingString = StatementModel.IMPLICATION;
 			//reasonModels[i].connectingString = StatementModel.IMPLICATION;
 			
-		
+			
 			if(claimModel.firstClaim && claimModel.statements.length < 2){
 				claimModel.addTemporaryStatement();
 				claimModel.statements[1].text = "T";
@@ -139,8 +135,6 @@ package Controller.logic
 					reasonModels[i].connectingString = StatementModel.IMPLICATION;
 				}
 			}
-			
-		
 			
 			//connect the conclusion of the claim
 			//to the conclusion of the inference
@@ -157,7 +151,7 @@ package Controller.logic
 			//inference's premise
 			reasonModels[reasonModels.length - 1].statements[1].addDependentStatement(inferenceModel.statements[0]);
 			
-		
+			
 			
 			//update linked texts
 			claimModel.statements[0].updateStatementTexts();

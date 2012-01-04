@@ -2,6 +2,7 @@ package components
 {
 	import classes.Language;
 	
+	import flash.display.MovieClip;
 	import flash.text.TextField;
 	
 	import mx.controls.Label;
@@ -10,7 +11,8 @@ package components
 	
 	public class StatusBar extends UIComponent
 	{
-		public var status:TextField;
+		public var status:Label;
+		public var bgmc:MovieClip;
 		public function StatusBar()
 		{
 			super();
@@ -18,21 +20,21 @@ package components
 		
 		override protected function createChildren():void{
 			super.createChildren();
-			if(!status){
-				status = new TextField;
-				status.height = 15;
-				status.text = Language.lookup("Loading");
-				status.visible = false;
-				status.background = true;
-				status.backgroundColor = 0xf6e2c6;
-				addChild(status);
+			if(!bgmc){
+				bgmc = new MovieClip;
+				addChild(bgmc);
 			}
+			if(!status){
+				status = new Label;
+				status.text = Language.lookup("Loading");
+				addChild(status);
+			}	
 		}
 		
 		override protected function measure():void{
 			super.measure();
-			this.measuredWidth = status.width + 10;
-			this.measuredHeight = 15;
+			this.measuredWidth = status.getExplicitOrMeasuredWidth() + 10;
+			this.measuredHeight = status.getExplicitOrMeasuredHeight() + 5;
 		}
 		
 		override protected function commitProperties():void{
@@ -41,24 +43,29 @@ package components
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			status.x = 0;
-			status.y = 0;
+			bgmc.graphics.clear();
+			bgmc.graphics.beginFill(0xf6e2c6,1);
+			bgmc.graphics.drawRect(1,1,this.getExplicitOrMeasuredWidth()-1, this.getExplicitOrMeasuredHeight()-1);
+			bgmc.graphics.endFill();
+			bgmc.graphics.drawRect(0,0,this.getExplicitOrMeasuredWidth(), this.getExplicitOrMeasuredHeight());	
+			status.setActualSize(status.getExplicitOrMeasuredWidth(), this.getExplicitOrMeasuredHeight());
+			status.move(5,2.5);
 		}
 		
 		public function displayLoading():void{
 			status.text = Language.lookup("Loading");
-			status.visible = true;
+			visible = true;
 			CursorManager.setBusyCursor();
 		}
 		
 		public function displayError():void{
 			CursorManager.removeBusyCursor();
 			status.text = Language.lookup("NetworkError");
-			status.visible = true;
+			visible = true;
 		}
 		
 		public function hideStatus():void{
-			status.visible = false;
+			visible = false;
 			CursorManager.removeBusyCursor();
 		}
 	}

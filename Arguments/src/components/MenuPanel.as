@@ -121,7 +121,7 @@ package components
 			//This should happen only after changeSchemeBtn is created
 			if(changeSchemeBtn){
 				if(value == null){
-					changeSchemeBtn.label = "Scheme";
+					changeSchemeBtn.label = Language.lookup("Scheme");
 				}else{
 					changeSchemeBtn.label = value;
 				}
@@ -130,17 +130,10 @@ package components
 		
 		//---------- Event Handlers ---------------------------------//
 		protected function onAddReasonClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().addReason(model);
+			ArgumentController.getInstance().addReasonToExistingArgument(model);
 		}
 		protected function onChangeSchemeClicked(event:MouseEvent):void{
-			var helpText:HelpText = FlexGlobals.topLevelApplication.map.agoraMap.helpText;
-			helpText.visible = true;
-			helpText.parent.setChildIndex(helpText, numChildren -1);
-			//get the first reason
-			var firstReason:ArgumentPanel = AgoraMap(helpText.parent).panelsHash[model.reasonModels[0].ID];
-			helpText.x = firstReason.x + firstReason.width + 30;
-			helpText.y = firstReason.y;
-			ArgumentController.getInstance().constructArgument(model);
+			ArgumentController.getInstance().initiateArgumentConstruction(model);
 		}
 		
 		//------------------- Framework methods---------------------//
@@ -159,7 +152,7 @@ package components
 			addReasonBtn.percentWidth = 100;
 			
 			changeSchemeBtn = new Button;
-			changeSchemeBtn.label =  (model != null)?(model.logicClass != null? model.logicClass: 'Scheme') : 'Scheme';
+			changeSchemeBtn.label =  (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme");
 			changeSchemeBtn.percentWidth = 100;
 			titleDisplay.setStyle("textAlign","center");
 			vgroup.addElement(changeSchemeBtn);

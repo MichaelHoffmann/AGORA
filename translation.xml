@@ -983,6 +983,12 @@
 		<GER text="Anmeldung erfolgreich. Du kannst dich jetzt einloggen."/>
 	</RegisterSuccess>
 
+	<Scheme>
+		<EN-US text="Scheme" />
+		<RUS text="" /><!--TODO:Translate-->
+		<GER text="" /><!--TODO:Translate-->
+	</Scheme>
+
 	<SeeObjection>
 		<EN-US text="See the following objection against this claim in another argument map"/>
 		<RUS text="См. следующее возражение против этого заявления в другой карте аргумента"/>
@@ -1171,7 +1177,29 @@
 		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
 		<GER text="Yet to be translated"/><!-- TODO: Translate -->
 	</IllegalMap>
+	<ArgUnderConstruction>
+		<EN-US text="You have not completed constructing an argument. Please complete it before proceeding." />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</ArgUnderConstruction>
+	<StatementToggleFailed>
+		<EN-US text = "The statement type was not changed. Please try again" />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</StatementToggleFailed>
+	
+	<ArgumentSaveFailed>
+		<EN-US text = "There was problem in saving the argument. Please try again." />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</ArgumentSaveFailed>
 
+		
+	<ArgumentAdditionFailed>
+		<EN-US text = "Supporting argument was not added. Please try again." />
+		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
+		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+	</ArgumentAdditionFailed>
 	<!--NAMES OF ARGUMENTS-->
 			
 	<ConSyl>
