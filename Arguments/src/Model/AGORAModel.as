@@ -17,15 +17,12 @@ package Model
 		public var schemeAndLanguage:Dictionary;
 		public var dbSchemeHashMap:Dictionary;
 		public var dbLanguageHashMap:Dictionary;
-		
 		public var mapListModel:MapListModel;
-		
 		public var myMapsModel:MyMapsModel;
-		
 		[Bindable]
 		public var userSessionModel:UserSessionModel;
-		
 		public var agoraMapModel:AGORAMapModel;
+		public var projectListModel:ProjectListModel;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -41,15 +38,11 @@ package Model
 			myMapsModel = new MyMapsModel;
 			userSessionModel = new UserSessionModel;
 			agoraMapModel = new AGORAMapModel;
-			
+			projectListModel = new ProjectListModel();
 			reference = this;
-		
 			leafDelete = true;
-			
 			language = 'EN-US';
-			
 			initializeHashMaps();
-			
 		}
 		
 		

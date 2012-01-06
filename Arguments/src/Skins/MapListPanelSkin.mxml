@@ -54,6 +54,7 @@
 	<mx:Text id="loadingDisplay" width = "100%" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
 	<mx:Text width="100%" bottom ="10" textAlign="center" text="{Language.lookup(&quot;ClickToView&quot;)}">
 	</mx:Text>
+	
 	<fx:Script>
 		<![CDATA[
 			import classes.Language;

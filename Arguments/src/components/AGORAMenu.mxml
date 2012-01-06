@@ -71,10 +71,13 @@
 									title="{Language.lookup(&quot;MyMaps&quot;)}" 
 									skinClass="Skins.MyMapsSkin">
 			</components:MyMapsPanel>
-			<s:Panel  id="projects" 
+			
+			<components:ProjectListPanel id="projects" 
 					  title="{Language.lookup(&quot;ProjectPP&quot;)}" 
-					  width="200" minHeight="400">	
-			</s:Panel>
+					  width="200" height="400">	
+			</components:ProjectListPanel>
+			
+			
 		</s:HGroup>
 		<s:HGroup paddingLeft="25" paddingTop="25">
 			

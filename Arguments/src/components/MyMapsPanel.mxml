@@ -115,9 +115,7 @@
 						mapMetaData.mapName = map.@title;
 						mapMetaDataVector.push(mapMetaData);
 					}
-					
 					mapMetaDataVector.sort(MapMetaData.isGreater);
-					
 					for each( mapMetaData in mapMetaDataVector){
 						var myMapName:MyMapName = new MyMapName;
 						myMapName.mapId = mapMetaData.mapID;

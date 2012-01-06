@@ -13,6 +13,7 @@ package ValueObjects
 		public var mapRemoveURL:String;
 		public var insertURL:String;
 		public var loadMapURL:String;
+		public var projectListURL:String;
 		public var deleteURL:String;
 		public var nameUpdateURL:String;
 		public var gridWidth:int;
@@ -154,6 +155,7 @@ package ValueObjects
 			insertURL = "http://agora.gatech.edu/release/insert.php";
 			loadMapURL = "http://agora.gatech.edu/release/load_map.php";
 			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
+			projectListURL = "http://agora.gatech.edu/testing/list_projects.php";
 			
 			initialize();		
 		}

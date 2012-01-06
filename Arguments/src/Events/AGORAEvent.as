@@ -40,6 +40,8 @@ package Events
 		public static const MAP_INFO_UPDATE_FAILED:String = "MapInfoUpdateFailed";
 		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
+		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
+		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
 		

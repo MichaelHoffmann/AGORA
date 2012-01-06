@@ -5,6 +5,7 @@ package Controller
 	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.MapListModel;
+	import Model.ProjectListModel;
 	import Model.UserSessionModel;
 	
 	import ValueObjects.UserDataVO;
@@ -50,6 +51,8 @@ package Controller
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETION_FAILED, onMyMapsDeletionFailed);
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.FAULT, onFault);
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.ILLEGAL_MAP, handleIllegalMap);
+			model.projectListModel.addEventListener(AGORAEvent.PROJECT_LIST_FETCHED, onProjectListFetched);
+			model.projectListModel.addEventListener(AGORAEvent.FAULT, onFault);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -83,6 +86,19 @@ package Controller
 			menu.mapList.invalidateProperties();
 			menu.mapList.invalidateSize();
 			menu.mapList.invalidateDisplayList();
+		}
+		
+		//------------------Fetch Project List----------------------------//
+		public function fetchDataProjectList():void{
+			menu.projects.loadingDisplay.text = Language.lookup("Loading");
+			menu.projects.loadingDisplay.visible = true;
+			var projectListM:ProjectListModel = model.projectListModel;
+			projectListM.requestProjectList();	
+		}
+		protected function onProjectListFetched(event:AGORAEvent):void{
+			menu.projects.loadingDisplay.visible = false;
+			menu.projects.invalidateProperties();
+			menu.projects.invalidateDisplayList();
 		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
@@ -138,6 +154,7 @@ package Controller
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				fetchDataMyMaps();
 			}
+			fetchDataProjectList();
 		}
 		
 		//--------------------Freeze the app--------------//
@@ -160,6 +177,7 @@ package Controller
 			//If loading had been displayed, remove it
 			//For the Map List box
 			menu.mapList.loadingDisplay.text = Language.lookup("NetworkError");
+			menu.projects.loadingDisplay.text = Language.lookup("NetworkError");
 			if(userSession.uid){
 				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
 			}
