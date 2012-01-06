@@ -26,12 +26,9 @@ package Model
 		public var userSessionModel:UserSessionModel;
 		
 		public var agoraMapModel:AGORAMapModel;
-		private var _state:int;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
-		public static const MENU:int = 0;
-		public  static const MAP:int = 1;
 		
 		private var _leafDelete:Boolean;
 		
@@ -45,7 +42,6 @@ package Model
 			userSessionModel = new UserSessionModel;
 			agoraMapModel = new AGORAMapModel;
 			
-			state = MENU;
 			reference = this;
 		
 			leafDelete = true;
@@ -87,19 +83,6 @@ package Model
 		public function set leafDelete(value:Boolean):void
 		{
 			_leafDelete = value;
-		}
-
-		public function get state():int
-		{
-			return _state;
-		}
-
-		public function set state(value:int):void
-		{
-			if(_state != value){
-			 	_state = value;
-				dispatchEvent(new AGORAEvent(AGORAEvent.APP_STATE_SET));
-			}
 		}
 		
 		//---------------------------- Other public functions ---------------------------------------------//

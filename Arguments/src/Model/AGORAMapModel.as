@@ -470,9 +470,6 @@ package Model
 							argumentTypeModel = connectionListHash[obj.connID];
 						}
 						
-						
-						dispatchEvent(new AGORAEvent(AGORAEvent.UNLINK_SCHEME, null, argumentTypeModel));
-						
 						argumentTypeModel.dbType = obj.type;					
 						
 						
@@ -503,8 +500,6 @@ package Model
 						var argumentTypeM:ArgumentTypeModel = connectionListHash[obj.connID];
 						var claimModel:StatementModel = argumentTypeM.claimModel;
 						var index:int = claimModel.supportingArguments.indexOf(argumentTypeM);
-						//raise an event -- Controller will unlink the statements
-						dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_DELETED, null, argumentTypeM));
 						//delete it from claim's list of supporting arguments
 						claimModel.supportingArguments.splice(index, 1);
 						//add it to deleted list, so that corresponding view components can 

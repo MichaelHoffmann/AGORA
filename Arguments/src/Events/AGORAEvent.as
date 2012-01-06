@@ -13,7 +13,6 @@ package Events
 		public static const REGISTRATION_FAILED:String = "RegistrationFailed";
 		public static const MAPS_DELETED:String = "MapsDeleted";
 		public static const MAPS_DELETION_FAILED:String = "MapsDeletionFailed";
-		public static const APP_STATE_SET:String = "AppStateSet";
 		public static const SINGNED_OUT:String = "SignedOut";
 		public static const LOGIN_STATUS_SET:String = "LogInStatus";
 		public static const MAP_CREATED:String = "MapCreated";
@@ -41,8 +40,6 @@ package Events
 		public static const MAP_INFO_UPDATE_FAILED:String = "MapInfoUpdateFailed";
 		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
-		public static const UNLINK_SCHEME:String = "UnlinkScheme";
-		public static const ARGUMENT_DELETED:String = "ArgumentDeleted";
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
 		

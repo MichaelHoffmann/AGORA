@@ -48,7 +48,6 @@ package Controller
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MY_MAPS_LIST_FETCHED, onMyMapsListFetched);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETED, onMyMapsDeleted);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETION_FAILED, onMyMapsDeletionFailed);
-			AGORAModel.getInstance().addEventListener(AGORAEvent.APP_STATE_SET, onAppStateSet);
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.FAULT, onFault);
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.ILLEGAL_MAP, handleIllegalMap);
 			
@@ -132,19 +131,6 @@ package Controller
 		protected function onMyMapsDeletionFailed(event:AGORAEvent):void{
 		}
 		
-		//--------------------On App State Set--------------------------//
-		protected function onAppStateSet(event:AGORAEvent):void{
-			//stop timer for AGORA Menu
-			if(AGORAModel.getInstance().state == AGORAModel.MAP){
-				FlexGlobals.topLevelApplication.agoraMenu.timer.reset();
-				map.agoraMap.timer.start();
-			}
-			else{
-				map.agoraMap.timer.reset();
-				FlexGlobals.topLevelApplication.agoraMenu.timer.start();
-			}
-		}
-		
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
@@ -181,7 +167,6 @@ package Controller
 		
 		//----------- other public functions --------------------//
 		public function hideMap():void{
-			AGORAModel.getInstance().state = AGORAModel.MENU;
 			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
 			//reinitializes the map model
 			mapModel.reinitializeModel();
@@ -194,10 +179,13 @@ package Controller
 			map.agoraMap.helpText.visible = false;
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
+			
+			//timers
+			map.agoraMap.timer.reset();
+			menu.timer.start();
 		}
 		
 		public function showMap():void{
-			model.state = AGORAModel.MAP;
 			model.agoraMapModel.reinitializeModel();
 			//hide and show view components
 			menu.visible = false;
@@ -207,6 +195,9 @@ package Controller
 			map.agoraMap.initializeMapStructures();
 			//fetch data
 			LoadController.getInstance().fetchMapData();
+			//timers
+			map.agoraMap.timer.start();
+			menu.timer.reset();
 		}
 		
 		//------------------------Creating a Map---------------//

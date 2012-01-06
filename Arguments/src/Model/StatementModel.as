@@ -74,6 +74,7 @@ package Model
 			nodeTextIDs = new Vector.<int>(0,false);
 			statementFunction = modelType;
 			deleteState = true;
+			connectingString = IMPLICATION;
 			
 			//create toggleStatementTypeService
 			toggleStatementTypeService = new HTTPService;

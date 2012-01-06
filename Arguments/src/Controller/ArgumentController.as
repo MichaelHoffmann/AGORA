@@ -68,8 +68,6 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
 			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_TYPE_ADDED, setArgumentTypeModelEventListeners);
 			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_SCHEME_SET, onArgumentSchemeSet);
-			model.agoraMapModel.addEventListener(AGORAEvent.UNLINK_SCHEME, onUnlinkScheme);
-			model.agoraMapModel.addEventListener(AGORAEvent.ARGUMENT_DELETED, onUnlinkScheme);
 		}
 		
 		//---------------------Get Instance -----------------------------//
@@ -604,15 +602,7 @@ package Controller
 				logicController.link(argumentTypeModel);
 			}	
 		}
-		
-		protected function onUnlinkScheme(event:AGORAEvent):void{
-			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
-			if(argumentTypeModel.logicClass != null){
-				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
-				logicController.deleteLinks(argumentTypeModel);
-			}
-		}
-		
+				
 		protected function onArgumentSaved(event:AGORAEvent):void{
 			var agoraMap:AgoraMap = FlexGlobals.topLevelApplication.map.agoraMap;
 			AGORAModel.getInstance().requested=false;
