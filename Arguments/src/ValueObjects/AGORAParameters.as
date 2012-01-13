@@ -146,15 +146,15 @@ package ValueObjects
 		
 		public function AGORAParameters()
 		{
-			listMapsURL = "http://agora.gatech.edu/release/list_maps.php";
-			myMapsURL = "http://agora.gatech.edu/release/my_maps.php";
-			loginURL = "http://agora.gatech.edu/release/login.php";
-			registrationURL = "http://agora.gatech.edu/release/register.php";
-			mapRemoveURL = "http://agora.gatech.edu/release/remove_map.php";
-			deleteURL = "http://agora.gatech.edu/release/remove.php";
-			insertURL = "http://agora.gatech.edu/release/insert.php";
-			loadMapURL = "http://agora.gatech.edu/release/load_map.php";
-			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
+			listMapsURL = "http://agora.gatech.edu/rework/list_maps.php";
+			myMapsURL = "http://agora.gatech.edu/rework/my_maps.php";
+			loginURL = "http://agora.gatech.edu/rework/login.php";
+			registrationURL = "http://agora.gatech.edu/rework/register.php";
+			mapRemoveURL = "http://agora.gatech.edu/rework/remove_map.php";
+			deleteURL = "http://agora.gatech.edu/rework/remove.php";
+			insertURL = "http://agora.gatech.edu/rework/insert.php";
+			loadMapURL = "http://agora.gatech.edu/rework/load_map.php";
+			nameUpdateURL = "http://agora.gatech.edu/rework/mapinfo.php";
 			projectListURL = "http://agora.gatech.edu/testing/list_projects.php";
 			myProjectsURL = "http://agora.gatech.edu/testing/my_projects.php";
 			

@@ -640,6 +640,13 @@
 		<RUS text="Введите свою причину"/>
 		<GER text="Gib deinen Grund ein"/>
 	</EnterReason>
+
+	<EnterObjection>
+		<EN-US text="Enter your objection"/>
+		<RUS text=""/><!--TODO: Translate-->
+		<GER text=""/><!--TODO: Translate-->
+
+	</EnterObjection>
 		
 	<EnterQ>
 		<EN-US text="Enter your question"/>

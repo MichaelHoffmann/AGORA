@@ -394,6 +394,9 @@ package components
 						displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
 					}
 				}
+				else if(model.statementFunction == StatementModel.OBJECTION){
+					displayTxt.text = "[" + Language.lookup("EnterObjection") + "]";
+				}
 				else if(model.statementFunction == StatementModel.INFERENCE){
 					displayTxt.text = AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
 				}
@@ -405,7 +408,10 @@ package components
 					}else{
 						displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
 					}
-				}else if(model.statementFunction == StatementModel.INFERENCE){
+				}else if(model.statementFunction == StatementModel.OBJECTION){
+					displayTxt.text = "["+Language.lookup("EnterObjection") +"]";
+				}
+				else if(model.statementFunction == StatementModel.INFERENCE){
 					displayTxt.text =  AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
 				}
 			}

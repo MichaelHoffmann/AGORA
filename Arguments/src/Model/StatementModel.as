@@ -487,7 +487,7 @@ package Model
 		
 		//------------------- Objections -----------------------------//
 		public function object(x:int):void{
-				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text={SimpleStatementModel.DEPENDENT_TEXT} /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x} y={ygrid + 10} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
+				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x} y={ygrid + 10} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 				addObjection.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
