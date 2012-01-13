@@ -152,7 +152,7 @@ package Controller
 			if(!model.requested){
 				//Set the coordinates of the help text
 				map.agoraMap.firstClaimHelpText.visible = true;
-				map.agoraMap.firstClaimHelpText.y = 8 * agoraParameters.gridWidth;
+				map.agoraMap.firstClaimHelpText.y = 2 * agoraParameters.gridWidth;
 				map.agoraMap.firstClaimHelpText.x = 3 * agoraParameters.gridWidth + 180 + 25;
 				//instruct the model to add a first claim to itself
 				model.requested = true;
