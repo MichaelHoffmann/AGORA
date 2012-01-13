@@ -1143,8 +1143,8 @@
 	</WhatIsMainClaim>
 	
 	<RegistrationNote>
-		<EN-US text="Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. Additionally, the following information will become visible (only for registered users) by hovering over the username: first name; last name; URL (if provided).\n Please do not use your Georgia Tech or other passwords. You might choose a username that does not reveal your identity.\n Your e-mail address will never be given out publicly. It will be used only for providing you with a replacement password in the event you forget your current one.\n We recommend that you provide a URL so that other users can find a way to contact you, for example if they want to join a password protected project that you created or if they want to collaborate with you outside of AGORA-net. Provide your Facebook address or any other URL.\n The AGORA project is in compliance with Georgia Tech's Data Protection Safeguards. [the last 3 words linked to http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf]." />
-		<RUS text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя-автора, потому что должно быть ясно, кто заявляет что. Дополнительно, следующая информация станет видимой (только для зарегистрированных участников), нависая над именем пользователя: имя; фамилия; URL (если предоставлен) . \n Пожалуйста, не используйте свой Georgia Tech или другие пароли. Вы можете выбрать имя пользователя, которое не раскрывает Вашей личности. \n Ваш адрес электронной почты никогда не будет выдаваться публично. Он будет использоваться только для предоставления Вам пароля замены в случае, если  Вы забываете свой текущий. \n Мы рекомендуем, чтобы Вы обеспечили URL так, чтобы другие пользователи могли найти способ связаться с Вами, например если они хотят присоединиться к защищённому паролем проекту, который Вы создали или если они хотят сотрудничать с Вами за пределами СЕТИ АГОРЫ. Предоставьте Ваш Facebook-адрес для  обращения или любой другой URL. \n Проект АГОРА соответствует Техническим Гарантиям Защиты данных Georgia Tech's - Georgia Tech's Data Protection Safeguards. \n [последние 3 слова связаны с http://www.oit.gatech.edu/sites/de fault/files/GIT_Data_Protection_Safeguards.pdf]" />
+		<EN-US text="Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. Additionally, the following information will become visible (only for registered users) by hovering over the username: first name; last name; URL (if provided). Please do not use your Georgia Tech or other passwords. You might choose a username that does not reveal your identity. Your e-mail address will never be given out publicly. It will be used only for providing you with a replacement password in the event you forget your current one. We recommend that you provide a URL so that other users can find a way to contact you, for example if they want to join a password protected project that you created or if they want to collaborate with you outside of AGORA-net. Provide your Facebook address or any other URL. The AGORA project is in compliance with Georgia Tech's Data Protection Safeguards. [the last 3 words linked to http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf]." />
+		<RUS text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя-автора, потому что должно быть ясно, кто заявляет что. Дополнительно, следующая информация станет видимой (только для зарегистрированных участников), нависая над именем пользователя: имя; фамилия; URL (если предоставлен) .  Пожалуйста, не используйте свой Georgia Tech или другие пароли. Вы можете выбрать имя пользователя, которое не раскрывает Вашей личности.  Ваш адрес электронной почты никогда не будет выдаваться публично. Он будет использоваться только для предоставления Вам пароля замены в случае, если  Вы забываете свой текущий.  Мы рекомендуем, чтобы Вы обеспечили URL так, чтобы другие пользователи могли найти способ связаться с Вами, например если они хотят присоединиться к защищённому паролем проекту, который Вы создали или если они хотят сотрудничать с Вами за пределами СЕТИ АГОРЫ. Предоставьте Ваш Facebook-адрес для  обращения или любой другой URL.  Проект АГОРА соответствует Техническим Гарантиям Защиты данных Georgia Tech's - Georgia Tech's Data Protection Safeguards.  [последние 3 слова связаны с http://www.oit.gatech.edu/sites/de fault/files/GIT_Data_Protection_Safeguards.pdf]" />
 		<GER text="BEACHTE: Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. Außerdem werden die folgenden Informationen sichtbar (nur für registrierte Personen) wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). Bitte verwende kein Passwort, dass du schon für andere Zwecke verwendest. Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für den Fall genutzt, dass dir ein Ersatz-Passwort zugeschickt werden muss. Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. Das AGORA-Projekt folgt den Richtlinien die in Georgia Techs Data Protection Safeguards niedergelegt sind."/>
 	</RegistrationNote>
 	
@@ -1304,116 +1304,116 @@
 	<!--ARGUMENT DESCRIPTIONS-->
 	
 	<CondSylDesc>
-		<EN-US text="Conditional Syllogism:\n
-					p --> q\n
-					q --> r\n
+		<EN-US text="Conditional Syllogism:
+					p --> q
+					q --> r
 					Therefore, p --> r"/>
-		<RUS text="Условный силлогизм:\n
-					p --> q\n
-					q --> r\n
+		<RUS text="Условный силлогизм:
+					p --> q
+					q --> r
 					Поэтому, p --> r"/>
-		<GER text="Konditionaler Syllogismus:\n
-					p --> q\n
-					q --> r\n
+		<GER text="Konditionaler Syllogismus:
+					p --> q
+					q --> r
 					Deshalb, p --> r"/>					
 	</CondSylDesc>
 	
 	<ConsDilDesc>
-		<EN-US text="Constructive dilemma:\n
-					p v q\n
-					p --> r\n
-					q --> s\n
+		<EN-US text="Constructive dilemma:
+					p v q
+					p --> r
+					q --> s
 					Therefore, s v t"/>
-		<RUS text="Конструктивная дилемма:\n
-					p v q\n
-					p --> r\n
-					q --> s\n
+		<RUS text="Конструктивная дилемма:
+					p v q
+					p --> r
+					q --> s
 					Поэтому, s v t"/>
-		<GER text="Konstruktives Dilemma:\n
-					p v q\n
-					p --> r\n
-					q --> s\n
+		<GER text="Konstruktives Dilemma:
+					p v q
+					p --> r
+					q --> s
 					Deshalb, s v t"/>
 	</ConsDilDesc>
 	
 	<DisSylDesc>
-		<EN-US text="Disjunctive Syllogism:\n
-					p v q\n
-					not p\n
+		<EN-US text="Disjunctive Syllogism:
+					p v q
+					not p
 					Therefore, q"/>
-		<RUS text="Дизъюнктивный силлогизм:\n
-					p v q\n
-					not p\n
+		<RUS text="Дизъюнктивный силлогизм:
+					p v q
+					not p
 					Поэтому, q"/>
-		<GER text="Disjunktiver Syllogism:\n
-					p v q\n
-					nicht p\n
+		<GER text="Disjunktiver Syllogism:
+					p v q
+					nicht p
 					Deshalb, q"/>
 	</DisSylDesc>
 	
 	<EitherWayDesc>
-		<EN-US text="Either way:\n
-					p v q\n
-					p --> r\n
-					q --> r\n
+		<EN-US text="Either way:
+					p v q
+					p --> r
+					q --> r
 					Therefore, r"/>
-		<RUS text="Так или иначе:\n
-					p v q\n
-					p --> r\n
-					q --> r\n
+		<RUS text="Так или иначе:
+					p v q
+					p --> r
+					q --> r
 					Поэтому, r"/>
-		<GER text="Wie-auch-immer:\n
-					p v q\n
-					p --> r\n
-					q --> r\n
+		<GER text="Wie-auch-immer:
+					p v q
+					p --> r
+					q --> r
 					Deshalb, r"/>
 	</EitherWayDesc>
 
 	<EQinferring>
-		<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer\n
-		--p from q\n
-		--q from p\n
-		--not-p from not-q, or\n
-		--not-q from not-p\n"/>
-		<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести\n
-		- p от q\n
-		- q от p\n
-		- не-p от не-q, или\n
+		<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer
+		--p from q
+		--q from p
+		--not-p from not-q, or
+		--not-q from not-p"/>
+		<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести
+		- p от q
+		- q от p
+		- не-p от не-q, или
 		- не-q от не-p"/>
-		<GER text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder\n
-		-- p von q,\n
-		-- q von p,\n
-		--nicht-p von nicht-q, oder\n
-		-- nicht-q von nicht-p erschließen\n"/>
+		<GER text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder
+		-- p von q,
+		-- q von p,
+		--nicht-p von nicht-q, oder
+		-- nicht-q von nicht-p erschließen"/>
 	</EQinferring>
 	
 	<MPDesc>
-		<EN-US text="Modus ponens:\n
-					p --> q\n
-					p\n
-					Therefore, q\n"/>
-		<RUS text="Модус поненс:\n
-					p --> q\n
-					p\n
-					Поэтому, q\n"/>
-		<GER text="Modus ponens:\n
-					p --> q\n
-					p\n
-					Deshalb, q\n"/>
+		<EN-US text="Modus ponens:
+					p --> q
+					p
+					Therefore, q"/>
+		<RUS text="Модус поненс:
+					p --> q
+					p
+					Поэтому, q"/>
+		<GER text="Modus ponens:
+					p --> q
+					p
+					Deshalb, q"/>
 	</MPDesc>
 	
 	<MTDesc>
-		<EN-US text="Modus tollens:\n
-					p --> q\n
-					not q\n
+		<EN-US text="Modus tollens:
+					p --> q
+					not q
 					Therefore, not p"/>
-		<RUS text="Модус толленс:\n
-					p --> q\n
-					не q\n
+		<RUS text="Модус толленс:
+					p --> q
+					не q
 					Поэтому, не p"/>
-		<GER text="Modus tollens:\n
-					p --> q\n
-					nicht q\n
+		<GER text="Modus tollens:
+					p --> q
+					nicht q
 					Deshalb, not p"/>
 	</MTDesc>
 	
@@ -1432,9 +1432,9 @@
 	</AnotherReasonHelp>
 	
 	<AnotherReasonHelp2>
-		<EN-US text="Support:\n This adds another reason to your argument so that only the combination of all your reasons can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light, &quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of dependent reasons to get to your conclusion or whether you have several independent reasons for the same conclusion."/>
-		<RUS text="Поддержка: \n Это добавляет другую причину к Вашему аргументу так, что  только комбинация всех Ваших причин может поддержать Ваше заключение. Например, в аргументе &quot;Помидоры Петра вырастут, потому что он регулярно поливает их, и они получают достаточно света солнца, &quot; и причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно света солнца&quot; должно быть истиной, чтобы вывести заключение. Важно различить, нуждаетесь ли Вы в комбинации зависимых причин , чтобы получить  Ваше  заключение или есть ли у Вас несколько независимых причин для того же самого заключения."/>
-		<GER text="Anmerkung: \n Dies fügt einen weiteren Grund zu deinem Argument hinzu so dass allein die Verbindung all deiner Gründe deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Gründe für dieselbe Schlussfolderung hast."/>
+		<EN-US text="Support: This adds another reason to your argument so that only the combination of all your reasons can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light, &quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of dependent reasons to get to your conclusion or whether you have several independent reasons for the same conclusion."/>
+		<RUS text="Поддержка:  Это добавляет другую причину к Вашему аргументу так, что  только комбинация всех Ваших причин может поддержать Ваше заключение. Например, в аргументе &quot;Помидоры Петра вырастут, потому что он регулярно поливает их, и они получают достаточно света солнца, &quot; и причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно света солнца&quot; должно быть истиной, чтобы вывести заключение. Важно различить, нуждаетесь ли Вы в комбинации зависимых причин , чтобы получить  Ваше  заключение или есть ли у Вас несколько независимых причин для того же самого заключения."/>
+		<GER text="Anmerkung:  Dies fügt einen weiteren Grund zu deinem Argument hinzu so dass allein die Verbindung all deiner Gründe deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Gründe für dieselbe Schlussfolderung hast."/>
 		
 	</AnotherReasonHelp2>
 	
@@ -1550,31 +1550,31 @@
 	</ArgComplete>
 	
 	<Intro>
-		<EN-US text="Your selection will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true. The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.\n
----\n
-	The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated argument in AGORA is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.\n
----\n
+		<EN-US text="Your selection will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true. The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.
+---
+	The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated argument in AGORA is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.
+---
 	To make your argument as powerful, clear, and convincing as possible, try to get the structure and the formulations right, and select that argument scheme that fits best to what you want to argue."/>
-		<RUS text="Ваш выбор создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки - истинны. Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает  Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы  не сможете принять истинность «гаранта» и всех Ваших причин.\n
----\n
-	Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может  быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot; &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.\n
----\n
+		<RUS text="Ваш выбор создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки - истинны. Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает  Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы  не сможете принять истинность «гаранта» и всех Ваших причин.
+---
+	Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может  быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot; &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.
+---
 	Чтобы сделать Ваш аргумент столь же сильным, ясным, сколь и убедительным насколько возможно, попытайтесь разобраться в структуре и формулировках, и выбрать ту схему аргумента, которая подходит лучше всего к тому, что Вы хотите обсудить."/>
-		<GER text="Deine Auswahl wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind. Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird &quot;Garant&quot; genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.\n
-	Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten  zu unterstützen. Da  jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie &quot;wahrscheinlich&quot;, &quot;gewöhnlich&quot;, &quot;unter normalen Umständen&quot; oder &quot;möglicherweise&quot; abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen.\n
+		<GER text="Deine Auswahl wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind. Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird &quot;Garant&quot; genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.
+	Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten  zu unterstützen. Da  jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie &quot;wahrscheinlich&quot;, &quot;gewöhnlich&quot;, &quot;unter normalen Umständen&quot; oder &quot;möglicherweise&quot; abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen.
 	Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt."/>
 	</Intro>
 	
 	<ParticularOrUniversal>
-		<EN-US text="Determine whether this statement is a\n
-					--particular statement\n
+		<EN-US text="Determine whether this statement is a
+					--particular statement
 					--universal statement
 					"/>
-		<RUS text="Определите, является ли это утверждение\n
+		<RUS text="Определите, является ли это утверждение
 					- особое утверждение
 					- универсальное утверждение"/>
-		<GER text="Bestimme ob diese Aussage eine\n
-					-- Einzelaussage oder\n
+		<GER text="Bestimme ob diese Aussage eine
+					-- Einzelaussage oder
 					-- Allgemeine Aussage ist"/>
 	</ParticularOrUniversal>
 
