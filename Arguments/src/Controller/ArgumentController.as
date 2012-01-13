@@ -629,7 +629,7 @@ package Controller
 				claim.changeTypeInfo.x = claim.x;
 				claim.changeTypeInfo.y = claim.y - claim.changeTypeInfo.getExplicitOrMeasuredHeight() - 10;
 				claim.changeTypeInfo.depth = claim.parent.numChildren;
-				claim.changeTypeInfo.visible = true;
+				//claim.changeTypeInfo.visible = true;
 			}
 			try{
 				var reason:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.reasonModels[0].ID];
@@ -639,7 +639,7 @@ package Controller
 			}
 			reason.changeTypeInfo.x = reason.x;
 			reason.changeTypeInfo.y = reason.y - reason.changeTypeInfo.getExplicitOrMeasuredHeight() - 10;
-			reason.changeTypeInfo.visible = true;
+			//reason.changeTypeInfo.visible = true;
 			reason.changeTypeInfo.depth = reason.parent.numChildren;
 		}
 		

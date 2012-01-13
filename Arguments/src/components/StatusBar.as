@@ -54,7 +54,7 @@ package components
 		
 		public function displayLoading():void{
 			status.text = Language.lookup("Loading");
-			visible = true;
+			//visible = true;
 			CursorManager.setBusyCursor();
 		}
 		

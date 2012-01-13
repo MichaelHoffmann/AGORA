@@ -23,6 +23,7 @@ package Model
 		public var userSessionModel:UserSessionModel;
 		public var agoraMapModel:AGORAMapModel;
 		public var projectListModel:ProjectListModel;
+		public var myProjectsModel:ProjectsModel;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -39,6 +40,7 @@ package Model
 			userSessionModel = new UserSessionModel;
 			agoraMapModel = new AGORAMapModel;
 			projectListModel = new ProjectListModel();
+			myProjectsModel = new ProjectsModel;
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';

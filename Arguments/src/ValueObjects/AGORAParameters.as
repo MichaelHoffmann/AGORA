@@ -18,7 +18,7 @@ package ValueObjects
 		public var nameUpdateURL:String;
 		public var gridWidth:int;
 		public var version:String;
-		
+		public var myProjectsURL:String;
 		
 		
 		//Error Codes TODO: Enter these in the Languages.xml
@@ -156,6 +156,7 @@ package ValueObjects
 			loadMapURL = "http://agora.gatech.edu/release/load_map.php";
 			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
 			projectListURL = "http://agora.gatech.edu/testing/list_projects.php";
+			myProjectsURL = "http://agora.gatech.edu/testing/my_projects.php";
 			
 			initialize();		
 		}

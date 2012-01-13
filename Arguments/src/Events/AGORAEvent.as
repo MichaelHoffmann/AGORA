@@ -41,6 +41,7 @@ package Events
 		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
 		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
+		public static const MY_PROJECTS_LIST_FETCHED:String = "MyProjectsListFetched";
 		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";

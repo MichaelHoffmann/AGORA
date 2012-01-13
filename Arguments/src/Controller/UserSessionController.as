@@ -75,6 +75,7 @@ package Controller
 			removeSignInBox();
 			var agoraController:AGORAController = AGORAController.getInstance();
 			agoraController.fetchDataMyMaps();
+			agoraController.fetchDataMyProjects();
 		}
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{

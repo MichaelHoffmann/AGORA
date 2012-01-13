@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<components:TopPanel id="topPanel" width="100%" height="40">
 	</components:TopPanel>
-	<components:StatusBar id="sBar">
+	<components:StatusBar id="sBar" visible="false">
 	</components:StatusBar>
 	
 	<s:Group id="theMap">

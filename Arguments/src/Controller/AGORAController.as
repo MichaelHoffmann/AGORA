@@ -53,6 +53,8 @@ package Controller
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.ILLEGAL_MAP, handleIllegalMap);
 			model.projectListModel.addEventListener(AGORAEvent.PROJECT_LIST_FETCHED, onProjectListFetched);
 			model.projectListModel.addEventListener(AGORAEvent.FAULT, onFault);
+			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_LIST_FETCHED, onMyProjectsListFetched);
+			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -103,7 +105,7 @@ package Controller
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
-			if(AGORAModel.getInstance().userSessionModel.uid){
+			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				var statusNE:String = Language.lookup("NetworkError");
 				if(menu.myMaps.loadingDisplay.text == statusNE){
 					menu.myMaps.loadingDisplay.text = Language.lookup("Loading");
@@ -119,6 +121,21 @@ package Controller
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
 			FlexGlobals.topLevelApplication.invalidateProperties();
 			FlexGlobals.topLevelApplication.invalidateDisplayList();
+		}
+		
+		//------------------Fetch my Projects ------------------------------//
+		public function fetchDataMyProjects():void{
+			if(model.userSessionModel.loggedIn()){
+				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+				menu.myProjects.loadingDisplay.visible = true;
+				model.myProjectsModel.sendRequest();
+			}
+		}
+		
+		protected function onMyProjectsListFetched(event:AGORAEvent):void{
+			menu.myProjects.loadingDisplay.visible = false;
+			menu.myProjects.invalidateProperties();
+			menu.myProjects.invalidateDisplayList();
 		}
 		
 		//-------------------------Delete Maps-----------------------------//

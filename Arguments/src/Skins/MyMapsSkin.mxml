@@ -6,8 +6,9 @@
 		<![CDATA[
 			import Controller.UserSessionController;
 			
-			import mx.core.FlexGlobals;
 			import classes.Language;
+			
+			import mx.core.FlexGlobals;
 
 			protected function userInfoTxt_clickHandler(event:MouseEvent):void
 			{
@@ -83,7 +84,7 @@
 			</s:Group>
 			<s:Group id="labelGroup" visible.loggedIn="false" visible.notLoggedIn= "true">
 				<s:Label id="userInfoTxt" x="28" y="118" visible.loggedIn="false" visible.notLoggedIn="true"  click="userInfoTxt_clickHandler(event)" textDecoration="underline">
-					<s:text>Sign In to view your maps</s:text>
+					<s:text>{Language.lookup("SignInToViewMaps")}</s:text>
 				</s:Label>
 				
 			</s:Group>

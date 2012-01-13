@@ -77,6 +77,10 @@
 					  width="200" height="400">	
 			</components:ProjectListPanel>
 			
+			<components:Projects id="myProjects"
+								 title = "{Language.lookup('MyPPProjects')}"
+								 width="200" height="400">
+			</components:Projects>
 			
 		</s:HGroup>
 		<s:HGroup paddingLeft="25" paddingTop="25">
