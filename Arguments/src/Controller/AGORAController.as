@@ -169,7 +169,7 @@ package Controller
 		public function printMap():void{
 			var flexPrintJob:FlexPrintJob = new FlexPrintJob;
 			flexPrintJob.start();
-			flexPrintJob.printAsBitmap = true;
+			flexPrintJob.printAsBitmap = false;
 			flexPrintJob.addObject(map.agoraMap, FlexPrintJobScaleType.SHOW_ALL);
 			flexPrintJob.send();
 		}

@@ -667,8 +667,17 @@ package components
 		{
 			//Draw the top left box for moving stuff
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			topArea.graphics.clear();
 			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,40,40);		
+			topArea.graphics.drawRect(0,0,40,40);	
+			topArea.graphics.endFill();
+			//if(this.panelType != StatementModel.INFERENCE){
+			//	topArea.graphics.beginFill(uint("0xffffff"), 1);
+			//	topArea.graphics.drawRect(-2, topHG.getExplicitOrMeasuredHeight()+ 5, displayTxt.getExplicitOrMeasuredWidth(), displayTxt.getExplicitOrMeasuredHeight());
+			//	topArea.graphics.endFill();
+			//	topArea.graphics.lineStyle(2, uint("0xf0f0f0"), 1.0);
+			//	topArea.drawRoundRect(-2, topHG.getExplicitOrMeasuredHeight() + 5, displayTxt.getExplicitOrMeasuredWidth(), displayTxt.getExplicitOrMeasuredHeight());
+			//}
 		}
 	}	
 }
