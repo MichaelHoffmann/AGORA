@@ -236,6 +236,13 @@
 		<RUS text="особое утверждение"/>
 		<GER text="Einzelaussage"/>
 	</Particular>
+
+	<PrintMap>
+		<EN-US text="Print Map" />
+		<RUS text=""/><!--TODO Translate-->
+		<GER text=""/><!--TODO:Translate-->
+	</PrintMap>
+
 	
 	<Therefore>
 		<EN-US text="therefore" />

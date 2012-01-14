@@ -26,6 +26,8 @@ package Controller
 	import mx.core.FlexGlobals;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
+	import mx.printing.FlexPrintJob;
+	import mx.printing.FlexPrintJobScaleType;
 	import mx.states.State;
 	
 	import spark.components.Group;
@@ -164,6 +166,14 @@ package Controller
 		protected function onMyMapsDeletionFailed(event:AGORAEvent):void{
 		}
 		
+		public function printMap():void{
+			var flexPrintJob:FlexPrintJob = new FlexPrintJob;
+			flexPrintJob.start();
+			flexPrintJob.printAsBitmap = true;
+			flexPrintJob.addObject(map.agoraMap, FlexPrintJobScaleType.SHOW_ALL);
+			flexPrintJob.send();
+		}
+		
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
@@ -199,6 +209,8 @@ package Controller
 				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
 			}
 		}
+		
+		
 		
 		//----------- other public functions --------------------//
 		public function hideMap():void{
