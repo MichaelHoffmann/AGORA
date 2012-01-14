@@ -250,13 +250,14 @@ package components
 				if(model.supportingArguments.length > 0 || model.objections.length > 0){
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
-					//draw an arrow
-					drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 35);
-					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
-					drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 25);
+				
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
 					var fvlspy:int = argumentPanel.y + 30;
-					if(model.supportingArguments.length > 0){	
+					if(model.supportingArguments.length > 0){
+						//draw arrow
+						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 35);
+						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
+						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 25);
 						//First Vertical Line Finishing Point
 						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
 						var fvlfpy:int = (lastMenuPanel.y + 30);
@@ -308,13 +309,16 @@ package components
 						var lastObjection:StatementModel = layoutController.getBottomObjection(model);
 						if(lastObjection != null){
 							var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
+							fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 30;
+							fvlspy = argumentPanel.y + argumentPanel.getExplicitOrMeasuredHeight();
 							fvlfpy = bottomObjection.y + 30;
 							//draw a line from the first objection to the last objection
-							drawUtility.graphics.moveTo(fvlspx, fvlspy);
-							drawUtility.graphics.lineTo(fvlspx, fvlfpy);
-							//draw a line from the claim to the first vertical oint
-							drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth(), fvlspy);
+							//and an arrow
+							drawUtility.graphics.moveTo(fvlspx, fvlfpy);
 							drawUtility.graphics.lineTo(fvlspx, fvlspy);
+							drawUtility.graphics.lineTo(fvlspx-5, fvlspy +5);
+							drawUtility.graphics.moveTo(fvlspx, fvlspy);
+							drawUtility.graphics.lineTo(fvlspx+5, fvlspy+5);
 							for each(var obj:StatementModel in model.objections){
 								//horizontal line from the vertical line to the objection
 								if(panelsHash.hasOwnProperty(obj.ID)){

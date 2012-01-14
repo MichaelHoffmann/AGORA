@@ -357,8 +357,10 @@ package Model
 					inputXML.appendChild(<node ID={stmt.ID} />);
 				}
 			}
-			else if(this.argumentTypeModel.reasonModels.length == 1){
-				inputXML.appendChild(<node ID = {argumentTypeModel.inferenceModel.ID} />);
+			else if(this.statementFunction == StatementModel.STATEMENT){
+				if(this.argumentTypeModel.reasonModels.length == 1){
+					inputXML.appendChild(<node ID = {argumentTypeModel.inferenceModel.ID} />);
+				}
 			}
 			inputXML.appendChild(statementXML);
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
@@ -487,7 +489,14 @@ package Model
 		
 		//------------------- Objections -----------------------------//
 		public function object(x:int):void{
-				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x} y={ygrid + 10} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
+				var y:int;
+				if(objections.length == 0){
+					y = ygrid + 10;
+				}
+				else{
+					y = objections[objections.length-1].ygrid;
+				}
+				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 				addObjection.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}

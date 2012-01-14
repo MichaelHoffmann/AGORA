@@ -239,7 +239,7 @@ package components
 				BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
 				BindingUtils.bindProperty(this, "panelType", model, ["statementFunction"]);
 				BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
-			
+				
 				author = model.author;
 				statementsAddedDF = true;
 				invalidateProperties();
@@ -487,7 +487,9 @@ package components
 			stmtTypeLbl = new Label;
 			// default setting    	
 			
-			stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			if(model.statementFunction == StatementModel.STATEMENT){
+				stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			}
 			BindingUtils.bindProperty(stmtTypeLbl, "text",this, ["statementType"]);
 			stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
 			
@@ -639,7 +641,7 @@ package components
 				state = DISPLAY;
 				group.addElement(displayTxt);
 			}
-			//If the statement is an enabler.
+				//If the statement is an enabler.
 			else{
 				//remove all textboxes
 				inputs.splice(0,inputs.length);

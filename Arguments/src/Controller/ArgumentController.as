@@ -400,15 +400,24 @@ package Controller
 					}
 				}
 				else if(model.statementFunction == StatementModel.INFERENCE){
-					if(model.supportingArguments.length > 0){
+					if(model.supportingArguments.length > 0 || model.objections.length > 0){
 						Alert.show("You cannot delete a statement that is supported.");
 						return;
 					}
 					for each(var stmt:StatementModel in model.argumentTypeModel.reasonModels){
-						if(stmt.supportingArguments.length > 0){
+						if(stmt.supportingArguments.length > 0 || stmt.objections.length > 0){
 							Alert.show("One of the reasons among the reasons, together with this enabler, that support the claim is supported by further arguments. Therefore, you cannot delete this enabler because it requires the supported reason to be deleted. No supported statement could be deleted.");
 							return;
 						}
+					}
+					AGORAModel.getInstance().requested = true;
+					map.sBar.displayLoading();
+					model.deleteMe();
+				}
+				else if(model.statementFunction == StatementModel.OBJECTION){
+					if(model.supportingArguments.length > 0 || model.objections.length > 0){
+						Alert.show(Language.lookup("DeleteSuppStmt"));
+						return;
 					}
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
@@ -490,7 +499,8 @@ package Controller
 				model.object(obj.xgrid + bottomObjection.height/agoraParameters.gridWidth + 3 );	
 			}
 			else{
-				model.object(model.xgrid);
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.object(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
 			}
 		}
 		protected function onObjectionCreated(event:AGORAEvent):void{
@@ -667,9 +677,7 @@ package Controller
 		//------------------ other public functions ----------------------//
 		public function showAddMenu(argumentPanel:ArgumentPanel):void{
 			var addMenuData:XML = <root><menuitem label={agoraParameters.ADD_SUPPORTING_STATEMENT} type="TopLevel" /></root>;
-			if(argumentPanel.model.supportingArguments.length == 0){
-				addMenuData.appendChild(<menuitem label={agoraParameters.ADD_OBJECTION} type="TopLevel"/>);
-			}
+			addMenuData.appendChild(<menuitem label={agoraParameters.ADD_OBJECTION} type="TopLevel"/>);
 			var addMenu:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
 			addMenu.labelField = "@label";
 			var point:Point = new Point;
@@ -684,7 +692,7 @@ package Controller
 		protected function onFault(event:AGORAEvent):void{
 			CursorManager.removeAllCursors();
 			model.requested = false;
-			sbar.displayError();
+			map.sBar.displayError();
 		}
 		
 		//----------------- Utility Functions -----------------//

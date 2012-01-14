@@ -103,12 +103,12 @@ package Model
 		{
 			return _argUnderConstruction;
 		}
-
+		
 		public function set argUnderConstruction(value:Boolean):void
 		{
 			_argUnderConstruction = value;
 		}
-
+		
 		public function get deletedList():Vector.<Object>
 		{
 			return _deletedList;
@@ -369,16 +369,19 @@ package Model
 				textboxListHash[textbox.ID] = textbox;
 			}
 			
-			//update enablers after deletion
+			//update enablers after deletsion
 			for each(var deletedObject:Object in deletedList){
 				if(deletedObject is StatementModel){
-					var sm:StatementModel = deletedObject as StatementModel;
-					var aTM:ArgumentTypeModel = sm.argumentTypeModel;
-					if(aTM.reasonModels.length > 0){
-						//aTM.reasonModels[0].statements[0].updateStatementTexts();
-						var logicController:ParentArg = LogicFetcher.getInstance().logicHash[aTM.logicClass];
-						logicController.formText(aTM);
+					var stmtM:StatementModel = deletedObject as StatementModel;
+					if(stmtM.statementFunction == StatementModel.STATEMENT){
+						var aTM:ArgumentTypeModel = stmtM.argumentTypeModel;
+						
+						if(aTM.reasonModels.length > 0){
+							var logicController:ParentArg = LogicFetcher.getInstance().logicHash[aTM.logicClass];
+							logicController.formText(aTM);
+						}
 					}
+					
 				}
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
@@ -424,6 +427,10 @@ package Model
 								var index:int = statementM.argumentTypeModel.reasonModels.indexOf(statementM);
 								statementM.argumentTypeModel.reasonModels.splice(index, 1);
 							}
+						}
+						else if(statementM.statementFunction == StatementModel.OBJECTION){
+							var i:int = statementM.parentStatement.objections.indexOf(statementM);
+							statementM.parentStatement.objections.splice(i, 1);
 						}
 						deletedList.push(statementM);
 						delete panelListHash[nodeVO.ID];
@@ -570,8 +577,6 @@ package Model
 				}
 				parentStatement.addObjectionStatement(objection);
 				objection.parentStatement = parentStatement;
-				parentStatement.statement.addDependentStatement(objection.statements[0]);
-				parentStatement.statement.updateStatementTexts();
 			}
 			return true;
 		}
@@ -661,11 +666,12 @@ package Model
 					var parentStatement:StatementModel = sm.parentStatement;
 					if(parentStatement != null){
 						if(parentStatement.objections.length > 0){
+							var desty:int = sm.ygrid + diffy;
 							for each(var siblingObjection:StatementModel in parentStatement.objections){
-								if(parentStatement.objections[0] == siblingObjection){
-									requestXML = moveSupportingStatements(siblingObjection, 0, diffy, requestXML);
+								if(siblingObjection == sm){
+									requestXML = moveSupportingStatements(siblingObjection, diffx, desty - siblingObjection.ygrid, requestXML);	
 								}else{
-									requestXML = moveSupportingStatements(siblingObjection, diffx, diffy, requestXML);
+									requestXML = moveSupportingStatements(siblingObjection, 0 , desty - siblingObjection.ygrid, requestXML);
 								}
 							}
 						}

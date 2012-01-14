@@ -1523,7 +1523,12 @@
 		<RUS text="" /> <!--TODO: Translate-->
 		<GER text="Die Hinzufügung deiner ersten Behauptung ist fehlgeschlagen. Bitte lösche diese Argumentation und starte mit einer neuen." />
 	</FirstClaimFailed>
-
+	
+	<DeleteSuppStmt>
+		<EN-US text="You cannot delete a statement that is either supported or objected to" />
+		<RUS text="" /><!--TODO: Translate-->
+		<GER text="" /><!--TODO: Translate-->
+	</DeleteSuppStmt>
 	
 	<!--WALLS OF TEXT-->
 		
