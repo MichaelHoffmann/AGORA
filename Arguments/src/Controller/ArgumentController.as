@@ -274,6 +274,7 @@ package Controller
 			if(checkArgUnderConstruction()){
 				return;
 			}
+			model.agoraMapModel.argUnderConstruction = true;
 			var helpText:HelpText = map.agoraMap.helpText;
 			helpText.visible = true;
 			helpText.parent.setChildIndex(helpText, map.agoraMap.numChildren -1);
