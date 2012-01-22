@@ -56,7 +56,7 @@
 		<s:HGroup 
 			paddingLeft="25" paddingTop="25">
 			<s:Label 
-				text = "Welcome to AGORA 2.3">
+				text = "{Language.lookup('WelcomeShort')} 2.3">
 			</s:Label>	
 		</s:HGroup>
 		<s:HGroup id="mainPanel" 

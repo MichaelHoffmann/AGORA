@@ -1,5 +1,7 @@
 package components
 {
+	import classes.Language;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
@@ -58,7 +60,7 @@ package components
 			OKButton = new Button;
 			//add an event listener
 			OKButton.addEventListener(MouseEvent.CLICK, onOKButtonClicked);
-			OKButton.label = "OK";
+			OKButton.label = Language.lookup("OK");
 			addChild(OKButton);
 		}
 		

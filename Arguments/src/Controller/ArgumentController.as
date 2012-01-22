@@ -113,7 +113,7 @@ package Controller
 				//fetch data
 				LoadController.getInstance().fetchMapData();
 			}else{
-				Alert.show("Please sign in into AGORA before loading a map.");
+				Alert.show(Language.lookup("MustRegister"));
 			}
 		}
 		
@@ -249,8 +249,7 @@ package Controller
 					flag = 1;
 				}
 				if(flag == 0){
-					Alert.show("The language type you have chosen is not expandable with multiple reasons. Please choose an expandable language type before adding reasons");
-					//TODO: translate above line
+					Alert.show(Language.lookup("CannotAddReason"));
 					return;
 				}
 				var lastReason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[LayoutController.getInstance().getBottomReason(argumentTypeModel).ID];
@@ -260,7 +259,7 @@ package Controller
 				argumentTypeModel.addReason(x, y);
 			}
 			else{
-				Alert.show("Please wait, the server is busy.");
+				Alert.show(Language.lookup("ServerBusy"));
 			}
 		}
 		
@@ -397,17 +396,17 @@ package Controller
 						model.deleteMe();
 					}
 					else{
-						Alert.show("You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim.");
+						Alert.show(Language.lookup("DeleteFirstClaim"));
 					}
 				}
 				else if(model.statementFunction == StatementModel.INFERENCE){
 					if(model.supportingArguments.length > 0 || model.objections.length > 0){
-						Alert.show("You cannot delete a statement that is supported.");
+						Alert.show(Language.lookup("DeleteSuppStmt"));
 						return;
 					}
 					for each(var stmt:StatementModel in model.argumentTypeModel.reasonModels){
 						if(stmt.supportingArguments.length > 0 || stmt.objections.length > 0){
-							Alert.show("One of the reasons among the reasons, together with this enabler, that support the claim is supported by further arguments. Therefore, you cannot delete this enabler because it requires the supported reason to be deleted. No supported statement could be deleted.");
+							Alert.show(Language.lookup("DeleteSuppStmtExt"));
 							return;
 						}
 					}
@@ -671,7 +670,7 @@ package Controller
 		
 		//-------------------Event Handlers---------------------------//
 		protected function reasonAdditionNotAllowedFault(event:AGORAEvent):void{
-			Alert.show("You are not allowed to add a reason to another user's argument");
+			Alert.show(Language.lookup("CannotModify"));
 		}
 		
 		

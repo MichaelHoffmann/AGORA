@@ -515,7 +515,7 @@
 		<GER text="Sorry, in öffentlichen Argumentationen ist es nicht erlaubt, den Text oder die Struktur eines Argumentes zu verändern, das jemand anderes konstruiert hat. Du kannst nur zusätzliche und unabhängige Argumente hinzufügen."/>
 		<RUS text="Извините, на общественных картах Вы не можете изменить текст или аргумент, который был создан другим пользователем. Вы можете только добавить дополнительные и независимые аргументы."/>
 	</CannotModify>
-	
+
 	<ChangeInfo>
 		<EN-US text="Change Personal Information"/>
 		<RUS text="Измените Личную Информацию"/>
@@ -999,8 +999,8 @@
 
 	<Scheme>
 		<EN-US text="Scheme" />
-		<RUS text="" /><!--TODO:Translate-->
-		<GER text="" /><!--TODO:Translate-->
+		<RUS text=" " /><!--TODO:Translate-->
+		<GER text=" " /><!--TODO:Translate-->
 	</Scheme>
 
 	<SeeObjection>
@@ -1131,8 +1131,8 @@
 
 	<Loading>
 		<EN-US text="Loading..."/>
-		<GER text="" /><!--TODO: Translate-->
-		<RUS text="" /><!--TODO: Translate-->
+		<GER text="Loading..." /><!--TODO: Translate-->
+		<RUS text="Loading..." /><!--TODO: Translate-->
 	</Loading>
 
 
@@ -1167,19 +1167,20 @@
 		<GER text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch’s noch einmal."/>
 	</RegistrationFailed>
 
-
 	<UpdateMapInfoFailed>
-		<EN-US text="Map info was not updated. Changes were rolled back" />
-		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
-		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+		<EN-US text="Map info was not updated." />
+		<RUS text="Map info was not updated." /> <!-- TODO: Translate -->
+		<GER text="Map info was not updated."/><!-- TODO: Translate -->
 	</UpdateMapInfoFailed>
 	
+	<!--Not Required-->
 	<Error103>
 		<EN-US text="Changes have been rolled back" />
 		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
 		<GER text="Yet to be translated"/><!-- TODO: Translate -->
 	</Error103>
 	
+	<!--Not Required-->
 	<Error106>
 		<EN-US text="Couldn't update the connection" />
 		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
@@ -1188,9 +1189,10 @@
 
 	<IllegalMap>
 		<EN-US text="The map is corrupted. Please try loading it again, or creating a new one" />
-		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
-		<GER text="Yet to be translated"/><!-- TODO: Translate -->
+		<RUS text="The map is corrupted. Please try loading it again, or creating a new one" /> <!-- TODO: Translate -->
+		<GER text="The map is corrupted. Please try loading it again, or creating a new one"/><!-- TODO: Translate -->
 	</IllegalMap>
+
 	<ArgUnderConstruction>
 		<EN-US text="You have not completed constructing an argument. Please complete it before proceeding." />
 		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
@@ -1214,6 +1216,7 @@
 		<RUS text="Yet to be translated" /> <!-- TODO: Translate -->
 		<GER text="Yet to be translated"/><!-- TODO: Translate -->
 	</ArgumentAdditionFailed>
+	
 	<!--NAMES OF ARGUMENTS-->
 			
 	<ConSyl>
@@ -1519,6 +1522,7 @@
 	</ObjectionHelp>
 	
 	<!--PROMPTS-->
+
 	<ObjectionFailed>
 		<EN-US text="&quot;Adding an Objection&quot; failed. Please click on &quot;Save and Exit&quot; and re-open the map once again." />
 		<RUS text="" /> <!--TODO: Translate-->
@@ -1530,13 +1534,31 @@
 		<RUS text="" /> <!--TODO: Translate-->
 		<GER text="Die Hinzufügung deiner ersten Behauptung ist fehlgeschlagen. Bitte lösche diese Argumentation und starte mit einer neuen." />
 	</FirstClaimFailed>
+
+	<DeleteFirstClaim>
+		<EN-US text="You cannot delete a statement that is supported, a statement whose enabler is supported, or the main claim." />
+		<RUS text="" /> <!--TODO: Translate-->
+		<GER text="" /> <!--TODO: Translate-->
+	</DeleteFirstClaim>
 	
 	<DeleteSuppStmt>
 		<EN-US text="You cannot delete a statement that is either supported or objected to" />
 		<RUS text="" /><!--TODO: Translate-->
 		<GER text="" /><!--TODO: Translate-->
 	</DeleteSuppStmt>
+	<DeleteSuppStmtExt>
+		<EN-US text="One of the reasons among the reasons, together with this enabler, that support the claim is supported by further arguments. Therefore, you cannot delete this enabler because it requires the supported reason to be deleted. No supported statement could be deleted." />
+		<RUS text="" /><!--TODO: Translate-->
+		<GER text="" /><!--TODO: Translate-->
+	</DeleteSuppStmtExt>
+
 	
+	<ServerBusy>
+		<EN-US text="Please wait. The server is busy" />
+		<RUS text="" /><!--TODO: Translate-->
+		<GER text="" /><!--TODO: Translate-->
+	</ServerBusy>
+
 	<!--WALLS OF TEXT-->
 		
 	<ArgComplete>

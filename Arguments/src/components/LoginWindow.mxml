@@ -47,28 +47,6 @@
 			import mx.managers.PopUpManager;
 			import mx.validators.Validator;
 			
-			/*
-			public function setProperties():void
-			{
-				title=Language.lookup("Login");
-			}
-			
-			private function displayStatus(event:Event):void
-			{
-				var xml:XML = XML(event.target.data);	
-			}
-			
-			public function verifyLogin():void
-			{
-				if(UserData.isValid()){
-					dispatchEvent(new Event("verification",true,false));				
-				}
-				else{
-					Alert.show("Login Failed");
-				}
-				PopUpManager.removePopUp(this);
-			}
-			*/
 			
 			public function init():void
 			{	

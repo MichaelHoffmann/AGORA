@@ -39,7 +39,7 @@ package classes
 		public static const GERMAN:String = "GER";
 		public static const ENGLISH:String = "EN-US";
 		public static const RUSSIAN:String = "RUS";
-		public static var language:String = ENGLISH;
+		public static var language:String =  ENGLISH;
 		
 		public static var xml:XML;
 		private static var ready:Boolean=false;
@@ -64,7 +64,8 @@ package classes
 			var lang:XMLList = lbl.descendants(language);
 			var output:String = lang.attribute("text");
 			if(!output){
-				output = "error | ошибка | Fehler --- There was a problem getting the text for this item. The label was: " + label;
+				output = "error | ошибка | Fehler";
+				trace(label);
 			}
 			return output;
 		}

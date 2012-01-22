@@ -158,7 +158,7 @@ package Controller
 		}
 		
 		protected function onMyMapsDeleted(event:AGORAEvent):void{
-			Alert.show("Maps Deleted");
+			Alert.show(Language.lookup("MapsDeleted"));
 			fetchDataMyMaps();
 			fetchDataMapList();
 		}
@@ -257,7 +257,7 @@ package Controller
 				PopUpManager.centerPopUp(mapNameDialog);
 			}
 			else{
-				Alert.show("Only registered users can create a map. If you had already registered, click Sign In.");
+				Alert.show(Language.lookup("MustRegister"));
 			}
 		}
 	}

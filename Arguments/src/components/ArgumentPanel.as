@@ -149,8 +149,7 @@ package components
 		public var btnG:Group;
 		
 		//Menu data
-		//XML string holding the menu data for the menu that pops up when user hits the done button
-		public var constructArgData:XML;
+		
 		
 		//other instance variables
 		public var connectingStr:String;
@@ -158,12 +157,12 @@ package components
 		{
 			super();
 			agoraLabels = AGORAParameters.getInstance();
-			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
 			inputs = new Vector.<DynamicTextArea>;
 			changeWatchers = new Vector.<ChangeWatcher>;
 			width = 180;
 			minHeight = 100;
 			state = DISPLAY;
+			this.toolTip = Language.lookup("Enabler");
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
@@ -377,7 +376,7 @@ package components
 		}
 		
 		protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
-			if(menuEvent.label == "add another reason"){
+			if(menuEvent.label == Language.lookup("AddReason")){
 				ArgumentController.getInstance().addReason(model.argumentTypeModel);
 			}else{
 				ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
@@ -446,7 +445,9 @@ package components
 		
 		public function showMenu():void
 		{
-			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;
+			var addReason:String = Language.lookup("AddReason");
+			var completeArgument:String = Language.lookup("Construct");
+			var constructArgData:XML = <root><menuitem label={addReason} type="TopLevel" /><menuitem label={completeArgument} type="TopLevel"/></root>;
 			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 			menu.labelField = "@label";
 			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
@@ -496,7 +497,7 @@ package components
 			bottomHG = new HGroup();
 			doneHG = new HGroup;
 			doneBtn = new Button;
-			doneBtn.label = "Done";
+			doneBtn.label = Language.lookup("Done");
 			doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
 			doneHG.addElement(doneBtn);
 			

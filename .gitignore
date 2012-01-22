@@ -3,6 +3,7 @@
 *.flexProperties
 #Ignore flex build directories
 bin-debug/
+bin-release/
 html-template/
 libs/flexunit-*
 generated/

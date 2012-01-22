@@ -103,7 +103,7 @@ package Controller
 		
 		//---------------Generic Network Fault----------------------//
 		protected function onFault(event:AGORAEvent):void{
-			Alert.show("Could not contact Authenticaion Server. Please make sure you are connected to the Internet");
+			Alert.show(Language.lookup("NetworkError"));
 		}
 		
 		//---------------Other public methods----------------------//

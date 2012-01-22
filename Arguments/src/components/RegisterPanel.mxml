@@ -158,7 +158,7 @@
 
 			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
 			{
-				Alert.show("Enter a valid email address...");
+				Alert.show(Language.lookup("EnterValidEmail"));
 				email.text = "";
 			}
 
