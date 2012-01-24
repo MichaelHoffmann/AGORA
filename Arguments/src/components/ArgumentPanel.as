@@ -162,7 +162,6 @@ package components
 			width = 180;
 			minHeight = 100;
 			state = DISPLAY;
-			this.toolTip = Language.lookup("Enabler");
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
@@ -523,6 +522,7 @@ package components
 			stmtInfoVG.gap = 0;
 			if(model.statementFunction == StatementModel.INFERENCE){
 				stmtInfoVG.visible = false;
+				this.toolTip = Language.lookup("Enabler");
 			}
 			topHG.addElement(stmtInfoVG);
 			
