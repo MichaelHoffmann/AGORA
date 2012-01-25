@@ -8,10 +8,12 @@ package Controller.logic
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.MenuPanel;
-	import classes.Language;
+	
 	import flash.utils.Dictionary;
 	
 	import mx.controls.Alert;
@@ -26,7 +28,8 @@ package Controller.logic
 		
 		public function ModusTollens()
 		{
-			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
+			var aConstants:AGORAParameters = AGORAParameters.getInstance();
+			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition", aConstants.NECESSARY_CONDITION];
 			expLangTypes = ["Only if"];	// Expandable with both And and Or
 			label = AGORAParameters.getInstance().MOD_TOL;	
 		}

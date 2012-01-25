@@ -124,10 +124,11 @@ package Controller.logic
 				claimModel.addTemporaryStatement();
 				claimModel.statements[1].text = "T";
 			}
+			
 			for(i = 0; i<reasonModels.length; i++){
 				if(reasonModels[i].statements.length < 2){
 					reasonModels[i].addTemporaryStatement();
-					reasonModels[i].statements[1].text = "W" + i;
+					reasonModels[i].statements[1].text = (reasonModels[i].statements[0].text == "" || reasonModels[i].statements[0].text==null)? "W"+i.toString() : reasonModels[i].statements[0].text;
 					reasonModels[i].connectingString = StatementModel.IMPLICATION;
 				}
 			}

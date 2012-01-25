@@ -304,14 +304,16 @@ package Controller
 				schemeSelector.scheme = ParentArg.getInstance().getFullArray();
 			}
 			else if(argumentTypeModel.claimModel.statements.length > 1){
-				//Allowing for constructive dilemma. Even for constructive dilemma
+				//Allowing for constructive dilemma. For constructive dilemma
 				//a separate treatment is required
 				//It's not yet incorporated
+				
 				//if positive implication
 				if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
 					schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
 				}
-					//if positive disjunction
+				
+				//if positive disjunction -- This is conditional dilemma
 				else if(argumentTypeModel.claimModel.connectingString == StatementModel.DISJUNCTION){
 					schemeSelector.scheme = ParentArg.getInstance().getDisjunctionPositiveArray();
 				}
@@ -655,6 +657,7 @@ package Controller
 		
 		protected function onArgumentSaveFailed(event:AGORAEvent):void{
 			AGORAModel.getInstance().requested = false;
+			model.agoraMapModel.argUnderConstruction = false;
 			CursorManager.removeAllCursors();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
@@ -665,7 +668,7 @@ package Controller
 				AGORAModel.getInstance().agoraMapModel.loadMapModel();
 			}
 			Alert.show(Language.lookup("ArgumentSaveFailed"));
-			fetchCompleteMap();
+			recover();
 		}
 		
 		//-------------------Event Handlers---------------------------//
