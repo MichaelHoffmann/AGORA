@@ -656,6 +656,7 @@ package Controller
 		protected function onArgumentSaveFailed(event:AGORAEvent):void{
 			AGORAModel.getInstance().requested = false;
 			CursorManager.removeAllCursors();
+			model.agoraMapModel.argUnderConstruction = false;
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
 			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
 			argumentSelector.hide();

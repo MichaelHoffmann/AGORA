@@ -7,10 +7,10 @@ package Controller.logic
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
-	
-	import classes.Language;
 	
 	import mx.controls.Alert;
 	import mx.messaging.channels.StreamingAMFChannel;
@@ -19,11 +19,12 @@ package Controller.logic
 	{
 		
 		private static var instance:ModusPonens;
-		
+		private var agoraLiterals:AGORAParameters;
 		
 		public function ModusPonens()
-		{			
-			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
+		{
+			agoraLiterals = AGORAParameters.getInstance();
+			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition", agoraLiterals.NECESSARY_CONDITION ];
 			expLangTypes = ["If-then","Whenever","Provided that"];	
 			label = AGORAParameters.getInstance().MOD_PON;
 		}
@@ -46,6 +47,10 @@ package Controller.logic
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var i:int;
+		
+			if(reasonModels.length == 0){
+				return;
+			}
 			
 			switch(argumentTypeModel.language){
 				case langTypes[0]:

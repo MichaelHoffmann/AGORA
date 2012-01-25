@@ -41,6 +41,11 @@ package Controller.logic
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var i:int;
 			
+			if(reasonModels.length == 0){
+				return;
+			}
+			
+			
 			output = Language.lookup("ArgCannotBe");
 			
 			for(i=0; i<reasonModels.length; i++){

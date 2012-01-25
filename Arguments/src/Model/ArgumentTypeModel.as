@@ -321,6 +321,9 @@ package Model
 					return true;
 				}
 			}
+			if(inferenceModel.supportingArguments.length > 0){
+				return true;
+			}
 			return false;
 		}
 		

@@ -48,6 +48,12 @@ package Controller.logic
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 			
+			//could happen when a reason is deleted and as, a result of it,
+			//an enabler itself is deleted.
+			if(reasonModels.length == 0){
+				return;
+			}
+			
 			inferenceModel.statements[0].text = reasonModels[reasonModels.length-1].statements[1].text;
 			inferenceModel.statements[1].text = claimModel.statements[1].text;
 			
@@ -127,7 +133,7 @@ package Controller.logic
 			for(i = 0; i<reasonModels.length; i++){
 				if(reasonModels[i].statements.length < 2){
 					reasonModels[i].addTemporaryStatement();
-					reasonModels[i].statements[1].text = "W" + i;
+					reasonModels[i].statements[1].text = (reasonModels[i].statements[0].text == null || reasonModels[i].statements[0].text == "")? "W"+i : reasonModels[i].statements[0].text ;
 					reasonModels[i].connectingString = StatementModel.IMPLICATION;
 				}
 			}

@@ -8,10 +8,12 @@ package Controller.logic
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.MenuPanel;
-	import classes.Language;
+	
 	import flash.utils.Dictionary;
 	
 	import mx.controls.Alert;
@@ -22,11 +24,12 @@ package Controller.logic
 		public var andOr:String;
 		private var _isExp:Boolean;
 		private static var instance:ModusTollens;
-		
+		private var agoraLiterals:AGORAParameters;
 		
 		public function ModusTollens()
 		{
-			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition","Necessary condition"];
+			agoraLiterals = AGORAParameters.getInstance();
+			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition", agoraLiterals.NECESSARY_CONDITION];
 			expLangTypes = ["Only if"];	// Expandable with both And and Or
 			label = AGORAParameters.getInstance().MOD_TOL;	
 		}
@@ -48,6 +51,11 @@ package Controller.logic
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var hash:Dictionary = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
+			
+			if(reasonModels.length == 0){
+				return;
+			}
+			
 			//At this point argSelector may not
 			//have been created
 			var argSelector:ArgSelector = null;

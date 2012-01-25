@@ -91,6 +91,7 @@ package Model
 			schemeAndLanguage[agoraParameters.MPnecessary] = new ArgumentScheme(agoraParameters.MOD_PON, agoraParameters.NECESSARY_CONDITION);
 			schemeAndLanguage[agoraParameters.MPonlyif] = new ArgumentScheme(agoraParameters.MOD_PON, agoraParameters.ONLY_IF);
 			schemeAndLanguage[agoraParameters.MPprovidedthat] = new ArgumentScheme(agoraParameters.MOD_PON, agoraParameters.PROVIDED_THAT);
+			schemeAndLanguage[agoraParameters.MPsufficient] = new ArgumentScheme(agoraParameters.MOD_PON, agoraParameters.SUFFICIENT_CONDITION);
 			schemeAndLanguage[agoraParameters.MPwhenever] = new ArgumentScheme(agoraParameters.MOD_PON, agoraParameters.WHENEVER);
 			
 			schemeAndLanguage[agoraParameters.MTifthen] = new ArgumentScheme(agoraParameters.MOD_TOL, agoraParameters.IF_THEN);
@@ -108,7 +109,7 @@ package Model
 			schemeAndLanguage[agoraParameters.NotAllSyll] = new ArgumentScheme(agoraParameters.NOT_ALL_SYLL, null);
 			
 			schemeAndLanguage[agoraParameters.CSifthen] = new ArgumentScheme(agoraParameters.COND_SYLL, agoraParameters.IF_THEN);
-			schemeAndLanguage[agoraParameters.CSimplies] = new ArgumentScheme(agoraParameters.CSimplies, agoraParameters.CSimplies);
+			schemeAndLanguage[agoraParameters.CSimplies] = new ArgumentScheme(agoraParameters.COND_SYLL, agoraParameters.CSimplies);
 			
 			dbSchemeHashMap = new Dictionary;
 			dbSchemeHashMap[agoraParameters.MOD_PON] = agoraParameters.dbMP;

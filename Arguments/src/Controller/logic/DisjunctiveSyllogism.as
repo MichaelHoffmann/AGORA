@@ -38,6 +38,10 @@ package Controller.logic
 			var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 			var i:int;
 
+			if(reasonModels.length == 0){
+				return;
+			}
+			
 			output = Language.lookup("ArgEitherCap"); //TODO: Need a translation for this
 			if(reasonModels.length < inferenceModel.statements.length){
 				for(i=0; i<reasonModels.length; i++){
