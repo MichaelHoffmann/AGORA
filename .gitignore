@@ -1,6 +1,7 @@
 #Ignore flex settings
 *.settings/
 *.flexProperties
+*.actionScriptProperties
 #Ignore flex build directories
 bin-debug/
 html-template/
