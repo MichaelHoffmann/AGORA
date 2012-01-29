@@ -42,17 +42,22 @@
 	<s:Label id="titleDisplay" 
 			 paddingLeft="15" paddingRight="15" paddingTop="15"
 			 fontWeight="bold"
-			 text = "List of Maps"
+			 text = "{Language.lookup(&quot;ListMaps&quot;)}"
 			 />
-	<s:Scroller width="100%" top="40" height="300">
+	<s:Scroller width="100%" top="56" height="300">
 		<s:Group id="contentGroup">
 			<s:VGroup id="mapsGroup" paddingLeft="10" paddingTop="5"> 
 			</s:VGroup>
 		</s:Group>
 	</s:Scroller>
 	
-	<mx:Text width="100%" bottom ="10" textAlign="center" >
-		<mx:text>Click on a map to view it.</mx:text>
+	<mx:Text id="loadingDisplay" width = "100%" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
+	<mx:Text width="100%" bottom ="10" textAlign="center" text="{Language.lookup(&quot;ClickToView&quot;)}">
 	</mx:Text>
 	
+	<fx:Script>
+		<![CDATA[
+			import classes.Language;
+		]]>
+	</fx:Script>
 </s:SparkSkin>

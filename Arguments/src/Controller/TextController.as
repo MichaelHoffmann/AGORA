@@ -18,7 +18,7 @@ package Controller
 			}
 			return instance;
 		}
-			
+		
 		//---------------- Text Changed ------------------//
 		public function updateModelText(dta:DynamicTextArea):void{
 			dta.model.text = dta.text;

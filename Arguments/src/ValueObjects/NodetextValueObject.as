@@ -8,22 +8,19 @@ package ValueObjects
 		
 		public function NodetextValueObject(nodetext:Object, inserted:Boolean = false)
 		{
-			try{
+			if(nodetext.hasOwnProperty("ID"))
 				ID = nodetext.ID;
-				if(!inserted){
-					if(nodetext.hasOwnProperty("textboxID")){
-						textboxID = nodetext.textboxID;
-						hasOwnText = true;
-					}else{
-						textboxID = 0;
-						hasOwnText = false;
-					}
+			else
+				throw new PropNotFoundError("nodetext does not have property 'ID'");
+			if(!inserted){
+				if(nodetext.hasOwnProperty("textboxID")){
+					textboxID = nodetext.textboxID;
+					hasOwnText = true;
+				}else{
+					textboxID = 0;
+					hasOwnText = false;
 				}
-			}catch(error:Error){
-				trace("NodetextValueObject::Constructor: Error reading nodetext object");
 			}
-			
-			
 		}
 	}
 }

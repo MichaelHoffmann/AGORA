@@ -16,6 +16,9 @@
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.managers.FocusManager;
@@ -51,9 +54,13 @@
 				{
 					thisMapButton.label = mapName;
 					thisMapButton.name = mapId.toString();
+					thisMapButton.addEventListener(MouseEvent.CLICK, onLoadMapClicked);
 				}
 			}
 			
+			protected function onLoadMapClicked(event:MouseEvent):void{
+				ArgumentController.getInstance().loadMap(event.target.name);
+			}
 
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{

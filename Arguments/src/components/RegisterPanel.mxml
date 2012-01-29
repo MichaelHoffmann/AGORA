@@ -24,6 +24,18 @@
 		  preinitialize="setProperties();" 
 		  creationComplete="init();"
 		  keyDown="panel1_keyDownHandler(event)" xmlns:components="components.*">
+
+	<fx:Script>
+		<![CDATA[
+			protected function registrationNote_clickHandler(event:MouseEvent):void
+			{
+				var registrationNote:RegistrationNote = new RegistrationNote;
+				PopUpManager.addPopUp(registrationNote, this.parent);
+				PopUpManager.centerPopUp(registrationNote);
+			}
+		]]>
+	</fx:Script>
+
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -61,7 +73,11 @@
 		<![CDATA[
 			import Controller.UserSessionController;
 			
+			import ValueObjects.AGORAParameters;
 			import ValueObjects.UserDataVO;
+			
+			import classes.Configure;
+			import classes.Language;
 			
 			import com.adobe.crypto.MD5;
 			
@@ -72,18 +88,18 @@
 			
 			import org.osmf.layout.AbsoluteLayoutFacet;
 			
-			import classes.Configure;
-			import classes.Language;
-			
 			private static var _salt:String = "AGORA";
+			[Bindable]
+			private var agoraConstants:AGORAParameters;
 			
 			public static function get salt():String{
 				return _salt;
 			}
-			
+				
 			public function init():void
 			{
 				focusManager.setFocus(username);
+				agoraConstants = AGORAParameters.getInstance();
 			}
 			
 			public function setProperties():void
@@ -97,7 +113,7 @@
 				if(xml.@created.length() == 0)
 				{
 					if( XMLList(xml.@exists).length() == 1){
-						Alert.show("Username exists. Please choose a different user name");
+						Alert.show(Language.lookup("RegisterFailed"));
 					}
 					else{
 						Alert.show(xml.toXMLString());
@@ -105,14 +121,14 @@
 				}
 				else if(xml.@created.length() == 1)
 				{
-					Alert.show("Registration Successful. You may now Login");
+					Alert.show(Language.lookup("RegisterSuccess"));
 				}
 				PopUpManager.removePopUp(this);
 			}
 			
 			public function errorHandler(event: IOErrorEvent):void
 			{
-				Alert.show("Error occurred when contacting server");
+				Alert.show(Language.lookup("CommunicationError"));
 			}
 			
 			public function clear_form():void
@@ -124,7 +140,7 @@
 			{
 				if(pass_hash.text != pass_hash_dup.text)
 				{
-					Alert.show("Passwords do not match");
+					Alert.show(Language.lookup("PassMismatch"));
 					return;
 				}
 				
@@ -142,7 +158,7 @@
 
 			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
 			{
-				Alert.show("Enter a valid email address...");
+				Alert.show(Language.lookup("EnterValidEmail"));
 				email.text = "";
 			}
 
@@ -157,28 +173,29 @@
 		]]>
 		
 	</fx:Script>
+	
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="Username" required="true">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}" required="true">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Password" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}" required="true">
 			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Confirm Password" required="true" >
+		<mx:FormItem  label="{Language.lookup(&quot;PassRepeat&quot;)}" required="true" >
 			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="First Name" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}" required="true">
 			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="Last Name" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}" required="true">
 			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="Email" required="true">
+		<mx:FormItem  label="{Language.lookup(&quot;Email&quot;)}" required="true">
 			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>
@@ -186,7 +203,9 @@
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
-
+		<mx:FormItem>
+			<s:Label textDecoration="underline" text="{agoraConstants.READ_REGISTRATION_NOTE}" id="registrationNote" click="registrationNote_clickHandler(event)" />
+		</mx:FormItem>
 		<mx:FormItem>
 			<s:HGroup>
 				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="7" id="submit_btn" click="submit_form();">		
@@ -194,7 +213,6 @@
 				<s:Button label="{Language.lookup(&quot;Back&quot;)}"  tabIndex="8" id="back_btn" click="clear_form();">		
 				</s:Button>
 			</s:HGroup>		
-			
 		</mx:FormItem>
 	</mx:Form>
 </mx:Panel>

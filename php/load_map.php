@@ -22,6 +22,7 @@
 	require 'configure.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	/**
 	*	Function that loads a map from the database.
 	*	Might be worth refactoring this somewhat.
@@ -30,7 +31,7 @@
 		global $dbName, $version;
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
-		$outputstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
+		$outputstr = "<?xml version='1.0' encoding='UTF-8'?>\n<map version='$version'></map>";
 		$output = new SimpleXMLElement($outputstr);
 		//Standard SQL connection stuff
 		$linkID= establishLink();
@@ -78,14 +79,18 @@
 				$row = mysql_fetch_assoc($resultID);
 				$textbox = $output->addChild("textbox");
 				$textbox->addAttribute("ID", $row['textbox_id']);
-				$textbox->addAttribute("text", $row['text']);
+				$textbox->addAttribute("text", to_utf8($row['text']));
 				$textbox->addAttribute("deleted", $row['is_deleted']);
 			}
 		}
 
 
 		// Nodes take a bit more work.
-		$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
+		/*$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
+			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+		*/
+		$query = "SELECT nodes.node_id, nodes.nodetype_id, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type
+			FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
 			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
@@ -100,7 +105,7 @@
 				$node->addAttribute("y", $row['y_coord']);
 				$node->addAttribute("typed", $row['typed']);
 				$node->addAttribute("positive", $row['is_positive']);
-				$node->addAttribute("connected_by", $row['connected_by']);				
+				$node->addAttribute("connected_by", $row['connected_by']);
 				$node->addAttribute("deleted", $row['is_deleted']);
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
@@ -155,5 +160,5 @@
 	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
 	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
 	$output = get_map($map_id, $timestamp); 
-	print($output->asXML());
+	print $output->asXML();
 ?>

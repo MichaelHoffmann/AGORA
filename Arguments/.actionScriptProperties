@@ -13,11 +13,8 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="Test.mxml"/>
     <application path="index.mxml"/>
-    <application path="Arguments.mxml"/>
-    <application path="LanguageScript.mxml"/>
-    <application path="MapConstruction.mxml"/>
-    <application path="startScheme.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

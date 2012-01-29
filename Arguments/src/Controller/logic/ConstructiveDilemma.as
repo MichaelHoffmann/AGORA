@@ -1,17 +1,24 @@
 package Controller.logic
 {
+	import Model.AGORAModel;
+	import Model.ArgumentTypeModel;
+	
+	import ValueObjects.AGORAParameters;
+	
 	import components.ArgumentPanel;
+
 	public class ConstructiveDilemma extends ParentArg
 	{
 		private static var instance:ConstructiveDilemma;
 		
 		public function ConstructiveDilemma()
 		{
-			_langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
-			dbLangTypeNames = ["altclaim", "propclaim"];
-			myname = CONST_DILEM;
+			langTypes = ["ConstrDil-1(with alternative as claim)","ConstrDil-1(with one proposition as claim)"];
+			//dbLangTypeNames = ["altclaim", "propclaim"];
+			//myname = CONST_DILEM;
 			//dbName = myname;
-			_dbType = "CD";
+			label = AGORAParameters.getInstance().CONST_DILEM;
+			//_dbType = "CD";
 			
 		}
 		
@@ -22,11 +29,14 @@ package Controller.logic
 			return instance;
 		}
 		
+		override public function formText(argumentTypeModel:ArgumentTypeModel):void{
+				
+		}
 		
+		/*
 		override public function correctUsage():String {
 			var output:String = "";
 			var i:int;
-			/*
 			switch(index) {
 				case 0: //Either-or with alternative as claim
 					output += "Either " + reason[0].input1.text;
@@ -37,9 +47,10 @@ package Controller.logic
 					break;
 				case 1: //Either-or with one proposition as claim
 			}
-			*/
+		
 			return output;
 			
 		}
+		*/
 	}
 }

@@ -2,38 +2,66 @@ package Controller
 {
 	import Events.AGORAEvent;
 	
+	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.MapListModel;
+	import Model.ProjectListModel;
+	import Model.UserSessionModel;
 	
 	import ValueObjects.UserDataVO;
 	
+	import classes.Language;
+	
+	import components.AGORAMenu;
+	import components.Map;
+	import components.MapName;
 	import components.MyMapName;
 	import components.MyMapsPanel;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.CursorManager;
+	import mx.managers.PopUpManager;
+	import mx.printing.FlexPrintJob;
+	import mx.printing.FlexPrintJobScaleType;
+	import mx.states.State;
 	
 	import spark.components.Group;
 	
 	public class AGORAController
 	{
 		private static var instance:AGORAController;
-			
+		private var menu:AGORAMenu;
+		private var map:Map;
+		
+		private var userSession:UserSessionModel;
+		private var mapModel:AGORAMapModel;
+		private var model:AGORAModel;
+		
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
 			instance = this;
+			model = AGORAModel.getInstance();
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.MAP_LIST_FETCHED, onMapListFetched);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MY_MAPS_LIST_FETCHED, onMyMapsListFetched);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETED, onMyMapsDeleted);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MAPS_DELETION_FAILED, onMyMapsDeletionFailed);
-			AGORAModel.getInstance().addEventListener(AGORAEvent.APP_STATE_SET, onAppStateSet);
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.FAULT, onFault);
-			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.FAULT, onFault);
+			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.ILLEGAL_MAP, handleIllegalMap);
+			model.projectListModel.addEventListener(AGORAEvent.PROJECT_LIST_FETCHED, onProjectListFetched);
+			model.projectListModel.addEventListener(AGORAEvent.FAULT, onFault);
+			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_LIST_FETCHED, onMyProjectsListFetched);
+			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
+			
+			menu = FlexGlobals.topLevelApplication.agoraMenu;
+			map = FlexGlobals.topLevelApplication.map;
+			userSession = AGORAModel.getInstance().userSessionModel;
+			mapModel = AGORAModel.getInstance().agoraMapModel;
 		}
 		
 		//----------------------Get Instance------------------------------//
@@ -44,37 +72,72 @@ package Controller
 			return instance;
 		}
 		
+		
 		//--------------------Fetch Map List------------------------------//
 		public function fetchDataMapList():void{
+			var statusNE:String = Language.lookup("NetworkError");
+			if(statusNE == menu.mapList.loadingDisplay.text){
+				menu.mapList.loadingDisplay.text = Language.lookup("Loading");
+			}
+			menu.mapList.loadingDisplay.visible = true;
 			var mapListModel:MapListModel = AGORAModel.getInstance().mapListModel;
 			mapListModel.requestMapList();
 		}
 		
 		protected function onMapListFetched(event : AGORAEvent):void{
-			trace("Map List Fetched");
-			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateSkinState();
-			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateProperties();
-			FlexGlobals.topLevelApplication.agoraMenu.mapList.invalidateDisplayList();
+			menu.mapList.loadingDisplay.visible = false;
+			menu.mapList.invalidateSkinState();
+			menu.mapList.invalidateProperties();
+			menu.mapList.invalidateSize();
+			menu.mapList.invalidateDisplayList();
 		}
 		
-		
+		//------------------Fetch Project List----------------------------//
+		public function fetchDataProjectList():void{
+			menu.projects.loadingDisplay.text = Language.lookup("Loading");
+			menu.projects.loadingDisplay.visible = true;
+			var projectListM:ProjectListModel = model.projectListModel;
+			projectListM.requestProjectList();	
+		}
+		protected function onProjectListFetched(event:AGORAEvent):void{
+			menu.projects.loadingDisplay.visible = false;
+			menu.projects.invalidateProperties();
+			menu.projects.invalidateDisplayList();
+		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
-			if(AGORAModel.getInstance().userSessionModel.uid){
+			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+				var statusNE:String = Language.lookup("NetworkError");
+				if(menu.myMaps.loadingDisplay.text == statusNE){
+					menu.myMaps.loadingDisplay.text = Language.lookup("Loading");
+				}
+				FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = true;
 				AGORAModel.getInstance().myMapsModel.requestMapList();
-			}
-			else{
-				Alert.show("The user has not signed in yet...");
 			}
 		}
 		
 		protected function onMyMapsListFetched(event:AGORAEvent):void{
-			trace("My Maps List Fetched");
+			FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapListXML = event.xmlData;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
 			FlexGlobals.topLevelApplication.invalidateProperties();
 			FlexGlobals.topLevelApplication.invalidateDisplayList();
+		}
+		
+		//------------------Fetch my Projects ------------------------------//
+		public function fetchDataMyProjects():void{
+			if(model.userSessionModel.loggedIn()){
+				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+				menu.myProjects.loadingDisplay.visible = true;
+				model.myProjectsModel.sendRequest();
+			}
+		}
+		
+		protected function onMyProjectsListFetched(event:AGORAEvent):void{
+			menu.myProjects.loadingDisplay.visible = false;
+			menu.myProjects.invalidateProperties();
+			menu.myProjects.invalidateDisplayList();
 		}
 		
 		//-------------------------Delete Maps-----------------------------//
@@ -95,25 +158,22 @@ package Controller
 		}
 		
 		protected function onMyMapsDeleted(event:AGORAEvent):void{
-			Alert.show("Maps Deleted");
+			Alert.show(Language.lookup("MapsDeleted"));
 			fetchDataMyMaps();
 			fetchDataMapList();
 		}
 		
 		protected function onMyMapsDeletionFailed(event:AGORAEvent):void{
-			
 		}
 		
-		//--------------------On App State Set--------------------------//
-		protected function onAppStateSet(event:AGORAEvent):void{
-			//stop timer for AGORA Menu
-			if(AGORAModel.getInstance().state == AGORAModel.MAP){
-				FlexGlobals.topLevelApplication.agoraMenu.timer.stop();
-			}
-			else{
-				FlexGlobals.topLevelApplication.agoraMenu.timer.start();
-			}
+		public function printMap():void{
+			var flexPrintJob:FlexPrintJob = new FlexPrintJob;
+			flexPrintJob.start();
+			flexPrintJob.printAsBitmap = false;
+			flexPrintJob.addObject(map.agoraMap, FlexPrintJobScaleType.SHOW_ALL);
+			flexPrintJob.send();
 		}
+		
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
@@ -121,6 +181,7 @@ package Controller
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				fetchDataMyMaps();
 			}
+			fetchDataProjectList();
 		}
 		
 		//--------------------Freeze the app--------------//
@@ -132,20 +193,72 @@ package Controller
 			CursorManager.removeBusyCursor();
 		}
 		
+		//-------------------- Illegal Map--------------------------------//
+		protected function handleIllegalMap(event:AGORAEvent):void{
+			Alert.show(Language.lookup("IllegalMap"));
+			hideMap();
+		}
+		
 		//--------------------Generic Fault Event ----------------------//
 		protected function onFault(event:AGORAEvent):void{
-			Alert.show("Network error occurred. Please make sure you are connected to the internet");
+			//If loading had been displayed, remove it
+			//For the Map List box
+			menu.mapList.loadingDisplay.text = Language.lookup("NetworkError");
+			menu.projects.loadingDisplay.text = Language.lookup("NetworkError");
+			if(userSession.uid){
+				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
+			}
 		}
 		
-		//--------------------Application Complete---------------------//
-		public function viewCreated():void{
-			FlexGlobals.topLevelApplication.stage.addEventListener(Event.RESIZE, updateSize);	
+		
+		
+		//----------- other public functions --------------------//
+		public function hideMap():void{
+			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
+			//reinitializes the map model
+			mapModel.reinitializeModel();
+			//initlizes the children hash map, and 
+			//sets the flag to delete all children
+			map.agoraMap.initializeMapStructures();
+			map.visible = false;
+			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
+			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
+			map.agoraMap.helpText.visible = false;
+			AGORAController.getInstance().fetchDataMapList();
+			AGORAController.getInstance().fetchDataMyMaps();
+			
+			//timers
+			map.agoraMap.timer.reset();
+			menu.timer.start();
 		}
 		
-		protected function updateSize(event:Event):void
-		{
-			FlexGlobals.topLevelApplication.map.agora.height = FlexGlobals.topLevelApplication.stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - FlexGlobals.topLevelApplication.map.container.gap - 10;
-			FlexGlobals.topLevelApplication.map.agora.width = FlexGlobals.topLevelApplication.stage.stageWidth;
+		public function showMap():void{
+			model.agoraMapModel.reinitializeModel();
+			//hide and show view components
+			menu.visible = false;
+			map.visible = true;
+			map.agora.visible = true;
+			//reinitialize map view
+			map.agoraMap.initializeMapStructures();
+			//fetch data
+			LoadController.getInstance().fetchMapData();
+			//timers
+			map.agoraMap.timer.start();
+			menu.timer.reset();
+		}
+		
+		//------------------------Creating a Map---------------//
+		public function displayMapInfoBox():void{
+			var agoraModel:AGORAModel = AGORAModel.getInstance();
+			if(agoraModel.userSessionModel.loggedIn()){
+				FlexGlobals.topLevelApplication.mapNameBox = new MapName;
+				var mapNameDialog:MapName = FlexGlobals.topLevelApplication.mapNameBox;
+				PopUpManager.addPopUp(mapNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
+				PopUpManager.centerPopUp(mapNameDialog);
+			}
+			else{
+				Alert.show(Language.lookup("MustRegister"));
+			}
 		}
 	}
 }

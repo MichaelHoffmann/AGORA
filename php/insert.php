@@ -68,9 +68,9 @@ List of variables for insertion:
 
 */
 	require 'configure.php';
-	require 'checklogin.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	
 	
 	$tbTIDarray;
@@ -372,6 +372,7 @@ List of variables for insertion:
 				return false;
 			}
 			$connection->addAttribute("ID", $id);
+			$connection->addAttribute("new_type", $typeID);
 		}
 		//Get the source nodes
 		$children = $conn->children();
@@ -424,7 +425,7 @@ List of variables for insertion:
 	{
 		global $dbName, $version;
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<map version='$version'></map>";
+		$xmlstr = "<?xml version='1.0'?>\n<map version='$version'></map>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
 		if(!$linkID){
@@ -456,7 +457,6 @@ List of variables for insertion:
 		if($mapID && !$mapClause){
 			$mapClause=$mapID;
 		}
-		$output->addAttribute("ID", $mapClause);
 
 		//Check to see if the map already exists
 		if($mapClause==0){
@@ -513,7 +513,16 @@ List of variables for insertion:
 		mysql_query("START TRANSACTION");
 		
 		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
+		//Update map last modified time
+		
 		if($success===true){
+			$uquery = "UPDATE maps SET modified_date=NOW() WHERE map_id=$mapClause";
+			$status = mysql_query($uquery);
+			if(!$status){
+				updateFailed($output, $uquery);
+				mysql_query("ROLLBACK");
+				rolledBack($output);
+			}
 			mysql_query("COMMIT");
 		}else{
 			mysql_query("ROLLBACK");
@@ -522,7 +531,8 @@ List of variables for insertion:
 		return $output;
 		
 	}
-	$xmlparam = $_REQUEST['xml']; //TODO: Change this back to a GET when all testing is done.
+	
+	$xmlparam = to_utf8($_REQUEST['xml']); //TODO: Change this back to a GET when all testing is done.
 	$userID = $_REQUEST['uid'];
 	$pass_hash = $_REQUEST['pass_hash'];
 	$output = insert($xmlparam, $userID, $pass_hash); 

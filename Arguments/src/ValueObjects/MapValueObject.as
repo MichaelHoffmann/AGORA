@@ -19,42 +19,67 @@ package ValueObjects
 			nodeObjects = new Vector.<NodeValueObject>;
 			connections = new Vector.<ConnectionValueObject>;
 			if(!inserted){
-				ID = mapObject.ID;
-				deleted = mapObject.deleted == 0? false:true;
-				//title = mapObject.title;
-				username = mapObject.username;
-				timestamp = mapObject.timestamp;
+				if(mapObject.hasOwnProperty("ID")){
+					ID = mapObject.ID;
+				}else{
+					throw new PropNotFoundError("Map does not have property ID");
+				}
+				/*
+				if(mapObject.hasOwnProperty("deleted")){
+					deleted = mapObject.deleted == 0? false:true;
+				}else{
+					throw new PropNotFoundError("Map does not have property 'deleted'");
+				}
+				*/
+				if(mapObject.hasOwnProperty("title")){
+					title = mapObject.title;
+				}else{
+					throw new PropNotFoundError("Map does not have property 'title'");
+				}
+				if(mapObject.hasOwnProperty("username")){
+					username = mapObject.username;	
+				}else{
+					throw new PropNotFoundError("Map does not have property 'username'");
+				}
+				if(mapObject.hasOwnProperty("timestamp")){
+					timestamp = mapObject.timestamp;
+				}else{
+					throw new PropNotFoundError("Map does not have property 'timestamp'");
+				}
 			}
 			var obj:Object;
-			
-			if(mapObject.hasOwnProperty("textbox")){
-				if(mapObject.textbox is ArrayCollection){
-					for each(obj in mapObject.textbox){
-						textboxes.push(new TextboxValueObject(obj,inserted));
+			try{
+				if(mapObject.hasOwnProperty("textbox")){
+					if(mapObject.textbox is ArrayCollection){
+						for each(obj in mapObject.textbox){
+							textboxes.push(new TextboxValueObject(obj,inserted));
+						}
+					}else{
+						textboxes.push(new TextboxValueObject(mapObject.textbox,inserted));
 					}
-				}else{
-					textboxes.push(new TextboxValueObject(mapObject.textbox,inserted));
 				}
-			}
-			
-			if(mapObject.hasOwnProperty("node")){
-				if(mapObject.node is ArrayCollection){
-					for each(obj in mapObject.node){
-						nodeObjects.push(new NodeValueObject(obj,inserted));
+				
+				if(mapObject.hasOwnProperty("node")){
+					if(mapObject.node is ArrayCollection){
+						for each(obj in mapObject.node){
+							nodeObjects.push(new NodeValueObject(obj,inserted));
 					}
-				}else{
-					nodeObjects.push(new NodeValueObject(mapObject.node, inserted));
-				}
-			}
-			
-			if(mapObject.hasOwnProperty("connection")){
-				if(mapObject.connection is ArrayCollection){
-					for each(obj in mapObject.connection){
-						connections.push(new ConnectionValueObject(obj, inserted));	
+					}else{
+						nodeObjects.push(new NodeValueObject(mapObject.node, inserted));
 					}
-				}else{
-					connections.push(new ConnectionValueObject(mapObject.connection, inserted));
 				}
+				
+				if(mapObject.hasOwnProperty("connection")){
+					if(mapObject.connection is ArrayCollection){
+						for each(obj in mapObject.connection){
+							connections.push(new ConnectionValueObject(obj, inserted));	
+						}
+					}else{
+						connections.push(new ConnectionValueObject(mapObject.connection, inserted));
+					}
+				}
+			}catch(error: PropNotFoundError){
+				throw error;
 			}
 		}
 	}

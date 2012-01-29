@@ -23,6 +23,7 @@ package Model
 	[Bindable]
 	public class UserSessionModel extends EventDispatcher
 	{
+		private var _username:String;
 		public var firstName:String;
 		public var lastName:String;
 		public var _uid:int;
@@ -42,6 +43,17 @@ package Model
 		}
 		
 		//Getters and setters
+
+		public function get username():String
+		{
+			return _username;
+		}
+
+		public function set username(value:String):void
+		{
+			_username = value;
+		}
+
 		public function get valueObject():UserDataVO
 		{
 			_valueObject.firstName = this.firstName;
@@ -78,17 +90,21 @@ package Model
 			var loginRequestService:HTTPService = new HTTPService;
 			passHash = MD5.hash(userData.password + _salt);
 			loginRequestService.url = AGORAParameters.getInstance().loginURL;
-			loginRequestService.request['username'] = userData.userName;
-			loginRequestService.request['pass_hash'] = passHash;
+			//loginRequestService.request['username'] = userData.userName;
+			//loginRequestService.request['pass_hash'] = passHash;
+			trace(userData.userName);
+			trace(passHash);
+			username = userData.userName;
 			loginRequestService.addEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			loginRequestService.addEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
-			loginRequestService.send();
+			loginRequestService.send({username: userData.userName, pass_hash: passHash});
 		}
 		
 		protected function onLoginRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
 			try{
+				//trace(event.result.toXMLString());
 				uid = event.result.login.ID;
 				firstName = event.result.login.firstname;
 				lastName = event.result.login.lastname;
@@ -123,14 +139,18 @@ package Model
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
-			if(event.result.AGORA.login.hasOwnProperty("created")){
-				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_SUCCEEDED));
+			if(event.result.AGORA.hasOwnProperty("error")){
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED, <error text={event.result.AGORA.error.text} />, null));
+			}
+			else if(event.result.AGORA.login.hasOwnProperty("created")){
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_SUCCEEDED, null,null));
 			}else{
-				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED));
+				dispatchEvent(new AGORAEvent(AGORAEvent.REGISTRATION_FAILED, <error text={AGORAParameters.getInstance().REGISTRATION_FAILED_MESSAGE}/>, null));
 			}
 		}
 		
 		protected function onRegistrationRequestServiceFault(event:ResultEvent):void{
+			//trace(event.result.toXMLString());
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));

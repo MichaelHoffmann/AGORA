@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	/**
 	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 			reflection, critique, deliberation, and creativity in individual argument construction 
@@ -90,7 +90,9 @@
 			updateFailed($output, $uquery);
 			return $output;
 		}
-		$message = wordwrap("Your new password for the AGORA system is:\n $password", 70);
+		$message = wordwrap("Your new password for the AGORA system is: $password \n
+							Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: $password \n
+							Dein Passwort auf dem AGORA Server wurde geändert. Das neue Passwort ist: $password", 70);
 		$headers = 'From: webmaster@agora.gatech.edu' . "\r\n" . 
 			'Reply-To: webmaster@agora.gatech.edu' . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();

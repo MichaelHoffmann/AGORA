@@ -9,8 +9,6 @@ package components
 	
 	import Model.SimpleStatementModel;
 	
-	import classes.UpdateEvent;
-	
 	import com.adobe.utils.StringUtil;
 	
 	import flash.events.Event;
@@ -56,7 +54,6 @@ package components
 		
 		override public function set text(value:String):void{
 			if(value != null){
-				trace("whatever");
 				//For Windows and Linux
 				if(value.charAt(value.length - 1) == '\n'){
 					value = value.substr(0,value.length - 1);
@@ -69,6 +66,7 @@ package components
 			}else{
 				super.text = value;
 			}
+			dispatchEvent(new Event(Event.CHANGE));
 			invalidateSize();
 			invalidateDisplayList();
 		}

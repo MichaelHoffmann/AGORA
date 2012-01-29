@@ -20,7 +20,8 @@
 -->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400"
+		 creationComplete="addEventHandlers(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -59,16 +60,19 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.ArgumentController;
+			import Controller.logic.*;
+			
 			import Model.ArgumentTypeModel;
 			
 			import flash.events.Event;
 			import flash.events.MouseEvent;
 			
-			import Controller.logic.*;
-			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 		
 			private var _languageTypes:Array;
@@ -144,7 +148,66 @@
 				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
 				y = value;
 			}
+
+			//----------------- Other public functions -----------------------------------//
+			public function show():void{
+				this.parent.setChildIndex(this, parent.numChildren - 1);
+				this.visible = true;
+			}
 			
+			public function hide():void{
+				//also hide the map's(parent's help text)
+				typeSelector.visible = false;
+				andor.visible = false;
+				this.visible = false;
+			}
+			
+			//----------------- Event Handlers --------------------------------------------//
+			protected function addEventHandlers(event:FlexEvent):void{
+				this.addEventListener(MouseEvent.ROLL_OVER, onRollOver);
+				mainSchemes.addEventListener(ListEvent.ITEM_ROLL_OVER, onSchemeItemRollOver);
+				typeSelector.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageTypeItemRollOver);
+				andor.addEventListener(ListEvent.ITEM_ROLL_OVER, onLanguageSubOptionsItemRollOver);
+				mainSchemes.addEventListener(ListEvent.ITEM_CLICK, onSchemeItemClicked);
+				typeSelector.addEventListener(ListEvent.ITEM_CLICK, onLanguageTypeItemClicked);
+				andor.addEventListener(ListEvent.ITEM_CLICK, onOptionsItemClicked);
+				
+			}
+			
+			protected function onSchemeItemRollOver(event:ListEvent):void{
+				var scheme:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().displayLanguageType(this, scheme);
+			}
+			
+			protected function onLanguageTypeItemRollOver(event:ListEvent):void{
+				var language:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().updateEnablerText(this, language);
+			}
+			
+			protected function onLanguageSubOptionsItemRollOver(event:ListEvent):void{
+				var option:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().updateEnablerTextWithConjunctions(this, option);
+			}
+			
+			protected function onSchemeItemClicked(event:ListEvent):void{
+				var scheme:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().setSchemeType(this, scheme);
+			}
+			
+			protected function onLanguageTypeItemClicked(event:ListEvent):void{
+				var language:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().setSchemeLanguageType(this, language);
+			}
+			
+			protected function onOptionsItemClicked(event:ListEvent):void{
+				var option:String = event.itemRenderer.data.toString();
+				ArgumentController.getInstance().setSchemeLanguageOptionType(this, option);
+			}
+			
+			protected function onRollOver(event:MouseEvent):void{
+				this.parent.setChildIndex(this, parent.numChildren - 1);
+			}
+		
 		]]>
 	</fx:Script>
 </s:Group>

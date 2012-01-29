@@ -13,10 +13,14 @@
 		<![CDATA[
 			import Controller.AGORAController;
 			import Controller.ArgumentController;
+			
+			import classes.Language;
+			
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
+			
 			public function map_name():void{
 				AGORAController.getInstance().freeze();
 				ArgumentController.getInstance().createMap(mapName.text);
@@ -45,13 +49,13 @@
 		]]>
 	</fx:Script>
 	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="Enter a name for your map">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;EnterMapName&quot;)}">
 			<s:TextInput id="mapName">
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem>
 			<s:HGroup>
-				<s:Button label="OK" tabIndex="7" id="OK_btn" click="map_name();">		
+				<s:Button label="{Language.lookup('OK')}" tabIndex="7" id="OK_btn" click="map_name();">		
 				</s:Button>
 			</s:HGroup>		
 		</mx:FormItem>

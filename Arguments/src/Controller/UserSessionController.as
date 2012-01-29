@@ -9,6 +9,7 @@ package Controller
 	
 	import components.LoginWindow;
 	import components.RegisterPanel;
+	import classes.Language;
 	
 	import flash.display.DisplayObject;
 	
@@ -74,11 +75,12 @@ package Controller
 			removeSignInBox();
 			var agoraController:AGORAController = AGORAController.getInstance();
 			agoraController.fetchDataMyMaps();
+			agoraController.fetchDataMyProjects();
 		}
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{
 			trace("User Authentication Failed");	
-			Alert.show("Invalid username/password");
+			Alert.show(Language.lookup("LoginFailed"));
 		}
 		
 		//----------------Registration Function--------------------//
@@ -89,16 +91,19 @@ package Controller
 		
 		protected function onRegistrationRequestSuccess(event:AGORAEvent):void{
 			removeRegistrationBox();
-			Alert.show("Registration Successful. You may use your username/password to participate in AGORA.");
+			Alert.show(Language.lookup("RegisterSuccess"));
 		}
 		
 		protected function onRegistrationRequestFailure(event:AGORAEvent):void{
-			Alert.show("Registration Failed");
+			//TODO: Get the appropriate text from the XML
+			trace(event.xmlData.text);
+			Alert.show(event.xmlData.@text);
+			Alert.show(Language.lookup("RegisterFailed"));
 		}
 		
 		//---------------Generic Network Fault----------------------//
 		protected function onFault(event:AGORAEvent):void{
-			Alert.show("Could not contact Authenticaion Server. Please make sure you are connected to the Internet");
+			Alert.show(Language.lookup("NetworkError"));
 		}
 		
 		//---------------Other public methods----------------------//

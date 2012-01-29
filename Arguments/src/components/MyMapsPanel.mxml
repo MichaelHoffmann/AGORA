@@ -19,9 +19,10 @@
 			import Controller.AGORAController;
 			
 			import Model.AGORAModel;
-			
 			import Model.MapMetaData;
-			import classes.UserData;
+			
+			import classes.Configure;
+			import classes.Language;
 			
 			import flash.net.URLLoader;
 			import flash.net.URLRequest;
@@ -30,15 +31,14 @@
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.controls.Label;
+			import spark.components.Label;
 			import mx.controls.Text;
 			import mx.core.FlexGlobals;
 			import mx.managers.CursorManager;
 			
 			import spark.components.Button;
 			import spark.components.Group;
-			import spark.components.Label;
-			
-			import classes.Configure;
 			
 			//for future
 			[Bindable]
@@ -51,7 +51,7 @@
 			public var labelGroup:Group;
 			
 			[SkinPart(required="true")]
-			public var userInfoTxt:Label;
+			public var userInfoTxt:spark.components.Label;
 			
 			[SkinPart(required="true")]
 			public var  selectBtn:Button;
@@ -59,8 +59,11 @@
 			[SkinPart(required="true")]
 			public var deleteBtn:Button;
 			
-			public static const MARK_ALL:String = "Select All";
-			public static const UNMARK_ALL:String = "Select None";
+			[SkinPart(required="true")]
+			public var loadingDisplay:mx.controls.Label;
+			
+			public static const MARK_ALL:String = Language.lookup("SelectAll");
+			public static const UNMARK_ALL:String = Language.lookup("SelectNone");
 			
 			[Bindable]
 			public var selectString:String;
@@ -86,7 +89,6 @@
 			
 			override protected function commitProperties():void{
 				super.commitProperties();
-				trace(" In MyMapsPanel: commitProperties" + skin.currentState);
 				if( skin.currentState == "loggedIn")
 				{ 
 					titleDisplay.text = AGORAModel.getInstance().userSessionModel.firstName+ "'s" + " maps";
@@ -113,9 +115,7 @@
 						mapMetaData.mapName = map.@title;
 						mapMetaDataVector.push(mapMetaData);
 					}
-					
 					mapMetaDataVector.sort(MapMetaData.isGreater);
-					
 					for each( mapMetaData in mapMetaDataVector){
 						var myMapName:MyMapName = new MyMapName;
 						myMapName.mapId = mapMetaData.mapID;
@@ -149,32 +149,6 @@
 				selectString = MARK_ALL;
 				AGORAController.getInstance().deleteSelectedMaps();
 				
-			}
-
-			private function deleteMap(map:MyMapName, mapsMarked:Vector.<MyMapName>):void{
-				var xml:XML = new XML("<map id=\""+ map.mapId +"\" remove=\"1\" />");
-				var urlRequest:URLRequest = new URLRequest;
-				urlRequest.url = Configure.lookup("baseURL") + "remove.php";
-				var urlRequestVars:URLVariables = new URLVariables("uid="+UserData.uid+"&"+"pass_hash="+UserData.passHashStr+"&xml="+ xml.toXMLString());
-				urlRequest.data = urlRequestVars;
-				urlRequest.method = URLRequestMethod.GET;
-				var urlLoader:URLLoader = new URLLoader;
-				urlLoader.addEventListener(Event.COMPLETE, function (event:Event):void{
-					if(mapsMarked.length > 0){
-						var tmpMap:MyMapName = mapsMarked.pop();
-						deleteMap(tmpMap,mapsMarked);
-					}
-					else
-					{
-						CursorManager.removeBusyCursor();
-						FlexGlobals.topLevelApplication.loadMyMapList();
-						FlexGlobals.topLevelApplication.loadMapList();
-						Alert.show("maps deleted ...");
-						
-					}
-				});
-				urlLoader.addEventListener( IOErrorEvent.IO_ERROR, function (event:IOErrorEvent):void{Alert.show("Deleting " + map.mapName + " failed ...");});
-				urlLoader.load(urlRequest);
 			}
 
 		]]>

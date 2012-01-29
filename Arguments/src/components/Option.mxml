@@ -28,10 +28,10 @@
 	</mx:Text>
 	<fx:Script>	
 		<![CDATA[
-
 			import Controller.ArgumentController;
 			import Model.ArgumentTypeModel;
 			import mx.events.FlexEvent;
+			import classes.Language;
 			private var _argumentTypeModel:ArgumentTypeModel;
 			
 			//----------------- Getters and Setters----------------//

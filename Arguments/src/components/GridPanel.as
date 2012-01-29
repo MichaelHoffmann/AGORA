@@ -1,8 +1,5 @@
 package components
 {
-
-	
-
 	/**
 	 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 	 reflection, critique, deliberation, and creativity in individual argument construction 

@@ -21,17 +21,21 @@ package components
 	 
 	 */
 	import Controller.ArgumentController;
+	import Controller.UpdateController;
 	import Controller.ViewController;
+	import Controller.logic.ConditionalSyllogism;
+	import Controller.logic.ParentArg;
 	
+	import Events.AGORAEvent;
+	
+	import Model.AGORAModel;
 	import Model.SimpleStatementModel;
 
 	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
 	
-	import classes.AButton;
 	import classes.Language;
-	import classes.UserData;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -41,9 +45,6 @@ package components
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
-	
-	import Controller.logic.ConditionalSyllogism;
-	import Controller.logic.ParentArg;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -82,6 +83,8 @@ package components
 		[Bindable]
 		private var _model:StatementModel;
 		
+		private var agoraLabels:AGORAParameters;
+		
 		//Input boxes
 		public var inputs:Vector.<DynamicTextArea>;
 		public var changeWatchers:Vector.<ChangeWatcher>;
@@ -103,11 +106,11 @@ package components
 		//control elements
 		public var topArea:UIComponent;
 		//doneButton
-		public var doneBtn:AButton;
+		public var doneBtn:Button;
 		//add button
-		public var addBtn:AButton;
+		public var addBtn:Button;
 		//delete button
-		public var deleteBtn:AButton;
+		public var deleteBtn:Button;
 		//banch option control
 		public var branchControl:Option;
 		
@@ -143,17 +146,18 @@ package components
 		public static const DISPLAY:String = "Display";
 		
 		//References to other objects
+		public var addArgumentsInfo:InfoBox;
+		public var changeTypeInfo:InfoBox;
+		
 		//A reference to the current map diplayed to the user
 		public static var parentMap:AgoraMap;
 		
 		//Containers
 		//The logical container that holds the text elements of the statement
 		//that is, input boxes and displayTxt
-		public var group:Group;
+		public var group:VGroup;
 		//multistatement group
 		public var msVGroup:VGroup;
-		//The enabler which makes this statements support a claim
-		public var inference:Inference;
 		//contains the add and the delete button
 		public var bottomHG:HGroup;
 		//the logical container that contains everything above the group container
@@ -166,30 +170,19 @@ package components
 		public var btnG:Group;
 		
 		//Menu data
-		//XML string holding the menu data for the add button
-		public var addMenuData:XML;
-		//XML string holding the menu data for the menu that pops up when user hits the done button
-		public var constructArgData:XML;
+		
 		
 		//other instance variables
 		public var connectingStr:String;
 		public function ArgumentPanel()
 		{
 			super();
-			addMenuData = <root><menuitem label="add an argument for this statement" type="TopLevel" /></root>;
-			constructArgData = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>;		
-			
+			agoraLabels = AGORAParameters.getInstance();
 			inputs = new Vector.<DynamicTextArea>;
 			changeWatchers = new Vector.<ChangeWatcher>;
-			
-			//will be set by the object that creates this
-			inference = null;
 			width = 180;
 			minHeight = 100;
-			
 			state = DISPLAY;
-			
-			//Event handlers
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}
 		
@@ -221,6 +214,7 @@ package components
 		{
 			_statementNegated = value;
 			statementNegatedDF = true;
+			stateDF = true;
 			
 			invalidateProperties();
 			invalidateSize();
@@ -252,7 +246,12 @@ package components
 			if(model == null){
 				_model = value;
 				//bind variables
-				BindingUtils.bindProperty(this, "statementType", this, ["model","statementType"]);
+				if(value.statementFunction == StatementModel.STATEMENT || value.statementFunction == StatementModel.INFERENCE){ 
+					BindingUtils.bindProperty(this, "statementType", this, ["model","statementType"]);
+				}
+				else if(value.statementFunction == StatementModel.OBJECTION){
+					BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+				}
 				BindingUtils.bindProperty(this, "statementNegated", model, ["negated"]);
 				BindingUtils.bindProperty(this, "gridX", model, ["xgrid"]);
 				BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
@@ -261,9 +260,7 @@ package components
 				BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
 				
 				author = model.author;
-				
 				statementsAddedDF = true;
-				
 				invalidateProperties();
 				invalidateSize();
 				invalidateDisplayList();
@@ -340,7 +337,7 @@ package components
 		}
 		
 		protected function onDeleteBtnClicked(event:MouseEvent):void{
-			
+			ArgumentController.getInstance().deleteNodes(this);
 		}
 		
 		protected function onStmtTypeClicked(event:MouseEvent):void{
@@ -349,13 +346,12 @@ package components
 		
 
 		protected function onAddBtnClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().addSupportingArgument(model);
-
+			ArgumentController.getInstance().showAddMenu(this);
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
 		{
-			state = EDIT;
+			ViewController.getInstance().changeToEdit(this);	
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
@@ -391,10 +387,6 @@ package components
 			}
 		}
 		
-		public function removeEventListeners():void
-		{
-			
-		}
 		
 		protected function optionClicked(event:MouseEvent):void
 		{
@@ -403,36 +395,45 @@ package components
 		protected function hideOption(event:KeyboardEvent):void
 		{
 		}
-	
+		
 		protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
-			 if(menuEvent.label == "add another reason"){
-				 ArgumentController.getInstance().addReason(model.argumentTypeModel);
-			 }else{
-				 ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
-			 }
+			if(menuEvent.label == Language.lookup("AddReason")){
+				ArgumentController.getInstance().addReason(model.argumentTypeModel);
+			}else{
+				ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+			}
 		}
-		
-		public function showMenu():void
-		{
-			var constructArgData:XML = <root><menuitem label="add another reason" type="TopLevel"/><menuitem label="construct argument" type="TopLevel"/></root>; 
-			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
-			menu.labelField = "@label";
-			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
-			var globalPosition:Point = localToGlobal(new Point(0,this.height));
-			menu.show(globalPosition.x,globalPosition.y);	
-		}
-		
-	
-		
 		
 		//----------------------- Bind Setters -------------------------------------------------//
 		protected function setDisplayStatement(value:String):void{
 			if(value == null){
+				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.firstClaim){
-						displayTxt.text = "[Enter your claim here]";
+						displayTxt.text = "[" + Language.lookup("EnterClaim") +"]";
 					}else{
-						displayTxt.text = "[Enter your reason here]";
+						displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
 					}
+				}
+				else if(model.statementFunction == StatementModel.OBJECTION){
+					displayTxt.text = "[" + Language.lookup("EnterObjection") + "]";
+				}
+				else if(model.statementFunction == StatementModel.INFERENCE){
+					displayTxt.text = AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
+				}
+			}
+			else if(value.split(" ").join("").length == 0){
+				if(model.statementFunction == StatementModel.STATEMENT){
+					if(model.firstClaim){
+						displayTxt.text = "[" + Language.lookup("EnterClaim") +"]";
+					}else{
+						displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
+					}
+				}else if(model.statementFunction == StatementModel.OBJECTION){
+					displayTxt.text = "["+Language.lookup("EnterObjection") +"]";
+				}
+				else if(model.statementFunction == StatementModel.INFERENCE){
+					displayTxt.text =  AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
+				}
 			}
 			else{
 				displayTxt.text = value;
@@ -447,6 +448,44 @@ package components
 				else{
 					this.visible = true;
 				}
+			}
+		}
+		
+		//-------------------- Other Public Methods ----------------------------//
+		public function enableDelete():void{
+			//remove button
+			if(AGORAModel.getInstance().leafDelete){
+				
+				if(model.supportingArguments.length != 0 || ( model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length != 0)){
+					if(deleteBtn){
+						deleteBtn.enabled = false;
+					}			
+				}
+			}
+		}
+		
+		public function showMenu():void
+		{
+			var addReason:String = Language.lookup("AddReason");
+			var completeArgument:String = Language.lookup("Construct");
+			var constructArgData:XML = <root><menuitem label={addReason} type="TopLevel" /><menuitem label={completeArgument} type="TopLevel"/></root>;
+			var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
+			menu.labelField = "@label";
+			menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
+			var globalPosition:Point = localToGlobal(new Point(0,this.height));
+			menu.show(globalPosition.x,globalPosition.y);	
+		}
+		
+		public function toEditState():void{
+			state = EDIT;
+			dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
+		}
+		
+		public function addMenuClicked(event:MenuEvent):void{
+			if(event.label == agoraLabels.ADD_SUPPORTING_STATEMENT){
+				ArgumentController.getInstance().addSupportingArgument(model);
+			}else if(event.label == agoraLabels.ADD_OBJECTION){
+				ArgumentController.getInstance().addAnObjection(model);
 			}
 		}
 		
@@ -470,18 +509,18 @@ package components
 			stmtTypeLbl = new Label;
 			// default setting    	
 			
-			//stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
-			//stmtTypeLbl.toolTip = "Please change it before commiting";
+			if(model.statementFunction == StatementModel.STATEMENT){
+				stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+			}
 
-			stmtTypeLbl.toolTip = "'Universal statement' is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include 'ought,' 'should,' or other forms indicating normativity, are universal statements. Anything else is treated as a 'particular statement' including statements about possibilities.  The distinction is important only with regard to the consequences of different forms of objections: If the premise of an argument is 'defeated,' then the conclusion and the entire chain of arguments that depends on this premise is defeated as well; but if a premise is only 'questioned' or criticized, then the conclusion and everything depending is only questioned, but not defeated. While universal statements can easily be defeated by a single counterexample, it depends on an agreement among deliberators whether a counterargument against a particular statement is sufficient to defeat it, even though it is always sufficient to question it and to shift, thus, the burden of proof.";
 			BindingUtils.bindProperty(stmtTypeLbl, "text",this, ["statementType"]);
 			stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
 
 			
 			bottomHG = new HGroup();
 			doneHG = new HGroup;
-			doneBtn = new AButton;
-			doneBtn.label = "Done";
+			doneBtn = new Button;
+			doneBtn.label = Language.lookup("Done");
 			doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
 
 			doneHG.addElement(doneBtn);
@@ -508,6 +547,7 @@ package components
 			stmtInfoVG.gap = 0;
 			if(model.statementFunction == StatementModel.INFERENCE){
 				stmtInfoVG.visible = false;
+				this.toolTip = Language.lookup("Enabler");
 			}
 			topHG.addElement(stmtInfoVG);
 			
@@ -516,15 +556,19 @@ package components
 			stmtInfoVG.addElement(userIdLbl);
 			
 			userIdLbl.text = "AU: " + author;
-			var userInfoStr:String = "User Name: " + UserData.userNameStr + "\n" + "User ID: " + UserData.uid;
+			var userInfoStr:String = Language.lookup("Username")+ ": " +
+				AGORAModel.getInstance().userSessionModel.firstName + "\n" +
+				"User ID: " + AGORAModel.getInstance().userSessionModel.uid
 			userIdLbl.toolTip = userInfoStr;
 			
 			negatedLbl = new Label;
-		
-			negatedLbl.visible = false;
+
+			negatedLbl.text = Language.lookup("ArgNotCase");
+			negatedLbl.visible = true;
+
 			
 			
-			group = new Group;
+			group = new VGroup;
 			addElement(group);
 			group.addElement(displayTxt);
 			
@@ -533,13 +577,15 @@ package components
 			btnG.addElement(bottomHG);
 			doneHG = new HGroup;
 			doneHG.addElement(doneBtn);
-			addBtn = new AButton;
-			addBtn.label = Language.lookup("Add")+"...";
+
+			addBtn = new Button;
+			addBtn.label = Language.lookup("Add") + "...";
 			
 			bottomHG.addElement(addBtn);
-			deleteBtn = new AButton;
-			deleteBtn.label = Language.lookup("Delete")+"...";
-			deleteBtn.addEventListener(MouseEvent.CLICK,deleteThis);
+			deleteBtn = new Button;
+			deleteBtn.label = Language.lookup("Delete") + "...";
+			deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
+
 			bottomHG.addElement(deleteBtn);
 			addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
 		}
@@ -550,7 +596,9 @@ package components
 			if(!(panelType == StatementModel.INFERENCE)){
 				var dta:DynamicTextArea;
 				var simpleStatement:SimpleStatementModel;
+				statementsAddedDF = true;
 				//check if new statements were added
+				//associate every statement in statments vector with a new dynamc text area
 				if(statementsAddedDF){
 					//clear flag
 					statementsAddedDF = false;
@@ -559,7 +607,7 @@ package components
 						try{
 							group.removeElement(dta);
 						}catch(error:Error){
-							trace("error: Trying to remove an element that is not present");
+							//trace("error: Trying to remove an element that is not present");
 						}
 					}
 					inputs.splice(0,inputs.length);
@@ -585,6 +633,7 @@ package components
 					}
 				}
 				
+				//Handle state change between DISPLAY AND EDIT.
 				if(stateDF){
 					stateDF = false;
 					if(state == EDIT){
@@ -606,12 +655,23 @@ package components
 						//remove buttons
 						btnG.removeAllElements();
 						//add label
+						//add the changed text.
+						//needed in case if the 
+						//node was changed from positive
+						//to negative
+						setDisplayStatement(model.statement.text);
 						group.addElement(displayTxt);
 						//add button
 						btnG.addElement(bottomHG);
 					}
 				}
 			}
+			else if(panelType == StatementModel.OBJECTION){
+				group.removeAllElements();
+				state = DISPLAY;
+				group.addElement(displayTxt);
+			}
+				//If the statement is an enabler.
 			else{
 				//remove all textboxes
 				inputs.splice(0,inputs.length);
@@ -635,9 +695,12 @@ package components
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
+			//Draw the top left box for moving stuff
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			topArea.graphics.clear();
 			topArea.graphics.beginFill(0xdddddd,1.0);
-			topArea.graphics.drawRect(0,0,40,40);		
+			topArea.graphics.drawRect(0,0,40,40);	
+			topArea.graphics.endFill();
 		}
 	}	
 }

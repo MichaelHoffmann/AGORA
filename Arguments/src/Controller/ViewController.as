@@ -2,8 +2,11 @@ package Controller
 {
 	import Events.AGORAEvent;
 	
+	import Model.AGORAModel;
 	import Model.SimpleStatementModel;
 	import Model.StatementModel;
+	
+	import ValueObjects.AGORAParameters;
 	
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
@@ -12,6 +15,7 @@ package Controller
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
+	import mx.controls.Alert;
 
 	public class ViewController
 	{
@@ -28,6 +32,7 @@ package Controller
 			return instance;
 		}
 	
+		
 		//---------------- Bind a new dta to a simpleStatementModel------------//
 		public function getNewDynamicTextArea(simpleStatement:SimpleStatementModel, changeWatcher:ChangeWatcher):DynamicTextArea{
 			var dta:DynamicTextArea = new DynamicTextArea;
@@ -35,11 +40,16 @@ package Controller
 			return dta;
 		}
 		
-		//--------------- add event handlers to the statement model -----------//
-		public function configureStatementModel(statementModel:StatementModel):void{
-			statementModel.addEventListener(AGORAEvent.TEXT_SAVED, ArgumentController.getInstance().textSaved);
-			statementModel.addEventListener(AGORAEvent.FAULT, ArgumentController.getInstance().onFault);
+		//---------------------------- Editing Text -------------------------------------//
+		public function changeToEdit(argumentPanel:ArgumentPanel):void{
+			if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === argumentPanel.author.toLocaleLowerCase()){
+				argumentPanel.toEditState();
+			}
+			else{
+				Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+			}
 		}
+			
 	}
 }
 

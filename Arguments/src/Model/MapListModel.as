@@ -21,26 +21,24 @@ package Model
 		{
 			super(target);
 			reference = this;
-			
-			//request map service
 			requestMapService = new HTTPService;
 			requestMapService.resultFormat = "e4x";
+			requestMapService.requestTimeout = 10;
 			requestMapService.url = AGORAParameters.getInstance().listMapsURL;
 			requestMapService.addEventListener(ResultEvent.RESULT, onRequestMapsServiceResult);
-			requestMapService.addEventListener(FaultEvent.FAULT, onRequestMapsServiceFault);
-			
+			requestMapService.addEventListener(FaultEvent.FAULT, onRequestMapsServiceFault);	
 		}
 		
 		public function requestMapList():void{
 			requestMapService.send();
 		}	
 		
-		private function onRequestMapsServiceResult(event:ResultEvent):void{
+		protected function onRequestMapsServiceResult(event:ResultEvent):void{
 			mapListXML = event.result as XML;
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LIST_FETCHED));
 		}
 		
-		private function onRequestMapsServiceFault(event:FaultEvent):void{
+		protected function onRequestMapsServiceFault(event:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 	}

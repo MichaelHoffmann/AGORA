@@ -26,7 +26,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Label text="Welcome to Agora! Please choose one of the following tasks to continue.."
+	<s:Label text="{Language.lookup(&quot;Welcome&quot;)}"
 			 x="10" y="10"
 			 fontWeight="bold" 
 			 fontFamily="Verdana"  
@@ -38,7 +38,7 @@
 				  width="191" 
 				  height="45" 
 				  text="{Language.lookup(&quot;WhatIsMainClaim&quot;)}"
-				  toolTip="The easiest way to construct an argument"
+				  toolTip="{Language.lookup(&quot;EasiestWay&quot;)}"
 				  textAlign="center"
 				  click="startWithClaim()"/>
 	<mx:TextArea id="schemeStart"
@@ -78,18 +78,11 @@
 			}
 			
 			public function startWithScheme():void {
-				
-/* 				var map:Map = new Map;
-				var group:Group = Group(this.parent);
-				group.addElement(map);
-				map.addEventListener("created",function(event:Event):void{map.addEmptyArgument();});	
-				group.removeElement(this);
- */			}
+			}
 			
 			public function init():void {
-				argumentPaste.text = Language.lookup("PasteArgument");
-				conceptStart.text = "Click here if you want to divide a concept into sub-concepts or a claim into sub-claims so that arguments or objections\n can be developed for each case (under construction)";
-				
+				argumentPaste.text=Language.lookup("PasteArgument");
+				conceptStart.text=Language.lookup("DivideToSubclaims");
 			}
 		]]>
 	</fx:Script>

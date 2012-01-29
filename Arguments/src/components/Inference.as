@@ -54,9 +54,15 @@ package components
 	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
 	
+<<<<<<< HEAD
 	import classes.Configure;
 	import classes.Language;
 	
+=======
+	
+	//This class is no longer used.
+	//This has been merged with ArgumentPanel
+>>>>>>> devel
 	public class Inference extends ArgumentPanel
 	{
 		

@@ -6,8 +6,9 @@
 		<![CDATA[
 			import Controller.UserSessionController;
 			
-			import mx.core.FlexGlobals;
 			import classes.Language;
+			
+			import mx.core.FlexGlobals;
 
 			protected function userInfoTxt_clickHandler(event:MouseEvent):void
 			{
@@ -67,10 +68,12 @@
 	<s:Label id="titleDisplay" 
 			 paddingLeft="15" paddingRight="15" paddingTop="15"
 			 fontWeight="bold"
-			 text.notLoggedIn="My Maps"
+			 text.notLoggedIn="{Language.lookup(&quot;MyMaps&quot;)}"
 			 />
 	
-	<s:Scroller width="100%" top="40" height="300">
+	<mx:Label id="loadingDisplay" width = "100%" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
+	
+	<s:Scroller width="100%" top="56" height="300">
 		<s:Group id="contentGroup" bottom="30">
 			<s:Group id="mapsGroup" 
 					 visible.notLoggedIn="false"
@@ -81,22 +84,21 @@
 			</s:Group>
 			<s:Group id="labelGroup" visible.loggedIn="false" visible.notLoggedIn= "true">
 				<s:Label id="userInfoTxt" x="28" y="118" visible.loggedIn="false" visible.notLoggedIn="true"  click="userInfoTxt_clickHandler(event)" textDecoration="underline">
-					<s:text>Sign In to view your maps</s:text>
+					<s:text>{Language.lookup("SignInToViewMaps")}</s:text>
 				</s:Label>
 				
 			</s:Group>
 		</s:Group>
 	</s:Scroller>
 	
+	
 	<s:Group id="controlBarGroup" bottom="10" visible.loggedIn="true" visible.notLoggedIn="false">
 		<s:layout>
 			<s:HorizontalLayout paddingLeft="5" paddingRight="5"/>
 		</s:layout>
-<<<<<<< HEAD
+
 		<s:Button label="{Language.lookup(&quot;Delete&quot;)}" id="deleteBtn" click="hostComponent.deleteMaps(event)">
-=======
-		<s:Button label="Delete" id="deleteBtn" width="80" click="hostComponent.deleteMaps(event)">
->>>>>>> Architect
+
 		</s:Button>
 		<s:Button label="{hostComponent.selectString}" id = "selectBtn"  width="100" click="hostComponent.makeSelection(event)">
 		</s:Button>
