@@ -130,6 +130,7 @@ package Controller.logic
 				claimModel.addTemporaryStatement();
 				claimModel.statements[1].text = "T";
 			}
+			
 			for(i = 0; i<reasonModels.length; i++){
 				if(reasonModels[i].statements.length < 2){
 					reasonModels[i].addTemporaryStatement();
