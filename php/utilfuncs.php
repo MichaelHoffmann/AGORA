@@ -25,9 +25,7 @@
 	*/
 	function checkLogin($userID, $pass_hash, $linkID)
 	{
-		$userclause = mysql_real_escape_string("$userID");
-		$passclause = mysql_real_escape_string("$pass_hash");
-		$query = "SELECT * FROM users WHERE user_ID='$userID' AND password='$passclause'";
+		$query = "SELECT * FROM users WHERE user_ID='$userID' AND password='$pass_hash'";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID && mysql_num_rows($resultID)>0){
 			return true;
@@ -58,4 +56,70 @@
 			return iconv( 'CP1252', 'UTF-8', $string);
 		}
 	}
+	
+	function checkForAdmin($projID, $userID, $linkID){
+		//There are two ways a person can be an "admin" of a project.
+		//The first is that the person is the owner of the project ($userID==projects.user_id)
+		$query = "SELECT user_id FROM projects WHERE proj_id=$projID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		if($userID == $row['user_id']){
+			return true;
+		}
+		//The other is that the person is an administrator of the project.
+		//(9 = projusers.user_level WHERE project=$projID AND user_id=$userID)
+		$query = "SELECT user_level FROM projusers WHERE proj_id=$projID AND user_id=$userID";
+		$resultID = mysql_query($query, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		if(9 == $row['user_level']){
+			return true;
+		}	
+		return false;
+	}
+	
+	/**
+		A function which will check whether:
+		1. The map is in a project
+		2. If 1 is true, then it checks if the user is in the corresponding project's user list
+		It returns false if:
+		-The map is not in a project at all 
+		-The user is not in the project the map is in
+		It returns true if:
+		-The map is in a project
+		AND
+		-The user in question is also in a project.
+	*/
+	function isUserInMapProject($userID, $mapID, $linkID){
+
+		//Some of the basic SQL error handling will be omitted.
+		//Queries should not fail at this point.
+		$query = "SELECT proj_id FROM maps WHERE map_id = $mapID";
+		$resultID = mysql_query($query, $linkID); 
+		if(!$resultID){
+			return false;
+			//The map isn't even showing up. The caller will get errors elsewhere.
+		}
+		$row = mysql_fetch_assoc($resultID);
+		$projID = $row['proj_id'];
+		if(!$projID){
+			return false;
+			//The map is not in a project
+		}
+		$pquery = "SELECT user_id FROM projects WHERE proj_id = $projID";
+		$resultID = mysql_query($pquery, $linkID); 
+		$row = mysql_fetch_assoc($resultID);
+		$proj_owner = $row['user_id'];
+		if($userID==$proj_owner){
+			return true;
+			//The project's owner has rights to any map in the project
+		}
+		$puquery = "SELECT user_id FROM projusers WHERE proj_id = $projID AND user_id = $userID";
+		$resultID = mysql_query($puquery, $linkID); 
+		if(mysql_num_rows($resultID)>0){
+			return true;
+			//The user is in the project
+		}
+		return false;
+	}
+	
 ?>

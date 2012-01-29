@@ -41,7 +41,7 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0 ORDER BY maps.title";
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE maps.is_deleted=0 AND maps.proj_id IS NULL ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);

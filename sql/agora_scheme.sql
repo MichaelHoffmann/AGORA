@@ -52,6 +52,8 @@ CREATE TABLE IF NOT EXISTS agora.maps (
   is_deleted TINYINT(1) NULL DEFAULT 0,
   created_date DATETIME NOT NULL,
   modified_date DATETIME NOT NULL,
+  proj_id INT NULL DEFAULT NULL,
+  map_type ENUM('debate', 'cooperate') NOT NULL DEFAULT 'debate',
   lang VARCHAR(10) NOT NULL,
   PRIMARY KEY (map_id),
   INDEX user_id (user_id ASC),
@@ -87,7 +89,7 @@ CREATE TABLE IF NOT EXISTS agora.node_types (
   type VARCHAR(30) NOT NULL,
   PRIMARY KEY (nodetype_id));
 
-INSERT INTO node_types (type) VALUES ("Particular"), ("Universal"), ("Inference"), ("Objection"), ("Question"), ("Amendment"), ("Comment"), ("Definition"), ("Citation");
+INSERT INTO node_types (nodetype_id, type) VALUES (1, 'Standard'), (2, 'Inference'), (3, 'Objection'), (4, 'Question'), (5, 'Amendment'), (6, 'Comment'), (7, 'Particular'), (8, 'Universal'), (9, 'Definition'), (10, 'Citation');
 -- All inferences are universal statements, but not all universal statements are inferences. As such, these are being separated.
 -- It's possible we will want to add more types later.
 
@@ -282,6 +284,41 @@ CREATE TABLE IF NOT EXISTS agora.sourcenodes (
     REFERENCES agora.nodes (node_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+	
+-- -----------------------------------------------------
+-- Table agora.projects (and related tables)
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS agora.projects (
+  proj_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id INT UNSIGNED NOT NULL, 
+  title VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NULL,
+  is_hostile TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (proj_id),
+  INDEX user_id (user_id ASC),
+  INDEX title (title ASC),
+  FOREIGN KEY (user_id)
+    REFERENCES agora.users (user_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
+
+CREATE TABLE IF NOT EXISTS agora.projusers (
+  pu_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  proj_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  user_level TINYINT(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = Standard user, 9 = Administrator',
+  PRIMARY KEY (pu_id),
+  INDEX proj_id (proj_id ASC),
+  INDEX user_id (user_id ASC),
+  UNIQUE pu_combo (proj_id, user_id),
+  FOREIGN KEY (proj_id)
+    REFERENCES agora.projects (proj_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+  FOREIGN KEY (user_id)
+    REFERENCES agora.users (user_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
 	
 -- -----------------------------------------------------
 -- Triggers

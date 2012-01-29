@@ -51,7 +51,7 @@
 
 		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date, lastviewed.lv_date 
 		FROM maps LEFT JOIN lastviewed ON lastviewed.map_id=maps.map_id LEFT JOIN users ON maps.user_id=users.user_id 
-		WHERE users.user_id=$userID AND maps.is_deleted=0 ORDER BY title, maps.map_id";
+		WHERE users.user_id=$userID AND maps.is_deleted=0 AND maps.proj_id IS NULL ORDER BY title, maps.map_id";
 				
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
@@ -77,8 +77,8 @@
 	}
 	
 	
-	$userID = mysql_real_escape_string($_REQUEST['uid']);  //TODO: Change this back to a GET when all testing is done.
-	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']); //TODO: Change this back to a GET when all testing is done.
+	$userID = mysql_real_escape_string($_REQUEST['uid']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$output = my_maps($userID, $pass_hash);
 	print($output->asXML());
 ?>

@@ -45,14 +45,7 @@
 			return $output;
 		}
 		
-		$userclause = mysql_real_escape_string("$username");
-		$passclause = mysql_real_escape_string("$pass_hash");
-		$fnclause = mysql_real_escape_string("$firstname");
-		$lnclause = mysql_real_escape_string("$lastname");
-		$mailclause = mysql_real_escape_string("$email");
-		$urlclause = mysql_real_escape_string("$url");
-		$npclause = mysql_real_escape_string("$newpass");
-		$query = "SELECT * FROM users WHERE username='$userclause' AND password='$pass_hash'";
+		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -66,15 +59,17 @@
 			$login->addAttribute("modified", false);
 		}else{
 			//update the database
-			if($npclause!="")
+			if($newpass!="")
 			{
-				$iquery= "UPDATE users SET firstname='$fnclause', lastname='$lnclause',	password='$npclause',
-						email='$mailclause', url='$urlclause', last_login=NOW() WHERE user_id=$uid";
+				$iquery= "UPDATE users SET firstname='$firstname', 
+				lastname='$lastname', password='$newpass', email='$email', 
+				url='$url', last_login=NOW() WHERE user_id=$uid";
 			}
 			else
 			{
-				$iquery = "UPDATE users SET firstname='$fnclause', lastname='$lnclause', email='$mailclause', 
-						url='$urlclause', last_login=NOW() WHERE user_id=$uid";
+				$iquery = "UPDATE users SET firstname='$firstname', 
+				lastname='$lastname', email='$email', url='$url', 
+				last_login=NOW() WHERE user_id=$uid";
 			}
 
 			$insID = mysql_query($iquery, $linkID);
@@ -82,19 +77,19 @@
 				updateFailed($login, $iquery);
 				return $output;
 			}else{
-				$login->addAttribute("modified", true); // Successfully created the username.
+				$login->addAttribute("modified", true); // Successfully modified the user info.
 			}
 		}
 		return $output;
 	}
 
-$username = $_REQUEST['username'];  //TODO: Change this back to a GET when all testing is done.
-$pass_hash = $_REQUEST['pass_hash'];  //TODO: Change this back to a GET when all testing is done.
-$firstname = $_REQUEST['firstname']; //TODO: Change this back to a GET when all testing is done.
-$lastname = $_REQUEST['lastname']; //TODO: Change this back to a GET when all testing is done.
-$email = $_REQUEST['email']; //TODO: Change this back to a GET when all testing is done.
-$url = $_REQUEST['url']; //TODO: Change this back to a GET when all testing is done.
-$new_pass= $_REQUEST['newpass']; //TODO: Change this back to a GET when all testing is done.
-$output = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
+	$username = mysql_real_escape_string($_REQUEST['username']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$firstname = mysql_real_escape_string($_REQUEST['firstname']);
+	$lastname = mysql_real_escape_string($_REQUEST['lastname']);
+	$email = mysql_real_escape_string($_REQUEST['email']);
+	$url = mysql_real_escape_string($_REQUEST['url']);
+	$new_pass= mysql_real_escape_string($_REQUEST['newpass']);
+	$output = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
 print($output->asXML());
 ?>

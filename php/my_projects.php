@@ -19,31 +19,25 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	*/
-	
-	/**
-	List of variables for insertion:
-	* HTTP Query variables:
-		uid: User ID of the user viewing the map
-		pass_hash: the hashed password of the user viewing the map
-		map: map ID of the map	
-	*/
-	
 	require 'configure.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
 	require 'utilfuncs.php';
-	
-	function lastviewed($userID, $pass_hash, $mapID){
+	/**
+	*	Function for getting the project list.
+	*/
+	function my_projects($userID, $pass_hash){
 		global $dbName, $version;
-		header("Content-type: text/xml");	
-		$outputstr = "<?xml version='1.0' ?>\n<AGORA version='$version' />";
-		$output = new SimpleXMLElement($outputstr);
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
+		$output = new SimpleXMLElement($xmlstr);
+		
 		$linkID= establishLink();
 		if(!$linkID){
 			badDBLink($output);
 			return $output;
 		}
-		$status = mysql_select_db($dbName, $linkID);
+		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			databaseNotFound($output);
 			return $output;
@@ -53,28 +47,29 @@
 			return $output;
 		}
 		
-		//There are two cases: One where the user has already viewed the map (UPDATE)
-		//and one where the user has not (INSERT)
-		//Thankfully, "ON DUPLICATE KEY UPDATE" exists :D
-		
-		$query = "INSERT INTO lastviewed(user_id, map_id, lv_date)
-					VALUES ($userID, $mapID, NOW()) ON DUPLICATE KEY UPDATE lv_date=NOW()";
+		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id WHERE users.user_id=$userID ORDER BY projects.title";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
-			insertFailed($output, $query);
+			dataNotFound($output, $query);
+			return $output;
+		}
+		if(mysql_num_rows($resultID)==0){
+			$output->addAttribute("proj_count", "0");
+			//This is a better alternative than reporting an error.
 			return $output;
 		}else{
-			$viewed=$output->addChild("viewed");
-			$viewed->addAttribute("user", $userID);
-			$viewed->addAttribute("map", $mapID);
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+				$row = mysql_fetch_assoc($resultID);
+				$proj = $output->addChild("proj");
+				$proj->addAttribute("ID", $row['proj_id']);
+				$proj->addAttribute("title", $row['title']);
+				$proj->addAttribute("creator", $row['username']);			
+			}
 		}
-		
 		return $output;
 	}
-	
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
-	$mapID = $_REQUEST['map'];
-	$output = lastviewed($userID, $pass_hash, $mapID);
+	$output = my_projects($userID, $pass_hash);
 	print($output->asXML());
 ?>

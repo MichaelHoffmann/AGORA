@@ -27,7 +27,7 @@
 	*	Function that loads a map from the database.
 	*	Might be worth refactoring this somewhat.
 	*/
-	function get_map($mapID, $timestamp){
+	function get_map($userID, $pass_hash, $mapID, $timestamp){
 		global $dbName, $version;
 		//Set up the basics of the XML.
 		header("Content-type: text/xml");
@@ -39,15 +39,19 @@
 			badDBLink($output);
 			return $output;
 		}
-		
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			databaseNotFound($output);
 			return $output;
 		}
-		$whereclause = mysql_real_escape_string("$mapID");
-		$timeclause = mysql_real_escape_string("$timestamp");
-		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $whereclause AND maps.is_deleted = 0";
+		if(!$userID){
+			//Don't have to check login info here
+		}else if(!checkLogin($userID, $pass_hash, $linkID)){
+				incorrectLogin($output);
+				return $output;
+		}			
+		
+		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapID AND maps.is_deleted = 0";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -57,10 +61,25 @@
 			nonexistent($output, $query);
 			return $output;
 		}
-		
 		$row = mysql_fetch_assoc($resultID);
+		
+		if($row['proj_id']){
+			//Map is in a project.
+			//Confirm that the project allows the user to open a map
+			if(isUserInMapProject($userID, $mapID, $linkID)){
+				//Nothing needs to be done, the logic will continue as normal
+			}else{
+				//Bail!
+				notInProject($output, "User ID: $userID and Map ID: $mapID");
+				return $output;
+			}
+		}
+		//If map isn't in a project, continue as normal.
+		
 		$output->addAttribute("ID", $row['map_id']);
+		$output->addAttribute("title", $row['title']);
 		$output->addAttribute("username", $row['username']);
+		$output->addAttribute("project", $row['proj_id']);
 		
 		$timeID = mysql_query("SELECT NOW()", $linkID);
 		if(!$timeID){
@@ -72,7 +91,7 @@
 		$output->addAttribute("timestamp", "$now");
 		
 		// Textboxes are easy!
-		$query = "SELECT * FROM textboxes WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY textbox_id";
+		$query = "SELECT * FROM textboxes WHERE map_id = $mapID AND modified_date>'$timestamp' ORDER BY textbox_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -87,11 +106,11 @@
 
 		// Nodes take a bit more work.
 		/*$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
-			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+			WHERE map_id = $mapID AND modified_date>\"$timestamp\" ORDER BY node_id";
 		*/
 		$query = "SELECT nodes.node_id, nodes.nodetype_id, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type
 			FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
-			WHERE map_id = $whereclause AND modified_date>\"$timeclause\" ORDER BY node_id";
+			WHERE map_id = $mapID AND modified_date>\"$timestamp\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -126,7 +145,7 @@
 		}
 
 		// sourcenodes will take a lot more work.
-		$query = "SELECT * FROM connections NATURAL JOIN connection_types WHERE map_id = $whereclause AND modified_date>\"$timeclause\"";
+		$query = "SELECT * FROM connections NATURAL JOIN connection_types WHERE map_id = $mapID AND modified_date>\"$timestamp\"";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
@@ -157,8 +176,10 @@
 		}
 		return $output;
 	}
-	$map_id = $_REQUEST['map_id'];  //TODO: Change this back to a GET when all testing is done.
-	$timestamp = $_REQUEST['timestamp'];  //TODO: Change this back to a GET when all testing is done.
-	$output = get_map($map_id, $timestamp); 
+	$userID = mysql_real_escape_string($_REQUEST['uid']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$mapID = mysql_real_escape_string($_REQUEST['map_id']);
+	$timestamp = mysql_real_escape_string($_REQUEST['timestamp']);
+	$output = get_map($userID, $pass_hash, $mapID, $timestamp); 
 	print $output->asXML();
 ?>
