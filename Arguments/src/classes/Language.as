@@ -28,7 +28,6 @@ package classes
 	
 	import mx.controls.Alert;
 	
-	import org.osmf.layout.AbsoluteLayoutFacet;
 	
 	public class Language
 	{
