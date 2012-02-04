@@ -421,7 +421,7 @@
 	<AddArgument>
 		<EN-US text="an argument for this statement"/>
 		<RUS text="добавьте аргумент для этого утверждения"/>
-		<GER text="verteidige diese Behauptung durch ein Argument"/>
+		<GER text="ein Argument für diese Behauptung"/>
 	</AddArgument>
 
 	<AddObjection>
@@ -443,24 +443,14 @@
 		<GER text="... füge URL hinzu"/>
 	</AddURL>
 	
-	<AGORAInvite>
-		<EN-US text="[username] wants to invite you to the AGORA project [project name]. If you accept, please go to http://agora.gatech.edu/, select the project [project name] from the list &quot;Projects&quot; after logging-in, and use the password [project password] to get access to this project."/>
-		<RUS text="[имя пользователя] хочет пригласить Вас в проект АГОРЫ [название проекта]. Если Вы принимаете, пожалуйста, пойдите в http://agora.gatech.edu/, выберите проект [название проекта] из списка &quot;Проекты&quot; после вхождения в систему, и используйте пароль [проектный пароль], чтобы получить доступ к этому проекту."/>
-		<GER text="[username] möchte dich zu dem AGORA Projekt [project name] einladen. Falls Du akzeptierst, geh zu http://agora.gatech.edu/, wähle das Projekt [project name] aus der Liste „Projekte“ aus und verwende das Passwort [project password] um Zugang zu diesem Projektbereich zu erhalten."/>
-	</AGORAInvite>
-	
+		
 	<AGORANetReq>
 		<EN-US text="AGORA-net request"/>
 		<RUS text="запрос АГОРЫ"/>
 		<GER text="AGORA-net Anfrage"/>
 	</AGORANetReq>
 	
-	<AGORANetReqCont>
-		<EN-US text="[username] requests participation in your AGORA project [project name]. If you accept the request, please send an e-mail with the project password to [e-mail of requesting user]"/>
-		<RUS text="[имя пользователя] просит участие в Вашем проекте АГОРЫ [название проекта]. Если Вы принимаете запрос, пожалуйста, пошлите электронное письмо с паролем проекта к [электронная почта требования пользователя]"/>
-		<GER text="[username] bittet um Teilnahme an deinem AGORA Projekt [project name]. Bitte sende eine e-mail mit dem Projekt Passwort an [e-mail of requesting user], falls du die Bitte akzeptierst."/>
-	</AGORANetReqCont>
-	
+		
 	<AGORAPass>
 		<EN-US text="AGORA password"/>
 		<RUS text="Пароль АГОРЫ"/>
@@ -814,8 +804,10 @@
 	
 	<NewProject>
 		<EN-US text="Create a password-protected project space"/>
-		<RUS text="Создайте защищённое паролем проектное пространство"/>
-		<GER text="Eröffne einen Passwort-geschützten Projektbereich"/>
+		<RUS text="Создайте защищённое паролем 
+проектное пространство"/>
+		<GER text="Eröffne einen Passwort-geschützten 
+Projektbereich"/>
 	</NewProject>
 	
 	<NewReason>
@@ -848,18 +840,7 @@
 		<GER text="... oder willst Du mit einem bestimmten Argument-Schema beginnen? Klicke hier!"/>
 	</OrStartWithScheme>
 	
-	<PasswordProtected>
-		<EN-US text="Password protected. Click to request access."/>
-		<RUS text="Защищённые паролем. Щелкните, чтобы запросить доступ."/>
-		<GER text="Passwort geschützt. Klicke um Zugang zu erbitten."/>
-	</PasswordProtected>
-	
-	<PasswordProtected2>
-		<EN-US text="This project is password protected. Click here if you want to sign up for this project."/>
-		<RUS text="Этот проект защищен паролем. Щелкните здесь, если Вы хотите подписаться на этот проект?"/>
-		<GER text="Dieses Projekt ist Passwort-geschützt. Klicke hier wenn du an diesem Projekt teilnehmen willst."/>
-	</PasswordProtected2>
-	
+		
 	<PassMismatch>
 		<EN-US text="Error: your passwords do not match"/>
 		<RUS text="Ошибка: Ваши пароли не соответствуют"/>
@@ -908,18 +889,7 @@
 		<GER text="Gib dein Projekt-Passwort ein oder..."/>
 	</ProjPass>
 	
-	<ProjPassEmail>
-		<EN-US text="send a system-generated e-mail with your user name and your e-mail address to the project administrator."/>
-		<RUS text="послать сгенерированное системой электронное письмо со своим именем пользователя и адресом электронной почты администратору проекта."/>
-		<GER text="sende eine vom AGORA-System generierte e-mail mit deinem Benutzernamen und deiner e-mail Adresse an den Projekt-Administrator."/>
-	</ProjPassEmail>
-	
-	<ProjPassEmailConf>
-		<EN-US text="E-mail has been sent! Now you have to wait for the project administrator’s response. Check your regular e-mail."/>
-		<RUS text="Электронное письмо было послано! Теперь Вы должны ждать ответа администратора проекта. Проверьте свою регулярную электронную почту."/>
-		<GER text="E-mail wurde gesandt! Jetzt musst du auf die Antwort des Projekt-Administrators warten. Checke deine reguläre e-mail."/>
-	</ProjPassEmailConf>
-	
+		
 	<ProjPassCreate>
 		<EN-US text="Project password, different from your user password (required)"/>
 		<RUS text="Пароль проекта, отличающийся от Вашего пользовательского пароля, (требуется)"/>
@@ -932,11 +902,6 @@
 		<GER text="Passwort für dieses Project ist:"/>
 	</ProjPassIs>
 	
-	<ProjPassRequest>
-		<EN-US text="Click here if you want to request the password for this project from the project administrator. In this case, the AGORA system will send an automatically created e-mail to the administrator which contains your user name and e-mail address."/>
-		<RUS text="Щелкните здесь, если Вы хотите просить пароль для этого проекта от администратора проекта. В этом случае, система АГОРЫ пошлет автоматически создаваемое электронное письмо администратору, которое содержит Ваше имя пользователя и адрес электронной почты."/>
-		<GER text="Klicke hier falls du das Passwort zu diesem Projekt vom Projekt Administrator erhalten willst. In diesem Fall wird das AGORA System dem Administrator eine automatisch generierte e-mail senden, welche deinen Benutzernamen und e-mail Addresse enthält."/>
-	</ProjPassRequest>
 	
 	<PublicMaps>
 		<EN-US text="Publicly Accessible Argument Maps"/>
@@ -988,8 +953,10 @@
 	
 	<RegisterAsNew>
 		<EN-US text="Register as new user"/>
-		<RUS text="Регистровать как нового пользователя"/>
-		<GER text="Registriere dich als neuer Benutzer"/>
+		<RUS text="Регистровать как 
+нового пользователя"/>
+		<GER text="Registriere dich 
+als neuer Benutzer"/>
 	</RegisterAsNew>
 	
 	<RegisterFailed>
@@ -1049,17 +1016,17 @@
 	<SignInToViewMaps>
 		<EN-US text="Sign in to view your maps"/>
 		<RUS text="Регистрируйтесь, чтобы 
-		просмотреть Ваши карты"/>
+просмотреть Ваши карты"/>
 		<GER text="Melde dich an um deine 
-		Argumentationen zu sehen"/>
+Argumentationen zu sehen"/>
 	</SignInToViewMaps>
 
 	<SignInToViewProj>
 		<EN-US text="Sign in to view your projects"/>
 		<RUS text="Регистрируйтесь, чтобы 
-		просмотреть Ваши проекты"/>
+просмотреть Ваши проекты"/>
 		<GER text="Melde dich an um deine 
-		Projekte zu sehen"/>
+Projekte zu sehen"/>
 	</SignInToViewProj>
 	
 	<Statement1>
@@ -1116,12 +1083,7 @@
 		<GER text="Bitte markiere die entsprechenden Kästchen um Argumentationen zu löschen"/>
 	</UseCheckboxes>
 	
-	<UserList>
-		<EN-US text="Select users from the AGORA user list"/>
-		<RUS text="Выберите пользователей из пользовательского списка АГОРЫ"/>
-		<GER text="Wähle Benutzer von der AGORA Benutzer-Liste aus"/>
-	</UserList>
-	
+		
 	<UsernameTaken>
 		<EN-US text="This username is already taken! Try another username."/>
 		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя."/>
@@ -1183,8 +1145,10 @@
 	
 	<ReadRegistrationNote>
 		<EN-US text="I have read and understood the Privacy Policy" />
-		<RUS text="Я прочитал и понял Политику Конфиденциальности" />
-		<GER text="Ich habe die Datenschutz-Vereinbarung gelesen und verstanden"/>
+		<RUS text="Я прочитал и понял Политику 
+Конфиденциальности" />
+		<GER text="Ich habe die Datenschutz-Vereinbarung 
+gelesen und verstanden"/>
 	</ReadRegistrationNote>
 	
 	<RegistrationFailed>
@@ -1258,17 +1222,6 @@
 		<GER text="Konstruktives Dilemma"/>
 	</ConsDil>
 	
-	<ConsDilDisjClaim>
-		<EN-US text=" with a disjunctive statement as claim"/>
-		<RUS text=" с дизъюнктивым утверждением как заявлением"/>
-		<GER text=" mit einer disjunktiven Aussage als Folge"/>
-	</ConsDilDisjClaim>
-	
-	<ConsDilOneProp>
-		<EN-US text=" with one proposition as claim"/>
-		<RUS text=" с одним суждением как заявлением"/>
-		<GER text=" mit allein einem Satz als Folge"/>
-	</ConsDilOneProp>
 	
 	
 	<DisjunctSyl>
@@ -1284,7 +1237,7 @@
 	</EitherWay>
 	
 	<EQ>
-		<EN-US text="Equivalence"/>
+		<EN-US text="equivalence"/>
 		<RUS text="эквивалентность"/>
 		<GER text="Äquivalenz"/>
 	</EQ>	
@@ -1304,7 +1257,7 @@
 	<Equivalence>
 		<EN-US text="equivalence"/>
 		<RUS text="эквивалентность"/>
-		<GER text="Equivalenz"/>
+		<GER text="Äquivalenz"/>
 	</Equivalence>
 	
 	<MP>
@@ -1315,14 +1268,14 @@
 	
 	<ModusPonens>
 		<EN-US text="modus ponens"/>
-		<RUS text="modus ponens"/>
-		<GER text="modus ponens"/>
+		<RUS text="Modus ponens"/>
+		<GER text="Modus ponens"/>
 	</ModusPonens>
 	
 	<ModusTollens>
 		<EN-US text="modus tollens"/>
-		<RUS text="modus tollens"/>
-		<GER text="modus tollens"/>
+		<RUS text="Modus tollens"/>
+		<GER text="Modus tollens"/>
 	</ModusTollens>
 
 	<NotAllSyl>
@@ -1337,6 +1290,66 @@
 		<GER text="bestimme die Art der Verbindung"/>
 	</SpecifyConn>
 
+
+		
+	<EquivEquiv>
+		<EN-US text="are equivalent"/>
+		<RUS text="эквивалентны"/>
+		<GER text="sind equivalent"/>
+	</EquivEquiv>
+	
+	
+	<EquivIff>
+		<EN-US text="if and only if "/>
+		<RUS text="если и только если "/>
+		<GER text="genau dann, wenn "/>
+	</EquivIff>
+	
+	<Implies>
+		<EN-US text="implies "/>
+		<RUS text="подразумевает "/>
+		<GER text="impliziert: "/>
+	</Implies>
+	
+	<NecessaryCond>
+		<EN-US text="necessary condition"/>
+		<RUS text="необходимое условие "/>
+		<GER text="notwendige Bedingung "/>
+	</NecessaryCond>
+	
+	<NecSuf>
+		<EN-US text="necessary and sufficient condition"/>
+		<RUS text="необходимое и достаточное условие "/>
+		<GER text="notwendige und hinreichende Bedingung "/>
+	</NecSuf>
+	
+	
+	<OnlyIf>
+		<EN-US text="only if "/>
+		<RUS text="только если "/>
+		<GER text="allein dann, wenn "/>
+	</OnlyIf>
+	
+	
+	<ProvidedThat>
+		<EN-US text="provided that "/>
+		<RUS text="при условии, что "/>
+		<GER text="gegeben, dass: "/>
+	</ProvidedThat>
+	
+	<SufficientCond>
+		<EN-US text="sufficient condition "/>
+		<RUS text="достаточное условие "/>
+		<GER text="hinreichende Bedingung "/>
+	</SufficientCond>
+	
+	
+	<Whenever>
+		<EN-US text="whenever "/>
+		<RUS text="Всякий раз, когда "/>
+		<GER text="immer wenn "/>
+	</Whenever>
+	
 	
 	<!--ARGUMENT DESCRIPTIONS-->
 	
@@ -1511,17 +1524,13 @@
 		<GER text="Der Satz in dieser Textbox wird &quot;Garant&quot; gennant. Der &quot;Garant&quot; ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der &quot;Garant&quot; ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist."/>
 	</Enabler>
 	
-	<InviteHelp>
-		<EN-US text="Send the project name and the password to those who you selected. Every project member can create maps within your project space which are visible only to other project members. Of course, you can use a project space only for yourself to protect your maps."/>
-		<RUS text="Пошлите название проекта и пароль тем, которых Вы выбрали. Каждый участник проекта может создать карты в пределах Вашего проектного пространства, которые видимы только другим участникам проекта. Конечно, Вы можете использовать проектное пространство только для Вас непосредственно, чтобы защитить Ваши карты"/>
-		<GER text="Sende den Projektnamen zusammen mit dem Passwort denen zu, die du ausgewählt hast. Jedes Mitglied eines Projektes kann Argumentationen innerhalb deines Projektbereiches erstellen, welche allein für andere Projektmitglieder sichtbar sind. Natürlich kannst du einen Projektbereich allein für dich selbst verwenden um deine Argumentationen zu schützen."/>
-	</InviteHelp>
-	
+		
 	<MTAndOrHelp>
 		<EN-US text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided."/>
 		<RUS text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин."/>
 		<GER text="Da es sich hier um ein modus tollens Argument handelt, musst Du entscheiden ob Du alle deine Gründe durch &quot;und&quot; oder durch &quot;oder&quot; verknüpfen willst. Wenn Du sie durch &quot;und&quot; verknüpfst, dann ist dein Argument allein dann gültig wenn alle deine Gründe wahr sind. Das bedeutet, dass dein Argument durch die Widerlegung von allein einem deiner Gründe widerlegt werden kann. Wenn Du deine Gründe durch &quot;oder&quot; verknüpfst, dann ist dein Argument logisch gültig so lange zumindest einer deiner Gründe wahr ist. Das bedeutet, dass dein Argument allein durch die Widerlegung aller Gründe widerlegt werden kann."/>
 	</MTAndOrHelp>
+
 	<MustRegister>
 		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible"/>
 		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой"/>
