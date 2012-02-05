@@ -17,7 +17,7 @@ package Controller.logic
 			//dbLangTypeNames = ["altclaim", "propclaim"];
 			//myname = CONST_DILEM;
 			//dbName = myname;
-			label = AGORAParameters.getInstance().CONST_DILEM;
+			//label = AGORAParameters.getInstance().CONST_DILEM;
 			//_dbType = "CD";
 			
 		}

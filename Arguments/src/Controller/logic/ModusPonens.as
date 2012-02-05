@@ -24,8 +24,8 @@ package Controller.logic
 		public function ModusPonens()
 		{
 			agoraLiterals = AGORAParameters.getInstance();
-			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition", agoraLiterals.NECESSARY_CONDITION ];
-			expLangTypes = ["If-then","Whenever","Provided that"];	
+			langTypes = [agoraLiterals.IF_THEN,agoraLiterals.IMPLIES,agoraLiterals.WHENEVER, agoraLiterals.ONLY_IF, agoraLiterals.PROVIDED_THAT,agoraLiterals.SUFFICIENT_CONDITION, agoraLiterals.NECESSARY_CONDITION ];
+			expLangTypes = [agoraLiterals.IF_THEN, agoraLiterals.WHENEVER, agoraLiterals.PROVIDED_THAT];	
 			label = AGORAParameters.getInstance().MOD_PON;
 		}
 		

@@ -103,10 +103,11 @@ package Model
 		//------------------ other public functions -----------------------//
 		public function updateStatementTexts():void{
 			for each(var simpleStatement:SimpleStatementModel in forwardList){
+				//conditional syllogism and constructive dilemma
 				if(simpleStatement.parent.statements.length >= 2 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
 				{
 					if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
-						simpleStatement.text = AGORAParameters.getInstance().IF + " " + simpleStatement.parent.statements[0].text + ", " + AGORAParameters.getInstance().THEN + " " + simpleStatement.parent.statements[1].text; 
+						simpleStatement.text = AGORAParameters.getInstance().IF + simpleStatement.parent.statements[0].text + AGORAParameters.getInstance().THEN  + simpleStatement.parent.statements[1].text; 
 					}
 					if(parent.connectingString == StatementModel.DISJUNCTION){
 						var vtext:String = parent.statements[0].text;

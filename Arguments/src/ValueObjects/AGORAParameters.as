@@ -29,10 +29,10 @@ package ValueObjects
 		public var UPDATE_MAP_INFO_FAILED:String;
 		public var REGISTRATION_FAILED_MESSAGE:String;
 		
-		public var IF:String = "If";
-		public var THEN:String = "then";
-		public var OR:String = "or";
-		public var AND:String = "and";
+		public var IF:String = Language.lookup("ArgIf");
+		public var THEN:String = Language.lookup("ArgThen");
+		public var OR:String = Language.lookup("ArgOr");
+		public var AND:String = Language.lookup("ArgAnd");
 		
 		public var THEREFORE:String;	
 		
@@ -40,22 +40,21 @@ package ValueObjects
 		public var READ_REGISTRATION_NOTE:String;
 		
 		//constants
-		public var MOD_PON:String = "Modus Ponens";
-		public var MOD_TOL:String = "Modus Tollens";
-		public var COND_SYLL:String = "Conditional Syllogism";
-		public var DIS_SYLL:String = "Disjunctive Syllogism";
-		public var NOT_ALL_SYLL:String = "Not-All Syllogism";
-		public var CONST_DILEM:String = "Constructive Dilemma";
+		public var MOD_PON:String = Language.lookup("ModusPonens");;
+		public var MOD_TOL:String = Language.lookup("ModusTollens");
+		public var COND_SYLL:String = Language.lookup("ConSyl");
+		public var DIS_SYLL:String = Language.lookup("DisjunctSyl");
+		public var NOT_ALL_SYLL:String = Language.lookup("NotAllSyl");
 		
-		public var IF_THEN:String = "If-then";
-		public var IMPLIES:String = "Implies";
-		public var WHENEVER:String = "Whenever";
-		public var ONLY_IF:String = "Only if";
-		public var ONLY_IF_OR:String = "OnlyIfOR";
-		public var ONLY_IF_AND:String = "OnlyIfAnd";
-		public var PROVIDED_THAT:String = "Provided that";
-		public var SUFFICIENT_CONDITION:String = "Sufficient condition";
-		public var NECESSARY_CONDITION:String = "Necessary Condition";
+		public var IF_THEN:String = Language.lookup("IfThen");;
+		public var IMPLIES:String = Language.lookup("Implies");
+		public var WHENEVER:String = Language.lookup("Whenever");
+		public var ONLY_IF:String = Language.lookup("OnlyIf");
+		public var ONLY_IF_OR:String = Language.lookup("OnlyIf") + Language.lookup("ArgOr");
+		public var ONLY_IF_AND:String = Language.lookup("OnlyIf") + Language.lookup("ArgAnd");
+		public var PROVIDED_THAT:String = Language.lookup("ProvidedThat");
+		public var SUFFICIENT_CONDITION:String = Language.lookup("SufficientCond");
+		public var NECESSARY_CONDITION:String = Language.lookup("NecessaryCond");
 		
 		public const DB_IF_THEN:String = "ifthen";
 		public const DB_IMPLIES:String = "implies";

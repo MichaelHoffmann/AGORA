@@ -29,8 +29,8 @@ package Controller.logic
 		public function ModusTollens()
 		{
 			agoraLiterals = AGORAParameters.getInstance();
-			langTypes = ["If-then","Implies","Whenever","Only if","Provided that","Sufficient condition", agoraLiterals.NECESSARY_CONDITION];
-			expLangTypes = ["Only if"];	// Expandable with both And and Or
+			langTypes = [agoraLiterals.IF_THEN,agoraLiterals.IMPLIES, agoraLiterals.WHENEVER, agoraLiterals.ONLY_IF, agoraLiterals.PROVIDED_THAT, agoraLiterals.SUFFICIENT_CONDITION, agoraLiterals.NECESSARY_CONDITION];
+			expLangTypes = [agoraLiterals.ONLY_IF];	// Expandable with both And and Or
 			label = AGORAParameters.getInstance().MOD_TOL;	
 		}
 		
