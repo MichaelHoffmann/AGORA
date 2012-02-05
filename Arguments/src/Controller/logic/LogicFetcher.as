@@ -55,9 +55,9 @@ package Controller.logic
 			logicHash[AGORAParameters.getInstance().CSimplies] = ConditionalSyllogism.getInstance();
 			
 			//Constructive Dilemma
-			logicHash[AGORAParameters.getInstance().CONST_DILEM] = ConstructiveDilemma.getInstance();
-			logicHash[AGORAParameters.getInstance().CDaltclaim] = ConstructiveDilemma.getInstance();
-			logicHash[AGORAParameters.getInstance().CDpropclaim] = ConstructiveDilemma.getInstance();
+			//logicHash[AGORAParameters.getInstance().CONST_DILEM] = ConstructiveDilemma.getInstance();
+			//logicHash[AGORAParameters.getInstance().CDaltclaim] = ConstructiveDilemma.getInstance();
+			//logicHash[AGORAParameters.getInstance().CDpropclaim] = ConstructiveDilemma.getInstance();
 
 		}
 		
