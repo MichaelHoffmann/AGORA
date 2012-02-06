@@ -10,6 +10,8 @@
 		<s:State name="disabled" />
 		<s:State name="checked" />
 		<s:State name="unchecked" />
+		<s:State name="disabledWithControlBar" />
+		<s:State name="normalWithControlBar" />
 	</s:states>
 	
 	<fx:Metadata>

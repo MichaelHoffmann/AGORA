@@ -14,6 +14,8 @@
 	<fx:Metadata>
 		[SkinState("disabled")]
 		[SkinState("normal")]
+		[SkinState("disabledWithControlBar")]
+		[SkinState("normalWithControlBar")]
 	</fx:Metadata>
 	
 	<fx:Script>

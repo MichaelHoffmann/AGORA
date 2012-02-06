@@ -155,7 +155,7 @@ package components
 			changeSchemeBtn = new Button;
 			changeSchemeBtn.label =  (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme");
 			changeSchemeBtn.percentWidth = 100;
-			titleDisplay.setStyle("textAlign","center");
+			//titleDisplay.setStyle("textAlign","center");
 
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);

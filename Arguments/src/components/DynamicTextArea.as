@@ -19,7 +19,7 @@ package components
 	import mx.controls.TextArea;
 	import mx.core.mx_internal;
 	
-	import org.osmf.layout.AbsoluteLayoutFacet;
+	//import org.osmf.layout.AbsoluteLayoutFacet;
 	
 	public class DynamicTextArea extends TextArea
 	{

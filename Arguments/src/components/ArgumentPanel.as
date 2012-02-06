@@ -63,7 +63,7 @@ package components
 	import mx.managers.DragManager;
 	import mx.skins.Border;
 	
-	import org.osmf.events.GatewayChangeEvent;
+	//import org.osmf.events.GatewayChangeEvent;
 	
 	import spark.components.Button;
 	import spark.components.Group;

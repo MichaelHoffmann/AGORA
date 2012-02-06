@@ -8,7 +8,7 @@ package components
 	import mx.controls.Button;
 	import mx.controls.Label;
 	
-	import org.osmf.events.GatewayChangeEvent;
+	//import org.osmf.events.GatewayChangeEvent;
 	
 	import spark.components.Panel;
 	import spark.components.Scroller;

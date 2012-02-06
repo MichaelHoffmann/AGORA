@@ -86,7 +86,7 @@
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
 			
-			import org.osmf.layout.AbsoluteLayoutFacet;
+			//import org.osmf.layout.AbsoluteLayoutFacet;
 			
 			private static var _salt:String = "AGORA";
 			[Bindable]

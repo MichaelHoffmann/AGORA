@@ -11,6 +11,8 @@
 	<s:states>
 		<s:State name="disabled" />
 		<s:State name="normal" />
+		<s:State name="disabledWithControlBar" />
+		<s:State name="normalWithControlBar" />
 	</s:states>
 	
 	

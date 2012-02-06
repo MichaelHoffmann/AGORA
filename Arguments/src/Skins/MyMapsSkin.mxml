@@ -26,6 +26,8 @@
 		<s:State name ="disabled" />
 		<s:State name="notLoggedIn" />
 		<s:State name="loggedIn" />
+		<s:State name="disabledWithControlBar" />
+		<s:State name="normalWithControlBar" />
 	</s:states>
 	
 	<fx:Metadata>
