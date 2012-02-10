@@ -1,87 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			reflection, critique, deliberation, and creativity in individual argument construction 
-			and in collaborative or adversarial settings. 
-    Copyright (C) 2011 Georgia Institute of Technology
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   minWidth="955" minHeight="600"
-			   xmlns:components="components.*"
-			   xmlns:Skins ="Skins.*"
-			   preinitialize="application_preinitializeHandler(event)"
-			   applicationComplete="application1_applicationCompleteHandler(event)"
-			   >
+			   minWidth="955" minHeight="600" pageTitle="This is a test... of my SANITY!!!">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	<fx:Script>
+
+		<![CDATA[
+			import components.LoginWindow;
+			import mx.managers.PopUpManager;
+			import Controller.UserSessionController;
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var loginPanel:LoginWindow = new LoginWindow();
+				PopUpManager.addPopUp(loginPanel, this);
+				PopUpManager.centerPopUp(loginPanel);
+				
+				
+			}
+		]]>
+	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<components:AGORAMenu id="agoraMenu" width="800" minHeight="600" name="agoraMenu" horizontalCenter="0">
-	</components:AGORAMenu>
-	<components:Map id="map" visible="false">
-	</components:Map>
-	
-	<fx:Script>
-		<![CDATA[
-			import Controller.LayoutController;
-			
-			import Model.AGORAModel;
-			
-			import components.AgoraMap;
-			import components.ArgumentPanel;
-			import components.LAMWorld;
-			import components.LoginWindow;
-			import components.Map;
-			import components.MapName;
-			import components.RegisterPanel;
-			
-			import mx.events.FlexEvent;
-			
-			//Model
-			private var model:AGORAModel;
-			//PopUp Window
-			public var loginWindow:LoginWindow;
-			//Registration Window
-			public var registrationWindow:RegisterPanel;
-			//MapName Box
-			public var mapNameBox:MapName;
-			
-			import mx.controls.Alert;
-			import mx.managers.PopUpManager;
-			import classes.Configure;
-			import classes.Language;
-			
-			public var username:String;
-			public var pass_hash:String;
-			public var maps_map:Dictionary;
-			public var presetMapName:String;
-						
-
-			protected function application_preinitializeHandler(event:FlexEvent):void
-			{
-				model = AGORAModel.getInstance();
-			}
-
-			protected function application1_applicationCompleteHandler(event:FlexEvent):void
-			{
-				LayoutController.getInstance().setApplicationLayoutProperties();
-			}
-		]]>
-	</fx:Script>
+	<s:SkinnableContainer left="0" right="692" top="0" bottom="0" backgroundColor="#29ABE2">
+		<s:layout>
+			<s:BasicLayout/>
+		</s:layout>
+		<s:Label id="VisitorGreeting" x="22" y="184" width="230" height="71"
+				 fontFamily="Arial" fontSize="20" text="New to AGORA? Visit a world of debates and discussion!" textAlign="center"
+				 verticalAlign="middle"/>
+		<s:Button x="55" width="154" height="40" label="Enter As Visitor" fontSize="17"
+				  verticalCenter="-16"/>
+	</s:SkinnableContainer>
+	<s:SkinnableContainer left="260" right="0" top="0" bottom="0" backgroundColor="#ECFAFA">
+		<s:layout>
+			<s:BasicLayout/>
+		</s:layout>
+		<s:Label width="206" height="129" fontSize="35" horizontalCenter="0"
+				 text="Welcome to&#xd;AGORA-net" textAlign="center" verticalCenter="-74"/>
+		<s:Button width="120" height="40" label="Login" click="button1_clickHandler(event)"
+				  horizontalCenter="-70" verticalCenter="-8"/>
+		<s:Button width="124" height="40" label="New User" horizontalCenter="60" verticalCenter="-8"/>
+		<mx:HBox width="233" height="29" horizontalCenter="0" textAlign="center" verticalCenter="43">
+			<mx:LinkButton id="about" label="About" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote')"/>
+			<mx:LinkButton id="faq" label="FAQ" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote')"/>
+			<mx:LinkButton id="contact" label="Contact" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote')"/>
+			<mx:LinkButton id="help" label="Help" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"/>
+		</mx:HBox>
+	</s:SkinnableContainer>
 </s:Application>
