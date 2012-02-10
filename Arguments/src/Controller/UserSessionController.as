@@ -7,9 +7,10 @@ package Controller
 	
 	import ValueObjects.UserDataVO;
 	
+	import classes.Language;
+	
 	import components.LoginWindow;
 	import components.RegisterPanel;
-	import classes.Language;
 	
 	import flash.display.DisplayObject;
 	
@@ -63,7 +64,10 @@ package Controller
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.registrationWindow);	
 		}
 		
-		
+		//--------------Login as Guest Function-----------------//
+		public function signInAsGuest():void{
+			//Does nothing for right now
+		}
 		//--------------Login Function--------------------------//
 		public function login(userDataVO:UserDataVO):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
@@ -71,6 +75,7 @@ package Controller
 		}
 		
 		protected function onAuthentication(event:AGORAEvent):void{
+			Alert.show("Authenticated!")
 			trace("User Authenticated");
 			removeSignInBox();
 			var agoraController:AGORAController = AGORAController.getInstance();
@@ -79,8 +84,9 @@ package Controller
 		}
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{
-			trace("User Authentication Failed");	
-			Alert.show(Language.lookup("LoginFailed"));
+			Alert.show("Failed!")
+			trace("User Authentication Failed. Wrong Username/Password combination");	
+			//Alert.show(Language.lookup("LoginFailed"));
 		}
 		
 		//----------------Registration Function--------------------//
