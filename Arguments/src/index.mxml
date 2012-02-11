@@ -61,7 +61,7 @@
 			 */
 			protected function registerButton_onClick(event:MouseEvent):void
 			{
-				//UserSessionController.getInstance().signInSignOut();	
+				UserSessionController.getInstance().showRegistrationBox();	
 			}
 			
 			

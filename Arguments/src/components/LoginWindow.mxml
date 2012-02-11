@@ -60,24 +60,43 @@
 				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showRegistrationBox();
 			}
-		
-			public function clear_form():void
+			
+			/**
+			 * This function handles the action that occurs when the user clicks the back button.
+			 * When the back button is clicked, the popup is removed.
+			 * 
+			 * This replaces the deprecated function clear_form()
+			 */
+			public function backButton_onClick():void
 			{
 				PopUpManager.removePopUp(this);
 			}
 			
-			public function submit_form():void
+			/**
+			 * This function handles what happens when the user clicks the submit
+			 * button. Submits the username and password combo and ultimately checks
+			 * the database for the combo.
+			 * 
+			 * This replaces the depracated function submit_form(). 
+			 */
+			public function submitButton_onClick():void
 			{
 				var userDataVO:UserDataVO = new UserDataVO;
 				userDataVO.userName = username.text;
 				userDataVO.password = pass_hash.text;
 				
 				var userLoginController:UserSessionController = UserSessionController.getInstance();
-				userLoginController.login(userDataVO);
-				
+				userLoginController.login(userDataVO);	
 			}
 			
-			protected function register_btn_clickHandler(event:MouseEvent):void
+			/**
+			 * This function handles what happens when the register button is clicked.
+			 * When it is clicked, a new registration form pop up grabs focus from the
+			 * login box
+			 * 
+			 * Replaces depracated function registration_btn_clickHandler()
+			 */
+			protected function registerButton_onClick(event:MouseEvent):void
 			{
 				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showRegistrationBox();
@@ -97,11 +116,11 @@
 		</mx:FormItem>
 		<mx:FormItem>
 			<s:HGroup>
-				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" id="submit_btn" click="submit_form();">		
+				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" id="submit_btn" click="submitButton_onClick();">		
 				</s:Button>
-				<s:Button label="{Language.lookup(&quot;Back&quot;)}" id="back_btn" click="clear_form();">		
+				<s:Button label="{Language.lookup(&quot;Back&quot;)}" id="back_btn" click="backButton_onClick();">		
 				</s:Button>
-				<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="register_btn_clickHandler(event)">		
+				<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="registerButton_onClick(event)">		
 				</s:Button>
 			</s:HGroup>		
 		</mx:FormItem>

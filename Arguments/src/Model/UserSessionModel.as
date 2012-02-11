@@ -17,7 +17,7 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.mxml.HTTPService;
-	
+	import mx.controls.Alert;
 	import org.osmf.utils.URL;
 	
 	[Bindable]
@@ -87,6 +87,7 @@ package Model
 		
 		//---------------- Authentication ------------------------//
 		public function authenticate(userData:UserDataVO):void{
+			
 			var loginRequestService:HTTPService = new HTTPService;
 			passHash = MD5.hash(userData.password + _salt);
 			loginRequestService.url = AGORAParameters.getInstance().loginURL;
