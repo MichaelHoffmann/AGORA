@@ -27,7 +27,7 @@
 
 	<s:Scroller y="0" right="0" width="100%" height="100%">
 		<s:Group> 
-			<components:AGORALogin id="agoraMenu" width="100%" height="100%" horizontalCenter="0" name="agoraMenu" verticalCenter="0"/>
+			<components:AGORALogin id="agoraMain" width="100%" height="100%" horizontalCenter="0" name="agoraMain" verticalCenter="0"/>
 		</s:Group>        
 	</s:Scroller> 
 
