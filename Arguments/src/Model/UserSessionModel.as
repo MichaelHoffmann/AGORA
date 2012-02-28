@@ -99,16 +99,28 @@ package Model
 			loginRequestService.addEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			loginRequestService.addEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
 			loginRequestService.send({username: userData.userName, pass_hash: passHash});
+			Alert.show("Returned from PHP");
 		}
 		
+		/**
+		 * @param event Result Event that is typically ust event 
+		 * 
+		 * Removes the event listeners from the login result and then assigns values to variable from the database.
+		 * If any of those are null then it falls out and fires a USER_INVALID event. In other words, the user MUST 
+		 * supply a correct username or password to log in. This method required a rework in the new implementation
+		 * for no apparent reason. If just stopped working.
+		 */
 		protected function onLoginRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
-			try{
-				//trace(event.result.toXMLString());
+			try{				
 				uid = event.result.login.ID;
 				firstName = event.result.login.firstname;
 				lastName = event.result.login.lastname;
+				if(!uid){
+					dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
+					return;
+				}
 				dispatchEvent(new AGORAEvent(AGORAEvent.AUTHENTICATED));
 			}catch(e:Error){
 				trace("In UserSessionModel.onLoginRequestServiceResult: expected attributes were not present either because of invalid credentials or change in server ");
