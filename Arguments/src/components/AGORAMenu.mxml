@@ -5,6 +5,7 @@
 		 xmlns:components="components.*"
 		 creationComplete="creationCompleteHandler(event)"
 		 >
+	<!--TEST-->
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
