@@ -65,7 +65,8 @@
 	</fx:Script>
 
 		<!--The left side of the page that houses the guest login button-->
-		<s:SkinnableContainer left="0" right="692" top="0" bottom="0" backgroundColor="#29ABE2">
+		<s:SkinnableContainer id = "guestWelcome"
+							  left="0" right="692" top="0" bottom="0" backgroundColor="#29ABE2">
 			<s:layout><s:BasicLayout/></s:layout>
 			
 
@@ -74,10 +75,12 @@
 					 fontFamily="Arial" fontSize="20" text="New to AGORA? Visit a world of debates and discussion." textAlign="center"
 					 verticalAlign="middle"/>
 			<!--The Guest Login button-->
-			<s:Button x="55" width="154" height="40" label="Enter As Guest" fontSize="17" verticalCenter="-16" click="guestButton_onClick(event)"/>
+			<s:Button x="55" width="154" height="40" label="Enter As Guest" fontSize="17" verticalCenter="-16" 
+					  click="mainMenu.visible=true, guestWelcome.visible=false, mainWelcome.visible=false"/>
 
 		</s:SkinnableContainer>
-		<s:SkinnableContainer left="260" right="0" top="0" bottom="0" backgroundColor="#ECFAFA">
+		<s:SkinnableContainer id="mainWelcome"
+			left="260" right="0" top="0" bottom="0" backgroundColor="#ECFAFA">
 			<s:layout><s:BasicLayout/></s:layout>
 			<!--This is the banner for that goes above the login/register buttons-->
 			<s:Label width="206" height="129" fontSize="35" horizontalCenter="0" text="Welcome to&#xd;AGORA-net" textAlign="center" verticalCenter="-74"/>
@@ -97,5 +100,7 @@
 				<mx:LinkButton id="help" label="Help" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"/>
 			</mx:HBox>
 		</s:SkinnableContainer>
+		<components:AGORAMenu id="mainMenu" visible="false">
+		</components:AGORAMenu>
 
 </s:Group>

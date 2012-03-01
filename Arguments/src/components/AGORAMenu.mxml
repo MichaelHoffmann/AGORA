@@ -5,19 +5,23 @@
 		 xmlns:components="components.*"
 		 creationComplete="creationCompleteHandler(event)"
 		 >
-	<!--TEST-->
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
 			import Controller.UpdateController;
 			import Controller.UserSessionController;
+			
 			import Model.AGORAModel;
-			import mx.controls.Alert;
-			import mx.events.FlexEvent;
 			
 			import classes.Language;
 			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
 			public var timer:Timer = new Timer(10000);
+			public var buttonWidth:int = 200;
+			public var buttonHeight:int = 80;
+			public var numClicks:int=0;
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
@@ -28,30 +32,116 @@
 			protected function timerFired(event:TimerEvent):void{
 				AGORAController.getInstance().onTimer();
 			}
-
+			
 			protected function createMapBtn_clickHandler(event:MouseEvent):void
 			{
 				AGORAController.getInstance().displayMapInfoBox();
 			}
-
-
+			
+			
 			protected function signInBtn_clickHandler(event:MouseEvent):void
 			{
 				UserSessionController.getInstance().signInSignOut();
 			}
-
-
+			
+			
 			protected function registerBtn_clickHandler(event:MouseEvent):void
 			{
 				UserSessionController.getInstance().showRegistrationBox();
 			}
-
+			
+			protected function checkLevel(level:int):void
+			{
+				if(level==0)
+				{
+					category.visible=true;
+					mapList.visible=false;
+				}
+				else if(level==1)
+				{
+					category.visible=false;	
+					//mainPanel.visible=true;
+					mapList.visible=true;
+					
+				}
+				else if(level==2)
+				{
+					category.visible=false;	
+					mainPanel.visible=false;
+					mapList.visible=true;
+					
+				}
+			}
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	
+	<!--Categories Grid-->		
+	<s:Panel id="category" 
+			 skinClass="Skins.MapListPanelSkin"
+			 width="800" height="400" y="70">
+		<mx:Grid id="myGrid" width="100%" height="100%" paddingLeft="100">
+			<mx:GridRow id="row1">
+				<mx:GridItem>
+					<mx:Button width="{buttonWidth}" height="{buttonHeight}" label="Class Projects"
+							   click="{numClicks=1, checkLevel(numClicks)}"/>
+				</mx:GridItem>
+				<mx:GridItem>
+					<mx:Button width="{buttonWidth}" height="{buttonHeight}" label="Argumentation Theory"
+							   click="{numClicks=1, checkLevel(numClicks)}"/>
+				</mx:GridItem>
+				<mx:GridItem>
+					<mx:Button label="Philosophy" 
+							   click="{numClicks=1, checkLevel(numClicks)}"
+							   width="{buttonWidth}" height="{buttonHeight}"
+							   />
+				</mx:GridItem>
+			</mx:GridRow>
+			
+			<mx:GridRow id="row2">
+				<mx:GridItem>
+					<mx:Button label="Theory of Representation" 
+							   width="{buttonWidth}" height="{buttonHeight}"
+							   click="{numClicks=1, checkLevel(numClicks)}"/>	
+				</mx:GridItem>
+				<mx:GridItem>
+					<mx:Button label="Environment" 
+							   click="{numClicks=1, checkLevel(numClicks)}"
+							   width="{buttonWidth}" height="{buttonHeight}"
+							   />
+				</mx:GridItem>
+				<mx:GridItem>
+					<mx:Button label="Projects"
+							   width="{buttonWidth}" height="{buttonHeight}"
+							   click="projects.visible=true"
+							   />	
+				</mx:GridItem>
+			</mx:GridRow>
+			<mx:GridRow id="row3">
+				<mx:GridItem>
+					<mx:Button label="Biology" 
+							   click="{numClicks=1, checkLevel(numClicks)}"
+							   width="{buttonWidth}" height="{buttonHeight}"
+							   />
+				</mx:GridItem>
+				<mx:GridItem>
+					<mx:Button label="Psychiatry"
+							   click="{numClicks=1, checkLevel(numClicks)}"
+							   width="{buttonWidth}" height="{buttonHeight}"
+							   />
+				</mx:GridItem>
+				<mx:GridItem>
+					<mx:Button label="Law" 
+							   click="{numClicks=1, checkLevel(numClicks)}"
+							   width="{buttonWidth}" height="{buttonHeight}"
+							   />	
+				</mx:GridItem>
+			</mx:GridRow>
+		</mx:Grid>
+	</s:Panel>	
 	
 	<s:VGroup id="Agora">
 		<s:HGroup 
@@ -61,7 +151,7 @@
 			</s:Label>	
 		</s:HGroup>
 		<s:HGroup id="mainPanel" 
-				  paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25">
+				  paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25" visible="false">
 			<components:MapListPanel 
 				id="mapList" 
 				title="{Language.lookup(&quot;ListMaps&quot;)}" 
@@ -74,8 +164,8 @@
 			</components:MyMapsPanel>
 			
 			<components:ProjectListPanel id="projects" 
-					  title="{Language.lookup(&quot;ProjectPP&quot;)}" 
-					  width="200" height="400">	
+										 title="{Language.lookup(&quot;ProjectPP&quot;)}" 
+										 width="200" height="400">	
 			</components:ProjectListPanel>
 			
 			<components:Projects id="myProjects"
@@ -84,8 +174,8 @@
 			</components:Projects>
 			
 		</s:HGroup>
-		<s:HGroup paddingLeft="25" paddingTop="25">
-			
+		<s:HGroup id="bottomButtonRow" paddingLeft="25" paddingTop="25">
+			<mx:Button label="Back" click="{numClicks=0, checkLevel(numClicks)}"/>
 			<s:Button id="createMapBtn"
 					  label="{Language.lookup(&quot;NewMap&quot;)}" click="createMapBtn_clickHandler(event)">
 			</s:Button >
@@ -96,7 +186,7 @@
 			
 			<s:Button id="signInBtn"
 					  label="{AGORAModel.getInstance().userSessionModel.uid? 
-					  	Language.lookup('SignOut'): Language.lookup('SignIn')}"
+					  Language.lookup('SignOut'): Language.lookup('SignIn')}"
 					  click="signInBtn_clickHandler(event)" />
 			
 			<s:Button id="registerBtn"
