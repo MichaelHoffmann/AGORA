@@ -100,7 +100,10 @@
 				<mx:LinkButton id="help" label="Help" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"/>
 			</mx:HBox>
 		</s:SkinnableContainer>
-		<components:AGORAMenu id="mainMenu" visible="false">
-		</components:AGORAMenu>
+		<s:SkinnableContainer id="mainMenu" visible="false" width="800" horizontalCenter="0">
+			<components:AGORAMenu >
+			</components:AGORAMenu>
+		</s:SkinnableContainer>
+		
 
 </s:Group>
