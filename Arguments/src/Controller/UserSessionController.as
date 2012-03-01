@@ -75,7 +75,6 @@ package Controller
 		}
 		
 		protected function onAuthentication(event:AGORAEvent):void{
-			Alert.show("Authenticated!")
 			trace("User Authenticated");
 			removeSignInBox();
 			var agoraController:AGORAController = AGORAController.getInstance();
@@ -84,7 +83,6 @@ package Controller
 		}
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{
-			Alert.show("Failed!")
 			trace("User Authentication Failed. Wrong Username/Password combination");	
 			//Alert.show(Language.lookup("LoginFailed"));
 		}
