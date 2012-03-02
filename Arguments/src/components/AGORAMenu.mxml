@@ -79,7 +79,7 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<!--Categories Grid-->		
+	<!--Categories Grid; y is used to keep the label from overlapping the title-->		
 	<s:Panel id="category" 
 			 skinClass="Skins.MapListPanelSkin"
 			 width="800" height="400" y="70">
