@@ -86,6 +86,8 @@
 	</fx:Declarations>
 	<mx:TabNavigator y="120" width="800" height="400" tabWidth="267" textAlign="center">
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
+			<mx:Image id="loader1" horizontalCenter="0"
+					   verticalCenter="-1"/> 
 			<s:HGroup x="10" width="778" height="356" horizontalAlign="center" verticalAlign="middle">
 				<mx:Grid id="myGrid" top="-7" bottom="3" horizontalCenter="0" paddingLeft="0"
 						 textAlign="center" verticalAlign="middle">
@@ -114,13 +116,13 @@
 									   click="{numClicks=1, checkLevel(numClicks)}"/>	
 						</mx:GridItem>
 						<mx:GridItem width="100%" height="100%">
-							<mx:Button label="Environment" 
+							<mx:Button label="{catNames[4]}" 
 									   click="{numClicks=1, checkLevel(numClicks)}"
 									   width="{buttonWidth}" height="{buttonHeight}"
 									   />
 						</mx:GridItem>
 						<mx:GridItem width="100%" height="100%">
-							<mx:Button label="{catNames[4]}"
+							<mx:Button label="{catNames[5]}"
 									   width="{buttonWidth}" height="{buttonHeight}"
 									   click="projects.visible=true"
 									   />	
@@ -128,19 +130,19 @@
 					</mx:GridRow>
 					<mx:GridRow id="row3">
 						<mx:GridItem width="100%" height="100%">
-							<mx:Button label="{catNames[5]}" 
+							<mx:Button label="{catNames[6]}" 
 									   click="{numClicks=1, checkLevel(numClicks)}"
 									   width="{buttonWidth}" height="{buttonHeight}"
 									   />
 						</mx:GridItem>
 						<mx:GridItem>
-							<mx:Button label="{catNames[6]}"
+							<mx:Button label="{catNames[7]}"
 									   click="{numClicks=1, checkLevel(numClicks)}"
 									   width="100%" height="100%"
 									   />
 						</mx:GridItem>
 						<mx:GridItem>
-							<mx:Button label="{catNames[7]}" 
+							<mx:Button label="{catNames[8]}" 
 									   click="{numClicks=1, checkLevel(numClicks)}"
 									   width="100%" height="100%"
 									   />	
@@ -150,9 +152,11 @@
 			</s:HGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
-			<components:MyMapsPanel id="myMaps"  
-									skinClass="Skins.MyMapsSkin">
-			</components:MyMapsPanel>
+			<s:HGroup>
+				<components:MyMapsPanel id="myMaps"  
+										skinClass="Skins.MyMapsSkin" width="600" height="300">
+				</components:MyMapsPanel>
+			</s:HGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
 			<components:Projects id="myProjects"

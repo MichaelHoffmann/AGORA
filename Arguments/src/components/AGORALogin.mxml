@@ -4,6 +4,8 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="932" height="300"
 	     xmlns:components="components.*"
 		 preinitialize="preInitializeHandler()">
+	<fx:Style>
+	</fx:Style>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -68,38 +70,49 @@
 	</components:AGORAMenu>
 		<!--The left side of the page that houses the guest login button-->
 		<s:SkinnableContainer id = "guestWelcome"
-							  left="0" right="692" top="0" bottom="0" backgroundColor="#29ABE2">
+							  left="0" right="682" top="0" bottom="0" backgroundColor="#29ABE2">
 			<s:layout><s:BasicLayout/></s:layout>
 			
 
 			<!--This is the new user label on the side panel-->
-			<s:Label id="VisitorGreeting" x="22" y="184" width="230" height="71"
-					 fontFamily="Arial" fontSize="20" text="New to AGORA? Visit a world of debates and discussion." textAlign="center"
-					 verticalAlign="middle"/>
+			<s:Label id="VisitorGreeting" x="7" width="230" height="71" fontFamily="Arial"
+					 fontSize="20" text="New to AGORA? Visit a world of debates and discussion."
+					 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
 			<!--The Guest Login button-->
-			<s:Button x="55" width="154" height="40" label="Enter As Guest" fontSize="17" verticalCenter="-16" 
+			<s:Button x="49" width="154" height="40" label="Enter As Guest" fontSize="17" verticalCenter="9" 
 					  click="mainMenu.visible=true, guestWelcome.visible=false, mainWelcome.visible=false"/>
 
 		</s:SkinnableContainer>
 		<s:SkinnableContainer id="mainWelcome"
-			left="260" right="0" top="0" bottom="0" backgroundColor="#ECFAFA">
+			left="248" right="0" top="0" bottom="0" backgroundColor="#FFFFFF">
 			<s:layout><s:BasicLayout/></s:layout>
+			<mx:Image id="loader1" horizontalCenter="0"
+					  source="@Embed(source='introBackground.jpg')" verticalCenter="-1"/> 
 			<!--This is the banner for that goes above the login/register buttons-->
-			<s:Label width="206" height="129" fontSize="35" horizontalCenter="0" text="Welcome to&#xd;AGORA-net" textAlign="center" verticalCenter="-74"/>
+			<s:Label width="206" height="129" fontSize="35" horizontalCenter="-7" text="Welcome to&#xd;AGORA-net!" textAlign="center" verticalCenter="-26"/>
 			<!--This is the login button-->
-			<s:Button id="loginButton" width="120" height="40" label="Login" click="loginButton_onClick(event)" horizontalCenter="-70" verticalCenter="-8"/>
+			<s:Button id="loginButton" width="120" height="40" label="Login" click="loginButton_onClick(event)" 
+					  horizontalCenter="-71" verticalCenter="19"/>
 			<!--This is the New User Registration button-->
-			<s:Button id="registerButton" width="124" height="40" label="Register" click = "registerButton_onClick(event)" horizontalCenter="60" verticalCenter="-8"/>
+			<s:Button id="registerButton" width="124" height="40" label="Register" click = "registerButton_onClick(event)" horizontalCenter="59" verticalCenter="19"/>
 			<!--This is the box group that forms the smaller links below Login/Register"-->
-			<mx:HBox width="291" height="29" horizontalCenter="16" textAlign="center" verticalCenter="45">
+			<mx:HBox width="291" height="29" horizontalCenter="8" textAlign="center" verticalCenter="69">
 				<!--The "About Us" link-->
-				<mx:LinkButton id="about" label="About Us" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote')"/>
+				<mx:LinkButton id="about" label="About Us"
+							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote')"
+							   color="#757575" toolTip="Visit the homepage of the AGORA Project"/>
 				<!--The "FAQ" link-->
-				<mx:LinkButton id="faq" label="FAQ" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote')"/>
+				<mx:LinkButton id="faq" label="FAQ"
+							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote')"
+							   color="#757575"/>
 				<!--The "Contact Us" link-->
-				<mx:LinkButton id="contact" label="Contact Us" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote')"/>
+				<mx:LinkButton id="contact" label="Contact Us"
+							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote')"
+							   color="#757575"/>
 				<!--The "Help" link"-->
-				<mx:LinkButton id="help" label="Help" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"/>
+				<mx:LinkButton id="help" label="Help"
+							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"
+							   color="#757575" toolTip="AGORA user manual: what you should know before you start"/>
 			</mx:HBox>
 		</s:SkinnableContainer>
 
