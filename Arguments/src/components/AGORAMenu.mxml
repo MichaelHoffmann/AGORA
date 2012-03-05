@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:components="components.*"
-		 creationComplete="creationCompleteHandler(event)"
-		 >
+		 creationComplete="creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -15,13 +14,18 @@
 			
 			import classes.Language;
 			
+			import flash.system.Capabilities;
+			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
 			public var timer:Timer = new Timer(10000);
-			public var buttonWidth:int = 200;
-			public var buttonHeight:int = 80;
 			public var numClicks:int=0;
+			[Bindable] private var buttonWidth:uint = 200;
+			[Bindable] private var buttonHeight:uint = 80;
+			
+			public var catNames:Array= new Array("Class Projects", "Argumentation Theory", "Philosophy", "Theory of Representation", 
+				"Environment/Climate", "Projects", "Biology", "Psychiatry", "Law");
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
@@ -54,102 +58,113 @@
 			{
 				if(level==0)
 				{
-					category.visible=true;
-					mapList.visible=false;
+					//category.visible=true;
+					//mapList.visible=false;
 				}
 				else if(level==1)
 				{
-					category.visible=false;	
+					//category.visible=false;	
 					//mainPanel.visible=true;
-					mapList.visible=true;
+					//mapList.visible=true;
 					
 				}
 				else if(level==2)
 				{
-					category.visible=false;	
-					mainPanel.visible=false;
-					mapList.visible=true;
+					//category.visible=false;	
+					//mainPanel.visible=false;
+					//mapList.visible=true;
 					
 				}
 			}
+			
+
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	<mx:TabNavigator y="120" width="800" height="400" tabWidth="267" textAlign="center">
+		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
+			<s:HGroup x="10" width="778" height="356" horizontalAlign="center" verticalAlign="middle">
+				<mx:Grid id="myGrid" top="-7" bottom="3" horizontalCenter="0" paddingLeft="0"
+						 textAlign="center" verticalAlign="middle">
+					<mx:GridRow id="row1">
+						<mx:GridItem>
+							<mx:Button width="100%" height="100%" label="{catNames[0]}"
+									   click="{numClicks=1, checkLevel
+									   (numClicks)}"/>
+						</mx:GridItem>
+						<mx:GridItem width="100%" height="100%">
+							<mx:Button width="{buttonWidth}" height="{buttonHeight}" label="{catNames[1]}"
+									   click="{numClicks=1, checkLevel(numClicks)}"/>
+						</mx:GridItem>
+						<mx:GridItem width="100%" height="100%">
+							<mx:Button label="{catNames[2]}" 
+									   click="{numClicks=1, checkLevel(numClicks)}"
+									   width="{buttonWidth}" height="{buttonHeight}"
+									   />
+						</mx:GridItem>
+					</mx:GridRow>
+					
+					<mx:GridRow id="row2">
+						<mx:GridItem width="100%" height="100%">
+							<mx:Button label="{catNames[3]}" 
+									   width="{buttonWidth}" height="{buttonHeight}"
+									   click="{numClicks=1, checkLevel(numClicks)}"/>	
+						</mx:GridItem>
+						<mx:GridItem width="100%" height="100%">
+							<mx:Button label="Environment" 
+									   click="{numClicks=1, checkLevel(numClicks)}"
+									   width="{buttonWidth}" height="{buttonHeight}"
+									   />
+						</mx:GridItem>
+						<mx:GridItem width="100%" height="100%">
+							<mx:Button label="{catNames[4]}"
+									   width="{buttonWidth}" height="{buttonHeight}"
+									   click="projects.visible=true"
+									   />	
+						</mx:GridItem>
+					</mx:GridRow>
+					<mx:GridRow id="row3">
+						<mx:GridItem width="100%" height="100%">
+							<mx:Button label="{catNames[5]}" 
+									   click="{numClicks=1, checkLevel(numClicks)}"
+									   width="{buttonWidth}" height="{buttonHeight}"
+									   />
+						</mx:GridItem>
+						<mx:GridItem>
+							<mx:Button label="{catNames[6]}"
+									   click="{numClicks=1, checkLevel(numClicks)}"
+									   width="100%" height="100%"
+									   />
+						</mx:GridItem>
+						<mx:GridItem>
+							<mx:Button label="{catNames[7]}" 
+									   click="{numClicks=1, checkLevel(numClicks)}"
+									   width="100%" height="100%"
+									   />	
+						</mx:GridItem>
+					</mx:GridRow>
+				</mx:Grid>
+			</s:HGroup>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
+			<components:MyMapsPanel id="myMaps"  
+									skinClass="Skins.MyMapsSkin">
+			</components:MyMapsPanel>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
+			<components:Projects id="myProjects"
+								 width="200" height="300">
+			</components:Projects>
+		</s:NavigatorContent>
+	</mx:TabNavigator>		
 	
-	<!--Categories Grid; y is used to keep the label from overlapping the title-->		
-	<s:Panel id="category" 
-			 skinClass="Skins.MapListPanelSkin"
-			 width="800" height="400" y="70">
-		<mx:Grid id="myGrid" width="100%" height="100%" paddingLeft="100">
-			<mx:GridRow id="row1">
-				<mx:GridItem>
-					<mx:Button width="{buttonWidth}" height="{buttonHeight}" label="Class Projects"
-							   click="{numClicks=1, checkLevel(numClicks)}"/>
-				</mx:GridItem>
-				<mx:GridItem>
-					<mx:Button width="{buttonWidth}" height="{buttonHeight}" label="Argumentation Theory"
-							   click="{numClicks=1, checkLevel(numClicks)}"/>
-				</mx:GridItem>
-				<mx:GridItem>
-					<mx:Button label="Philosophy" 
-							   click="{numClicks=1, checkLevel(numClicks)}"
-							   width="{buttonWidth}" height="{buttonHeight}"
-							   />
-				</mx:GridItem>
-			</mx:GridRow>
-			
-			<mx:GridRow id="row2">
-				<mx:GridItem>
-					<mx:Button label="Theory of Representation" 
-							   width="{buttonWidth}" height="{buttonHeight}"
-							   click="{numClicks=1, checkLevel(numClicks)}"/>	
-				</mx:GridItem>
-				<mx:GridItem>
-					<mx:Button label="Environment" 
-							   click="{numClicks=1, checkLevel(numClicks)}"
-							   width="{buttonWidth}" height="{buttonHeight}"
-							   />
-				</mx:GridItem>
-				<mx:GridItem>
-					<mx:Button label="Projects"
-							   width="{buttonWidth}" height="{buttonHeight}"
-							   click="projects.visible=true"
-							   />	
-				</mx:GridItem>
-			</mx:GridRow>
-			<mx:GridRow id="row3">
-				<mx:GridItem>
-					<mx:Button label="Biology" 
-							   click="{numClicks=1, checkLevel(numClicks)}"
-							   width="{buttonWidth}" height="{buttonHeight}"
-							   />
-				</mx:GridItem>
-				<mx:GridItem>
-					<mx:Button label="Psychiatry"
-							   click="{numClicks=1, checkLevel(numClicks)}"
-							   width="{buttonWidth}" height="{buttonHeight}"
-							   />
-				</mx:GridItem>
-				<mx:GridItem>
-					<mx:Button label="Law" 
-							   click="{numClicks=1, checkLevel(numClicks)}"
-							   width="{buttonWidth}" height="{buttonHeight}"
-							   />	
-				</mx:GridItem>
-			</mx:GridRow>
-		</mx:Grid>
-	</s:Panel>	
-	
-	<s:VGroup id="Agora">
-		<s:HGroup 
-			paddingLeft="25" paddingTop="25">
-			<s:Label 
-				text = "{Language.lookup('WelcomeShort')} 2.3">
-			</s:Label>	
-		</s:HGroup>
+	<s:VGroup id="Agora" x="1" y="0">
+		<s:Label id="Greeting" width="197" height="92" text="{Language.lookup('WelcomeShort')} 2.3"
+				 verticalAlign="bottom">
+		</s:Label>
 		<s:HGroup id="mainPanel" 
 				  paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25" visible="false">
 			<components:MapListPanel 
@@ -158,24 +173,15 @@
 				width="200" height="400"
 				>
 			</components:MapListPanel>
-			<components:MyMapsPanel id="myMaps" 
-									title="{Language.lookup(&quot;MyMaps&quot;)}" 
-									skinClass="Skins.MyMapsSkin">
-			</components:MyMapsPanel>
+
 			
 			<components:ProjectListPanel id="projects" 
 										 title="{Language.lookup(&quot;ProjectPP&quot;)}" 
 										 width="200" height="400">	
 			</components:ProjectListPanel>
 			
-			<components:Projects id="myProjects"
-								 title = "{Language.lookup('MyPPProjects')}"
-								 width="200" height="400">
-			</components:Projects>
-			
 		</s:HGroup>
 		<s:HGroup id="bottomButtonRow" paddingLeft="25" paddingTop="25">
-			<mx:Button label="Back" click="{numClicks=0, checkLevel(numClicks)}"/>
 			<s:Button id="createMapBtn"
 					  label="{Language.lookup(&quot;NewMap&quot;)}" click="createMapBtn_clickHandler(event)">
 			</s:Button >

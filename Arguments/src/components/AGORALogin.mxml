@@ -11,6 +11,7 @@
 		<![CDATA[
 			import Controller.UserSessionController;
 
+			import flash.system.Capabilities;
 			/**
 			 * This function initializes the GUI to be the whole size of the screen. It does NOT keep checking for screen size changes.
 			 */
@@ -63,6 +64,8 @@
 		
 		]]>
 	</fx:Script>
+	<components:AGORAMenu id="mainMenu" visible="false" width="800" horizontalCenter="0">
+	</components:AGORAMenu>
 		<!--The left side of the page that houses the guest login button-->
 		<s:SkinnableContainer id = "guestWelcome"
 							  left="0" right="692" top="0" bottom="0" backgroundColor="#29ABE2">
@@ -99,8 +102,5 @@
 				<mx:LinkButton id="help" label="Help" click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"/>
 			</mx:HBox>
 		</s:SkinnableContainer>
-		<s:SkinnableContainer width="100%" height="100%">
-			<components:AGORAMenu id="mainMenu" visible="false" width="800" horizontalCenter="0" verticalCenter="0">
-			</components:AGORAMenu>
-		</s:SkinnableContainer>
+
 </s:Group>
