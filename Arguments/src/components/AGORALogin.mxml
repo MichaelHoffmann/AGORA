@@ -12,7 +12,7 @@
 	<fx:Script>
 		<![CDATA[
 			import Controller.UserSessionController;
-
+			import mx.controls.Alert;
 			import flash.system.Capabilities;
 			/**
 			 * This function initializes the GUI to be the whole size of the screen. It does NOT keep checking for screen size changes.
@@ -46,6 +46,7 @@
 			*/
 			protected function guestButton_onClick(event:MouseEvent):void
 			{
+				
 				UserSessionController.getInstance().signInAsGuest();	
 			}
 			
@@ -66,8 +67,6 @@
 		
 		]]>
 	</fx:Script>
-	<components:AGORAMenu id="mainMenu" visible="false" width="800" horizontalCenter="0">
-	</components:AGORAMenu>
 		<!--The left side of the page that houses the guest login button-->
 		<s:SkinnableContainer id = "guestWelcome"
 							  left="0" right="682" top="0" bottom="0" backgroundColor="#29ABE2">
@@ -80,7 +79,7 @@
 					 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
 			<!--The Guest Login button-->
 			<s:Button x="49" width="154" height="40" label="Enter As Guest" fontSize="17" verticalCenter="9" 
-					  click="mainMenu.visible=true, guestWelcome.visible=false, mainWelcome.visible=false"/>
+					  click="guestButton_onClick(event)"/>
 
 		</s:SkinnableContainer>
 		<s:SkinnableContainer id="mainWelcome"

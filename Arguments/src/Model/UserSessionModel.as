@@ -99,7 +99,6 @@ package Model
 			loginRequestService.addEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			loginRequestService.addEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
 			loginRequestService.send({username: userData.userName, pass_hash: passHash});
-			Alert.show("Returned from PHP");
 		}
 		
 		/**

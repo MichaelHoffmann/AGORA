@@ -66,7 +66,9 @@ package Controller
 		
 		//--------------Login as Guest Function-----------------//
 		public function signInAsGuest():void{
-			//Does nothing for right now
+			FlexGlobals.topLevelApplication.agoraMain.setVisible(false,true);
+			FlexGlobals.topLevelApplication.agoraMenu.setVisible(true,true);
+//			mainMenu.visible=true, guestWelcome.visible=false, mainWelcome.visible=false
 		}
 		//--------------Login Function--------------------------//
 		public function login(userDataVO:UserDataVO):void{
@@ -77,6 +79,8 @@ package Controller
 		protected function onAuthentication(event:AGORAEvent):void{
 			trace("User Authenticated");
 			removeSignInBox();
+			FlexGlobals.topLevelApplication.agoraMain.setVisible(false,true);
+			FlexGlobals.topLevelApplication.agoraMenu.setVisible(true,true);
 			var agoraController:AGORAController = AGORAController.getInstance();
 			agoraController.fetchDataMyMaps();
 			agoraController.fetchDataMyProjects();
@@ -84,7 +88,7 @@ package Controller
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{
 			trace("User Authentication Failed. Wrong Username/Password combination");	
-			//Alert.show(Language.lookup("LoginFailed"));
+			Alert.show(Language.lookup("LoginFailed"));
 		}
 		
 		//----------------Registration Function--------------------//
