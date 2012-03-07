@@ -83,6 +83,16 @@
 				}
 			}
 			
+			protected function projectsButton_OnClick(event:MouseEvent):void{
+				this.tabNav.setVisible(false,true);
+				this.mainPanel.visible=true;
+			}
+			
+			protected function backButton_OnClick():void{
+				this.tabNav.setVisible(true,true);
+				this.mainPanel.visible=false;
+			}
+			
 
 		]]>
 	</fx:Script>
@@ -90,7 +100,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:TabNavigator y="120" width="800" height="400" tabWidth="267" textAlign="center">
+	<mx:TabNavigator id="tabNav" name="tabNav" y="120" width="800" height="400" tabWidth="267" textAlign="center">
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/> 
@@ -130,7 +140,7 @@
 						<mx:GridItem width="100%" height="100%">
 							<mx:Button label="{catNames[5]}"
 									   width="{buttonWidth}" height="{buttonHeight}"
-									   click="projects.visible=true"
+									   click="projectsButton_OnClick(event)"
 									   />	
 						</mx:GridItem>
 					</mx:GridRow>
@@ -215,6 +225,9 @@
 					  label="{Language.lookup(&quot;RegisterAsNew&quot;)}"
 					  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
 					  click="registerBtn_clickHandler(event)" />
+			<s:Button id="backBtn"
+					  label="{Language.lookup('Back')}"
+					  click="backButton_OnClick()"/>
 		</s:HGroup>
 	</s:VGroup>	
 </s:Group>
