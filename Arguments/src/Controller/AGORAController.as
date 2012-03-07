@@ -128,11 +128,9 @@ package Controller
 		 * cause individual hangs in the code. 
 		 */
 		protected function onMyMapsListFetched(event:AGORAEvent):void{
-			/*
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapListXML = event.xmlData;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
-			*/
 			FlexGlobals.topLevelApplication.invalidateProperties();
 			FlexGlobals.topLevelApplication.invalidateDisplayList();
 		}
@@ -216,7 +214,7 @@ package Controller
 			//If loading had been displayed, remove it
 			//For the Map List box
 			menu.mapList.loadingDisplay.text = Language.lookup("NetworkError");
-			menu.projects.loadingDisplay.text = Language.lookup("NetworkError");
+			menu.myProjects.loadingDisplay.text = Language.lookup("NetworkError");
 			if(userSession.uid){
 				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
 			}

@@ -97,7 +97,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:TabNavigator id="tabNav" name="tabNav" y="120" width="800" height="400" tabWidth="267" textAlign="center">
+	<mx:TabNavigator id="tabNav" name="tabNav" y="120" width="800" height="400" tabWidth="267" textAlign="center" creationPolicy="all">
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/> 
@@ -169,7 +169,7 @@
 		
 		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
 			<s:HGroup id="myMapsHorizGroup">
-				<components:MyMapsPanel id="myMaps_" title="{Language.lookup(&quot;MyMaps&quot;)}" 
+				<components:MyMapsPanel id="myMaps" title="{Language.lookup(&quot;MyMaps&quot;)}" 
 										skinClass="Skins.MyMapsSkin" width="600" height="300"
 										focusIn="test()">
 				</components:MyMapsPanel>
@@ -179,7 +179,7 @@
 		<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
 		
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
-			<components:Projects id="myProjects_"
+			<components:Projects id="myProjects"
 								 width="200" height="300">
 			</components:Projects>
 		</s:NavigatorContent>
@@ -195,21 +195,13 @@
 				id="mapList" 
 				title="{Language.lookup(&quot;ListMaps&quot;)}" 
 				width="200" height="400"
-				>
+				>		
 			</components:MapListPanel>
-			<components:MyMapsPanel id="myMaps" title="{Language.lookup(&quot;MyMaps&quot;)}" 
-									skinClass="Skins.MyMapsSkin" width="600" height="300"
-									focusIn="test()">
-			</components:MyMapsPanel>
-
-			
 			<components:ProjectListPanel id="projects" 
 										 title="{Language.lookup(&quot;ProjectPP&quot;)}" 
 										 width="200" height="400">	
 			</components:ProjectListPanel>
-			<components:Projects id="myProjects"
-								 width="200" height="300">
-			</components:Projects>
+		
 			
 		</s:HGroup>
 		<s:HGroup id="bottomButtonRow" paddingLeft="25" paddingTop="25">

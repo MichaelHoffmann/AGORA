@@ -36,6 +36,7 @@
 			public var mapName:String;
 			
 			override protected function getCurrentSkinState():String{
+				/*
 				if(thisMap.selected)
 				{
 					return "checked";
@@ -44,6 +45,8 @@
 				{
 					return "unchecked";
 				}
+				*/
+				return "unchecked";
 			}
 			
 			override protected function partAdded(partName:String, instance:Object):void{
