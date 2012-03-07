@@ -14,7 +14,8 @@
 	<s:Scroller y="0" right="0" width="100%" height="100%">
 		<s:Group> 
 			<components:AGORALogin id="agoraMain" width="100%" height="100%" horizontalCenter="0" name="agoraMain" verticalCenter="0" visible="true"/>
-			<components:AGORAMenu id="agoraMenu" visible="false" width="100%" height="100%" horizontalCenter="0" verticalCenter="0"/>
+			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="100%" height="100%" horizontalCenter="0" verticalCenter="0"/>
+			<components:Map id="map" visible="false"/>
 		</s:Group>
 	</s:Scroller> 
 	

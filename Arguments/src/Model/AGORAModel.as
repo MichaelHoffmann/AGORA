@@ -8,6 +8,7 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
+	import mx.controls.Alert;
 
 	public class AGORAModel extends EventDispatcher
 	{

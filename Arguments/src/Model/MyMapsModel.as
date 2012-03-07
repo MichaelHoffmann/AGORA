@@ -41,9 +41,17 @@ package Model
 		
 		//-----------------------Requesting Map List--------------------------------//
 		public function requestMapList():void{
+			
+
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			if(userSessionModel.loggedIn()){	
+			if(userSessionModel.loggedIn()){
+				
+				
+				
+
 				requestMapsService.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash});
+				
+
 			}else{
 				Alert.show("Attempting to fetch my maps when the user is not logged in... Please report this error...");
 				//TODO: Translate above error
@@ -52,6 +60,8 @@ package Model
 	
 		protected function onRequestMapsServiceResult(event:ResultEvent):void{
 			myMapsXML = event.result as XML;
+			
+
 			dispatchEvent(new AGORAEvent(AGORAEvent.MY_MAPS_LIST_FETCHED, myMapsXML));
 		}	
 		

@@ -7,6 +7,7 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
+	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
@@ -23,7 +24,7 @@ package Model
 			reference = this;
 			requestMapService = new HTTPService;
 			requestMapService.resultFormat = "e4x";
-			requestMapService.requestTimeout = 10;
+			requestMapService.requestTimeout = 100;
 			requestMapService.url = AGORAParameters.getInstance().listMapsURL;
 			requestMapService.addEventListener(ResultEvent.RESULT, onRequestMapsServiceResult);
 			requestMapService.addEventListener(FaultEvent.FAULT, onRequestMapsServiceFault);	

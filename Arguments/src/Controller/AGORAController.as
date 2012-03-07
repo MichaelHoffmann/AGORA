@@ -75,13 +75,15 @@ package Controller
 		
 		//--------------------Fetch Map List------------------------------//
 		public function fetchDataMapList():void{
+
 			var statusNE:String = Language.lookup("NetworkError");
 			if(statusNE == menu.mapList.loadingDisplay.text){
+				
 				menu.mapList.loadingDisplay.text = Language.lookup("Loading");
 			}
 			menu.mapList.loadingDisplay.visible = true;
 			var mapListModel:MapListModel = AGORAModel.getInstance().mapListModel;
-			mapListModel.requestMapList();
+			mapListModel.requestMapList();			
 		}
 		
 		protected function onMapListFetched(event : AGORAEvent):void{
@@ -107,20 +109,30 @@ package Controller
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
+
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
-				var statusNE:String = Language.lookup("NetworkError");
+				var statusNE:String = Language.lookup("NetworkError");;
 				if(menu.myMaps.loadingDisplay.text == statusNE){
+
 					menu.myMaps.loadingDisplay.text = Language.lookup("Loading");
 				}
 				FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = true;
+				
+
 				AGORAModel.getInstance().myMapsModel.requestMapList();
 			}
 		}
 		
+		/**
+		 * This function is causing a hang. The first three lines never finish. Each of them separately
+		 * cause individual hangs in the code. 
+		 */
 		protected function onMyMapsListFetched(event:AGORAEvent):void{
+			/*
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapListXML = event.xmlData;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
+			*/
 			FlexGlobals.topLevelApplication.invalidateProperties();
 			FlexGlobals.topLevelApplication.invalidateDisplayList();
 		}

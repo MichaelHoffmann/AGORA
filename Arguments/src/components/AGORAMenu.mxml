@@ -3,7 +3,6 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:components="components.*"
-		 preinitialize="initialize_menu(event)"
 		 creationComplete="creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
@@ -28,10 +27,6 @@
 			public var catNames:Array= new Array("Class Projects", "Argumentation Theory", "Philosophy", "Theory of Representation", 
 				"Environment/Climate", "Projects", "Biology", "Psychiatry", "Law");
 			
-			protected function initialize_menu(event:FlexEvent):void{
-				this.height = stage.height;
-				this.width = stage.width;
-			}
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
@@ -93,7 +88,9 @@
 				this.mainPanel.visible=false;
 			}
 			
-
+			protected function test():void{
+				//Do nothing
+			}
 		]]>
 	</fx:Script>
 	
@@ -170,10 +167,11 @@
 		
 		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
 		
-		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
-			<s:HGroup>
-				<components:MyMapsPanel id="myMaps"  
-										skinClass="Skins.MyMapsSkin" width="600" height="300" focusIn="mapList.setVisible(true,true)">
+		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
+			<s:HGroup id="myMapsHorizGroup">
+				<components:MyMapsPanel id="myMaps_" title="{Language.lookup(&quot;MyMaps&quot;)}" 
+										skinClass="Skins.MyMapsSkin" width="600" height="300"
+										focusIn="test()">
 				</components:MyMapsPanel>
 			</s:HGroup>
 		</s:NavigatorContent>
@@ -181,7 +179,7 @@
 		<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
 		
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
-			<components:Projects id="myProjects"
+			<components:Projects id="myProjects_"
 								 width="200" height="300">
 			</components:Projects>
 		</s:NavigatorContent>
@@ -199,12 +197,19 @@
 				width="200" height="400"
 				>
 			</components:MapListPanel>
+			<components:MyMapsPanel id="myMaps" title="{Language.lookup(&quot;MyMaps&quot;)}" 
+									skinClass="Skins.MyMapsSkin" width="600" height="300"
+									focusIn="test()">
+			</components:MyMapsPanel>
 
 			
 			<components:ProjectListPanel id="projects" 
 										 title="{Language.lookup(&quot;ProjectPP&quot;)}" 
 										 width="200" height="400">	
 			</components:ProjectListPanel>
+			<components:Projects id="myProjects"
+								 width="200" height="300">
+			</components:Projects>
 			
 		</s:HGroup>
 		<s:HGroup id="bottomButtonRow" paddingLeft="25" paddingTop="25">
