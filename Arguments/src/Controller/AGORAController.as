@@ -7,6 +7,7 @@ package Controller
 	import Model.MapListModel;
 	import Model.ProjectListModel;
 	import Model.UserSessionModel;
+	import Model.CategoryModel;
 	
 	import ValueObjects.UserDataVO;
 	
@@ -57,6 +58,8 @@ package Controller
 			model.projectListModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_LIST_FETCHED, onMyProjectsListFetched);
 			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
+			model.categoryModel.addEventListener(AGORAEvent.CATEGORY_FETCHED,onCategoryFetched);
+			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -93,7 +96,18 @@ package Controller
 			menu.mapList.invalidateSize();
 			menu.mapList.invalidateDisplayList();
 		}
-		
+		//------------------Fetch Category--------------------------------//
+		public function fetchDataCategory():void{
+			menu.categories.loadingDisplay.text = Language.lookup("Loading");
+			menu.categories.loadingDisplay.visible = true;
+			var categoryM:CategoryModel = model.categoryModel;
+			categoryM.requestCategory();	
+		}
+		protected function onCategoryFetched(event:AGORAEvent):void{
+			menu.categories.loadingDisplay.visible = false;
+			menu.categories.invalidateProperties();
+			menu.categories.invalidateDisplayList();
+		}
 		//------------------Fetch Project List----------------------------//
 		public function fetchDataProjectList():void{
 			menu.projects.loadingDisplay.text = Language.lookup("Loading");
@@ -192,6 +206,7 @@ package Controller
 				fetchDataMyMaps();
 			}
 			fetchDataProjectList();
+			fetchDataCategory();
 		}
 		
 		//--------------------Freeze the app--------------//

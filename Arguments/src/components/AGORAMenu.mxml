@@ -102,6 +102,7 @@
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/> 
 			<s:HGroup x="10" width="778" height="356" horizontalAlign="center" verticalAlign="middle">
+				<!--
 				<mx:Grid id="myGrid" top="-7" bottom="3" horizontalCenter="0" paddingLeft="0"
 						 textAlign="center" verticalAlign="middle">
 					<mx:GridRow id="row1">
@@ -161,7 +162,11 @@
 									   />	
 						</mx:GridItem>
 					</mx:GridRow>
-				</mx:Grid>
+				</mx:Grid>-->
+				<components:CategoryPanel id="categories" 
+											 title="category" 
+											 width="778" height="356">	
+				</components:CategoryPanel>
 			</s:HGroup>
 		</s:NavigatorContent>
 		

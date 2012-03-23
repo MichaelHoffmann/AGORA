@@ -8,6 +8,7 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
+	
 	import mx.controls.Alert;
 
 	public class AGORAModel extends EventDispatcher
@@ -25,6 +26,7 @@ package Model
 		public var agoraMapModel:AGORAMapModel;
 		public var projectListModel:ProjectListModel;
 		public var myProjectsModel:ProjectsModel;
+		public var categoryModel:CategoryModel;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -42,6 +44,7 @@ package Model
 			agoraMapModel = new AGORAMapModel;
 			projectListModel = new ProjectListModel();
 			myProjectsModel = new ProjectsModel;
+			categoryModel= new CategoryModel;
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';
