@@ -46,9 +46,8 @@ package components
 			// Creates a TileGroup layout for the category buttons
 			if(!categoryTiles){
 				categoryTiles = new TileGroup;
-				categoryTiles.horizontalGap = 5;
-				categoryTiles.requestedColumnCount = 3;
-				categoryTiles.verticalGap = 5;
+				categoryTiles.horizontalGap = 20;
+				categoryTiles.verticalGap = 20;
 				scroller.viewport = categoryTiles;
 			}
 						
@@ -69,7 +68,7 @@ package components
 					var button:Button = new Button;
 					button.name = categoryXML.@ID;
 					button.label = categoryXML.@Name;
-					button.width = 200;
+					button.width = 150;
 					button.height = 80;
 					categoryTiles.addElement(button);
 				

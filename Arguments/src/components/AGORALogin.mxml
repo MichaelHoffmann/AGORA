@@ -86,7 +86,7 @@
 			left="248" right="0" top="0" bottom="0" backgroundColor="#FFFFFF">
 			<s:layout><s:BasicLayout/></s:layout>
 			<mx:Image id="loader1" horizontalCenter="0"
-					  source="@Embed(source='introBackground.jpg')" verticalCenter="-1"/> 
+					  source="@Embed(source='introBackground.png')" verticalCenter="-1"/> 
 			<!--This is the banner for that goes above the login/register buttons-->
 			<s:Label width="206" height="129" fontSize="35" horizontalCenter="-7" text="Welcome to&#xd;AGORA-net!" textAlign="center" verticalCenter="-26"/>
 			<!--This is the login button-->
