@@ -13,6 +13,7 @@ package components
 	import spark.components.Panel;
 	import spark.components.Scroller;
 	import spark.components.VGroup;
+	import spark.components.TileGroup;
 	
 	public class CategoryPanel extends Panel
 	{
@@ -20,6 +21,7 @@ package components
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
 		public var vContentGroup:VGroup; 
+		public var categoryTiles:TileGroup;
 		
 		public function CategoryPanel()
 		{
@@ -35,11 +37,21 @@ package components
 				scroller.y = 25;
 				this.addElement(scroller);
 			}
-			if(!vContentGroup){
+/*			if(!vContentGroup){
 				vContentGroup = new VGroup;
 				vContentGroup.gap = 5;
 				scroller.viewport = vContentGroup;
 			}
+*/
+			// Creates a TileGroup layout for the category buttons
+			if(!categoryTiles){
+				categoryTiles = new TileGroup;
+				categoryTiles.horizontalGap = 5;
+				categoryTiles.requestedColumnCount = 3;
+				categoryTiles.verticalGap = 5;
+				scroller.viewport = categoryTiles;
+			}
+						
 			if(!loadingDisplay){
 				loadingDisplay = new Label;
 				loadingDisplay.text = Language.lookup("Loading");
@@ -50,7 +62,7 @@ package components
 		override protected function commitProperties():void{
 			super.commitProperties();
 			
-			vContentGroup.removeAllElements();
+			categoryTiles.removeAllElements();
 			//add elements
 			if(model.category){
 				for each(var categoryXML:XML in model.category.category){
@@ -59,7 +71,7 @@ package components
 					button.label = categoryXML.@Name;
 					button.width = 200;
 					button.height = 80;
-					vContentGroup.addElement(button);
+					categoryTiles.addElement(button);
 				
 				}
 			}
