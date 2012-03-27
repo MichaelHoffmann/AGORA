@@ -206,7 +206,6 @@ package Controller
 				fetchDataMyMaps();
 			}
 			fetchDataProjectList();
-			fetchDataCategory();
 		}
 		
 		//--------------------Freeze the app--------------//

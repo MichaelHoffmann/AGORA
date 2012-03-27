@@ -32,6 +32,7 @@
 			{
 				timer.addEventListener(TimerEvent.TIMER, timerFired);
 				timer.start();
+				AGORAController.getInstance().fetchDataCategory();
 			}
 			
 			protected function timerFired(event:TimerEvent):void{
