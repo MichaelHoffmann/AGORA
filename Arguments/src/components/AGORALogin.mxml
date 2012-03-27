@@ -103,11 +103,11 @@
 				<!--The "FAQ" link-->
 				<mx:LinkButton id="faq" label="FAQ"
 							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote')"
-							   color="#757575"/>
+							   color="#757575" toolTip="Have a question? Check here first!"/>
 				<!--The "Contact Us" link-->
 				<mx:LinkButton id="contact" label="Contact Us"
 							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote')"
-							   color="#757575"/>
+							   color="#757575" toolTip="Talk to the people behind the AGORA Project"/>
 				<!--The "Help" link"-->
 				<mx:LinkButton id="help" label="Help"
 							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"

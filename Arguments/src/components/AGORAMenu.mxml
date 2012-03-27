@@ -114,9 +114,9 @@
 		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
 		
 		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
-			<s:HGroup id="myMapsHorizGroup">
-				<components:MyMapsPanel id="myMaps" title="{Language.lookup(&quot;MyMaps&quot;)}" 
-										skinClass="Skins.MyMapsSkin" width="600" height="300"
+			<s:HGroup id="myMapsHorizGroup" x="84" y="10">
+				<components:MyMapsPanel id="myMaps" title="{Language.lookup(&quot;MyMaps&quot;)}"  
+										width="600" height="300"
 										focusIn="test()">
 				</components:MyMapsPanel>
 			</s:HGroup>
