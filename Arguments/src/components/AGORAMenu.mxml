@@ -56,28 +56,6 @@
 				UserSessionController.getInstance().showRegistrationBox();
 			}
 			
-			protected function checkLevel(level:int):void
-			{
-				if(level==0)
-				{
-					//category.visible=true;
-					//mapList.visible=false;
-				}
-				else if(level==1)
-				{
-					//category.visible=false;	
-					//mainPanel.visible=true;
-					//mapList.visible=true;
-					
-				}
-				else if(level==2)
-				{
-					//category.visible=false;	
-					//mainPanel.visible=false;
-					//mapList.visible=true;
-					
-				}
-			}
 			
 			protected function projectsButton_OnClick(event:MouseEvent):void{
 				this.tabNav.setVisible(false,true);
@@ -103,13 +81,14 @@
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/>
-			<s:HGroup id="catContainer" width="100%" height="100%" horizontalAlign="center"
-					  horizontalCenter="0" verticalAlign="middle" verticalCenter="-10">
-				<components:CategoryPanel id="categories"
-										  skinClass="spark.skins.spark.SkinnableContainerSkin"
-										  title="category">	
-				</components:CategoryPanel>
-			</s:HGroup>
+				<s:Group horizontalCenter="-3" verticalCenter="-25">
+					<components:CategoryPanel id="categories" width="482" height="309"
+											  horizontalCenter="0"
+											  skinClass="spark.skins.spark.SkinnableContainerSkin"
+											  title="category" verticalCenter="0">	
+					</components:CategoryPanel>
+					
+				</s:Group>
 		</s:NavigatorContent>
 		
 		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
@@ -157,7 +136,7 @@
 			</s:Button >
 			
 			<s:Button id="createProjectBtn" 
-					  label="{Language.lookup(&quot;NewProject&quot;)}" click="Alert.show(Language.lookup(&quot;NotYet&quot;));">
+					  label="{Language.lookup(&quot;NewProject&quot;)}" click="registerBtn_clickHandler(event)">
 			</s:Button>
 			
 			<s:Button id="signInBtn"
