@@ -43,6 +43,7 @@ package Events
 		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
 		public static const MY_PROJECTS_LIST_FETCHED:String = "MyProjectsListFetched";
 		public static const CATEGORY_FETCHED:String = "CategoryFetched";
+		public static const CHAT_FETCHED:String = "ChatFetched";
 		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";

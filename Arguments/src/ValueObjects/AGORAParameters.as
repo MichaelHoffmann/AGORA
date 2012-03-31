@@ -20,7 +20,8 @@ package ValueObjects
 		public var version:String;
 		public var myProjectsURL:String;
 		public var categoryURL:String;
-		
+		public var chatPushURL:String;
+		public var chatPullURL:String;
 		
 		//Error Codes TODO: Enter these in the Languages.xml
 		public var ERROR_106:String;
@@ -157,7 +158,9 @@ package ValueObjects
 			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
 			projectListURL = "http://agora.gatech.edu/testing/list_projects.php";
 			myProjectsURL = "http://agora.gatech.edu/testing/my_projects.php";
-			categoryURL= "http://agora.gatech.edu/rzhang39_testing/category.php";//category testing
+			categoryURL= "http://agora.gatech.edu/rzhang39_testing/category.php"; //category testing
+			chatPushURL= "http://agora.gatech.edu/zlee6_testing/push_chat.php"; //chat testing
+			chatPullURL= "http://agora.gatech.edu/zlee6_testing/pull_chat.php"; //chat testing
 			initialize();		
 		}
 		

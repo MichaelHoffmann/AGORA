@@ -39,7 +39,6 @@
 		<![CDATA[
 			import Controller.UserSessionController;
 			
-			
 			import ValueObjects.UserDataVO;
 			
 			import classes.Language;
@@ -48,7 +47,7 @@
 			import mx.managers.PopUpManager;
 			import mx.validators.Validator;
 			
-			
+			public var usernameHolder:String;
 			public function init():void
 			{	
 				focusManager.setFocus(username);
@@ -82,6 +81,7 @@
 			public function submitButton_onClick():void
 			{
 				var userDataVO:UserDataVO = new UserDataVO;
+				this.usernameHolder = username.text;
 				userDataVO.userName = username.text;
 				userDataVO.password = pass_hash.text;
 				

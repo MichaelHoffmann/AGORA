@@ -5,6 +5,7 @@ package Controller
 	import Model.AGORAModel;
 	import Model.UserSessionModel;
 	
+	import ValueObjects.ChatDataVO;
 	import ValueObjects.UserDataVO;
 	
 	import classes.Language;
@@ -75,6 +76,13 @@ package Controller
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			userSessionModel.authenticate(userDataVO);
 		}
+		
+		//-------------Submit Chat Function--------------------//
+		public function push_chat(chatDataVO:ChatDataVO):void{
+			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			userSessionModel.push_chat(chatDataVO);
+		}
+		
 		
 		protected function onAuthentication(event:AGORAEvent):void{
 			trace("User Authenticated");

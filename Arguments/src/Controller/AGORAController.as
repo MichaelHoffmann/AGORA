@@ -4,10 +4,11 @@ package Controller
 	
 	import Model.AGORAMapModel;
 	import Model.AGORAModel;
+	import Model.CategoryModel;
+	import Model.ChatModel;
 	import Model.MapListModel;
 	import Model.ProjectListModel;
 	import Model.UserSessionModel;
-	import Model.CategoryModel;
 	
 	import ValueObjects.UserDataVO;
 	
@@ -60,6 +61,8 @@ package Controller
 			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.categoryModel.addEventListener(AGORAEvent.CATEGORY_FETCHED,onCategoryFetched);
 			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
+			model.chatModel.addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
+			model.chatModel.addEventListener(AGORAEvent.FAULT, onFault);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -107,6 +110,15 @@ package Controller
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
+		}
+		//------------------Fetch Chat--------------------------------//
+		public function fetchDataChat():void{
+			var chatM:ChatModel = model.chatModel;
+			chatM.requestChat();	
+		}
+		protected function onChatFetched(event:AGORAEvent):void{
+			menu.chat.chatField.invalidateProperties();
+			menu.chat.chatField.invalidateDisplayList();
 		}
 		//------------------Fetch Project List----------------------------//
 		public function fetchDataProjectList():void{
@@ -201,11 +213,14 @@ package Controller
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
+			Alert.show("Before");
 			fetchDataMapList();
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				fetchDataMyMaps();
 			}
 			fetchDataProjectList();
+			Alert.show("After");
+			fetchDataChat();
 		}
 		
 		//--------------------Freeze the app--------------//

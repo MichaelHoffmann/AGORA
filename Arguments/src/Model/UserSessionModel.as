@@ -4,9 +4,12 @@ package Model
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
+	import ValueObjects.ChatDataVO;
 	import ValueObjects.UserDataVO;
 	
 	import com.adobe.crypto.MD5;
+	
+	import components.TopPanel;
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -14,10 +17,12 @@ package Model
 	import flash.utils.getQualifiedClassName;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.mxml.HTTPService;
-	import mx.controls.Alert;
+	
 	import org.osmf.utils.URL;
 	
 	[Bindable]
@@ -99,6 +104,28 @@ package Model
 			loginRequestService.addEventListener(ResultEvent.RESULT, onLoginRequestServiceResult);
 			loginRequestService.addEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
 			loginRequestService.send({username: userData.userName, pass_hash: passHash});
+		}
+		
+		//-----------------push_chat to db-------------------------//
+		public function push_chat(chatData:ChatDataVO):void{
+			var chatService:HTTPService = new HTTPService;
+			chatService.url = AGORAParameters.getInstance().chatPushURL;
+			chatService.addEventListener(ResultEvent.RESULT, onChatServiceResult);
+			chatService.addEventListener(FaultEvent.FAULT, onChatServiceFault);
+			chatService.send({username: chatData.username, text: chatData.textMessage, map_id: chatData.map_type, time: chatData.time});
+		}
+		
+		
+		
+		protected function onChatServiceResult(event:ResultEvent):void{
+			event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
+			event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
+		}
+		
+		protected function onChatServiceFault(event:FaultEvent):void{
+			event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
+			event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
+			FlexGlobals.topLevelApplication.agoraMenu.chat.chatField.text = "Network Error While Loading Chat Information";
 		}
 		
 		/**
