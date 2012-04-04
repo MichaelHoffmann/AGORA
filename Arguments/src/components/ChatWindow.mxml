@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+		 creationComplete="init()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:TextArea id="chatField" name="chatField" x="10" y="0" width="380" editable="false" enabled="true"/>
+	<s:TextInput id="chatTextEntry" x="10" y="159" width="380" height="88" enabled="true"/>
+	<s:Button id="send" x="242" y="269" label="Send"/>
+	<s:Button id="clear" x="320" y="269" label="Clear"  click="clearButton_OnClick(event)"/>
+	<fx:Script>
+		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import Model.AGORAModel;
+			import Model.ChatModel;
+			import Model.UserSessionModel;
+			
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			
+			import spark.formatters.DateTimeFormatter;
+			private var model:ChatModel;
+			public var time:Number;
+			
+			/**
+			 * Initializer that is called when the window is created. It loads up a model and stamps the milli time into time 
+			 */
+			public function init():void{
+				model = AGORAModel.getInstance().chatModel;
+				time = new Date().time;
+			}
+			
+			/**
+			 * This is activated whenever we return from the PHP call. It populates the chat window with all the chat
+			 * information that has occurred from the moment the user joined until the user quits. 
+			 */
+			override protected function commitProperties():void{
+				super.commitProperties();
+				
+				chatField.text = "";
+				//add elements
+				
+				if(model && model.chat){
+					for each(var chatXML:XML in model.chat.chat){
+						var line:String = new String;
+						line = chatXML.@Username + ": " + chatXML.@Text + '\n';
+						if(chatXML.@username == FlexGlobals.topLevelApplication.loginWindow.usernameHolder){
+							//Plan on changing the color if it is the user who made the comment... Not sure how...
+						}
+						chatField.text+=line;
+						
+					}
+				} else {
+					chatField.text = time.toString(10);
+				}
+			}
+			
+			private function sendButton_onClick(event:Event):void{
+				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();
+				
+			}
+			
+			private function clearButton_OnClick(event:Event):void{
+				chatTextEntry.text = "";
+			}
+		]]>
+	</fx:Script>
+</s:Group>
