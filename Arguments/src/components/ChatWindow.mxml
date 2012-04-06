@@ -8,7 +8,7 @@
 	</fx:Declarations>
 	<s:TextArea id="chatField" name="chatField" x="10" y="0" width="380" editable="false" enabled="true"/>
 	<s:TextInput id="chatTextEntry" x="10" y="159" width="380" height="88" enabled="true"/>
-	<s:Button id="send" x="242" y="269" label="Send"/>
+	<s:Button id="send" x="242" y="269" label="Send" click="sendButton_onClick(event)"/> 
 	<s:Button id="clear" x="320" y="269" label="Clear"  click="clearButton_OnClick(event)"/>
 	<fx:Script>
 		<![CDATA[
@@ -16,6 +16,7 @@
 			
 			import Model.AGORAModel;
 			import Model.ChatModel;
+			import Model.PushChatModel;
 			import Model.UserSessionModel;
 			
 			import mx.controls.Alert;
@@ -24,12 +25,13 @@
 			import spark.formatters.DateTimeFormatter;
 			private var model:ChatModel;
 			public var time:Number;
-			
+			public var pmodel:PushChatModel;
 			/**
 			 * Initializer that is called when the window is created. It loads up a model and stamps the milli time into time 
 			 */
 			public function init():void{
 				model = AGORAModel.getInstance().chatModel;
+				pmodel = AGORAModel.getInstance().pushChatModel;
 				time = new Date().time;
 			}
 			
@@ -42,27 +44,36 @@
 				
 				chatField.text = "";
 				//add elements
-				
 				if(model && model.chat){
-					for each(var chatXML:XML in model.chat.chat){
+
+					for each(var chatXML:XML in model.chat){
 						var line:String = new String;
-						line = chatXML.@Username + ": " + chatXML.@Text + '\n';
-						if(chatXML.@username == FlexGlobals.topLevelApplication.loginWindow.usernameHolder){
-							//Plan on changing the color if it is the user who made the comment... Not sure how...
-						}
+						line = chatXML.@username + ": " + chatXML.@text + '\n';
+//						if(chatXML.@username == FlexGlobals.topLevelApplication.loginWindow.usernameHolder){
+//						}
 						chatField.text+=line;
 						
 					}
 				} else {
-					chatField.text = time.toString(10);
+					chatField.text = "Loading";
 				}
 			}
 			
+			/**
+			 * When I am done this is going to submit a user's input text to the db and refresh his/her text window.
+			 * Could just add text to the window on the fly and then repopulate the window in the 5 sec db call.
+			 * Just some ideas. 
+			 */
 			private function sendButton_onClick(event:Event):void{
-				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();
+				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();	
+				chatField.text = chatTextEntry.text;
+				pmodel.pushChat(chatTextEntry.text);
 				
 			}
 			
+			/**
+			 * Clears the text that the user has input into the text box. More efficient for the user than highlighting and removing
+			 */
 			private function clearButton_OnClick(event:Event):void{
 				chatTextEntry.text = "";
 			}

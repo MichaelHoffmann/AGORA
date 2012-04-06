@@ -117,8 +117,8 @@ package Controller
 			chatM.requestChat();	
 		}
 		protected function onChatFetched(event:AGORAEvent):void{
-			menu.chat.chatField.invalidateProperties();
-			menu.chat.chatField.invalidateDisplayList();
+			menu.chat.invalidateProperties();
+			menu.chat.invalidateDisplayList();
 		}
 		//------------------Fetch Project List----------------------------//
 		public function fetchDataProjectList():void{
@@ -213,13 +213,11 @@ package Controller
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
-			Alert.show("Before");
 			fetchDataMapList();
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				fetchDataMyMaps();
 			}
 			fetchDataProjectList();
-			Alert.show("After");
 			fetchDataChat();
 		}
 		

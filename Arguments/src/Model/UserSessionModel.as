@@ -74,6 +74,8 @@ package Model
 			return _uid;
 		}
 		
+
+		
 		public function set uid(value:int):void{
 			if(value != _uid){
 				_uid = value;
@@ -115,7 +117,13 @@ package Model
 			chatService.send({username: chatData.username, text: chatData.textMessage, map_id: chatData.map_type, time: chatData.time});
 		}
 		
-		
+		public function pull_chat(chatData:ChatDataVO):void{
+			var chatService:HTTPService = new HTTPService;
+			chatService.url = AGORAParameters.getInstance().chatPullURL;
+			chatService.addEventListener(ResultEvent.RESULT, onChatServiceResult);
+			chatService.addEventListener(FaultEvent.FAULT, onChatServiceFault);
+			chatService.send({username: chatData.username, text: chatData.textMessage, time: chatData.time, map_id: chatData.map_type});
+		}
 		
 		protected function onChatServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);

@@ -28,6 +28,7 @@ package Model
 		public var myProjectsModel:ProjectsModel;
 		public var categoryModel:CategoryModel;
 		public var chatModel:ChatModel;
+		public var pushChatModel:PushChatModel;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -47,6 +48,7 @@ package Model
 			myProjectsModel = new ProjectsModel;
 			categoryModel= new CategoryModel;
 			chatModel = new ChatModel;
+			pushChatModel = new PushChatModel;
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';
