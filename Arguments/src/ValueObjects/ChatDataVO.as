@@ -6,7 +6,7 @@ package ValueObjects
 			public var username:String;
 			public var textMessage:String;
 			public var time:Number;
-			public var map_type:int;
+			public var map_name:String;
 		
 		public function ChatDataVO()
 		{

@@ -10,6 +10,7 @@ package Controller
 	import Model.ProjectListModel;
 	import Model.UserSessionModel;
 	
+	import ValueObjects.ChatDataVO;
 	import ValueObjects.UserDataVO;
 	
 	import classes.Language;
@@ -114,7 +115,12 @@ package Controller
 		//------------------Fetch Chat--------------------------------//
 		public function fetchDataChat():void{
 			var chatM:ChatModel = model.chatModel;
-			chatM.requestChat();	
+			var chatdatavo:ChatDataVO;
+			chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
+			chatdatavo.textMessage = "";
+			chatdatavo.time = 99999999;
+			chatdatavo.username = AGORAModel.getInstance().userSessionModel.username;
+			chatM.requestChat(chatdatavo);	
 		}
 		protected function onChatFetched(event:AGORAEvent):void{
 			menu.chat.invalidateProperties();

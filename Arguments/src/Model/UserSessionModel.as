@@ -114,7 +114,7 @@ package Model
 			chatService.url = AGORAParameters.getInstance().chatPushURL;
 			chatService.addEventListener(ResultEvent.RESULT, onChatServiceResult);
 			chatService.addEventListener(FaultEvent.FAULT, onChatServiceFault);
-			chatService.send({username: chatData.username, text: chatData.textMessage, map_id: chatData.map_type, time: chatData.time});
+			chatService.send({username: chatData.username, text: chatData.textMessage, map_name: chatData.map_name, time: chatData.time});
 		}
 		
 		public function pull_chat(chatData:ChatDataVO):void{
@@ -122,7 +122,7 @@ package Model
 			chatService.url = AGORAParameters.getInstance().chatPullURL;
 			chatService.addEventListener(ResultEvent.RESULT, onChatServiceResult);
 			chatService.addEventListener(FaultEvent.FAULT, onChatServiceFault);
-			chatService.send({username: chatData.username, text: chatData.textMessage, time: chatData.time, map_id: chatData.map_type});
+			chatService.send({username: chatData.username, text: chatData.textMessage, map_name: chatData.map_name});
 		}
 		
 		protected function onChatServiceResult(event:ResultEvent):void{

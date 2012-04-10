@@ -31,7 +31,7 @@ package Model
 		public function pushChat(text:String):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			var chatdatavo:ChatDataVO = new ChatDataVO;
-			chatdatavo.map_type = 0;
+			chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
 			chatdatavo.textMessage = text;
 			chatdatavo.time = 99999999;
 			chatdatavo.username = userSessionModel.username;

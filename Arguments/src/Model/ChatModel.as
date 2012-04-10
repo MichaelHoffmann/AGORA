@@ -3,8 +3,10 @@ package Model
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
+	import ValueObjects.ChatDataVO;
 	
 	import flash.events.EventDispatcher;
+	
 	import mx.controls.Alert;
 	import mx.controls.List;
 	import mx.core.FlexGlobals;
@@ -28,9 +30,9 @@ package Model
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
-		public function requestChat():void{
+		public function requestChat(chatDataVO:ChatDataVO):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			request.send({username: userSessionModel.username, time: 1,  map_id: 0});
+			request.send({username: chatDataVO.username, time: chatDataVO.time,  map_name: chatDataVO.map_name});
 		}
 		
 		protected function onChatFetched(event:ResultEvent):void{
