@@ -87,7 +87,6 @@
 											  skinClass="spark.skins.spark.SkinnableContainerSkin"
 											  title="category" verticalCenter="0">	
 					</components:CategoryPanel>
-					
 				</s:Group>
 		</s:NavigatorContent>
 		

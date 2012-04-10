@@ -48,7 +48,9 @@ package components
 				categoryTiles = new TileGroup;
 				categoryTiles.horizontalGap = 20;
 				categoryTiles.verticalGap = 20;
-				categoryTiles.requestedColumnCount = 3;				
+				categoryTiles.requestedColumnCount = 3;
+				categoryTiles.clipAndEnableScrolling = true;
+				
 				scroller.viewport = categoryTiles;
 			}
 						

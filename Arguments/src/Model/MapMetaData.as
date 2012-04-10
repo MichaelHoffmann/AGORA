@@ -4,6 +4,7 @@ package Model
 	{
 		public var mapID:Number;
 		public var mapName:String;
+		public var mapCreator:String;
 		
 		public function MapMetaData()
 		{

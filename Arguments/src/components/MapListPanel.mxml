@@ -61,6 +61,7 @@
 						mapMetaData = new MapMetaData;
 						mapMetaData.mapID = int(map.attribute("ID")); 
 						mapMetaData.mapName = map.attribute("title"); 
+						//mapMetaData.mapCreator = map.attribute("creator");
 						mapMetaDataVector.push(mapMetaData);						
 					}
 					
@@ -71,6 +72,7 @@
 						mapButton.name = mapMetaData.mapID.toString();
 						mapButton.addEventListener(MouseEvent.CLICK, onMapObjectClicked);
 						mapButton.label = mapMetaData.mapName;
+						//mapButton.toolTip = mapMetaData.mapCreator;
 						mapsGroup.addElement(mapButton);
 					}
 				}
