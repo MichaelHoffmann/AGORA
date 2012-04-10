@@ -5,16 +5,16 @@ package components
 	
 	import classes.Language;
 	
+	import flash.events.Event;
+	
 	import mx.controls.Button;
 	import mx.controls.Label;
 	
-	//import org.osmf.events.GatewayChangeEvent;
-	
 	import spark.components.Panel;
 	import spark.components.Scroller;
-	import spark.components.VGroup;
 	import spark.components.TileGroup;
-	
+	import spark.components.VGroup;
+	import mx.controls.Alert;
 	public class CategoryPanel extends Panel
 	{
 		private var model:CategoryModel;
@@ -73,8 +73,9 @@ package components
 					button.label = categoryXML.@Name;
 					button.width = 150;
 					button.height = 80;
+					button.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();model.requestChildCategories(button.label);Alert.show(button.name)}, false, 1,false);
+
 					categoryTiles.addElement(button);
-				
 				}
 			}
 		}

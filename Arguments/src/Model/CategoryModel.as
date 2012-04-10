@@ -46,7 +46,7 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 		
-		protected function requestChildCategories(categoryName:String):void{
+		public function requestChildCategories(categoryName:String):void{
 			requestChildren.send({parent_category: categoryName});
 		}
 		
