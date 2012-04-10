@@ -16,7 +16,7 @@ package Model
 	{
 		public var category:XML;
 		private var request: HTTPService;
-
+		private var requestChildren: HTTPService;
 		public function CategoryModel()
 		{
 
@@ -25,6 +25,11 @@ package Model
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onCategoryFetched);
 			request.addEventListener(FaultEvent.FAULT, onFault);
+			requestChildren = new HTTPService;
+			requestChildren.url = AGORAParameters.getInstance().childCategoryURL;
+			requestChildren.resultFormat="e4x";
+			requestChildren.addEventListener(ResultEvent.RESULT, onCategoryFetched);
+			requestChildren.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
 		public function requestCategory():void{
@@ -41,6 +46,9 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 		
+		protected function requestChildCategories(categoryName:String):void{
+			requestChildren.send({parent_category: categoryName});
+		}
 		
 	}
 }// ActionScript file

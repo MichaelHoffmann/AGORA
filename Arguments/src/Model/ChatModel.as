@@ -30,9 +30,14 @@ package Model
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
-		public function requestChat(chatDataVO:ChatDataVO):void{
+		public function requestChat():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			request.send({username: chatDataVO.username, time: chatDataVO.time,  map_name: chatDataVO.map_name});
+			var chatdatavo:ChatDataVO;
+			chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
+			chatdatavo.textMessage = "";
+			chatdatavo.time = 99999999;
+			chatdatavo.username = AGORAModel.getInstance().userSessionModel.username;
+			userSessionModel.pull_chat(chatdatavo);
 		}
 		
 		protected function onChatFetched(event:ResultEvent):void{

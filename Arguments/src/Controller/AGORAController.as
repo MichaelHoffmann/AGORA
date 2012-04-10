@@ -25,6 +25,7 @@ package Controller
 	import flash.events.Event;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.CursorManager;
@@ -44,6 +45,8 @@ package Controller
 		private var userSession:UserSessionModel;
 		private var mapModel:AGORAMapModel;
 		private var model:AGORAModel;
+		
+		private var categoryChain:ArrayList;
 		
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
@@ -69,6 +72,8 @@ package Controller
 			map = FlexGlobals.topLevelApplication.map;
 			userSession = AGORAModel.getInstance().userSessionModel;
 			mapModel = AGORAModel.getInstance().agoraMapModel;
+			
+			categoryChain = new ArrayList();
 		}
 		
 		//----------------------Get Instance------------------------------//
@@ -112,15 +117,23 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 		}
+		
+		public function fetchDataChildCategory():void{
+			menu.categories.loadingDisplay.text = Language.lookup("Loading");
+			menu.categories.loadingDisplay.visible = true;
+			var categoryM:CategoryModel = model.categoryModel;
+			categoryM.requestCategory();	
+		}
+		protected function onChildCategoryFetched(event:AGORAEvent):void{
+			menu.categories.loadingDisplay.visible = false;
+			menu.categories.invalidateProperties();
+			menu.categories.invalidateDisplayList();
+		}
+		
 		//------------------Fetch Chat--------------------------------//
 		public function fetchDataChat():void{
 			var chatM:ChatModel = model.chatModel;
-			var chatdatavo:ChatDataVO;
-			chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
-			chatdatavo.textMessage = "";
-			chatdatavo.time = 99999999;
-			chatdatavo.username = AGORAModel.getInstance().userSessionModel.username;
-			chatM.requestChat(chatdatavo);	
+			chatM.requestChat();	
 		}
 		protected function onChatFetched(event:AGORAEvent):void{
 			menu.chat.invalidateProperties();
