@@ -5,6 +5,9 @@ package Model
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.ChatDataVO;
 	
+	import components.AGORAMenu;
+	import components.Map;
+	
 	import flash.events.EventDispatcher;
 	
 	import mx.controls.Alert;
@@ -14,7 +17,6 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
-	import components.AGORAMenu;
 	
 	public class ChatModel extends EventDispatcher
 	{
@@ -47,6 +49,8 @@ package Model
 		protected function onChatFetched(event:ResultEvent):void{
 			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateDisplayList();
+			FlexGlobals.topLevelApplication.map.chat.invalidateProperties();
+			FlexGlobals.topLevelApplication.map.chat.invalidateDisplayList();
 		}
 	
 		protected function onChatServiceResult(event:ResultEvent):void{

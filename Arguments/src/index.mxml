@@ -21,6 +21,8 @@
 	
 
 	<fx:Script>
+		
+
 		import components.Map;
 		import components.LoginWindow;
 		import Model.AGORAModel;
@@ -33,6 +35,7 @@
 		public var loginWindow:LoginWindow;
 		//This is a universal RegistrationPanel that can be accessed by FlexGlobals.topLevelApplication.registrationWindow
 		public var registrationWindow:RegisterPanel;
+
 		
 		public var switchView:Boolean = true;
 		

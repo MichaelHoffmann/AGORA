@@ -139,7 +139,7 @@
 			</s:Button >
 			
 			<s:Button id="createProjectBtn" 
-					  label="{Language.lookup(&quot;NewProject&quot;)}" click="registerBtn_clickHandler(event)">
+					  label="{Language.lookup(&quot;NewProject&quot;)}" click="projectsButton_OnClick(event)">
 			</s:Button>
 			
 			<s:Button id="signInBtn"

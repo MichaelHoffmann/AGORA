@@ -47,6 +47,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<components:LAMWorld id="lamWorld" visible="false">
 		</components:LAMWorld>
 	</s:Group>
+	<components:ChatWindow name="chat" id="chat" x="1075" y="168" width="395" height="376">
+		
+	</components:ChatWindow>
 	
 	
 	<fx:Script>

@@ -139,6 +139,8 @@ package Controller
 		protected function onChatFetched(event:AGORAEvent):void{
 			menu.chat.invalidateProperties();
 			menu.chat.invalidateDisplayList();
+			FlexGlobals.topLevelApplication.Map.chat.invalidateProperties();
+			FlexGlobals.topLevelApplication.Map.chat.invalidateDisplayList();
 		}
 		//------------------Fetch Project List----------------------------//
 		public function fetchDataProjectList():void{
@@ -169,10 +171,7 @@ package Controller
 			}
 		}
 		
-		/**
-		 * This function is causing a hang. The first three lines never finish. Each of them separately
-		 * cause individual hangs in the code. 
-		 */
+
 		protected function onMyMapsListFetched(event:AGORAEvent):void{
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapListXML = event.xmlData;
