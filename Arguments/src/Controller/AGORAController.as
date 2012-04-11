@@ -118,11 +118,11 @@ package Controller
 			menu.categories.invalidateDisplayList();
 		}
 		
-		public function fetchDataChildCategory():void{
+		public function fetchDataChildCategory(parentCategory:String):void{
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
 			var categoryM:CategoryModel = model.categoryModel;
-			categoryM.requestCategory();	
+			categoryM.requestChildCategories(parentCategory);	
 		}
 		protected function onChildCategoryFetched(event:AGORAEvent):void{
 			menu.categories.loadingDisplay.visible = false;

@@ -47,7 +47,7 @@ package Model
 		}
 		
 		public function requestChildCategories(categoryName:String):void{
-			requestChildren.send({parent_category: categoryName});
+			requestChildren.send({parentCategory: "'" + categoryName + "'"});
 		}
 		
 	}

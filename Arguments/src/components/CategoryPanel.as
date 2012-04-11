@@ -15,6 +15,7 @@ package components
 	import spark.components.TileGroup;
 	import spark.components.VGroup;
 	import mx.controls.Alert;
+	import Controller.AGORAController;
 	public class CategoryPanel extends Panel
 	{
 		private var model:CategoryModel;
@@ -22,6 +23,7 @@ package components
 		public var scroller:Scroller;
 		public var vContentGroup:VGroup; 
 		public var categoryTiles:TileGroup;
+		
 		
 		public function CategoryPanel()
 		{
@@ -73,7 +75,7 @@ package components
 					button.label = categoryXML.@Name;
 					button.width = 150;
 					button.height = 80;
-					button.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();model.requestChildCategories(button.label);Alert.show(button.name)}, false, 1,false);
+					button.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();AGORAController.getInstance().fetchDataChildCategory(e.target.label);}, false, 1,false);
 
 					categoryTiles.addElement(button);
 				}
