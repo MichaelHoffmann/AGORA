@@ -110,7 +110,8 @@ package Controller
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
 			var categoryM:CategoryModel = model.categoryModel;
-			categoryM.requestCategory();	
+			categoryM.requestCategory();
+			
 		}
 		protected function onCategoryFetched(event:AGORAEvent):void{
 			menu.categories.loadingDisplay.visible = false;
@@ -122,7 +123,7 @@ package Controller
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
 			var categoryM:CategoryModel = model.categoryModel;
-			categoryM.requestChildCategories(parentCategory);	
+			categoryM.requestChildCategories(parentCategory);
 		}
 		protected function onChildCategoryFetched(event:AGORAEvent):void{
 			menu.categories.loadingDisplay.visible = false;

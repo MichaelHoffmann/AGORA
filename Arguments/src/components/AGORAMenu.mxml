@@ -155,5 +155,4 @@
 	<!--Adds the chat window to the menu-->
 	<components:ChatWindow name="chat" id="chat" x="1075" y="168" width="395" height="376">
 	</components:ChatWindow>
-	<s:Label x="1088" y="148" text="Chat with other users:"/>
 </s:Group>

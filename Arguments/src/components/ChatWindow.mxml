@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This mxml file is the GUI for the chat window. It includes a label that displays: "Chat with other users:"
+a text area that houses the ongoing chat, a text input box that allows the user to input their chat, and three
+buttons that hide the chat, send the message currently in the chat box, and clear the currently input message-->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
@@ -7,11 +10,15 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:TextArea id="chatField" name="chatField" x="10" y="0" width="380" editable="false" enabled="true"/>
-	<s:TextInput id="chatTextEntry" x="10" y="159" width="380" height="88" enabled="true"/>
-	<s:Button id="send" x="242" y="269" label="Send" click="sendButton_onClick(event)"/> 
-	<s:Button id="clear" x="320" y="269" label="Clear"  click="clearButton_OnClick(event)"/>
+	<s:TextInput id="chatTextEntry" x="110" y="159" width="280" enabled="true"/>
+	<s:Button id="send" x="246" y="185" label="Send" click="sendButton_onClick(event)"/> 
+	<s:Button id="hide" x="162" y="185" label="Hide Chat" click="hideButton_onClick(event)"/>
+	<s:Button id="clear" x="320" y="185" label="Clear"  click="clearButton_onClick(event)"/>
+	<s:Label id="mainLabel" x="10" y="-20" text="Chat with other users:"/>
+	<s:Label id="chatLabel" x="10" y="164" height="26" text="Type message:"/>
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
 			import Controller.UserSessionController;
 			
 			import Model.AGORAModel;
@@ -36,8 +43,8 @@
 			}
 			
 			/**
-			 * This is activated whenever we return from the PHP call. It populates the chat window with all the chat
-			 * information that has occurred from the moment the user joined until the user quits. 
+			 * This is activated whenever we return from the PHP call. It populates the chat window with all of the
+			 * chat provided in the XML from the PHP return in the form Username: Text. 
 			 */
 			override protected function commitProperties():void{
 				super.commitProperties();
@@ -45,13 +52,15 @@
 				chatField.text = "";
 				//add elements
 				if(model && model.chat){
-
-					for each(var chatXML:XML in model.chat){
+					for each(var chatXML:XML in model.chat.chat){
 						var line:String = new String;
+						if(chatXML.@username == null) chatXML.@username = "Guest";
 						line = chatXML.@username + ": " + chatXML.@text + '\n';
-//						if(chatXML.@username == FlexGlobals.topLevelApplication.loginWindow.usernameHolder){
-//						}
-						chatField.text+=line;
+						//Changes the color of the text based on the username. Thinking red for you and blue for all else
+						if(chatXML.@username == AGORAModel.getInstance().userSessionModel.username){						
+							//some form of TextFormatter object to change color of user's text... 
+						}
+						if(line.charAt(0) != ":")	chatField.text+=line; //For some reason, the DB's return XML kept picking up a blank line. This stops it from printing...
 						
 					}
 				} else {
@@ -66,16 +75,44 @@
 			 */
 			private function sendButton_onClick(event:Event):void{
 				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();	
-				chatField.text = chatTextEntry.text;
-				pmodel.pushChat(chatTextEntry.text);
-				
+				if(chatTextEntry.text != ""){
+					chatField.text += AGORAModel.getInstance().userSessionModel.username + ": " + chatTextEntry.text;
+					pmodel.pushChat(chatTextEntry.text);
+					AGORAController.getInstance().fetchDataChat();
+				}
+				chatTextEntry.text = "";
+
 			}
 			
 			/**
 			 * Clears the text that the user has input into the text box. More efficient for the user than highlighting and removing
 			 */
-			private function clearButton_OnClick(event:Event):void{
+			private function clearButton_onClick(event:Event):void{
 				chatTextEntry.text = "";
+			}
+			
+			/** 
+			 * This is the action that is taken when the hide chat button is clicked. Essentially it just sets everything to invisiblie except itself
+			 * so that you can then click it again and unhide everything! 
+			 */
+			private function hideButton_onClick(event:Event):void{
+				if(this.send.visible){
+					this.send.visible = false;
+					this.clear.visible = false;
+					this.chatTextEntry.visible = false;
+					this.chatField.visible = false;
+					this.mainLabel.visible = false;
+					this.chatLabel.visible = false;
+					this.hide.label = "Unhide Chat";
+				} else {
+					this.send.visible = true;
+					this.clear.visible = true;
+					this.chatTextEntry.visible = true;
+					this.chatField.visible = true;
+					this.mainLabel.visible = true;
+					this.chatLabel.visible = true;
+					this.hide.label = "Hide Chat";
+				}
 			}
 		]]>
 	</fx:Script>

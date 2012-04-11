@@ -40,9 +40,10 @@ package Model
 		private var _valueObject:UserDataVO;
 		private static var _salt:String = "AGORA";
 		
-		
+
 		public function UserSessionModel(target:IEventDispatcher=null)
 		{
+
 			_valueObject = new UserDataVO;
 			super(target);
 		}
@@ -114,26 +115,30 @@ package Model
 			chatService.url = AGORAParameters.getInstance().chatPushURL;
 			chatService.addEventListener(ResultEvent.RESULT, onChatServiceResult);
 			chatService.addEventListener(FaultEvent.FAULT, onChatServiceFault);
-			chatService.send({username: chatData.username, text: chatData.textMessage, map_name: chatData.map_name, time: chatData.time});
+			chatService.send({username: "'" + chatData.username + "'", text: "'" + chatData.textMessage + "'", map_name: "'" + chatData.map_name + "'"});
 		}
 		
-		public function pull_chat(chatData:ChatDataVO):void{
-			var chatService:HTTPService = new HTTPService;
-			chatService.url = AGORAParameters.getInstance().chatPullURL;
-			chatService.addEventListener(ResultEvent.RESULT, onChatServiceResult);
-			chatService.addEventListener(FaultEvent.FAULT, onChatServiceFault);
-			chatService.send({username: chatData.username, text: chatData.textMessage, map_name: chatData.map_name});
-		}
-		
-		protected function onChatServiceResult(event:ResultEvent):void{
+		protected function onChatServiceResult(event:ResultEvent):void{			
 			event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
+			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_FETCHED));
 		}
 		
 		protected function onChatServiceFault(event:FaultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
 			FlexGlobals.topLevelApplication.agoraMenu.chat.chatField.text = "Network Error While Loading Chat Information";
+			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
+			
+		}
+		
+
+		
+
+		
+		protected function onChatFetched(event:AGORAEvent):void{
+			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateProperties();
+			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateDisplayList();
 		}
 		
 		/**

@@ -14,39 +14,55 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
+	import components.AGORAMenu;
 	
 	public class ChatModel extends EventDispatcher
 	{
 		
 		public var chat:XML;
 		private var request: HTTPService;
+	
 		
 		public function ChatModel()
 		{	
 			request = new HTTPService;
 			request.url = AGORAParameters.getInstance().chatPullURL;
 			request.resultFormat="e4x";
-			request.addEventListener(ResultEvent.RESULT, onChatFetched);
-			request.addEventListener(FaultEvent.FAULT, onFault);
+			request.addEventListener(ResultEvent.RESULT, onChatServiceResult);
+			request.addEventListener(FaultEvent.FAULT, onChatServiceFault);
+			addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
+
 		}
 		
 		public function requestChat():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			var chatdatavo:ChatDataVO;
-			chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
+			var chatdatavo:ChatDataVO = new ChatDataVO();
+			chatdatavo.map_name = chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
 			chatdatavo.textMessage = "";
 			chatdatavo.time = 99999999;
 			chatdatavo.username = AGORAModel.getInstance().userSessionModel.username;
-			userSessionModel.pull_chat(chatdatavo);
+			request.send({map_name: "'" + chatdatavo.map_name + "'"});
 		}
 		
 		protected function onChatFetched(event:ResultEvent):void{
+			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateProperties();
+			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateDisplayList();
+		}
+	
+		protected function onChatServiceResult(event:ResultEvent):void{
 			chat = event.result as XML;
-			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_FETCHED));
+			
+			//event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
+			//event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
+			onChatFetched(event);
 		}
 		
-		protected function onFault(event:FaultEvent):void{
+		protected function onChatServiceFault(event:FaultEvent):void{
+			//event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
+			//event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
+			FlexGlobals.topLevelApplication.agoraMenu.chat.chatField.text = "Network Error While Loading Chat Information";
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
+
 		}
 		
 	}
