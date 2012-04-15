@@ -82,9 +82,6 @@
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/>
-			<s:Button id="catBack" x="38" chromeColor="#FFFFFF"
-					  icon="@Embed(source='components/AGORAArrow.png')" skinClass="Skins.sampleSkin"
-					  verticalCenter="0"/>
 				<s:Group horizontalCenter="-3" verticalCenter="-25">
 					<components:CategoryPanel id="categories" width="482" height="309"
 											  horizontalCenter="0"
