@@ -22,19 +22,22 @@
 
 	<fx:Script>
 		
-
+		import components.MapName;
 		import components.Map;
 		import components.LoginWindow;
 		import Model.AGORAModel;
 		import components.RegisterPanel;
 		import mx.events.FlexEvent;
 		import Controller.LayoutController;
+		
 		//This is a universal AGORAModel that can be accessed by FlexGlobals.topLevelApplication.model
 		private var model:AGORAModel;
 		//This is a universal LoginWindow that can be accessed by FlexGlobals.topLevelApplication.loginWindow
 		public var loginWindow:LoginWindow;
 		//This is a universal RegistrationPanel that can be accessed by FlexGlobals.topLevelApplication.registrationWindow
 		public var registrationWindow:RegisterPanel;
+		//Universally accessible mapName box
+		public var mapNameBox:MapName;
 
 		
 		public var switchView:Boolean = true;

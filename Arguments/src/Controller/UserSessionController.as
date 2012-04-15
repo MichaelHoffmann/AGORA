@@ -69,7 +69,10 @@ package Controller
 		public function signInAsGuest():void{
 			FlexGlobals.topLevelApplication.agoraMain.setVisible(false,true);
 			FlexGlobals.topLevelApplication.agoraMenu.setVisible(true,true);
-//			mainMenu.visible=true, guestWelcome.visible=false, mainWelcome.visible=false
+			var userDataVO:UserDataVO = new UserDataVO;
+			userDataVO.password = "guest";
+			userDataVO.userName = "Guest";
+			login(userDataVO);
 		}
 		//--------------Login Function--------------------------//
 		public function login(userDataVO:UserDataVO):void{

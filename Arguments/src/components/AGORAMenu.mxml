@@ -11,6 +11,7 @@
 			import Controller.UserSessionController;
 			
 			import Model.AGORAModel;
+			import Model.UserSessionModel;
 			
 			import classes.Language;
 			
@@ -41,6 +42,7 @@
 			
 			protected function createMapBtn_clickHandler(event:MouseEvent):void
 			{
+				
 				AGORAController.getInstance().displayMapInfoBox();
 			}
 			
