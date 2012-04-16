@@ -47,6 +47,9 @@ package components
 	import spark.components.HGroup;
 	import spark.components.VGroup;
 	
+	import Model.AGORAModel;
+	import mx.controls.Alert;
+	
 	public class MenuPanel extends GridPanel
 	{
 		private var _model:ArgumentTypeModel;
@@ -131,10 +134,18 @@ package components
 		
 		//---------- Event Handlers ---------------------------------//
 		protected function onAddReasonClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().addReasonToExistingArgument(model);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				ArgumentController.getInstance().addReasonToExistingArgument(model);
+			} else { 
+				Alert.show("Guests to AGORA cannot edit maps");
+			}
 		}
 		protected function onChangeSchemeClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().initiateArgumentConstruction(model);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				ArgumentController.getInstance().initiateArgumentConstruction(model);
+			} else { 
+				Alert.show("Guests to AGORA cannot edit maps");
+			}
 		}
 		
 		//------------------- Framework methods---------------------//

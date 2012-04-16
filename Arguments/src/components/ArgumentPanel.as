@@ -30,7 +30,6 @@ package components
 	
 	import Model.AGORAModel;
 	import Model.SimpleStatementModel;
-
 	import Model.StatementModel;
 	
 	import ValueObjects.AGORAParameters;
@@ -62,8 +61,6 @@ package components
 	import mx.events.MenuEvent;
 	import mx.managers.DragManager;
 	import mx.skins.Border;
-	
-	//import org.osmf.events.GatewayChangeEvent;
 	
 	import spark.components.Button;
 	import spark.components.Group;
@@ -337,53 +334,81 @@ package components
 		}
 		
 		protected function onDeleteBtnClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().deleteNodes(this);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				ArgumentController.getInstance().deleteNodes(this);
+			} else {
+				Alert.show("Guests to AGORA cannot edit maps");
+			}
 		}
 		
 		protected function onStmtTypeClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().changeType(model.ID);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				ArgumentController.getInstance().changeType(model.ID);
+			} else {
+				Alert.show("Guests to AGORA cannot edit maps");
+			}
 		}
 		
 
 		protected function onAddBtnClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().showAddMenu(this);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				ArgumentController.getInstance().showAddMenu(this);
+			} else {
+				Alert.show("Guests to AGORA cannot edit maps");
+			}
 		}
 		
 		protected function lblClicked(event:MouseEvent):void
 		{
-			ViewController.getInstance().changeToEdit(this);	
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				ViewController.getInstance().changeToEdit(this);	
+			} else {
+				Alert.show("Guests to AGORA cannot edit maps");
+			}
 		}
 		
 		protected function doneBtnClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().saveText(model);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				ArgumentController.getInstance().saveText(model);
+			} else {
+				Alert.show("Guests to AGORA cannot edit maps");
+			}
 		}
 		
 		protected function keyEntered(event: KeyboardEvent):void
 		{
-			if(event.keyCode == Keyboard.ENTER)	
-			{				
-				if(state == EDIT){
-					ArgumentController.getInstance().saveText(model);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				if(event.keyCode == Keyboard.ENTER)	
+				{				
+					if(state == EDIT){
+						ArgumentController.getInstance().saveText(model);
+					}
 				}
+			} else {
+				Alert.show("Guests to AGORA cannot edit maps");
 			}
 		}
 		
 		public function beginDrag(mouseEvent: MouseEvent ):void
 		{
-			try{
-				var dPInitiator:ArgumentPanel = this;
-				var ds:DragSource = new DragSource();
-				var tmpx:int = int(dPInitiator.mouseX);
-				var tmpy:int = int(dPInitiator.mouseY);
-				ds.addData(tmpx,"x");
-				ds.addData(tmpy,"y");
-				ds.addData(dPInitiator.model.xgrid,"gx");
-				ds.addData(dPInitiator.model.ygrid,"gy");
-				DragManager.doDrag(dPInitiator,ds,mouseEvent,null);
-			}
-			catch(error:Error)
-			{
-				Alert.show(error.toString());
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				try{
+					var dPInitiator:ArgumentPanel = this;
+					var ds:DragSource = new DragSource();
+					var tmpx:int = int(dPInitiator.mouseX);
+					var tmpy:int = int(dPInitiator.mouseY);
+					ds.addData(tmpx,"x");
+					ds.addData(tmpy,"y");
+					ds.addData(dPInitiator.model.xgrid,"gx");
+					ds.addData(dPInitiator.model.ygrid,"gy");
+					DragManager.doDrag(dPInitiator,ds,mouseEvent,null);
+				}
+				catch(error:Error)
+				{
+					Alert.show(error.toString());
+				}
+			} else {
+				Alert.show("Guests to AGORA cannot edit maps");
 			}
 		}
 		
@@ -397,10 +422,14 @@ package components
 		}
 		
 		protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
-			if(menuEvent.label == Language.lookup("AddReason")){
-				ArgumentController.getInstance().addReason(model.argumentTypeModel);
-			}else{
-				ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				if(menuEvent.label == Language.lookup("AddReason")){
+					ArgumentController.getInstance().addReason(model.argumentTypeModel);
+				}else{
+					ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+				}
+			} else {
+				Alert.show("Guests cannot edit maps");
 			}
 		}
 		
@@ -454,12 +483,15 @@ package components
 		//-------------------- Other Public Methods ----------------------------//
 		public function enableDelete():void{
 			//remove button
-			if(AGORAModel.getInstance().leafDelete){
-				
-				if(model.supportingArguments.length != 0 || ( model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length != 0)){
-					if(deleteBtn){
-						deleteBtn.enabled = false;
-					}			
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+
+				if(AGORAModel.getInstance().leafDelete){
+					
+					if(model.supportingArguments.length != 0 || ( model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length != 0)){
+						if(deleteBtn){
+							deleteBtn.enabled = false;
+						}			
+					}
 				}
 			}
 		}
@@ -482,10 +514,14 @@ package components
 		}
 		
 		public function addMenuClicked(event:MenuEvent):void{
-			if(event.label == agoraLabels.ADD_SUPPORTING_STATEMENT){
-				ArgumentController.getInstance().addSupportingArgument(model);
-			}else if(event.label == agoraLabels.ADD_OBJECTION){
-				ArgumentController.getInstance().addAnObjection(model);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				if(event.label == agoraLabels.ADD_SUPPORTING_STATEMENT){
+					ArgumentController.getInstance().addSupportingArgument(model);
+				}else if(event.label == agoraLabels.ADD_OBJECTION){
+					ArgumentController.getInstance().addAnObjection(model);
+				}
+			} else { 
+				Alert.show("Guests to AGORA cannot edit maps.");
 			}
 		}
 		

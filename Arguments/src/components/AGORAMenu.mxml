@@ -42,8 +42,12 @@
 			
 			protected function createMapBtn_clickHandler(event:MouseEvent):void
 			{
-				
-				AGORAController.getInstance().displayMapInfoBox();
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show("You must log in with a non guest account before creating a map");
+				} else {
+					AGORAController.getInstance().displayMapInfoBox();
+				}
 			}
 			
 			
