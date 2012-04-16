@@ -2,6 +2,8 @@ package components
 {
 	import Controller.AGORAController;
 	
+	import Model.AGORAModel;
+	
 	import ValueObjects.AGORAParameters;
 	
 	import classes.Language;

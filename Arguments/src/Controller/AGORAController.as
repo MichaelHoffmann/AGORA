@@ -282,6 +282,8 @@ package Controller
 			map.agoraMap.helpText.visible = false;
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
+			AGORAController.getInstance().mapModel.name = "null";
+			AGORAController.getInstance().fetchDataChat();
 			
 			//timers
 			map.agoraMap.timer.reset();

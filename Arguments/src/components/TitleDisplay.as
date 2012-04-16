@@ -15,6 +15,8 @@ package components
 	import mx.controls.Text;
 	import mx.controls.TextArea;
 	import mx.core.UIComponent;
+	import mx.controls.Alert;
+	
 	
 	public class TitleDisplay extends UIComponent
 	{
@@ -111,13 +113,18 @@ package components
 		}
 		
 		protected function toEdit(event:MouseEvent):void{
-			if(event.target != doneBtn){
-				textField.text = title;
-				textField.selectionBeginIndex = 0;
-				textField.selectionEndIndex = textField.text.length;
-				state = EDIT;
-				//stage.focus = textField;
-				focusManager.setFocus(textField);
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				if(event.target != doneBtn){
+					textField.text = title;
+					textField.selectionBeginIndex = 0;
+					textField.selectionEndIndex = textField.text.length;
+					state = EDIT;
+					//stage.focus = textField;
+					focusManager.setFocus(textField);
+				}
+			
+			} else { 
+				Alert.show("Guests to AGORA cannot edit maps.");
 			}
 		}
 		protected function onEnter(event:KeyboardEvent):void{
