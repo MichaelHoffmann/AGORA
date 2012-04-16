@@ -32,13 +32,13 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.controls.Label;
-			import spark.components.Label;
 			import mx.controls.Text;
 			import mx.core.FlexGlobals;
 			import mx.managers.CursorManager;
 			
 			import spark.components.Button;
 			import spark.components.Group;
+			import spark.components.Label;
 			
 			//for future
 			[Bindable]
@@ -61,6 +61,7 @@
 			
 			[SkinPart(required="true")]
 			public var loadingDisplay:mx.controls.Label;
+			
 			
 			public static const MARK_ALL:String = Language.lookup("SelectAll");
 			public static const UNMARK_ALL:String = Language.lookup("SelectNone");
@@ -122,6 +123,7 @@
 						myMapName.mapName = mapMetaData.mapName;
 						mapsGroup.addElement(myMapName);	
 					}
+					
 					selectBtn.enabled = (mapsGroup.numElements == 0)? false:true;
 					deleteBtn.enabled = (mapsGroup.numElements == 0)? false:true;
 				}

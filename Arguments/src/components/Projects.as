@@ -55,6 +55,7 @@ package components
 			}
 			if(!signIn){
 				signIn = new Label;
+				signIn.horizontalCenter = 0;
 				signIn.setStyle("textDecoration","underline");
 				signIn.text = Language.lookup("SignInToViewProj");
 				signIn.addEventListener(MouseEvent.CLICK, showSignInBox);

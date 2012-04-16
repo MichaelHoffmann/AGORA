@@ -4,18 +4,19 @@ a text area that houses the ongoing chat, a text input box that allows the user 
 buttons that hide the chat, send the message currently in the chat box, and clear the currently input message-->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="250" height="338"
 		 creationComplete="init()">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:TextArea id="chatField" name="chatField" x="10" y="0" width="380" editable="false" enabled="true"/>
-	<s:TextInput id="chatTextEntry" x="110" y="159" width="280" enabled="true"/>
-	<s:Button id="send" x="246" y="185" label="Send" click="sendButton_onClick(event)"/> 
-	<s:Button id="hide" x="162" y="185" label="Hide Chat" click="hideButton_onClick(event)"/>
-	<s:Button id="clear" x="320" y="185" label="Clear"  click="clearButton_onClick(event)"/>
+	<s:TextArea id="chatField" x="10" y="0" width="229" height="265" editable="false" enabled="true"
+				name="chatField"/>
+	<s:TextInput id="chatTextEntry" x="103" y="273" width="137" enabled="true"/>
+	<s:Button id="send" x="94" y="303" label="Send" click="sendButton_onClick(event)"/> 
+	<s:Button id="hide" x="12" y="303" label="Hide Chat" click="hideButton_onClick(event)"/>
+	<s:Button id="clear" x="170" y="303" label="Clear"  click="clearButton_onClick(event)"/>
 	<s:Label id="mainLabel" x="10" y="-20" text="Chat with other users:"/>
-	<s:Label id="chatLabel" x="10" y="164" height="26" text="Type message:"/>
+	<s:Label id="chatLabel" x="11" y="277" height="26" text="Type message:"/>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
