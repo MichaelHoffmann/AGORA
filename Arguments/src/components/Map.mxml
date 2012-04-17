@@ -35,8 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</components:StatusBar>
 	
 	<s:Group id="theMap">
-		<s:Scroller id="agora" visible="false">	
-			<s:Group>
+		<s:Scroller >	
+			<s:Group id="agora" visible="false">
 				<mx:Canvas>
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
 					</components:AgoraMap>	
@@ -46,11 +46,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		
 		<components:LAMWorld id="lamWorld" visible="false">
 		</components:LAMWorld>
-	</s:Group>
-	<components:ChatWindow name="chat" id="chat" x="1075" y="168" width="395" height="376">
+	<components:ChatWindow name="chat" id="chat" y="168" width="395" height="376">
 		
 	</components:ChatWindow>
-	
+	</s:Group>
 	
 	<fx:Script>
 		<![CDATA[

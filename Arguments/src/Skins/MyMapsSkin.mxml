@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			 xmlns:s="library://ns.adobe.com/flex/spark" 
-			 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="400">
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009"
+			 xmlns:s="library://ns.adobe.com/flex/spark"
+			 xmlns:mx="library://ns.adobe.com/flex/mx"
+			 width="200" height="400"
+			 width.disabled="800" height.disabled="360"
+			 width.disabledWithControlBar="800" height.disabledWithControlBar="360"
+			 width.loggedIn="800" height.loggedIn="360"
+			 width.normal="800" height.normal="360"
+			 width.normalWithControlBar="800"
+			 width.notLoggedIn="800" height.notLoggedIn="360">
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
 			import Controller.UserSessionController;
 			
+			import Model.AGORAModel;
+			import Model.UserSessionModel;
+			
 			import classes.Language;
+			
+			import flash.system.Capabilities;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
 			
 			import mx.core.FlexGlobals;
 
@@ -14,6 +30,16 @@
 			{
 				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showSignInBox();
+			}
+			
+			protected function createMapBtn_clickHandler(event:MouseEvent):void
+			{
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show("You must log in with a non guest account before creating a map");
+				} else {
+					AGORAController.getInstance().displayMapInfoBox();
+				}
 			}
 		]]>
 	</fx:Script>
@@ -46,23 +72,52 @@
 				</s:layout>	
 			</s:Group>
 			<s:Group id="labelGroup" visible.loggedIn="false" visible.notLoggedIn= "true">
-				<s:Label id="userInfoTxt" x="28" y="118" horizontalCenter = "0" visible.loggedIn="false" visible.notLoggedIn="true"  click="userInfoTxt_clickHandler(event)" textDecoration="underline">
-					<s:text>{Language.lookup("SignInToViewMaps")}</s:text>
-				</s:Label>
-				
 			</s:Group>
+			<s:Label id="userInfoTxt" x="28" y="118" click="userInfoTxt_clickHandler(event)"
+					 textDecoration="underline"
+					 horizontalCenter.disabled="0"
+					 horizontalCenter.disabledWithControlBar="0"
+					 visible.loggedIn="false" horizontalCenter.loggedIn="0"
+					 x.normal="376" y.normal="118"
+					 horizontalCenter.normalWithControlBar="0"
+					 visible.notLoggedIn="true" horizontalCenter.notLoggedIn="0">
+				<s:text>{Language.lookup("SignInToViewMaps")}</s:text>
+			</s:Label>
 		</s:Group>
 	</s:Scroller>
 	
 	
-	<s:Group id="controlBarGroup" bottom="10" visible.loggedIn="true" visible.notLoggedIn="false">
+	<s:Group id="controlBarGroup" bottom="10"
+			 bottom.disabled="10" horizontalCenter.disabled="0" textAlign.disabled="center"
+			 bottom.disabledWithControlBar="10" horizontalCenter.disabledWithControlBar="0"
+			 textAlign.disabledWithControlBar="center"
+			 visible.loggedIn="true" bottom.loggedIn="10" horizontalCenter.loggedIn="0"
+			 textAlign.loggedIn="center"
+			 bottom.normal="10" horizontalCenter.normal="0" textAlign.normal="center"
+			 bottom.normalWithControlBar="10" horizontalCenter.normalWithControlBar="0"
+			 textAlign.normalWithControlBar="center"
+			 visible.notLoggedIn="false" bottom.notLoggedIn="10" horizontalCenter.notLoggedIn="0"
+			 textAlign.notLoggedIn="center">
 		<s:layout>
-			<s:HorizontalLayout paddingLeft="5" paddingRight="5"/>
+			<s:HorizontalLayout paddingLeft="5" paddingRight="5"
+								verticalAlign.disabled="middle"
+								verticalAlign.disabledWithControlBar="middle"
+								verticalAlign.loggedIn="middle"
+								verticalAlign.normal="middle"
+								verticalAlign.normalWithControlBar="middle"
+								verticalAlign.notLoggedIn="middle"/>
 		</s:layout>
+		
+		<!--Button to create a new map-->
+		<s:Button id="createMapBtn"
+				  label="{Language.lookup(&quot;NewMap&quot;)}" click="createMapBtn_clickHandler(event)">
+		</s:Button >
 
+		<!--Delete Selected Maps-->
 		<s:Button label="{Language.lookup(&quot;Delete&quot;)}" id="deleteBtn" click="hostComponent.deleteMaps(event)">
-
 		</s:Button>
+		
+		<!--Select All Maps-->
 		<s:Button label="{hostComponent.selectString}" id = "selectBtn"  width="100" click="hostComponent.makeSelection(event)">
 		</s:Button>
 	</s:Group>

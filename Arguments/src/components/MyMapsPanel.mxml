@@ -92,7 +92,7 @@
 				super.commitProperties();
 				if( skin.currentState == "loggedIn")
 				{ 
-					titleDisplay.text = AGORAModel.getInstance().userSessionModel.firstName+ "'s" + " maps";
+//					titleDisplay.text = AGORAModel.getInstance().userSessionModel.firstName+ "'s" + " maps";
 					if(mapsGroup.numElements > 0){
 						mapsGroup.removeAllElements();
 					}	
