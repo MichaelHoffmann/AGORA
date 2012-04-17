@@ -46,6 +46,7 @@
 				if(userSession.username == "Guest"){
 					Alert.show("You must log in with a non guest account before creating a map");
 				} else {
+					AGORAController.getInstance().setProject = false;
 					AGORAController.getInstance().displayMapInfoBox();
 				}
 			}
@@ -64,8 +65,16 @@
 			
 			
 			protected function projectsButton_OnClick(event:MouseEvent):void{
-				this.tabNav.setVisible(false,true);
-				this.mainPanel.visible=true;
+//				this.tabNav.setVisible(false,true);
+//				this.mainPanel.visible=true;
+				
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show("You must log in with a non guest account before creating a map");
+				} else {
+					AGORAController.getInstance().setProject = true;
+					AGORAController.getInstance().displayMapInfoBox();
+				}
 			}
 			
 			protected function backButton_OnClick():void{

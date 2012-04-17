@@ -40,7 +40,6 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			public function init():void{
 				model = AGORAModel.getInstance().chatModel;
 				pmodel = AGORAModel.getInstance().pushChatModel;
-				time = new Date().time;
 			}
 			
 			/**
@@ -61,7 +60,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 						if(chatXML.@username == AGORAModel.getInstance().userSessionModel.username){						
 							//some form of TextFormatter object to change color of user's text... 
 						}
-						if(line.charAt(0) != ":")	chatField.text+=line; //For some reason, the DB's return XML kept picking up a blank line. This stops it from printing...
+						if(line.charAt(0) != ":")	chatField.appendText(line); //For some reason, the DB's return XML kept picking up a blank line. This stops it from printing...
 						
 					}
 				} else {
