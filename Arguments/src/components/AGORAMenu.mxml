@@ -3,7 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:components="components.*"
-		 width="1514" height="737" creationComplete="creationCompleteHandler(event)">
+		 creationComplete="creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -100,8 +100,8 @@
 		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
 		
 		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
-			<s:HGroup id="myMapsHorizGroup" x="84" y="10">
-				<components:MyMapsPanel id="myMaps" width="100%" height="300" horizontalCenter="0"
+			<s:HGroup id="myMapsHorizGroup" y="10" horizontalCenter="0">
+				<components:MyMapsPanel id="myMaps" width="100%" height="100%" horizontalCenter="0"
 										focusIn="test()">
 				</components:MyMapsPanel>
 			</s:HGroup>
@@ -111,7 +111,7 @@
 		
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
 			<components:Projects id="myProjects" width="100%" height="300" dropShadowVisible="false" 
-								 controlBarVisible = "false"
+								 controlBarVisible = "true"
 								 borderVisible="false">
 			</components:Projects>
 		</s:NavigatorContent>
@@ -137,10 +137,7 @@
 		
 		<!--Horizontal row of buttons at the bottom of the screen-->
 		<s:HGroup id="bottomButtonRow" paddingLeft="0" paddingTop="25" textAlign="center">
-			<s:Button id="createMapBtn"
-					  label="{Language.lookup(&quot;NewMap&quot;)}" click="createMapBtn_clickHandler(event)">
-			</s:Button >
-			
+
 			<s:Button id="createProjectBtn" 
 					  label="{Language.lookup(&quot;NewProject&quot;)}" click="projectsButton_OnClick(event)">
 			</s:Button>
@@ -160,7 +157,7 @@
 		</s:HGroup>
 	</s:VGroup>	
 	<!--Adds the chat window to the menu-->
-	<components:ChatWindow id="chat" y="163" width="200" height="376" horizontalCenter="505"
-						   name="chat">
+	<components:ChatWindow id="chat" width="200" height="376" horizontalCenter="505" name="chat"
+						   verticalCenter="-18">
 	</components:ChatWindow>
 </s:Group>
