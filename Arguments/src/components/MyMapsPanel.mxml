@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="Skins.MyMapsSkin" initialize="initializeMyMaps(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[SkinState("disabled")]
+		[SkinState("normal")]
+		[SkinState("notLoggedIn")]
+		[SkinState("loggedIn")]
+	</fx:Metadata>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			
+			import Model.AGORAModel;
+			import Model.MapMetaData;
+			
+			import classes.Configure;
+			import classes.Language;
+			
+			import flash.net.URLLoader;
+			import flash.net.URLRequest;
+			import flash.net.URLRequestMethod;
+			import flash.net.URLVariables;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.Label;
+			import mx.controls.Text;
+			import mx.core.FlexGlobals;
+			import mx.managers.CursorManager;
+			
+			import spark.components.Button;
+			import spark.components.Group;
+			import spark.components.Label;
+			
+			//for future
+			[Bindable]
+			public var mapListXML:XML;
+			
+			[SkinPart(required="true")]
+			public var mapsGroup:Group;
+			
+			[SkinPart(required="true")]
+			public var labelGroup:Group;
+			
+			[SkinPart(required="true")]
+			public var userInfoTxt:spark.components.Label;
+			
+			[SkinPart(required="true")]
+			public var  selectBtn:Button;
+			
+			[SkinPart(required="true")]
+			public var deleteBtn:Button;
+			
+			[SkinPart(required="true")]
+			public var loadingDisplay:mx.controls.Label;
+			
+			
+			public static const MARK_ALL:String = Language.lookup("SelectAll");
+			public static const UNMARK_ALL:String = Language.lookup("SelectNone");
+			
+			[Bindable]
+			public var selectString:String;
+			
+			
+			protected function initializeMyMaps(event:Event):void{
+				//addEventListener(
+				selectString = MARK_ALL;
+			}
+			
+			public function set skinState(value:Boolean):void{
+				invalidateSkinState();
+			}
+			
+			override protected function getCurrentSkinState():String{
+				if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+					return "loggedIn";
+				}
+				else{
+					return "notLoggedIn";	
+				}
+			}
+			
+			override protected function commitProperties():void{
+				super.commitProperties();
+				if( skin.currentState == "loggedIn")
+				{ 
+					titleDisplay.text = AGORAModel.getInstance().userSessionModel.firstName+ "'s" + " maps";
+					if(mapsGroup.numElements > 0){
+						mapsGroup.removeAllElements();
+					}	
+					
+					var maps:XMLList = mapListXML.map;
+					var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+					
+					for each(var map:XML in maps)
+					{
+						try{
+							if(map.@is_deleted == "1")
+							{
+								continue;
+							}
+						}catch(error:Error){
+							trace("is_deleted not available yet...");
+						}
+						
+						var mapMetaData:MapMetaData = new MapMetaData();
+						mapMetaData.mapID = map.@ID;
+						mapMetaData.mapName = map.@title;
+						mapMetaDataVector.push(mapMetaData);
+					}
+					mapMetaDataVector.sort(MapMetaData.isGreater);
+					for each( mapMetaData in mapMetaDataVector){
+						var myMapName:MyMapName = new MyMapName;
+						myMapName.mapId = mapMetaData.mapID;
+						myMapName.mapName = mapMetaData.mapName;
+						mapsGroup.addElement(myMapName);	
+					}
+					
+					selectBtn.enabled = (mapsGroup.numElements == 0)? false:true;
+					deleteBtn.enabled = (mapsGroup.numElements == 0)? false:true;
+				}
+			}
+			
+			override protected function partAdded(partName:String, instance:Object):void{
+			}
+			
+			
+			public function makeSelection(event:MouseEvent):void{
+				var mapsMarked:Vector.<MyMapName> = new Vector.<MyMapName>(0,false);
+				for(var i:int=0; i < mapsGroup.numElements; i++)
+				{
+					var myMapName:MyMapName = MyMapName(mapsGroup.getElementAt(i));
+					if(selectString == MARK_ALL){
+						myMapName.thisMap.selected = true;
+					}else{
+						myMapName.thisMap.selected = false;
+					}	
+				}
+				selectString = (selectString == MARK_ALL)? UNMARK_ALL : MARK_ALL;
+			}
+			
+			public function deleteMaps(event:MouseEvent):void{
+				selectString = MARK_ALL;
+				AGORAController.getInstance().deleteSelectedMaps();
+				
+			}
+
+		]]>
+	</fx:Script>
+</s:Panel>

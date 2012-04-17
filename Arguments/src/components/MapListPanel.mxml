@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="200" height="400" 
+		 skinClass="Skins.MapListPanelSkin" 
+		 creationComplete="panel_creationCompleteHandler(event)">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	
+	<fx:Metadata>
+		[SkinState("disabled")]
+		[SkinState("normal")]
+		[SkinState("disabledWithControlBar")]
+		[SkinState("normalWithControlBar")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			
+			import Model.AGORAModel;
+			import Model.MapListModel;
+			import Model.MapMetaData;
+			
+			import mx.controls.Label;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Button;
+			import spark.components.VGroup;
+			
+			[SkinPart(required="true")]
+			public var mapsGroup:VGroup;
+			
+			[SkinPart(required="true")]
+			public var loadingDisplay:Label;
+			
+			protected override function commitProperties():void{
+				super.commitProperties();
+				var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+				var mapList:XML = AGORAModel.getInstance().mapListModel.mapListXML;
+				if(mapList != null){
+					if(mapsGroup.numElements > 0){
+						mapsGroup.removeAllElements();
+					}	
+					for each (var map:XML in mapList.map)
+					{
+						try{
+							if(map.@is_deleted == "1"){
+								continue;
+							}
+						}catch(error:Error){
+							trace("is_deleted not available yet");
+						}
+						//var mapObject:Object = new Object;
+						mapMetaData = new MapMetaData;
+						mapMetaData.mapID = int(map.attribute("ID")); 
+						mapMetaData.mapName = map.attribute("title"); 
+						//mapMetaData.mapCreator = map.attribute("creator");
+						mapMetaDataVector.push(mapMetaData);						
+					}
+					
+					mapMetaDataVector.sort(MapMetaData.isGreater);
+					for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+						var mapButton:Button = new Button;
+						mapButton.width = 170;
+						mapButton.name = mapMetaData.mapID.toString();
+						mapButton.addEventListener(MouseEvent.CLICK, onMapObjectClicked);
+						mapButton.label = mapMetaData.mapName;
+						//mapButton.toolTip = mapMetaData.mapCreator;
+						mapsGroup.addElement(mapButton);
+					}
+				}
+			}
+
+			protected function panel_creationCompleteHandler(event:FlexEvent):void
+			{
+				var fetchCommand:AGORAController =  AGORAController.getInstance();
+				fetchCommand.fetchDataMapList();
+			}
+			
+			protected function onMapObjectClicked(event:MouseEvent):void{
+				ArgumentController.getInstance().loadMap(event.target.name);					
+			}
+
+		]]>
+	</fx:Script>
+</s:Panel>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:components="components.*"
+		 width="1514" height="737" creationComplete="creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.UpdateController;
+			import Controller.UserSessionController;
+			
+			import Model.AGORAModel;
+			import Model.UserSessionModel;
+			
+			import classes.Language;
+			
+			import flash.system.Capabilities;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			public var timer:Timer = new Timer(10000);
+			public var numClicks:int=0;
+			[Bindable] private var buttonWidth:uint = 200;
+			[Bindable] private var buttonHeight:uint = 80;
+			
+			public var catNames:Array= new Array("Class Projects", "Argumentation Theory", "Philosophy", "Theory of Representation", 
+				"Environment/Climate", "Projects", "Biology", "Psychiatry", "Law");
+			
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				timer.addEventListener(TimerEvent.TIMER, timerFired);
+				timer.start();
+				AGORAController.getInstance().fetchDataCategory();
+			}
+			
+			protected function timerFired(event:TimerEvent):void{
+				AGORAController.getInstance().onTimer();
+			}
+			
+			protected function createMapBtn_clickHandler(event:MouseEvent):void
+			{
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show("You must log in with a non guest account before creating a map");
+				} else {
+					AGORAController.getInstance().displayMapInfoBox();
+				}
+			}
+			
+			
+			protected function signInBtn_clickHandler(event:MouseEvent):void
+			{
+				UserSessionController.getInstance().signInSignOut();
+			}
+			
+			
+			protected function registerBtn_clickHandler(event:MouseEvent):void
+			{
+				UserSessionController.getInstance().showRegistrationBox();
+			}
+			
+			
+			protected function projectsButton_OnClick(event:MouseEvent):void{
+				this.tabNav.setVisible(false,true);
+				this.mainPanel.visible=true;
+			}
+			
+			protected function backButton_OnClick():void{
+				this.tabNav.setVisible(true,true);
+				this.mainPanel.visible=false;
+			}
+			
+			protected function test():void{
+				//Do nothing
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:TabNavigator id="tabNav" width="800" height="400" cornerRadius="0" creationPolicy="all"
+					 horizontalCenter="0" name="tabNav" tabWidth="267" textAlign="center"
+					 verticalCenter="-26">
+		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
+			<mx:Image id="loader1" horizontalCenter="0"
+					   verticalCenter="-1"/>
+				<s:Group horizontalCenter="-3" verticalCenter="-25">
+					<components:CategoryPanel id="categories" width="482" height="309"
+											  horizontalCenter="0"
+											  skinClass="spark.skins.spark.SkinnableContainerSkin"
+											  title="category" verticalCenter="0">	
+					</components:CategoryPanel>
+				</s:Group>
+		</s:NavigatorContent>
+		
+		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
+		
+		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
+			<s:HGroup id="myMapsHorizGroup" x="84" y="10">
+				<components:MyMapsPanel id="myMaps" width="100%" height="300" horizontalCenter="0"
+										focusIn="test()">
+				</components:MyMapsPanel>
+			</s:HGroup>
+		</s:NavigatorContent>
+		
+		<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
+		
+		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
+			<components:Projects id="myProjects" width="100%" height="300" dropShadowVisible="false" 
+								 controlBarVisible = "false"
+								 borderVisible="false">
+			</components:Projects>
+		</s:NavigatorContent>
+	</mx:TabNavigator>		
+	
+	<s:VGroup id="Agora" horizontalCenter="0" verticalCenter="-40">
+		<s:Label id="Greeting" width="197" height="92" text="{Language.lookup('WelcomeShort')} 2.3"
+				 verticalAlign="bottom">
+		</s:Label>
+		<s:HGroup id="mainPanel" 
+				  paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25" visible="false">
+			<components:MapListPanel 
+				id="mapList" 
+				title="{Language.lookup(&quot;ListMaps&quot;)}" 
+				width="200" height="400"
+				>		
+			</components:MapListPanel>
+			<components:ProjectListPanel id="projects" 
+										 title="{Language.lookup(&quot;ProjectPP&quot;)}" 
+										 width="200" height="400">	
+			</components:ProjectListPanel>			
+		</s:HGroup>
+		
+		<!--Horizontal row of buttons at the bottom of the screen-->
+		<s:HGroup id="bottomButtonRow" paddingLeft="0" paddingTop="25" textAlign="center">
+			<s:Button id="createMapBtn"
+					  label="{Language.lookup(&quot;NewMap&quot;)}" click="createMapBtn_clickHandler(event)">
+			</s:Button >
+			
+			<s:Button id="createProjectBtn" 
+					  label="{Language.lookup(&quot;NewProject&quot;)}" click="projectsButton_OnClick(event)">
+			</s:Button>
+			
+			<s:Button id="signInBtn"
+					  label="{AGORAModel.getInstance().userSessionModel.uid? 
+					  Language.lookup('SignOut'): Language.lookup('SignIn')}"
+					  click="signInBtn_clickHandler(event)" />
+			
+			<s:Button id="registerBtn"
+					  label="{Language.lookup(&quot;RegisterAsNew&quot;)}"
+					  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
+					  click="registerBtn_clickHandler(event)" />
+			<s:Button id="backBtn"
+					  label="{Language.lookup('Back')}"
+					  click="backButton_OnClick()"/>
+		</s:HGroup>
+	</s:VGroup>	
+	<!--Adds the chat window to the menu-->
+	<components:ChatWindow id="chat" y="163" width="200" height="376" horizontalCenter="505"
+						   name="chat">
+	</components:ChatWindow>
+</s:Group>

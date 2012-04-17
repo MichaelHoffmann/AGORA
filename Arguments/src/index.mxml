@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Random-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600" pageTitle="Welcome to AGORA" xmlns:components="components.*"
+			   preinitialize="application_preinitializeHandler(event)"
+			   applicationComplete="application1_applicationCompleteHandler(event)"
+			   >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Scroller y="0" right="0" width="100%" height="100%">
+		<s:Group> 
+			<components:AGORALogin id="agoraMain" width="100%" height="100%" horizontalCenter="0" name="agoraMain" verticalCenter="0" visible="true"/>
+			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="100%" height="100%" horizontalCenter="0" verticalCenter="0"/>
+			<components:Map id="map" name="map" visible="false"/>
+		</s:Group>
+	</s:Scroller> 
+	
+
+	<fx:Script>
+		
+		import components.MapName;
+		import components.Map;
+		import components.LoginWindow;
+		import Model.AGORAModel;
+		import components.RegisterPanel;
+		import mx.events.FlexEvent;
+		import Controller.LayoutController;
+		
+		//This is a universal AGORAModel that can be accessed by FlexGlobals.topLevelApplication.model
+		private var model:AGORAModel;
+		//This is a universal LoginWindow that can be accessed by FlexGlobals.topLevelApplication.loginWindow
+		public var loginWindow:LoginWindow;
+		//This is a universal RegistrationPanel that can be accessed by FlexGlobals.topLevelApplication.registrationWindow
+		public var registrationWindow:RegisterPanel;
+		//Universally accessible mapName box
+		public var mapNameBox:MapName;
+
+		
+		public var switchView:Boolean = true;
+		
+		protected function application_preinitializeHandler(event:FlexEvent):void
+		{
+			model = AGORAModel.getInstance();
+		}
+		
+		protected function application1_applicationCompleteHandler(event:FlexEvent):void
+		{
+			LayoutController.getInstance().setApplicationLayoutProperties();
+		}
+		
+	</fx:Script>
+	
+
+
+</s:Application>

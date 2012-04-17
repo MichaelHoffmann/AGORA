@@ -1,0 +1,16 @@
+<map id="4" timestamp="0">
+	<textbox ID="4" text="Paul is responsible for his actions" />
+	<textbox ID="5" text="Paul is a rational being" />
+
+	<node ID="6" Type="Standard" typed="1" is_positive="1" x="1" y="1">
+		<nodetext textboxID="5" />
+	</node>
+	<node ID="7" Type="Standard" typed="1" is_positive="1" x="10" y="1">
+		<nodetext textboxID="4" />
+	</node>
+	<node ID="8" Type="Inference" typed="1" is_positive="1" x="5" y="5">
+		<nodetext textboxID="5" />
+		<nodetext textboxID="4" />
+	</node>
+	<connection ID="3" type="MPifthen" targetnodeID="7" />
+</map>

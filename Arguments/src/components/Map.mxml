@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+reflection, critique, deliberation, and creativity in individual argument construction 
+and in collaborative or adversarial settings. 
+Copyright (C) 2011 Georgia Institute of Technology
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:classes="classes.*" 
+		   xmlns:components="components.*"
+		   xmlns:value_objects="ValueObjects.*"
+		   >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<components:TopPanel id="topPanel" width="100%" height="40">
+	</components:TopPanel>
+	<components:StatusBar id="sBar" visible="false">
+	</components:StatusBar>
+	
+	<s:Group id="theMap">
+		<s:Scroller id="agora" visible="false">	
+			<s:Group>
+				<mx:Canvas>
+					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
+					</components:AgoraMap>	
+				</mx:Canvas>
+			</s:Group>
+		</s:Scroller>
+		
+		<components:LAMWorld id="lamWorld" visible="false">
+		</components:LAMWorld>
+	</s:Group>
+	<components:ChatWindow name="chat" id="chat" x="1075" y="168" width="395" height="376">
+		
+	</components:ChatWindow>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.LayoutController;
+			
+			import ValueObjects.AGORAParameters;
+			
+			import flash.display.*;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.controls.Alert;
+			import mx.controls.Label;
+			import mx.controls.Text;
+			import mx.core.Application;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Group;
+			import spark.primitives.Graphic;
+			
+			
+			public var numComponentsX:int;
+			public var numComponentsY:int;
+			public var layoutManager:LayoutController;
+			
+			import classes.Language;
+			
+			public function discardChanges(event:Event):void
+			{
+				AGORAController.getInstance().hideMap();
+			}
+			
+			public function setWidth(event: Event):void
+			{
+				agora.height =  stage.stageHeight - topPanel.height - 20 * 2 - topPanel.title.height - 30;
+				agora.width = stage.stageWidth - 50;
+				topPanel.width = stage.stageWidth;
+			}
+			
+			override protected function measure():void{
+				super.measure();
+			}
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				topPanel.move(0,0);
+				sBar.move(this.getExplicitOrMeasuredWidth()/2-sBar.getExplicitOrMeasuredWidth()/2, topPanel.getExplicitOrMeasuredHeight());
+				sBar.setActualSize(sBar.getExplicitOrMeasuredWidth(),sBar.getExplicitOrMeasuredHeight());
+				theMap.move(0, topPanel.getExplicitOrMeasuredHeight() + sBar.getExplicitOrMeasuredHeight());
+			}
+
+		]]>
+	</fx:Script>
+</mx:Canvas>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+			reflection, critique, deliberation, and creativity in individual argument construction 
+			and in collaborative or adversarial settings. 
+    Copyright (C) 2011 Georgia Institute of Technology
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="350" height="150" creationComplete="init();" layout="absolute"
+		  title="Login To AGORA">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:StringValidator id="unameValidator"
+							source="{username}"
+							property="text">
+		</mx:StringValidator>
+		<mx:StringValidator id="passwordValidator"
+							source="{pass_hash}"
+							property="text">
+		</mx:StringValidator>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.UserSessionController;
+			
+			import ValueObjects.UserDataVO;
+			
+			import classes.Language;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import mx.validators.Validator;
+			
+			public var usernameHolder:String;
+			public function init():void
+			{	
+				focusManager.setFocus(username);
+			}
+			
+			
+			public function register_form():void
+			{	
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.showRegistrationBox();
+			}
+			
+			/**
+			 * This function handles the action that occurs when the user clicks the back button.
+			 * When the back button is clicked, the popup is removed.
+			 * 
+			 * This replaces the deprecated function clear_form()
+			 */
+			public function backButton_onClick():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			/**
+			 * This function handles what happens when the user clicks the submit
+			 * button. Submits the username and password combo and ultimately checks
+			 * the database for the combo.
+			 * 
+			 * This replaces the depracated function submit_form(). 
+			 */
+			public function submitButton_onClick():void
+			{
+				var userDataVO:UserDataVO = new UserDataVO;
+				this.usernameHolder = username.text;
+				userDataVO.userName = username.text;
+				userDataVO.password = pass_hash.text;
+				
+				var userLoginController:UserSessionController = UserSessionController.getInstance();
+				userLoginController.login(userDataVO);	
+			}
+			
+			/**
+			 * This function handles what happens when the register button is clicked.
+			 * When it is clicked, a new registration form pop up grabs focus from the
+			 * login box
+			 * 
+			 * Replaces depracated function registration_btn_clickHandler()
+			 */
+			protected function registerButton_onClick(event:MouseEvent):void
+			{
+				var userSessionController:UserSessionController = UserSessionController.getInstance();
+				userSessionController.showRegistrationBox();
+			}
+
+		]]>
+		
+	</fx:Script>
+	<mx:Form id="form">
+		<mx:FormItem label="{Language.lookup(&quot;Username&quot;)}" >
+			<s:TextInput id="username">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}">
+			<s:TextInput id="pass_hash" displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem>
+			<s:HGroup>
+				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" id="submit_btn" click="submitButton_onClick();">		
+				</s:Button>
+				<s:Button label="{Language.lookup(&quot;Back&quot;)}" id="back_btn" click="backButton_onClick();">		
+				</s:Button>
+				<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="registerButton_onClick(event)">		
+				</s:Button>
+			</s:HGroup>		
+		</mx:FormItem>
+		
+	</mx:Form>
+</mx:Panel>

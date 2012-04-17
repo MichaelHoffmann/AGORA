@@ -1,0 +1,16 @@
+http://agora.gatech.edu/dev/insert.php?uid=24&pass_hash=fef4af315052d1502f7eed683b920ef0&xml=<map id="0"></map>
+
+<map id="1420"><textbox TID="1" text="FOO"/><node TID="1" Type="Standard" x="2" y="3" is_positive="1" typed="0"><nodetext TID="1" textboxTID="2" /></node></map>
+
+<map id="1420"><textbox TID="1" text="Bar" /><node ID="4529" Type="Standard" x="2" y="3" is_positive="1" typed="0"><nodetext ID="7576" textboxID="7700"/> <nodetext TID="2" textboxTID="1" /></node></map>
+
+#inserting a nodetext in a node
+<map id="1599"><textbox TID="2" text="" /><node ID="5050" Type="Inference" x="17" y="28" typed="0" is_positive="1"><nodetext ID="8330" textboxID="8459" /><nodetext ID="8331" textboxID="8460"/><nodetext TID="1" textboxTID="2" /></node></map>
+
+<map ID="1601"><extbox TID="2" text="A$#$DependentText$#$" /></map>
+
+<map ID="1601"></map>
+
+
+
+
