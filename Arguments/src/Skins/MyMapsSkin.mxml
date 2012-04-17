@@ -34,14 +34,6 @@
 		[HostComponent("components.MyMapsPanel")]
 	</fx:Metadata>
 	
-
-	
-	<s:Label id="titleDisplay" 
-			 paddingLeft="15" paddingRight="15" paddingTop="15"
-			 fontWeight="bold"
-			 text.notLoggedIn="{Language.lookup(&quot;MyMaps&quot;)}"
-			 />
-	
 	<mx:Label id="loadingDisplay" width = "100%" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
 	
 	<s:Scroller width="100%" top="56" height="300">
@@ -54,7 +46,7 @@
 				</s:layout>	
 			</s:Group>
 			<s:Group id="labelGroup" visible.loggedIn="false" visible.notLoggedIn= "true">
-				<s:Label id="userInfoTxt" x="28" y="118" visible.loggedIn="false" visible.notLoggedIn="true"  click="userInfoTxt_clickHandler(event)" textDecoration="underline">
+				<s:Label id="userInfoTxt" x="28" y="118" horizontalCenter = "0" visible.loggedIn="false" visible.notLoggedIn="true"  click="userInfoTxt_clickHandler(event)" textDecoration="underline">
 					<s:text>{Language.lookup("SignInToViewMaps")}</s:text>
 				</s:Label>
 				
