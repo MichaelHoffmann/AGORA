@@ -45,13 +45,14 @@ package Controller
 		private var userSession:UserSessionModel;
 		private var mapModel:AGORAMapModel;
 		private var model:AGORAModel;
-		
+		private var project:Boolean;
 		private var categoryChain:ArrayList;
 		
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
 			instance = this;
+			project=false;
 			model = AGORAModel.getInstance();
 			AGORAModel.getInstance().mapListModel.addEventListener(AGORAEvent.MAP_LIST_FETCHED, onMapListFetched);
 			AGORAModel.getInstance().myMapsModel.addEventListener(AGORAEvent.MY_MAPS_LIST_FETCHED, onMyMapsListFetched);
@@ -317,6 +318,15 @@ package Controller
 			else{
 				Alert.show(Language.lookup("MustRegister"));
 			}
+		}
+		
+		public function get getProject():Boolean{
+			
+			return this.project;
+		}
+		
+		public function set setProject(project:Boolean):void{
+			this.project = project;
 		}
 	}
 }
