@@ -45,6 +45,7 @@ package Events
 		public static const CATEGORY_FETCHED:String = "CategoryFetched";
 		public static const CHAT_FETCHED:String = "ChatFetched";
 		public static const CHAT_PUSHED:String = "ChatPushed";
+		public static const MAP_FETCHED:String ="MapFetched";
 		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";

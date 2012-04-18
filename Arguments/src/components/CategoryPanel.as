@@ -75,11 +75,28 @@ package components
 					button.label = categoryXML.@Name;
 					button.width = 150;
 					button.height = 80;
-					button.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();AGORAController.getInstance().fetchDataChildCategory(e.target.label);}, false, 1,false);
+					button.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();AGORAController.getInstance().fetchDataChildCategory(e.target.label);AGORAController.getInstance().fetchDataChildMap(e.target.label);}, false, 1,false);
 
 					categoryTiles.addElement(button);
 				}
+				
+				
 			}
+			if(model.map){
+				//Alert.show(model.map);
+				for each(var mapXML:XML in model.map.map){
+					
+					var button2:Button = new Button;
+					button2.name = mapXML.@ID;
+					button2.label = mapXML.@Name;
+					button2.width = 150;
+					button2.height = 80;
+					//button2.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();AGORAController.getInstance().fetchDataChildCategory(e.target.label);}, false, 1,false);
+					
+					categoryTiles.addElement(button2);
+				}
+			}
+			model.map=new XML;
 		}
 		
 		override protected function measure():void{

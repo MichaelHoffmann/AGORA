@@ -23,6 +23,7 @@ package ValueObjects
 		public var childCategoryURL:String;
 		public var chatPushURL:String;
 		public var chatPullURL:String;
+		public var childMapURL:String;
 		
 		//Error Codes TODO: Enter these in the Languages.xml
 		public var ERROR_106:String;
@@ -162,7 +163,8 @@ package ValueObjects
 			categoryURL= "http://agora.gatech.edu/rzhang39_testing/category.php"; //category testing
 			chatPushURL= "http://agora.gatech.edu/zlee6_testing/push_chat.php"; //chat testing
 			chatPullURL= "http://agora.gatech.edu/zlee6_testing/pull_chat.php"; //chat testing
-			childCategoryURL = "http://agora.gatech.edu/rzhang39_testing/child_category.php"
+			childCategoryURL = "http://agora.gatech.edu/rzhang39_testing/child_category.php";
+			childMapURL="http://agora.gatech.edu/rzhang39_testing/map_category.php";
 			initialize();		
 		}
 		
