@@ -18,6 +18,7 @@
 			import flash.system.Capabilities;
 			
 			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			
 			public var timer:Timer = new Timer(10000);
@@ -73,6 +74,7 @@
 					Alert.show("You must log in with a non guest account before creating a map");
 				} else {
 					AGORAController.getInstance().setProject = true;
+					FlexGlobals.topLevelApplication.map.lamWorld.setVisibleForProjects();
 					AGORAController.getInstance().displayMapInfoBox();
 				}
 			}

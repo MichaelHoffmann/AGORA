@@ -8,6 +8,8 @@ package Controller
 	import Model.ChatModel;
 	import Model.MapListModel;
 	import Model.ProjectListModel;
+	import Model.ProjectsModel;
+	import Model.PushProject;
 	import Model.UserSessionModel;
 	
 	import ValueObjects.ChatDataVO;
@@ -155,6 +157,12 @@ package Controller
 			menu.projects.invalidateProperties();
 			menu.projects.invalidateDisplayList();
 		}
+		
+		public function pushNewProject():void{
+			var pp:PushProject = new PushProject;
+			pp.sendRequest();
+		}
+		
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
