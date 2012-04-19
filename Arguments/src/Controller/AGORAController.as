@@ -133,6 +133,18 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 		}
+		public function fetchDataChildMap(parentCategory:String):void{
+			menu.categories.loadingDisplay.text = Language.lookup("Loading");
+			menu.categories.loadingDisplay.visible = true;
+			var categoryM:CategoryModel = model.categoryModel;
+			categoryM.onrequestChildMap(parentCategory);
+		}
+		protected function onChildMapFetched(event:AGORAEvent):void{
+			menu.categories.loadingDisplay.visible = false;
+			menu.categories.invalidateProperties();
+			menu.categories.invalidateDisplayList();
+		}
+		
 		
 		//------------------Fetch Chat--------------------------------//
 		public function fetchDataChat():void{
