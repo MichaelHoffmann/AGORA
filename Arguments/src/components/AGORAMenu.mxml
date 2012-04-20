@@ -11,12 +11,16 @@
 			import Controller.UserSessionController;
 			
 			import Model.AGORAModel;
+			import Model.CategoryModel;
 			import Model.UserSessionModel;
+			
+			import ValueObjects.CategoryDataV0;
 			
 			import classes.Language;
 			
 			import flash.system.Capabilities;
 			
+			import mx.collections.ArrayList;
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
@@ -76,16 +80,29 @@
 			}
 			
 			protected function backButton_OnClick():void{
+//				if(!this.mainPanel.visible){
+//					this.tabNav.setVisible(false,true);
+//					this.mainPanel.visible=true;
+//				} else {
+//					this.tabNav.setVisible(true,true);
+//					this.mainPanel.visible=false;
+//				}
+				var cg:ArrayList = AGORAController.getInstance().categoryChain;
+				var temp:String = (CategoryDataV0)(cg.removeItemAt(cg.length-1)).parent;
+				if(!temp)
+					AGORAController.getInstance().fetchDataCategory();
+				else
+					AGORAController.getInstance().fetchDataChildCategory(temp);
+				
+			}
+			protected function hackButton_OnClick():void{
 				if(!this.mainPanel.visible){
 					this.tabNav.setVisible(false,true);
 					this.mainPanel.visible=true;
 				} else {
 					this.tabNav.setVisible(true,true);
-					this.mainPanel.visible=false;
+					this.mainPanel.visible=false;		
 				}
-			}
-			protected function test():void{
-				//Do nothing
 			}
 		]]>
 	</fx:Script>
@@ -113,7 +130,7 @@
 		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
 			<s:HGroup id="myMapsHorizGroup" y="10" horizontalCenter="0">
 				<components:MyMapsPanel id="myMaps" width="100%" height="100%" horizontalCenter="0"
-										focusIn="test()">
+										>
 				</components:MyMapsPanel>
 			</s:HGroup>
 		</s:NavigatorContent>
@@ -165,6 +182,9 @@
 			<s:Button id="backBtn"
 					  label="{Language.lookup('Back')}"
 					  click="backButton_OnClick()"/>
+			<s:Button id="hack"
+					  label="Hacked See all Button"
+					  click="hackButton_OnClick()"/>
 		</s:HGroup>
 	</s:VGroup>	
 	<!--Adds the chat window to the menu-->

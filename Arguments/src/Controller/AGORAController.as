@@ -50,8 +50,7 @@ package Controller
 		private var mapModel:AGORAMapModel;
 		private var model:AGORAModel;
 		private var project:Boolean;
-		private var categoryChain:ArrayList;
-		
+		private var _categoryChain:ArrayList;
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
@@ -359,6 +358,17 @@ package Controller
 				Alert.show(Language.lookup("MustRegister"));
 			}
 		}
+
+		public function get categoryChain():ArrayList
+		{
+			return _categoryChain;
+		}
+
+		public function set categoryChain(value:ArrayList):void
+		{
+			_categoryChain = value;
+		}
+
 	}
 }
 
