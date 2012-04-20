@@ -59,7 +59,6 @@
 							 y="67"  
 							 click="{argumentPaste.text=''}" 
 							 textAlign="center"/>
-	<mx:TextInput id="passwordProtection" x="338" y="319"/>
 	
 	<!-- <mx:RemoteObject id="loginService" destination="amfphp" source="loginmodelservice">
 	<mx:method name="verifyLogin" fault="onFault(event)" result="verifyLogin(event)" />
@@ -76,8 +75,7 @@
 			import mx.events.FlexEvent;
 			
 			import spark.components.Group;
-			
-			private var _password:String;
+
 			
 			public function startWithClaim():void {
 				ArgumentController.getInstance().startWithClaim();
@@ -89,36 +87,11 @@
 			public function init():void {
 				argumentPaste.text=Language.lookup("PasteArgument");
 				conceptStart.text=Language.lookup("DivideToSubclaims");
-				_password = "";
 			}
 			
-			public function setVisibleForProjects():void{
-				passwordLabel.visible = AGORAController.getInstance().getProject;
-				confirmInput.visible = AGORAController.getInstance().getProject;
-				passwordProtection.visible = AGORAController.getInstance().getProject;
-				confirmLabel.visible = AGORAController.getInstance().getProject;
-				ConfirmPass.visible = AGORAController.getInstance().getProject;
-			}
 			
-			public function get password():String{
-				return this._password;
-			}
-			
-			public function verifyPasswords():void{
-				if(passwordProtection.text == confirmInput.text){
-					AGORAController.getInstance().pushNewProject();
-				} else {
-					passwordProtection.text = "";
-					confirmInput.text="";
-					Alert.show("Passwords do not match");
-					
-				}
-			}
 			
 		]]>
 	</fx:Script>
-	<s:Label id="passwordLabel" x="152" y="327" height="23" text="Enter a password for this project:"/>
-	<s:Label id="confirmLabel" x="225" y="396" text="Confirm password:"/>
-	<s:TextInput id="confirmInput" x="339" y="386" width="159"/>
-	<s:Button id="ConfirmPass" x="428" y="420" label="Submit" name="Submit" click="verifyPasswords()"/>
+
 </mx:Canvas>

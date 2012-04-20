@@ -75,7 +75,11 @@ package components
 					button.label = categoryXML.@Name;
 					button.width = 150;
 					button.height = 80;
-					button.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();AGORAController.getInstance().fetchDataChildCategory(e.target.label);AGORAController.getInstance().fetchDataChildMap(e.target.label);}, false, 1,false);
+					button.addEventListener('click',function(e:Event):void{
+						e.stopImmediatePropagation();
+						AGORAController.getInstance().fetchDataChildCategory(e.target.label);
+						AGORAController.getInstance().fetchDataChildMap(e.target.label);
+					}, false, 1,false);
 
 					categoryTiles.addElement(button);
 				}

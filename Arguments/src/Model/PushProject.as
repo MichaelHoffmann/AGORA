@@ -1,6 +1,8 @@
 package Model
 {
 	
+	import Controller.AGORAController;
+	
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
@@ -9,12 +11,13 @@ package Model
 	
 	import flash.events.EventDispatcher;
 	
+	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 
-	public class PushProject
+	public class PushProject extends EventDispatcher
 	{
 		public var projectList:XML;
 		private var request:HTTPService;
@@ -32,17 +35,17 @@ package Model
 		public function sendRequest():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
-				request.send({uid: userSessionModel.uid, pass_hash: userSessionModel.passHash, projID: 0, newpass: MD5.hash(FlexGlobals.topLevelApplication.map.lamWorld.password), title: AGORAModel.getInstance().agoraMapModel.name, is_hostile: 0});	
+				request.send({uid: userSessionModel.uid, pass_hash: userSessionModel.passHash, newpass: AGORAModel.getInstance().agoraMapModel.projectPassword, projID: 0, title: AGORAModel.getInstance().agoraMapModel.name, is_hostile: 0});	
 			}
 		}
 		
 		protected function onResult(event:ResultEvent):void{
-			projectList = event.result as XML;
-//			dispatchEvent(new AGORAEvent(AGORAEvent.MY_PROJECTS_LIST_FETCHED));
+			Alert.show("Valid");
+			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
 		
 		protected function onFault(event:FaultEvent)    :void{
-//			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
+			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 	}
 }

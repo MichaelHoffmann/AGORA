@@ -22,7 +22,11 @@
 
 	<fx:Script>
 		
+	
+		import components.Join_Project;
+
 		import components.MapName;
+		import components.ProjectName;
 		import components.Map;
 		import components.LoginWindow;
 		import Model.AGORAModel;
@@ -38,7 +42,10 @@
 		public var registrationWindow:RegisterPanel;
 		//Universally accessible mapName box
 		public var mapNameBox:MapName;
-
+		//Universally accessible mapName box
+		public var projectNameBox:ProjectName;
+		//Universal Join_Project box
+		public var join_project:Join_Project;
 		
 		public var switchView:Boolean = true;
 		

@@ -41,11 +41,13 @@ package Events
 		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
 		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
+		public static const PROJECT_PUSHED:String = "ProjectPushed";
 		public static const MY_PROJECTS_LIST_FETCHED:String = "MyProjectsListFetched";
 		public static const CATEGORY_FETCHED:String = "CategoryFetched";
 		public static const CHAT_FETCHED:String = "ChatFetched";
 		public static const CHAT_PUSHED:String = "ChatPushed";
 		public static const MAP_FETCHED:String ="MapFetched";
+		public static const PROJECT_PASSWORD_VERIFIED:String = "ProjectJoined";
 		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";

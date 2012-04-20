@@ -54,6 +54,9 @@ package Model
 		private var _mapConstructedFromArgument:Boolean;
 		private var _argUnderConstruction:Boolean;
 		
+		private var _projectID:int;
+		private var _projectPassword:String;
+		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
@@ -695,6 +698,11 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.POSITIONS_UPDATED, null, null));
 		}
 		
+		/**
+		 * After some intense inspection, this function may be the source of all the hangs. It is O(n^2) in the best case
+		 * but it definitely grows within the while loop
+		 */
+		
 		protected function moveSupportingStatements(model:Object, diffx:int, diffy:int, requestXML:XML):XML{
 			var list:Vector.<Object> = new Vector.<Object>;
 			list.push(model);
@@ -761,6 +769,27 @@ package Model
 		protected function onFault(event:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));	
 		}
+
+		public function get projectID():int
+		{
+			return _projectID;
+		}
+
+		public function set projectID(value:int):void
+		{
+			_projectID = value;
+		}
+
+		public function get projectPassword():String
+		{
+			return _projectPassword;
+		}
+
+		public function set projectPassword(value:String):void
+		{
+			_projectPassword = value;
+		}
+
 		
 	}
 }

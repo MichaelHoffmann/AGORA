@@ -47,7 +47,6 @@
 				if(userSession.username == "Guest"){
 					Alert.show("You must log in with a non guest account before creating a map");
 				} else {
-					AGORAController.getInstance().setProject = false;
 					AGORAController.getInstance().displayMapInfoBox();
 				}
 			}
@@ -66,24 +65,25 @@
 			
 			
 			protected function projectsButton_OnClick(event:MouseEvent):void{
-//				this.tabNav.setVisible(false,true);
-//				this.mainPanel.visible=true;
+
 				
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 				if(userSession.username == "Guest"){
 					Alert.show("You must log in with a non guest account before creating a map");
 				} else {
-					AGORAController.getInstance().setProject = true;
-					FlexGlobals.topLevelApplication.map.lamWorld.setVisibleForProjects();
-					AGORAController.getInstance().displayMapInfoBox();
+					AGORAController.getInstance().displayProjectInfoBox();
 				}
 			}
 			
 			protected function backButton_OnClick():void{
-				this.tabNav.setVisible(true,true);
-				this.mainPanel.visible=false;
+				if(!this.mainPanel.visible){
+					this.tabNav.setVisible(false,true);
+					this.mainPanel.visible=true;
+				} else {
+					this.tabNav.setVisible(true,true);
+					this.mainPanel.visible=false;
+				}
 			}
-			
 			protected function test():void{
 				//Do nothing
 			}

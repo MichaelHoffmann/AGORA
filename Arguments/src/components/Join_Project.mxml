@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="258" height="132"
+		 creationComplete="init();"
+		 >
+	
+	<fx:Declarations>
+
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import Model.AGORAModel;
+			import Model.VerifyProjectPasswordModel;
+			
+			import com.adobe.crypto.MD5;
+			
+			import mx.managers.PopUpManager;
+			public function init():void
+			{
+//				focusManager.setFocus(password);
+			}
+			
+			public function clear_form():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function submit_form():void{
+				PopUpManager.removePopUp(this);				
+				AGORAModel.getInstance().agoraMapModel.projectPassword = MD5.hash(password.text);
+				var verifyCorrectProject:VerifyProjectPasswordModel = new VerifyProjectPasswordModel;
+				verifyCorrectProject.send();
+			}
+			
+		]]>
+	</fx:Script>
+
+	<s:Button id="submitButton" x="52" y="86" label="Submit" click="submit_form()"/>
+	<s:TextInput x="65" y="54" id="password"/>
+	<s:Label x="52" y="34" text="Input the Project's Password"/>
+	<s:Button id="cancelButton" x="137" y="86" label="Back" click="clear_form()"/>
+</s:Group>
+
+

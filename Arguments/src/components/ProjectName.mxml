@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="400" height="200"
+		 creationComplete="panel_creationCompleteHandler(event)"
+		 addedToStage="panel1_addedToStageHandler(event)"
+		 keyDown="panel_keyDownHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			import Model.AGORAModel;
+			import classes.Language;
+			
+			import com.adobe.crypto.MD5;
+			
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.managers.FocusManager;
+			import mx.managers.PopUpManager;
+			
+			private var _password:String;
+			public function map_name():void{
+				if(passwordSet.text == confirmPassword.text){
+					AGORAModel.getInstance().agoraMapModel.name = projectName.text;
+					AGORAModel.getInstance().agoraMapModel.projectPassword =  MD5.hash(_password);
+					this._password = passwordSet.text;
+					this.visible=false;
+					AGORAController.getInstance().pushNewProject();
+					AGORAController.getInstance().freeze();
+					ArgumentController.getInstance().createMap(projectName.text);
+				}else{
+					Alert.show(Language.lookup("PassMismatch"));
+					return;
+				}
+			}
+			
+			protected function panel_creationCompleteHandler(event:FlexEvent):void
+			{
+				projectName.text=" ";
+				projectName.setFocus();
+				projectName.text = "";
+			}
+			
+			protected function panel_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.ENTER){
+					map_name();
+				}
+			}
+			
+			
+			protected function panel1_addedToStageHandler(event:Event):void
+			{
+				stage.focus= null;
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:Form id="form">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;EnterMapName&quot;)}" required="true">
+			<s:TextInput id="projectName">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}" required="true">
+			<s:TextInput id="passwordSet" displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="{Language.lookup(&quot;PassRepeat&quot;)}" required="true">
+			<s:TextInput id="confirmPassword" displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem>
+			<s:HGroup>
+				<s:Button label="{Language.lookup('OK')}" tabIndex="7" id="OK_btn" click="map_name();">		
+				</s:Button>
+				<s:Button label="Back" tabIndex="7" id="CANECL_btn" click="this.visible=false;">		
+				</s:Button>
+			</s:HGroup>		
+		</mx:FormItem>
+	</mx:Form>
+</s:Panel>
+
