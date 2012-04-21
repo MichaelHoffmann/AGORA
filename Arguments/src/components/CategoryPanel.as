@@ -1,7 +1,7 @@
 package components
 {
 	import Controller.AGORAController;
-	
+	import Controller.ArgumentController;
 	import Model.AGORAModel;
 	import Model.CategoryModel;
 	
@@ -82,14 +82,20 @@ package components
 					button.height = 80;
 					button.addEventListener('click',function(e:Event):void{
 						e.stopImmediatePropagation();
-						var cg:ArrayList = AGORAController.getInstance().categoryChain;
-						if(cg.length == 0)
-							cg.addItem(new CategoryDataV0(e.target.label, null));
-						else
-							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length)).current));
-						AGORAController.getInstance().categoryChain = cg;
+					
 						AGORAController.getInstance().fetchDataChildCategory(e.target.label);
 						AGORAController.getInstance().fetchDataChildMap(e.target.label);
+						var cg:ArrayList = AGORAController.getInstance().categoryChain;
+						if(cg.length == 0){
+							cg.addItem(new CategoryDataV0(e.target.label, null));
+				
+						}
+						else{
+						
+							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));
+							
+						}
+						AGORAController.getInstance().categoryChain = cg;
 					}, false, 1,false);
 
 					categoryTiles.addElement(button);
@@ -106,13 +112,15 @@ package components
 					button2.label = mapXML.@Name;
 					button2.width = 150;
 					button2.height = 80;
-					//button2.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();AGORAController.getInstance().fetchDataChildCategory(e.target.label);}, false, 1,false);
-					
+					button2.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();ArgumentController.getInstance().loadMap(e.target.label);}, false, 1,false);
+					//button2.addEventListener('click', onMapObjectClicked);
 					categoryTiles.addElement(button2);
 				}
 			}
 			model.map=new XML;
 		}
+		
+
 		
 		override protected function measure():void{
 			super.measure();	

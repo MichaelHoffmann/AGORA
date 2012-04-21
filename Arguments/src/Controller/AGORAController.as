@@ -259,11 +259,11 @@ package Controller
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
-			fetchDataMapList();
+			//fetchDataMapList();
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				fetchDataMyMaps();
 			}
-			fetchDataProjectList();
+			//fetchDataProjectList();
 			fetchDataChat();
 		}
 		
