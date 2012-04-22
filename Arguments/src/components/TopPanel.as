@@ -17,7 +17,7 @@ package components
 	import mx.core.UIComponent;
 	import mx.printing.FlexPrintJob;
 	import mx.printing.FlexPrintJobScaleType;
-
+	
 	public class TopPanel extends UIComponent
 	{
 		public var gotoMenuBtn:Button;

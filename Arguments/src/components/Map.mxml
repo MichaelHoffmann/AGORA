@@ -34,11 +34,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<components:StatusBar id="sBar" visible="false">
 	</components:StatusBar>
 	
-	<s:Group id="theMap">
-		<s:Scroller >	
-			<s:Group id="agora" visible="false">
+	<s:Group id="theMap" x="200">
+		<s:Scroller id="agora" visible="false">	
+			<s:Group>
 				<mx:Canvas>
-					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
+					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" >	
 					</components:AgoraMap>	
 				</mx:Canvas>
 			</s:Group>
@@ -46,10 +46,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		
 		<components:LAMWorld id="lamWorld" visible="false">
 		</components:LAMWorld>
-	<components:ChatWindow name="chat" id="chat" y="168" width="395" height="376">
-		
-	</components:ChatWindow>
+		<components:ChatWindow id="chat" width="249" height="376" name="chat" verticalCenter="-28">
+			
+		</components:ChatWindow>
 	</s:Group>
+	
 	
 	<fx:Script>
 		<![CDATA[
@@ -86,8 +87,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			public function setWidth(event: Event):void
 			{
-				agora.height =  stage.stageHeight - topPanel.height - 20 * 2 - topPanel.title.height - 30;
-				agora.width = stage.stageWidth - 50;
+				agora.height =  stage.stageHeight - topPanel.height-25;
+				agora.x = 200;
+				agora.width = stage.stageWidth - agora.x;
 				topPanel.width = stage.stageWidth;
 			}
 			

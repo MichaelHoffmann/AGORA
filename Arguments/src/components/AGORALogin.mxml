@@ -4,8 +4,6 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="932" height="300"
 	     xmlns:components="components.*"
 		 preinitialize="preInitializeHandler()">
-	<fx:Style>
-	</fx:Style>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -63,25 +61,25 @@
 				UserSessionController.getInstance().showRegistrationBox();	
 			}
 			
-		
-		
 		]]>
 	</fx:Script>
+
 		<!--The left side of the page that houses the guest login button-->
-		<s:SkinnableContainer id = "guestWelcome"
-							  left="0" right="682" top="0" bottom="0" backgroundColor="#29ABE2">
-			<s:layout><s:BasicLayout/></s:layout>
-			
+			<s:SkinnableContainer id="guestWelcome" left="0" top="0" bottom="0" width="250"
+								  backgroundColor="#29ABE2">
+				<s:layout><s:BasicLayout/></s:layout>
+				
+	
+				<!--This is the new user label on the side panel-->
+				<s:Label id="VisitorGreeting" x="7" width="230" height="71" fontFamily="Arial"
+						 fontSize="20" text="New to AGORA? Visit a world of debates and discussion."
+						 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
+				<!--The Guest Login button-->
 
-			<!--This is the new user label on the side panel-->
-			<s:Label id="VisitorGreeting" x="7" width="230" height="71" fontFamily="Arial"
-					 fontSize="20" text="New to AGORA? Visit a world of debates and discussion."
-					 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
-			<!--The Guest Login button-->
-			<s:Button x="49" width="154" height="40" label="Enter As Guest" fontSize="17" verticalCenter="9" 
-					  click="guestButton_onClick(event)"/>
-
-		</s:SkinnableContainer>
+				<s:Button x="49" width="154" height="40" label="Enter As Guest"
+						  click="guestButton_onClick(event)" verticalCenter="9"/>
+	
+			</s:SkinnableContainer>
 		<s:SkinnableContainer id="mainWelcome"
 			left="248" right="0" top="0" bottom="0" backgroundColor="#FFFFFF">
 			<s:layout><s:BasicLayout/></s:layout>
@@ -90,8 +88,8 @@
 			<!--This is the banner for that goes above the login/register buttons-->
 			<s:Label width="206" height="129" fontSize="35" horizontalCenter="-7" text="Welcome to&#xd;AGORA-net!" textAlign="center" verticalCenter="-26"/>
 			<!--This is the login button-->
-			<s:Button id="loginButton" width="120" height="40" label="Login" click="loginButton_onClick(event)" 
-					  horizontalCenter="-71" verticalCenter="19"/>
+			<s:Button id="loginButton" width="120" height="40" label="Login" horizontalCenter="-71"
+					  verticalCenter="19" click = "loginButton_onClick(event)"/>
 			<!--This is the New User Registration button-->
 			<s:Button id="registerButton" width="124" height="40" label="Register" click = "registerButton_onClick(event)" horizontalCenter="59" verticalCenter="19"/>
 			<!--This is the box group that forms the smaller links below Login/Register"-->
