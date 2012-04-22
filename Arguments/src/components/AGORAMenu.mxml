@@ -192,9 +192,7 @@
 			<s:Button id="backBtn"
 					  label="{Language.lookup('Back')}"
 					  click="backButton_OnClick()"/>
-			<s:Button id="hack"
-					  label="Hacked See all Button"
-					  click="hackButton_OnClick()"/>
+			
 		</s:HGroup>
 	</s:VGroup>	
 	<!--Adds the chat window to the menu-->
