@@ -53,7 +53,12 @@
 				focusManager.setFocus(username);
 			}
 			
-			
+			/**
+			 * Deprecated function call. Replaced by registerButton_onClick(). The reason for the change
+			 * is naming conventions. Trying to move toward a more smooth naming convention within AGORA.
+			 * No functionality has been altered so any call to this method will do the same as 
+			 * registerButton_onClick().
+			 */
 			public function register_form():void
 			{	
 				var userSessionController:UserSessionController = UserSessionController.getInstance();

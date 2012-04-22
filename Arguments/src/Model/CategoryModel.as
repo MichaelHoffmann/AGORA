@@ -6,6 +6,7 @@ package Model
 	
 	import flash.events.EventDispatcher;
 	
+	import mx.controls.Alert;
 	import mx.controls.List;
 	import mx.messaging.messages.HTTPRequestMessage;
 	import mx.rpc.events.FaultEvent;
@@ -15,8 +16,10 @@ package Model
 	public class CategoryModel extends EventDispatcher
 	{
 		public var category:XML;
+		public var map:XML;
 		private var request: HTTPService;
 		private var requestChildren: HTTPService;
+		private var requestChildMap: HTTPService;
 		public function CategoryModel()
 		{
 
@@ -30,6 +33,11 @@ package Model
 			requestChildren.resultFormat="e4x";
 			requestChildren.addEventListener(ResultEvent.RESULT, onCategoryFetched);
 			requestChildren.addEventListener(FaultEvent.FAULT, onFault);
+			requestChildMap = new HTTPService;
+			requestChildMap.url = AGORAParameters.getInstance().childMapURL;
+			requestChildMap.resultFormat="e4x";
+			requestChildMap.addEventListener(ResultEvent.RESULT, onMapFetched);
+			requestChildMap.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
 		public function requestCategory():void{
@@ -38,8 +46,12 @@ package Model
 		}
 		
 		protected function onCategoryFetched(event:ResultEvent):void{
-			category = event.result as XML;
+			category= event.result as XML;
 			dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED));
+		}
+		protected function onMapFetched(event:ResultEvent):void{
+			map = event.result as XML;
+			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_FETCHED));
 		}
 		
 		protected function onFault(event:FaultEvent):void{
@@ -48,6 +60,13 @@ package Model
 		
 		public function requestChildCategories(categoryName:String):void{
 			requestChildren.send({parentCategory: "'" + categoryName + "'"});
+			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+		}
+		public function onrequestChildMap(categoryName:String):void{
+			//Alert.show("woot");
+			//requestChildren.send({parentCategory: "'" + categoryName + "'"});
+			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
 		}
 		
 	}

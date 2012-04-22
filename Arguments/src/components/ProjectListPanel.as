@@ -2,13 +2,18 @@ package components
 {
 	import Model.AGORAModel;
 	import Model.ProjectListModel;
+	import Model.VerifyProjectPasswordModel;
 	
 	import classes.Language;
 	
+	import flash.display.DisplayObject;
+	import flash.events.Event;
+	
+	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.controls.Label;
-	
-	//import org.osmf.events.GatewayChangeEvent;
+	import mx.core.FlexGlobals;
+	import mx.managers.PopUpManager;
 	
 	import spark.components.Panel;
 	import spark.components.Scroller;
@@ -60,6 +65,13 @@ package components
 					button.toolTip = projXML.@creator;
 					button.width = 170;
 					vContentGroup.addElement(button);
+					button.addEventListener('click',function(e:Event):void{
+						e.stopImmediatePropagation();
+						AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+						FlexGlobals.topLevelApplication.join_project = new Join_Project;
+						PopUpManager.addPopUp(FlexGlobals.topLevelApplication.join_project, DisplayObject(FlexGlobals.topLevelApplication),true);
+						PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.join_project);
+					}, false, 1,false);
 				}
 			}
 		}

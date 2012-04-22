@@ -11,13 +11,18 @@
 			import Controller.UserSessionController;
 			
 			import Model.AGORAModel;
+			import Model.CategoryModel;
 			import Model.UserSessionModel;
+			
+			import ValueObjects.CategoryDataV0;
 			
 			import classes.Language;
 			
 			import flash.system.Capabilities;
 			
+			import mx.collections.ArrayList;
 			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			
 			public var timer:Timer = new Timer(10000);
@@ -34,6 +39,8 @@
 				timer.addEventListener(TimerEvent.TIMER, timerFired);
 				timer.start();
 				AGORAController.getInstance().fetchDataCategory();
+				AGORAController.getInstance().fetchDataMapList();
+				AGORAController.getInstance().fetchDataProjectList();
 			}
 			
 			protected function timerFired(event:TimerEvent):void{
@@ -46,7 +53,6 @@
 				if(userSession.username == "Guest"){
 					Alert.show("You must log in with a non guest account before creating a map");
 				} else {
-					AGORAController.getInstance().setProject = false;
 					AGORAController.getInstance().displayMapInfoBox();
 				}
 			}
@@ -65,25 +71,45 @@
 			
 			
 			protected function projectsButton_OnClick(event:MouseEvent):void{
-//				this.tabNav.setVisible(false,true);
-//				this.mainPanel.visible=true;
+
 				
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 				if(userSession.username == "Guest"){
 					Alert.show("You must log in with a non guest account before creating a map");
 				} else {
-					AGORAController.getInstance().setProject = true;
-					AGORAController.getInstance().displayMapInfoBox();
+					AGORAController.getInstance().displayProjectInfoBox();
 				}
 			}
 			
 			protected function backButton_OnClick():void{
-				this.tabNav.setVisible(true,true);
-				this.mainPanel.visible=false;
+//				if(!this.mainPanel.visible){
+//					this.tabNav.setVisible(false,true);
+//					this.mainPanel.visible=true;
+//				} else {
+//					this.tabNav.setVisible(true,true);
+//					this.mainPanel.visible=false;
+//				}
+				var cg:ArrayList = AGORAController.getInstance().categoryChain;
+				var temp:String = (CategoryDataV0)(cg.getItemAt(cg.length-1)).parent;
+				cg.removeItemAt(cg.length-1);
+				if(!temp){
+					AGORAController.getInstance().fetchDataCategory();
+					AGORAController.getInstance().fetchDataChildMap(temp);
+				}
+				else{
+					AGORAController.getInstance().fetchDataChildCategory(temp);
+					AGORAController.getInstance().fetchDataChildMap(temp);
+				}
+				
 			}
-			
-			protected function test():void{
-				//Do nothing
+			protected function hackButton_OnClick():void{
+				if(!this.mainPanel.visible){
+					this.tabNav.setVisible(false,true);
+					this.mainPanel.visible=true;
+				} else {
+					this.tabNav.setVisible(true,true);
+					this.mainPanel.visible=false;		
+				}
 			}
 		]]>
 	</fx:Script>
@@ -111,7 +137,7 @@
 		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
 			<s:HGroup id="myMapsHorizGroup" y="10" horizontalCenter="0">
 				<components:MyMapsPanel id="myMaps" width="100%" height="100%" horizontalCenter="0"
-										focusIn="test()">
+										>
 				</components:MyMapsPanel>
 			</s:HGroup>
 		</s:NavigatorContent>
@@ -163,6 +189,9 @@
 			<s:Button id="backBtn"
 					  label="{Language.lookup('Back')}"
 					  click="backButton_OnClick()"/>
+			<s:Button id="hack"
+					  label="Hacked See all Button"
+					  click="hackButton_OnClick()"/>
 		</s:HGroup>
 	</s:VGroup>	
 	<!--Adds the chat window to the menu-->

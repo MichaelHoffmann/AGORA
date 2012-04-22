@@ -8,7 +8,10 @@ package Controller
 	import Model.ChatModel;
 	import Model.MapListModel;
 	import Model.ProjectListModel;
+	import Model.ProjectsModel;
+	import Model.PushProject;
 	import Model.UserSessionModel;
+	import Model.VerifyProjectPasswordModel;
 	
 	import ValueObjects.ChatDataVO;
 	import ValueObjects.UserDataVO;
@@ -20,6 +23,7 @@ package Controller
 	import components.MapName;
 	import components.MyMapName;
 	import components.MyMapsPanel;
+	import components.ProjectName;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
@@ -46,8 +50,7 @@ package Controller
 		private var mapModel:AGORAMapModel;
 		private var model:AGORAModel;
 		private var project:Boolean;
-		private var categoryChain:ArrayList;
-		
+		private var _categoryChain:ArrayList;
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
@@ -131,6 +134,18 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 		}
+		public function fetchDataChildMap(parentCategory:String):void{
+			menu.categories.loadingDisplay.text = Language.lookup("Loading");
+			menu.categories.loadingDisplay.visible = true;
+			var categoryM:CategoryModel = model.categoryModel;
+			categoryM.onrequestChildMap(parentCategory);
+		}
+		protected function onChildMapFetched(event:AGORAEvent):void{
+			menu.categories.loadingDisplay.visible = false;
+			menu.categories.invalidateProperties();
+			menu.categories.invalidateDisplayList();
+		}
+		
 		
 		//------------------Fetch Chat--------------------------------//
 		public function fetchDataChat():void{
@@ -155,6 +170,17 @@ package Controller
 			menu.projects.invalidateProperties();
 			menu.projects.invalidateDisplayList();
 		}
+		
+		public function pushNewProject():void{
+			var pp:PushProject = new PushProject;
+			pp.sendRequest();
+		}
+		
+		public function verifyProjectPassword():void{
+			var verifyPassword:VerifyProjectPasswordModel = new VerifyProjectPasswordModel;
+			verifyPassword.send();
+		}
+		
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
@@ -233,11 +259,11 @@ package Controller
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
-			fetchDataMapList();
+			//fetchDataMapList();
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				fetchDataMyMaps();
 			}
-			fetchDataProjectList();
+			//fetchDataProjectList();
 			fetchDataChat();
 		}
 		
@@ -320,14 +346,29 @@ package Controller
 			}
 		}
 		
-		public function get getProject():Boolean{
-			
-			return this.project;
+		public function displayProjectInfoBox():void{
+			var agoraModel:AGORAModel = AGORAModel.getInstance();
+			if(agoraModel.userSessionModel.loggedIn()){
+				FlexGlobals.topLevelApplication.projectNameBox = new ProjectName;
+				var pojectNameDialog:ProjectName = FlexGlobals.topLevelApplication.projectNameBox;
+				PopUpManager.addPopUp(pojectNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
+				PopUpManager.centerPopUp(pojectNameDialog);
+			}
+			else{
+				Alert.show(Language.lookup("MustRegister"));
+			}
 		}
-		
-		public function set setProject(project:Boolean):void{
-			this.project = project;
+
+		public function get categoryChain():ArrayList
+		{
+			return _categoryChain;
 		}
+
+		public function set categoryChain(value:ArrayList):void
+		{
+			_categoryChain = value;
+		}
+
 	}
 }
 
