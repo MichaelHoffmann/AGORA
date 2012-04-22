@@ -119,17 +119,17 @@
 	</fx:Declarations>
 	<mx:TabNavigator id="tabNav" width="800" height="400" cornerRadius="0" creationPolicy="all"
 					 horizontalCenter="0" name="tabNav" tabWidth="267" textAlign="center"
-					 verticalCenter="-26">
+					 verticalCenter="-80">
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/>
-				<s:Group horizontalCenter="-3" verticalCenter="-25">
-					<components:CategoryPanel id="categories" width="482" height="309"
-											  horizontalCenter="0"
-											  skinClass="spark.skins.spark.SkinnableContainerSkin"
-											  title="category" verticalCenter="0">	
-					</components:CategoryPanel>
-				</s:Group>
+					<s:Group horizontalCenter="-3" verticalCenter="-25">
+						<components:CategoryPanel id="categories" width="482" height="309"
+												  horizontalCenter="0"
+												  skinClass="spark.skins.spark.SkinnableContainerSkin"
+												  title="category" verticalCenter="0">	
+						</components:CategoryPanel>
+					</s:Group>
 		</s:NavigatorContent>
 		
 		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
@@ -152,9 +152,10 @@
 		</s:NavigatorContent>
 	</mx:TabNavigator>		
 	
-	<s:VGroup id="Agora" horizontalCenter="0" verticalCenter="-40">
-		<s:Label id="Greeting" width="197" height="92" text="{Language.lookup('WelcomeShort')} 2.3"
-				 verticalAlign="bottom">
+	<s:VGroup id="Agora" width="800" horizontalAlign="center" horizontalCenter="0"
+			  verticalCenter="-100">
+		<s:Label id="Greeting" x="295" width="211" height="54"
+				 text="{Language.lookup('WelcomeShort')} 2.3" verticalAlign="bottom">
 		</s:Label>
 		<s:HGroup id="mainPanel" 
 				  paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25" visible="false">
@@ -171,7 +172,8 @@
 		</s:HGroup>
 		
 		<!--Horizontal row of buttons at the bottom of the screen-->
-		<s:HGroup id="bottomButtonRow" paddingLeft="0" paddingTop="25" textAlign="center">
+		<s:HGroup id="bottomButtonRow" paddingLeft="0" paddingTop="25" textAlign="center"
+				  verticalAlign="middle">
 
 			<s:Button id="createProjectBtn" 
 					  label="{Language.lookup(&quot;NewProject&quot;)}" click="projectsButton_OnClick(event)">
@@ -196,6 +198,6 @@
 	</s:VGroup>	
 	<!--Adds the chat window to the menu-->
 	<components:ChatWindow id="chat" width="200" height="396" horizontalCenter="-556" name="chat"
-						   verticalCenter="-28">
+						   verticalCenter="-80">
 	</components:ChatWindow>
 </s:Group>
