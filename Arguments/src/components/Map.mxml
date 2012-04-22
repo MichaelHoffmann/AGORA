@@ -34,10 +34,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<components:StatusBar id="sBar" visible="false">
 	</components:StatusBar>
 	
-	<s:Group id="theMap" x="200">
+	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false">	
 			<s:Group>
-				<mx:Canvas>
+				<mx:Canvas x="200">
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" >	
 					</components:AgoraMap>	
 				</mx:Canvas>
@@ -88,7 +88,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			public function setWidth(event: Event):void
 			{
 				agora.height =  stage.stageHeight - topPanel.height-25;
-				agora.x = 200;
 				agora.width = stage.stageWidth - agora.x;
 				topPanel.width = stage.stageWidth;
 			}
