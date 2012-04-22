@@ -3,7 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:components="components.*"
-		 creationComplete="creationCompleteHandler(event)">
+		 width="1166" height="596" creationComplete="creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -119,9 +119,9 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:TabNavigator id="tabNav" width="800" height="400" cornerRadius="0" creationPolicy="all"
-					 horizontalCenter="0" name="tabNav" tabWidth="267" textAlign="center"
-					 verticalCenter="-80">
+	<mx:TabNavigator id="tabNav" top="100" width="800" height="400" cornerRadius="0"
+					 creationPolicy="all" horizontalCenter="0" name="tabNav" tabWidth="267"
+					 textAlign="center">
 		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/>
@@ -154,13 +154,12 @@
 		</s:NavigatorContent>
 	</mx:TabNavigator>		
 	
-	<s:VGroup id="Agora" width="800" horizontalAlign="center" horizontalCenter="0"
-			  verticalCenter="-100">
+	<s:VGroup id="Agora" top="17" width="800" horizontalAlign="center" horizontalCenter="0">
 		<s:Label id="Greeting" x="295" width="211" height="54"
 				 text="{Language.lookup('WelcomeShort')} 2.3" verticalAlign="bottom">
 		</s:Label>
-		<s:HGroup id="mainPanel" 
-				  paddingLeft="25" paddingTop="25" paddingRight="25" paddingBottom="25" visible="false">
+		<s:HGroup id="mainPanel" visible="false" height="436" paddingBottom="25" paddingLeft="25"
+				  paddingRight="25" paddingTop="25">
 			<components:MapListPanel 
 				id="mapList" 
 				title="{Language.lookup(&quot;ListMaps&quot;)}" 
@@ -174,7 +173,7 @@
 		</s:HGroup>
 		
 		<!--Horizontal row of buttons at the bottom of the screen-->
-		<s:HGroup id="bottomButtonRow" paddingLeft="0" paddingTop="25" textAlign="center"
+		<s:HGroup id="bottomButtonRow" height="36" paddingLeft="0" paddingTop="25" textAlign="center"
 				  verticalAlign="middle">
 
 			<s:Button id="createProjectBtn" 
@@ -199,7 +198,7 @@
 		</s:HGroup>
 	</s:VGroup>	
 	<!--Adds the chat window to the menu-->
-	<components:ChatWindow id="chat" width="200" height="396" horizontalCenter="-556" name="chat"
-						   verticalCenter="-80">
+	<components:ChatWindow id="chat" top="100" width="200" height="396" horizontalCenter="-556"
+						   name="chat">
 	</components:ChatWindow>
 </s:Group>
