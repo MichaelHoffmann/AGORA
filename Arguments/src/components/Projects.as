@@ -10,9 +10,13 @@ package components
 	
 	import classes.Language;
 	
+	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import mx.controls.Button;
+	import mx.core.FlexGlobals;
+	import mx.managers.PopUpManager;
 	
 	import spark.components.Label;
 	import spark.components.Panel;
@@ -79,7 +83,14 @@ package components
 						button.label = xml.@title;
 						button.toolTip = xml.@creator;
 						projectsGroup.addElement(button);
-						button.addEventListener(MouseEvent.CLICK, getProjectPanel);
+						button.addEventListener('click',function(e:Event):void{
+							e.stopImmediatePropagation();
+							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+							FlexGlobals.topLevelApplication.join_project = new Join_Project;
+							PopUpManager.addPopUp(FlexGlobals.topLevelApplication.join_project, DisplayObject(FlexGlobals.topLevelApplication),true);
+							PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.join_project);
+						}, false, 1,false);
+						
 					}
 				}	
 			}

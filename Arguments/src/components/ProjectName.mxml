@@ -27,12 +27,14 @@
 			private var _password:String;
 			public function map_name():void{
 				if(passwordSet.text == confirmPassword.text){
-					AGORAModel.getInstance().agoraMapModel.name = projectName.text;
-					AGORAModel.getInstance().agoraMapModel.projectPassword =  MD5.hash(_password);
 					this._password = passwordSet.text;
+					AGORAModel.getInstance().agoraMapModel.name = projectName.text;				
+					AGORAModel.getInstance().agoraMapModel.projectPassword =  MD5.hash(_password);
+					Alert.show("Post model.name");
+					
 					this.visible=false;
+					
 					AGORAController.getInstance().pushNewProject();
-					AGORAController.getInstance().freeze();
 					ArgumentController.getInstance().createMap(projectName.text);
 				}else{
 					Alert.show(Language.lookup("PassMismatch"));
