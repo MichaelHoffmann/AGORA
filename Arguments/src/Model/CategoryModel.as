@@ -61,11 +61,12 @@ package Model
 		public function requestChildCategories(categoryName:String):void{
 			requestChildren.send({parentCategory: "'" + categoryName + "'"});
 			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
 		}
 		public function onrequestChildMap(categoryName:String):void{
 			//Alert.show("woot");
 			//requestChildren.send({parentCategory: "'" + categoryName + "'"});
-			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
 		}
 		
 	}

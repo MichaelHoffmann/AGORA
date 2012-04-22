@@ -1,0 +1,39 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+s|Button
+{
+	cornerRadius: 5;
+	chromeColor: #FFFFFF;
+	border: #FFFFFF
+}
+
+s|Button:over
+{
+	cornerRadius: 5;
+	chromeColor: #6FC3E7;
+}
+
+s|Button:down
+{
+	cornerRadius: 5;
+	chromeColor: #1C759A;
+}
+
+mx|Button
+{
+	cornerRadius: 5;
+	chromeColor: #FFFFFF;
+}
+
+mx|Button:overSkin
+{
+	cornerRadius: 5;
+	chromeColor: #6FC3E7;
+}
+
+mx|Button:downSkin
+{
+	cornerRadius: 5;
+	chromeColor: #1C759A;
+}

@@ -39,6 +39,8 @@
 				timer.addEventListener(TimerEvent.TIMER, timerFired);
 				timer.start();
 				AGORAController.getInstance().fetchDataCategory();
+				AGORAController.getInstance().fetchDataMapList();
+				AGORAController.getInstance().fetchDataProjectList();
 			}
 			
 			protected function timerFired(event:TimerEvent):void{
@@ -90,11 +92,16 @@
 //					this.mainPanel.visible=false;
 //				}
 				var cg:ArrayList = AGORAController.getInstance().categoryChain;
-				var temp:String = (CategoryDataV0)(cg.removeItemAt(cg.length-1)).parent;
-				if(!temp)
+				var temp:String = (CategoryDataV0)(cg.getItemAt(cg.length-1)).parent;
+				cg.removeItemAt(cg.length-1);
+				if(!temp){
 					AGORAController.getInstance().fetchDataCategory();
-				else
+					AGORAController.getInstance().fetchDataChildMap(temp);
+				}
+				else{
 					AGORAController.getInstance().fetchDataChildCategory(temp);
+					AGORAController.getInstance().fetchDataChildMap(temp);
+				}
 				
 			}
 			protected function hackButton_OnClick():void{
@@ -190,7 +197,7 @@
 		</s:HGroup>
 	</s:VGroup>	
 	<!--Adds the chat window to the menu-->
-	<components:ChatWindow id="chat" width="200" height="376" horizontalCenter="505" name="chat"
-						   verticalCenter="-18">
+	<components:ChatWindow id="chat" width="200" height="396" horizontalCenter="-556" name="chat"
+						   verticalCenter="-28">
 	</components:ChatWindow>
 </s:Group>
