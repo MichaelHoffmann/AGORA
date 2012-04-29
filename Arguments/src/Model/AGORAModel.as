@@ -26,6 +26,7 @@ package Model
 		public var agoraMapModel:AGORAMapModel;
 		public var projectListModel:ProjectListModel;
 		public var myProjectsModel:ProjectsModel;
+		public var loadProjMaps:LoadProjectMapsModel;
 		public var categoryModel:CategoryModel;
 		public var chatModel:ChatModel;
 		public var pushChatModel:PushChatModel;
@@ -46,6 +47,7 @@ package Model
 			agoraMapModel = new AGORAMapModel;
 			projectListModel = new ProjectListModel();
 			myProjectsModel = new ProjectsModel;
+			loadProjMaps = new LoadProjectMapsModel;
 			categoryModel= new CategoryModel;
 			chatModel = new ChatModel;
 			pushChatModel = new PushChatModel;

@@ -53,6 +53,7 @@ package Model
 		private var _deletedList:Vector.<Object>;
 		private var _mapConstructedFromArgument:Boolean;
 		private var _argUnderConstruction:Boolean;
+		private var _projID:int;
 		
 		private var _projectID:int;
 		private var _projectPassword:String;
@@ -788,6 +789,16 @@ package Model
 		public function set projectPassword(value:String):void
 		{
 			_projectPassword = value;
+		}
+
+		public function get projID():int
+		{
+			return _projID;
+		}
+
+		public function set projID(value:int):void
+		{
+			_projID = value;
 		}
 
 		

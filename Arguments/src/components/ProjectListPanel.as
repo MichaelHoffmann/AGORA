@@ -1,6 +1,10 @@
 package components
 {
+	import Controller.ArgumentController;
+	
 	import Model.AGORAModel;
+	import Model.LoadProjectMapsModel;
+	import Model.MapMetaData;
 	import Model.ProjectListModel;
 	import Model.VerifyProjectPasswordModel;
 	
@@ -8,6 +12,7 @@ package components
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import mx.controls.Alert;
 	import mx.controls.Button;
@@ -22,14 +27,17 @@ package components
 	public class ProjectListPanel extends Panel
 	{
 		private var model:ProjectListModel;
+		private var projMapModel:LoadProjectMapsModel;
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
+		
 		public var vContentGroup:VGroup; 
 		
 		public function ProjectListPanel()
 		{
 			super();
 			model = AGORAModel.getInstance().projectListModel;
+			projMapModel = AGORAModel.getInstance().loadProjMaps;
 		}
 		
 		override protected function createChildren():void{
@@ -65,7 +73,8 @@ package components
 					button.toolTip = projXML.@creator;
 					button.width = 170;
 					vContentGroup.addElement(button);
-					button.addEventListener('click',function(e:Event):void{
+					button.addEventListener('click',function(e:Event):void
+					{
 						e.stopImmediatePropagation();
 						AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 						FlexGlobals.topLevelApplication.join_project = new Join_Project;
@@ -76,8 +85,54 @@ package components
 			}
 		}
 		
+		/**
+		 * Deletes the current window and repopulates with the maps within that project.
+		 * This was taken from mapListPanel and refactored
+		 */
+		public function onCorrectPassword(projectMapList:XML):void{
+			super.commitProperties();
+			vContentGroup.removeAllElements();
+			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+			for each (var projectMapList:XML in projectMapList.map){
+				try{
+					if(projectMapList.@is_deleted == "1"){
+						
+						continue;
+					} else if(projectMapList.@proj_id != null){
+						//This needs to be set to continue
+					}
+				}catch(error:Error){
+					trace("is_deleted not available yet");
+				}
+				
+				//var mapObject:Object = new Object;
+				mapMetaData = new MapMetaData;
+				mapMetaData.mapID = int(projectMapList.attribute("ID")); 
+				mapMetaData.mapName = projectMapList.attribute("title");
+				//mapMetaData.mapCreator = map.attribute("creator");
+				mapMetaDataVector.push(mapMetaData);						
+			
+			
+				mapMetaDataVector.sort(MapMetaData.isGreater);
+				for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+					var mapButton:Button = new Button;
+					mapButton.width = 170;
+					mapButton.name = mapMetaData.mapID.toString();
+					mapButton.addEventListener('click', onMapObjectClicked);
+					mapButton.label = mapMetaData.mapName;
+					//mapButton.toolTip = mapMetaData.mapCreator;
+					vContentGroup.addElement(mapButton);
+				}
+			}
+			
+		}
+		
 		override protected function measure():void{
 			super.measure();	
+		}
+		
+		protected function onMapObjectClicked(event:MouseEvent):void{
+			ArgumentController.getInstance().loadMap(event.target.name);					
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{

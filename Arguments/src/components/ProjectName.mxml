@@ -29,13 +29,11 @@
 				if(passwordSet.text == confirmPassword.text){
 					this._password = passwordSet.text;
 					AGORAModel.getInstance().agoraMapModel.name = projectName.text;				
-					AGORAModel.getInstance().agoraMapModel.projectPassword =  MD5.hash(_password);
-					Alert.show("Post model.name");
-					
+					AGORAModel.getInstance().agoraMapModel.projectPassword =  MD5.hash(_password);					
 					this.visible=false;
 					
 					AGORAController.getInstance().pushNewProject();
-					ArgumentController.getInstance().createMap(projectName.text);
+					//ArgumentController.getInstance().createMap(projectName.text);
 				}else{
 					Alert.show(Language.lookup("PassMismatch"));
 					return;

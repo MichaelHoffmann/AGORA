@@ -27,6 +27,7 @@
 			import Model.MapListModel;
 			import Model.MapMetaData;
 			
+			import mx.controls.Alert;
 			import mx.controls.Label;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
@@ -52,7 +53,10 @@
 					{
 						try{
 							if(map.@is_deleted == "1"){
+								
 								continue;
+							} else if(map.@proj_id != null){
+								//This needs to be set to continue
 							}
 						}catch(error:Error){
 							trace("is_deleted not available yet");
@@ -60,7 +64,7 @@
 						//var mapObject:Object = new Object;
 						mapMetaData = new MapMetaData;
 						mapMetaData.mapID = int(map.attribute("ID")); 
-						mapMetaData.mapName = map.attribute("title"); 
+						mapMetaData.mapName = map.attribute("title");
 						//mapMetaData.mapCreator = map.attribute("creator");
 						mapMetaDataVector.push(mapMetaData);						
 					}

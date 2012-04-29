@@ -1,5 +1,6 @@
 package Model
 {
+	import Controller.AGORAController;
 	import Controller.ArgumentController;
 	import Controller.UserSessionController;
 	
@@ -21,7 +22,6 @@ package Model
 	public class VerifyProjectPasswordModel extends EventDispatcher
 	{
 		private var request: HTTPService;
-		private var request2: HTTPService;
 		public function VerifyProjectPasswordModel()
 		{
 			request = new HTTPService;
@@ -29,11 +29,6 @@ package Model
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onSuccessfulJoin);
 			request.addEventListener(FaultEvent.FAULT, onFault);
-			request = new HTTPService;
-			request2.url = AGORAParameters.getInstance().getMapFromProjURL;
-			request2.resultFormat="e4x";
-			request2.addEventListener(ResultEvent.RESULT, onGotMapID);
-			request2.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
 		public function send():void{
@@ -46,9 +41,10 @@ package Model
 		protected function onSuccessfulJoin(event:ResultEvent):void{
 			var result:XML = event.result as XML;
 			if(result.@project_count == "1"){
-				
-//				FlexGlobals.topLevelApplication.map.visible = true;
-			} else{
+				//Potentially violating MVC. Need someone to help me consider this..
+				var loadProjMaps:LoadProjectMapsModel = new LoadProjectMapsModel;
+				loadProjMaps.sendRequest();
+			} else {
 				Alert.show("Incorrect Password");
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PASSWORD_VERIFIED));
