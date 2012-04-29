@@ -48,6 +48,7 @@ package Events
 		public static const CHAT_PUSHED:String = "ChatPushed";
 		public static const MAP_FETCHED:String ="MapFetched";
 		public static const PROJECT_PASSWORD_VERIFIED:String = "ProjectJoined";
+		public static const MAP_ADDED:String = "MapMoved";
 		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
