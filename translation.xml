@@ -48,11 +48,11 @@
 		<GER text="PHIL 3109, Georgia Tech" />
 	</PHIL3109>
 
-	<2011>
+	<Date2011>
 		<EN-US text="2011" />
 		<RUS text="2011" /><!--TODO Translate -->
 		<GER text="2011" />
-	</2011>
+	</Date2011>
 
 	<BMSTU>
 		<EN-US text="Bauman Moscow State Technical University" />
@@ -66,17 +66,17 @@
 		<GER text="Public Policy" />
 	</PublicPolicy>
 
-	<2012>
+	<Date2012>
 		<EN-US text="2012" />
 		<RUS text="2012" /><!--TODO Translate -->
 		<GER text="2012" />
-	</>
+	</Date2012>
 
 	<PubP6010>
 		<EN-US text="PUBP 6010, Georgia Tech" />
 		<RUS text=" PUBP 6010, Georgia Tech" /><!--TODO Translate -->
 		<GER text=" PUBP 6010, Georgia Tech" />
-	</PubP 6010>
+	</PubP6010>
 
 	<PHIL2025>
 		<EN-US text="PHIL 2025, Georgia Tech" />
