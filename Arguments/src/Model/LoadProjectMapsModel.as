@@ -42,6 +42,7 @@ package Model
 		protected function onResult(event:ResultEvent):void{
 			projectMapList = event.result as XML;
 			FlexGlobals.topLevelApplication.agoraMenu.projects.onCorrectPassword(projectMapList);
+			FlexGlobals.topLevelApplication.agoraMenu.myProjects.onCorrectPassword(projectMapList);
 			dispatchEvent(new AGORAEvent(AGORAEvent.MY_PROJECTS_LIST_FETCHED));
 		}
 		
