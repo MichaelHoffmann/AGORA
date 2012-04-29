@@ -7,6 +7,7 @@ package Controller
 	import Model.CategoryModel;
 	import Model.ChatModel;
 	import Model.MapListModel;
+	import Model.MoveMapToProjectModel;
 	import Model.ProjectListModel;
 	import Model.ProjectsModel;
 	import Model.PushProject;
@@ -45,7 +46,6 @@ package Controller
 		private static var instance:AGORAController;
 		private var menu:AGORAMenu;
 		private var map:Map;
-		
 		private var userSession:UserSessionModel;
 		private var mapModel:AGORAMapModel;
 		private var model:AGORAModel;
@@ -76,7 +76,6 @@ package Controller
 			map = FlexGlobals.topLevelApplication.map;
 			userSession = AGORAModel.getInstance().userSessionModel;
 			mapModel = AGORAModel.getInstance().agoraMapModel;
-			
 			categoryChain = new ArrayList();
 		}
 		
@@ -181,6 +180,10 @@ package Controller
 			verifyPassword.send();
 		}
 		
+		public function addMapToProject():void{
+			var mapToProject:MoveMapToProjectModel = new MoveMapToProjectModel;
+			
+		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
 		public function fetchDataMyMaps():void{
