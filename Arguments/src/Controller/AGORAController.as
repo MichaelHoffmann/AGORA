@@ -180,9 +180,9 @@ package Controller
 			verifyPassword.send();
 		}
 		
-		public function addMapToProject():void{
+		public function addMapToProject(mapID:int, projID:int):void{
 			var mapToProject:MoveMapToProjectModel = new MoveMapToProjectModel;
-			
+			mapToProject.send(mapID,projID);
 		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
