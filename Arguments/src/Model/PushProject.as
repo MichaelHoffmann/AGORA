@@ -35,12 +35,12 @@ package Model
 		public function sendRequest():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
-				request.send({uid: userSessionModel.uid, pass_hash: userSessionModel.passHash, newpass: AGORAModel.getInstance().agoraMapModel.projectPassword, projID: 0, title: AGORAModel.getInstance().agoraMapModel.name, is_hostile: 0});	
+				request.send({uid: userSessionModel.uid, pass_hash: userSessionModel.passHash, 
+					newpass: AGORAModel.getInstance().agoraMapModel.projectPassword, projID: 0, title: AGORAModel.getInstance().agoraMapModel.name, is_hostile: 0});	
 			}
 		}
 		
 		protected function onResult(event:ResultEvent):void{
-			Alert.show("Valid");
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
 		
