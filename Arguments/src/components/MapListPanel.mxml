@@ -55,8 +55,8 @@
 							if(map.@is_deleted == "1"){
 								
 								continue;
-							} else if(map.@proj_id != null){
-								//This needs to be set to continue
+							} else if(map.@proj_id != "NULL"){
+								continue;
 							}
 						}catch(error:Error){
 							trace("is_deleted not available yet");

@@ -1,10 +1,12 @@
 package components
 {
+	import Controller.ArgumentController;
 	import Controller.UserSessionController;
 	
 	import Events.AGORAEvent;
 	
 	import Model.AGORAModel;
+	import Model.MapMetaData;
 	import Model.ProjectsModel;
 	import Model.UserSessionModel;
 	
@@ -14,6 +16,7 @@ package components
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
@@ -30,6 +33,7 @@ package components
 		public var scroller:Scroller;
 		public var model:ProjectsModel;
 		public var signIn:Label;
+		public var vContentGroup:VGroup;
 		
 		public function Projects()
 		{
@@ -109,10 +113,58 @@ package components
 			}
 		}
 		
+		
+		/**
+		 * Deletes the current window and repopulates with the maps within that project.
+		 * This was taken from mapListPanel and refactored
+		 */
+		public function onCorrectPassword(projectMapList:XML):void{
+			Alert.show("Here");
+			super.commitProperties();
+			vContentGroup.removeAllElements();
+			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+			for each (var projectMapList:XML in projectMapList.map){
+				try{
+					if(projectMapList.@is_deleted == "1"){
+						
+						continue;
+					} else if(projectMapList.@proj_id != null){
+						//This needs to be set to continue
+					}
+				}catch(error:Error){
+					trace("is_deleted not available yet");
+				}
+				
+				//var mapObject:Object = new Object;
+				mapMetaData = new MapMetaData;
+				mapMetaData.mapID = int(projectMapList.attribute("ID")); 
+				mapMetaData.mapName = projectMapList.attribute("title");
+				//mapMetaData.mapCreator = map.attribute("creator");
+				mapMetaDataVector.push(mapMetaData);						
+				
+				
+				mapMetaDataVector.sort(MapMetaData.isGreater);
+				for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+					var mapButton:Button = new Button;
+					mapButton.width = 170;
+					mapButton.name = mapMetaData.mapID.toString();
+					mapButton.addEventListener('click', onMapObjectClicked);
+					mapButton.label = mapMetaData.mapName;
+					//mapButton.toolTip = mapMetaData.mapCreator;
+					vContentGroup.addElement(mapButton);
+				}
+			}
+			
+		}
+		
 		private function getProjectPanel(event:MouseEvent):void{
 			var button:Button = event.target as Button;
 			//call controller
 			
+		}
+		
+		protected function onMapObjectClicked(event:MouseEvent):void{
+			ArgumentController.getInstance().loadMap(event.target.name);					
 		}
 		
 		private function showSignInBox(event:MouseEvent):void{
