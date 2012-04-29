@@ -94,6 +94,7 @@
 				var cg:ArrayList = AGORAController.getInstance().categoryChain;
 				var temp:String = (CategoryDataV0)(cg.getItemAt(cg.length-1)).parent;
 				cg.removeItemAt(cg.length-1);
+				//Alert.show(cg.length.toString());
 				if(!temp){
 					AGORAController.getInstance().fetchDataCategory();
 					AGORAController.getInstance().fetchDataChildMap(temp);

@@ -2,7 +2,7 @@ package components
 {
 	import Controller.AGORAController;
 	import Controller.ArgumentController;
-	
+	import flash.events.MouseEvent;
 	import Model.AGORAModel;
 	import Model.CategoryModel;
 	import Model.MapMetaData;	
@@ -72,7 +72,6 @@ package components
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
-			
 			categoryTiles.removeAllElements();
 			//add elements
 			if(model.category){
@@ -84,29 +83,23 @@ package components
 					button.height = 80;
 					button.setStyle("chromeColor", 0xA0CADB);
 					button.addEventListener('click',function(e:Event):void{
-						e.stopImmediatePropagation();
-					
+						e.stopImmediatePropagation();	
 						AGORAController.getInstance().fetchDataChildCategory(e.target.label);
 						AGORAController.getInstance().fetchDataChildMap(e.target.label);
 						var cg:ArrayList = AGORAController.getInstance().categoryChain;
 						if(cg.length == 0){
 							cg.addItem(new CategoryDataV0(e.target.label, null));
-				
 						}
-						else{
-						
-							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));
-							
+						else{	
+							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));						
 						}
 						AGORAController.getInstance().categoryChain = cg;
 					}, false, 1,false);
 
 					categoryTiles.addElement(button);
-				}
-				
-				
+				}				
 			}
-			if(model.map){
+			/*if(model.map){
 				//Alert.show(model.map);
 				var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
 				for each(var mapXML:XML in model.map.map){
@@ -132,10 +125,42 @@ package components
 			}
 			
 			model.map=new XML;
-		}
+		}*/
+			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+			var mapList:XML = model.map;
+			if(mapList != null){
+				for each (var map:XML in mapList.map)
+				{
+					//var mapObject:Object = new Object;
+					mapMetaData = new MapMetaData;
+					mapMetaData.mapID = map.@ID;//int(map.attribute("ID")); 
+					mapMetaData.mapName = map.@Name;//map.attribute("title");
+					
+					//mapMetaData.mapCreator = map.attribute("creator");
+					mapMetaDataVector.push(mapMetaData);						
+				}
+				
+				mapMetaDataVector.sort(MapMetaData.isGreater);
+				for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+					var mapButton:Button = new Button;
+					mapButton.width = 150;
+					mapButton.height = 80;
+					mapButton.setStyle("chromeColor", 0xF99653);
+					mapButton.name = mapMetaData.mapID.toString();
+					mapButton.label = mapMetaData.mapName;
+					mapButton.addEventListener(MouseEvent.CLICK, onMapObjectClicked);
+				
+					
+					//mapButton.toolTip = mapMetaData.mapCreator;
+					categoryTiles.addElement(mapButton);
+				}
+			}
+	}
+		
+		protected function onMapObjectClicked(event:MouseEvent):void{
+			ArgumentController.getInstance().loadMap(event.target.name);					
 		}
 		
-
 		
 		override protected function measure():void{
 			super.measure();	
