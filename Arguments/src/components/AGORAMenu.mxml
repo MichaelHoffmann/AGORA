@@ -94,6 +94,8 @@
 				cg.removeItemAt(cg.length-1);
 				//Alert.show(cg.length.toString());
 				if(!temp){
+					this.tabNav.setVisible(true,true);
+					this.mainPanel.visible=false;
 					AGORAController.getInstance().fetchDataCategory();
 					AGORAController.getInstance().fetchDataChildMap(temp);
 				}
@@ -156,25 +158,30 @@
 			</s:Button>
 		</s:NavigatorContent>
 	</mx:TabNavigator>		
-	
+	<s:HGroup id="mainPanel2" visible="false" height="436" paddingBottom="25" paddingLeft="25"
+			  paddingRight="25" paddingTop="25">
+		<components:MapListPanel 
+			id="mapList" 
+			title="{Language.lookup(&quot;ListMaps&quot;)}" 
+			width="200" height="400"
+			>		
+		</components:MapListPanel>
+		
+		
+	</s:HGroup>
 	<s:VGroup id="Agora" top="17" width="800" horizontalAlign="center" horizontalCenter="0">
 		<s:Label id="Greeting" x="295" width="211" height="54"
 				 text="{Language.lookup('WelcomeShort')} 2.3" verticalAlign="bottom">
 		</s:Label>
 		<s:HGroup id="mainPanel" visible="false" height="436" paddingBottom="25" paddingLeft="25"
 				  paddingRight="25" paddingTop="25">
-			<components:MapListPanel 
-				id="mapList" 
-				title="{Language.lookup(&quot;ListMaps&quot;)}" 
-				width="200" height="400"
-				>		
-			</components:MapListPanel>
 			<components:ProjectListPanel id="projects" 
 										 title="{Language.lookup(&quot;ProjectPP&quot;)}" 
 										 width="200" height="400">	
 			</components:ProjectListPanel>
 
 		</s:HGroup>
+		
 		
 		<!--Horizontal row of buttons at the bottom of the screen-->
 		<s:HGroup id="bottomButtonRow" height="36" paddingLeft="0" paddingTop="25" textAlign="center"
@@ -192,9 +199,9 @@
 			<s:Button id="backBtn"
 					  label="{Language.lookup('Back')}"
 					  click="backButton_OnClick()"/>
-			<s:Button id="hackBtn"
+			<!--<s:Button id="hackBtn"
 					  label="{Language.lookup('Back')}"
-					  click="hackButton_OnClick()"/>
+					  click="hackButton_OnClick()"/>-->
 			
 		</s:HGroup>
 	</s:VGroup>	

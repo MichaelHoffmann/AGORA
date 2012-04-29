@@ -6,7 +6,8 @@ package components
 	import Model.AGORAModel;
 	import Model.CategoryModel;
 	import Model.MapMetaData;	
-	
+	import mx.core.FlexGlobals;
+	import components.AGORAMenu;
 	import ValueObjects.CategoryDataV0;
 	
 	import classes.Language;
@@ -82,6 +83,7 @@ package components
 					button.width = 150;
 					button.height = 80;
 					button.setStyle("chromeColor", 0xA0CADB);
+					if(categoryXML.@ID!=6){
 					button.addEventListener('click',function(e:Event):void{
 						e.stopImmediatePropagation();	
 						AGORAController.getInstance().fetchDataChildCategory(e.target.label);
@@ -95,7 +97,23 @@ package components
 						}
 						AGORAController.getInstance().categoryChain = cg;
 					}, false, 1,false);
-
+					}
+					else{
+					button.addEventListener('click',function(e:Event):void{
+						e.stopImmediatePropagation();	
+						//AGORAMenu.getInstance().projectListPanel();
+						FlexGlobals.topLevelApplication.agoraMenu.mainPanel.visible=true;
+						FlexGlobals.topLevelApplication.agoraMenu.tabNav.setVisible(false,true);
+						var cg:ArrayList = AGORAController.getInstance().categoryChain;
+						if(cg.length == 0){
+							cg.addItem(new CategoryDataV0(e.target.label, null));
+						}
+						else{	
+							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));						
+						}
+						AGORAController.getInstance().categoryChain = cg;
+					}, false, 1,false);
+					}
 					categoryTiles.addElement(button);
 				}				
 			}
