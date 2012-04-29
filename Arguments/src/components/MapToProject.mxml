@@ -28,6 +28,7 @@
 			import mx.events.FlexEvent;
 
 			protected function submitButton_OnClick():void{
+				this.visible = false;
 				AGORAController.getInstance().addMapToProject(AGORAModel.getInstance().agoraMapModel.ID, parseInt(projID.text)); 
 			}
 		]]>

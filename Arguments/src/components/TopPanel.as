@@ -125,6 +125,7 @@ package components
 		}
 		
 		protected function onAddToProject(event:MouseEvent):void{
+			FlexGlobals.topLevelApplication.move_map = new MapToProject;
 			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.move_map, DisplayObject(FlexGlobals.topLevelApplication),true);
 			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.move_map);
 		}

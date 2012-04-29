@@ -36,7 +36,7 @@ package Model
 		public function send(mapID:int, projID:int):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
-				request.send({map_id: mapID, projID: projID});	
+				request.send({map_id: mapID, proj_id: projID});	
 			}
 		}
 		
