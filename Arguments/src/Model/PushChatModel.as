@@ -19,6 +19,13 @@ package Model
 	{
 		
 		private var request: HTTPService;
+		
+		/**
+		 * Creates a chatmodel object. This constructor simply creates the HTTP request
+		 * 
+		 * Success: onChatPushed
+		 * Fail: onFault 
+		 */
 		public function ChatModel():void
 		{	
 			request = new HTTPService;
@@ -28,20 +35,29 @@ package Model
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
+		/**
+		 * Sends a chat data value object filled with the proper information to the database once the user hits send
+		 * in the chat box
+		 */
 		public function pushChat(text:String):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			var chatdatavo:ChatDataVO = new ChatDataVO;
 			chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
 			chatdatavo.textMessage = text;
-			chatdatavo.time = 99999999;
 			chatdatavo.username = userSessionModel.username;
 			userSessionModel.push_chat(chatdatavo);
 		}
 		
+		/**
+		 * This is called on a successful return from the PHP
+		 */
 		protected function onChatPushed(event:ResultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_PUSHED));
 		}
 		
+		/**
+		 * This is called on a unsuccessful return from the PHP
+		 */
 		protected function onFault(event:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}

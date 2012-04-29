@@ -2,6 +2,7 @@ package components
 {
 	import Controller.AGORAController;
 	import Controller.ArgumentController;
+	
 	import Model.AGORAModel;
 	import Model.CategoryModel;
 	
@@ -80,6 +81,7 @@ package components
 					button.label = categoryXML.@Name;
 					button.width = 150;
 					button.height = 80;
+					button.setStyle("chromeColor", 0xA0CADB);
 					button.addEventListener('click',function(e:Event):void{
 						e.stopImmediatePropagation();
 					
@@ -112,6 +114,7 @@ package components
 					button2.label = mapXML.@Name;
 					button2.width = 150;
 					button2.height = 80;
+					button2.setStyle("chromeColor", 0xF99653);
 					button2.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();ArgumentController.getInstance().loadMap(e.target.label);}, false, 1,false);
 					//button2.addEventListener('click', onMapObjectClicked);
 					categoryTiles.addElement(button2);

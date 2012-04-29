@@ -18,13 +18,25 @@ package Model
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	
+	
 	public class ChatModel extends EventDispatcher
 	{
 		
 		public var chat:XML;
 		private var request: HTTPService;
 	
-		
+		/**
+		 * Creates the ChatModel(CM) object. Simply instantiates the HTTP Request and configures it to use the appropriate 
+		 * configurations.
+		 * 
+		 * This also adds the event listeners to the request; where it goes is discernable by the resulting function call. The 
+		 * methods for both the failure and success are contained within this class. See those comments for more detail.
+		 * 
+		 * Success: onChatServiceResult
+		 * Failure: onChatServiceFault 
+		 * 
+		 * Generic Class Wide Event Listener: onChatFetched
+		 */
 		public function ChatModel()
 		{	
 			request = new HTTPService;
@@ -36,16 +48,23 @@ package Model
 
 		}
 		
+		/**
+		 * The send request for chat. Populates a Chat Data Value Object and sends it off. There
+		 * is more to this than meets the eye. This function gets called repeatedly so the 
+		 * population here corrects issues with the population of cdvo.
+		 */
 		public function requestChat():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			var chatdatavo:ChatDataVO = new ChatDataVO();
 			chatdatavo.map_name  = AGORAModel.getInstance().agoraMapModel.name;
 			chatdatavo.textMessage = "";
-			chatdatavo.time = 99999999;
 			chatdatavo.username = AGORAModel.getInstance().userSessionModel.username;
 			request.send({map_name: "'" + chatdatavo.map_name + "'"});
 		}
 		
+		/**
+		 * This is called upon successfully leaving the PHP. Invalidates the displays of the chats
+		 */
 		protected function onChatFetched(event:ResultEvent):void{
 			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateDisplayList();
@@ -53,17 +72,20 @@ package Model
 			FlexGlobals.topLevelApplication.map.chat.invalidateDisplayList();
 		}
 	
+		/**
+		 * This is called upon successfully leaving the PHP. Populates the value object and calls onChatFetched to
+		 * invalidate the displays
+		 */
 		protected function onChatServiceResult(event:ResultEvent):void{
 			chat = event.result as XML;
 			
-			//event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
-			//event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
 			onChatFetched(event);
 		}
 		
+		/**
+		 * This is called upon unsuccessfully leaving the PHP. Displays an error message in the chat window
+		 */
 		protected function onChatServiceFault(event:FaultEvent):void{
-			//event.target.removeEventListener(ResultEvent.RESULT, onChatServiceResult);
-			//event.target.removeEventListener(FaultEvent.FAULT, onChatServiceFault);
 			FlexGlobals.topLevelApplication.agoraMenu.chat.chatField.text = "Network Error While Loading Chat Information";
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 

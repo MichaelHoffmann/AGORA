@@ -21,6 +21,14 @@ package Model
 	{
 		public var projectList:XML;
 		private var request:HTTPService;
+		
+		/**
+		 * Constructor that takes in nothing and creates the object by first calling the EventDispatcher constructor and then
+		 * setting up the HTTP request. Sets timeout to be 3
+		 * 
+		 * Adds two event listeners, one that calls onResult function for when the PHP returns normally and one that calls onFault
+		 * for when it returns ungracefully
+		 */
 		public function PushProject()
 		{
 			super();
@@ -32,6 +40,10 @@ package Model
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
+		/**
+		 * Function that officially sends the HTTP request. This gets called when a new project has been created
+		 * 
+		 */
 		public function sendRequest():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
@@ -40,10 +52,16 @@ package Model
 			}
 		}
 		
+		/**
+		 * If the sendRequest method comes back normally, we enter here and broadcast PROJECT_PUSHED event
+		 */
 		protected function onResult(event:ResultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
 		
+		/**
+		 * If the sendRequest method comes back poorly, we enter here and broadcast the FAULT event
+		 */
 		protected function onFault(event:FaultEvent)    :void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
