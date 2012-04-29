@@ -169,7 +169,8 @@
 			<components:ProjectListPanel id="projects" 
 										 title="{Language.lookup(&quot;ProjectPP&quot;)}" 
 										 width="200" height="400">	
-			</components:ProjectListPanel>			
+			</components:ProjectListPanel>
+
 		</s:HGroup>
 		
 		<!--Horizontal row of buttons at the bottom of the screen-->
@@ -192,6 +193,9 @@
 			<s:Button id="backBtn"
 					  label="{Language.lookup('Back')}"
 					  click="backButton_OnClick()"/>
+			<s:Button id="hackBtn"
+					  label="{Language.lookup('Back')}"
+					  click="hackButton_OnClick()"/>
 			
 		</s:HGroup>
 	</s:VGroup>	

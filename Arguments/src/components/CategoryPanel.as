@@ -5,6 +5,7 @@ package components
 	
 	import Model.AGORAModel;
 	import Model.CategoryModel;
+	import Model.MapMetaData;	
 	
 	import ValueObjects.CategoryDataV0;
 	
@@ -107,20 +108,31 @@ package components
 			}
 			if(model.map){
 				//Alert.show(model.map);
+				var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
 				for each(var mapXML:XML in model.map.map){
-					
-					var button2:Button = new Button;
-					button2.name = mapXML.@ID;
-					button2.label = mapXML.@Name;
-					button2.width = 150;
-					button2.height = 80;
-					button2.setStyle("chromeColor", 0xF99653);
-					button2.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();ArgumentController.getInstance().loadMap(e.target.label);}, false, 1,false);
-					//button2.addEventListener('click', onMapObjectClicked);
-					categoryTiles.addElement(button2);
+					mapMetaData = new MapMetaData;
+					mapMetaData.mapID = int(mapXML.attribute("ID")); 
+					mapMetaData.mapName = mapXML.attribute("title"); 
+					//mapMetaData.mapCreator = map.attribute("creator");
+					mapMetaDataVector.push(mapMetaData);			
 				}
+				
+			
+			mapMetaDataVector.sort(MapMetaData.isGreater);
+			for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+				var button2:Button = new Button;
+				button2.name = mapXML.@ID;
+				button2.label = mapXML.@Name;
+				button2.width = 150;
+				button2.height = 80;
+				button2.setStyle("chromeColor", 0xF99653);
+				button2.addEventListener('click',function(e:Event):void{e.stopImmediatePropagation();ArgumentController.getInstance().loadMap(e.target.label);}, false, 1,false);
+				//button2.addEventListener('click', onMapObjectClicked);
+				categoryTiles.addElement(button2);
 			}
+			
 			model.map=new XML;
+		}
 		}
 		
 

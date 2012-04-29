@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Button x="106" y="164" label="Submit" click="submitButton_OnClick()"/>
+	<s:Button x="224" y="164" label="Cancel" click="this.visible=false;"/>
+	<s:Label x="27" y="112" text="Input unique project ID located next to the project in parentheses"/>
+	<s:TextArea x="106" y="132" height="24"/>
+
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.UserSessionController;
+			
+			import Model.AGORAModel;
+			import Model.UserSessionModel;
+			
+			import classes.Language;
+			
+			import flash.system.Capabilities;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			import mx.core.FlexGlobals;
+
+			protected function submitButton_OnClick():void{
+				
+			}
+		]]>
+
+	</fx:Script>
+</s:Group>

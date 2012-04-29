@@ -18,47 +18,35 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
-
-	public class VerifyProjectPasswordModel extends EventDispatcher
+	
+	public class MoveMapToProjectModel extends EventDispatcher
 	{
 		private var request: HTTPService;
-		public function VerifyProjectPasswordModel()
+		public function MoveMapToProjectModel()
 		{
+			
+			super();
 			request = new HTTPService;
-			request.url = AGORAParameters.getInstance().joinProjectURL;
+			request.url = AGORAParameters.getInstance().moveMapToProjectURL;
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onSuccessfulJoin);
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
-		public function send():void{
+		public function send(mapID:int, projID:int):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
-				request.send({pass_hash: AGORAModel.getInstance().agoraMapModel.projectPassword, projID: AGORAModel.getInstance().agoraMapModel.projectID});	
+				request.send({map_id: mapID, projID: projID});	
 			}
 		}
 		
 		protected function onSuccessfulJoin(event:ResultEvent):void{
-			var result:XML = event.result as XML;
-			if(result.@project_count == "1"){
-				//Potentially violating MVC. Need someone to help me consider this..
-				var loadProjMaps:LoadProjectMapsModel = new LoadProjectMapsModel;
-				loadProjMaps.sendRequest();
-			} else {
-				Alert.show("Incorrect Password");
-			}
-			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PASSWORD_VERIFIED));
+			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_ADDED));
 		}
 		
-		protected function onGotMapID(event:ResultEvent):void{
-			var result:XML = event.result as XML;
-			if(result.@mapID){
-				ArgumentController.getInstance().loadMap(result.@mapID);
-			}
-		}
 		
 		protected function onFault(event:FaultEvent):void{
-			Alert.show("Incorrect Password");
+			Alert.show("Could not move the map to the selected project");
 		}
 	}
 }

@@ -18,12 +18,18 @@ package components
 	import mx.printing.FlexPrintJob;
 	import mx.printing.FlexPrintJobScaleType;
 	
+	import spark.components.Label;
+	import spark.components.TextArea;
+	
 	public class TopPanel extends UIComponent
 	{
 		public var gotoMenuBtn:Button;
 		public var saveAsBtn:Button;
 		public var title:TitleDisplay;
 		public var print:Button;
+		public var addToProject:TextArea;
+		public var projectLabel:Label;
+		public var submitAddToProject:Button;
 		
 		private var agoraConstants:AGORAParameters;
 		private var background:Sprite;
@@ -67,6 +73,27 @@ package components
 				print.addEventListener(MouseEvent.CLICK, onPrint);
 				addChild(print);
 			}
+			
+			if(!projectLabel){
+				projectLabel = new Label;
+				projectLabel.text = "Move map into project using unique project identifier in parenthesis next to the project name";
+				projectLabel.height = projectLabel.getExplicitOrMeasuredHeight() - 5;
+				addChild(projectLabel);
+			}
+			if(!addToProject){
+				addToProject = new TextArea;
+				addToProject.height = 20;
+				addChild(addToProject);
+				
+				
+			}
+			
+			if(!submitAddToProject){
+				submitAddToProject = new Button;
+				submitAddToProject.label = "Submit";
+				submitAddToProject.addEventListener('click',onAddToProject);
+				addChild(submitAddToProject);
+			}
 		} 
 		
 		override protected function commitProperties():void{
@@ -92,8 +119,18 @@ package components
 			xB = xB + saveAsBtn.getExplicitOrMeasuredWidth() + 15;
 			print.setActualSize(print.getExplicitOrMeasuredWidth(), 30);
 			print.move(xB, 5);
+			xB = xB + print.getExplicitOrMeasuredWidth() + 15;
 			title.setActualSize(title.getExplicitOrMeasuredWidth(), title.getExplicitOrMeasuredHeight());
-			title.move(xB + print.getExplicitOrMeasuredWidth()+15,5);
+			title.move(xB,5);
+			xB = xB + title.getExplicitOrMeasuredWidth() + 15;
+			projectLabel.setActualSize(projectLabel.getExplicitOrMeasuredWidth(), projectLabel.getExplicitOrMeasuredHeight());
+			projectLabel.move(xB,5);
+			addToProject.setActualSize(addToProject.getExplicitOrMeasuredWidth(), addToProject.getExplicitOrMeasuredHeight());
+			addToProject.move(xB,7);
+			xB = xB + projectLabel.getExplicitOrMeasuredWidth() + 15;
+			submitAddToProject.setActualSize(submitAddToProject.getExplicitOrMeasuredWidth(), submitAddToProject.getExplicitOrMeasuredHeight());
+			submitAddToProject.move(xB,5);
+			
 		}
 		
 		//------------------------Event Handlers----------------------//
@@ -103,6 +140,10 @@ package components
 		
 		protected function onPrint(event:MouseEvent):void{
 			AGORAController.getInstance().printMap();
+		}
+		
+		protected function onAddToProject(event:MouseEvent):void{
+			//Send data to the database
 		}
 	}
 }

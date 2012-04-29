@@ -21,12 +21,17 @@ package ValueObjects
 		public var myProjectsURL:String;
 		public var pushProjectsURL:String;
 		public var joinProjectURL:String;
+		public var loadProjectMapsURL:String;
 		public var getMapFromProjURL:String;
+		public var moveMapToProjectURL:String;
 		public var categoryURL:String;
 		public var childCategoryURL:String;
 		public var chatPushURL:String;
 		public var chatPullURL:String;
 		public var childMapURL:String;
+		
+		
+		
 		
 		//Error Codes TODO: Enter these in the Languages.xml
 		public var ERROR_106:String;
@@ -165,7 +170,9 @@ package ValueObjects
 			myProjectsURL = "http://agora.gatech.edu/testing/my_projects.php";
 			pushProjectsURL = "http://agora.gatech.edu/testing/projects.php";
 			joinProjectURL = "http://agora.gatech.edu/rzhang39_testing/verifyProject.php";
+			loadProjectMapsURL = "http://agora.gatech.edu/zlee6_testing/load_project_maps.php";
 			getMapFromProjURL = "http://agora.gatech.edu/rzhang39_testing/getMapFromProjID.php";
+			moveMapToProjectURL = "http://agora.gatech.edu/zlee6_testing/moveMapToProject.php";
 			categoryURL= "http://agora.gatech.edu/rzhang39_testing/category.php"; //category testing
 			chatPushURL= "http://agora.gatech.edu/zlee6_testing/push_chat.php"; //chat testing
 			chatPullURL= "http://agora.gatech.edu/zlee6_testing/pull_chat.php"; //chat testing
