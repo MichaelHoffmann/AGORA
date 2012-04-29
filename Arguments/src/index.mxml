@@ -22,6 +22,9 @@
 	<fx:Script>
 		
 	
+		
+		
+		import components.MapToProject;
 		import components.Join_Project;
 
 		import components.MapName;
@@ -45,6 +48,8 @@
 		public var projectNameBox:ProjectName;
 		//Universal Join_Project box
 		public var join_project:Join_Project;
+		//Universal moveMapToProject box
+		public var move_map:MapToProject;
 		
 		public var switchView:Boolean = true;
 		

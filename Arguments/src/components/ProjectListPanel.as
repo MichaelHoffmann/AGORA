@@ -69,7 +69,7 @@ package components
 				for each(var projXML:XML in model.projectList.proj){
 					var button:Button = new Button;
 					button.name = projXML.@ID;
-					button.label = projXML.@title;
+					button.label = projXML.@title + " (" + projXML.@ID + ")";
 					button.toolTip = projXML.@creator;
 					button.width = 170;
 					vContentGroup.addElement(button);

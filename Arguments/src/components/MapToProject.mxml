@@ -8,11 +8,12 @@
 	<s:Button x="106" y="164" label="Submit" click="submitButton_OnClick()"/>
 	<s:Button x="224" y="164" label="Cancel" click="this.visible=false;"/>
 	<s:Label x="27" y="112" text="Input unique project ID located next to the project in parentheses"/>
-	<s:TextArea x="106" y="132" height="24"/>
+	<s:TextArea id="projID" x="106" y="132" height="24" restrict="[0-9]"/>
 
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
+			import Controller.ArgumentController;
 			import Controller.UserSessionController;
 			
 			import Model.AGORAModel;
@@ -23,12 +24,12 @@
 			import flash.system.Capabilities;
 			
 			import mx.controls.Alert;
-			import mx.events.FlexEvent;
-			
 			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
 
 			protected function submitButton_OnClick():void{
-				
+				this.visible = false;
+				AGORAController.getInstance().addMapToProject(AGORAModel.getInstance().agoraMapModel.ID, parseInt(projID.text)); 
 			}
 		]]>
 

@@ -8,13 +8,16 @@ package components
 	
 	import classes.Language;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
+	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
+	import mx.managers.PopUpManager;
 	import mx.printing.FlexPrintJob;
 	import mx.printing.FlexPrintJobScaleType;
 	
@@ -27,9 +30,7 @@ package components
 		public var saveAsBtn:Button;
 		public var title:TitleDisplay;
 		public var print:Button;
-		public var addToProject:TextArea;
-		public var projectLabel:Label;
-		public var submitAddToProject:Button;
+		public var addToProjectButton:Button;
 		
 		private var agoraConstants:AGORAParameters;
 		private var background:Sprite;
@@ -74,25 +75,11 @@ package components
 				addChild(print);
 			}
 			
-			if(!projectLabel){
-				projectLabel = new Label;
-				projectLabel.text = "Move map into project using unique project identifier in parenthesis next to the project name";
-				projectLabel.height = projectLabel.getExplicitOrMeasuredHeight() - 5;
-				addChild(projectLabel);
-			}
-			if(!addToProject){
-				addToProject = new TextArea;
-				addToProject.height = 20;
-				addChild(addToProject);
-				
-				
-			}
-			
-			if(!submitAddToProject){
-				submitAddToProject = new Button;
-				submitAddToProject.label = "Submit";
-				submitAddToProject.addEventListener('click',onAddToProject);
-				addChild(submitAddToProject);
+			if(!addToProjectButton){
+				addToProjectButton = new Button;
+				addToProjectButton.label = "Move Map To Project";
+				addToProjectButton.addEventListener(MouseEvent.CLICK,onAddToProject);
+				addChild(addToProjectButton);
 			}
 		} 
 		
@@ -123,13 +110,8 @@ package components
 			title.setActualSize(title.getExplicitOrMeasuredWidth(), title.getExplicitOrMeasuredHeight());
 			title.move(xB,5);
 			xB = xB + title.getExplicitOrMeasuredWidth() + 15;
-			projectLabel.setActualSize(projectLabel.getExplicitOrMeasuredWidth(), projectLabel.getExplicitOrMeasuredHeight());
-			projectLabel.move(xB,5);
-			addToProject.setActualSize(addToProject.getExplicitOrMeasuredWidth(), addToProject.getExplicitOrMeasuredHeight());
-			addToProject.move(xB,7);
-			xB = xB + projectLabel.getExplicitOrMeasuredWidth() + 15;
-			submitAddToProject.setActualSize(submitAddToProject.getExplicitOrMeasuredWidth(), submitAddToProject.getExplicitOrMeasuredHeight());
-			submitAddToProject.move(xB,5);
+			addToProjectButton.setActualSize(addToProjectButton.getExplicitOrMeasuredWidth(), addToProjectButton.getExplicitOrMeasuredHeight());
+			addToProjectButton.move(xB,5);
 			
 		}
 		
@@ -143,7 +125,9 @@ package components
 		}
 		
 		protected function onAddToProject(event:MouseEvent):void{
-			//Send data to the database
+			FlexGlobals.topLevelApplication.move_map = new MapToProject;
+			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.move_map, DisplayObject(FlexGlobals.topLevelApplication),true);
+			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.move_map);
 		}
 	}
 }
