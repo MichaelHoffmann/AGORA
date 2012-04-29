@@ -1,6 +1,5 @@
 package Model
 {
-	import flash.events.EventDispatcher;
 	import Controller.AGORAController;
 	import Controller.ArgumentController;
 	import Controller.UserSessionController;
@@ -9,7 +8,9 @@ package Model
 	
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.ChatDataVO;
-		
+	
+	import flash.events.EventDispatcher;
+	
 	import mx.controls.Alert;
 	import mx.controls.List;
 	import mx.core.FlexGlobals;
@@ -32,34 +33,20 @@ package Model
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
-		public function send():void{
+		public function send(mapID:int, projID:int):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
-				request.send({pass_hash: AGORAModel.getInstance().agoraMapModel.projectPassword, projID: AGORAModel.getInstance().agoraMapModel.projectID});	
+				request.send({map_id: mapID, projID: projID});	
 			}
 		}
 		
 		protected function onSuccessfulJoin(event:ResultEvent):void{
-			var result:XML = event.result as XML;
-			if(result.@project_count == "1"){
-				//Potentially violating MVC. Need someone to help me consider this..
-				var loadProjMaps:LoadProjectMapsModel = new LoadProjectMapsModel;
-				loadProjMaps.sendRequest();
-			} else {
-				Alert.show("Incorrect Password");
-			}
-			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PASSWORD_VERIFIED));
+			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_ADDED));
 		}
 		
-		protected function onGotMapID(event:ResultEvent):void{
-			var result:XML = event.result as XML;
-			if(result.@mapID){
-				ArgumentController.getInstance().loadMap(result.@mapID);
-			}
-		}
 		
 		protected function onFault(event:FaultEvent):void{
-			Alert.show("Incorrect Password");
+			Alert.show("Could not move the map to the selected project");
 		}
 	}
 }
