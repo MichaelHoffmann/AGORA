@@ -33,6 +33,8 @@
 					this.visible=false;
 					
 					AGORAController.getInstance().pushNewProject();
+					
+					
 					//ArgumentController.getInstance().createMap(projectName.text);
 				}else{
 					Alert.show(Language.lookup("PassMismatch"));
