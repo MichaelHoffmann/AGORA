@@ -180,6 +180,10 @@ package Controller
 			verifyPassword.send();
 		}
 		
+		/**
+		 * This sends an HTTPRequest. Todo... check which function is calling it to determine
+		 * where to send the open call...
+		 */
 		public function addMapToProject(mapID:int, projID:int):void{
 			var mapToProject:MoveMapToProjectModel = new MoveMapToProjectModel;
 			mapToProject.send(mapID,projID);

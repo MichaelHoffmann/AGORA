@@ -33,7 +33,6 @@ package components
 		public var scroller:Scroller;
 		public var model:ProjectsModel;
 		public var signIn:Label;
-		public var vContentGroup:VGroup;
 		
 		public function Projects()
 		{
@@ -90,6 +89,7 @@ package components
 						button.addEventListener('click',function(e:Event):void{
 							e.stopImmediatePropagation();
 							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+							AGORAModel.getInstance().agoraMapModel.name = e.target.label;
 							FlexGlobals.topLevelApplication.join_project = new Join_Project;
 							PopUpManager.addPopUp(FlexGlobals.topLevelApplication.join_project, DisplayObject(FlexGlobals.topLevelApplication),true);
 							PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.join_project);
@@ -119,9 +119,9 @@ package components
 		 * This was taken from mapListPanel and refactored
 		 */
 		public function onCorrectPassword(projectMapList:XML):void{
-			Alert.show("Here");
 			super.commitProperties();
-			vContentGroup.removeAllElements();
+			FlexGlobals.topLevelApplication.agoraMenu.createProjectBtn.label = "Create a map within this project";
+			projectsGroup.removeAllElements();
 			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
 			for each (var projectMapList:XML in projectMapList.map){
 				try{
@@ -151,7 +151,7 @@ package components
 					mapButton.addEventListener('click', onMapObjectClicked);
 					mapButton.label = mapMetaData.mapName;
 					//mapButton.toolTip = mapMetaData.mapCreator;
-					vContentGroup.addElement(mapButton);
+					projectsGroup.addElement(mapButton);
 				}
 			}
 			

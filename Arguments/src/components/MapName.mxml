@@ -14,6 +14,8 @@
 			import Controller.AGORAController;
 			import Controller.ArgumentController;
 			
+			import Model.AGORAModel;
+			
 			import classes.Language;
 			
 			import mx.core.FlexGlobals;
@@ -24,6 +26,8 @@
 			public function map_name():void{
 				AGORAController.getInstance().freeze();
 				ArgumentController.getInstance().createMap(mapName.text);
+
+				
 			}
 			
 			protected function panel_creationCompleteHandler(event:FlexEvent):void

@@ -69,7 +69,7 @@ package components
 				for each(var projXML:XML in model.projectList.proj){
 					var button:Button = new Button;
 					button.name = projXML.@ID;
-					button.label = projXML.@title + " (" + projXML.@ID + ")";
+					button.label = projXML.@title;
 					button.toolTip = projXML.@creator;
 					button.width = 170;
 					vContentGroup.addElement(button);
@@ -77,6 +77,7 @@ package components
 					{
 						e.stopImmediatePropagation();
 						AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+						AGORAModel.getInstance().agoraMapModel.projectName = e.target.label;
 						FlexGlobals.topLevelApplication.join_project = new Join_Project;
 						PopUpManager.addPopUp(FlexGlobals.topLevelApplication.join_project, DisplayObject(FlexGlobals.topLevelApplication),true);
 						PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.join_project);

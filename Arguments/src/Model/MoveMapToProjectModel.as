@@ -46,7 +46,7 @@ package Model
 		
 		
 		protected function onFault(event:FaultEvent):void{
-			Alert.show("Could not move the map to the selected project");
+			Alert.show("Could not move the map to the selected project"); //To translate
 		}
 	}
 }

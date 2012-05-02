@@ -1,5 +1,6 @@
 package Model
 {
+	import Controller.AGORAController;
 	import Controller.LoadController;
 	import Controller.UserSessionController;
 	import Controller.logic.LogicFetcher;
@@ -57,6 +58,7 @@ package Model
 		
 		private var _projectID:int;
 		private var _projectPassword:String;
+		private var _projectName:String;
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
@@ -260,6 +262,10 @@ package Model
 			var mapMetaData:MapMetaData = new MapMetaData;
 			mapMetaData.mapID = resultEvent.result.map.ID;
 			mapMetaData.mapName = resultEvent.result.map.title;
+			if(AGORAModel.getInstance().moveToProject){
+				AGORAController.getInstance().addMapToProject(resultEvent.result.map.ID, projectID);
+				AGORAModel.getInstance().moveToProject = false;
+			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
 		}
 		
@@ -799,6 +805,16 @@ package Model
 		public function set projID(value:int):void
 		{
 			_projID = value;
+		}
+
+		public function get projectName():String
+		{
+			return _projectName;
+		}
+
+		public function set projectName(value:String):void
+		{
+			_projectName = value;
 		}
 
 		

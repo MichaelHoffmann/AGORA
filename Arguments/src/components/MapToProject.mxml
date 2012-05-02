@@ -7,7 +7,7 @@
 	</fx:Declarations>
 	<s:Button x="106" y="164" label="Submit" click="submitButton_OnClick()"/>
 	<s:Button x="224" y="164" label="Cancel" click="this.visible=false;"/>
-	<s:Label x="27" y="112" text="Input unique project ID located next to the project in parentheses"/>
+	<s:Label x="27" y="112" text="Input project to move map to"/>
 	<s:TextArea id="projID" x="106" y="132" height="24" restrict="[0-9]"/>
 
 	<fx:Script>

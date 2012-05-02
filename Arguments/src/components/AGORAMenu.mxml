@@ -10,6 +10,7 @@
 			import Controller.UpdateController;
 			import Controller.UserSessionController;
 			
+			import Model.AGORAMapModel;
 			import Model.AGORAModel;
 			import Model.CategoryModel;
 			import Model.UserSessionModel;
@@ -29,7 +30,7 @@
 			public var numClicks:int=0;
 			[Bindable] private var buttonWidth:uint = 200;
 			[Bindable] private var buttonHeight:uint = 80;
-	
+			
 			
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
@@ -47,7 +48,6 @@
 			
 			protected function createMapBtn_clickHandler(event:MouseEvent):void
 			{
-				timer.stop();
 				
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 				if(userSession.username == "Guest"){
@@ -77,8 +77,19 @@
 				if(userSession.username == "Guest"){
 					Alert.show("You must log in with a non guest account before creating a map");
 				} else {
-					AGORAController.getInstance().displayProjectInfoBox();
+					if(createProjectBtn.label == "Create a map within this project"){
+						AGORAModel.getInstance().moveToProject = true;
+						AGORAController.getInstance().displayMapInfoBox();
+						
+					} else {
+						AGORAController.getInstance().displayProjectInfoBox();
+					}
 				}
+			}
+			
+			protected function backToMajorProjectList(event:MouseEvent):void{
+				projects.invalidateDisplayList();
+				myProjects.invalidateDisplayList();
 			}
 			
 			protected function backButton_OnClick():void{
@@ -147,13 +158,17 @@
 		
 		<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
 		
-		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
+		<s:NavigatorContent id="projectsTab" width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
 			<components:Projects id="myProjects" y="-34" width="100%" height="341" borderAlpha="0.0"
 								 borderVisible="false" controlBarVisible="false"
 								 dropShadowVisible="false">
 			</components:Projects> 
 			<s:Button id="createProjectBtn" label="{Language.lookup(&quot;NewProject&quot;)}"
-					  click="projectsButton_OnClick(event)" horizontalCenter="0"
+					  click="projectsButton_OnClick(event)" horizontalCenter="-90"
+					  verticalCenter="163">
+			</s:Button>
+			<s:Button id="backToProjectList" label="{Language.lookup(&quot;Back&quot;)}"
+					  click="backToMajorProjectList(event)" horizontalCenter="90"
 					  verticalCenter="163">
 			</s:Button>
 		</s:NavigatorContent>

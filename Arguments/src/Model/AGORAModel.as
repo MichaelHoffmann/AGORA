@@ -30,6 +30,7 @@ package Model
 		public var categoryModel:CategoryModel;
 		public var chatModel:ChatModel;
 		public var pushChatModel:PushChatModel;
+		public var moveToProject:Boolean;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -54,6 +55,7 @@ package Model
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';
+			moveToProject = false;
 			initializeHashMaps();
 		}
 		
