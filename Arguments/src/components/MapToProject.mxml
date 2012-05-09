@@ -8,7 +8,7 @@
 	<s:Button x="106" y="164" label="Submit" click="submitButton_OnClick()"/>
 	<s:Button x="224" y="164" label="Cancel" click="this.visible=false;"/>
 	<s:Label x="27" y="112" text="Input project to move map to"/>
-	<s:TextArea id="projID" x="106" y="132" height="24" restrict="[0-9]"/>
+	<s:TextArea id="projName" x="106" y="132" height="24"/>
 
 	<fx:Script>
 		<![CDATA[
@@ -29,7 +29,7 @@
 
 			protected function submitButton_OnClick():void{
 				this.visible = false;
-				AGORAController.getInstance().addMapToProject(AGORAModel.getInstance().agoraMapModel.ID, parseInt(projID.text)); 
+				AGORAController.getInstance().addMapToProject(AGORAModel.getInstance().agoraMapModel.ID, projName.text); 
 			}
 		]]>
 

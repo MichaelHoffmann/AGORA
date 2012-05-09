@@ -263,7 +263,7 @@ package Model
 			mapMetaData.mapID = resultEvent.result.map.ID;
 			mapMetaData.mapName = resultEvent.result.map.title;
 			if(AGORAModel.getInstance().moveToProject){
-				AGORAController.getInstance().addMapToProject(resultEvent.result.map.ID, projectID);
+				AGORAController.getInstance().addMapToProject(resultEvent.result.map.ID, projectName);
 				AGORAModel.getInstance().moveToProject = false;
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));

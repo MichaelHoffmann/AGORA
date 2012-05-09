@@ -89,7 +89,7 @@ package components
 						button.addEventListener('click',function(e:Event):void{
 							e.stopImmediatePropagation();
 							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
-							AGORAModel.getInstance().agoraMapModel.name = e.target.label;
+							AGORAModel.getInstance().agoraMapModel.projectName = e.target.label;
 							FlexGlobals.topLevelApplication.join_project = new Join_Project;
 							PopUpManager.addPopUp(FlexGlobals.topLevelApplication.join_project, DisplayObject(FlexGlobals.topLevelApplication),true);
 							PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.join_project);
@@ -144,15 +144,16 @@ package components
 				
 				
 				mapMetaDataVector.sort(MapMetaData.isGreater);
-				for each(var mapMetaData:MapMetaData in mapMetaDataVector){
-					var mapButton:Button = new Button;
-					mapButton.width = 170;
-					mapButton.name = mapMetaData.mapID.toString();
-					mapButton.addEventListener('click', onMapObjectClicked);
-					mapButton.label = mapMetaData.mapName;
-					//mapButton.toolTip = mapMetaData.mapCreator;
-					projectsGroup.addElement(mapButton);
-				}
+				
+			}
+			for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+				var mapButton:Button = new Button;
+				mapButton.width = 170;
+				mapButton.name = mapMetaData.mapID.toString();
+				mapButton.addEventListener('click', onMapObjectClicked);
+				mapButton.label = mapMetaData.mapName;
+				//mapButton.toolTip = mapMetaData.mapCreator;
+				projectsGroup.addElement(mapButton);
 			}
 			
 		}

@@ -184,9 +184,9 @@ package Controller
 		 * This sends an HTTPRequest. Todo... check which function is calling it to determine
 		 * where to send the open call...
 		 */
-		public function addMapToProject(mapID:int, projID:int):void{
+		public function addMapToProject(mapID:int, projName:String):void{
 			var mapToProject:MoveMapToProjectModel = new MoveMapToProjectModel;
-			mapToProject.send(mapID,projID);
+			mapToProject.send(mapID,projName);
 		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
@@ -266,11 +266,6 @@ package Controller
 		
 		//-------------------On timer-------------------//
 		public function onTimer():void{
-			//fetchDataMapList();
-			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
-				fetchDataMyMaps();
-			}
-			//fetchDataProjectList();
 			fetchDataChat();
 		}
 		

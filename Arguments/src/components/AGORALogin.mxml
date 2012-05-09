@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+	<!--
+	-	AUTHOR: Michelle, Ruiqi, and Zach (herein, Team Agora)
+	-	
+	-	The object that draws the front screen for AGORA. This screen is seen after the user visits
+	-	agora.gatech.edu and clicks to enter AGORA. Notable features of this object are the guest login
+	-	button, the main login button, the register button, and the overall design of the new AGORA
+	-	look and feel.
+	-->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
@@ -67,20 +75,21 @@
 	</fx:Script>
 
 		<!--The left side of the page that houses the guest login button-->
-			<s:SkinnableContainer id="guestWelcome" left="0" top="0" bottom="0" width="250"
-								  backgroundColor="#29ABE2">
-				<s:layout><s:BasicLayout/></s:layout>
-	
-				<!--This is the new user label on the side panel-->
-				<s:Label id="VisitorGreeting" x="7" width="230" height="71" fontFamily="Arial"
-						 fontSize="20" text="New to AGORA? Visit a world of debates and discussion."
-						 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
-				<!--The Guest Login button-->
+		<s:SkinnableContainer id="guestWelcome" left="0" top="0" bottom="0" width="250"
+							  backgroundColor="#29ABE2">
+			<s:layout><s:BasicLayout/></s:layout>
 
-				<s:Button x="49" width="154" height="40" label="Enter As Guest"
-						  click="guestButton_onClick(event)" verticalCenter="9"/>
-	
-			</s:SkinnableContainer>
+			<!--This is the new user label on the side panel-->
+			<s:Label id="VisitorGreeting" x="7" width="230" height="71" fontFamily="Arial"
+					 fontSize="20" text="New to AGORA? Visit a world of debates and discussion."
+					 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
+			<!--The Guest Login button-->
+
+			<s:Button x="49" width="154" height="40" label="Enter As Guest"
+					  click="guestButton_onClick(event)" verticalCenter="9"/>
+
+		</s:SkinnableContainer>
+		<!--The right side of the page that houses the login and register buttons and the links-->
 		<s:SkinnableContainer id="mainWelcome" width="564" height="300" backgroundColor="#FFFFFF"  horizontalCenter="124" verticalCenter="0">
 			<s:layout><s:BasicLayout/></s:layout>
 			<mx:Image id="loader1" horizontalCenter="0"

@@ -19,6 +19,13 @@ package Model
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	
+	/**
+	 * This class moves a map to a project by taking a map's ID and a project's name
+	 * and moving the project's ID from the project's name and moving them over to
+	 * the map's project ID field.
+	 * 
+	 * Related PHP file: 
+	 */
 	public class MoveMapToProjectModel extends EventDispatcher
 	{
 		private var request: HTTPService;
@@ -33,10 +40,10 @@ package Model
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
-		public function send(mapID:int, projID:int):void{
+		public function send(mapID:int, projName:String):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
-				request.send({map_id: mapID, proj_id: projID});	
+				request.send({map_id: mapID, proj_name: projName});	
 			}
 		}
 		

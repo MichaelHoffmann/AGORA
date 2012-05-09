@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+	<!--
+	-	Author: Zach
+	-	
+	-	This mxml class gives a UI for joining a project. When created, this function sets the user's focus
+	-	on the password field. Then, when any particular button is pressed, the corresponding event listener
+	-	is called. See the corresponding FlexDoc for more info. 
+	-->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="258" height="132"
@@ -8,6 +15,15 @@
 	<fx:Declarations>
 
 	</fx:Declarations>
+	
+	<!--The submit button that submits the input password for verification-->
+	<s:Button id="submitButton" x="52" y="86" label="Submit" click="submit_form()"/>
+	<!--Text box allowing for password input-->
+	<s:TextInput x="65" y="54" id="password"/>
+	<!--Instructive text field that tells the user what to do: input the password-->
+	<s:Label x="52" y="34" text="Input the Project's Password"/>
+	<!--Cancel button that closes the popup when pressed-->
+	<s:Button id="cancelButton" x="137" y="86" label="Back" click="clear_form()"/>
 	<fx:Script>
 		<![CDATA[
 			import Model.AGORAModel;
@@ -16,16 +32,31 @@
 			import com.adobe.crypto.MD5;
 			
 			import mx.managers.PopUpManager;
+			
+			/**
+			 * Run when the object is instantiated. This sets focus to be the password field
+			 */
 			public function init():void
 			{
-//				focusManager.setFocus(password);
 			}
 			
+			/**
+			 * When the cancel button is pressed this method is run. 
+			 * 
+			 * Gets rid of THIS popup.
+			 */
 			public function clear_form():void
 			{
 				PopUpManager.removePopUp(this);
 			}
 			
+			/**
+			 * When the submit button is pressed this method is run.
+			 * 
+			 * Removes the popup, hashes the input password and puts it into the correct place, then 
+			 * sends the password to the database to be checked for correctness. See the FlexDoc in
+			 * VerifyProjectPasswordModel for more info on what goes on when a password is verified.
+			 */
 			public function submit_form():void{
 				PopUpManager.removePopUp(this);				
 				AGORAModel.getInstance().agoraMapModel.projectPassword = MD5.hash(password.text);
@@ -36,10 +67,6 @@
 		]]>
 	</fx:Script>
 
-	<s:Button id="submitButton" x="52" y="86" label="Submit" click="submit_form()"/>
-	<s:TextInput x="65" y="54" id="password"/>
-	<s:Label x="52" y="34" text="Input the Project's Password"/>
-	<s:Button id="cancelButton" x="137" y="86" label="Back" click="clear_form()"/>
 </s:Group>
 
 

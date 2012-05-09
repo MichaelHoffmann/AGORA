@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Random-->
+	<!--
+	- 	Index is the main function of the program. When FB builds the program, it automatically creates an html file
+	- 	that, when opened, hosts index.mxml. For that reason, the major components need to go here.
+	-->
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
@@ -12,18 +15,18 @@
 	<fx:Declarations>
 	</fx:Declarations>
 	
-		<s:Group> 
+		<s:Group>
+			<!--Adds a visible AGORALogin object to the main index panel-->
 			<components:AGORALogin id="agoraMain" width="100%" height="100%" horizontalCenter="0" name="agoraMain" verticalCenter="0" visible="true"/>
+			<!--Adds an invisible AGORAMenu object to the main index panel-->
 			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="100%" height="100%" horizontalCenter="0" verticalCenter="0"/>
+			<!--Adds an invisible map object to the main index panel-->
 			<components:Map id="map" name="map" visible="false"/>
 		</s:Group>
 	
 
 	<fx:Script>
-		
-	
-		
-		
+
 		import components.MapToProject;
 		import components.Join_Project;
 
@@ -36,28 +39,65 @@
 		import mx.events.FlexEvent;
 		import Controller.LayoutController;
 		
+		/*
+		* NOTE:
+		* 
+		* All the universally accessible objects other than model are instantiated just prior
+		* to use and then set to null in order to be GC'd. This is a better method
+		* because the memory traces can be cleaned and reused as necessary
+		* instead of having the object just sitting in memory for no reason. 
+		* The key takeaway is that these globals are rarely used (very specific
+		* times and events) so freeing the memory by setting it to null helps to
+		* speed up the program, even if it is a small fraction of speed up.
+		*
+		* Model is instantiated in this class and then called through FlexGlobals (like the others) 
+		* but does not require instantiation because this class instantiates it when it is created.
+		* Because of this, a model object is always sitting in memory but hardly ever used. See the
+		* FlexDoc for the method application_preinitializeHandler below for more info.
+		*/
+		
 		//This is a universal AGORAModel that can be accessed by FlexGlobals.topLevelApplication.model
 		private var model:AGORAModel;
 		//This is a universal LoginWindow that can be accessed by FlexGlobals.topLevelApplication.loginWindow
 		public var loginWindow:LoginWindow;
 		//This is a universal RegistrationPanel that can be accessed by FlexGlobals.topLevelApplication.registrationWindow
 		public var registrationWindow:RegisterPanel;
+		
+		/*
+		* The 4 universal components below are misplaced at best. Violate the MVC. So do the above 3, really
+		* --Zach
+		*/
+		
 		//Universally accessible mapName box
 		public var mapNameBox:MapName;
-		//Universally accessible mapName box
+		//Universally accessible projectName box
 		public var projectNameBox:ProjectName;
 		//Universal Join_Project box
 		public var join_project:Join_Project;
 		//Universal moveMapToProject box
 		public var move_map:MapToProject;
 		
-		public var switchView:Boolean = true;
-		
+		/**
+		 * Runs when the object is instantiated. This instantiates the universal "model"
+		 * 
+		 * NOTE:
+		 * 
+		 * This is used sporadically at best. Most of the time the code just uses
+		 * var model:AGORAModel = AGORAModel.getInstance() and bypass the need to
+		 * use the global model all together. However, there are places in the
+		 * code where the reference to model IS used so we have to keep this in
+		 * until we code search and remove these. 
+		 */
 		protected function application_preinitializeHandler(event:FlexEvent):void
 		{
 			model = AGORAModel.getInstance();
 		}
 		
+		/**
+		 * Runs when the onject is instantiated. This function sets the various layout
+		 * properties of the UI by calling LayouController's method 
+		 * setApplicationLayoutProperties.
+		 */
 		protected function application1_applicationCompleteHandler(event:FlexEvent):void
 		{
 			LayoutController.getInstance().setApplicationLayoutProperties();

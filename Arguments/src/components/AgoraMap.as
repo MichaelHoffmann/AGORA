@@ -70,7 +70,7 @@ package components
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
 			initializeMapStructures();
-			timer = new Timer(5000);
+			timer = new Timer(10000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			beganBy = BY_CLAIM;
 			removePreviousElements = false;

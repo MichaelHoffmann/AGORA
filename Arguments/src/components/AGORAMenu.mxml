@@ -32,7 +32,12 @@
 			[Bindable] private var buttonHeight:uint = 80;
 			
 			
-			
+			/**
+			 * Once the object has been fully created, this method is called
+			 * 
+			 * Starts the timer and adds the function timerFired to it
+			 * Fetches the categories and two lists upon completion
+			 */
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				timer.addEventListener(TimerEvent.TIMER, timerFired);
@@ -42,10 +47,22 @@
 				AGORAController.getInstance().fetchDataProjectList();
 			}
 			
+			/**
+			 * Gets called every time the timer is fired. 
+			 * 
+			 * Calls the AGORAController's method, onTimer. See that method's documentation 
+			 * for more info
+			 */
 			protected function timerFired(event:TimerEvent):void{
 				AGORAController.getInstance().onTimer();
 			}
 			
+			/**
+			 * Handles what happens when the Create New Map button is clicked.
+			 * 
+			 * If the user is a guest, prevent the user from accessing this button. Otherwise,
+			 * display a map info box. See display AGORAController.displayMapInfoBox for more details
+			 */
 			protected function createMapBtn_clickHandler(event:MouseEvent):void
 			{
 				
@@ -57,19 +74,43 @@
 				}
 			}
 			
-			
+			/**
+			 * Handles what happens when the user clicks the sign in button when the AGORAMenu is present.
+			 * 
+			 * If the user is logged in, just log them out. If the user is not logged in, display the
+			 * box that allows the user to log in. See UserSessionController's documentation for more
+			 * detail.
+			 */
 			protected function signInBtn_clickHandler(event:MouseEvent):void
 			{
 				UserSessionController.getInstance().signInSignOut();
 			}
 			
-			
+			/**
+			 * Handles what happens when the user clicks the register button when the AGORAMenu is present.
+			 * 
+			 * Displays the box that allows the user to register for agora. See
+			 * UserSessionController.showRegistrationBox for more info
+			 */
 			protected function registerBtn_clickHandler(event:MouseEvent):void
 			{
 				UserSessionController.getInstance().showRegistrationBox();
 			}
 			
-			
+			/**
+			 * Handles what happens when the Create Password Protected Project button is clicked or
+			 * the Create a map within this project button is clicked.
+			 * 
+			 * First, gets the instance of the UserSessionController. Then it blocks guests from
+			 * doing anything. Once guests are blocked, check to see if we check which button was
+			 * clicked. Two things are possible:
+			 *		1. Button was Create password protected project button
+			 * 				Displays the project info box. See AGORAController.displayProjectInfoBox
+			 * 				for more info on this.
+			 * 		2. Button was Create a map within this project button
+			 * 				Sets a boolean to tell other threads that we are moving a project and
+			 * 				then displays a map info box 		
+			 */
 			protected function projectsButton_OnClick(event:MouseEvent):void{
 
 				
@@ -87,35 +128,56 @@
 				}
 			}
 			
-			protected function backToMajorProjectList(event:MouseEvent):void{
+			/**
+			 * Handles what happens when the uesr presses the back button inside of projects
+			 * 
+			 * Calls the correct invalidateDisplayLists of each of the two project zones. This
+			 * repopulates the lists with the top level projects.
+			 */ 
+			protected function backToMajorProjectList(event:MouseEvent):void {
+				AGORAModel.getInstance().agoraMapModel.projectID = 0;
+				AGORAModel.getInstance().agoraMapModel.projID = 0;
 				projects.invalidateDisplayList();
 				myProjects.invalidateDisplayList();
 			}
 			
+			/**
+			 * Handles what happens when the back button is click within AGORAMenu
+			 * 
+			 * This back button handles category transitions. It moves back and forth
+			 * between each of the categories and their parent. The way this is done
+			 * is to make an arraylist and store the current category and the current
+			 * category's parent into a category value object. This is nothing more
+			 * than transforming the arraylist into a linkedlist with a prev and next
+			 * pointer. It is used this way to retain indexing speeds while maintaining
+			 * the integrity of the category value object. 
+			 * 
+			 * Basically, this just makes a DB call that retrieves the parent category's
+			 * list and populates the category pane with it.
+			 */
 			protected function backButton_OnClick():void{
-//				if(!this.mainPanel.visible){
-//					this.tabNav.setVisible(false,true);
-//					this.mainPanel.visible=true;
-//				} else {
-//					this.tabNav.setVisible(true,true);
-//					this.mainPanel.visible=false;
-//				}
 				var cg:ArrayList = AGORAController.getInstance().categoryChain;
 				var temp:String = (CategoryDataV0)(cg.getItemAt(cg.length-1)).parent;
 				cg.removeItemAt(cg.length-1);
-				//Alert.show(cg.length.toString());
 				if(!temp){
 					this.tabNav.setVisible(true,true);
 					this.mainPanel.visible=false;
 					AGORAController.getInstance().fetchDataCategory();
 					AGORAController.getInstance().fetchDataChildMap(temp);
-				}
-				else{
+				} else {
 					AGORAController.getInstance().fetchDataChildCategory(temp);
 					AGORAController.getInstance().fetchDataChildMap(temp);
 				}
 				
 			}
+			
+			/**
+			 * REMOVE THIS FUNCTION WHEN TESTING IS DONE
+			 * 
+			 * This was used to view all maps and all projects. It is being ONLY so that
+			 * testing can continue. It allows us to see the lists of all maps and all
+			 * projects
+			 */
 			protected function hackButton_OnClick():void{
 				if(!this.mainPanel.visible){
 					this.tabNav.setVisible(false,true);
