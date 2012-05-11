@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+	<!--
+	-	Brings up a box that allows the user to input the name of a map at time of creation
+	-->
 <s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
@@ -23,13 +26,22 @@
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
 			
+			/**
+			 * Sets the mouse to the "busy" look and then sends the input box off to the ArgumentController.
+			 * 
+			 * See the method createMap in ArgumentController for more info
+			 */
 			public function map_name():void{
 				AGORAController.getInstance().freeze();
 				ArgumentController.getInstance().createMap(mapName.text);
-
-				
+	
 			}
 			
+			/**
+			 * Handles the effects of the text field input box. 
+			 * 
+			 * Sets the text to be empty string and sets the box to be the focus 
+			 */
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
 				mapName.text=" ";
@@ -37,6 +49,9 @@
 				mapName.text = "";
 			}
 			
+			/**
+			 * Allows the user to hit enter on the map name box and submit the name
+			 */
 			protected function panel_keyDownHandler(event:KeyboardEvent):void
 			{
 				if(event.keyCode == Keyboard.ENTER){
@@ -44,7 +59,9 @@
 				}
 			}
 			
-
+			/**
+			 * Takes the focus away from the stage
+			 */
 			protected function panel1_addedToStageHandler(event:Event):void
 			{
 				stage.focus= null;
@@ -52,17 +69,33 @@
 
 		]]>
 	</fx:Script>
+	
+	<!--Creates a form-->
 	<mx:Form id="form">
+		
+		<!--Declares the first item of the form-->
 		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;EnterMapName&quot;)}">
+			
+			<!--The text field that allows the user to input the map name-->
 			<s:TextInput id="mapName">
 			</s:TextInput>
+
 		</mx:FormItem>
+		
+		<!--The second form item-->
 		<mx:FormItem>
+			
+			<!--Forces the items to remain horizontal-->
 			<s:HGroup>
+				
+				<!--The OK button that sends the data off to the ArgumentContoller-->
 				<s:Button label="{Language.lookup('OK')}" tabIndex="7" id="OK_btn" click="map_name();">		
 				</s:Button>
+				
+				<!--The back button that simply sets the box to be invisible-->
 				<s:Button label="Back" tabIndex="7" id="CANECL_btn" click="this.visible=false;">		
 				</s:Button>
+				
 			</s:HGroup>		
 		</mx:FormItem>
 	</mx:Form>

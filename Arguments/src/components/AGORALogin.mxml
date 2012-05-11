@@ -17,6 +17,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
 			import Controller.UserSessionController;
 			
 			import flash.system.Capabilities;
@@ -55,7 +56,6 @@
 			*/
 			protected function guestButton_onClick(event:MouseEvent):void
 			{
-				
 				UserSessionController.getInstance().signInAsGuest();	
 			}
 			

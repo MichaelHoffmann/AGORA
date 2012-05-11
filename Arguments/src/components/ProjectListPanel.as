@@ -20,9 +20,11 @@ package components
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 	
+	import spark.components.Group;
 	import spark.components.Panel;
 	import spark.components.Scroller;
 	import spark.components.VGroup;
+	import spark.layouts.VerticalLayout;
 	
 	public class ProjectListPanel extends Panel
 	{
@@ -31,34 +33,27 @@ package components
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
 		
-		public var vContentGroup:VGroup; 
+		public var vContentGroup:Group; 
 		
 		public function ProjectListPanel()
 		{
 			super();
 			model = AGORAModel.getInstance().projectListModel;
 			projMapModel = AGORAModel.getInstance().loadProjMaps;
+			scroller = new Scroller;
+			scroller.x = scroller.y = 5;
+			scroller.percentHeight = scroller.percentWidth = 100;
+			vContentGroup = new Group;
+			vContentGroup.layout = new VerticalLayout();
+			//vContentGroup.layout.gap = 10;
+			scroller.viewport = vContentGroup;
+			this.addElement(scroller);
+			loadingDisplay = new Label;
+			loadingDisplay.text = Language.lookup("Loading");
+			addElement(loadingDisplay);
 		}
 		
-		override protected function createChildren():void{
-			super.createChildren();	
-			if(!scroller){
-				scroller = new Scroller;
-				scroller.x = 10;
-				scroller.y = 25;
-				this.addElement(scroller);
-			}
-			if(!vContentGroup){
-				vContentGroup = new VGroup;
-				vContentGroup.gap = 5;
-				scroller.viewport = vContentGroup;
-			}
-			if(!loadingDisplay){
-				loadingDisplay = new Label;
-				loadingDisplay.text = Language.lookup("Loading");
-				addElement(loadingDisplay);
-			}
-		}
+	
 		
 		override protected function commitProperties():void{
 			super.commitProperties();

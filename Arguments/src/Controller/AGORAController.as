@@ -68,6 +68,7 @@ package Controller
 			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_LIST_FETCHED, onMyProjectsListFetched);
 			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.categoryModel.addEventListener(AGORAEvent.CATEGORY_FETCHED,onCategoryFetched);
+			model.categoryModel.addEventListener(AGORAEvent.MAP_FETCHED,onChildMapFetched);
 			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.chatModel.addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
 			model.chatModel.addEventListener(AGORAEvent.FAULT, onFault);
@@ -133,12 +134,7 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 		}
-		public function fetchDataChildMap(parentCategory:String):void{
-			menu.categories.loadingDisplay.text = Language.lookup("Loading");
-			menu.categories.loadingDisplay.visible = true;
-			var categoryM:CategoryModel = model.categoryModel;
-			categoryM.onrequestChildMap(parentCategory);
-		}
+		
 		protected function onChildMapFetched(event:AGORAEvent):void{
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();

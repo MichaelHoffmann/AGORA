@@ -21,14 +21,17 @@ package Model
 	
 	/**
 	 * This class moves a map to a project by taking a map's ID and a project's name
-	 * and moving the project's ID from the project's name and moving them over to
+	 * and using the project's ID from the project's name and moving them over to
 	 * the map's project ID field.
-	 * 
-	 * Related PHP file: 
+	 *
 	 */
 	public class MoveMapToProjectModel extends EventDispatcher
 	{
 		private var request: HTTPService;
+		
+		/**
+		 * Constructor that sets up the request that eventually sends the data off to the database
+		 */
 		public function MoveMapToProjectModel()
 		{
 			
@@ -40,6 +43,9 @@ package Model
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
+		/**
+		 * The method that sends the request off to the database loaded with the correct info
+		 */
 		public function send(mapID:int, projName:String):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
@@ -47,11 +53,16 @@ package Model
 			}
 		}
 		
+		/**
+		 * When we do not return with an error enters here
+		 */
 		protected function onSuccessfulJoin(event:ResultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_ADDED));
 		}
 		
-		
+		/**
+		 * When we return from the DB with an error, enters here
+		 */
 		protected function onFault(event:FaultEvent):void{
 			Alert.show("Could not move the map to the selected project"); //To translate
 		}

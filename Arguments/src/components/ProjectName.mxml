@@ -34,6 +34,7 @@
 					
 					AGORAController.getInstance().pushNewProject();
 					AGORAController.getInstance().fetchDataProjectList();
+					AGORAController.getInstance().fetchDataMyProjects();
 					//ArgumentController.getInstance().createMap(projectName.text);
 				}else{
 					Alert.show(Language.lookup("PassMismatch"));

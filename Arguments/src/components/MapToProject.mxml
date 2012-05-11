@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+	<!--
+	-	The GUI that allows a user to move an existing map to a new (or existing) project using the project's name.
+	-	As of the writing of this comment, the only use of this was in the top panel (TopPanel.as) of the map screen.
+	-->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	
+	<!--Submit button. Sends the info in the text box back to the database to either move the project to a map or fail to do so for the reported reason-->
 	<s:Button x="106" y="164" label="Submit" click="submitButton_OnClick()"/>
+	
+	<!--Cancel button. Simply hides the popup by setting the visibility to false-->
 	<s:Button x="224" y="164" label="Cancel" click="this.visible=false;"/>
+	
+	<!--A label to help indicate what the user should do-->
 	<s:Label x="27" y="112" text="Input project to move map to"/>
+	
+	<!--The main text area where the user can input the name of the project to send off to the DB-->
 	<s:TextArea id="projName" x="106" y="132" height="24"/>
 
 	<fx:Script>
@@ -26,7 +38,11 @@
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
-
+			/**
+			 * Submits the data in the projName text area along with the current map ID located in agoraMapModel to the database
+			 * 
+			 * How it does it: Hides the panel, calls the AGORAController method addMapToProject and provides it the necessary input 
+			 */
 			protected function submitButton_OnClick():void{
 				this.visible = false;
 				AGORAController.getInstance().addMapToProject(AGORAModel.getInstance().agoraMapModel.ID, projName.text); 

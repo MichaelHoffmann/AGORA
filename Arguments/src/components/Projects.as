@@ -21,15 +21,17 @@ package components
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 	
+	import spark.components.Group;
 	import spark.components.Label;
 	import spark.components.Panel;
 	import spark.components.Scroller;
 	import spark.components.VGroup;
+	import spark.layouts.VerticalLayout;
 	
 	public class Projects extends Panel
 	{
 		public var loadingDisplay:Label;
-		public var projectsGroup:VGroup;
+		public var vContentGroup:Group;
 		public var scroller:Scroller;
 		public var model:ProjectsModel;
 		public var signIn:Label;
@@ -38,37 +40,25 @@ package components
 		{
 			super();
 			model = AGORAModel.getInstance().myProjectsModel;
+			scroller = new Scroller;
+			scroller.x = scroller.y = 5;
+			scroller.percentHeight = scroller.percentWidth = 100;
+			vContentGroup = new Group;
+			vContentGroup.layout = new VerticalLayout();
+			//vContentGroup.layout.gap = 10;
+			scroller.viewport = vContentGroup;
+			this.addElement(scroller);
+			loadingDisplay = new Label;
+			loadingDisplay.text = Language.lookup("Loading");
+			addElement(loadingDisplay);
+			signIn = new Label;
+			signIn.horizontalCenter = 0;
+			signIn.setStyle("textDecoration","underline");
+			signIn.text = Language.lookup("SignInToViewProj");
+			signIn.addEventListener(MouseEvent.CLICK, showSignInBox);
+			this.addElement(signIn);
 		}
 		
-		override protected function createChildren():void{
-			super.createChildren();
-			if(!loadingDisplay){
-				loadingDisplay = new Label;
-				loadingDisplay.text = Language.lookup("Loading");
-				loadingDisplay.y = 10;
-				loadingDisplay.visible = false;
-				addElement(loadingDisplay);
-			}
-			if(!scroller){
-				scroller = new Scroller;
-				scroller.x = 10;
-				scroller.y = 25;
-				addElement(scroller);
-			}
-			if(!projectsGroup){
-				projectsGroup = new VGroup;
-				projectsGroup.gap = 5;
-				scroller.viewport = projectsGroup;
-			}
-			if(!signIn){
-				signIn = new Label;
-				signIn.horizontalCenter = 0;
-				signIn.setStyle("textDecoration","underline");
-				signIn.text = Language.lookup("SignInToViewProj");
-				signIn.addEventListener(MouseEvent.CLICK, showSignInBox);
-				addElement(signIn);
-			}	
-		}
 		
 		override protected function measure():void{
 			super.measure();
@@ -85,7 +75,7 @@ package components
 						button.name = xml.@ID;
 						button.label = xml.@title;
 						button.toolTip = xml.@creator;
-						projectsGroup.addElement(button);
+						vContentGroup.addElement(button);
 						button.addEventListener('click',function(e:Event):void{
 							e.stopImmediatePropagation();
 							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
@@ -99,7 +89,7 @@ package components
 				}	
 			}
 			else{
-				projectsGroup.removeAllElements();
+				vContentGroup.removeAllElements();
 				addElement(signIn);
 			}
 		}
@@ -121,7 +111,7 @@ package components
 		public function onCorrectPassword(projectMapList:XML):void{
 			super.commitProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.createProjectBtn.label = "Create a map within this project";
-			projectsGroup.removeAllElements();
+			vContentGroup.removeAllElements();
 			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
 			for each (var projectMapList:XML in projectMapList.map){
 				try{
@@ -153,7 +143,7 @@ package components
 				mapButton.addEventListener('click', onMapObjectClicked);
 				mapButton.label = mapMetaData.mapName;
 				//mapButton.toolTip = mapMetaData.mapCreator;
-				projectsGroup.addElement(mapButton);
+				vContentGroup.addElement(mapButton);
 			}
 			
 		}

@@ -1,5 +1,7 @@
 package Model
 {
+	import Controller.AGORAController;
+	
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
@@ -31,7 +33,7 @@ package Model
 			requestChildren = new HTTPService;
 			requestChildren.url = AGORAParameters.getInstance().childCategoryURL;
 			requestChildren.resultFormat="e4x";
-			requestChildren.addEventListener(ResultEvent.RESULT, onCategoryFetched);
+			requestChildren.addEventListener(ResultEvent.RESULT, onChildCategoryFetched);
 			requestChildren.addEventListener(FaultEvent.FAULT, onFault);
 			requestChildMap = new HTTPService;
 			requestChildMap.url = AGORAParameters.getInstance().childMapURL;
@@ -49,6 +51,10 @@ package Model
 			category= event.result as XML;
 			dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED));
 		}
+		protected function onChildCategoryFetched(event:ResultEvent):void{
+			category= event.result as XML;
+			//dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED));
+		}
 		protected function onMapFetched(event:ResultEvent):void{
 			map = event.result as XML;
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_FETCHED));
@@ -61,12 +67,8 @@ package Model
 		public function requestChildCategories(categoryName:String):void{
 			requestChildren.send({parentCategory: "'" + categoryName + "'"});
 			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+			
 			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
-		}
-		public function onrequestChildMap(categoryName:String):void{
-			//Alert.show("woot");
-			//requestChildren.send({parentCategory: "'" + categoryName + "'"});
-			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
 		}
 		
 	}
