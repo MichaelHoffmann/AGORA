@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</components:StatusBar>
 	
 	<s:Group id="theMap">
-		<s:Scroller id="agora" visible="false">	
+		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin">	
 			<s:Group>
 				<mx:Canvas x="200">
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" >	

@@ -135,10 +135,13 @@
 			 * repopulates the lists with the top level projects.
 			 */ 
 			protected function backToMajorProjectList(event:MouseEvent):void {
+				backToProjectList.visible = false;
+				myProjects.loadMapsHere = false;
 				AGORAModel.getInstance().agoraMapModel.projectID = 0;
 				AGORAModel.getInstance().agoraMapModel.projID = 0;
-				projects.invalidateDisplayList();
 				myProjects.invalidateDisplayList();
+				myProjects.invalidateProperties();
+				createProjectBtn.label = "Create a password-protected project space";
 			}
 			
 			/**
@@ -197,7 +200,7 @@
 	<mx:TabNavigator id="tabNav" top="100" width="800" height="400" borderVisible="true"
 					 cornerRadius="0" creationPolicy="all" horizontalCenter="0" name="tabNav"
 					 tabWidth="267" textAlign="center">
-		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup(&quot;Search&quot;)}">
+		<s:NavigatorContent width="100%" height="100%" label="{'A World of Arguments'}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/>
 					<s:Group horizontalCenter="-3" verticalCenter="-25">
@@ -234,6 +237,9 @@
 					  click="backToMajorProjectList(event)" horizontalCenter="90"
 					  verticalCenter="163">
 			</s:Button>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="Search">
+			<s:Label id="ComingSoon" text="Coming Soon"/>
 		</s:NavigatorContent>
 	</mx:TabNavigator>		
 	<s:HGroup id="mainPanel2" visible="false" height="436" paddingBottom="25" paddingLeft="25"

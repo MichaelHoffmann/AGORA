@@ -22,6 +22,7 @@ package Model
 	public class VerifyProjectPasswordModel extends EventDispatcher
 	{
 		private var request: HTTPService;
+		private var loadProjMaps:LoadProjectMapsModel;
 		public function VerifyProjectPasswordModel()
 		{
 			request = new HTTPService;
@@ -42,7 +43,7 @@ package Model
 			var result:XML = event.result as XML;
 			if(result.@project_count == "1"){
 				//Potentially violating MVC. Need someone to help me consider this..
-				var loadProjMaps:LoadProjectMapsModel = new LoadProjectMapsModel;
+				loadProjMaps = AGORAModel.getInstance().loadProjMaps;;
 				loadProjMaps.sendRequest();
 			} else {
 				Alert.show("Incorrect Password");

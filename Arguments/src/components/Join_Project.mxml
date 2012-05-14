@@ -6,24 +6,23 @@
 	-	on the password field. Then, when any particular button is pressed, the corresponding event listener
 	-	is called. See the corresponding FlexDoc for more info. 
 	-->
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="258" height="132"
-		 creationComplete="init();"
-		 >
+<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="176" height="132" creationComplete="init();" layout="absolute">
 	
 	<fx:Declarations>
 
 	</fx:Declarations>
 	
 	<!--The submit button that submits the input password for verification-->
-	<s:Button id="submitButton" x="52" y="86" label="Submit" click="submit_form()"/>
 	<!--Text box allowing for password input-->
-	<s:TextInput x="65" y="54" id="password"/>
 	<!--Instructive text field that tells the user what to do: input the password-->
-	<s:Label x="52" y="34" text="Input the Project's Password"/>
+	<s:Label x="10" y="5" text="Input the Project's Password"/>
 	<!--Cancel button that closes the popup when pressed-->
-	<s:Button id="cancelButton" x="137" y="86" label="Back" click="clear_form()"/>
+	<s:TextInput id="password" x="23" y="25" displayAsPassword="true"/>
+	<s:Button id="submitButton" x="10" y="70" label="Submit" click="submit_form()"/>
+	<s:Button id="cancelButton" x="88" y="70" label="Back" click="clear_form()"/>
 	<fx:Script>
 		<![CDATA[
 			import Model.AGORAModel;
@@ -31,6 +30,9 @@
 			
 			import com.adobe.crypto.MD5;
 			
+			import mx.core.Application;
+			import mx.core.FlexGlobals;
+			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
 			
 			/**
@@ -38,6 +40,7 @@
 			 */
 			public function init():void
 			{
+				FlexGlobals.topLevelApplication.focusManager.setFocus(password);
 			}
 			
 			/**
@@ -67,6 +70,6 @@
 		]]>
 	</fx:Script>
 
-</s:Group>
+</mx:Panel>
 
 

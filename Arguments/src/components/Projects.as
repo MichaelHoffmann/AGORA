@@ -6,6 +6,7 @@ package components
 	import Events.AGORAEvent;
 	
 	import Model.AGORAModel;
+	import Model.LoadProjectMapsModel;
 	import Model.MapMetaData;
 	import Model.ProjectsModel;
 	import Model.UserSessionModel;
@@ -34,11 +35,15 @@ package components
 		public var vContentGroup:Group;
 		public var scroller:Scroller;
 		public var model:ProjectsModel;
+		public var projMapModel:LoadProjectMapsModel;
 		public var signIn:Label;
+		private var back:Button;
+		private var _loadMapsHere:Boolean;
 		
 		public function Projects()
 		{
 			super();
+			projMapModel = AGORAModel.getInstance().loadProjMaps;
 			model = AGORAModel.getInstance().myProjectsModel;
 			scroller = new Scroller;
 			scroller.x = scroller.y = 5;
@@ -56,7 +61,8 @@ package components
 			signIn.setStyle("textDecoration","underline");
 			signIn.text = Language.lookup("SignInToViewProj");
 			signIn.addEventListener(MouseEvent.CLICK, showSignInBox);
-			this.addElement(signIn);
+			addElement(signIn);
+			loadMapsHere = false;
 		}
 		
 		
@@ -66,17 +72,21 @@ package components
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
+			vContentGroup.removeAllElements();
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(usm.loggedIn()){
-				removeElement(signIn);
-				if(model.projectList){
+				if(this.contains(signIn))
+					removeElement(signIn);
+				if(model.projectList && !_loadMapsHere){
 					for each(var xml:XML in model.projectList.proj){
+						loadMapsHere = true;
 						var button:Button = new Button;
 						button.name = xml.@ID;
 						button.label = xml.@title;
 						button.toolTip = xml.@creator;
 						vContentGroup.addElement(button);
 						button.addEventListener('click',function(e:Event):void{
+							loadMapsHere = true;
 							e.stopImmediatePropagation();
 							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 							AGORAModel.getInstance().agoraMapModel.projectName = e.target.label;
@@ -86,7 +96,40 @@ package components
 						}, false, 1,false);
 						
 					}
-				}	
+				} else if(projMapModel && _loadMapsHere){
+					FlexGlobals.topLevelApplication.agoraMenu.backToProjectList.visible = true;
+					FlexGlobals.topLevelApplication.agoraMenu.createProjectBtn.label = "Create a map within this project";
+					var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+					for each (var projectMapList:XML in projMapModel.projectMapList.map){
+						try{
+							if(projectMapList.@is_deleted == "1"){
+								
+								continue;
+							}
+						}catch(error:Error){
+							trace("is_deleted not available yet");
+						}
+						
+						//var mapObject:Object = new Object;
+						mapMetaData = new MapMetaData;
+						mapMetaData.mapID = int(projectMapList.attribute("ID")); 
+						mapMetaData.mapName = projectMapList.attribute("title");
+						//mapMetaData.mapCreator = map.attribute("creator");
+						mapMetaDataVector.push(mapMetaData);						
+						
+						
+						mapMetaDataVector.sort(MapMetaData.isGreater);	
+					}
+					for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+						var mapButton:Button = new Button;
+						mapButton.width = 170;
+						mapButton.name = mapMetaData.mapID.toString();
+						mapButton.addEventListener('click', onMapObjectClicked);
+						mapButton.label = mapMetaData.mapName;
+						//mapButton.toolTip = mapMetaData.mapCreator;
+						vContentGroup.addElement(mapButton);
+					}
+				}
 			}
 			else{
 				vContentGroup.removeAllElements();
@@ -104,49 +147,6 @@ package components
 		}
 		
 		
-		/**
-		 * Deletes the current window and repopulates with the maps within that project.
-		 * This was taken from mapListPanel and refactored
-		 */
-		public function onCorrectPassword(projectMapList:XML):void{
-			super.commitProperties();
-			FlexGlobals.topLevelApplication.agoraMenu.createProjectBtn.label = "Create a map within this project";
-			vContentGroup.removeAllElements();
-			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
-			for each (var projectMapList:XML in projectMapList.map){
-				try{
-					if(projectMapList.@is_deleted == "1"){
-						
-						continue;
-					} else if(projectMapList.@proj_id != null){
-						//This needs to be set to continue
-					}
-				}catch(error:Error){
-					trace("is_deleted not available yet");
-				}
-				
-				//var mapObject:Object = new Object;
-				mapMetaData = new MapMetaData;
-				mapMetaData.mapID = int(projectMapList.attribute("ID")); 
-				mapMetaData.mapName = projectMapList.attribute("title");
-				//mapMetaData.mapCreator = map.attribute("creator");
-				mapMetaDataVector.push(mapMetaData);						
-				
-				
-				mapMetaDataVector.sort(MapMetaData.isGreater);
-				
-			}
-			for each(var mapMetaData:MapMetaData in mapMetaDataVector){
-				var mapButton:Button = new Button;
-				mapButton.width = 170;
-				mapButton.name = mapMetaData.mapID.toString();
-				mapButton.addEventListener('click', onMapObjectClicked);
-				mapButton.label = mapMetaData.mapName;
-				//mapButton.toolTip = mapMetaData.mapCreator;
-				vContentGroup.addElement(mapButton);
-			}
-			
-		}
 		
 		private function getProjectPanel(event:MouseEvent):void{
 			var button:Button = event.target as Button;
@@ -160,6 +160,13 @@ package components
 		
 		private function showSignInBox(event:MouseEvent):void{
 			UserSessionController.getInstance().showSignInBox();
+			
 		}
+
+		public function set loadMapsHere(value:Boolean):void
+		{
+			_loadMapsHere = value;
+		}
+
 	}
 }
