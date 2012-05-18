@@ -59,37 +59,6 @@ package components
 			addElement(loadingDisplay);
 		}
 		
-//		override protected function createChildren():void{
-//			super.createChildren();	
-//			if(!scroller){
-//				scroller = new Scroller;
-//				scroller.x = 10;
-//				scroller.y = 25;
-//				this.addElement(scroller);
-//			}
-///*			if(!vContentGroup){
-//				vContentGroup = new VGroup;
-//				vContentGroup.gap = 5;
-//				scroller.viewport = vContentGroup;
-//			}
-//*/
-//			// Creates a TileGroup layout for the category buttons
-////			if(!categoryTiles){
-////				categoryTiles = new TileGroup;
-////				categoryTiles.layout.hhorizontalGap = 20;
-////				categoryTiles.verticalGap = 20;
-////				categoryTiles.requestedColumnCount = 3;
-////				categoryTiles.clipAndEnableScrolling = true;
-////				
-////				scroller.viewport = categoryTiles;
-////			}
-//						
-//			if(!loadingDisplay){
-//				loadingDisplay = new Label;
-//				loadingDisplay.text = Language.lookup("Loading");
-//				addElement(loadingDisplay);
-//			}
-//		}
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
@@ -107,24 +76,26 @@ package components
 					button.height = 80;
 					button.setStyle("chromeColor", 0xA0CADB);
 					/*If the category that was clicked is NOT projects, load the child categories and maps*/
-					if(categoryXML.@ID!=6){
-						button.addEventListener('click',function(e:Event):void{
-							//Begin private inner click event function for button
-							trace("button " + e.target.label + " clicked");
-							e.stopImmediatePropagation();	
-							AGORAController.getInstance().fetchDataChildCategory(e.target.label);
-							/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
-							if(cg.length == 0){
-								cg.addItem(new CategoryDataV0(e.target.label, null));
-							}
-							else{	
-								cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));						
-							}
-							AGORAController.getInstance().categoryChain = cg;
-							trace(cg);
-						}, false, 1,false);
+					
+					//if(categoryXML.@ID!=6){ //UNCOMMENT THIS LINE AND THE ELSE AND THE CLOSING CURLY ABOUT 20 LINES DOWN TO ADD ALL PROJECTS BACK
+					button.addEventListener('click',function(e:Event):void{
+						//Begin private inner click event function for button
+						trace("button " + e.target.label + " clicked");
+						e.stopImmediatePropagation();	
+						AGORAController.getInstance().fetchDataChildCategory(e.target.label);
+						/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
+						if(cg.length == 0){
+							cg.addItem(new CategoryDataV0(e.target.label, null));
+						}else{	
+							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));	
+						}
+						FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.enabled = true;
+						FlexGlobals.topLevelApplication.agoraMenu.categoryChain.addCategory(e.target.label);
+						AGORAController.getInstance().categoryChain = cg;
+													
+					}, false, 1,false);
 					/*If the category clicked was the project list, load up the project list*/
-					}else{
+					/*}else{ //UNCOMMENT THIS BLOCK TO ADD PROJECTS BACK
 						button.addEventListener('click',function(e:Event):void{
 							//Begin private inner click event function for button
 							trace("button " + e.target.label + " clicked");
@@ -132,7 +103,7 @@ package components
 							FlexGlobals.topLevelApplication.agoraMenu.mainPanel.visible=true;
 							FlexGlobals.topLevelApplication.agoraMenu.tabNav.setVisible(false,true);
 							var cg:ArrayList = AGORAController.getInstance().categoryChain;
-							/*Populates the category chain. See above*/
+							//Populates the category chain. See above
 							if(cg.length == 0){
 								cg.addItem(new CategoryDataV0(e.target.label, null));
 							}
@@ -141,7 +112,7 @@ package components
 							}
 							AGORAController.getInstance().categoryChain = cg;
 						}, false, 1,false);
-					}
+					} */ //UNCOMMENT THIS BLOCK END
 						//Add the button related to the category to the view
 						categoryTiles.addElement(button);
 				}				

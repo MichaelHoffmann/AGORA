@@ -46,7 +46,7 @@
 			 fontWeight="bold"
 			 text = "{Language.lookup(&quot;ListMaps&quot;)}"
 			 />
-	<s:Scroller width="100%" top="56" height="300">
+	<s:Scroller width="100%" top="56" height="300" skinClass="Skins.ScrollerSkin">
 		<s:Group id="contentGroup">
 			<s:VGroup id="mapsGroup" paddingLeft="10" paddingTop="5"> 
 			</s:VGroup>

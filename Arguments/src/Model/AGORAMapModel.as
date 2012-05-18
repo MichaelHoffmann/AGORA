@@ -9,6 +9,7 @@ package Model
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
+	import ValueObjects.CategoryDataV0;
 	import ValueObjects.ConnectionValueObject;
 	import ValueObjects.MapValueObject;
 	import ValueObjects.NodeValueObject;
@@ -25,6 +26,7 @@ package Model
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
@@ -266,6 +268,9 @@ package Model
 				AGORAController.getInstance().addMapToProject(resultEvent.result.map.ID, projectName);
 				AGORAModel.getInstance().moveToProject = false;
 			}
+			var cg:ArrayList = AGORAController.getInstance().categoryChain;
+			var cmiccm:CreateMapInCurrentCategoryModel = new CreateMapInCurrentCategoryModel;
+			cmiccm.send(resultEvent.result.map.ID,(CategoryDataV0) (cg.getItemAt(cg.length-1)).current);
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
 		}
 		

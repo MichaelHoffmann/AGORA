@@ -6,6 +6,7 @@ package ValueObjects
 	public class AGORAParameters
 	{
 		public static var reference:AGORAParameters;
+		public var createMapHereURL:String;
 		public var listMapsURL:String; 
 		public var myMapsURL:String;
 		public var loginURL:String;
@@ -29,6 +30,7 @@ package ValueObjects
 		public var chatPushURL:String;
 		public var chatPullURL:String;
 		public var childMapURL:String;
+		
 		
 		
 		
@@ -178,6 +180,7 @@ package ValueObjects
 			chatPullURL= "http://agora.gatech.edu/zlee6_testing/pull_chat.php"; //chat testing
 			childCategoryURL = "http://agora.gatech.edu/rzhang39_testing/child_category.php";
 			childMapURL="http://agora.gatech.edu/rzhang39_testing/map_category.php";
+			createMapHereURL = "http://agora.gatech.edu/zlee6_testing/create_map_in_current_category.php";
 			initialize();		
 		}
 		

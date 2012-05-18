@@ -19,8 +19,11 @@
 			
 			import Model.AGORAModel;
 			
+			import ValueObjects.CategoryDataV0;
+			
 			import classes.Language;
 			
+			import mx.collections.ArrayList;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.managers.FocusManager;
@@ -44,9 +47,11 @@
 			 */
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
+				var cc:ArrayList = AGORAController.getInstance().categoryChain;
 				mapName.text=" ";
 				mapName.setFocus();
 				mapName.text = "";
+				currCat.text = currCat.text + (CategoryDataV0)(cc.getItemAt(cc.length-1)).current;
 			}
 			
 			/**
@@ -99,4 +104,5 @@
 			</s:HGroup>		
 		</mx:FormItem>
 	</mx:Form>
+	<s:Label id="currCat" x="10" y="93" text="Map will be added to category: "/>
 </s:Panel>

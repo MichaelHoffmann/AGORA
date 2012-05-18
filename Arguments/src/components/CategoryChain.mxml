@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+	 -	A custom label setup that displays the current category hierarchy to the user.
+	 -	
+	 -	Has two functions: removeCategory and addCategory. See the documentation of those two functions for more info
+	-->
+<s:Label xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 preinitialize="preInit();">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			/**
+			 * @param - numCats - Keeps up with the number of categories currently in the chain. 
+			 * 
+			 * It is used to verify when we need to tell the user that he or she is on the top level or to remove the top level string
+			 * when the user navigates away from it.
+			 */
+			private var numCats:int; 
+			
+			/**
+			 * The delimeter used to seperate the categories. Originally was an arrow "-->" then changed to a slash "\"
+			 */
+			private var delimeter:String;
+			
+			/**
+			 * Essentially a constructor. 
+			 * 
+			 * 
+			 * Sets the label to have the default text of Top Level indicating that the user is currently at the top level of the category hierarchy
+			 * 
+			 * Initializes the number of categories to be zero. Integer values are initialized to 0 even without a constructor but this is done here
+			 * for the sake of readability.
+			 * Initializes the delimeter that makes readability better. Initially, this is "\". May change in the future
+			 */
+			private function preInit():void{
+				this.numCats = 0;
+				this.delimeter = " \\ "; //Make the delimeter. Remember to escape the delimeter if it is a character like "\"
+				super.text = "Top Level";
+			}
+			
+			/**
+			 * Adds a category to the label. Simoltaneously adds the appropriate delimeter.
+			 * 
+			 * @param newCat - The category to be added to the label
+			 */
+			public function addCategory(newCat:String):void{
+				/*
+				 *	If the connection is not right then categories do not load and it really screws with the text in the chain.
+				 *	This solves that problem and lets the user know that there was a problem loading the category.
+				 */
+				if(super.text == newCat || super.text == "Error loading categories"){
+					this.text = "Error loading categories"
+					return;
+				}
+				
+				
+				/*
+				 *  Checks to see if we are at the top level of the category hierarchy. If we are and a category is clicked, remove the text "Top Level"
+				 *	and add the first category. If we are not, concatinate the old text, the delimeter, and the new category string.
+				 */
+				if(numCats == 0) super.text=newCat;
+				else{
+					//Add a new line BEFORE concatinating text IF the length of the new text is more than 20
+					if(newCat.length > 20) super.text = super.text + '\n';
+					super.text = super.text + delimeter + newCat;
+				}
+
+				
+				numCats++;
+			}
+			
+			/**
+			 * Removes the tail category from the label. Because of the nature of categories, we cannot just remove the end category and
+			 * therefore need to know what category needs to be removed. Also removes the delimeter.
+			 * 
+			 * @param oldCat - The category to be removed.
+			 */
+			public function removeCategory(oldCat:String):void{
+				if(numCats > 1){
+					super.text = super.text.substr(0, super.text.length	- oldCat.length - delimeter.length);
+					if(oldCat.length > 20) super.text.substr(0, super.text.length - 1); //Remove the new line
+				} else super.text = "Top Level";
+				numCats--;	
+			}
+
+		]]>
+	</fx:Script>
+</s:Label>

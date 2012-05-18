@@ -2,6 +2,8 @@ package components
 {
 	import Controller.ArgumentController;
 	
+	import Skins.ScrollerSkin;
+	
 	import Model.AGORAModel;
 	import Model.LoadProjectMapsModel;
 	import Model.MapMetaData;
@@ -45,6 +47,8 @@ package components
 			scroller = new Scroller;
 			scroller.x = scroller.y = 5;
 			scroller.percentHeight = scroller.percentWidth = 100;
+			scroller.setStyle("skinClass",Skins.ScrollerSkin);
+
 			vContentGroup = new Group;
 			vContentGroup.layout = new VerticalLayout();
 			//vContentGroup.layout.gap = 10;

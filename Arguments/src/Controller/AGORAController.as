@@ -14,6 +14,7 @@ package Controller
 	import Model.UserSessionModel;
 	import Model.VerifyProjectPasswordModel;
 	
+	import ValueObjects.CategoryDataV0;
 	import ValueObjects.ChatDataVO;
 	import ValueObjects.UserDataVO;
 	
@@ -296,6 +297,11 @@ package Controller
 		//----------- other public functions --------------------//
 		public function hideMap():void{
 			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
+			if(!(CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).parent){
+				fetchDataCategory();
+			} else {
+				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current);
+			}
 			//reinitializes the map model
 			mapModel.reinitializeModel();
 			//initlizes the children hash map, and 

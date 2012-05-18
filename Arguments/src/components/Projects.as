@@ -11,6 +11,8 @@ package components
 	import Model.ProjectsModel;
 	import Model.UserSessionModel;
 	
+	import Skins.ScrollerSkin;
+	
 	import classes.Language;
 	
 	import flash.display.DisplayObject;
@@ -48,6 +50,7 @@ package components
 			scroller = new Scroller;
 			scroller.x = scroller.y = 5;
 			scroller.percentHeight = scroller.percentWidth = 100;
+			scroller.setStyle("skinClass",Skins.ScrollerSkin);
 			vContentGroup = new Group;
 			vContentGroup.layout = new VerticalLayout();
 			//vContentGroup.layout.gap = 10;

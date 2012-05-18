@@ -13,6 +13,7 @@
 			import Model.AGORAMapModel;
 			import Model.AGORAModel;
 			import Model.CategoryModel;
+			import Model.CreateMapInCurrentCategoryModel;
 			import Model.UserSessionModel;
 			
 			import ValueObjects.CategoryDataV0;
@@ -160,18 +161,24 @@
 			 */
 			protected function backButton_OnClick():void{
 				var cg:ArrayList = AGORAController.getInstance().categoryChain;
-				var temp:String = null;
+				var temp:CategoryDataV0 = null;
 				if(cg.length>0){
-					temp = (CategoryDataV0)(cg.removeItemAt(cg.length-1)).parent;
+					temp = (CategoryDataV0)(cg.removeItemAt(cg.length-1));
 					trace("Fetching category: " + temp);
-					if(!temp){
+					if(!temp.parent){
 						this.tabNav.setVisible(true,true);
 						this.mainPanel.visible=false;
+						createMapBtn.enabled = false;
+						AGORAController.getInstance().categoryChain = cg;
 						AGORAController.getInstance().fetchDataCategory();
 					} else {
-						AGORAController.getInstance().fetchDataChildCategory(temp);
+						
+						AGORAController.getInstance().categoryChain = cg;
+						AGORAController.getInstance().fetchDataChildCategory(temp.parent);
 					}
-				}
+					categoryChain.removeCategory(temp.current); //Get the arrow (-->)
+
+				} 
 				
 			}
 			
@@ -203,13 +210,23 @@
 		<s:NavigatorContent width="100%" height="100%" label="{'A World of Arguments'}">
 			<mx:Image id="loader1" horizontalCenter="0"
 					   verticalCenter="-1"/>
-					<s:Group horizontalCenter="-3" verticalCenter="-25">
+					<s:VGroup horizontalCenter="-3" verticalCenter="-25">
+						
 						<components:CategoryPanel id="categories" width="100%" height="309"
 												  horizontalCenter="0"
 												  skinClass="spark.skins.spark.SkinnableContainerSkin"
 												  title="category" verticalCenter="0">	
 						</components:CategoryPanel>
-					</s:Group>
+						<!--Button to create a new map-->
+						<s:HGroup horizontalAlign="center">
+							<s:Button id="createMapBtn" enabled="false"
+									  label="{('Create Map In Current Category')}" click="createMapBtn_clickHandler(event)">
+							</s:Button >
+							<s:Label text="Current Category Chain:  "/>
+							<components:CategoryChain id="categoryChain"/>
+						</s:HGroup>
+						
+					</s:VGroup>
 		</s:NavigatorContent>
 		
 		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
