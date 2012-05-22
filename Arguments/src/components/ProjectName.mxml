@@ -81,7 +81,7 @@
 			<s:HGroup>
 				<s:Button label="{Language.lookup('OK')}" tabIndex="7" id="OK_btn" click="map_name();">		
 				</s:Button>
-				<s:Button label="Back" tabIndex="7" id="CANECL_btn" click="this.visible=false;">		
+				<s:Button label="{Language.lookup('Back')}" tabIndex="7" id="CANECL_btn" click="this.visible=false;">		
 				</s:Button>
 			</s:HGroup>		
 		</mx:FormItem>

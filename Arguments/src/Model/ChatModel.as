@@ -5,6 +5,8 @@ package Model
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.ChatDataVO;
 	
+	import classes.Language;
+	
 	import components.AGORAMenu;
 	import components.Map;
 	
@@ -86,7 +88,7 @@ package Model
 		 * This is called upon unsuccessfully leaving the PHP. Displays an error message in the chat window
 		 */
 		protected function onChatServiceFault(event:FaultEvent):void{
-			FlexGlobals.topLevelApplication.agoraMenu.chat.chatField.text = "Network Error While Loading Chat Information";
+			FlexGlobals.topLevelApplication.agoraMenu.chat.chatField.text = Language.lookup('ChatError');
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 
 		}

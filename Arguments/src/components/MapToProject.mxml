@@ -12,13 +12,13 @@
 	</fx:Declarations>
 	
 	<!--Submit button. Sends the info in the text box back to the database to either move the project to a map or fail to do so for the reported reason-->
-	<s:Button x="37" y="67" label="Submit" click="submitButton_OnClick()"/>
+	<s:Button x="37" y="67" label="{Language.lookup('Submit')}" click="submitButton_OnClick()"/>
 	
 	<!--Cancel button. Simply hides the popup by setting the visibility to false-->
-	<s:Button x="122" y="68" label="Cancel" click="this.visible=false;"/>
+	<s:Button x="122" y="68" label="{Language.lookup('Back')}" click="this.visible=false;"/>
 	
 	<!--A label to help indicate what the user should do-->
-	<s:Label x="24" y="19" text="Input project name to move map to"/>
+	<s:Label x="24" y="19" text="{Language.lookup('InputProjName')}"/>
 	
 	<!--The main text area where the user can input the name of the project to send off to the DB-->
 	<s:TextArea id="projName" x="23" y="36" height="24"/>

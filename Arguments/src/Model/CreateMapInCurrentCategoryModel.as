@@ -7,6 +7,8 @@ package Model
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import com.adobe.crypto.MD5;
 	
 	import flash.events.EventDispatcher;
@@ -62,8 +64,8 @@ package Model
 		/**
 		 * If the sendRequest method comes back poorly, we enter here and broadcast the FAULT event
 		 */
-		protected function onFault(event:FaultEvent)    :void{
-			Alert.show("Encountered problem adding map to the current category");
+		protected function onFault(event:FaultEvent):void{
+			Alert.show(Language.lookup('MapInCatError'));
 		}
 	}
 }

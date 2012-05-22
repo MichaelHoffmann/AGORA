@@ -9,6 +9,8 @@ package Model
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.ChatDataVO;
 	
+	import classes.Language;
+	
 	import flash.events.EventDispatcher;
 	
 	import mx.controls.Alert;
@@ -46,7 +48,7 @@ package Model
 				loadProjMaps = AGORAModel.getInstance().loadProjMaps;;
 				loadProjMaps.sendRequest();
 			} else {
-				Alert.show("Incorrect Password");
+				Alert.show(Language.lookup('IncorrectProjPass'));
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PASSWORD_VERIFIED));
 		}
@@ -59,7 +61,7 @@ package Model
 		}
 		
 		protected function onFault(event:FaultEvent):void{
-			Alert.show("Incorrect Password");
+			Alert.show(Language.lookup('IncorrectProjPass'));
 		}
 	}
 }

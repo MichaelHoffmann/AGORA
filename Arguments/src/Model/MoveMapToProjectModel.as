@@ -9,6 +9,8 @@ package Model
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.ChatDataVO;
 	
+	import classes.Language;
+	
 	import flash.events.EventDispatcher;
 	
 	import mx.controls.Alert;
@@ -64,7 +66,7 @@ package Model
 		 * When we return from the DB with an error, enters here
 		 */
 		protected function onFault(event:FaultEvent):void{
-			Alert.show("Could not move the map to the selected project"); //To translate
+			Alert.show(Language.lookup('MapToProjError')); //To translate
 		}
 	}
 }

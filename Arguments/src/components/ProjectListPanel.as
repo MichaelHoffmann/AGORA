@@ -58,7 +58,7 @@ package components
 			loadingDisplay.text = Language.lookup("Loading");
 			addElement(loadingDisplay);
 			back = new Button;
-			back.label = "Back"; //Translate
+			back.label = Language.lookup('Back');
 			
 			back.addEventListener('click', backButton_OnClick, false, 1,false);
 			back.visible = false;

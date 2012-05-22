@@ -14,6 +14,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import classes.Language;
 			
 			/**
 			 * @param - numCats - Keeps up with the number of categories currently in the chain. 
@@ -41,7 +42,7 @@
 			private function preInit():void{
 				this.numCats = 0;
 				this.delimeter = " \\ "; //Make the delimeter. Remember to escape the delimeter if it is a character like "\"
-				super.text = "Top Level";
+				super.text = Language.lookup('CategoryTopLevel');
 			}
 			
 			/**
@@ -55,7 +56,7 @@
 				 *	This solves that problem and lets the user know that there was a problem loading the category.
 				 */
 				if(super.text == newCat || super.text == "Error loading categories"){
-					this.text = "Error loading categories"
+					this.text = Language.lookup('CategoryLoadError');
 					return;
 				}
 				
@@ -85,7 +86,7 @@
 				if(numCats > 1){
 					super.text = super.text.substr(0, super.text.length	- oldCat.length - delimeter.length);
 					if(oldCat.length > 20) super.text.substr(0, super.text.length - 1); //Remove the new line
-				} else super.text = "Top Level";
+				} else super.text = Language.lookup('CategoryTopLevel');;
 				numCats--;	
 			}
 

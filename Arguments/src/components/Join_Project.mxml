@@ -18,15 +18,17 @@
 	<!--The submit button that submits the input password for verification-->
 	<!--Text box allowing for password input-->
 	<!--Instructive text field that tells the user what to do: input the password-->
-	<s:Label x="10" y="5" text="Input the Project's Password"/>
+	<s:Label x="10" y="5" text="{Language.lookup('RequestProjPass')}"></s:Label>
 	<!--Cancel button that closes the popup when pressed-->
 	<s:TextInput id="password" x="23" y="25" displayAsPassword="true"/>
-	<s:Button id="submitButton" x="10" y="70" label="Submit" click="submit_form()"/>
-	<s:Button id="cancelButton" x="88" y="70" label="Back" click="clear_form()"/>
+	<s:Button id="submitButton" x="10" y="70" label="{Language.lookup('Submit')}" click="submit_form()"/>
+	<s:Button id="cancelButton" x="88" y="70" label="{Language.lookup('Back')}" click="clear_form()"/>
 	<fx:Script>
 		<![CDATA[
 			import Model.AGORAModel;
 			import Model.VerifyProjectPasswordModel;
+			
+			import classes.Language;
 			
 			import com.adobe.crypto.MD5;
 			

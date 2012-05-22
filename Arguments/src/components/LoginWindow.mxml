@@ -22,7 +22,7 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  width="350" height="150" creationComplete="init();" layout="absolute"
-		  title="Login To AGORA">
+		  title="{Language.lookup('Login')}">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:StringValidator id="unameValidator"
@@ -43,7 +43,6 @@
 			
 			import classes.Language;
 			
-			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import mx.validators.Validator;
 			

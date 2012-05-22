@@ -12,11 +12,11 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 	<s:TextArea id="chatField" x="10" y="0" width="229" height="265" editable="false" enabled="true"
 				name="chatField"/>
 	<s:TextArea id="chatTextEntry" x="10" y="310" width="230" height="133" enabled="true"/>
-	<s:Button id="send" x="94" y="451" label="Send" click="sendButton_onClick(event)"/> 
-	<s:Button id="hide" x="10" y="451" label="Hide Chat" click="hideButton_onClick(event)"/>
-	<s:Button id="clear" x="171" y="451" label="Clear"  click="clearButton_onClick(event)"/>
-	<s:Label id="mainLabel" x="10" y="-20" text="Chat with other users:"/>
-	<s:Label id="chatLabel" x="11" y="277" height="26" text="Type message:"/>
+	<s:Button id="send" x="94" y="451" label="{Language.lookup('Send')}" click="sendButton_onClick(event)"/> 
+	<s:Button id="hide" x="10" y="451" label="{Language.lookup('HideChat')}" click="hideButton_onClick(event)"/>
+	<s:Button id="clear" x="171" y="451" label="{Language.lookup('Clear')}"  click="clearButton_onClick(event)"/>
+	<s:Label id="mainLabel" x="10" y="-20" text="{Language.lookup('ChatLabel')}"/>
+	<s:Label id="chatLabel" x="11" y="277" height="26" text="{Language.lookup('TypeMessage')}"/>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -26,6 +26,8 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			import Model.ChatModel;
 			import Model.PushChatModel;
 			import Model.UserSessionModel;
+			
+			import classes.Language;
 			
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
@@ -64,7 +66,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 						
 					}
 				} else {
-					chatField.text = "Loading";
+					chatField.text = Language.lookup("Loading");
 				}
 			}
 			
@@ -103,7 +105,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 					this.chatField.visible = false;
 					this.mainLabel.visible = false;
 					this.chatLabel.visible = false;
-					this.hide.label = "Unhide Chat";
+					this.hide.label = Language.lookup('UnhideChat');
 				} else {
 					this.send.visible = true;
 					this.clear.visible = true;
@@ -111,7 +113,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 					this.chatField.visible = true;
 					this.mainLabel.visible = true;
 					this.chatLabel.visible = true;
-					this.hide.label = "Hide Chat";
+					this.hide.label = Language.lookup('HideChat');
 				}
 			}
 		]]>

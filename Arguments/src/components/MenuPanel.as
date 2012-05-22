@@ -23,17 +23,18 @@ package components
 
 	import Controller.ArgumentController;
 	
+	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	
 	import ValueObjects.AGORAParameters;
 	
 	import classes.Language;
 	
-
 	import flash.events.MouseEvent;
-	import Model.ArgumentTypeModel;
+	
 	import mx.binding.utils.BindingUtils;
 	import mx.containers.Panel;
+	import mx.controls.Alert;
 	import mx.controls.Label;
 	import mx.core.DragSource;
 	import mx.core.FlexBitmap;
@@ -46,9 +47,6 @@ package components
 	import spark.components.Button;
 	import spark.components.HGroup;
 	import spark.components.VGroup;
-	
-	import Model.AGORAModel;
-	import mx.controls.Alert;
 	
 	public class MenuPanel extends GridPanel
 	{
@@ -137,14 +135,14 @@ package components
 			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 				ArgumentController.getInstance().addReasonToExistingArgument(model);
 			} else { 
-				Alert.show("Guests to AGORA cannot edit maps");
+				Alert.show(Language.lookup("GuestEditMapError"));
 			}
 		}
 		protected function onChangeSchemeClicked(event:MouseEvent):void{
 			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 				ArgumentController.getInstance().initiateArgumentConstruction(model);
 			} else { 
-				Alert.show("Guests to AGORA cannot edit maps");
+				Alert.show(Language.lookup("GuestEditMapError"));
 			}
 		}
 		

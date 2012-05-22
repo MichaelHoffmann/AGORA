@@ -79,7 +79,7 @@
 	<mx:Form id="form">
 		
 		<!--Declares the first item of the form-->
-		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;EnterMapName&quot;)}">
+		<mx:FormItem tabIndex="1" label="{Language.lookup('EnterMapName')}">
 			
 			<!--The text field that allows the user to input the map name-->
 			<s:TextInput id="mapName">
@@ -98,11 +98,11 @@
 				</s:Button>
 				
 				<!--The back button that simply sets the box to be invisible-->
-				<s:Button label="Back" tabIndex="7" id="CANECL_btn" click="this.visible=false;">		
+				<s:Button label="{Language.lookup('Back')}" tabIndex="7" id="CANECL_btn" click="this.visible=false;">		
 				</s:Button>
 				
 			</s:HGroup>		
 		</mx:FormItem>
 	</mx:Form>
-	<s:Label id="currCat" x="10" y="93" text="Map will be added to category: "/>
+	<s:Label id="currCat" x="10" y="93" text="{Language.lookup('AddMapToCategory')}"/>
 </s:Panel>

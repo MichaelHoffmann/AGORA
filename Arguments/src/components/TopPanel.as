@@ -77,7 +77,7 @@ package components
 			
 			if(!addToProjectButton){
 				addToProjectButton = new Button;
-				addToProjectButton.label = "Move Map To Project";
+				addToProjectButton.label = Language.lookup('MapToProject');
 				addToProjectButton.addEventListener(MouseEvent.CLICK,onAddToProject);
 				addChild(addToProjectButton);
 			}
