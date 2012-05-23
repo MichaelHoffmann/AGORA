@@ -9,24 +9,29 @@
 			   minWidth="955" minHeight="600" pageTitle="Welcome to AGORA" xmlns:components="components.*"
 			   preinitialize="application_preinitializeHandler(event)"
 			   applicationComplete="application1_applicationCompleteHandler(event)"
+			   addedToStage="application1_addedToStageHandler(event)"
 			   >
 	<fx:Style source="styles.css"/>
 
 	<fx:Declarations>
 	</fx:Declarations>
 	
-		<s:Group>
+		<s:Group id="mainGroup" percentWidth="100" percentHeight="100">
 			<!--Adds a visible AGORALogin object to the main index panel-->
-			<components:AGORALogin id="agoraMain" width="100%" height="100%" horizontalCenter="0" name="agoraMain" verticalCenter="0" visible="true"/>
+			<components:AGORALogin id="agoraMain" visible="true" percentWidth="100" percentHeight="100" name="agoraMain"/>
 			<!--Adds an invisible AGORAMenu object to the main index panel-->
-			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="100%" height="100%" horizontalCenter="0" verticalCenter="0"/>
+			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" percentWidth="77" percentHeight="100"/>
+			<!--he panel that goes on the right side of the screen-->
+			<components:RightSidePanel id="rightSidePanel" visible="false" percentHeight="100" percentWidth="23"/>
 			<!--Adds an invisible map object to the main index panel-->
 			<components:Map id="map" name="map" visible="false"/>
+			<!--he panel that goes on the right side of the screen-->
 		</s:Group>
 	
 
 	<fx:Script>
 
+		import mx.events.ResizeEvent;
 		import components.MapToProject;
 		import components.Join_Project;
 
@@ -101,7 +106,20 @@
 		protected function application1_applicationCompleteHandler(event:FlexEvent):void
 		{
 			LayoutController.getInstance().setApplicationLayoutProperties();
+			this.addEventListener(ResizeEvent.RESIZE, application1_addedToStageHandler);
 		}
+		
+		protected function application1_addedToStageHandler(event:Event):void
+		{
+			rightSidePanel.x = stage.stageWidth - rightSidePanel.width;	
+			agoraMain.percentWidth = agoraMain.percentHeight = 100;
+			agoraMenu.percentWidth = 77;
+			rightSidePanel.percentWidth = 23;
+			agoraMenu.percentHeight = rightSidePanel.percentHeight = 100;
+			mainGroup.invalidateSize();
+
+		}
+
 		
 	</fx:Script>
 	

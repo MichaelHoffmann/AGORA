@@ -30,7 +30,17 @@
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 
-
+	<PrivacyPolicy>
+		<EN-US text="Privacy Policy" />
+		<RUS text="Privacy Policy" /><!--TODO Translate -->
+		<GER text="Privacy Policy" />
+	</PrivacyPolicy>
+	
+	<YouAreHere>
+		<EN-US text="You are here:" />
+		<RUS text="You are here:" /><!--TODO Translate -->
+		<GER text="You are here:" />
+	</YouAreHere>
 
 	<AboutUsTT>
 		<EN-US text="Visit the homepage of the AGORA Project" />
@@ -124,24 +134,24 @@
 		<RUS text="Publish your map in the World of Arguments" /><!--TODO Translate -->
 		<GER text="Veröffentliche dein Argument in der Welt der Argumente" />
 	</PublishMap>
-
-
+	
 	<Send>
 		<EN-US text="Send" />
 		<RUS text="Send" /><!--TODO Translate -->
 		<GER text="Sende" />
 	</Send>
+	
 	<Clear>
 		<EN-US text="Clear" />
 		<RUS text="Clear" /><!--TODO Translate -->
 		<GER text="Lösche alles" />
 	</Clear>
 
-	<HideChat>
+	<HidePanel>
 		<EN-US text="Hide Panel" />
 		<RUS text="Hide Panel" /><!--TODO Translate -->
 		<GER text="Verberge dieses Feld" />
-	</HideChat>
+	</HidePanel>
 
 	<ChatLabel>
 		<EN-US text="Chat with other users" />
@@ -2090,9 +2100,9 @@ gelesen und verstanden" />
 	</MTAndOrHelp>
 
 	<MustRegister>
-		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible. Please note that you can register with the same e-mail address only once. So, if you forgot your access info, please use the "Forgot your password?" function." />
+		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible. Please note that you can register with the same e-mail address only once. So, if you forgot your access info, please use the &quot;Forgot your password?&quot; function." />
 		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой" /><!--TODO Translate the last two sentences -->
-		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als &quot;AU&quot; (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar. Du kannst dich nur einmal mit derselben e-mail Adresse registrieren. Falls du deine Zugangs-Info vergißt, benutze bitte die "Passwort vergessen?" Funktion." />
+		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als &quot;AU&quot; (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar. Du kannst dich nur einmal mit derselben e-mail Adresse registrieren. Falls du deine Zugangs-Info vergißt, benutze bitte die &quot;Passwort vergessen?&quot; Funktion." />
 	</MustRegister>
 
 	<NewPass>

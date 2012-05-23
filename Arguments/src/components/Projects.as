@@ -103,6 +103,7 @@ package components
 					FlexGlobals.topLevelApplication.agoraMenu.backToProjectList.visible = true;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjectBtn.label = "Create a map within this project";
 					var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+					if(!projMapModel || !projMapModel.projectMapList) return;
 					for each (var projectMapList:XML in projMapModel.projectMapList.map){
 						try{
 							if(projectMapList.@is_deleted == "1"){

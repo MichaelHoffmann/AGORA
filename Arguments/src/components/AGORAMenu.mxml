@@ -3,7 +3,9 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:components="components.*"
-		 width="1166" height="596" creationComplete="creationCompleteHandler(event)">
+		 width="1166" height="596" 
+		 creationComplete="creationCompleteHandler(event)"
+		 >
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -25,7 +27,9 @@
 			import mx.collections.ArrayList;
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
+			import mx.core.mx_internal;
 			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
 			
 			public var timer:Timer = new Timer(10000);
 			public var numClicks:int=0;
@@ -46,6 +50,13 @@
 				AGORAController.getInstance().fetchDataCategory();
 				AGORAController.getInstance().fetchDataMapList();
 				AGORAController.getInstance().fetchDataProjectList();
+			}
+			
+			protected function resizeScreen(event:Event):void{
+				if(stage){
+					this.height = stage.stageHeight;
+					this.width = stage.stageWidth;
+				}
 			}
 			
 			/**
@@ -176,7 +187,7 @@
 						AGORAController.getInstance().categoryChain = cg;
 						AGORAController.getInstance().fetchDataChildCategory(temp.parent);
 					}
-					categoryChain.removeCategory(temp.current); //Get the arrow (-->)
+					FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current); //Get the arrow (-->)
 
 				} 
 				
@@ -198,72 +209,45 @@
 					this.mainPanel.visible=false;		
 				}
 			}
+			
+			protected function privacyPolicyBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function aboutUsBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function faqBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function contactUsBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function helpBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:TabNavigator id="tabNav" top="100" width="800" height="400" borderVisible="true"
-					 cornerRadius="0" creationPolicy="all" horizontalCenter="0" name="tabNav"
-					 tabWidth="267" textAlign="center">
-		<s:NavigatorContent width="100%" height="100%" label="{Language.lookup('MainTab')}">
-			<mx:Image id="loader1" horizontalCenter="0"
-					   verticalCenter="-1"/>
-					<s:VGroup horizontalCenter="-3" verticalCenter="-25">
-						
-						<components:CategoryPanel id="categories" width="100%" height="309"
-												  horizontalCenter="0"
-												  skinClass="spark.skins.spark.SkinnableContainerSkin"
-												  title="category" verticalCenter="0">	
-						</components:CategoryPanel>
-						<!--Button to create a new map-->
-						<s:HGroup horizontalAlign="center">
-							<s:VGroup>
-								<s:Button id="createMapBtn" enabled="false"
-										  label="{Language.lookup('CategoryMap')}" click="createMapBtn_clickHandler(event)">
-								</s:Button >
-								<s:Button id="createProjBtn" enabled="false" visible="false"
-										  label="{Language.lookup('CategoryProject')}" click="createMapBtn_clickHandler(event)">
-								</s:Button >
-							</s:VGroup>
-							<s:Label text="{Language.lookup('CategoryChainLead')}"/>
-							<components:CategoryChain id="categoryChain"/>
-						</s:HGroup>
-						
-					</s:VGroup>
-		</s:NavigatorContent>
-		
-		<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
-		
-		<s:NavigatorContent id="myMapsTab" width="100%" height="100%" label="{Language.lookup(&quot;MyMaps&quot;)}">
-			<s:HGroup id="myMapsHorizGroup" y="10" horizontalCenter="0">
-				<components:MyMapsPanel id="myMaps" width="796" height="357"
-										dropShadowVisible="false" horizontalCenter="-2">
-				</components:MyMapsPanel>
-			</s:HGroup>
-		</s:NavigatorContent>
-		
-		<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
-		
-		<s:NavigatorContent id="projectsTab" width="100%" height="100%" label="{Language.lookup('MyPPProjects')}">
-			<components:Projects id="myProjects" y="-34" width="100%" height="341" borderAlpha="0.0"
-								 borderVisible="false" controlBarVisible="false"
-								 dropShadowVisible="false">
-			</components:Projects> 
-			<s:Button id="createProjectBtn" label="{Language.lookup(&quot;NewProject&quot;)}"
-					  click="projectsButton_OnClick(event)" horizontalCenter="-90"
-					  verticalCenter="163">
-			</s:Button>
-			<s:Button id="backToProjectList" label="{Language.lookup(&quot;Back&quot;)}"
-					  click="backToMajorProjectList(event)" horizontalCenter="90"
-					  verticalCenter="163">
-			</s:Button>
-		</s:NavigatorContent>
-		<s:NavigatorContent width="100%" height="100%" label="Search">
-			<s:Label id="ComingSoon" text="{Language.lookup('ComingSoon')"/>
-		</s:NavigatorContent>
-	</mx:TabNavigator>		
+	
+	
 	<s:HGroup id="mainPanel2" visible="false" height="436" paddingBottom="25" paddingLeft="25"
 			  paddingRight="25" paddingTop="25">
 		<components:MapListPanel 
@@ -271,12 +255,11 @@
 			title="{Language.lookup(&quot;ListMaps&quot;)}" 
 			width="200" height="400"
 			>		
-		</components:MapListPanel>
-		
-		
+		</components:MapListPanel>	
 	</s:HGroup>
+
 	<s:VGroup id="Agora" top="17" width="800" horizontalAlign="center" horizontalCenter="0">
-		<s:Label id="Greeting" x="295" width="211" height="54"
+		<s:Label id="Greeting" width="211" height="54"
 				 text="{Language.lookup('WelcomeShort')} 2.3" verticalAlign="bottom">
 		</s:Label>
 		<s:HGroup id="mainPanel" visible="false" height="436" paddingBottom="25" paddingLeft="25"
@@ -289,32 +272,108 @@
 			</components:ProjectListPanel>
 
 		</s:HGroup>
-		
+
 		
 		<!--Horizontal row of buttons at the bottom of the screen-->
-		<s:HGroup id="bottomButtonRow" height="36" paddingLeft="0" paddingTop="25" textAlign="center"
-				  verticalAlign="middle">
+		
+	</s:VGroup>
+	<s:VGroup id="navigtorGroup" percentWidth="100" percentHeight="100" horizontalAlign="center">
+		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
+						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.25}" textAlign="center">
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}">
+						<s:VGroup percentWidth="100" percentHeight="100">
+							
+							<components:CategoryPanel id="categories" percentWidth="100" percentHeight="100"
+													  horizontalCenter="0"
+													  skinClass="spark.skins.spark.SkinnableContainerSkin"
+													  title="category" verticalCenter="0">	
+							</components:CategoryPanel>
+							<!--Button to create a new map-->
+							<s:HGroup horizontalAlign="center" verticalAlign="top">
+								<s:VGroup percentWidth="100" percentHeight="100" horizontalAlign="center">
+									<s:Button id="createMapBtn" enabled="false"
+											  label="{Language.lookup('CategoryMap')}" click="createMapBtn_clickHandler(event)">
+									</s:Button >
+									<s:Button id="createProjBtn" enabled="false" visible="false"
+											  label="{Language.lookup('CategoryProject')}" click="createMapBtn_clickHandler(event)">
+									</s:Button >
+								</s:VGroup>
+							</s:HGroup>
+							
+						</s:VGroup>
+			</s:NavigatorContent>
 			
-			<s:Button id="signInBtn"
-					  label="{AGORAModel.getInstance().userSessionModel.uid? 
-					  Language.lookup('SignOut'): Language.lookup('SignIn')}"
-					  click="signInBtn_clickHandler(event)" />
+			<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
 			
-			<s:Button id="registerBtn"
-					  label="{Language.lookup(&quot;RegisterAsNew&quot;)}"
-					  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
-					  click="registerBtn_clickHandler(event)" />
-			<s:Button id="backBtn"
-					  label="{Language.lookup('Back')}"
-					  click="backButton_OnClick()"/>
-			<!--s:Button id="hackBtn"
-					  label="{Language.lookup('Back')}"
-					  click="hackButton_OnClick()"/-->
+			<s:NavigatorContent id="myMapsTab" percentWidth="100" percentHeight="100" label="{Language.lookup(&quot;MyMaps&quot;)}">
+				<s:HGroup id="myMapsHorizGroup" percentWidth="100" percentHeight="100">
+					<components:MyMapsPanel id="myMaps" percentWidth="100" percentHeight="100"
+											dropShadowVisible="false" >
+					</components:MyMapsPanel>
+				</s:HGroup>
+			</s:NavigatorContent>
 			
-		</s:HGroup>
-	</s:VGroup>	
-	<!--Adds the chat window to the menu-->
-	<components:ChatWindow id="chat" top="100" width="200" height="374" horizontalCenter="-556"
-						   name="chat">
-	</components:ChatWindow>
+			<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
+			
+			<s:NavigatorContent id="projectsTab" percentWidth="100" percentHeight="100" label="{Language.lookup('MyPPProjects')}">
+				<s:VGroup percentWidth="100" percentHeight="100">
+					<components:Projects id="myProjects" percentWidth="100" percentHeight="90"
+										 borderVisible="false" controlBarVisible="false"
+										 dropShadowVisible="false">
+					</components:Projects> 
+					<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
+						<s:Button id="createProjectBtn" label="{Language.lookup(&quot;NewProject&quot;)}"
+								  click="projectsButton_OnClick(event)">
+						</s:Button>
+						<s:Button id="backToProjectList" label="{Language.lookup(&quot;Back&quot;)}"
+								  click="backToMajorProjectList(event)">
+						</s:Button>
+					</s:HGroup>
+				</s:VGroup>
+			</s:NavigatorContent>
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="Search">
+				<s:Label id="ComingSoon" text="{Language.lookup('ComingSoon')}"/>
+			</s:NavigatorContent>
+		</mx:TabNavigator>
+		<s:VGroup verticalAlign="middle" horizontalAlign="center" percentWidth="100" percentHeight="10">
+			<s:HGroup id="bottomButtonRow" percentWidth="100" percentHeight="100" textAlign="center" horizontalAlign="center">
+			
+				<s:Button id="signInBtn"
+						  label="{AGORAModel.getInstance().userSessionModel.uid? 
+						  Language.lookup('SignOut'): Language.lookup('SignIn')}"
+						  click="signInBtn_clickHandler(event)" />
+				
+				<s:Button id="registerBtn"
+						  label="{Language.lookup(&quot;RegisterAsNew&quot;)}"
+						  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
+						  click="registerBtn_clickHandler(event)" />
+				<s:Button id="privacyPolicyBtn"
+						  label="{Language.lookup('PrivacyPolicy')}"
+						  click="privacyPolicyBtn_clickHandler(event)"/>
+				<s:Button id="backBtn"
+						  label="{Language.lookup('Back')}"
+						  click="backButton_OnClick()"/>
+				<!--s:Button id="hackBtn"
+				label="{Language.lookup('Back')}"
+				click="hackButton_OnClick()"/-->
+			</s:HGroup>
+			<s:HGroup percentWidth="100" percentHeight="100" verticalAlign="middle" horizontalAlign="center">
+				<s:Button id="aboutUsBtn"
+						  label="{Language.lookup('AboutUs')}"
+						  click="aboutUsBtn_clickHandler(event)" />
+				
+				<s:Button id="faqBtn"
+						  label="{Language.lookup('FAQ')}"
+						  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
+						  click="faqBtn_clickHandler(event)" />
+				<s:Button id="contactUsBtn"
+						  label="{Language.lookup('ContactUS')}"
+						  click="contactUsBtn_clickHandler(event)"/>
+				<s:Button id="helpBtn"
+						  label="{Language.lookup('Help')}"
+						  click="helpBtn_clickHandler(event)"/>
+			</s:HGroup>
+		</s:VGroup>
+	</s:VGroup>
+
 </s:Group>

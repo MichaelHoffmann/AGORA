@@ -13,7 +13,6 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				name="chatField"/>
 	<s:TextArea id="chatTextEntry" x="10" y="310" width="230" height="133" enabled="true"/>
 	<s:Button id="send" x="94" y="451" label="{Language.lookup('Send')}" click="sendButton_onClick(event)"/> 
-	<s:Button id="hide" x="10" y="451" label="{Language.lookup('HideChat')}" click="hideButton_onClick(event)"/>
 	<s:Button id="clear" x="171" y="451" label="{Language.lookup('Clear')}"  click="clearButton_onClick(event)"/>
 	<s:Label id="mainLabel" x="10" y="-20" text="{Language.lookup('ChatLabel')}"/>
 	<s:Label id="chatLabel" x="11" y="277" height="26" text="{Language.lookup('TypeMessage')}"/>
@@ -92,30 +91,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			private function clearButton_onClick(event:Event):void{
 				chatTextEntry.text = "";
 			}
-			
-			/** 
-			 * This is the action that is taken when the hide chat button is clicked. Essentially it just sets everything to invisiblie except itself
-			 * so that you can then click it again and unhide everything! 
-			 */
-			private function hideButton_onClick(event:Event):void{
-				if(this.send.visible){
-					this.send.visible = false;
-					this.clear.visible = false;
-					this.chatTextEntry.visible = false;
-					this.chatField.visible = false;
-					this.mainLabel.visible = false;
-					this.chatLabel.visible = false;
-					this.hide.label = Language.lookup('UnhideChat');
-				} else {
-					this.send.visible = true;
-					this.clear.visible = true;
-					this.chatTextEntry.visible = true;
-					this.chatField.visible = true;
-					this.mainLabel.visible = true;
-					this.chatLabel.visible = true;
-					this.hide.label = Language.lookup('HideChat');
-				}
-			}
+
 		]]>
 	</fx:Script>
 </s:Group>

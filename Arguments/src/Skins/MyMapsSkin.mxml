@@ -60,13 +60,11 @@
 		[HostComponent("components.MyMapsPanel")]
 	</fx:Metadata>
 	
-	<mx:Label id="loadingDisplay" width = "100%" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
+	<mx:Label id="loadingDisplay" percentWidth="100" textAlign="center" top="35" text="{Language.lookup('Loading')}" visible="false"/>
 	
-	<s:Scroller width="100%" top="56" height="300" skinClass="Skins.ScrollerSkin">
-		<s:Group id="contentGroup" bottom="30">
-			<s:Group id="mapsGroup" 
-					 visible.notLoggedIn="false"
-					 width="160">
+	<s:Scroller  percentWidth="100" percentHeight="90" skinClass="Skins.ScrollerSkin">
+		<s:Group id="contentGroup" percentHeight="90">
+			<s:Group id="mapsGroup" visible.notLoggedIn="false" percentHeight="90">
 				<s:layout>
 					<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0"/>
 				</s:layout>	
@@ -85,40 +83,34 @@
 			</s:Label>
 		</s:Group>
 	</s:Scroller>
+		<s:Group id="controlBarGroup" bottom="10"
+				 bottom.disabled="10" horizontalCenter.disabled="0" textAlign.disabled="center"
+				 bottom.disabledWithControlBar="10" horizontalCenter.disabledWithControlBar="0"
+				 textAlign.disabledWithControlBar="center"
+				 visible.loggedIn="true" bottom.loggedIn="10" horizontalCenter.loggedIn="0"
+				 textAlign.loggedIn="center"
+				 bottom.normal="10" horizontalCenter.normal="0" textAlign.normal="center"
+				 bottom.normalWithControlBar="10" horizontalCenter.normalWithControlBar="0"
+				 textAlign.normalWithControlBar="center"
+				 visible.notLoggedIn="false" bottom.notLoggedIn="10" horizontalCenter.notLoggedIn="0"
+				 textAlign.notLoggedIn="center">
+			<s:layout>
+				<s:HorizontalLayout paddingLeft="5" paddingRight="5"
+									verticalAlign.disabled="middle"
+									verticalAlign.disabledWithControlBar="middle"
+									verticalAlign.loggedIn="middle"
+									verticalAlign.normal="middle"
+									verticalAlign.normalWithControlBar="middle"
+									verticalAlign.notLoggedIn="middle"/>
+			</s:layout>
+			
 	
-	
-	<s:Group id="controlBarGroup" bottom="10"
-			 bottom.disabled="10" horizontalCenter.disabled="0" textAlign.disabled="center"
-			 bottom.disabledWithControlBar="10" horizontalCenter.disabledWithControlBar="0"
-			 textAlign.disabledWithControlBar="center"
-			 visible.loggedIn="true" bottom.loggedIn="10" horizontalCenter.loggedIn="0"
-			 textAlign.loggedIn="center"
-			 bottom.normal="10" horizontalCenter.normal="0" textAlign.normal="center"
-			 bottom.normalWithControlBar="10" horizontalCenter.normalWithControlBar="0"
-			 textAlign.normalWithControlBar="center"
-			 visible.notLoggedIn="false" bottom.notLoggedIn="10" horizontalCenter.notLoggedIn="0"
-			 textAlign.notLoggedIn="center">
-		<s:layout>
-			<s:HorizontalLayout paddingLeft="5" paddingRight="5"
-								verticalAlign.disabled="middle"
-								verticalAlign.disabledWithControlBar="middle"
-								verticalAlign.loggedIn="middle"
-								verticalAlign.normal="middle"
-								verticalAlign.normalWithControlBar="middle"
-								verticalAlign.notLoggedIn="middle"/>
-		</s:layout>
-		
-		<!--Button to create a new map-->
-		<s:Button id="createMapBtn"
-				  label="{Language.lookup(&quot;NewMap&quot;)}" click="createMapBtn_clickHandler(event)">
-		</s:Button >
-
-		<!--Delete Selected Maps-->
-		<s:Button label="{Language.lookup(&quot;Delete&quot;)}" id="deleteBtn" click="hostComponent.deleteMaps(event)">
-		</s:Button>
-		
-		<!--Select All Maps-->
-		<s:Button label="{hostComponent.selectString}" id = "selectBtn"  width="100" click="hostComponent.makeSelection(event)">
-		</s:Button>
-	</s:Group>
+			<!--Delete Selected Maps-->
+			<s:Button label="{Language.lookup(&quot;Delete&quot;)}" id="deleteBtn" click="hostComponent.deleteMaps(event)">
+			</s:Button>
+			
+			<!--Select All Maps-->
+			<s:Button label="{hostComponent.selectString}" id = "selectBtn"  width="100" click="hostComponent.makeSelection(event)">
+			</s:Button>
+		</s:Group>		
 </s:SparkSkin>

@@ -41,16 +41,21 @@ package components
 		public function CategoryPanel()
 		{
 			super();
+			this.percentHeight = this.percentWidth = 100;
 			model = AGORAModel.getInstance().categoryModel;
 			scroller = new Scroller;
 			scroller.x = scroller.y = 25;
 			scroller.percentHeight = scroller.percentWidth = 100;
 			categoryTiles = new Group;
+			categoryTiles.percentHeight = 100;
+			categoryTiles.percentWidth = 100;
 			var tl:TileLayout = new TileLayout();
-			tl.horizontalGap = 20;
-			tl.verticalGap = 20;
 			tl.requestedColumnCount = 3;
-//			tl.clipAndEnableScrolling = true;
+			tl.requestedRowCount = 3;
+			tl.horizontalAlign="center";
+			tl.verticalAlign = "middle";
+			tl.columnAlign="justifyUsingWidth";
+			tl.rowAlign="justifyUsingHeight";
 			categoryTiles.layout = tl;
 			scroller.viewport = categoryTiles;
 			this.addElement(scroller);
@@ -67,6 +72,7 @@ package components
 			//add elements
 			if(model.category){
 				//Loop over the categories that were pulled from the DB
+
 				for each(var categoryXML:XML in model.category.category){
 					/*Create and setup buttons corresponding to categories*/
 					var button:Button = new Button;
@@ -90,7 +96,7 @@ package components
 							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));	
 						}
 						FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.enabled = true;
-						FlexGlobals.topLevelApplication.agoraMenu.categoryChain.addCategory(e.target.label);
+						FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.addCategory(e.target.label);
 						AGORAController.getInstance().categoryChain = cg;
 													
 					}, false, 1,false);

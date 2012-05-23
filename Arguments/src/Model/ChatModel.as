@@ -68,10 +68,7 @@ package Model
 		 * This is called upon successfully leaving the PHP. Invalidates the displays of the chats
 		 */
 		protected function onChatFetched(event:ResultEvent):void{
-			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateProperties();
-			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateDisplayList();
-			FlexGlobals.topLevelApplication.map.chat.invalidateProperties();
-			FlexGlobals.topLevelApplication.map.chat.invalidateDisplayList();
+			//Nothing to do...
 		}
 	
 		/**
@@ -88,7 +85,7 @@ package Model
 		 * This is called upon unsuccessfully leaving the PHP. Displays an error message in the chat window
 		 */
 		protected function onChatServiceFault(event:FaultEvent):void{
-			FlexGlobals.topLevelApplication.agoraMenu.chat.chatField.text = Language.lookup('ChatError');
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.chatField.text = Language.lookup('ChatError');
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 
 		}

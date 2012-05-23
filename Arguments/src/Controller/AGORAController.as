@@ -149,8 +149,8 @@ package Controller
 			chatM.requestChat();	
 		}
 		protected function onChatFetched(event:AGORAEvent):void{
-			menu.chat.invalidateProperties();
-			menu.chat.invalidateDisplayList();
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.invalidateProperties();
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.Map.chat.invalidateProperties();
 			FlexGlobals.topLevelApplication.Map.chat.invalidateDisplayList();
 		}
