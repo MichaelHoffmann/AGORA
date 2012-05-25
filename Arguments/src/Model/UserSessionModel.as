@@ -156,6 +156,8 @@ package Model
 				uid = event.result.login.ID;
 				firstName = event.result.login.firstname;
 				lastName = event.result.login.lastname;
+				//For some reason, the DB would lookup and find a blank username and password allowing
+				//full access to the system. We are preventing that here
 				if(!uid){
 					dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
 					return;

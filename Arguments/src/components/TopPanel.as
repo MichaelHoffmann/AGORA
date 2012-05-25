@@ -10,6 +10,7 @@ package components
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
@@ -31,6 +32,7 @@ package components
 		public var title:TitleDisplay;
 		public var print:Button;
 		public var addToProjectButton:Button;
+		public var unhidePanelButton:Button;
 		
 		private var agoraConstants:AGORAParameters;
 		private var background:Sprite;
@@ -81,7 +83,19 @@ package components
 				addToProjectButton.addEventListener(MouseEvent.CLICK,onAddToProject);
 				addChild(addToProjectButton);
 			}
+			
+			if(!unhidePanelButton){
+				unhidePanelButton = new Button;
+				unhidePanelButton.label = Language.lookup('UnhidePanel');
+				unhidePanelButton.addEventListener(MouseEvent.CLICK, unhidePanelButton_ClickHandler);
+				addChild(unhidePanelButton);
+			}
 		} 
+		
+		private function unhidePanelButton_ClickHandler(event:Event):void{
+			FlexGlobals.topLevelApplication.rightSidePanel.visible = true;
+			FlexGlobals.topLevelApplication.map.percentWidth="80";	
+		}
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
@@ -112,6 +126,9 @@ package components
 			xB = xB + title.getExplicitOrMeasuredWidth() + 15;
 			addToProjectButton.setActualSize(addToProjectButton.getExplicitOrMeasuredWidth(), addToProjectButton.getExplicitOrMeasuredHeight());
 			addToProjectButton.move(xB,5);
+			xB = xB + addToProjectButton.getExplicitOrMeasuredWidth() + 15;
+			unhidePanelButton.setActualSize(unhidePanelButton.getExplicitOrMeasuredWidth(), unhidePanelButton.getExplicitOrMeasuredHeight());
+			unhidePanelButton.move(this.getExplicitOrMeasuredWidth()-unhidePanelButton.getExplicitOrMeasuredWidth(),5);
 			
 		}
 		

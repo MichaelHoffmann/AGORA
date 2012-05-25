@@ -21,6 +21,7 @@ package components
 	import mx.controls.Button;
 	import mx.controls.Label;
 	import mx.core.FlexGlobals;
+	import mx.events.ResizeEvent;
 	
 	import spark.components.Group;
 	import spark.components.Panel;
@@ -36,7 +37,7 @@ package components
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
 		public var categoryTiles:Group;
-		
+		private var tl:TileLayout = new TileLayout();
 		
 		public function CategoryPanel()
 		{
@@ -49,7 +50,7 @@ package components
 			categoryTiles = new Group;
 			categoryTiles.percentHeight = 100;
 			categoryTiles.percentWidth = 100;
-			var tl:TileLayout = new TileLayout();
+			tl = new TileLayout();
 			tl.requestedColumnCount = 3;
 			tl.requestedRowCount = 3;
 			tl.horizontalAlign="center";
@@ -62,8 +63,9 @@ package components
 			loadingDisplay = new Label;
 			loadingDisplay.text = Language.lookup("Loading");
 			addElement(loadingDisplay);
+			
 		}
-		
+				
 		
 		override protected function commitProperties():void{
 			super.commitProperties();

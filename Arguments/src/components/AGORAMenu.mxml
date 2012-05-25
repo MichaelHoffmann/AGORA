@@ -22,6 +22,7 @@
 			
 			import classes.Language;
 			
+			import flash.net.navigateToURL;
 			import flash.system.Capabilities;
 			
 			import mx.collections.ArrayList;
@@ -52,12 +53,6 @@
 				AGORAController.getInstance().fetchDataProjectList();
 			}
 			
-			protected function resizeScreen(event:Event):void{
-				if(stage){
-					this.height = stage.stageHeight;
-					this.width = stage.stageWidth;
-				}
-			}
 			
 			/**
 			 * Gets called every time the timer is fired. 
@@ -212,31 +207,31 @@
 			
 			protected function privacyPolicyBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				//Will be a blurb about stuff here... 
 				
 			}
 			
 			protected function aboutUsBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote')
 				
 			}
 			
 			protected function faqBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote')
 				
 			}
 			
 			protected function contactUsBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote');
 				
 			}
 			
 			protected function helpBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')
 				
 			}
 			
@@ -277,26 +272,30 @@
 		<!--Horizontal row of buttons at the bottom of the screen-->
 		
 	</s:VGroup>
-	<s:VGroup id="navigtorGroup" percentWidth="100" percentHeight="100" horizontalAlign="center">
+	<s:VGroup id="navigtorGroup" percentWidth="100" percentHeight="100" horizontalAlign="center" verticalAlign="middle" paddingLeft="10" paddingTop="10" paddingRight="10" paddingBottom="10">
+		<s:Label text="SOME TEXT HERE"/>
 		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
-						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.25}" textAlign="center">
-			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}">
-						<s:VGroup percentWidth="100" percentHeight="100">
+						 creationPolicy="all" horizontalAlign="center" verticalCenter="0" name="tabNav" tabWidth="{navigtorGroup.width*.25}" textAlign="center">
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}" horizontalCenter="0" verticalCenter="0">
+						<s:VGroup percentWidth="100" percentHeight="100" horizontalAlign="center" verticalAlign="middle">
 							
-							<components:CategoryPanel id="categories" percentWidth="100" percentHeight="100"
-													  horizontalCenter="0"
+							<components:CategoryPanel id="categories" percentWidth="75" percentHeight="75" 
 													  skinClass="spark.skins.spark.SkinnableContainerSkin"
-													  title="category" verticalCenter="0">	
+													  title="category" verticalCenter="0" horizontalCenter="0">	
 							</components:CategoryPanel>
 							<!--Button to create a new map-->
 							<s:HGroup horizontalAlign="center" verticalAlign="top">
-								<s:VGroup percentWidth="100" percentHeight="100" horizontalAlign="center">
-									<s:Button id="createMapBtn" enabled="false"
+								<s:VGroup percentWidth="100" percentHeight="100" horizontalAlign="center" verticalAlign="top">
+									
+									<s:Button id="createMapBtn" enabled="false" horizontalCenter="0"
 											  label="{Language.lookup('CategoryMap')}" click="createMapBtn_clickHandler(event)">
 									</s:Button >
-									<s:Button id="createProjBtn" enabled="false" visible="false"
+									<s:Line >
+										
+									</s:Line>
+									<s:Button id="createProjBtn" enabled="false" horizontalCenter="0"
 											  label="{Language.lookup('CategoryProject')}" click="createMapBtn_clickHandler(event)">
-									</s:Button >
+									</s:Button>
 								</s:VGroup>
 							</s:HGroup>
 							
@@ -339,13 +338,11 @@
 			<s:HGroup id="bottomButtonRow" percentWidth="100" percentHeight="100" textAlign="center" horizontalAlign="center">
 			
 				<s:Button id="signInBtn"
-						  label="{AGORAModel.getInstance().userSessionModel.uid? 
-						  Language.lookup('SignOut'): Language.lookup('SignIn')}"
+						  label="{ Language.lookup(UserSessionController.getInstance().getSignInBtnText(AGORAModel.getInstance().userSessionModel._uid)) }"
 						  click="signInBtn_clickHandler(event)" />
 				
 				<s:Button id="registerBtn"
-						  label="{Language.lookup(&quot;RegisterAsNew&quot;)}"
-						  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
+						  label="{ Language.lookup(UserSessionController.getInstance().getRegisterBtnText(AGORAModel.getInstance().userSessionModel._uid)) }"
 						  click="registerBtn_clickHandler(event)" />
 				<s:Button id="privacyPolicyBtn"
 						  label="{Language.lookup('PrivacyPolicy')}"
@@ -364,7 +361,6 @@
 				
 				<s:Button id="faqBtn"
 						  label="{Language.lookup('FAQ')}"
-						  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
 						  click="faqBtn_clickHandler(event)" />
 				<s:Button id="contactUsBtn"
 						  label="{Language.lookup('ContactUS')}"

@@ -128,18 +128,36 @@ package Controller
 		}
 		
 		//---------------Other public methods----------------------//
+		
+
 		public function getSignInBtnText(uid:int):String{
-			if(uid == 0){
-				return "Sign In";
+			trace("Getting the text for the sign in button");
+			if(uid == 0 || AGORAModel.getInstance().userSessionModel.username == "Guest"){
+				//The reason this is unspaced is so that when it returns, the calling function can then pass it straight to Language.lookup(...)
+				return "SignIn"; 
 			}
 			else{
-				return "Sign Out";
+				//The reason this is unspaced is so that when it returns, the calling function can then pass it straight to Language.lookup(...)
+				return "SignOut";
+			}
+			
+		}
+		
+		public function getRegisterBtnText(uid:int):String{
+			trace("Getting the text for the register button");
+			if(uid == 0 || AGORAModel.getInstance().userSessionModel.username == "Guest"){
+				//The reason this is unspaced is so that when it returns, the calling function can then pass it straight to Language.lookup(...)
+				return "RegisterAsNew"; 
+			}
+			else{
+				//The reason this is unspaced is so that when it returns, the calling function can then pass it straight to Language.lookup(...)
+				return "ChangeRegData";
 			}
 			
 		}
 		
 		public function signInSignOut():void{
-			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
+			if(AGORAModel.getInstance().userSessionModel.loggedIn() && AGORAModel.getInstance().userSessionModel.username != "Guest"){
 				AGORAModel.getInstance().userSessionModel.uid = 0;
 				FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
 				FlexGlobals.topLevelApplication.invalidateProperties();
