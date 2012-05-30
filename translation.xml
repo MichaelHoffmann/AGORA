@@ -165,11 +165,11 @@
 		<GER text="Schreib eine Mitteilung: " />
 	</TypeMessage>
 
-	<UnhidePanel>
+	<UnhideChat>
 		<EN-US text="Unhide Panel" />
-		<RUS text="Unhide Pane;" /><!--TODO Translate -->
+		<RUS text="Unhide Chat" /><!--TODO Translate -->
 		<GER text="Zeige dieses Feld" />
-	</UnhidePanel>
+	</UnhideChat>
 
 
 	<GuestEditMapError>

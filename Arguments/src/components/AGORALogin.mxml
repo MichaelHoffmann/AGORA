@@ -42,7 +42,6 @@
 					this.height = stage.stageHeight;
 					this.width = stage.stageWidth;
 					guestWelcome.top = guestWelcome.bottom = guestWelcome.left = 0;
-					versionLabel.y = guestWelcome.height - 20;
 				}
 			}
 			
@@ -69,7 +68,6 @@
 			*/
 			protected function guestButton_onClick(event:MouseEvent):void
 			{
-				registerButton.label = Language.lookup("RegisterAsNew");
 				UserSessionController.getInstance().signInAsGuest();	
 			}
 			
@@ -90,7 +88,7 @@
 
 		<!--The left side of the page that houses the guest login button-->
 		<s:SkinnableContainer id="guestWelcome" left="0" top="0" bottom="0" width="250"
-							  percentHeight="100" backgroundColor="#29ABE2">
+							  backgroundColor="#29ABE2">
 			<s:layout><s:BasicLayout/></s:layout>
 
 			<!--This is the new user label on the side panel-->
@@ -101,7 +99,6 @@
 
 			<s:Button x="49" width="154" height="40" label="{Language.lookup('EnterGuest')}"
 					  click="guestButton_onClick(event)" verticalCenter="9"/>
-			<s:Label id="versionLabel" y="{guestWelcome.height - 20}" right="14" text="V 3.0" verticalAlign="bottom"/>
 
 		</s:SkinnableContainer>
 		<!--The right side of the page that houses the login and register buttons and the links-->

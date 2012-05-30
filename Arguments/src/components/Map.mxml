@@ -29,15 +29,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<components:TopPanel id="topPanel" percentWidth="100" height="40">
+	<components:TopPanel id="topPanel" width="100%" height="40">
 	</components:TopPanel>
 	<components:StatusBar id="sBar" visible="false">
 	</components:StatusBar>
 	
-	<s:Group id="theMap" percentWidth="100" percentHeight="100">
+	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin">	
-			<s:Group percentWidth="100" percentHeight="100">
-				<mx:Canvas percentWidth="100" percentHeight="100">
+			<s:Group>
+				<mx:Canvas x="200">
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" >	
 					</components:AgoraMap>	
 				</mx:Canvas>
@@ -46,6 +46,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		
 		<components:LAMWorld id="lamWorld" visible="false">
 		</components:LAMWorld>
+		<components:ChatWindow id="chat" width="249" height="376" name="chat" verticalCenter="-28">
+			
+		</components:ChatWindow>
 	</s:Group>
 	
 	
@@ -84,9 +87,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			public function setWidth(event: Event):void
 			{
-				//agora.height =  stage.stageHeight - topPanel.height-25;
-				//agora.width = stage.stageWidth - agora.x;
-				//topPanel.width = stage.stageWidth;
+				agora.height =  stage.stageHeight - topPanel.height-25;
+				agora.width = stage.stageWidth - agora.x;
+				topPanel.width = stage.stageWidth;
 			}
 			
 			override protected function measure():void{

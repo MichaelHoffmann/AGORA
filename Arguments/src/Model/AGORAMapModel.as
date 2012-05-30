@@ -268,10 +268,6 @@ package Model
 				AGORAController.getInstance().addMapToProject(resultEvent.result.map.ID, projectName);
 				AGORAModel.getInstance().moveToProject = false;
 			}
-			var cg:ArrayList = AGORAController.getInstance().categoryChain;
-			var cmiccm:CreateMapInCurrentCategoryModel = new CreateMapInCurrentCategoryModel;
-			cmiccm.send(resultEvent.result.map.ID,(CategoryDataV0) (cg.getItemAt(cg.length-1)).current);
-			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
 		}
 		
 		//-----------------------Add First Claim---------------------------------------------//

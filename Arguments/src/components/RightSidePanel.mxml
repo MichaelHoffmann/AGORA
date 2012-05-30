@@ -8,31 +8,14 @@
 		 >
 	<fx:Script>
 
-	
-		<![CDATA[
-			import Controller.AGORAController;
-			
-			import classes.Language;
-			
-			import mx.core.FlexGlobals;
-			
-			[Bindable]
-			private var visibility:Boolean = FlexGlobals.topLevelApplication.map.visible;
-			private function hideThePanel_ClickHandler():void{
-				this.visible = false;
-				FlexGlobals.topLevelApplication.map.percentWidth="100";
-			}
-			
-		]]>
-	
+	import classes.Language;
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<components:ChatWindow x="15" y="190" id="chat">
+	<components:ChatWindow horizontalCenter="0" id="chat">
 	</components:ChatWindow>
-	<s:Button id="hideThePanel" x="10" y="10" label="{Language.lookup('HidePanel')}" click="hideThePanel_ClickHandler()"
-			  visible="{visibility}"/>
+	<s:Button x="10" y="10" label="{Language.lookup('HidePanel')}" click="{this.visible = false}"/>
 	<components:CategoryChain x="89" y="147" id="categoryChain"/>
 	<s:Label x="10" y="147" text="{Language.lookup('YouAreHere')}"/>
 	
