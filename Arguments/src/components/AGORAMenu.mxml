@@ -218,25 +218,25 @@
 			
 			protected function aboutUsBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote');
 				
 			}
 			
 			protected function faqBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote');
 				
 			}
 			
 			protected function contactUsBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote');
 				
 			}
 			
 			protected function helpBtn_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote');
 				
 			}
 			
@@ -280,8 +280,8 @@
 	<s:VGroup id="navigtorGroup" percentWidth="100" percentHeight="100" horizontalAlign="center">
 		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
 						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.25}" textAlign="center">
-			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}">
-						<s:VGroup percentWidth="100" percentHeight="100">
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}" verticalCenter="0" horizontalCenter="0">
+						<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0">
 							
 							<components:CategoryPanel id="categories" percentWidth="100" percentHeight="100"
 													  horizontalCenter="0"
@@ -291,7 +291,7 @@
 							<!--Button to create a new map-->
 							<s:HGroup horizontalAlign="center" verticalAlign="top">
 								<s:VGroup percentWidth="100" percentHeight="100" horizontalAlign="center">
-									<s:Button id="createMapBtn" enabled="false"
+									<s:Button id="createMapBtn" verticalCenter="0"
 											  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)">
 									</s:Button >
 									<s:Button id="createProjBtn" enabled="false" visible="false"
@@ -339,13 +339,11 @@
 			<s:HGroup id="bottomButtonRow" percentWidth="100" percentHeight="100" textAlign="center" horizontalAlign="center">
 			
 				<s:Button id="signInBtn"
-						  label="{AGORAModel.getInstance().userSessionModel.uid? 
-						  Language.lookup('SignOut'): Language.lookup('SignIn')}"
+						  label="{Language.lookup(UserSessionController.getInstance().getSignInBtnText(AGORAModel.getInstance().userSessionModel._uid)) }"
 						  click="signInBtn_clickHandler(event)" />
 				
 				<s:Button id="registerBtn"
-						  label="{Language.lookup(&quot;RegisterAsNew&quot;)}"
-						  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
+						  label="{Language.lookup(UserSessionController.getInstance().getRegisterBtnText(AGORAModel.getInstance().userSessionModel._uid)) }"
 						  click="registerBtn_clickHandler(event)" />
 				<s:Button id="privacyPolicyBtn"
 						  label="{Language.lookup('PrivacyPolicy')}"
@@ -364,7 +362,6 @@
 				
 				<s:Button id="faqBtn"
 						  label="{Language.lookup('FAQ')}"
-						  enabled ="{AGORAModel.getInstance().userSessionModel.uid? false: true}"
 						  click="faqBtn_clickHandler(event)" />
 				<s:Button id="contactUsBtn"
 						  label="{Language.lookup('ContactUS')}"

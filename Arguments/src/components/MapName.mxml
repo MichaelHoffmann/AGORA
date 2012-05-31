@@ -37,7 +37,6 @@
 			public function map_name():void{
 				AGORAController.getInstance().freeze();
 				ArgumentController.getInstance().createMap(mapName.text);
-	
 			}
 			
 			/**
@@ -47,11 +46,9 @@
 			 */
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
-				var cc:ArrayList = AGORAController.getInstance().categoryChain;
 				mapName.text=" ";
 				mapName.setFocus();
 				mapName.text = "";
-				currCat.text = currCat.text + (CategoryDataV0)(cc.getItemAt(cc.length-1)).current;
 			}
 			
 			/**
@@ -104,5 +101,4 @@
 			</s:HGroup>		
 		</mx:FormItem>
 	</mx:Form>
-	<s:Label id="currCat" x="10" y="93" text="{Language.lookup('AddMapToCategory')}"/>
 </s:Panel>

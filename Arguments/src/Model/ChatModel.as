@@ -46,7 +46,6 @@ package Model
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onChatServiceResult);
 			request.addEventListener(FaultEvent.FAULT, onChatServiceFault);
-			addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
 
 		}
 		
@@ -64,12 +63,6 @@ package Model
 			request.send({map_name: "'" + chatdatavo.map_name + "'"});
 		}
 		
-		/**
-		 * This is called upon successfully leaving the PHP. Invalidates the displays of the chats
-		 */
-		protected function onChatFetched(event:ResultEvent):void{
-			//Nothing to do...
-		}
 	
 		/**
 		 * This is called upon successfully leaving the PHP. Populates the value object and calls onChatFetched to
@@ -77,8 +70,11 @@ package Model
 		 */
 		protected function onChatServiceResult(event:ResultEvent):void{
 			chat = event.result as XML;
-			
-			onChatFetched(event);
+			if(event.result.hasOwnProperty("error")){
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.chatField.text = Language.lookup('ChatError');
+			}
+			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_FETCHED));
+
 		}
 		
 		/**
@@ -87,7 +83,6 @@ package Model
 		protected function onChatServiceFault(event:FaultEvent):void{
 			FlexGlobals.topLevelApplication.rightSidePanel.chat.chatField.text = Language.lookup('ChatError');
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
-
 		}
 		
 	}

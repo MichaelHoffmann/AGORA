@@ -30,6 +30,7 @@ package ValueObjects
 		public var chatPushURL:String;
 		public var chatPullURL:String;
 		public var childMapURL:String;
+		public var mapToPrivateProjURL:String;
 		
 		
 		
@@ -171,16 +172,17 @@ package ValueObjects
 			projectListURL = "http://agora.gatech.edu/testing/list_projects.php";
 			myProjectsURL = "http://agora.gatech.edu/testing/my_projects.php";
 			pushProjectsURL = "http://agora.gatech.edu/testing/projects.php";
-			joinProjectURL = "http://agora.gatech.edu/rzhang39_testing/verifyProject.php";
-			loadProjectMapsURL = "http://agora.gatech.edu/zlee6_testing/load_project_maps.php";
-			getMapFromProjURL = "http://agora.gatech.edu/rzhang39_testing/getMapFromProjID.php";
-			moveMapToProjectURL = "http://agora.gatech.edu/zlee6_testing/moveMapToProject.php";
-			categoryURL= "http://agora.gatech.edu/rzhang39_testing/category.php"; //category testing
-			chatPushURL= "http://agora.gatech.edu/zlee6_testing/push_chat.php"; //chat testing
-			chatPullURL= "http://agora.gatech.edu/zlee6_testing/pull_chat.php"; //chat testing
-			childCategoryURL = "http://agora.gatech.edu/rzhang39_testing/child_category.php";
-			childMapURL="http://agora.gatech.edu/rzhang39_testing/map_category.php";
-			createMapHereURL = "http://agora.gatech.edu/zlee6_testing/create_map_in_current_category.php";
+			joinProjectURL = "http://agora.gatech.edu/release/verifyProject.php";
+			loadProjectMapsURL = "http://agora.gatech.edu/release/load_project_maps.php";
+			getMapFromProjURL = "http://agora.gatech.edu/release/getMapFromProjID.php";
+			moveMapToProjectURL = "http://agora.gatech.edu/release/moveMapToProject.php";
+			categoryURL= "http://agora.gatech.edu/release/category.php"; //category
+			chatPushURL= "http://agora.gatech.edu/release/push_chat.php"; //chat
+			chatPullURL= "http://agora.gatech.edu/release/pull_chat.php"; //chat
+			childCategoryURL = "http://agora.gatech.edu/release/child_category.php";
+			childMapURL="http://agora.gatech.edu/release/map_category.php";
+			createMapHereURL = "http://agora.gatech.edu/release/create_map_in_current_category.php";
+			mapToPrivateProjURL = "http://agora.gatech.edu/release/map_to_private_project.php";
 			initialize();		
 		}
 		

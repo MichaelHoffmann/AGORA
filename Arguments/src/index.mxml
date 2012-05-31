@@ -20,13 +20,12 @@
 			<!--Adds a visible AGORALogin object to the main index panel-->
 			<components:AGORALogin id="agoraMain" visible="true" percentWidth="100" percentHeight="100" name="agoraMain"/>
 			<!--Adds an invisible AGORAMenu object to the main index panel-->
-			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" percentWidth="77" percentHeight="100"
+			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" percentWidth="85" percentHeight="100"
 								  top="5" left="5" bottom="5"/>
-			<!--he panel that goes on the right side of the screen-->
-			<components:RightSidePanel id="rightSidePanel" visible="false" percentHeight="100" percentWidth="23"/>
 			<!--Adds an invisible map object to the main index panel-->
 			<components:Map id="map" name="map" visible="false"/>
-			<!--he panel that goes on the right side of the screen-->
+			<!--The panel that goes on the right side of the screen-->
+			<components:RightSidePanel id="rightSidePanel" visible="false" percentHeight="100" percentWidth="15" right="0"/>
 		</s:Group>
 	
 
@@ -114,8 +113,7 @@
 		{
 			rightSidePanel.x = stage.stageWidth - rightSidePanel.width;	
 			agoraMain.percentWidth = agoraMain.percentHeight = 100;
-			agoraMenu.percentWidth = 77;
-			rightSidePanel.percentWidth = 20;
+			agoraMenu.percentWidth = 85;
 			agoraMenu.percentHeight = rightSidePanel.percentHeight = 100;
 			mainGroup.invalidateSize();
 

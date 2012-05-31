@@ -151,8 +151,6 @@ package Controller
 		protected function onChatFetched(event:AGORAEvent):void{
 			FlexGlobals.topLevelApplication.rightSidePanel.chat.invalidateProperties();
 			FlexGlobals.topLevelApplication.rightSidePanel.chat.invalidateDisplayList();
-			FlexGlobals.topLevelApplication.Map.chat.invalidateProperties();
-			FlexGlobals.topLevelApplication.Map.chat.invalidateDisplayList();
 		}
 		//------------------Fetch Project List----------------------------//
 		public function fetchDataProjectList():void{
@@ -297,7 +295,10 @@ package Controller
 		//----------- other public functions --------------------//
 		public function hideMap():void{
 			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
-			if(!(CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).parent){
+			//When we return to the category screen by clicking save and home or loading an illegal map,
+			//find the current category and refresh it. Solved a problem with a created map not appearing
+			//in the category panel upon returning home.
+			if(categoryChain.length <= 0 || !(CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).parent){
 				fetchDataCategory();
 			} else {
 				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current);
