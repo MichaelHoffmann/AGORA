@@ -185,7 +185,7 @@
 					} else {
 						
 						AGORAController.getInstance().categoryChain = cg;
-						AGORAController.getInstance().fetchDataChildCategory(temp.parent);
+						AGORAController.getInstance().fetchDataChildCategory(temp.parent, false);
 					}
 					FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current); //Get the arrow (-->)
 

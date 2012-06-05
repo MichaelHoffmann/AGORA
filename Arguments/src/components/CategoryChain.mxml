@@ -41,7 +41,7 @@
 			 */
 			private function preInit():void{
 				this.numCats = 0;
-				this.delimeter = " \\ "; //Make the delimeter. Remember to escape the delimeter if it is a character like "\"
+				this.delimeter = "\n\\ "; //Make the delimeter. Remember to escape the delimeter if it is a character like "\"
 				super.text = Language.lookup('CategoryTopLevel');
 			}
 			
@@ -68,7 +68,7 @@
 				if(numCats == 0) super.text=newCat;
 				else{
 					//Add a new line BEFORE concatinating text IF the length of the new text is more than 20
-					if(newCat.length > 20) super.text = super.text + '\n';
+					//if(newCat.length % 20) super.text = super.text;
 					super.text = super.text + delimeter + newCat;
 				}
 

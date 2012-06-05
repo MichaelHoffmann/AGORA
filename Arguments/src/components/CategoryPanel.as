@@ -3,6 +3,8 @@ package components
 	import Controller.AGORAController;
 	import Controller.ArgumentController;
 	
+	import Events.AGORAEvent;
+	
 	import Model.AGORAModel;
 	import Model.CategoryModel;
 	import Model.MapMetaData;
@@ -15,6 +17,10 @@ package components
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	import flash.utils.clearTimeout;
+	import flash.utils.setTimeout;
 	
 	import mx.collections.ArrayList;
 	import mx.controls.Alert;
@@ -29,15 +35,13 @@ package components
 	import spark.components.VGroup;
 	import spark.layouts.TileLayout;
 	import spark.layouts.VerticalLayout;
-
+	
 	public class CategoryPanel extends Panel
 	{
 		private var model:CategoryModel;
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
 		public var categoryTiles:Group;
-		
-		
 		public function CategoryPanel()
 		{
 			super();
@@ -68,11 +72,10 @@ package components
 		override protected function commitProperties():void{
 			super.commitProperties();
 			categoryTiles.removeAllElements();
-			var cg:ArrayList = AGORAController.getInstance().categoryChain; //Array list of the current category hierarchy
 			//add elements
 			if(model.category){
 				//Loop over the categories that were pulled from the DB
-
+				trace();
 				for each(var categoryXML:XML in model.category.category){
 					/*Create and setup buttons corresponding to categories*/
 					var button:Button = new Button;
@@ -80,53 +83,31 @@ package components
 					button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
 					button.width = 150;
 					button.height = 80;
-					button.setStyle("chromeColor", 0xA0CADB);
-					/*If the category that was clicked is NOT projects, load the child categories and maps*/
-					
-					//if(categoryXML.@ID!=6){ //UNCOMMENT THIS LINE AND THE ELSE AND THE CLOSING CURLY ABOUT 20 LINES DOWN TO ADD ALL PROJECTS BACK
+					button.setStyle("chromeColor", 0xA0CADB);					
 					button.addEventListener('click',function(e:Event):void{
 						//Begin private inner click event function for button
-						trace("button " + e.target.label + " clicked");
+						trace("button \"" + e.target.label + "\" clicked");
 						e.stopImmediatePropagation();	
-						AGORAController.getInstance().fetchDataChildCategory(e.target.label);
-						/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
-						if(cg.length == 0){
-							cg.addItem(new CategoryDataV0(e.target.label, null));
-						}else{	
-							cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));	
+						//Checks to see if the current category is a project
+						if(categoryXML.@is_project == 1){
+							trace("Category clicked was a project");
+							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+							AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
+							AGORAController.getInstance().verifyProjectMember(e.target.label);
+						} else {
+							AGORAController.getInstance().fetchDataChildCategory(e.target.label, true);
 						}
-						FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.enabled = true;
-						FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.addCategory(e.target.label);
-						AGORAController.getInstance().categoryChain = cg;
-													
+						
 					}, false, 1,false);
-					/*If the category clicked was the project list, load up the project list*/
-					/*}else{ //UNCOMMENT THIS BLOCK TO ADD PROJECTS BACK
-						button.addEventListener('click',function(e:Event):void{
-							//Begin private inner click event function for button
-							trace("button " + e.target.label + " clicked");
-							e.stopImmediatePropagation();
-							FlexGlobals.topLevelApplication.agoraMenu.mainPanel.visible=true;
-							FlexGlobals.topLevelApplication.agoraMenu.tabNav.setVisible(false,true);
-							var cg:ArrayList = AGORAController.getInstance().categoryChain;
-							//Populates the category chain. See above
-							if(cg.length == 0){
-								cg.addItem(new CategoryDataV0(e.target.label, null));
-							}
-							else{	
-								cg.addItem(new CategoryDataV0(e.target.label, (CategoryDataV0)(cg.getItemAt(cg.length-1)).current));						
-							}
-							AGORAController.getInstance().categoryChain = cg;
-						}, false, 1,false);
-					} */ //UNCOMMENT THIS BLOCK END
-						//Add the button related to the category to the view
-						categoryTiles.addElement(button);
+					//Add the button related to the category to the view
+					categoryTiles.addElement(button);
 				}				
 			}
 			if(model.map != null)
 				populateMaps();
 			
-	}
+		}		
+		
 		/**
 		 * 
 		 */
@@ -141,7 +122,6 @@ package components
 				trace("map " +  map.@Name + " being loaded");
 				mapMetaData.mapID = map.@ID;//int(map.attribute("ID")); 
 				mapMetaData.mapName = map.@Name;//map.attribute("title");
-				
 				//mapMetaData.mapCreator = map.attribute("creator");
 				mapMetaDataVector.push(mapMetaData);						
 			}
@@ -170,6 +150,7 @@ package components
 			model.map = null;
 			
 		}
+		
 		
 		protected function onMapObjectClicked(event:MouseEvent):void{
 			ArgumentController.getInstance().loadMap(event.target.name);					

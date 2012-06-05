@@ -20,37 +20,45 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
+	
 
-	public class VerifyProjectPasswordModel extends EventDispatcher
+	public class VerifyProjectMemberModel extends EventDispatcher
 	{
 		private var request: HTTPService;
 		private var loadProjMaps:LoadProjectMapsModel;
-		public function VerifyProjectPasswordModel()
+		public var verified:Boolean;
+		private var currTime:Date;
+		public function VerifyProjectMemberModel()
 		{
+			currTime = new Date;
 			request = new HTTPService;
 			request.url = AGORAParameters.getInstance().joinProjectURL;
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onSuccessfulJoin);
 			request.addEventListener(FaultEvent.FAULT, onFault);
+			verified = false;
 		}
 		
 		public function send():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			currTime = new Date;
 			if(userSessionModel.loggedIn()){
-				request.send({pass_hash: AGORAModel.getInstance().agoraMapModel.projectPassword, projID: AGORAModel.getInstance().agoraMapModel.projectID});	
+				request.send({pass_hash: userSessionModel.passHash, projID: AGORAModel.getInstance().agoraMapModel.projectID,
+					user_id: userSessionModel.uid});	
 			}
 		}
 		
 		protected function onSuccessfulJoin(event:ResultEvent):void{
+			
 			var result:XML = event.result as XML;
-			if(result.@project_count == "1"){
-				//Potentially violating MVC. Need someone to help me consider this..
-				loadProjMaps = AGORAModel.getInstance().loadProjMaps;;
-				loadProjMaps.sendRequest();
-			} else {
+			if(result.@verified != 1){
+				verified = false;
 				Alert.show(Language.lookup('IncorrectProjPass'));
+				return;
 			}
-			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PASSWORD_VERIFIED));
+			
+			verified = true;
+			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_USER_VERIFIED));
 		}
 		
 		protected function onGotMapID(event:ResultEvent):void{

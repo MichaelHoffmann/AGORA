@@ -26,7 +26,7 @@
 	<fx:Script>
 		<![CDATA[
 			import Model.AGORAModel;
-			import Model.VerifyProjectPasswordModel;
+			import Model.VerifyProjectMemberModel;
 			
 			import classes.Language;
 			
@@ -65,7 +65,7 @@
 			public function submit_form():void{
 				PopUpManager.removePopUp(this);				
 				AGORAModel.getInstance().agoraMapModel.projectPassword = MD5.hash(password.text);
-				var verifyCorrectProject:VerifyProjectPasswordModel = new VerifyProjectPasswordModel;
+				var verifyCorrectProject:VerifyProjectMemberModel = new VerifyProjectMemberModel;
 				verifyCorrectProject.send();
 			}
 			

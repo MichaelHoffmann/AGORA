@@ -12,7 +12,7 @@ package Controller
 	import Model.ProjectsModel;
 	import Model.PushProject;
 	import Model.UserSessionModel;
-	import Model.VerifyProjectPasswordModel;
+	import Model.VerifyProjectMemberModel;
 	
 	import ValueObjects.CategoryDataV0;
 	import ValueObjects.ChatDataVO;
@@ -52,6 +52,7 @@ package Controller
 		private var model:AGORAModel;
 		private var project:Boolean;
 		private var _categoryChain:ArrayList;
+		private var tempParentCategory:String;
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
@@ -73,6 +74,7 @@ package Controller
 			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.chatModel.addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
 			model.chatModel.addEventListener(AGORAEvent.FAULT, onFault);
+			model.verifyProjModel.addEventListener(AGORAEvent.PROJECT_USER_VERIFIED, onProjectUserVerified);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -119,18 +121,31 @@ package Controller
 			
 		}
 		protected function onCategoryFetched(event:AGORAEvent):void{
+			trace("Here");
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 		}
 		
-		public function fetchDataChildCategory(parentCategory:String):void{
+		public function fetchDataChildCategory(parentCategory:String, addOne:Boolean):void{
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
+			/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
+			trace("Adding to the cc with category: " + parentCategory);
+			if(addOne){
+				if(categoryChain.length == 0){
+					categoryChain.addItem(new CategoryDataV0(parentCategory, null));
+				}else{	
+					trace("Adding pair" + (CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).current + "-->" + parentCategory);
+					categoryChain.addItem(new CategoryDataV0(parentCategory, (CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).current));	
+				}
+				FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.addCategory(parentCategory);
+			}
 			var categoryM:CategoryModel = model.categoryModel;
 			categoryM.requestChildCategories(parentCategory);
 		}
 		protected function onChildCategoryFetched(event:AGORAEvent):void{
+			
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
@@ -170,9 +185,13 @@ package Controller
 			pp.sendRequest();
 		}
 		
-		public function verifyProjectPassword():void{
-			var verifyPassword:VerifyProjectPasswordModel = new VerifyProjectPasswordModel;
-			verifyPassword.send();
+		public function verifyProjectMember(parentCategory:String):void{
+			this.tempParentCategory = parentCategory;
+			model.verifyProjModel.send();
+		}
+		
+		protected function onProjectUserVerified(event:AGORAEvent):void{
+			fetchDataChildCategory(tempParentCategory, true);
 		}
 		
 		/**
@@ -222,6 +241,11 @@ package Controller
 			menu.myProjects.loadingDisplay.visible = false;
 			menu.myProjects.invalidateProperties();
 			menu.myProjects.invalidateDisplayList();
+		}
+		
+		protected function onProjectVerified(event:AGORAEvent):void{
+			trace("Loading the projects within the category");
+			//FlexGlobals.topLevelApplication.agoraMenu.categories.loadProjectCategories();
 		}
 		
 		//-------------------------Delete Maps-----------------------------//
@@ -301,7 +325,7 @@ package Controller
 			if(categoryChain.length <= 0 || !(CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).parent){
 				fetchDataCategory();
 			} else {
-				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current);
+				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current, false);
 			}
 			//reinitializes the map model
 			mapModel.reinitializeModel();

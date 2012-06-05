@@ -20,10 +20,11 @@
 			
 			protected function skinnablecontainer1_creationCompleteHandler(event:FlexEvent):void
 			{
-				youAreHereLabel.left = 0;
-				youAreHereLabel.top = top=hidePanelButton.getExplicitOrMeasuredHeight()+5;
-				categoryChain.top=hidePanelButton.getExplicitOrMeasuredHeight()+5;
-				categoryChain.left=youAreHereLabel.getExplicitOrMeasuredWidth()+5;
+				youAreHereLabel.left = categoryChain.left = 0;
+				categoryChain.top = top = hidePanelButton.getExplicitOrMeasuredHeight()+5;
+				youAreHereLabel.top=categoryChain.getExplicitOrMeasuredHeight()-5;
+				
+				
 			}		
 		]]>
 

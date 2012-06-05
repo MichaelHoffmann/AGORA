@@ -8,7 +8,7 @@ package components
 	import Model.LoadProjectMapsModel;
 	import Model.MapMetaData;
 	import Model.ProjectListModel;
-	import Model.VerifyProjectPasswordModel;
+	import Model.VerifyProjectMemberModel;
 	
 	import classes.Language;
 	
