@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-	 -	A custom label setup that displays the current category hierarchy to the user.
-	 -	
+	 -	Visual element that adds the category hierarchy to the right side of the screen. The buttons allow the user to
+	 -	click on a button a take themselves to that category. Also removes elements from the category chain as necessary.
+	 -
 	 -	Has two functions: removeCategory and addCategory. See the documentation of those two functions for more info
 	-->
-<s:Label xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 preinitialize="preInit();">
@@ -14,7 +15,17 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
+			
+			import ValueObjects.CategoryDataV0;
+			
 			import classes.Language;
+			
+			import mx.collections.ArrayList;
+			import mx.controls.Button;
+			import mx.controls.Label;
+			
+			import spark.components.HGroup;
 			
 			/**
 			 * @param - numCats - Keeps up with the number of categories currently in the chain. 
@@ -30,6 +41,22 @@
 			private var delimeter:String;
 			
 			/**
+			 * Keeps a running label of the information. This is legacy from before we used buttons but it is still here for future
+			 * implementation of a copy/past mechanism
+			 */
+			private var textVersion:Label;
+			
+			/**
+			 * Solved a very strange problem that involved the scope of the button listener. Apparently, the child button could not see functions within the
+			 * parent container even though it was flagged as public. This is instantiated in the constructor to be "this"
+			 */
+			private var thisParent:CategoryChain;
+			
+			private var controller:AGORAController;
+			
+			private var categoryChain:ArrayList;
+			
+			/**
 			 * Essentially a constructor. 
 			 * 
 			 * 
@@ -42,7 +69,35 @@
 			private function preInit():void{
 				this.numCats = 0;
 				this.delimeter = "\n\\ "; //Make the delimeter. Remember to escape the delimeter if it is a character like "\"
-				super.text = Language.lookup('CategoryTopLevel');
+				controller = AGORAController.getInstance();
+				categoryChain = controller.categoryChain;
+				textVersion = new Label;
+				textVersion.text = Language.lookup('CategoryTopLevel');
+				thisParent = this;
+				var button:Button = new Button;
+				button.label = Language.lookup('CategoryTopLevel');
+				button.addEventListener('click',function(e:Event):void{
+					while(numCats>0) thisParent.removeCategory((Button) (thisParent.getElementAt(numCats-1)).label);
+					(CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1));
+					thisParent.controller.categoryChain = thisParent.categoryChain;
+					AGORAController.getInstance().fetchDataCategory();
+				},false,1,false);
+				this.addElement(button);
+			}
+			
+			/**
+			 * Removes the tail category from the label. Because of the nature of categories, we cannot just remove the end category and
+			 * therefore need to know what category needs to be removed. Also removes the delimeter.
+			 * 
+			 * @param oldCat - The category to be removed.
+			 */
+			public function removeCategory(oldCat:String):void{
+				if(numCats > 1){
+					textVersion.text = textVersion.text.substr(0, textVersion.text.length	- oldCat.length - delimeter.length);
+					if(oldCat.length > 20) textVersion.text.substr(0, textVersion.text.length - 1); //Remove the new line
+				} else textVersion.text = Language.lookup('CategoryTopLevel');;
+				numCats--;
+				removeElementAt(numCats + 1);
 			}
 			
 			/**
@@ -55,8 +110,8 @@
 				 *	If the connection is not right then categories do not load and it really screws with the text in the chain.
 				 *	This solves that problem and lets the user know that there was a problem loading the category.
 				 */
-				if(super.text == newCat || super.text == "Error loading categories"){
-					this.text = Language.lookup('CategoryLoadError');
+				if(textVersion.text == newCat || textVersion.text == "Error loading categories"){
+					textVersion.text = Language.lookup('CategoryLoadError');
 					return;
 				}
 				
@@ -65,31 +120,27 @@
 				 *  Checks to see if we are at the top level of the category hierarchy. If we are and a category is clicked, remove the text "Top Level"
 				 *	and add the first category. If we are not, concatinate the old text, the delimeter, and the new category string.
 				 */
-				if(numCats == 0) super.text=newCat;
-				else{
-					//Add a new line BEFORE concatinating text IF the length of the new text is more than 20
-					//if(newCat.length % 20) super.text = super.text;
-					super.text = super.text + delimeter + newCat;
-				}
+				if(numCats == 0)
+					textVersion.text=newCat;
+				 else {
+					if(newCat.length % 20) textVersion.text = textVersion.text; //Add a new line IF the length of the new text is more than 20
+					textVersion.text = textVersion.text + delimeter + newCat;
+				 }
+				var button:Button = new Button;
+				button.label = newCat;
+				button.addEventListener('click',function(e:Event):void{
+					while(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current) != ((Button) (e.target).label)){
+						thisParent.removeCategory((CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1)).current);	
+					}
+					controller.categoryChain = thisParent.categoryChain;
+					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current), false);
+				},false,1,false);
+				this.addElement(button);
 
 				
 				numCats++;
 			}
 			
-			/**
-			 * Removes the tail category from the label. Because of the nature of categories, we cannot just remove the end category and
-			 * therefore need to know what category needs to be removed. Also removes the delimeter.
-			 * 
-			 * @param oldCat - The category to be removed.
-			 */
-			public function removeCategory(oldCat:String):void{
-				if(numCats > 1){
-					super.text = super.text.substr(0, super.text.length	- oldCat.length - delimeter.length);
-					if(oldCat.length > 20) super.text.substr(0, super.text.length - 1); //Remove the new line
-				} else super.text = Language.lookup('CategoryTopLevel');;
-				numCats--;	
-			}
-
 		]]>
 	</fx:Script>
-</s:Label>
+</s:VGroup>

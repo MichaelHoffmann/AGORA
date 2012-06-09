@@ -6,120 +6,138 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   minWidth="955" minHeight="600" pageTitle="Welcome to AGORA" xmlns:components="components.*"
-			   preinitialize="application_preinitializeHandler(event)"
-			   applicationComplete="application1_applicationCompleteHandler(event)"
+			   xmlns:components="components.*"
+			   minWidth="800" minHeight="600"
 			   addedToStage="application1_addedToStageHandler(event)"
-			   >
+			   applicationComplete="application1_applicationCompleteHandler(event)"
+			   pageTitle="Welcome to AGORA" preinitialize="application_preinitializeHandler(event)"
+			   resize="application1_resizeHandler(event)">
 	<fx:Style source="styles.css"/>
 
 	<fx:Declarations>
 	</fx:Declarations>
 	
-		<s:Group id="mainGroup" percentWidth="100" percentHeight="100">
-			<!--Adds a visible AGORALogin object to the main index panel-->
-			<components:AGORALogin id="agoraMain" visible="true" percentWidth="100" percentHeight="100" name="agoraMain"/>
-			<!--Adds an invisible AGORAMenu object to the main index panel-->
-			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" percentWidth="85" percentHeight="100"
-								  top="5" left="5" bottom="5"/>
-			<!--Adds an invisible map object to the main index panel-->
-			<components:Map id="map" name="map" visible="false"/>
-			<!--The panel that goes on the right side of the screen-->
-			<components:RightSidePanel id="rightSidePanel" visible="false" percentHeight="100" percentWidth="15" right="0"/>
-		</s:Group>
-	
+		<s:Scroller width="100%" height="100%" id="applicationScroller">
+			<s:HGroup percentWidth="100" percentHeight="100">	
+			<s:Group id="mainGroup" percentWidth="80">
+				<!--Adds a visible AGORALogin object to the main index panel-->
+				<components:AGORALogin id="agoraMain" visible="true" percentWidth="100" percentHeight="100" name="agoraMain"/>
+				<!--Adds an invisible AGORAMenu object to the main index panel-->
+				<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="800" height="600"
+									  verticalCenter="0" horizontalCenter="0"/>
+				<!--Adds an invisible map object to the main index panel-->
+				<components:Map id="map" name="map" visible="false"/>
+				<!--The panel that goes on the right side of the screen-->
+			</s:Group>
+			<components:RightSidePanel id="rightSidePanel" visible="true" percentHeight="100"/>
+			</s:HGroup>
+		</s:Scroller>
+		
 
 	<fx:Script>
-
-		import mx.events.ResizeEvent;
-		import components.MapToProject;
-		import components.Join_Project;
-
-		import components.MapName;
-		import components.ProjectName;
-		import components.Map;
-		import components.LoginWindow;
-		import Model.AGORAModel;
-		import components.RegisterPanel;
-		import mx.events.FlexEvent;
-		import Controller.LayoutController;
-		
-		/*
-		* NOTE:
-		* 
-		* All the universally accessible objects other than model are instantiated just prior
-		* to use and then set to null in order to be GC'd. This is a better method
-		* because the memory traces can be cleaned and reused as necessary
-		* instead of having the object just sitting in memory for no reason. 
-		* The key takeaway is that these globals are rarely used (very specific
-		* times and events) so freeing the memory by setting it to null helps to
-		* speed up the program, even if it is a small fraction of speed up.
-		*
-		* Model is instantiated in this class and then called through FlexGlobals (like the others) 
-		* but does not require instantiation because this class instantiates it when it is created.
-		* Because of this, a model object is always sitting in memory but hardly ever used. See the
-		* FlexDoc for the method application_preinitializeHandler below for more info.
-		*/
-		
-		//This is a universal AGORAModel that can be accessed by FlexGlobals.topLevelApplication.model
-		private var model:AGORAModel;
-		//This is a universal LoginWindow that can be accessed by FlexGlobals.topLevelApplication.loginWindow
-		public var loginWindow:LoginWindow;
-		//This is a universal RegistrationPanel that can be accessed by FlexGlobals.topLevelApplication.registrationWindow
-		public var registrationWindow:RegisterPanel;
-		
-		/*
-		* The 4 universal components below are misplaced at best. Violate the MVC. So do the above 3, really
-		* --Zach
-		*/
-		
-		//Universally accessible mapName box
-		public var mapNameBox:MapName;
-		//Universally accessible projectName box
-		public var projectNameBox:ProjectName;
-		//Universal Join_Project box
-		public var join_project:Join_Project;
-		//Universal moveMapToProject box
-		public var move_map:MapToProject;
-		
-		/**
-		 * Runs when the object is instantiated. This instantiates the universal "model"
-		 * 
-		 * NOTE:
-		 * 
-		 * This is used sporadically at best. Most of the time the code just uses
-		 * var model:AGORAModel = AGORAModel.getInstance() and bypass the need to
-		 * use the global model all together. However, there are places in the
-		 * code where the reference to model IS used so we have to keep this in
-		 * until we code search and remove these. 
-		 */
-		protected function application_preinitializeHandler(event:FlexEvent):void
-		{
-			model = AGORAModel.getInstance();
-		}
-		
-		/**
-		 * Runs when the onject is instantiated. This function sets the various layout
-		 * properties of the UI by calling LayouController's method 
-		 * setApplicationLayoutProperties.
-		 */
-		protected function application1_applicationCompleteHandler(event:FlexEvent):void
-		{
-			LayoutController.getInstance().setApplicationLayoutProperties();
-			this.addEventListener(ResizeEvent.RESIZE, application1_addedToStageHandler);
-		}
-		
-		protected function application1_addedToStageHandler(event:Event):void
-		{
-			rightSidePanel.x = stage.stageWidth - rightSidePanel.width;	
-			agoraMain.percentWidth = agoraMain.percentHeight = 100;
-			agoraMenu.percentWidth = 85;
-			agoraMenu.percentHeight = rightSidePanel.percentHeight = 100;
-			mainGroup.invalidateSize();
-
-		}
-
-		
+		<![CDATA[
+			import Controller.LayoutController;
+			
+			import Model.AGORAModel;
+			
+			import components.Join_Project;
+			import components.LoginWindow;
+			import components.Map;
+			import components.MapName;
+			import components.MapToProject;
+			import components.ProjectName;
+			import components.RegisterPanel;
+			
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			
+			/*
+			* NOTE:
+			* 
+			* All the universally accessible objects other than model are instantiated just prior
+			* to use and then set to null in order to be GC'd. This is a better method
+			* because the memory traces can be cleaned and reused as necessary
+			* instead of having the object just sitting in memory for no reason. 
+			* The key takeaway is that these globals are rarely used (very specific
+			* times and events) so freeing the memory by setting it to null helps to
+			* speed up the program, even if it is a small fraction of speed up.
+			*
+			* Model is instantiated in this class and then called through FlexGlobals (like the others) 
+			* but does not require instantiation because this class instantiates it when it is created.
+			* Because of this, a model object is always sitting in memory but hardly ever used. See the
+			* FlexDoc for the method application_preinitializeHandler below for more info.
+			*/
+			
+			//This is a universal AGORAModel that can be accessed by FlexGlobals.topLevelApplication.model
+			private var model:AGORAModel;
+			//This is a universal LoginWindow that can be accessed by FlexGlobals.topLevelApplication.loginWindow
+			public var loginWindow:LoginWindow;
+			//This is a universal RegistrationPanel that can be accessed by FlexGlobals.topLevelApplication.registrationWindow
+			public var registrationWindow:RegisterPanel;
+			
+			/*
+			* The 4 universal components below are misplaced at best. Violate the MVC. So do the above 3, really
+			* --Zach
+			*/
+			
+			//Universally accessible mapName box
+			public var mapNameBox:MapName;
+			//Universally accessible projectName box
+			public var projectNameBox:ProjectName;
+			//Universal Join_Project box
+			public var join_project:Join_Project;
+			//Universal moveMapToProject box
+			public var move_map:MapToProject;
+			
+			/**
+			 * Runs when the object is instantiated. This instantiates the universal "model"
+			 * 
+			 * NOTE:
+			 * 
+			 * This is used sporadically at best. Most of the time the code just uses
+			 * var model:AGORAModel = AGORAModel.getInstance() and bypass the need to
+			 * use the global model all together. However, there are places in the
+			 * code where the reference to model IS used so we have to keep this in
+			 * until we code search and remove these. 
+			 */
+			protected function application_preinitializeHandler(event:FlexEvent):void
+			{
+				model = AGORAModel.getInstance();
+				addEventListener(ResizeEvent.RESIZE,application1_addedToStageHandler);
+			}
+			
+			/**
+			 * Runs when the onject is instantiated. This function sets the various layout
+			 * properties of the UI by calling LayouController's method 
+			 * setApplicationLayoutProperties.
+			 */
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				LayoutController.getInstance().setApplicationLayoutProperties();
+				this.addEventListener(ResizeEvent.RESIZE, application1_addedToStageHandler);
+			}
+			
+			protected function application1_addedToStageHandler(event:Event):void
+			{
+//				if(rightSidePanel.x > agoraMenu.getExplicitOrMeasuredWidth() + agoraMenu.x){
+//					trace("RSP to the right of AM");
+//					rightSidePanel.x = agoraMenu.getExplicitOrMeasuredWidth() + agoraMenu.x + 5;
+//				}
+//				else rightSidePanel.right = 0;
+			
+			}
+			
+			protected function application1_resizeHandler(event:ResizeEvent):void
+			{
+				if(stage){
+					map.width = stage.stageWidth-rightSidePanel.width + 10;
+					agoraMain.percentHeight = agoraMain.percentWidth = 100;			
+					this.applicationScroller.width = stage.stageWidth;
+					this.applicationScroller.height = stage.stageHeight;
+				}				
+			}
+			
+		]]>
 	</fx:Script>
 	
 

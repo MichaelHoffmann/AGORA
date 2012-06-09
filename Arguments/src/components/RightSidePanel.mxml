@@ -21,9 +21,9 @@
 			protected function skinnablecontainer1_creationCompleteHandler(event:FlexEvent):void
 			{
 				youAreHereLabel.left = categoryChain.left = 0;
-				categoryChain.top = top = hidePanelButton.getExplicitOrMeasuredHeight()+5;
+				categoryChain.top = hidePanelButton.getExplicitOrMeasuredHeight()+5;
 				youAreHereLabel.top=categoryChain.getExplicitOrMeasuredHeight()-5;
-				
+				chat.top = categoryChain.getExplicitOrMeasuredHeight() + 100;
 				
 			}		
 		]]>
@@ -32,7 +32,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<components:ChatWindow id="chat" bottom="50" left="5" right="5" horizontalCenter="0"/>
+	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0"/>
 	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" click="{this.visible = false}" visible="{visibility}"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>
 	<components:CategoryChain id="categoryChain"/>

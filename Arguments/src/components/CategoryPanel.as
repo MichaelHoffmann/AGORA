@@ -27,12 +27,14 @@ package components
 	import mx.controls.Button;
 	import mx.controls.Label;
 	import mx.core.FlexGlobals;
+	import mx.skins.Border;
 	
 	import spark.components.Group;
 	import spark.components.Panel;
 	import spark.components.Scroller;
 	import spark.components.TileGroup;
 	import spark.components.VGroup;
+	import spark.layouts.HorizontalLayout;
 	import spark.layouts.TileLayout;
 	import spark.layouts.VerticalLayout;
 	
@@ -42,6 +44,10 @@ package components
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
 		public var categoryTiles:Group;
+		private var mapPanel:VGroup;
+		private var projectPanel:VGroup;
+		private var is_project_level:Boolean;
+		private var tl:TileLayout;
 		public function CategoryPanel()
 		{
 			super();
@@ -50,10 +56,12 @@ package components
 			scroller = new Scroller;
 			scroller.x = scroller.y = 25;
 			scroller.percentHeight = scroller.percentWidth = 100;
+			mapPanel = new VGroup;
+			projectPanel = new VGroup;
 			categoryTiles = new Group;
 			categoryTiles.percentHeight = 100;
 			categoryTiles.percentWidth = 100;
-			var tl:TileLayout = new TileLayout();
+			tl = new TileLayout();
 			tl.requestedColumnCount = 3;
 			tl.requestedRowCount = 3;
 			tl.horizontalAlign="center";
@@ -74,6 +82,18 @@ package components
 			categoryTiles.removeAllElements();
 			//add elements
 			if(model.category){
+				if(model.category.@category_count == 0 || model.category.category.@is_project == 1){
+					is_project_level = true;
+					this.categoryTiles.layout = new HorizontalLayout;
+					categoryTiles.addElement(mapPanel);
+					categoryTiles.addElement(projectPanel);
+					if(model.map != null){
+						populateMaps();
+					}
+				} else {
+					categoryTiles.removeAllElements();
+					categoryTiles.layout = tl;
+				}
 				//Loop over the categories that were pulled from the DB
 				trace();
 				for each(var categoryXML:XML in model.category.category){
@@ -90,21 +110,21 @@ package components
 						e.stopImmediatePropagation();	
 						//Checks to see if the current category is a project
 						if(categoryXML.@is_project == 1){
-							trace("Category clicked was a project");
 							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 							AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
 							AGORAController.getInstance().verifyProjectMember(e.target.label);
 						} else {
 							AGORAController.getInstance().fetchDataChildCategory(e.target.label, true);
 						}
-						
+						trace("From for loop, count is: " + categoryXML.@category_count);
 					}, false, 1,false);
 					//Add the button related to the category to the view
-					categoryTiles.addElement(button);
-				}				
+					if(is_project_level) projectPanel.addElement(button);
+					else categoryTiles.addElement(button);
+				}
+				trace("The category count is: " + (model.category.@category_count));
+				
 			}
-			if(model.map != null)
-				populateMaps();
 			
 		}		
 		
@@ -138,7 +158,7 @@ package components
 				trace("map " + mapMetaData.mapName + " officially added as a button");
 				
 				//mapButton.toolTip = mapMetaData.mapCreator;
-				categoryTiles.addElement(mapButton);
+				mapPanel.addElement(mapButton);
 			}
 			/*
 			* These cured our source of error for maps pouring over the screen and not loading.
