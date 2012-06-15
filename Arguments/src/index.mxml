@@ -17,21 +17,17 @@
 	<fx:Declarations>
 	</fx:Declarations>
 	
-		<s:Scroller width="100%" height="100%" id="applicationScroller">
-			<s:HGroup percentWidth="100" percentHeight="100">	
-			<s:Group id="mainGroup" percentWidth="80">
-				<!--Adds a visible AGORALogin object to the main index panel-->
-				<components:AGORALogin id="agoraMain" visible="true" percentWidth="100" percentHeight="100" name="agoraMain"/>
-				<!--Adds an invisible AGORAMenu object to the main index panel-->
-				<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="800" height="600"
-									  verticalCenter="0" horizontalCenter="0"/>
-				<!--Adds an invisible map object to the main index panel-->
-				<components:Map id="map" name="map" visible="false"/>
-				<!--The panel that goes on the right side of the screen-->
-			</s:Group>
-			<components:RightSidePanel id="rightSidePanel" visible="true" percentHeight="100"/>
-			</s:HGroup>
-		</s:Scroller>
+		<s:Group id="mainGroup" percentWidth="80">
+			<!--Adds a visible AGORALogin object to the main index panel-->
+			<components:AGORALogin id="agoraMain" visible="true" percentWidth="80" percentHeight="100" name="agoraMain"/>
+			<!--Adds an invisible AGORAMenu object to the main index panel-->
+			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="800" height="600"
+								  verticalCenter="0" horizontalCenter="0"/>
+			<!--Adds an invisible map object to the main index panel-->
+			<components:Map id="map" name="map" visible="false"/>
+			<!--The panel that goes on the right side of the screen-->
+			<components:RightSidePanel id="rightSidePanel" visible="false" percentHeight="100" right="0"/>
+		</s:Group>
 		
 
 	<fx:Script>
@@ -46,8 +42,10 @@
 			import components.MapName;
 			import components.MapToProject;
 			import components.ProjectName;
+			import components.PublishMapPopUpPanel;
 			import components.RegisterPanel;
 			
+			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.events.ResizeEvent;
 			
@@ -89,6 +87,10 @@
 			//Universal moveMapToProject box
 			public var move_map:MapToProject;
 			
+			public var publishMap:PublishMapPopUpPanel;
+			
+			//A boolean representing the active/inactive variable of the scroller
+
 			/**
 			 * Runs when the object is instantiated. This instantiates the universal "model"
 			 * 
@@ -118,24 +120,52 @@
 			}
 			
 			protected function application1_addedToStageHandler(event:Event):void
-			{
-//				if(rightSidePanel.x > agoraMenu.getExplicitOrMeasuredWidth() + agoraMenu.x){
-//					trace("RSP to the right of AM");
-//					rightSidePanel.x = agoraMenu.getExplicitOrMeasuredWidth() + agoraMenu.x + 5;
-//				}
-//				else rightSidePanel.right = 0;
-			
+			{		
+				if(rightSidePanel.x < 1080){
+					agoraMenu.horizontalCenter = undefined;
+					agoraMenu.left = 0;
+				}
+				else{
+					agoraMenu.left = undefined;
+					agoraMenu.horizontalCenter = 0;
+				}
 			}
 			
+
+			
+			/**
+			 * Listens for resize events and does a lot of amazing work. Believe me, just read below. It is amazing...
+			 * 
+			 * For some reason, flex does not adjust the width and height of the screen components during every resize
+			 * event and because of that, this was created. Basically, forcing the screen to be full screen at every
+			 * resize.
+			 */
 			protected function application1_resizeHandler(event:ResizeEvent):void
 			{
 				if(stage){
-					map.width = stage.stageWidth-rightSidePanel.width + 10;
-					agoraMain.percentHeight = agoraMain.percentWidth = 100;			
-					this.applicationScroller.width = stage.stageWidth;
-					this.applicationScroller.height = stage.stageHeight;
+					//The width of the map has to account for the RSP
+					map.agora.x = rightSidePanel.x-map.agora.width - 5;
+					//Sets the width of the login window
+					agoraMain.percentHeight = 100;
+					agoraMain.percentWidth = 80;
+					//Adjusts the elements if the screen resolution drops
+					//below the correct threshold
+					if(rightSidePanel.x < 1080){
+						agoraMenu.horizontalCenter = undefined;
+						agoraMenu.left = 0;
+					}
+					else{
+						agoraMenu.left = undefined;
+						agoraMenu.horizontalCenter = 0;
+					}
+			
 				}				
 			}
+			
+
+
+			
+			
 			
 		]]>
 	</fx:Script>

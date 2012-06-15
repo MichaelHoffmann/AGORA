@@ -75,6 +75,7 @@ package Controller
 			model.chatModel.addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
 			model.chatModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.verifyProjModel.addEventListener(AGORAEvent.PROJECT_USER_VERIFIED, onProjectUserVerified);
+			model.verifyProjModel.addEventListener(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH, onCategoryFetchedForPublish);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -155,6 +156,12 @@ package Controller
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
+		}
+		
+		protected function onCategoryFetchedForPublish(event:AGORAEvent):void{
+			FlexGlobals.topLevelApplication.publishMap.loadingDisplay.visible = false;
+			FlexGlobals.topLevelApplication.publishMap.invalidateProperties();
+			FlexGlobals.topLevelApplication.publishMap.invalidateDisplayList();
 		}
 		
 		
@@ -322,7 +329,7 @@ package Controller
 			//When we return to the category screen by clicking save and home or loading an illegal map,
 			//find the current category and refresh it. Solved a problem with a created map not appearing
 			//in the category panel upon returning home.
-			if(categoryChain.length <= 0 || !(CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).parent){
+			if(categoryChain.length <= 0){
 				fetchDataCategory();
 			} else {
 				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current, false);

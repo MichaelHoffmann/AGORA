@@ -49,6 +49,7 @@ package Events
 		public static const MAP_FETCHED:String ="MapFetched";
 		public static const PROJECT_USER_VERIFIED:String = "ProjectJoined";
 		public static const MAP_ADDED:String = "MapMoved";
+		public static const CATEGORY_FETCHED_FOR_PUBLISH:String = "CategoryFetchedForPublish";
 		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";

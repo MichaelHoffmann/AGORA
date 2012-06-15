@@ -84,9 +84,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			public function setWidth(event: Event):void
 			{
-				agora.height =  stage.stageHeight - topPanel.height-25;
-				agora.width = stage.stageWidth - agora.x;
-				topPanel.width = stage.stageWidth;
+				agora.height = this.height - topPanel.height-25;
+				agora.width = this.width;
+				topPanel.width = this.width;
 			}
 			
 			override protected function measure():void{

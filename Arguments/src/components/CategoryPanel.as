@@ -51,17 +51,23 @@ package components
 		public function CategoryPanel()
 		{
 			super();
-			this.percentHeight = this.percentWidth = 100;
-			model = AGORAModel.getInstance().categoryModel;
+			/*Instantiations in order of depth in UI field*/
 			scroller = new Scroller;
-			scroller.x = scroller.y = 25;
-			scroller.percentHeight = scroller.percentWidth = 100;
+			categoryTiles = new Group;
+			tl = new TileLayout();
 			mapPanel = new VGroup;
 			projectPanel = new VGroup;
-			categoryTiles = new Group;
+			loadingDisplay = new Label;
+			model = AGORAModel.getInstance().categoryModel;
+			/*Setting the UI components to the proper places and sizes*/
+			this.percentHeight = this.percentWidth = 100;
+			scroller.percentHeight = scroller.percentWidth = 100;
+			scroller.x = scroller.y = 25;
 			categoryTiles.percentHeight = 100;
 			categoryTiles.percentWidth = 100;
-			tl = new TileLayout();
+			mapPanel.percentWidth = 50;
+			projectPanel.percentWidth = 50;
+			/*Editing how the layout will be for the buttons*/		
 			tl.requestedColumnCount = 3;
 			tl.requestedRowCount = 3;
 			tl.horizontalAlign="center";
@@ -69,9 +75,11 @@ package components
 			tl.columnAlign="justifyUsingWidth";
 			tl.rowAlign="justifyUsingHeight";
 			categoryTiles.layout = tl;
+			/*Adding the category tiles elemet as viewport of scroller*/
 			scroller.viewport = categoryTiles;
+			/*Making scroller part of this UI component*/
 			this.addElement(scroller);
-			loadingDisplay = new Label;
+			/*Setting up loading display*/
 			loadingDisplay.text = Language.lookup("Loading");
 			addElement(loadingDisplay);
 		}
@@ -80,6 +88,8 @@ package components
 		override protected function commitProperties():void{
 			super.commitProperties();
 			categoryTiles.removeAllElements();
+			projectPanel.removeAllElements();
+			mapPanel.removeAllElements();
 			//add elements
 			if(model.category){
 				if(model.category.@category_count == 0 || model.category.category.@is_project == 1){
@@ -91,12 +101,15 @@ package components
 						populateMaps();
 					}
 				} else {
-					categoryTiles.removeAllElements();
+					is_project_level = false;
+					
 					categoryTiles.layout = tl;
+					trace("Changing back to normal layout");
 				}
 				//Loop over the categories that were pulled from the DB
-				trace();
+				
 				for each(var categoryXML:XML in model.category.category){
+					trace("Adding buttons");
 					/*Create and setup buttons corresponding to categories*/
 					var button:Button = new Button;
 					button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
@@ -119,7 +132,11 @@ package components
 						trace("From for loop, count is: " + categoryXML.@category_count);
 					}, false, 1,false);
 					//Add the button related to the category to the view
-					if(is_project_level) projectPanel.addElement(button);
+					if(is_project_level){
+						button.width = undefined;
+						button.height = undefined;
+						projectPanel.addElement(button);
+					}
 					else categoryTiles.addElement(button);
 				}
 				trace("The category count is: " + (model.category.@category_count));
@@ -149,8 +166,7 @@ package components
 			mapMetaDataVector.sort(MapMetaData.isGreater);
 			for each(var mapMetaData:MapMetaData in mapMetaDataVector){
 				var mapButton:Button = new Button;
-				mapButton.width = 150;
-				mapButton.height = 80;
+				
 				mapButton.setStyle("chromeColor", 0xF99653);
 				mapButton.name = mapMetaData.mapID.toString();
 				mapButton.label = mapMetaData.mapName;
@@ -159,16 +175,7 @@ package components
 				
 				//mapButton.toolTip = mapMetaData.mapCreator;
 				mapPanel.addElement(mapButton);
-			}
-			/*
-			* These cured our source of error for maps pouring over the screen and not loading.
-			* The cause was related to a persistant map list constantly being called.
-			*/
-			mapList.map = null;
-			mapMetaDataVector = null;
-			mapMetaData = null;
-			model.map = null;
-			
+			}			
 		}
 		
 		

@@ -24,6 +24,7 @@
 			import mx.collections.ArrayList;
 			import mx.controls.Button;
 			import mx.controls.Label;
+			import mx.core.FlexGlobals;
 			
 			import spark.components.HGroup;
 			
@@ -83,6 +84,7 @@
 					AGORAController.getInstance().fetchDataCategory();
 				},false,1,false);
 				this.addElement(button);
+				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			}
 			
 			/**
@@ -96,8 +98,9 @@
 					textVersion.text = textVersion.text.substr(0, textVersion.text.length	- oldCat.length - delimeter.length);
 					if(oldCat.length > 20) textVersion.text.substr(0, textVersion.text.length - 1); //Remove the new line
 				} else textVersion.text = Language.lookup('CategoryTopLevel');;
+				removeElementAt(numCats);
 				numCats--;
-				removeElementAt(numCats + 1);
+				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			}
 			
 			/**
@@ -136,7 +139,7 @@
 					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current), false);
 				},false,1,false);
 				this.addElement(button);
-
+				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 				
 				numCats++;
 			}

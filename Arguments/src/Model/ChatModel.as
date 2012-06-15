@@ -60,7 +60,7 @@ package Model
 			chatdatavo.map_name  = AGORAModel.getInstance().agoraMapModel.name;
 			chatdatavo.textMessage = "";
 			chatdatavo.username = AGORAModel.getInstance().userSessionModel.username;
-			request.send({map_name: "'" + chatdatavo.map_name + "'"});
+			request.send({map_name: chatdatavo.map_name});
 		}
 		
 	

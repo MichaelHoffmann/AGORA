@@ -70,7 +70,6 @@ package Controller
 			model.agoraMapModel.deletedList.splice(0, model.agoraMapModel.deletedList.length);
 			
 			//set the title
-			FlexGlobals.topLevelApplication.map.topPanel.title.title = model.agoraMapModel.name;
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.reset();

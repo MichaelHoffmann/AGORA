@@ -179,7 +179,6 @@
 					if(!temp.parent){
 						this.tabNav.setVisible(true,true);
 						this.mainPanel.visible=false;
-						createMapBtn.enabled = false;
 						AGORAController.getInstance().categoryChain = cg;
 						AGORAController.getInstance().fetchDataCategory();
 					} else {
@@ -272,10 +271,6 @@
 			</components:ProjectListPanel>
 
 		</s:HGroup>
-
-		
-		<!--Horizontal row of buttons at the bottom of the screen-->
-		
 	</s:VGroup>
 	<s:VGroup id="navigtorGroup" percentWidth="100" percentHeight="100" horizontalAlign="center">
 		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
@@ -292,7 +287,8 @@
 							<s:HGroup horizontalAlign="center" verticalAlign="top">
 								<s:VGroup percentWidth="100" percentHeight="100" horizontalAlign="center">
 									<s:Button id="createMapBtn" verticalCenter="0"
-											  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)">
+											  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
+											  toolTip="{Language.lookup('NewMapToolTip')}">
 									</s:Button >
 									<s:Button id="createProjBtn" enabled="false" visible="false"
 											  label="{Language.lookup('CategoryProject')}" click="createMapBtn_clickHandler(event)">
@@ -335,6 +331,7 @@
 				<s:Label id="ComingSoon" text="{Language.lookup('ComingSoon')}"/>
 			</s:NavigatorContent>
 		</mx:TabNavigator>
+		<!--Horizontal row of buttons at the bottom of the screen-->
 		<s:VGroup verticalAlign="middle" horizontalAlign="center" percentWidth="100" percentHeight="10">
 			<s:HGroup id="bottomButtonRow" percentWidth="100" percentHeight="100" textAlign="center" horizontalAlign="center">
 			

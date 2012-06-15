@@ -32,6 +32,7 @@ package Model
 		public var pushChatModel:PushChatModel;
 		public var moveToProject:Boolean;
 		public var verifyProjModel:VerifyProjectMemberModel;
+		public var publishMapModel:PublishMapModel;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -54,6 +55,7 @@ package Model
 			chatModel = new ChatModel;
 			pushChatModel = new PushChatModel;
 			verifyProjModel = new VerifyProjectMemberModel;
+			publishMapModel = new PublishMapModel;
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';

@@ -28,9 +28,10 @@ package components
 	{
 		public var gotoMenuBtn:Button;
 		public var saveAsBtn:Button;
-		public var title:TitleDisplay;
 		public var print:Button;
-		public var addToProjectButton:Button;
+		public var _unhideRSP:Button;
+		public var _publishMapButton:Button;
+		
 		
 		private var agoraConstants:AGORAParameters;
 		private var background:Sprite;
@@ -63,10 +64,12 @@ package components
 				addChild(saveAsBtn);
 			}
 			
-			if(!title){
-				title = new TitleDisplay;
-				addChild(title);
-			}	
+			if(!_publishMapButton){
+				_publishMapButton = new Button;
+				_publishMapButton.label = Language.lookup("PublishMap");
+				_publishMapButton.addEventListener(MouseEvent.CLICK, onPublishMap); 
+				addChild(_publishMapButton);
+			}
 			
 			if(!print){
 				print = new Button;
@@ -75,11 +78,11 @@ package components
 				addChild(print);
 			}
 			
-			if(!addToProjectButton){
-				addToProjectButton = new Button;
-				addToProjectButton.label = Language.lookup('MapToProject');
-				addToProjectButton.addEventListener(MouseEvent.CLICK,onAddToProject);
-				addChild(addToProjectButton);
+			if(!_unhideRSP){
+				_unhideRSP = new Button;
+				_unhideRSP.label = Language.lookup("UnhidePanel");
+				_unhideRSP.addEventListener(MouseEvent.CLICK, unhideButton_ClickHandler);
+				addChild(_unhideRSP);
 			}
 		} 
 		
@@ -107,17 +110,25 @@ package components
 			print.setActualSize(print.getExplicitOrMeasuredWidth(), 30);
 			print.move(xB, 5);
 			xB = xB + print.getExplicitOrMeasuredWidth() + 15;
-			title.setActualSize(title.getExplicitOrMeasuredWidth(), title.getExplicitOrMeasuredHeight());
-			title.move(xB,5);
-			xB = xB + title.getExplicitOrMeasuredWidth() + 15;
-			addToProjectButton.setActualSize(addToProjectButton.getExplicitOrMeasuredWidth(), addToProjectButton.getExplicitOrMeasuredHeight());
-			addToProjectButton.move(xB,5);
+			_publishMapButton.setActualSize(_publishMapButton.getExplicitOrMeasuredWidth(), 30);
+			_publishMapButton.move(xB,5);
+			xB = xB + _publishMapButton.getExplicitOrMeasuredWidth() + 15;
+			_unhideRSP.setActualSize(_unhideRSP.getExplicitOrMeasuredWidth(),30);
+			_unhideRSP.move(this.width - _unhideRSP.width, 5);
 			
 		}
 		
 		//------------------------Event Handlers----------------------//
 		protected function discardChanges(event:MouseEvent):void{
 			AGORAController.getInstance().hideMap();
+		}
+		
+		protected function onPublishMap(event:MouseEvent):void{
+			FlexGlobals.topLevelApplication.publishMap = new PublishMapPopUpPanel;
+			AGORAModel.getInstance().publishMapModel.sendForTopLevel();
+			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.publishMap, DisplayObject(this),true);
+			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.publishMap);
+			
 		}
 		
 		protected function onPrint(event:MouseEvent):void{
@@ -128,6 +139,10 @@ package components
 			FlexGlobals.topLevelApplication.move_map = new MapToProject;
 			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.move_map, DisplayObject(FlexGlobals.topLevelApplication),true);
 			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.move_map);
+		}
+		
+		protected function unhideButton_ClickHandler(event:MouseEvent):void{
+			FlexGlobals.topLevelApplication.rightSidePanel.visible = true;
 		}
 	}
 }

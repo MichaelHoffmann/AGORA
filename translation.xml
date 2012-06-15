@@ -30,6 +30,14 @@
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 
+
+
+	<NewMapToolTip>
+		<EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
+		<RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
+		<GER text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
+	</NewMapToolTip>
+
 	<PrivacyPolicy>
 		<EN-US text="Privacy Policy" />
 		<RUS text="Privacy Policy" /><!--TODO Translate -->
@@ -165,11 +173,11 @@
 		<GER text="Schreib eine Mitteilung: " />
 	</TypeMessage>
 
-	<UnhideChat>
+	<UnhidePanel>
 		<EN-US text="Unhide Panel" />
 		<RUS text="Unhide Chat" /><!--TODO Translate -->
 		<GER text="Zeige dieses Feld" />
-	</UnhideChat>
+	</UnhidePanel>
 
 
 	<GuestEditMapError>

@@ -5,7 +5,6 @@
 		 xmlns:components="components.*"
 		 width="278" height="682"
 		 backgroundColor="#29ABE2"
-		 creationComplete="skinnablecontainer1_creationCompleteHandler(event)"
 		 >
 	<fx:Script>
 
@@ -13,27 +12,36 @@
 		<![CDATA[
 			import classes.Language;
 			
+			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
-			[Bindable]
-			private var visibility:Boolean = FlexGlobals.topLevelApplication.map.visible;
+			[Bindable] private var visibility:Map = FlexGlobals.topLevelApplication.map;
 			
-			protected function skinnablecontainer1_creationCompleteHandler(event:FlexEvent):void
-			{
-				youAreHereLabel.left = categoryChain.left = 0;
-				categoryChain.top = hidePanelButton.getExplicitOrMeasuredHeight()+5;
-				youAreHereLabel.top=categoryChain.getExplicitOrMeasuredHeight()-5;
-				chat.top = categoryChain.getExplicitOrMeasuredHeight() + 100;
+
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				var xB:int = 0;
+				hidePanelButton.setActualSize(hidePanelButton.getExplicitOrMeasuredWidth(), hidePanelButton.getExplicitOrMeasuredHeight());
+				hidePanelButton.move(2, xB);
+				xB = xB + hidePanelButton.getExplicitOrMeasuredHeight() + 10;
+				youAreHereLabel.setActualSize(youAreHereLabel.getExplicitOrMeasuredWidth(), youAreHereLabel.getExplicitOrMeasuredHeight());
+				youAreHereLabel.move(2, xB);
+				xB = xB + youAreHereLabel.getExplicitOrMeasuredHeight() + 5;
+				categoryChain.setActualSize(categoryChain.getExplicitOrMeasuredWidth(), categoryChain.getExplicitOrMeasuredHeight());
+				categoryChain.move(2, xB);
+				xB = xB + categoryChain.getExplicitOrMeasuredHeight() + 30;
+				chat.setActualSize(chat.getExplicitOrMeasuredWidth(), chat.getExplicitOrMeasuredHeight());
+				chat.move(2, xB);
 				
-			}		
+			}
 		]]>
 
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
+	</fx:Declarations>		
 	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0"/>
-	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" click="{this.visible = false}" visible="{visibility}"/>
+	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" click="{this.visible = false}" visible="{visibility.visible}"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>
 	<components:CategoryChain id="categoryChain"/>
 
