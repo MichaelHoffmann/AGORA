@@ -113,7 +113,7 @@ package components
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
 			firstClaimHelpText.visible = false;
-		
+
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
@@ -255,9 +255,10 @@ package components
 					var fvlspy:int = argumentPanel.y + 30;
 					if(model.supportingArguments.length > 0){
 						//draw arrow
-						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 35);
+						drawUtility.graphics.lineStyle(10, 0x29ABE2, 10);
+						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 55);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 30);
-						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 5, argumentPanel.y + 25);
+						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 10);
 						//First Vertical Line Finishing Point
 						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
 						var fvlfpy:int = (lastMenuPanel.y + 30);
@@ -305,6 +306,7 @@ package components
 						}
 					}
 					if(model.objections.length > 0){
+						drawUtility.graphics.lineStyle(10, 0xF99653, 10);
 						argumentPanel = panelsHash[model.ID];
 						var lastObjection:StatementModel = layoutController.getBottomObjection(model);
 						if(lastObjection != null){
@@ -316,9 +318,9 @@ package components
 							//and an arrow
 							drawUtility.graphics.moveTo(fvlspx, fvlfpy);
 							drawUtility.graphics.lineTo(fvlspx, fvlspy);
-							drawUtility.graphics.lineTo(fvlspx-5, fvlspy +5);
+							drawUtility.graphics.lineTo(fvlspx-25, fvlspy +25);
 							drawUtility.graphics.moveTo(fvlspx, fvlspy);
-							drawUtility.graphics.lineTo(fvlspx+5, fvlspy+5);
+							drawUtility.graphics.lineTo(fvlspx+25, fvlspy+25);
 							for each(var obj:StatementModel in model.objections){
 								//horizontal line from the vertical line to the objection
 								if(panelsHash.hasOwnProperty(obj.ID)){

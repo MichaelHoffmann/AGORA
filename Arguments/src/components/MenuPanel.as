@@ -64,9 +64,10 @@ package components
 		public function MenuPanel()
 		{
 			super();
+			setStyle("skinClass", MenuPanelSkin);
+			setStyle("borderVisible", false);
 			minHeight = 20;
 			width = 150;
-			this.setStyle("chromeColor",uint("0xdddddd"));
 			agoraConstants = AGORAParameters.getInstance();
 			this.title = agoraConstants.THEREFORE;
 		}

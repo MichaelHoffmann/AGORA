@@ -37,9 +37,8 @@ package components
 		{
 			super();
 			this.setStyle("dropShadowVisible",false);
-			this.setStyle("cornerRadius",4);
-			this.setStyle("chromeColor",uint("0xffffff"));
-			this.setStyle("backgroundColor",uint("0x999966"));
+			//this.setStyle("chromeColor",uint("0xffffff"));
+			this.setStyle("alpha",uint(0));
 		}
 		override protected function createChildren():void
 		{
