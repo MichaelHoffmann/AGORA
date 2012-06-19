@@ -26,7 +26,7 @@ package Model
 		 * Success: onChatPushed
 		 * Fail: onFault 
 		 */
-		public function ChatModel():void
+		public function PushChatModel():void
 		{	
 			request = new HTTPService;
 			request.url = AGORAParameters.getInstance().chatPushURL;
@@ -41,25 +41,20 @@ package Model
 		 */
 		public function pushChat(text:String):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			var chatdatavo:ChatDataVO = new ChatDataVO;
-			chatdatavo.map_name = AGORAModel.getInstance().agoraMapModel.name;
-			chatdatavo.textMessage = text;
-			chatdatavo.username = userSessionModel.username;
-			userSessionModel.push_chat(chatdatavo);
+			request.send({username: userSessionModel.username, text: text, map_id: AGORAModel.getInstance().agoraMapModel.ID});
 		}
 		
-		/**
-		 * This is called on a successful return from the PHP
-		 */
-		protected function onChatPushed(event:ResultEvent):void{
-			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_PUSHED));
+		protected function onChatPushed(event:ResultEvent):void{			
+			event.target.removeEventListener(ResultEvent.RESULT, onChatPushed);
+			event.target.removeEventListener(FaultEvent.FAULT, onFault);
+			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_FETCHED));
 		}
 		
-		/**
-		 * This is called on a unsuccessful return from the PHP
-		 */
 		protected function onFault(event:FaultEvent):void{
+			event.target.removeEventListener(ResultEvent.RESULT, onChatPushed);
+			event.target.removeEventListener(FaultEvent.FAULT, onFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
+			
 		}
 		
 		

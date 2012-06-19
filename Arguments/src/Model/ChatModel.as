@@ -56,11 +56,7 @@ package Model
 		 */
 		public function requestChat():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			var chatdatavo:ChatDataVO = new ChatDataVO();
-			chatdatavo.map_name  = AGORAModel.getInstance().agoraMapModel.name;
-			chatdatavo.textMessage = "";
-			chatdatavo.username = AGORAModel.getInstance().userSessionModel.username;
-			request.send({map_name: chatdatavo.map_name});
+			request.send({map_id: AGORAModel.getInstance().agoraMapModel.ID});
 		}
 		
 	
@@ -70,9 +66,7 @@ package Model
 		 */
 		protected function onChatServiceResult(event:ResultEvent):void{
 			chat = event.result as XML;
-			if(event.result.hasOwnProperty("error")){
-				FlexGlobals.topLevelApplication.rightSidePanel.chat.chatField.text = Language.lookup('ChatError');
-			}
+
 			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_FETCHED));
 
 		}

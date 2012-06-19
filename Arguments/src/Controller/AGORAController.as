@@ -10,6 +10,7 @@ package Controller
 	import Model.MoveMapToProjectModel;
 	import Model.ProjectListModel;
 	import Model.ProjectsModel;
+	import Model.PublishMapModel;
 	import Model.PushProject;
 	import Model.UserSessionModel;
 	import Model.VerifyProjectMemberModel;
@@ -75,7 +76,7 @@ package Controller
 			model.chatModel.addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
 			model.chatModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.verifyProjModel.addEventListener(AGORAEvent.PROJECT_USER_VERIFIED, onProjectUserVerified);
-			model.verifyProjModel.addEventListener(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH, onCategoryFetchedForPublish);
+			model.publishMapModel.addEventListener(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH, onCategoryFetchedForPublish);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -158,8 +159,11 @@ package Controller
 			menu.categories.invalidateDisplayList();
 		}
 		
+		public function fetchDataChildCategoryForPublish(parentCategory:String):void{
+			model.publishMapModel.sendForChildren(parentCategory);
+		}
+		
 		protected function onCategoryFetchedForPublish(event:AGORAEvent):void{
-			FlexGlobals.topLevelApplication.publishMap.loadingDisplay.visible = false;
 			FlexGlobals.topLevelApplication.publishMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.publishMap.invalidateDisplayList();
 		}

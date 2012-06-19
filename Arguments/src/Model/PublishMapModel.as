@@ -7,6 +7,7 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
+	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;

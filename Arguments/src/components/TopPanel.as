@@ -124,7 +124,8 @@ package components
 		}
 		
 		protected function onPublishMap(event:MouseEvent):void{
-			FlexGlobals.topLevelApplication.publishMap = new PublishMapPopUpPanel;
+			if(!FlexGlobals.topLevelApplication.publishMap)
+				FlexGlobals.topLevelApplication.publishMap = new PublishMapPopUpPanel;
 			AGORAModel.getInstance().publishMapModel.sendForTopLevel();
 			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.publishMap, DisplayObject(this),true);
 			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.publishMap);

@@ -14,6 +14,7 @@ package components
 	import classes.Language;
 	
 	import components.AGORAMenu;
+	import components.TextWrapButton;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -111,11 +112,10 @@ package components
 				for each(var categoryXML:XML in model.category.category){
 					trace("Adding buttons");
 					/*Create and setup buttons corresponding to categories*/
-					var button:Button = new Button;
+					var button:TextWrapButton = new TextWrapButton;
 					button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 					button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
-					button.width = 150;
-					button.height = 80;
+
 					button.setStyle("chromeColor", 0xA0CADB);					
 					button.addEventListener('click',function(e:Event):void{
 						//Begin private inner click event function for button

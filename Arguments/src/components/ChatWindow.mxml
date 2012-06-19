@@ -62,7 +62,6 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 							//some form of TextFormatter object to change color of user's text... 
 						}
 						if(line.charAt(0) != ":")	chatField.appendText(line); //For some reason, the DB's return XML kept picking up a blank line. This stops it from printing...
-						
 					}
 				} else {
 					chatField.text = Language.lookup("Loading");

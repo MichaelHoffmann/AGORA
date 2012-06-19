@@ -5,7 +5,6 @@ package Controller
 	import Model.AGORAModel;
 	import Model.UserSessionModel;
 	
-	import ValueObjects.ChatDataVO;
 	import ValueObjects.UserDataVO;
 	
 	import classes.Language;
