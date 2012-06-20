@@ -14,7 +14,7 @@ package components
 	import classes.Language;
 	
 	import components.AGORAMenu;
-	import components.TextWrapButton;
+
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -183,7 +183,11 @@ package components
 		
 		
 		protected function onMapObjectClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().loadMap(event.target.name);					
+			ArgumentController.getInstance().loadMap(event.target.name);		
+			FlexGlobals.topLevelApplication.rightSidePanel.mapOwner.text = "Feature Coming soon";
+			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
+			ArgumentController.getInstance().loadMap(event.target.name);	
+
 		}
 		
 		
