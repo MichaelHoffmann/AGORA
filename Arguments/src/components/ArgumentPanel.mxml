@@ -724,7 +724,7 @@
 					}
 					if(panelType == StatementModel.OBJECTION){
 						this.setStyle("borderColor" ,0xF99653);
-						stmtButton.visible = "false";
+						stmtButton.visible = false;
 					}}
 				else if(panelType == StatementModel.OBJECTION){
 					skin.setStyle("borderColor" ,252525);
