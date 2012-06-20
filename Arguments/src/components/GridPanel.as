@@ -22,15 +22,18 @@ package components
 	 */
 	
 	import ValueObjects.AGORAParameters;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.controls.Alert;
 	
+	import spark.components.Group;
 	import spark.components.Panel;
 	
 	public class GridPanel extends Panel
 	{
 		public static var count:int;
+
 		public var gridX:int;
 		public var gridY:int;
 		public function GridPanel()

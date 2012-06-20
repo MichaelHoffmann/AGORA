@@ -86,7 +86,7 @@ package components
 			tl.requestedRowCount = 3;
 			tl.horizontalAlign="center";
 			tl.verticalAlign = "middle";
-
+			
 			categoryTiles.layout = tl;
 			
 			/*Adding the category tiles elemet as viewport of scroller*/

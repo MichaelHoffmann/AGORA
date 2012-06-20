@@ -25,12 +25,15 @@
 			<!--Within the topHG. It holds the author information and the type of statement-->
 			<s:HGroup id = "stmtInfoVG" width = "100%" fontSize="12"  >
 				<s:Label id = "stmtTypeLbl" alpha=".50"/>
-				<s:Graphic height ="10" width = "10" mouseOver="scaleX" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" >
-					<s:Ellipse height ="10" width = "10" >
+				<s:Graphic mouseOver="scaleX" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" >
+					<s:Ellipse height ="12" width = "12" id = "stmtellipse">
 						<s:fill>
-							<s:SolidColor color="#25ff25" alpha = "1"/>
+							<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
 						</s:fill>
-					</s:Ellipse>	 
+					</s:Ellipse>	
+					<s:Image  left = "3" top = "0" horizontalAlign="center"   scaleX=".1" source="@Embed('components/agoraMasterImages_Triangle.png')" scaleY="-.1" />
+					<s:Image  left = "3" top = "7"  horizontalAlign="center"    scaleX=".1" source="@Embed('components/agoraMasterImages_Triangle.png')" scaleY=".1" />
+
 				</s:Graphic>
 				<!--Displays the user id-->
 				<s:Label id = "userIdLbl"    maxDisplayedLines="1" width="{100}"  right = "0" alpha=".50"/>
@@ -721,7 +724,7 @@
 					}
 					if(panelType == StatementModel.OBJECTION){
 						this.setStyle("borderColor" ,0xF99653);
-						stmtInfoVG.removeElement(stmtButton);
+						stmtButton.visible = "false";
 					}}
 				else if(panelType == StatementModel.OBJECTION){
 					skin.setStyle("borderColor" ,252525);

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			reflection, critique, deliberation, and creativity in individual argument construction 
-			and in collaborative or adversarial settings. 
-    Copyright (C) 2011 Georgia Institute of Technology
+AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
+reflection, critique, deliberation, and creativity in individual argument construction 
+and in collaborative or adversarial settings. 
+Copyright (C) 2011 Georgia Institute of Technology
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
@@ -34,7 +34,7 @@
 				 focusRoundedCorners="tr br tl bl"
 				 paddingLeft="8"
 				 labelField="name"/>
-				 <!-- itemClick="changeTitle(event)" -->
+		<!-- itemClick="changeTitle(event)" -->
 		
 		<mx:List id="typeSelector" 
 				 dataProvider="{languageTypes}"
@@ -74,7 +74,7 @@
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
-		
+			
 			private var _languageTypes:Array;
 			private var _scheme:Array;
 			private var _options:Array;
@@ -84,12 +84,12 @@
 			
 			
 			//------------- Getters and Setters -----------------------//
-
+			
 			public function get argumentTypeModel():ArgumentTypeModel
 			{
 				return _argumentTypeModel;
 			}
-
+			
 			public function set argumentTypeModel(value:ArgumentTypeModel):void
 			{
 				_argumentTypeModel = value;
@@ -104,7 +104,7 @@
 					trace(error.message);
 				}
 			}
-
+			
 			[Bindable]
 			public function get languageTypes():Array{
 				return _languageTypes;
@@ -128,7 +128,7 @@
 			{
 				return _options;
 			}
-
+			
 			[Bindable]
 			public function set options(value:Array):void
 			{
@@ -148,7 +148,7 @@
 				var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
 				y = value;
 			}
-
+			
 			//----------------- Other public functions -----------------------------------//
 			public function show():void{
 				this.parent.setChildIndex(this, parent.numChildren - 1);
@@ -207,7 +207,7 @@
 			protected function onRollOver(event:MouseEvent):void{
 				this.parent.setChildIndex(this, parent.numChildren - 1);
 			}
-		
+			
 		]]>
 	</fx:Script>
 </s:Group>

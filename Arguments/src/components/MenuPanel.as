@@ -47,6 +47,8 @@ package components
 	import spark.components.Button;
 	import spark.components.HGroup;
 	import spark.components.VGroup;
+	import spark.primitives.Ellipse;
+	import flash.display.Sprite;
 	
 	public class MenuPanel extends GridPanel
 	{
@@ -170,7 +172,6 @@ package components
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
-			
 			
 			addReasonBtn.addEventListener(MouseEvent.CLICK, onAddReasonClicked);
 			changeSchemeBtn.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);

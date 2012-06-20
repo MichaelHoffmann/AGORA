@@ -15,6 +15,7 @@
   </compiler>
   <applications>
     <application path="index.mxml"/>
+    <application path="Testing.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

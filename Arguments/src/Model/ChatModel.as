@@ -26,7 +26,7 @@ package Model
 		
 		public var chat:XML;
 		private var request: HTTPService;
-	
+		
 		/**
 		 * Creates the ChatModel(CM) object. Simply instantiates the HTTP Request and configures it to use the appropriate 
 		 * configurations.
@@ -46,7 +46,7 @@ package Model
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onChatServiceResult);
 			request.addEventListener(FaultEvent.FAULT, onChatServiceFault);
-
+			
 		}
 		
 		/**
@@ -61,16 +61,16 @@ package Model
 			request.send({map_id: temp});
 		}
 		
-	
+		
 		/**
 		 * This is called upon successfully leaving the PHP. Populates the value object and calls onChatFetched to
 		 * invalidate the displays
 		 */
 		protected function onChatServiceResult(event:ResultEvent):void{
 			chat = event.result as XML;
-
+			
 			dispatchEvent(new AGORAEvent(AGORAEvent.CHAT_FETCHED));
-
+			
 		}
 		
 		/**

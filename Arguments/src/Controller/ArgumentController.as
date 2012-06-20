@@ -22,7 +22,6 @@ package Controller
 	import components.ArgumentPanel;
 	import components.GridPanel;
 	import components.HelpText;
-	import components.LAMWorld;
 	import components.Map;
 	import components.MenuPanel;
 	import components.Option;
@@ -130,8 +129,8 @@ package Controller
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
 			AGORAModel.getInstance().agoraMapModel.ID = mapMetaData.mapID;
 			map.visible = true;
-			map.lamWorld.visible = true;
-			menu.visible = false;
+			startWithClaim();
+
 		}
 		
 		
@@ -139,7 +138,7 @@ package Controller
 		//-------------------Start with Claim----------------------------//
 		public function startWithClaim():void{
 			//remove Lam world
-			map.lamWorld.visible = false;
+
 			//display map
 			map.agora.visible = true;
 			
@@ -153,7 +152,7 @@ package Controller
 				//Set the coordinates of the help text
 				map.agoraMap.firstClaimHelpText.visible = true;
 				map.agoraMap.firstClaimHelpText.y = 2 * agoraParameters.gridWidth;
-				map.agoraMap.firstClaimHelpText.x = 3 * agoraParameters.gridWidth + 180 + 25;
+				map.agoraMap.firstClaimHelpText.x = 3 * agoraParameters.gridWidth + 300 + 25;
 				//instruct the model to add a first claim to itself
 				model.requested = true;
 				model.agoraMapModel.addFirstClaim();

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-	 -	Visual element that adds the category hierarchy to the right side of the screen. The buttons allow the user to
-	 -	click on a button a take themselves to that category. Also removes elements from the category chain as necessary.
-	 -
-	 -	Has two functions: removeCategory and addCategory. See the documentation of those two functions for more info
-	-->
+<!--
+-	Visual element that adds the category hierarchy to the right side of the screen. The buttons allow the user to
+-	click on a button a take themselves to that category. Also removes elements from the category chain as necessary.
+-
+-	Has two functions: removeCategory and addCategory. See the documentation of those two functions for more info
+-->
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 preinitialize="preInit();">
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  preinitialize="preInit();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -117,9 +117,9 @@
 			 */
 			public function addCategory(newCat:String):void{
 				/*
-				 *	If the connection is not right then categories do not load and it really screws with the text in the chain.
-				 *	This solves that problem and lets the user know that there was a problem loading the category.
-				 */
+				*	If the connection is not right then categories do not load and it really screws with the text in the chain.
+				*	This solves that problem and lets the user know that there was a problem loading the category.
+				*/
 				if(textVersion.text == newCat || textVersion.text == "Error loading categories"){
 					textVersion.text = Language.lookup('CategoryLoadError');
 					return;
@@ -127,15 +127,15 @@
 				
 				
 				/*
-				 *  Checks to see if we are at the top level of the category hierarchy. If we are and a category is clicked, remove the text "Top Level"
-				 *	and add the first category. If we are not, concatinate the old text, the delimeter, and the new category string.
-				 */
+				*  Checks to see if we are at the top level of the category hierarchy. If we are and a category is clicked, remove the text "Top Level"
+				*	and add the first category. If we are not, concatinate the old text, the delimeter, and the new category string.
+				*/
 				if(numCats == 0)
 					textVersion.text=newCat;
-				 else {
+				else {
 					if(newCat.length % 20) textVersion.text = textVersion.text; //Add a new line IF the length of the new text is more than 20
 					textVersion.text = textVersion.text + delimeter + newCat;
-				 }
+				}
 				var button:Button = new Button;
 				button.label = newCat;
 				button.addEventListener('click',function(e:Event):void{
@@ -148,7 +148,7 @@
 					}
 					controller.categoryChain = thisParent.categoryChain;
 					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current), false);
-
+					
 				},false,1,false);
 				this.addElement(button);
 				numCats++;

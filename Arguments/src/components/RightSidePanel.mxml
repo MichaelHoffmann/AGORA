@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 xmlns:components="components.*"
-		 width="278" height="682"
-		 backgroundColor="#29ABE2"
-		 >
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  xmlns:components="components.*"
+					  width="278" height="682"
+					  backgroundColor="#29ABE2"
+					  >
 	<fx:Script>
 
-	
+
 		<![CDATA[
 			import classes.Language;
 			
@@ -17,7 +17,7 @@
 			import mx.events.FlexEvent;
 			[Bindable] private var visibility:Map = FlexGlobals.topLevelApplication.map;
 			
-
+			
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 				var xB:int = 0;
@@ -48,7 +48,7 @@
 				
 			}
 		]]>
-
+		
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -59,6 +59,6 @@
 	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" click="{this.visible = false}" visible="{visibility.visible}"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>
 	<components:CategoryChain id="categoryChain"/>
-
+	
 	
 </s:SkinnableContainer>

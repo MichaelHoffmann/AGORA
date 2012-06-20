@@ -1,7 +1,7 @@
 package ValueObjects
 {
 	import classes.Language;
-
+	
 	[Bindable]
 	public class AGORAParameters
 	{

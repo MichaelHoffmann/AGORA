@@ -49,7 +49,7 @@ package components
 			addChild(bgSprite);
 			
 			_textBox = new TextField;
-			_textBox.x = 20;
+			_textBox.x = 50;
 			_textBox.y = 20;
 			_textBox.width = boxWidth - 30;
 			_textBox.multiline = true;
