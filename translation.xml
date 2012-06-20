@@ -30,7 +30,29 @@
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 
+	<OwnerOfMap>
+		<EN-US text="Owner of map: " />
+		<RUS text="Owner of map: " /><!--TODO Translate -->
+		<GER text="Owner of map: " />
+	</OwnerOfMap>
+	
+	<SuccessfullyPublished>
+		<EN-US text="Your map was successfully published. It is now publically available inside the category you chose" />
+		<RUS text="Your map was successfully published. It is now publically available inside the category you chose" /><!--TODO Translate -->
+		<GER text="Your map was successfully published. It is now publically available inside the category you chose" />
+	</SuccessfullyPublished>
 
+	<UnsuccessfullyPublished>
+		<EN-US text="An error occurred while trying to publish your map. Please close the window and try again." />
+		<RUS text="An error occurred while trying to publish your map. Please close the window and try again." /><!--TODO Translate -->
+		<GER text="An error occurred while trying to publish your map. Please close the window and try again." />
+	</UnsuccessfullyPublished>
+
+	<ClickThroughCategory>
+		<EN-US text="Click through the categories below to determine where you want to publish your map" />
+		<RUS text="Click through the categories below to determine where you want to publish your map" /><!--TODO Translate -->
+		<GER text="Click through the categories below to determine where you want to publish your map" />
+	</ClickThroughCategory>
 
 	<NewMapToolTip>
 		<EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />

@@ -162,7 +162,7 @@ package components
 				trace("map " +  map.@Name + " being loaded");
 				mapMetaData.mapID = map.@ID;//int(map.attribute("ID")); 
 				mapMetaData.mapName = map.@Name;//map.attribute("title");
-				//mapMetaData.mapCreator = map.attribute("creator");
+				mapMetaData.mapCreator = map.@creator;
 				mapMetaDataVector.push(mapMetaData);						
 			}
 			
@@ -173,6 +173,7 @@ package components
 				mapButton.setStyle("chromeColor", 0xF99653);
 				mapButton.name = mapMetaData.mapID.toString();
 				mapButton.label = mapMetaData.mapName;
+				mapButton.id = mapMetaData.mapCreator;
 				mapButton.addEventListener(MouseEvent.CLICK, onMapObjectClicked);
 				trace("map " + mapMetaData.mapName + " officially added as a button");
 				
@@ -183,10 +184,10 @@ package components
 		
 		
 		protected function onMapObjectClicked(event:MouseEvent):void{
-			ArgumentController.getInstance().loadMap(event.target.name);		
-			FlexGlobals.topLevelApplication.rightSidePanel.mapOwner.text = "Feature Coming soon";
+			FlexGlobals.topLevelApplication.rightSidePanel.clickableMapOwnerInformation.text = (Button) (event.target).id;
+			FlexGlobals.topLevelApplication.rightSidePanel.mapTitle.text = event.target.label;
 			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
-			ArgumentController.getInstance().loadMap(event.target.name);	
+			ArgumentController.getInstance().loadMap(event.target.name);		
 
 		}
 		

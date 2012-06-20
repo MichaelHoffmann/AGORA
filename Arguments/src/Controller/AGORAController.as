@@ -331,6 +331,7 @@ package Controller
 		
 		//----------- other public functions --------------------//
 		public function hideMap():void{
+			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			//When we return to the category screen by clicking save and home or loading an illegal map,
 			//find the current category and refresh it. Solved a problem with a created map not appearing
 			//in the category panel upon returning home.

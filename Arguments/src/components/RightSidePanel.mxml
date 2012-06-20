@@ -27,8 +27,12 @@
 				if(visibility.visible){
 					mapOwner.visible = true;
 					mapTitle.visible = true;
+					clickableMapOwnerInformation.visible = true;
 					mapOwner.setActualSize(mapOwner.getExplicitOrMeasuredWidth(), mapOwner.getExplicitOrMeasuredHeight());
 					mapOwner.move(2, xB);
+					clickableMapOwnerInformation.setActualSize
+						(clickableMapOwnerInformation.getExplicitOrMeasuredWidth(), clickableMapOwnerInformation.getExplicitOrMeasuredHeight());
+					clickableMapOwnerInformation.move(mapOwner.getExplicitOrMeasuredWidth()+3, xB);
 					xB = xB + mapOwner.getExplicitOrMeasuredHeight() + 3;
 					mapTitle.setActualSize(mapTitle.getExplicitOrMeasuredWidth(), mapTitle.getExplicitOrMeasuredHeight());
 					mapTitle.move(2, xB);
@@ -36,6 +40,7 @@
 				} else {
 					mapOwner.visible = false;
 					mapTitle.visible = false;
+					clickableMapOwnerInformation.visible = false;
 				}
 				youAreHereLabel.setActualSize(youAreHereLabel.getExplicitOrMeasuredWidth(), youAreHereLabel.getExplicitOrMeasuredHeight());
 				youAreHereLabel.move(2, xB);
@@ -55,7 +60,8 @@
 	</fx:Declarations>		
 	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
-	<s:TextArea id="mapTitle" visible="false"/>
+	<s:Label id="clickableMapOwnerInformation" visible="false"/>
+	<s:TextArea id="mapTitle" visible="false" heightInLines="4"/>
 	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" click="{this.visible = false}" visible="{visibility.visible}"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>
 	<components:CategoryChain id="categoryChain"/>
