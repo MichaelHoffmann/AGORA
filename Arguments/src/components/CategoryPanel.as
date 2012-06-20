@@ -25,7 +25,7 @@ package components
 	
 	import mx.collections.ArrayList;
 	import mx.controls.Alert;
-	import mx.controls.Button;
+	import spark.components.Button;
 	import mx.controls.Label;
 	import mx.core.FlexGlobals;
 	import mx.skins.Border;
@@ -68,7 +68,7 @@ package components
 			categoryTiles.percentWidth = 100;
 			mapPanel.percentWidth = 50;
 			projectPanel.percentWidth = 50;
-			/*Editing how the layout will be for the buttons*/	
+			/*Editing how the layout will be for the buttons*/		
 			tl.requestedColumnCount = 3;
 			tl.requestedRowCount = 3;
 			tl.horizontalAlign="center";
@@ -112,11 +112,14 @@ package components
 				for each(var categoryXML:XML in model.category.category){
 					trace("Adding buttons");
 					/*Create and setup buttons corresponding to categories*/
-					var button:TextWrapButton = new TextWrapButton;
+					var button:Button = new Button;
+					button.setStyle("skinClass",TextWrapSkin);
+					button.height = 100;
+					button.width = 200;
 					button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 					button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
-					
-					button.setStyle("chromeColor", 0xA0CADB);	
+
+					button.setStyle("chromeColor", 0xA0CADB);					
 					button.addEventListener('click',function(e:Event):void{
 						//Begin private inner click event function for button
 						trace("button \"" + e.target.label + "\" clicked");
@@ -143,10 +146,10 @@ package components
 				
 			}
 			
-		}	
+		}		
 		
 		/**
-		 *
+		 * 
 		 */
 		private function populateMaps():void{
 			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
@@ -156,11 +159,11 @@ package components
 			{
 				//var mapObject:Object = new Object;
 				mapMetaData = new MapMetaData;
-				trace("map " + map.@Name + " being loaded");
-				mapMetaData.mapID = map.@ID;//int(map.attribute("ID"));
+				trace("map " +  map.@Name + " being loaded");
+				mapMetaData.mapID = map.@ID;//int(map.attribute("ID")); 
 				mapMetaData.mapName = map.@Name;//map.attribute("title");
 				//mapMetaData.mapCreator = map.attribute("creator");
-				mapMetaDataVector.push(mapMetaData);	
+				mapMetaDataVector.push(mapMetaData);						
 			}
 			
 			mapMetaDataVector.sort(MapMetaData.isGreater);
@@ -175,14 +178,12 @@ package components
 				
 				//mapButton.toolTip = mapMetaData.mapCreator;
 				mapPanel.addElement(mapButton);
-			}	
+			}			
 		}
 		
 		
 		protected function onMapObjectClicked(event:MouseEvent):void{
-			FlexGlobals.topLevelApplication.rightSidePanel.mapOwner.text = "Feature Coming soon";
-			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
-			ArgumentController.getInstance().loadMap(event.target.name);	
+			ArgumentController.getInstance().loadMap(event.target.name);					
 		}
 		
 		
