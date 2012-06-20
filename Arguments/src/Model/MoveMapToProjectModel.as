@@ -39,7 +39,7 @@ package Model
 			
 			super();
 			request = new HTTPService;
-			request.url = AGORAParameters.getInstance().moveMapToProjectURL;
+			//request.url = AGORAParameters.getInstance().moveMapToProjectURL;
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onSuccessfulJoin);
 			request.addEventListener(FaultEvent.FAULT, onFault);

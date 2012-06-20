@@ -56,7 +56,9 @@ package Model
 		 */
 		public function requestChat():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			request.send({map_id: AGORAModel.getInstance().agoraMapModel.ID});
+			var temp:int = AGORAModel.getInstance().agoraMapModel.ID;
+			if(!temp) temp = 0;
+			request.send({map_id: temp});
 		}
 		
 	

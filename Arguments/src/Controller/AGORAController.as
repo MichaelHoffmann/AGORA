@@ -163,6 +163,10 @@ package Controller
 			model.publishMapModel.sendForChildren(parentCategory);
 		}
 		
+		public function publishMap(mapID:int, currCatID:int):void{
+			model.publishMapModel.publishMap(mapID, currCatID);
+		}
+		
 		protected function onCategoryFetchedForPublish(event:AGORAEvent):void{
 			FlexGlobals.topLevelApplication.publishMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.publishMap.invalidateDisplayList();
@@ -330,6 +334,7 @@ package Controller
 		//----------- other public functions --------------------//
 		public function hideMap():void{
 			FlexGlobals.topLevelApplication.map.lamWorld.visible = false;
+			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			//When we return to the category screen by clicking save and home or loading an illegal map,
 			//find the current category and refresh it. Solved a problem with a created map not appearing
 			//in the category panel upon returning home.
@@ -349,6 +354,7 @@ package Controller
 			map.agoraMap.helpText.visible = false;
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
+			AGORAController.getInstance().mapModel.ID = 0;
 			AGORAController.getInstance().mapModel.name = "null";
 			AGORAController.getInstance().fetchDataChat();
 			

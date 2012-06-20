@@ -180,6 +180,8 @@ package components
 		
 		
 		protected function onMapObjectClicked(event:MouseEvent):void{
+			FlexGlobals.topLevelApplication.rightSidePanel.mapOwner = ;
+			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			ArgumentController.getInstance().loadMap(event.target.name);					
 		}
 		

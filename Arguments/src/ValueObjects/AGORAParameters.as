@@ -24,7 +24,7 @@ package ValueObjects
 		public var joinProjectURL:String;
 		public var loadProjectMapsURL:String;
 		public var getMapFromProjURL:String;
-		public var moveMapToProjectURL:String;
+		public var publishMapURL:String;
 		public var categoryURL:String;
 		public var childCategoryURL:String;
 		public var chatPushURL:String;
@@ -175,7 +175,7 @@ package ValueObjects
 			joinProjectURL = "http://agora.gatech.edu/release/verifyProject.php";
 			loadProjectMapsURL = "http://agora.gatech.edu/release/load_project_maps.php";
 			getMapFromProjURL = "http://agora.gatech.edu/release/getMapFromProjID.php";
-			moveMapToProjectURL = "http://agora.gatech.edu/release/moveMapToProject.php";
+			publishMapURL = "http://agora.gatech.edu/release/publishMap.php";
 			categoryURL= "http://agora.gatech.edu/release/category.php"; //category
 			chatPushURL= "http://agora.gatech.edu/release/push_chat.php"; //chat
 			chatPullURL= "http://agora.gatech.edu/release/pull_chat.php"; //chat

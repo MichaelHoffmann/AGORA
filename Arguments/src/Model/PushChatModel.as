@@ -41,7 +41,9 @@ package Model
 		 */
 		public function pushChat(text:String):void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			request.send({username: userSessionModel.username, text: text, map_id: AGORAModel.getInstance().agoraMapModel.ID});
+			var temp:int = AGORAModel.getInstance().agoraMapModel.ID;
+			if(!temp) temp = 0;
+			request.send({username: userSessionModel.username, text: text, map_id: temp});
 		}
 		
 		protected function onChatPushed(event:ResultEvent):void{			

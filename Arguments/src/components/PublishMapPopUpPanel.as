@@ -31,6 +31,8 @@ package components
 	import mx.managers.PopUpManager;
 	import mx.skins.Border;
 	
+	import org.osmf.layout.HorizontalAlign;
+	
 	import spark.components.Group;
 	import spark.components.HGroup;
 	import spark.components.Panel;
@@ -55,22 +57,24 @@ package components
 		private var groupContainer:VGroup;
 		private var cc:CategoryChain;
 		private var categoryData:CategoryDataV0;
+		private var currCatID:int;
+		private var howToUseThisFeatureLabel:Label;
+		public var informationLabel:Label;
 		
 		public function PublishMapPopUpPanel()
 		{
 			super();
-			
+			howToUseThisFeatureLabel = new Label;
+			informationLabel = new Label;
 			/*Instantiations in order of depth in UI field*/
 			scroller = new Scroller;
 			categoryTiles = new Group;
 			tl = new TileLayout();
 			model = AGORAModel.getInstance().publishMapModel;
-			cc = new CategoryChain;
-			categoryData.current = null;
-			
+			cc = new CategoryChain;			
 			
 			/*Setting the UI components to the proper places and sizes*/
-			this.height = 200;
+			this.height = 300;
 			this.width = 750;
 			scroller.percentHeight = scroller.percentWidth = 100;
 			scroller.x = scroller.y = 25;
@@ -82,6 +86,7 @@ package components
 			tl.requestedRowCount = 3;
 			tl.horizontalAlign="center";
 			tl.verticalAlign = "middle";
+
 			categoryTiles.layout = tl;
 			
 			/*Adding the category tiles elemet as viewport of scroller*/
@@ -94,7 +99,7 @@ package components
 			cancelButton.label = Language.lookup('Back');
 			okayButton.label = Language.lookup('Submit');
 			okayButton.visible = false;
-			okayButton.addEventListener(MouseEvent.CLICK,submitPublishNotImplementedYet);
+			okayButton.addEventListener(MouseEvent.CLICK,submitPublish);
 			
 			/*Making the groups*/
 			bottomButtonGroup = new HGroup();
@@ -107,9 +112,18 @@ package components
 			bottomButtonGroup.verticalAlign = "bottom";
 			
 			/*Set up the correct location of the two individual components and adds them to the panel*/
-			scroller.top = 0;
+			scroller.verticalCenter = 0;
+			scroller.top = 100;
+			scroller.horizontalCenter = 0;
+			categoryTiles.horizontalCenter = 0;
 			bottomButtonGroup.bottom = 0;
 			bottomButtonGroup.horizontalCenter=0;
+			groupContainer.horizontalAlign = HorizontalAlign.CENTER;
+			groupContainer.horizontalCenter = 0;
+			howToUseThisFeatureLabel.text = Language.lookup("ClickThroughCategory");
+			groupContainer.addElement(howToUseThisFeatureLabel);
+			groupContainer.addElement(informationLabel);
+			this.addElement(groupContainer);
 			this.addElement(scroller);
 			this.addElement(bottomButtonGroup);
 		}
@@ -120,7 +134,7 @@ package components
 			categoryTiles.removeAllElements();
 			//begin sequence of adding elements
 			if(model.category){
-				if(model.category.@category_count == 0)
+				if(model.category.@category_count == 0 || model.category.category.@is_project == 1)
 					okayButton.visible = true;
 				else{
 					okayButton.visible = false;
@@ -135,6 +149,7 @@ package components
 							//Begin private inner click event function for button
 							e.stopImmediatePropagation();
 							AGORAController.getInstance().fetchDataChildCategoryForPublish(e.target.label);
+							currCatID = e.target.name;
 						}, false, 1,false);
 						//Add the button related to the category to the view
 						categoryTiles.addElement(button);
@@ -148,14 +163,12 @@ package components
 		}
 		
 		protected function removePupUp(event:MouseEvent):void{
+			informationLabel.text = "";
 			PopUpManager.removePopUp(this);					
 		}
 		
-		protected function submitPublishNotImplementedYet(event:MouseEvent):void{
-			Alert.show("Coming Soon");					
-		}
-		
 		protected function submitPublish(event:MouseEvent):void{
+			AGORAController.getInstance().publishMap(AGORAModel.getInstance().agoraMapModel.ID,currCatID);
 		}
 		
 		override protected function measure():void{

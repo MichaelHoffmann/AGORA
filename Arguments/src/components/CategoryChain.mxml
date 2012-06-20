@@ -22,6 +22,7 @@
 			import classes.Language;
 			
 			import mx.collections.ArrayList;
+			import mx.controls.Alert;
 			import mx.controls.Button;
 			import mx.controls.Label;
 			import mx.core.FlexGlobals;
@@ -57,6 +58,8 @@
 			
 			private var categoryChain:ArrayList;
 			
+			[Bindable] private var boundedMap:Map = FlexGlobals.topLevelApplication.map;
+			
 			/**
 			 * Essentially a constructor. 
 			 * 
@@ -78,6 +81,10 @@
 				var button:Button = new Button;
 				button.label = Language.lookup('CategoryTopLevel');
 				button.addEventListener('click',function(e:Event):void{
+					if(boundedMap.visible){
+						AGORAController.getInstance().hideMap();
+						FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
+					}
 					while(numCats>0) thisParent.removeCategory((Button) (thisParent.getElementAt(numCats-1)).label);
 					(CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1));
 					thisParent.controller.categoryChain = thisParent.categoryChain;
@@ -132,15 +139,18 @@
 				var button:Button = new Button;
 				button.label = newCat;
 				button.addEventListener('click',function(e:Event):void{
+					if(boundedMap.visible){
+						AGORAController.getInstance().hideMap();
+						FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
+					}
 					while(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current) != ((Button) (e.target).label)){
 						thisParent.removeCategory((CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1)).current);	
 					}
 					controller.categoryChain = thisParent.categoryChain;
 					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current), false);
+
 				},false,1,false);
 				this.addElement(button);
-				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
-				
 				numCats++;
 			}
 			
