@@ -14,22 +14,23 @@ package components
 	import classes.Language;
 	
 	import components.AGORAMenu;
-
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	import flash.utils.Timer;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	
 	import mx.collections.ArrayList;
 	import mx.controls.Alert;
-	import spark.components.Button;
 	import mx.controls.Label;
 	import mx.core.FlexGlobals;
 	import mx.skins.Border;
 	
+	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.Panel;
 	import spark.components.Scroller;
@@ -49,6 +50,8 @@ package components
 		private var projectPanel:VGroup;
 		private var is_project_level:Boolean;
 		private var tl:TileLayout;
+		private var mapMetaDataVector:Vector.<MapMetaData>;
+		private var rsp:RightSidePanel;
 		public function CategoryPanel()
 		{
 			super();
@@ -83,6 +86,8 @@ package components
 			/*Setting up loading display*/
 			loadingDisplay.text = Language.lookup("Loading");
 			addElement(loadingDisplay);
+			
+			rsp = FlexGlobals.topLevelApplication.rightSidePanel;
 		}
 		
 		
@@ -152,7 +157,7 @@ package components
 		 * 
 		 */
 		private function populateMaps():void{
-			var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+			mapMetaDataVector = new Vector.<MapMetaData>(0,false);
 			var mapList:XML = model.map;
 			trace("loading maps for the project");
 			for each (var map:XML in mapList.map)
@@ -160,35 +165,44 @@ package components
 				//var mapObject:Object = new Object;
 				mapMetaData = new MapMetaData;
 				trace("map " +  map.@Name + " being loaded");
-				mapMetaData.mapID = map.@ID;//int(map.attribute("ID")); 
-				mapMetaData.mapName = map.@Name;//map.attribute("title");
+				mapMetaData.mapID = map.@ID;
+				mapMetaData.mapName = map.@Name;
 				mapMetaData.mapCreator = map.@creator;
+				mapMetaData.firstname = map.@firstname;
+				mapMetaData.lastname = map.@lastname;
+				mapMetaData.url = map.@url;
 				mapMetaDataVector.push(mapMetaData);						
 			}
 			
 			mapMetaDataVector.sort(MapMetaData.isGreater);
+			var i:int = 0;
 			for each(var mapMetaData:MapMetaData in mapMetaDataVector){
 				var mapButton:Button = new Button;
-				
 				mapButton.setStyle("chromeColor", 0xF99653);
 				mapButton.name = mapMetaData.mapID.toString();
 				mapButton.label = mapMetaData.mapName;
-				mapButton.id = mapMetaData.mapCreator;
+				mapButton.id = i.toString();
 				mapButton.addEventListener(MouseEvent.CLICK, onMapObjectClicked);
 				trace("map " + mapMetaData.mapName + " officially added as a button");
-				
 				//mapButton.toolTip = mapMetaData.mapCreator;
 				mapPanel.addElement(mapButton);
+				i++;
 			}			
 		}
 		
 		
 		protected function onMapObjectClicked(event:MouseEvent):void{
-			FlexGlobals.topLevelApplication.rightSidePanel.clickableMapOwnerInformation.text = (Button) (event.target).id;
-			FlexGlobals.topLevelApplication.rightSidePanel.mapTitle.text = event.target.label;
-			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
-			ArgumentController.getInstance().loadMap(event.target.name);		
-
+			var thisMapInfo:MapMetaData = mapMetaDataVector[parseInt((Button) (event.target).id)];
+			rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
+			rsp.clickableMapOwnerInformation.toolTip = 
+				thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url;
+			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+			},false, 0, false);
+			rsp.mapTitle.text = event.target.label;
+			rsp.invalidateDisplayList();
+			mapMetaDataVector = null;
+			ArgumentController.getInstance().loadMap(event.target.name);
 		}
 		
 		
@@ -200,5 +214,6 @@ package components
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			loadingDisplay.move(this.getExplicitOrMeasuredWidth()/2 - loadingDisplay.getExplicitOrMeasuredWidth()/2, 5);
 		}
+		
 	}
 }// ActionScript file

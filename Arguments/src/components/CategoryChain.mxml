@@ -5,9 +5,10 @@
 -
 -	Has two functions: removeCategory and addCategory. See the documentation of those two functions for more info
 -->
-<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:TileGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="150"
 		  preinitialize="preInit();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -26,6 +27,8 @@
 			import mx.controls.Button;
 			import mx.controls.Label;
 			import mx.core.FlexGlobals;
+			import mx.core.IVisualElement;
+			import mx.core.UIComponent;
 			
 			import spark.components.HGroup;
 			
@@ -128,7 +131,7 @@
 				
 				/*
 				*  Checks to see if we are at the top level of the category hierarchy. If we are and a category is clicked, remove the text "Top Level"
-				*	and add the first category. If we are not, concatinate the old text, the delimeter, and the new category string.
+				*  and add the first category. If we are not, concatinate the old text, the delimeter, and the new category string.
 				*/
 				if(numCats == 0)
 					textVersion.text=newCat;
@@ -150,10 +153,34 @@
 					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current), false);
 					
 				},false,1,false);
+				button.width = 60;
 				this.addElement(button);
 				numCats++;
+				this.invalidateDisplayList();
 			}
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				var moveX:int = 0;
+				var moveY:int = 0;
+				for(var i:int = 0; i < this.numElements; i++){
+					var currChild:Button = (Button) (this.getElementAt(i));
+					if(moveX + currChild.getExplicitOrMeasuredWidth() >= this.getExplicitOrMeasuredWidth()){
+						Alert.show(moveX.toString() + " " + this.width.toString());
+						moveX = currChild.getExplicitOrMeasuredWidth();
+						moveY += currChild.getExplicitOrMeasuredHeight();
+					} else {
+						
+						moveX += currChild.getExplicitOrMeasuredWidth();
+					}
+					currChild.move(moveX-currChild.getExplicitOrMeasuredWidth(), moveY);
+
+				}
+					
+			}
+			
+
 			
 		]]>
 	</fx:Script>
-</s:VGroup>
+</s:TileGroup>

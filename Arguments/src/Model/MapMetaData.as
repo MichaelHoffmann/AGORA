@@ -5,6 +5,9 @@ package Model
 		public var mapID:Number;
 		public var mapName:String;
 		public var mapCreator:String;
+		public var firstname:String;
+		public var lastname:String;
+		public var url:String;
 		
 		public function MapMetaData()
 		{
