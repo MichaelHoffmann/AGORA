@@ -141,7 +141,7 @@ package Controller
 
 			//display map
 			map.agora.visible = true;
-			
+			menu.visible= false;
 			//ask controller to add the first claim
 			addFirstClaim();
 		}
