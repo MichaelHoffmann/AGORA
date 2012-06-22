@@ -10,6 +10,8 @@
 
 
 		<![CDATA[
+			import Controller.UpdateController;
+			
 			import classes.Language;
 			
 			import mx.controls.Alert;
@@ -27,6 +29,7 @@
 				if(visibility.visible){
 					mapOwner.visible = true;
 					mapTitle.visible = true;
+					titleOfMap.visible = true;
 					clickableMapOwnerInformation.visible = true;
 					mapOwner.setActualSize(mapOwner.getExplicitOrMeasuredWidth(), mapOwner.getExplicitOrMeasuredHeight());
 					mapOwner.move(2, xB);
@@ -34,12 +37,16 @@
 						(clickableMapOwnerInformation.getExplicitOrMeasuredWidth(), clickableMapOwnerInformation.getExplicitOrMeasuredHeight());
 					clickableMapOwnerInformation.move(mapOwner.getExplicitOrMeasuredWidth()+3, xB - 4);
 					xB = xB + clickableMapOwnerInformation.getExplicitOrMeasuredHeight() + 3;
+					titleOfMap.setActualSize(titleOfMap.getExplicitOrMeasuredWidth(), titleOfMap.getExplicitOrMeasuredHeight());
+					titleOfMap.move(2,xB);
+					xB = xB + titleOfMap.getExplicitOrMeasuredHeight() + 1;
 					mapTitle.setActualSize(mapTitle.getExplicitOrMeasuredWidth(), mapTitle.getExplicitOrMeasuredHeight());
 					mapTitle.move(2, xB);
 					xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 10;
 				} else {
 					mapOwner.visible = false;
 					mapTitle.visible = false;
+					titleOfMap.visible = false;
 					clickableMapOwnerInformation.visible = false;
 				}
 				youAreHereLabel.setActualSize(youAreHereLabel.getExplicitOrMeasuredWidth(), youAreHereLabel.getExplicitOrMeasuredHeight());
@@ -52,6 +59,28 @@
 				chat.move(2, xB);
 				
 			}
+			
+			protected function mapTitle_focusInHandler(event:FocusEvent):void
+			{
+				this.addEventListener(KeyboardEvent.KEY_DOWN, onEnter);
+				
+			}
+			
+			protected function mapTitle_focusOutHandler(event:FocusEvent):void
+			{
+				this.removeEventListener(KeyboardEvent.KEY_DOWN, onEnter);
+				
+			}
+			
+			protected function onEnter(event:KeyboardEvent):void{
+				if(event.keyCode == Keyboard.ENTER){
+					mapTitle.text = mapTitle.text.replace("\n","");
+					mapTitle.text = mapTitle.text.replace("\r","");
+					Alert.show("Change map name?");
+					UpdateController.getInstance().updateMapInfo(mapTitle.text);
+				}
+			}
+			
 		]]>
 		
 	</fx:Script>
@@ -61,9 +90,10 @@
 	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
 	<s:Button id="clickableMapOwnerInformation" visible="false"/>
-	<s:TextArea id="mapTitle" visible="false" heightInLines="4"/>
+	<s:TextArea id="mapTitle" visible="false" heightInLines="4" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
 	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" click="{this.visible = false}" visible="{visibility.visible}"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>
+	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
 	<components:CategoryChain id="categoryChain"/>
 	
 	

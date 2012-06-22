@@ -30,6 +30,12 @@
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 
+	<TitleClickToChange>
+		<EN-US text="Map Title (Click, edit, hit enter to change): " />
+		<RUS text="Map Title (Click, edit, hit enter to change): " /><!--TODO Translate -->
+		<GER text="Map Title (Click, edit, hit enter to change): " />
+	</TitleClickToChange>
+
 	<OwnerOfMap>
 		<EN-US text="Owner of map: " />
 		<RUS text="Owner of map: " /><!--TODO Translate -->
