@@ -61,6 +61,7 @@
 			
 			private var categoryChain:ArrayList;
 			
+			
 			[Bindable] private var boundedMap:Map = FlexGlobals.topLevelApplication.map;
 			
 			/**
@@ -110,7 +111,8 @@
 				} else textVersion.text = Language.lookup('CategoryTopLevel');;
 				removeElementAt(numCats);
 				numCats--;
-				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
+				this.invalidateDisplayList();
+				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();	
 			}
 			
 			/**
@@ -157,26 +159,33 @@
 				this.addElement(button);
 				numCats++;
 				this.invalidateDisplayList();
+				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();	
 			}
 			
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 				var moveX:int = 0;
 				var moveY:int = 0;
+				trace("----------Start----------");
+				trace("This panel's width: " + this.getExplicitOrMeasuredWidth());
 				for(var i:int = 0; i < this.numElements; i++){
 					var currChild:Button = (Button) (this.getElementAt(i));
+					trace("Moving button: " + currChild.label);
+					trace(currChild.label +"'s width is: " + currChild.getExplicitOrMeasuredWidth());
+					trace("moveX is currently: " + moveX);
 					if(moveX + currChild.getExplicitOrMeasuredWidth() >= this.getExplicitOrMeasuredWidth()){
-						Alert.show(moveX.toString() + " " + this.width.toString());
-						moveX = currChild.getExplicitOrMeasuredWidth();
+						moveX = 0;
+						trace("Before editing y value: " + moveY);
 						moveY += currChild.getExplicitOrMeasuredHeight();
+						trace("Moving the y value to: " + moveY);
+						currChild.move(moveX, moveY);
+						moveX += currChild.getExplicitOrMeasuredWidth();
 					} else {
-						
+						currChild.move(moveX, moveY);
 						moveX += currChild.getExplicitOrMeasuredWidth();
 					}
-					currChild.move(moveX-currChild.getExplicitOrMeasuredWidth(), moveY);
-
 				}
-					
+				trace("----------Stop----------");	
 			}
 			
 
