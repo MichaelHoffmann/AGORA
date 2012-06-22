@@ -54,7 +54,7 @@
 				xB = xB + youAreHereLabel.getExplicitOrMeasuredHeight() + 5;
 				categoryChain.setActualSize(categoryChain.getExplicitOrMeasuredWidth(), categoryChain.getExplicitOrMeasuredHeight());
 				categoryChain.move(2, xB);
-				xB = xB + categoryChain.getExplicitOrMeasuredHeight() + 30;
+				xB = xB + categoryChain.getExplicitOrMeasuredHeight() + 60;
 				chat.setActualSize(chat.getExplicitOrMeasuredWidth(), chat.getExplicitOrMeasuredHeight());
 				chat.move(2, xB);
 				

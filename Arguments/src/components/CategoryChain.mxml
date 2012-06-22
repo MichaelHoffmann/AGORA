@@ -5,7 +5,7 @@
 -
 -	Has two functions: removeCategory and addCategory. See the documentation of those two functions for more info
 -->
-<s:TileGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  width="150"
@@ -155,7 +155,6 @@
 					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current), false);
 					
 				},false,1,false);
-				button.width = 60;
 				this.addElement(button);
 				numCats++;
 				this.invalidateDisplayList();
@@ -166,18 +165,13 @@
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 				var moveX:int = 0;
 				var moveY:int = 0;
-				trace("----------Start----------");
-				trace("This panel's width: " + this.getExplicitOrMeasuredWidth());
 				for(var i:int = 0; i < this.numElements; i++){
 					var currChild:Button = (Button) (this.getElementAt(i));
-					trace("Moving button: " + currChild.label);
-					trace(currChild.label +"'s width is: " + currChild.getExplicitOrMeasuredWidth());
-					trace("moveX is currently: " + moveX);
-					if(moveX + currChild.getExplicitOrMeasuredWidth() >= this.getExplicitOrMeasuredWidth()){
+					currChild.width=75;
+					trace(this.width + "  " + this.getExplicitOrMeasuredWidth());
+					if(moveX + currChild.getExplicitOrMeasuredWidth() > this.getExplicitOrMeasuredWidth()){
 						moveX = 0;
-						trace("Before editing y value: " + moveY);
 						moveY += currChild.getExplicitOrMeasuredHeight();
-						trace("Moving the y value to: " + moveY);
 						currChild.move(moveX, moveY);
 						moveX += currChild.getExplicitOrMeasuredWidth();
 					} else {
@@ -185,11 +179,10 @@
 						moveX += currChild.getExplicitOrMeasuredWidth();
 					}
 				}
-				trace("----------Stop----------");	
 			}
 			
 
 			
 		]]>
 	</fx:Script>
-</s:TileGroup>
+</s:Group>

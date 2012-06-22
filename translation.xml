@@ -61,10 +61,10 @@
 	</ClickThroughCategory>
 
 	<NewMapToolTip>
-		<EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
-		<RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
-		<GER text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
-	</NewMapToolTip>
+		 <EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
+		 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
+		 <GER text="Jedes Argument wird in einem privaten Projektbereich erstellt welches deinen Namen trägt und zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, klicke auf den entsprechenden Funktionsknopf der am oberen Ende der Argument-Graphik erscheinen wird." />
+	 </NewMapToolTip>
 
 	<PrivacyPolicy>
 		<EN-US text="Privacy Policy" />
