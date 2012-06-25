@@ -8,7 +8,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  width="150"
+		  width="278"
 		  preinitialize="preInit();">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -106,7 +106,7 @@
 			 */
 			public function removeCategory(oldCat:String):void{
 				if(numCats > 1){
-					textVersion.text = textVersion.text.substr(0, textVersion.text.length	- oldCat.length - delimeter.length);
+					textVersion.text = textVersion.text.substr(0, textVersion.text.length - oldCat.length - delimeter.length);
 					if(oldCat.length > 20) textVersion.text.substr(0, textVersion.text.length - 1); //Remove the new line
 				} else textVersion.text = Language.lookup('CategoryTopLevel');;
 				removeElementAt(numCats);
@@ -142,6 +142,7 @@
 					textVersion.text = textVersion.text + delimeter + newCat;
 				}
 				var button:Button = new Button;
+				button.setStyle("skinClass",TextWrapSkin);
 				button.label = newCat;
 				button.addEventListener('click',function(e:Event):void{
 					if(boundedMap.visible){
@@ -167,7 +168,6 @@
 				var moveY:int = 0;
 				for(var i:int = 0; i < this.numElements; i++){
 					var currChild:Button = (Button) (this.getElementAt(i));
-					currChild.width=75;
 					trace(this.width + "  " + this.getExplicitOrMeasuredWidth());
 					if(moveX + currChild.getExplicitOrMeasuredWidth() > this.getExplicitOrMeasuredWidth()){
 						moveX = 0;
