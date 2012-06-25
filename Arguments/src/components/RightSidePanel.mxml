@@ -10,12 +10,17 @@
 
 
 		<![CDATA[
+			import Controller.AGORAController;
 			import Controller.UpdateController;
+			import Controller.UserSessionController;
+			
+			import Model.AGORAModel;
 			
 			import classes.Language;
 			
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
+			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			[Bindable] private var visibility:Map = FlexGlobals.topLevelApplication.map;
 			
@@ -73,13 +78,20 @@
 			}
 			
 			protected function onEnter(event:KeyboardEvent):void{
-				if(event.keyCode == Keyboard.ENTER){
+				if(event.keyCode == Keyboard.ENTER && AGORAModel.getInstance().userSessionModel._uid != -1){ //AGORAModel.getInstance().agoraMapModel.o){
 					mapTitle.text = mapTitle.text.replace("\n","");
 					mapTitle.text = mapTitle.text.replace("\r","");
-					Alert.show("Change map name?");
-					UpdateController.getInstance().updateMapInfo(mapTitle.text);
+					Alert.cancelLabel = Language.lookup("Back");
+					Alert.show(Language.lookup("ChangeMapName"), "", Alert.OK|Alert.CANCEL, null, 
+						function(event:CloseEvent):void{
+							if(event.detail == Alert.OK){
+								UpdateController.getInstance().updateMapInfo(mapTitle.text);	
+							}
+							
+						});				
 				}
 			}
+			
 			
 		]]>
 		
@@ -89,7 +101,7 @@
 	</fx:Declarations>		
 	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
-	<s:Button id="clickableMapOwnerInformation" visible="false"/>
+	<s:Button id="clickableMapOwnerInformation" visible="false" toolTip="{Language.lookup('MapOwnerURLWarning')}"/>
 	<s:TextArea id="mapTitle" visible="false" heightInLines="4" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
 	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" click="{this.visible = false}" visible="{visibility.visible}"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>

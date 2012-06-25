@@ -29,35 +29,70 @@
 
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
+	
+	<MapOwnerURLWarning>
+		<EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
+		<RUS text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
+		<GER text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
+	</MapOwnerURLWarning>
+	
+	<ChangeMapName>
+		<EN-US text="Change Map Name?" />
+		<RUS text="Change Map Name?" />
+		<GER text="Change Map Name?" />
+	</ChangeMapName>
+	
+	<AddEqForm>
+		<EN-US text="an equivalent reformulation of this statement" />
+		<RUS text="an equivalent reformulation of this statement" /> <!--TODO: Translate -->
+		<GER text="eine äquivalente Formulierung fÃ¼r diese Aussage" />
+	</AddEqForm>
+	<EnterResourceName>
+		<EN-US text="Enter name for this resource" />
+		<RUS text="Enter name for this resource" /> <!--TODO: Translate -->
+		<GER text="Gib einen Namen fÃ¼r diese Resource ein" />
+	</EnterResourceName>
 
+	<PrivacyPolicy>
+		<EN-US text="Privacy Policy" />
+		<RUS text="Privacy Policy" /><!--TODO Translate -->
+		<GER text="Datenschutz Vereinbarung" />
+	</PrivacyPolicy>
+	
+	<YouAreHere>
+		<EN-US text="You are here:" />
+		<RUS text="You are here:" /><!--TODO Translate -->
+		<GER text="Du bist hier:" />
+	</YouAreHere>
+	
 	<TitleClickToChange>
-		<EN-US text="Map Title (Click, edit, hit enter to change): " />
-		<RUS text="Map Title (Click, edit, hit enter to change): " /><!--TODO Translate -->
-		<GER text="Map Title (Click, edit, hit enter to change): " />
+		<EN-US text="Map Title (Click, edit, hit 'Enter' to change): " />
+		<RUS text="Map Title (Click, edit, hit 'Enter' to change): " /><!--TODO Translate -->
+		<GER text="Names deines Argumentes (Klicke, verändere und drück 'Eingabe' zum Speichern): " />
 	</TitleClickToChange>
 
 	<OwnerOfMap>
 		<EN-US text="Owner of map: " />
 		<RUS text="Owner of map: " /><!--TODO Translate -->
-		<GER text="Owner of map: " />
+		<GER text="Eigentümer des Argumentes: " />
 	</OwnerOfMap>
 	
 	<SuccessfullyPublished>
 		<EN-US text="Your map was successfully published. It is now publically available inside the category you chose" />
 		<RUS text="Your map was successfully published. It is now publically available inside the category you chose" /><!--TODO Translate -->
-		<GER text="Your map was successfully published. It is now publically available inside the category you chose" />
+		<GER text="Dein Argument wurde erfolgreich publiziert. Es ist nun öffentlich verfügbar in der Kategorie, die du ausgewählt hast." />
 	</SuccessfullyPublished>
 
 	<UnsuccessfullyPublished>
 		<EN-US text="An error occurred while trying to publish your map. Please close the window and try again." />
 		<RUS text="An error occurred while trying to publish your map. Please close the window and try again." /><!--TODO Translate -->
-		<GER text="An error occurred while trying to publish your map. Please close the window and try again." />
+		<GER text="Während des Versuches, dein Argument zu publizieren, ist ein Fehler aufgetreten. Bitte schließe das Fenster und probier's noch einmal." />
 	</UnsuccessfullyPublished>
 
 	<ClickThroughCategory>
 		<EN-US text="Click through the categories below to determine where you want to publish your map" />
 		<RUS text="Click through the categories below to determine where you want to publish your map" /><!--TODO Translate -->
-		<GER text="Click through the categories below to determine where you want to publish your map" />
+		<GER text="Klicke dich durch die Kategorien unten um den Ort zu bestimmen, wo du dein Argument veröffentlichen willst." />
 	</ClickThroughCategory>
 
 	<NewMapToolTip>
@@ -65,18 +100,6 @@
 		 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
 		 <GER text="Jedes Argument wird in einem privaten Projektbereich erstellt welches deinen Namen trägt und zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, klicke auf den entsprechenden Funktionsknopf der am oberen Ende der Argument-Graphik erscheinen wird." />
 	 </NewMapToolTip>
-
-	<PrivacyPolicy>
-		<EN-US text="Privacy Policy" />
-		<RUS text="Privacy Policy" /><!--TODO Translate -->
-		<GER text="Privacy Policy" />
-	</PrivacyPolicy>
-	
-	<YouAreHere>
-		<EN-US text="You are here:" />
-		<RUS text="You are here:" /><!--TODO Translate -->
-		<GER text="You are here:" />
-	</YouAreHere>
 
 	<AboutUsTT>
 		<EN-US text="Visit the homepage of the AGORA Project" />
@@ -238,11 +261,11 @@
 		<GER text="Es gab ein Problem beim Verschieben des Arguments zum ausgewählten Projekt" />
 	</MapToProjError>
 
-	<IncorrectProjPass>
-		<EN-US text="Incorrect Password" />
-		<RUS text="Incorrect Password" /><!--TODO Translate -->
-		<GER text="Falsches Passwort" />
-	</IncorrectProjPass>
+	<NotProjMember>
+		<EN-US text="This project is accessible for members only. Project administrator: " />
+		<RUS text="This project is accessible for members only. Project administrator: " /><!--TODO Translate -->
+		<GER text="This project is accessible for members only. Project administrator: " />
+	</NotProjMember>
 
 
 	<!--Categories-->
@@ -505,12 +528,13 @@
 
 	<!--BUTTONS, LABELS, AND SINGLE WORDS -->
 
+
+
 	<NewHere>
 		<EN-US text="New to AGORA-net? Visit a world of debates and discussion." />
 		<RUS text="New to AGORA-net? Visit a world of debates and discussion." /><!--TODO 
 			Translate -->
-		<GER
-			text="Neu im AGORA-net? Besuche eine Welt voller Debatten und Diskussionen!" />
+		<GER text="Neu im AGORA-net? Besuche eine Welt voller Debatten und Diskussionen!" />
 	</NewHere>
 
 	<EnterGuest>

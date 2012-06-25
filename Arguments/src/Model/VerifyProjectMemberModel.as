@@ -53,7 +53,8 @@ package Model
 			var result:XML = event.result as XML;
 			if(result.@verified != 1){
 				verified = false;
-				Alert.show(Language.lookup('IncorrectProjPass'));
+				Alert.show(Language.lookup('NotProjMember') + 
+					result.@project_admin_firstname + " " + result.@project_admin_lastname + '\n' + "URL: " + result.@admin_url);
 				return;
 			}
 			
@@ -69,7 +70,7 @@ package Model
 		}
 		
 		protected function onFault(event:FaultEvent):void{
-			Alert.show(Language.lookup('IncorrectProjPass'));
+			Alert.show(Language.lookup('NotProjMember'));
 		}
 	}
 }
