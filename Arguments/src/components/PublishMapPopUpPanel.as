@@ -2,6 +2,7 @@ package components
 {
 	import Controller.AGORAController;
 	import Controller.ArgumentController;
+	import Controller.UserSessionController;
 	
 	import Events.AGORAEvent;
 	
@@ -12,6 +13,7 @@ package components
 	
 	import ValueObjects.CategoryDataV0;
 	
+	import classes.AgoraMap;
 	import classes.Language;
 	
 	import components.AGORAMenu;
@@ -60,10 +62,13 @@ package components
 		private var currCatID:int;
 		private var howToUseThisFeatureLabel:Label;
 		public var informationLabel:Label;
+		public var mapID:int;
 		
-		public function PublishMapPopUpPanel()
+		public function PublishMapPopUpPanel(mapID:int=-1)
 		{
 			super();
+			if(mapID != -1) this.mapID = mapID;
+			else this.mapID = AGORAModel.getInstance().agoraMapModel.ID;
 			howToUseThisFeatureLabel = new Label;
 			informationLabel = new Label;
 			/*Instantiations in order of depth in UI field*/
@@ -164,11 +169,13 @@ package components
 		
 		protected function removePupUp(event:MouseEvent):void{
 			informationLabel.text = "";
-			PopUpManager.removePopUp(this);					
+			PopUpManager.removePopUp(this);
 		}
 		
 		protected function submitPublish(event:MouseEvent):void{
-			AGORAController.getInstance().publishMap(AGORAModel.getInstance().agoraMapModel.ID,currCatID);
+			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
+			AGORAController.getInstance().publishMap(mapID,currCatID);
+			mapID = -1;
 		}
 		
 		override protected function measure():void{

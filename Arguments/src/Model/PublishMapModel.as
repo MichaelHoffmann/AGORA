@@ -57,11 +57,12 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH));
 		}
 		protected function onMapPublished(event:ResultEvent):void{
-			if(event.result.publish.hasOwnProperty("error")){
+			if(event.result.hasOwnProperty("error")){
 				FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("UnsuccessfullyPublished");
 			} else {
 				FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("SuccessfullyPublished");
 			}
+			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_PUBLISHED));
 		}
 		protected function onFault(event:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));

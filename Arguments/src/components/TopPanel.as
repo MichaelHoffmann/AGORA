@@ -30,7 +30,6 @@ package components
 		public var saveAsBtn:Button;
 		public var print:Button;
 		public var _unhideRSP:Button;
-		public var _publishMapButton:Button;
 		
 		
 		private var agoraConstants:AGORAParameters;
@@ -64,12 +63,6 @@ package components
 				addChild(saveAsBtn);
 			}
 			
-			if(!_publishMapButton){
-				_publishMapButton = new Button;
-				_publishMapButton.label = Language.lookup("PublishMap");
-				_publishMapButton.addEventListener(MouseEvent.CLICK, onPublishMap); 
-				addChild(_publishMapButton);
-			}
 			
 			if(!print){
 				print = new Button;
@@ -110,9 +103,6 @@ package components
 			print.setActualSize(print.getExplicitOrMeasuredWidth(), 30);
 			print.move(xB, 5);
 			xB = xB + print.getExplicitOrMeasuredWidth() + 15;
-			_publishMapButton.setActualSize(_publishMapButton.getExplicitOrMeasuredWidth(), 30);
-			_publishMapButton.move(xB,5);
-			xB = xB + _publishMapButton.getExplicitOrMeasuredWidth() + 15;
 			_unhideRSP.setActualSize(_unhideRSP.getExplicitOrMeasuredWidth(),30);
 			_unhideRSP.move(this.width - _unhideRSP.width, 5);
 			
@@ -121,15 +111,6 @@ package components
 		//------------------------Event Handlers----------------------//
 		protected function discardChanges(event:MouseEvent):void{
 			AGORAController.getInstance().hideMap();
-		}
-		
-		protected function onPublishMap(event:MouseEvent):void{
-			if(!FlexGlobals.topLevelApplication.publishMap)
-				FlexGlobals.topLevelApplication.publishMap = new PublishMapPopUpPanel;
-			AGORAModel.getInstance().publishMapModel.sendForTopLevel();
-			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.publishMap, DisplayObject(this),true);
-			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.publishMap);
-			
 		}
 		
 		protected function onPrint(event:MouseEvent):void{

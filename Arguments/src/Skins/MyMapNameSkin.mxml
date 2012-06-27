@@ -32,7 +32,7 @@
 		</s:layout>
 		<s:CheckBox id="thisMap">
 		</s:CheckBox>
-		<s:Button id="thisMapButton" width="130">
+		<s:Button id="thisMapButton" percentWidth="100">
 		</s:Button>
 	</s:Group>		
 	

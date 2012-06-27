@@ -30,6 +30,12 @@
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 	
+	<IsIn>
+		<EN-US text="is in category" />
+		<RUS text="is in category" />
+		<GER text="is in category" />
+	</IsIn>
+	
 	<MapOwnerURLWarning>
 		<EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
 		<RUS text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
@@ -96,8 +102,8 @@
 	</ClickThroughCategory>
 
 	<NewMapToolTip>
-		 <EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
-		 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, click on the corresponding button that will appear on top of your map." />
+		 <EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
+		 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
 		 <GER text="Jedes Argument wird in einem privaten Projektbereich erstellt welches deinen Namen trägt und zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, klicke auf den entsprechenden Funktionsknopf der am oberen Ende der Argument-Graphik erscheinen wird." />
 	 </NewMapToolTip>
 

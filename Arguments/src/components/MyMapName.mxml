@@ -4,6 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 skinClass="Skins.MyMapNameSkin"
 		 creationComplete="panel_creationCompleteHandler(event)"
+		 percentWidth="100"
 		 >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->

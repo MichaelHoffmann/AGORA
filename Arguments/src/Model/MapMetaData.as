@@ -8,6 +8,7 @@ package Model
 		public var firstname:String;
 		public var lastname:String;
 		public var url:String;
+		public var category:String;
 		
 		public function MapMetaData()
 		{

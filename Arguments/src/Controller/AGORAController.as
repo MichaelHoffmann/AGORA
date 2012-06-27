@@ -77,6 +77,7 @@ package Controller
 			model.chatModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.verifyProjModel.addEventListener(AGORAEvent.PROJECT_USER_VERIFIED, onProjectUserVerified);
 			model.publishMapModel.addEventListener(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH, onCategoryFetchedForPublish);
+			model.publishMapModel.addEventListener(AGORAEvent.MAP_PUBLISHED, onMapPublished);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -170,6 +171,10 @@ package Controller
 			FlexGlobals.topLevelApplication.publishMap.invalidateDisplayList();
 		}
 		
+		protected function onMapPublished(event:AGORAEvent):void{
+			fetchDataMyMaps();
+		}
+		
 		
 		//------------------Fetch Chat--------------------------------//
 		public function fetchDataChat():void{
@@ -221,11 +226,11 @@ package Controller
 
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				var statusNE:String = Language.lookup("NetworkError");;
-				if(menu.myMaps.loadingDisplay.text == statusNE){
-
-					menu.myMaps.loadingDisplay.text = Language.lookup("Loading");
-				}
-				FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = true;
+//				if(menu.myMaps.loadingDisplay.text == statusNE){
+//
+//					menu.myMaps.loadingDisplay.text = Language.lookup("Loading");
+//				}
+				//FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = true;
 				
 
 				AGORAModel.getInstance().myMapsModel.requestMapList();
@@ -234,9 +239,10 @@ package Controller
 		
 
 		protected function onMyMapsListFetched(event:AGORAEvent):void{
-			FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = false;
+//			FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = false;
 			FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapListXML = event.xmlData;
-			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
+			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateProperties();
+			FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.invalidateProperties();
 			FlexGlobals.topLevelApplication.invalidateDisplayList();
 		}
@@ -323,7 +329,7 @@ package Controller
 			menu.mapList.loadingDisplay.text = Language.lookup("NetworkError");
 			menu.myProjects.loadingDisplay.text = Language.lookup("NetworkError");
 			if(userSession.uid){
-				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
+//				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
 			}
 		}
 		
