@@ -195,7 +195,7 @@ package Controller
 					var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
 					var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
 					//find the last grid
-					var xgridReason:int = (reason.y + reason.height ) / agoraParameters.gridWidth + 2;
+					var xgridReason:int = (reason.y + reason.height ) / agoraParameters.gridWidth +50;
 					//compare and figure out the max
 					var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
 				}else{
