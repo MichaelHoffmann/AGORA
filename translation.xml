@@ -30,6 +30,13 @@
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 	
+	
+	<ClickToPublishMap>
+		<EN-US text="Click on the category to bring up a window that allows you to click through and pubish your map or relocate your map to another private project of which you are a member" />
+		<RUS text="Click on the category to bring up a window that allows you to click through and pubish your map or relocate your map to another private project of which you are a member" />
+		<GER text="Click on the category to bring up a window that allows you to click through and pubish your map or relocate your map to another private project of which you are a member" />
+	</ClickToPublishMap>
+	
 	<IsIn>
 		<EN-US text="is in category" />
 		<RUS text="is in category" />

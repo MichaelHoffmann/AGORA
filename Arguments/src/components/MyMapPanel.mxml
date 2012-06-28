@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="400" height="300">
+	<fx:Script>
+		<![CDATA[
+			import Model.AGORAModel;
+			import Model.MapMetaData;
+			
+			import classes.Language;
+			
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.graphics.SolidColorStroke;
+			import mx.managers.PopUpManager;
+			
+			import spark.components.Button;
+			import spark.components.HGroup;
+			import spark.components.Label;
+			import spark.primitives.Line;
+			
+			public var mapListXML:XML;
+			override protected function commitProperties():void{
+				super.commitProperties();
+				if(listMyMaps.numElements > 0){
+					listMyMaps.removeAllElements();
+				}	
+				
+				if(mapListXML && mapListXML.map)
+					var maps:XMLList = mapListXML.map;
+				var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+				
+				for each(var map:XML in maps)
+				{
+					try{
+						if(map.@is_deleted == "1")
+						{
+							continue;
+						}
+					}catch(error:Error){
+						trace("is_deleted not available yet...");
+					}
+					
+					var mapMetaData:MapMetaData = new MapMetaData();
+					mapMetaData.mapID = map.@ID;
+					mapMetaData.mapName = map.@title;
+					mapMetaData.category = map.@category;
+					mapMetaDataVector.push(mapMetaData);
+				}
+				mapMetaDataVector.sort(MapMetaData.isGreater);
+				for each( mapMetaData in mapMetaDataVector){
+					var myMapName:MyMapName = new MyMapName;
+					myMapName.mapId = mapMetaData.mapID;
+					myMapName.mapName = mapMetaData.mapName;
+					myMapName.percentWidth = 40;
+					var myCategory:Button = new Button;
+					myCategory.label = mapMetaData.category;
+					myCategory.id = mapMetaData.mapID.toString();
+					myCategory.toolTip = Language.lookup("ClickToPublishMap");
+					myCategory.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void{
+						if(!FlexGlobals.topLevelApplication.publishMap){
+							FlexGlobals.topLevelApplication.publishMap = new PublishMapPopUpPanel();
+						}
+						FlexGlobals.topLevelApplication.publishMap.mapID = parseInt(((Button)(e.target).id));
+
+						AGORAModel.getInstance().publishMapModel.sendForTopLevel();
+						PopUpManager.addPopUp(FlexGlobals.topLevelApplication.publishMap,FlexGlobals.topLevelApplication.agoraMenu,true);
+						PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.publishMap);
+					},false,0);
+					myCategory.percentWidth = 40;
+					var temp:Label = new Label;
+					temp.text = Language.lookup('IsIn');
+					temp.percentWidth = 10;
+					var horizGroup:HGroup = new HGroup;
+					horizGroup.percentWidth = 100;
+					horizGroup.addElement(myMapName);
+					horizGroup.addElement(temp);
+					horizGroup.addElement(myCategory);
+					listMyMaps.addElement(horizGroup);
+					var line:Line = new Line;
+					line.percentWidth = 100;
+					line.stroke=new SolidColorStroke(0);
+					listMyMaps.addElement(line);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Scroller percentHeight="100" percentWidth="100">
+		
+		<s:VGroup percentHeight="100" percentWidth="100" id="listMyMaps">
+		</s:VGroup>
+	</s:Scroller>
+</s:Group>
