@@ -166,7 +166,6 @@ package components
 			vgroup.percentWidth = 100;
 			addReasonBtn.setStyle("skinClass",AddButtonSkin);
 			changeButton = new Button;
-			changeButton.top = 52;
 			changeSchemeBtn = new Button;
 			changeButton.setStyle("skinClass",ToggleButtonSkin);
 

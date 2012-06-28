@@ -60,9 +60,9 @@
 		<!--the logical container that contains everything above the group container-->
 
 		<!-- contains the doneHG and bottomHG-->
-		<s:Group id = "btnG" visible = "false">
+		<s:Group id = "btnG" >
 			<!--Container that holds the done button-->
-			<s:HGroup id = "doneHG">
+			<s:HGroup id = "doneHG" visible = "false">
 				<!--doneButton-->
 				<s:Button id = "doneBtn"/>
 			</s:HGroup>
@@ -173,7 +173,8 @@
 			//model class
 			[Bindable]
 			private var _model:StatementModel;
-			
+			private var  dta:DynamicTextArea;
+
 			private var agoraLabels:AGORAParameters;
 			
 			//Input boxes
@@ -306,6 +307,7 @@
 				if(model == null){
 					_model = value;
 					//bind variables
+
 					if(value.statementFunction == StatementModel.STATEMENT || value.statementFunction == StatementModel.INFERENCE){ 
 						BindingUtils.bindProperty(this, "statementType", this, ["model","statementType"]);
 					}
@@ -327,7 +329,7 @@
 				}else{
 					trace("Error (ArgumentPanel.as, set model): attempted to reassign the model of statement view. Not allowed.");
 				}
-				
+
 			}
 			
 			public function get statementTypeChangedDF():Boolean
@@ -462,6 +464,9 @@
 						ds.addData(dPInitiator.model.xgrid,"gx");
 						ds.addData(dPInitiator.model.ygrid,"gy");
 						DragManager.doDrag(dPInitiator,ds,mouseEvent,null);
+						if(state == EDIT){
+							state = DISPLAY;
+						}
 					}
 					catch(error:Error)
 					{
@@ -648,7 +653,6 @@
 				
 				super.commitProperties();
 				if(!(panelType == StatementModel.INFERENCE)){
-					var dta:DynamicTextArea;
 					var simpleStatement:SimpleStatementModel;
 					statementsAddedDF = true;
 					//check if new statements were added
@@ -670,7 +674,6 @@
 						for each(simpleStatement in model.statements){
 							dta = new DynamicTextArea;
 							dta.width = 200;
-							dta.height = displayTxt.height;
 							//add model
 							dta.model = simpleStatement;
 							//push that into inputs
@@ -694,8 +697,8 @@
 					if(stateDF){
 						stateDF = false;
 						if(state == EDIT){
+							
 							group.removeAllElements();
-							btnG.removeAllElements();
 							
 							if(statementNegated){
 								group.addElement(negatedLbl);
@@ -704,13 +707,15 @@
 								group.addElement(dta);
 								stage.focus = dta;
 							}	
+							
 							doneHG.visible = true;
+						}else{setDisplayStatement(model.statement.text);
+							group.addElement(displayTxt);
 						}
-						else if(state == DISPLAY){
+						if(state == DISPLAY){
 							//remove inputs
 							group.removeAllElements();
 							//remove buttons
-							btnG.removeAllElements();
 							//add label
 							//add the changed text.
 							//needed in case if the 
@@ -718,6 +723,8 @@
 							//to negative
 							setDisplayStatement(model.statement.text);
 							group.addElement(displayTxt);
+							displayTxt.minHeight=10;
+							displayTxt.minWidth=100;
 							//add button
 							btnG.addElement(bottomHG);
 						}
@@ -730,7 +737,6 @@
 					skin.setStyle("borderColor" ,252525);
 					group.removeAllElements();
 					state = DISPLAY;
-					displayTxt.minHeight =10;
 					group.addElement(displayTxt);
 				}
 					//If the statement is an enabler.
@@ -740,9 +746,7 @@
 					//remove inputs
 					group.removeAllElements();
 					//remove buttons
-					btnG.removeAllElements();
 					//add label
-					displayTxt.minHeight =10;
 
 					group.addElement(displayTxt);
 					//add button
