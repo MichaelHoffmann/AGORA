@@ -303,8 +303,8 @@
 			
 			<s:NavigatorContent id="myMapsTab" percentWidth="100" percentHeight="100" label="{Language.lookup(&quot;MyMaps&quot;)}">
 				<s:HGroup id="myMapsHorizGroup" percentWidth="100" percentHeight="100">
-					<components:MyMapPanel id="myMaps" percentWidth="100" percentHeight="100">
-					</components:MyMapPanel>
+					<components:MyMapsPanel id="myMaps" percentWidth="100" percentHeight="100">
+					</components:MyMapsPanel>
 				</s:HGroup>
 			</s:NavigatorContent>
 			

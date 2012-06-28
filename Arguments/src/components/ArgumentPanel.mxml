@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					  xmlns:s="library://ns.adobe.com/flex/spark" 
-					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" width="250" minHeight="100" preinitialize="preInit();" borderColor ="#29ABE2" skinClass="components.ArgumentPanelSkin">
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" width="250" minHeight="100" preinitialize="preInit();" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
 
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -25,7 +25,7 @@
 			<!--Within the topHG. It holds the author information and the type of statement-->
 			<s:HGroup id = "stmtInfoVG" width = "100%" fontSize="12"  >
 				<s:Label id = "stmtTypeLbl" alpha=".50"/>
-				<s:Graphic mouseOver="scaleX" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" >
+				<s:Graphic  click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" >
 					<s:Ellipse height ="12" width = "12" id = "stmtellipse">
 						<s:fill>
 							<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
@@ -47,7 +47,7 @@
 
 				<!--label for displaying 'It is not the case that' for negated statements-->
 				<s:Label id = "negatedLbl"/>
-				<mx:Text id = "displayTxt" />
+				<mx:Text id = "displayTxt" minHeight="50" minWidth="50"/>
 			</s:VGroup>
 	</s:VGroup>
 
@@ -618,7 +618,7 @@
 				
 				
 				//TODO: Translate
-				displayTxt = new Text;
+				displayTxt.minHeight = 50;
 				displayTxt.width = 200;
 				BindingUtils.bindSetter(setDisplayStatement, model, ["statement", "text"]);
 				this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
@@ -730,6 +730,7 @@
 					skin.setStyle("borderColor" ,252525);
 					group.removeAllElements();
 					state = DISPLAY;
+					displayTxt.minHeight =10;
 					group.addElement(displayTxt);
 				}
 					//If the statement is an enabler.
@@ -741,6 +742,8 @@
 					//remove buttons
 					btnG.removeAllElements();
 					//add label
+					displayTxt.minHeight =10;
+
 					group.addElement(displayTxt);
 					//add button
 					btnG.addElement(bottomHG);

@@ -112,7 +112,7 @@ package components
 			helpText.visible = false;
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
-			firstClaimHelpText.visible = false;
+			firstClaimHelpText.visible = true;
 
 		}
 		public function acceptDrop(d:DragEvent):void
@@ -191,7 +191,7 @@ package components
 							{
 								if(model.argumentTypeModel.reasonModels.length == 1){
 									argumentPanel.branchControl = new Option;
-									argumentPanel.branchControl.x = argumentPanel.x + AGORAParameters.getInstance().gridWidth * 9;
+									argumentPanel.branchControl.x = argumentPanel.x + AGORAParameters.getInstance().gridWidth * 10;
 									argumentPanel.branchControl.y = argumentPanel.y;
 									argumentPanel.branchControl.argumentTypeModel = model.argumentTypeModel;
 									addChild(argumentPanel.branchControl);
@@ -252,7 +252,7 @@ package components
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
 				
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
-					var fvlspy:int = argumentPanel.y + 70;
+					var fvlspy:int = argumentPanel.y + 75;
 					if(model.supportingArguments.length > 0){
 						//draw arrow
 						drawUtility.graphics.lineStyle(10, 0x29ABE2, 10);
@@ -261,7 +261,7 @@ package components
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 60);
 						//First Vertical Line Finishing Point
 						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
-						var fvlfpy:int = (lastMenuPanel.y + 70);
+						var fvlfpy:int = (lastMenuPanel.y + 75);
 						//draw a line
 						drawUtility.graphics.moveTo(fvlspx, fvlspy);
 						drawUtility.graphics.lineTo(fvlspx, fvlfpy);
@@ -289,7 +289,7 @@ package components
 							
 							//Line from first vertical line to menu Panel
 							drawUtility.graphics.moveTo(fvlspx, menuPanel.y + 75);
-							drawUtility.graphics.lineTo(menuPanel.x+30, menuPanel.y + 75);
+							drawUtility.graphics.lineTo(menuPanel.x+20, menuPanel.y + 75);
 							
 							//Line from menuPanel to Inference
 							var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
@@ -314,7 +314,7 @@ package components
 							var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
 							fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 30;
 							fvlspy = argumentPanel.y + argumentPanel.getExplicitOrMeasuredHeight();
-							fvlfpy = bottomObjection.y + 70;
+							fvlfpy = bottomObjection.y + 75;
 							//draw a line from the first objection to the last objection
 							//and an arrow
 							drawUtility.graphics.moveTo(fvlspx, fvlfpy);

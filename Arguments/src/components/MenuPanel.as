@@ -46,18 +46,22 @@ package components
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
-	import spark.components.VGroup;
 	import spark.primitives.Ellipse;
 	import flash.display.Sprite;
-	
+	import Skins.AddButtonSkin;
+	import Skins.SchemeButtonSkin;
+	import Skins.MenuPanelSkin;
+	import Skins.ToggleButtonSkin;
+
 	public class MenuPanel extends GridPanel
 	{
 		private var _model:ArgumentTypeModel;
 		private var _agoraConstants:AGORAParameters;
-		public var vgroup:VGroup;
+		public var vgroup:HGroup;
 		public var hgroup:HGroup;
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
+		public var changeButton:Button;
 		
 		
 		
@@ -69,7 +73,6 @@ package components
 			setStyle("skinClass", MenuPanelSkin);
 			setStyle("borderVisible", false);
 			minHeight = 20;
-			width = 150;
 			agoraConstants = AGORAParameters.getInstance();
 			this.title = agoraConstants.THEREFORE;
 		}
@@ -153,21 +156,25 @@ package components
 		override protected function createChildren():void
 		{
 			super.createChildren();
-			vgroup = new VGroup;
+			vgroup = new HGroup;
 			vgroup.gap = 0;
 			addElement(vgroup);
 			hgroup = new HGroup;
 			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
-			addReasonBtn.label = Language.lookup("Add")+"...";
 			hgroup.gap = 0;
 			vgroup.percentWidth = 100;
-			addReasonBtn.percentWidth = 100;
-			
+			addReasonBtn.setStyle("skinClass",AddButtonSkin);
+			changeButton = new Button;
+			changeButton.top = 52;
 			changeSchemeBtn = new Button;
-			changeSchemeBtn.label =  (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme");
+			changeButton.setStyle("skinClass",ToggleButtonSkin);
+
+			changeSchemeBtn.label = "("+( (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme"))+")";
 			changeSchemeBtn.percentWidth = 100;
 			//titleDisplay.setStyle("textAlign","center");
+			changeSchemeBtn.setStyle("skinClass",SchemeButtonSkin);
+			vgroup.addElement(changeButton);
 
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(addReasonBtn);
@@ -175,7 +182,8 @@ package components
 			
 			addReasonBtn.addEventListener(MouseEvent.CLICK, onAddReasonClicked);
 			changeSchemeBtn.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);
-			
+			changeButton.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);
+
 			//set bind setters
 			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");
 			BindingUtils.bindSetter(enableChangeScheme, model, "reasonsCompleted");
