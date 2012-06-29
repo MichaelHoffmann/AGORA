@@ -31,29 +31,49 @@
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 	
 	
+	<HowToDeleteMaps>
+		<EN-US text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />
+		<RUS text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />
+		<GER text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />
+	</HowToDeleteMaps>
+                                     
 	<ClickToPublishMap>
-		<EN-US text="Click on the category to bring up a window that allows you to click through and pubish your map or relocate your map to another private project of which you are a member" />
-		<RUS text="Click on the category to bring up a window that allows you to click through and pubish your map or relocate your map to another private project of which you are a member" />
-		<GER text="Click on the category to bring up a window that allows you to click through and pubish your map or relocate your map to another private project of which you are a member" />
+		<EN-US text="Click on the category to bring up a window that allows you to either publish your map or relocate it to another category. In order to relocate your map into a private project, you need to be a member of this project." />
+		<RUS text="Click on the category to bring up a window that allows you to either publish your map or relocate it to another category. In order to relocate your map into a private project, you need to be a member of this project." />
+		<GER text="Klicke auf diese Kategorie um ein Fenster zu öffnen welches dir erlaubt dein Argument entweder zu publizieren oder in eine andere Kategorie zu verschieben. Um ein Argument in ein privates Projekt zu verschieben musst du Mitglied dieses Projektes sein." />
 	</ClickToPublishMap>
 	
+	<NewMapToolTip>
+		 <EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
+		 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
+		 <GER text="Jedes Argument wird in einem privaten Projektbereich erstellt welches deinen Namen trägt und zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, gehe zu &quot;Meine Argumente&quot; und klicke auf den Funktionsknopf der anzeigt, wo dein Argument derzeit gespeichert ist." />
+	</NewMapToolTip>
+	
 	<IsIn>
-		<EN-US text="is in category" />
-		<RUS text="is in category" />
-		<GER text="is in category" />
+		<EN-US text="is in" />
+		<RUS text="is in" />
+		<GER text="ist in" />
 	</IsIn>
 	
 	<MapOwnerURLWarning>
 		<EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
 		<RUS text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
-		<GER text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
+		<GER text="Wenn Du hier klickst, und wenn der Eigentümer dieses Argumentes eine URL zugänglich gemacht hat, dann öffnet sich die entsprechende Webseite in einem neuen Fenster. Bitte beachte, dass das AGORA-net Projekt keine Verantwortung für den Inhalt von Webseiten übernimmt, die von Nutzern des Systems zur Verfügung gestellt werden." />
 	</MapOwnerURLWarning>
 	
 	<ChangeMapName>
 		<EN-US text="Change Map Name?" />
 		<RUS text="Change Map Name?" />
-		<GER text="Change Map Name?" />
+		<GER text="Willst du den Namen deines Argumentes verändern?" />
 	</ChangeMapName>
+	
+	
+	<WarnDelEnabl>
+		<EN-US text="Click deletes the entire argument. If you want to change the argument scheme, please click on the name of the currently selected argument scheme that is named under &quot;therefore&quot;" />
+		<RUS text="Click deletes the entire argument. If you want to change the argument scheme, please click on the name of the currently selected argument scheme that is named under &quot;therefore&quot;" />
+		<GER text="Klick löscht das ganze Argument. Wenn du nur das Argumentschema wechseln willst, klicke auf das gegenwärtig ausgewählte Argumentschema under &quot;deshalb&quot;" />
+	</WarnDelEnabl>
+
 	
 	<AddEqForm>
 		<EN-US text="an equivalent reformulation of this statement" />
@@ -108,11 +128,7 @@
 		<GER text="Klicke dich durch die Kategorien unten um den Ort zu bestimmen, wo du dein Argument veröffentlichen willst." />
 	</ClickThroughCategory>
 
-	<NewMapToolTip>
-		 <EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
-		 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
-		 <GER text="Jedes Argument wird in einem privaten Projektbereich erstellt welches deinen Namen trägt und zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, klicke auf den entsprechenden Funktionsknopf der am oberen Ende der Argument-Graphik erscheinen wird." />
-	 </NewMapToolTip>
+
 
 	<AboutUsTT>
 		<EN-US text="Visit the homepage of the AGORA Project" />

@@ -150,7 +150,6 @@ package Controller
 		public function signInSignOut():void{
 			if(AGORAModel.getInstance().userSessionModel.loggedIn() && AGORAModel.getInstance().userSessionModel.username != "Guest"){
 				AGORAModel.getInstance().userSessionModel.uid = 0;
-				FlexGlobals.topLevelApplication.agoraMenu.myMaps.invalidateSkinState();
 				FlexGlobals.topLevelApplication.invalidateProperties();
 				FlexGlobals.topLevelApplication.invalidateDisplayList();
 			}

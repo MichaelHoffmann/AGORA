@@ -302,10 +302,23 @@
 			<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
 			
 			<s:NavigatorContent id="myMapsTab" percentWidth="100" percentHeight="100" label="{Language.lookup(&quot;MyMaps&quot;)}">
-				<s:HGroup id="myMapsHorizGroup" percentWidth="100" percentHeight="100">
-					<components:MyMapsPanel id="myMaps" percentWidth="100" percentHeight="100">
-					</components:MyMapsPanel>
-				</s:HGroup>
+				<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0">
+					<s:HGroup id="myMapsHorizGroup" percentWidth="100" percentHeight="100">
+						<components:MyMapPanel id="myMaps" percentWidth="100" percentHeight="100">
+						</components:MyMapPanel>
+					</s:HGroup>
+					
+					<s:HGroup percentWidth='100' percentHeight='10' bottom="5" horizontalAlign="left">
+						<s:Button label="{Language.lookup('Delete')}" id="deleteButton" click="this.myMaps.deleteMaps(event)"
+								  toolTip="{Language.lookup('HowToDeleteMaps')}"/>
+						<s:Spacer width="20%"/>
+						<s:Button id="createMapBtnMyMaps" horizontalCenter="-5" bottom="10"
+								  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
+								  toolTip="{Language.lookup('NewMapToolTip')}">
+						</s:Button >
+	
+					</s:HGroup>
+				</s:VGroup>
 			</s:NavigatorContent>
 			
 			<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->

@@ -5,8 +5,13 @@
 		 width="400" height="300">
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			
 			import Model.AGORAModel;
 			import Model.MapMetaData;
+			
+			import Skins.LeftAlignTextButtonSkin;
 			
 			import classes.Language;
 			
@@ -21,6 +26,7 @@
 			import spark.primitives.Line;
 			
 			public var mapListXML:XML;
+			public var mapMetaDataVector:Vector.<MapMetaData>;
 			override protected function commitProperties():void{
 				super.commitProperties();
 				if(listMyMaps.numElements > 0){
@@ -29,7 +35,7 @@
 				
 				if(mapListXML && mapListXML.map)
 					var maps:XMLList = mapListXML.map;
-				var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+				mapMetaDataVector = new Vector.<MapMetaData>(0,false);
 				
 				for each(var map:XML in maps)
 				{
@@ -46,18 +52,29 @@
 					mapMetaData.mapID = map.@ID;
 					mapMetaData.mapName = map.@title;
 					mapMetaData.category = map.@category;
+					mapMetaData.mapCreator = map.@creator;
+					mapMetaData.firstname = map.@firstname;
+					mapMetaData.lastname = map.@lastname;
+					mapMetaData.url = map.@url;
 					mapMetaDataVector.push(mapMetaData);
 				}
 				mapMetaDataVector.sort(MapMetaData.isGreater);
+				var i:int = 0;
 				for each( mapMetaData in mapMetaDataVector){
-					var myMapName:MyMapName = new MyMapName;
-					myMapName.mapId = mapMetaData.mapID;
-					myMapName.mapName = mapMetaData.mapName;
-					myMapName.percentWidth = 40;
+
+					/*Creates the button for the map to be added to the panel*/
+					var myMap:MyMapName = new MyMapName;
+					myMap.mapId = mapMetaData.mapID;
+					myMap.mapName = mapMetaData.mapName;
+					myMap.buttonID = i++.toString();
+					myMap.percentHeight=100;
+
 					var myCategory:Button = new Button;
 					myCategory.label = mapMetaData.category;
 					myCategory.id = mapMetaData.mapID.toString();
 					myCategory.toolTip = Language.lookup("ClickToPublishMap");
+					myCategory.setStyle("skinClass",LeftAlignTextButtonSkin);
+					myCategory.setStyle("chromeColor", 0xA0CADB);
 					myCategory.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void{
 						if(!FlexGlobals.topLevelApplication.publishMap){
 							FlexGlobals.topLevelApplication.publishMap = new PublishMapPopUpPanel();
@@ -68,21 +85,30 @@
 						PopUpManager.addPopUp(FlexGlobals.topLevelApplication.publishMap,FlexGlobals.topLevelApplication.agoraMenu,true);
 						PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.publishMap);
 					},false,0);
-					myCategory.percentWidth = 40;
+					
 					var temp:Label = new Label;
-					temp.text = Language.lookup('IsIn');
+					temp.text = '\n' + Language.lookup('IsIn');
 					temp.percentWidth = 10;
-					var horizGroup:HGroup = new HGroup;
-					horizGroup.percentWidth = 100;
-					horizGroup.addElement(myMapName);
-					horizGroup.addElement(temp);
-					horizGroup.addElement(myCategory);
-					listMyMaps.addElement(horizGroup);
-					var line:Line = new Line;
-					line.percentWidth = 100;
-					line.stroke=new SolidColorStroke(0);
-					listMyMaps.addElement(line);
+					temp.horizontalCenter = 0;
+					temp.verticalCenter = 0;
+					var horizMapGroup:HGroup = new HGroup;
+					var horizAddDeleteMapsGroup:HGroup = new HGroup;
+					myCategory.percentWidth = 40;
+					myCategory.percentHeight = 100;	
+					horizMapGroup.percentWidth = 100;
+					
+					horizMapGroup.addElement(myMap);
+					horizMapGroup.addElement(temp);
+					horizMapGroup.addElement(myCategory);
+	
+
+						
+					listMyMaps.addElement(horizMapGroup);
 				}
+			}
+			
+			public function deleteMaps(event:MouseEvent):void{
+				AGORAController.getInstance().deleteSelectedMaps();
 			}
 			
 		]]>
@@ -92,8 +118,8 @@
 	</fx:Declarations>
 	
 	<s:Scroller percentHeight="100" percentWidth="100">
-		
 		<s:VGroup percentHeight="100" percentWidth="100" id="listMyMaps">
 		</s:VGroup>
 	</s:Scroller>
+	
 </s:Group>

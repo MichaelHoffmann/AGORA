@@ -20,6 +20,13 @@
 			import Controller.AGORAController;
 			import Controller.ArgumentController;
 			
+			import Model.MapMetaData;
+			
+			import Skins.LeftAlignTextButtonSkin;
+			
+			import classes.Language;
+			
+			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.managers.FocusManager;
@@ -35,6 +42,7 @@
 			
 			public var mapId:int;
 			public var mapName:String;
+			public var buttonID:String;
 			
 			override protected function getCurrentSkinState():String{
 				/*
@@ -58,16 +66,29 @@
 				{
 					thisMapButton.label = mapName;
 					thisMapButton.name = mapId.toString();
+					thisMapButton.setStyle("skinClass",LeftAlignTextButtonSkin);
 					thisMapButton.addEventListener(MouseEvent.CLICK, onLoadMapClicked);
+					thisMapButton.id = buttonID;
 				}
 			}
 			
 			protected function onLoadMapClicked(event:MouseEvent):void{
+				var thisMapInfo:MapMetaData = FlexGlobals.topLevelApplication.agoraMenu.myMaps.mapMetaDataVector[parseInt((Button) (event.target).id)];
+				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+				rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
+				rsp.clickableMapOwnerInformation.toolTip = 
+					thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+					navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+				},false, 0, false);
+				rsp.mapTitle.text = event.target.label;
+				rsp.invalidateDisplayList();
 				ArgumentController.getInstance().loadMap(event.target.name);
 			}
 
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
+				
 			}
 
 		]]>

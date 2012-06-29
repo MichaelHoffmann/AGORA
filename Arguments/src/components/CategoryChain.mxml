@@ -87,10 +87,10 @@
 				button.addEventListener('click',function(e:Event):void{
 					if(boundedMap.visible){
 						AGORAController.getInstance().hideMap();
-						FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
+						
 					}
-					while(numCats>0) thisParent.removeCategory((Button) (thisParent.getElementAt(numCats-1)).label);
-					(CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1));
+					FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
+					while(numCats>0) thisParent.removeCategory((Button) (thisParent.getElementAt(numCats)).label);
 					thisParent.controller.categoryChain = thisParent.categoryChain;
 					AGORAController.getInstance().fetchDataCategory();
 				},false,1,false);
@@ -147,8 +147,9 @@
 				button.addEventListener('click',function(e:Event):void{
 					if(boundedMap.visible){
 						AGORAController.getInstance().hideMap();
-						FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
+						
 					}
+					FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
 					while(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current) != ((Button) (e.target).label)){
 						thisParent.removeCategory((CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1)).current);	
 					}

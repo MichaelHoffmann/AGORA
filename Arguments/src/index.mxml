@@ -143,8 +143,6 @@
 			protected function application1_resizeHandler(event:ResizeEvent):void
 			{
 				if(stage){
-					//The width of the map has to account for the RSP
-					//map.agora.x = rightSidePanel.x-map.agora.width - 5; //THIS LINE OF CODE CAUSES THE MAP TO SHOOT OFF THE SCREEN DURING A SCREEN RESIZE. The math is just idiotic. Trying to get the map to fit the width of the screen accounting for the blue bar or not...
 					//Sets the width of the login window
 					agoraMain.percentHeight = 100;
 					agoraMain.percentWidth = 80;
@@ -160,6 +158,19 @@
 					}
 			
 				}				
+			}
+			
+			override protected function commitProperties():void{
+				super.commitProperties();
+				if(stage){
+					if(rightSidePanel.visible){
+						map.percentWidth = undefined;
+						map.width = stage.stageWidth - rightSidePanel.width;
+					} else {
+						map.width = undefined;
+						map.percentWidth = 100;
+					}
+				}
 			}
 			
 

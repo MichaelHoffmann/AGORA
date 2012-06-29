@@ -25,7 +25,7 @@ package Controller
 	import components.Map;
 	import components.MapName;
 	import components.MyMapName;
-	import components.MyMapsPanel;
+	import components.MyMapPanel;
 	import components.ProjectName;
 	
 	import flash.display.DisplayObject;
@@ -42,6 +42,7 @@ package Controller
 	import mx.states.State;
 	
 	import spark.components.Group;
+	import spark.components.HGroup;
 	
 	public class AGORAController
 	{
@@ -269,14 +270,15 @@ package Controller
 		
 		//-------------------------Delete Maps-----------------------------//
 		public function deleteSelectedMaps():void{
-			var myMapListPanel: MyMapsPanel = FlexGlobals.topLevelApplication.agoraMenu.myMaps;
-			var mapsGroup:Group = myMapListPanel.mapsGroup;
+			var myMapListPanel:MyMapPanel = FlexGlobals.topLevelApplication.agoraMenu.myMaps;
+			var mapsGroup:Group = myMapListPanel.listMyMaps;
 			
 			//get the map id's to be deleted and form XML
 			var xml:XML = <remove></remove>;
 			for(var i:int=0; i < mapsGroup.numElements; i++)
 			{
-				var myMapName:MyMapName = MyMapName(mapsGroup.getElementAt(i));
+				var horizMapGroup:HGroup = (HGroup)(mapsGroup.getElementAt(i));
+				var myMapName:MyMapName = MyMapName(horizMapGroup.getElementAt(0));
 				if(myMapName.thisMap.selected == true){
 					xml.appendChild(<map id={myMapName.mapId} />);	
 				}
@@ -355,6 +357,7 @@ package Controller
 			FlexGlobals.topLevelApplication.agoraMenu.visible = true;
 			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
 			map.agoraMap.helpText.visible = false;
+			mapModel.ID = 0;
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
 			AGORAController.getInstance().mapModel.name = "null";

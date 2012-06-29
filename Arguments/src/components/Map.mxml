@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin">	
 			<s:Group>
-				<mx:Canvas x="200">
+				<mx:Canvas x="0">
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" >	
 					</components:AgoraMap>	
 				</mx:Canvas>

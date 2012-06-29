@@ -11,6 +11,8 @@ package components
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
@@ -30,6 +32,12 @@ package components
 		public var saveAsBtn:Button;
 		public var print:Button;
 		public var _unhideRSP:Button;
+		
+		public var _whatYouShouldKnowBeforeYouStartBtn:Button;
+		public var _aboutUsBtn:Button;
+		public var _faqBtn:Button;
+		public var _contactUsBtn:Button;
+		public var _helpBtn:Button;
 		
 		
 		private var agoraConstants:AGORAParameters;
@@ -71,11 +79,70 @@ package components
 				addChild(print);
 			}
 			
+			
+			
+			if(!_whatYouShouldKnowBeforeYouStartBtn){
+				_whatYouShouldKnowBeforeYouStartBtn = new Button;
+				_whatYouShouldKnowBeforeYouStartBtn.label = Language.lookup("BeforeYouStart");
+				_whatYouShouldKnowBeforeYouStartBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+				{
+					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=255'), 'quote');
+				}
+				);
+				addChild(_whatYouShouldKnowBeforeYouStartBtn);
+			}
+			
 			if(!_unhideRSP){
 				_unhideRSP = new Button;
 				_unhideRSP.label = Language.lookup("UnhidePanel");
+				_unhideRSP.visible = false;
 				_unhideRSP.addEventListener(MouseEvent.CLICK, unhideButton_ClickHandler);
 				addChild(_unhideRSP);
+			}
+			if(!_aboutUsBtn){
+				_aboutUsBtn = new Button;
+				_aboutUsBtn.id="aboutUsBtn";
+				_aboutUsBtn.label=Language.lookup('AboutUs');
+				_aboutUsBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+					{
+					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote');
+					}
+				);
+				
+				addChild(_aboutUsBtn);
+			}
+			if(!_faqBtn){
+				_faqBtn = new Button;
+				_faqBtn.id="faqBtn"
+				_faqBtn.label=Language.lookup('FAQ');
+				_faqBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+				{
+					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote');
+				}
+				);
+				addChild(_faqBtn);
+			}
+			if(!_contactUsBtn){
+				_contactUsBtn = new Button;
+				_contactUsBtn.id="contactUsBtn";
+				_contactUsBtn.label=Language.lookup('ContactUS');
+				_contactUsBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+				{
+					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote');
+				}
+				);
+				addChild(_contactUsBtn);
+			}
+			if(!_helpBtn){
+				_helpBtn = new Button;
+				_helpBtn.id="helpBtn";
+				_helpBtn.label=Language.lookup('Help');
+				_helpBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+				{
+					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote');
+				}
+				);
+				addChild(_helpBtn);
 			}
 		} 
 		
@@ -103,6 +170,22 @@ package components
 			print.setActualSize(print.getExplicitOrMeasuredWidth(), 30);
 			print.move(xB, 5);
 			xB = xB + print.getExplicitOrMeasuredWidth() + 15;
+			_whatYouShouldKnowBeforeYouStartBtn.setActualSize(_whatYouShouldKnowBeforeYouStartBtn.getExplicitOrMeasuredWidth(), 30);
+			_whatYouShouldKnowBeforeYouStartBtn.move(xB, 5);
+			xB = xB + _whatYouShouldKnowBeforeYouStartBtn.getExplicitOrMeasuredWidth() + 15;
+			_faqBtn.setActualSize(_faqBtn.getExplicitOrMeasuredWidth(), 30);
+			_faqBtn.move(xB, 5);
+			xB = xB + _faqBtn.getExplicitOrMeasuredWidth() + 15;
+			xB = xB + _aboutUsBtn.getExplicitOrMeasuredWidth() + 15;
+			_faqBtn.setActualSize(_faqBtn.getExplicitOrMeasuredWidth(), 30);
+			_faqBtn.move(xB, 5);
+			xB = xB + _faqBtn.getExplicitOrMeasuredWidth() + 15;
+			_contactUsBtn.setActualSize(_contactUsBtn.getExplicitOrMeasuredWidth(), 30);
+			_contactUsBtn.move(xB, 5);
+			xB = xB + _contactUsBtn.getExplicitOrMeasuredWidth() + 15;
+			_helpBtn.setActualSize(_helpBtn.getExplicitOrMeasuredWidth(), 30);
+			_helpBtn.move(xB, 5);
+			xB = xB + _helpBtn.getExplicitOrMeasuredWidth() + 15;
 			_unhideRSP.setActualSize(_unhideRSP.getExplicitOrMeasuredWidth(),30);
 			_unhideRSP.move(this.width - _unhideRSP.width, 5);
 			
@@ -110,6 +193,7 @@ package components
 		
 		//------------------------Event Handlers----------------------//
 		protected function discardChanges(event:MouseEvent):void{
+			FlexGlobals.topLevelApplication.rightSidePanel.visible = true;
 			AGORAController.getInstance().hideMap();
 		}
 		
@@ -125,6 +209,9 @@ package components
 		
 		protected function unhideButton_ClickHandler(event:MouseEvent):void{
 			FlexGlobals.topLevelApplication.rightSidePanel.visible = true;
+			_unhideRSP.visible = false;
+			FlexGlobals.topLevelApplication.invalidateProperties();
+			FlexGlobals.topLevelApplication.invalidateDisplayList();
 		}
 	}
 }
