@@ -160,25 +160,28 @@ package components
 			vgroup = new HGroup;
 			vgroup.gap = 0;
 			addElement(vgroup);
-			hgroup = new HGroup;
-			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
-			hgroup.gap = 0;
-			vgroup.percentWidth = 100;
+			vgroup.verticalAlign="middle";
 			addReasonBtn.setStyle("skinClass",AddButtonSkin);
+			addReasonBtn.toolTip=Language.lookup('AnotherReasonHelp2');
 			changeButton = new Button;
 			changeSchemeBtn = new Button;
+			changeSchemeBtn.toolTip=changeButton.toolTip=Language.lookup("ArgSchemeChange");
+
+		 	this.addElement(addReasonBtn);
 			changeButton.setStyle("skinClass",ToggleButtonSkin);
 			var endParen:Label=new Label();
 			endParen.text=")";
+			addReasonBtn.top = -20;
+			addReasonBtn.right = -10;
 			changeSchemeBtn.label = "("+( (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme"));
 			//titleDisplay.setStyle("textAlign","center");
 			changeSchemeBtn.setStyle("skinClass",SchemeButtonSkin);
-	
+			changeButton.verticalCenter=0;
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(changeButton);
 			vgroup.addElement(endParen);
-			vgroup.addElement(addReasonBtn);
+			
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			
 			addReasonBtn.addEventListener(MouseEvent.CLICK, onAddReasonClicked);

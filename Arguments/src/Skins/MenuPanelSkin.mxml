@@ -197,7 +197,7 @@ in accordance with the terms of the license agreement accompanying it.
                 <!--- @copy spark.components.Panel#titleDisplay -->
 				<s:Group id ="moveButton">
 					<s:Graphic buttonMode="true" id = "moveDrag" mouseDown="{hostComponent.beginDrag(event)}">
-						<s:Image source="@Embed('images/agoraMoveLR.png')" left= "-20"  top = "20"  width = "150" />
+						<s:Image source="@Embed('images/agoraMoveLR.png')"  left="20" top = "20"  width = "75" />
 
 					</s:Graphic>
 					<s:Label id="titleDisplay" left="50" right="3" top="60" bottom="0" minHeight="30" width = "100%"

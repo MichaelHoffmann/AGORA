@@ -20,11 +20,11 @@
       @playerversion AIR 1.5
       @productversion Flex 4
 -->
-<s:SparkButtonSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
-             xmlns:s="library://ns.adobe.com/flex/spark" 
-             xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
-             width="13" height="13" 
-             alpha.disabled="0.5">
+<s:SparkButtonSkin xmlns:fx="http://ns.adobe.com/mxml/2009"
+				   xmlns:s="library://ns.adobe.com/flex/spark"
+				   xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+				   width="15" height="15" maxWidth="15" maxHeight="15"
+				   >
      
     <fx:Metadata>
         <![CDATA[ 
@@ -52,7 +52,7 @@
              */
             override protected function initializationComplete():void
             {
-                useChromeColor = true;
+                useChromeColor = false;
                 super.initializationComplete();
             }  
             
@@ -92,68 +92,69 @@
         <s:State name="down" />
         <s:State name="disabled" />
     </s:states>
-	<s:HGroup>
-		<s:Group>
-			<s:Ellipse height ="{this.height}" width = "{this.width}" id = "stmtellipse">
-				<s:fill>
-					<s:SolidColor color="#29ABE2" alpha = "1"/>
-				</s:fill>
-			</s:Ellipse>	
-			<s:Image  left = "3" top = "0" horizontalAlign="center"   scaleX=".1" source="@Embed('/images/agoraMasterImages_Triangle.png')" scaleY="-.1" />
-			<s:Image  left = "3" top = "7"  horizontalAlign="center"    scaleX=".1" source="@Embed('/images/agoraMasterImages_Triangle.png')" scaleY=".1" />
-		</s:Group>
-
-	</s:HGroup>
+	<s:Group width="15" height="15">	
 	
+		
+
 
     <!-- layer 1: shadow -->
     <!--- @private -->
-    <s:Rect id="shadow">
+    <s:Rect id="shadow" visible = "false">
 
     </s:Rect>
     
     <!-- layer 2: fill -->
     <!--- @private -->
-    <s:Rect id="fill" >
+    <s:Rect id="fill" visible = "false" >
 
     </s:Rect>
 
     <!-- layer 3: fill lowlight -->
     <!--- @private -->
-    <s:Rect id="lowlight">
+    <s:Rect id="lowlight" visible = "false">
 
     </s:Rect>
     
     <!-- layer 4: fill highlight -->
     <!--- @private -->
-    <s:Rect id="highlight" >
+    <s:Rect id="highlight"  visible = "false">
 
     </s:Rect>
     
     <!-- layer 5: highlight stroke (all states except down) -->
     <!--- @private -->
-    <s:Rect id="highlightStroke" >
+    <s:Rect id="highlightStroke" visible = "false" >
 
     </s:Rect>
     
     <!-- layer 6: highlight stroke (down state only) -->
     <!--- @private -->
-    <s:Rect id="hldownstroke1">
+    <s:Rect id="hldownstroke1" visible = "false">
 
     </s:Rect>
     <!--- @private -->
-    <s:Rect id="hldownstroke2" >
+    <s:Rect id="hldownstroke2"  visible = "false">
 
     </s:Rect>
 
     <!-- layer 7: border - put on top of the fill so it doesn't disappear when scale is less than 1 -->
     <!--- @private -->
-    <s:Rect id="border" left="0" >
+    <s:Rect id="border" left="0"  visible = "false">
     </s:Rect>
 
     <!-- layer 8: text -->
     <!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay  -->
-	<s:Label id="labelDisplay"  >
+	<s:Label id="labelDisplay" height = "0"  >
 	</s:Label>
+		<s:Ellipse  height = "15" width = "15" id = "stmtellipse"  >
+			<s:fill>
+				<s:SolidColor color="#29ABE2" alpha = "1"/>
+			</s:fill>
+		</s:Ellipse>	
+		
+		<s:Image horizontalCenter = "0" top ="2"   scaleX=".1" scaleY="-.1"  source="@Embed('/images/agoraMasterImages_Triangle.png')" />
+		<s:Image horizontalCenter = "0" bottom = "2"       scaleX=".1" scaleY=".1" source="@Embed('/images/agoraMasterImages_Triangle.png')"  />
+		
+	</s:Group>
 
 </s:SparkButtonSkin>

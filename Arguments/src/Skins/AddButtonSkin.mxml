@@ -24,7 +24,7 @@
 				   xmlns:s="library://ns.adobe.com/flex/spark"
 				   xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
 				   minWidth="25" minHeight="25"
-				   alpha.disabled="0.5"
+				   alpha.disabled="1"
 				   width="25" height="25" fontWeight.up="bold">
      
     <fx:Metadata>
@@ -53,7 +53,7 @@
              */
             override protected function initializationComplete():void
             {
-                useChromeColor = true;
+                useChromeColor = false;
                 super.initializationComplete();
             }  
             

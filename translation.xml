@@ -1138,11 +1138,11 @@
 			text="In der Kommunikation mit dem Server ist ein Fehler aufgetreten. Bitte versuch's noch einmal." />
 	</CommunicationError>
 
-	<CompleteArgOneReason>
+	<Construct>
 		<EN-US text="complete your argument with just one reason" />
 		<RUS text="завершите свой аргумент еще одной причиной" />
 		<GER text="Vervollständige dein Argument mit allein einem Grund" />
-	</CompleteArgOneReason>
+	</Construct>
 
 	<CompleteEnablerFirst>
 		<EN-US
@@ -1167,11 +1167,11 @@
 		<GER text="Verküpfe deinen Grund durch &quot;und&quot; | &quot;oder&quot;" />
 	</ConnectViaAndOr>
 
-	<Construct>
+	<Construct-old>
 		<EN-US text="complete your argument " />
 		<RUS text="завершите свой аргумент " />
 		<GER text="Vervollständige dein Argument " />
-	</Construct>
+	</Construct-old>
 
 	<CopyToClip>
 		<EN-US text="or copy into the clipboard " />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					  xmlns:s="library://ns.adobe.com/flex/spark" 
-					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" width="250" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" width="250" minHeight="100" preinitialize="preInit();" cornerRadius="25" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
 
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -70,7 +70,7 @@
 			<!--contains the add and the delete button-->
 	<s:Group id = "bottomSlideout" visible = "false"  right = "50" bottom ="0">	
 		<s:Graphic>
-			<s:Rect bottom = "-50" height="30" width="150" radiusX="10" radiusY="10" left = "-10">
+			<s:Rect bottom = "-50" height="30" width="150" radiusX="15" radiusY="15" left = "-10">
 				<s:stroke>
 					<s:SolidColorStroke color="{this.getStyle('borderColor')}" weight="0" />
 				</s:stroke>
@@ -100,26 +100,6 @@
 
 	<fx:Script>
 		<![CDATA[
-			/**
-			 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			 reflection, critique, deliberation, and creativity in individual argument construction 
-			 and in collaborative or adversarial settings. 
-			 Copyright (C) 2011 Georgia Institute of Technology
-			 
-			 This program is free software: you can redistribute it and/or modify
-			 it under the terms of the GNU Affero General Public License as
-			 published by the Free Software Foundation, either version 3 of the
-			 License, or (at your option) any later version.
-			 
-			 This program is distributed in the hope that it will be useful,
-			 but WITHOUT ANY WARRANTY; without even the implied warranty of
-			 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-			 GNU Affero General Public License for more details.
-			 
-			 You should have received a copy of the GNU Affero General Public License
-			 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-			 
-			 */
 			import Controller.ArgumentController;
 			import Controller.UpdateController;
 			import Controller.ViewController;
@@ -131,6 +111,7 @@
 			import Model.AGORAModel;
 			import Model.SimpleStatementModel;
 			import Model.StatementModel;
+			import Model.UserSessionModel;
 			
 			import ValueObjects.AGORAParameters;
 			
@@ -265,7 +246,6 @@
 			{
 				_author = value;
 			}
-			
 			public function get statementNegated():Boolean
 			{
 				return _statementNegated;
@@ -568,6 +548,7 @@
 				var constructArgData:XML = <root><menuitem label={addReason} type="TopLevel" /><menuitem label={completeArgument} type="TopLevel"/></root>;
 				var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 				menu.labelField = "@label";
+				menu.toolTip=Language.lookup("AnotherReasonHelp");
 				menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
 				var globalPosition:Point = localToGlobal(new Point(0,this.height));
 				menu.show(globalPosition.x,globalPosition.y);	
@@ -632,12 +613,12 @@
 					topHG.removeElement(stmtInfoVG);
 					topHG.removeElement(theLine);
 					this.toolTip = Language.lookup("Enabler");
+					deleteBtn.toolTip=Language.lookup("WarnDelEnabl");
 				}
 				userIdLbl.text = "AU: " + author;
-				var userInfoStr:String = Language.lookup("Username")+ ": " +
-					AGORAModel.getInstance().userSessionModel.firstName + "\n" +
-					"User ID: " + AGORAModel.getInstance().userSessionModel.uid
-				userIdLbl.toolTip = author;
+				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				var userInfoStr:String = "Name:"+theAuthor.firstName+" "+theAuthor.lastName+" URL:"+theAuthor.URL;
+				userIdLbl.toolTip =userInfoStr;
 				
 				
 				negatedLbl.text = Language.lookup("ArgNotCase");
@@ -685,7 +666,7 @@
 					if(statementTypeChangedDF){
 						statementTypeChangedDF = false;
 						if(statementType == StatementModel.UNIVERSAL){
-							skin.setStyle("cornerRadius","60");
+							skin.setStyle("cornerRadius","30");
 						}
 						else{
 							skin.setStyle("cornerRadius","15");
