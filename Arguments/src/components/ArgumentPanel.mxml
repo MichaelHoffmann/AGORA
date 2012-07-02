@@ -9,13 +9,13 @@
 	<!--dragbutton formerly toparea-->
 	<s:Group id="dragBtnGroup" >
 		
-		<s:Ellipse width="30" height="30" left = "-35" top ="-25">
+		<s:Ellipse width="30" height="30" left = "-40" top ="-30">
 			<s:fill>
 				<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
 			</s:fill>
 		</s:Ellipse>
 	<s:Image id="dragButton" mouseDown ="beginDrag(event)"
-			 source="@Embed('images/agoraMove.png')" left= "-35"  top = "-25" height = "30" width = "30" />
+			 source="@Embed('images/agoraMove.png')" left= "-40"  top = "-30" height = "30" width = "30" />
 	</s:Group>
 
 	<s:Group >
@@ -91,7 +91,7 @@
 
 				</s:HGroup>
 				</s:Group>
-		<s:Image right="56.5" bottom="-35" id="showButton"  width="10" height="10"
+		<s:Image right="61.5" bottom="-35" id="showButton"  width="10" height="10"
 				 mouseOver="{showButton.visible = false; bottomSlideout.visible=true; }"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
 

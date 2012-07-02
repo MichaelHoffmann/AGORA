@@ -78,11 +78,11 @@ in accordance with the terms of the license agreement accompanying it.
 				if (getStyle("borderVisible") == true)
 				{
 					border.visible = true;
-					background.left =10;
-					background.top =10;
-					background.right=10;
-					background.bottom = 10;
-					contents.left = contents.top = contents.right = contents.bottom = 15 	;
+					background.left =15;
+					background.top =15;
+					background.right=15;
+					background.bottom = 15;
+					contents.left = contents.top = contents.right = contents.bottom = 20 	;
 				}
 				else
 				{
@@ -183,7 +183,7 @@ in accordance with the terms of the license agreement accompanying it.
 		<s:Rect id="border" left="0" right="0" top="0" bottom="0" topRightRadiusX="15" bottomLeftRadiusX="15" >
 			<s:stroke>
 				<!--- @private -->
-				<s:SolidColorStroke id="borderStroke" weight="10" />
+				<s:SolidColorStroke id="borderStroke" weight="15" />
 			</s:stroke>
 		</s:Rect>
 		<s:Ellipse width = "25" height = "25" bottom="-10" right = "75"  >
