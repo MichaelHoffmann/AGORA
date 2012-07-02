@@ -48,6 +48,7 @@
 					mapTitle.setActualSize(mapTitle.getExplicitOrMeasuredWidth(), mapTitle.getExplicitOrMeasuredHeight());
 					mapTitle.move(2, xB);
 					xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 10;
+					
 				} else {
 					mapOwner.visible = false;
 					mapTitle.visible = false;
@@ -61,7 +62,8 @@
 				categoryChain.move(2, xB);
 				xB = xB + categoryChain.getExplicitOrMeasuredHeight() + 60;
 				chat.setActualSize(chat.getExplicitOrMeasuredWidth(), chat.getExplicitOrMeasuredHeight());
-				chat.move(2, xB);
+				chat.move(2, xB); 
+				xB = xB + chat.getExplicitOrMeasuredHeight();
 				
 			}
 			
@@ -113,6 +115,7 @@
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
 	<components:CategoryChain id="categoryChain"/>
+	<components:SponsorPanel id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
 	
 	
 </s:SkinnableContainer>

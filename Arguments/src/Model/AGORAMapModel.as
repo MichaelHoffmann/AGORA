@@ -263,6 +263,7 @@ package Model
 		public function createMap(mapName:String):void{
 			var xmlForMap:XML = <map id="0" title={mapName}></map>;
 			var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			this._name = mapName;
 			createMapService.send({uid:usModel.uid, pass_hash:usModel.passHash, xml:xmlForMap.toXMLString()});
 		}
 		

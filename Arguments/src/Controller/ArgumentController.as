@@ -11,6 +11,7 @@ package Controller
 	import Model.ArgumentTypeModel;
 	import Model.MapMetaData;
 	import Model.StatementModel;
+	import Model.UserSessionModel;
 	
 	import ValueObjects.AGORAParameters;
 	
@@ -25,10 +26,15 @@ package Controller
 	import components.Map;
 	import components.MenuPanel;
 	import components.Option;
+	import components.RightSidePanel;
 	import components.StatusBar;
 	
 	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	
 	import mx.controls.Alert;
 	import mx.controls.Menu;
@@ -106,6 +112,8 @@ package Controller
 				//hide and show view components
 				menu.visible = false;
 				map.visible = true;
+				
+				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 				map.agora.visible = true;
 				//reinitialize map view
 				map.agoraMap.initializeMapStructures();
@@ -129,6 +137,17 @@ package Controller
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
 			AGORAModel.getInstance().agoraMapModel.ID = mapMetaData.mapID;
 			map.visible = true;
+			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+			var thisMapInfo:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
+			rsp.titleOfMap.text = this.model.agoraMapModel.name;
+			rsp.clickableMapOwnerInformation.label = thisMapInfo.username;
+			rsp.clickableMapOwnerInformation.toolTip = 
+				thisMapInfo.firstName + " " + thisMapInfo.lastName + "\n" + thisMapInfo.URL + '\n' + Language.lookup('MapOwnerURLWarning');
+			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+				navigateToURL(new URLRequest(thisMapInfo.URL), 'quote');
+			},false, 0, false);
+			rsp.mapTitle.text = this.model.agoraMapModel.name;
+			rsp.invalidateDisplayList();
 			startWithClaim();
 
 		}

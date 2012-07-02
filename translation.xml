@@ -29,7 +29,21 @@
 
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
-	
+	<BeforeYouStart>
+		<EN-US text="What you should know before you start" />
+		<RUS text="What you should know before you start" />
+		<GER text="What you should know before you start" />
+	</BeforeYouStart>
+	<FundedByText>
+		<EN-US text="AGORA-Net is funded by " />
+		<RUS text="AGORA-Net is funded by " />
+		<GER text="AGORA-Net is funded by " />
+	</FundedByText>
+	<USDepartmentOfEdu>
+		<EN-US text="United States Department of Education" />
+		<RUS text="United States Department of Education" />
+		<GER text="United States Department of Education" />
+	</USDepartmentOfEdu>
 	
 	<HowToDeleteMaps>
 		<EN-US text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />

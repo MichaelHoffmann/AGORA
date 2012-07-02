@@ -179,12 +179,13 @@ package components
 			for each(var mapMetaData:MapMetaData in mapMetaDataVector){
 				var mapButton:Button = new Button;
 				mapButton.setStyle("chromeColor", 0xF99653);
+				mapButton.percentWidth = 100;
 				mapButton.name = mapMetaData.mapID.toString();
 				mapButton.label = mapMetaData.mapName;
 				mapButton.id = i.toString();
 				mapButton.addEventListener(MouseEvent.CLICK, onMapObjectClicked);
 				trace("map " + mapMetaData.mapName + " officially added as a button");
-				//mapButton.toolTip = mapMetaData.mapCreator;
+				mapButton.toolTip = mapMetaData.mapName;
 				mapPanel.addElement(mapButton);
 				i++;
 			}			

@@ -2,12 +2,39 @@
 <s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" gap ="0">
+	
+	<fx:Script>
+		<![CDATA[
+			protected function fipseProjectButton_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest('http://agora.gatech.edu'), 'quote');
+				
+			}
+			
+			protected function philosophyGatechButton_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest(' http://philosophy.gatech.edu'), 'quote');
+				
+			}
+			
+			protected function gatechButton_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest('http://gatech.edu'), 'quote');
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Image id = "image1" width = "33%" height = "100%"  source="@Embed('images/FIPSElogoblue-jpg.jpg')"/>
-	<s:Image id = "image2" width = "33%" height = "100%" source="@Embed('images/philosophy-logo-with-text.gif')" />
-	<s:Image id = "image3" width = "33%" height = "100%" source="@Embed('images/logo-gatech.gif')"/>
+	<s:Image id = "fipseProjectButton" width = "33%" height="50"  source="@Embed('images/FIPSElogoblue-jpg.jpg')" 
+			 click="fipseProjectButton_clickHandler(event)" verticalAlign="bottom" bottom="0"/>
+	<s:Image id="philosophyGatechButton" width="33%" height="100%" source="@Embed('images/philosophy-logo-with-text.gif')" 
+			 click="philosophyGatechButton_clickHandler(event)" bottom="0" verticalAlign="bottom"/>
+	<s:Image id = "gatechButton" width = "33%" height = "100%" source="@Embed('images/logo-gatech.gif')" 
+			 click="gatechButton_clickHandler(event)" bottom="0" verticalAlign="bottom"/>
 		
 			 
 </s:HGroup>
