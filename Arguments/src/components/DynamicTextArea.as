@@ -16,7 +16,7 @@ package components
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Alert;
-	import mx.controls.TextArea;
+	import spark.components.TextArea;
 	import mx.core.mx_internal;
 	
 	//import org.osmf.layout.AbsoluteLayoutFacet;
@@ -34,8 +34,6 @@ package components
 		{
 			super();
 			modified=false;
-			super.horizontalScrollPolicy = "off";
-			super.verticalScrollPolicy = "off";
 		}
 		
 		public function get model():SimpleStatementModel
@@ -79,12 +77,8 @@ package components
 			super.measure();
 			var lineHeight:uint = 10;
 			this.measuredMinHeight = 100;
-			for(var i:int = 0; i < this.mx_internal::getTextField().numLines; i++)
-			{
-				lineHeight = lineHeight + this.mx_internal::getTextField().getLineMetrics(i).height;
-			}
-			this.measuredHeight = lineHeight;
-			this.verticalScrollPolicy = "off";
+
+
 		}
 		
 		override protected function commitProperties():void

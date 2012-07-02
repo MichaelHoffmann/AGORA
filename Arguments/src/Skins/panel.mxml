@@ -22,8 +22,16 @@ in accordance with the terms of the license agreement accompanying it.
 -->
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
     xmlns:fb="http://ns.adobe.com/flashbuilder/2009" blendMode="normal" mouseEnabled="false" 
-    minWidth="131" minHeight="127"  >
-	<fx:Metadata>[HostComponent("components.MenuPanel")]</fx:Metadata>
+    minWidth="131" minHeight="127" alpha.disabled="0.5" alpha.disabledWithControlBar="0.5">
+    
+    <fx:Metadata>
+        <![CDATA[ 
+        /** 
+         * @copy spark.skins.spark.ApplicationSkin#hostComponent
+         */
+        [HostComponent("spark.components.Panel")]
+        ]]>
+    </fx:Metadata> 
     
     <fx:Script fb:purpose="styling">
         <![CDATA[
@@ -69,13 +77,13 @@ in accordance with the terms of the license agreement accompanying it.
             if (getStyle("borderVisible") == true)
             {
                 border.visible = true;
-
+                background.left = background.top = background.right = background.bottom = 1;
                 contents.left = contents.top = contents.right = contents.bottom = 1;
             }
             else
             {
-                border.visible = false;
-
+                border.visible = true;
+                background.left = background.top = background.right = background.bottom = 0;
                 contents.left = contents.top = contents.right = contents.bottom = 0;
             }
             
@@ -97,15 +105,15 @@ in accordance with the terms of the license agreement accompanying it.
                 
                 setPartCornerRadii(topMaskRect, withControls); 
                 setPartCornerRadii(border, withControls); 
-
+                setPartCornerRadii(background, withControls);                
             }
             
             if (bottomMaskRect) setPartCornerRadii(bottomMaskRect, withControls); 
             
             borderStroke.color = getStyle("borderColor");
             borderStroke.alpha = getStyle("borderAlpha");
-
-
+            backgroundFill.color = getStyle("backgroundColor");
+            backgroundFill.alpha = getStyle("backgroundAlpha");
             
             super.updateDisplayList(unscaledWidth, unscaledHeight);
         }
@@ -115,10 +123,10 @@ in accordance with the terms of the license agreement accompanying it.
          */  
         private function setPartCornerRadii(target:Rect, includeBottom:Boolean):void
         {            
-            target.topLeftRadiusX = cornerRadius;
-            target.topRightRadiusX = cornerRadius;
-            target.bottomLeftRadiusX = includeBottom ? cornerRadius : 0;
-            target.bottomRightRadiusX = includeBottom ? cornerRadius : 0;
+            target.topLeftRadiusX = 0;
+            target.topRightRadiusX = 15;
+            target.bottomLeftRadiusX = 15;
+            target.bottomRightRadiusX = 10;
         }
         
         private var cornerRadius:Number;
@@ -168,45 +176,51 @@ in accordance with the terms of the license agreement accompanying it.
         <s:Rect id="border" left="0" right="0" top="0" bottom="0" >
             <s:stroke>
                 <!--- @private -->
-                <s:SolidColorStroke id="borderStroke" weight="1" />
+                <s:SolidColorStroke id="borderStroke" weight="10" />
             </s:stroke>
         </s:Rect>
         
         <!-- layer 2: background fill -->
         <!--- Defines the appearance of the PanelSkin class's background. -->
+        <s:Rect id="background" left="1" top="1" right="1" bottom="1">
+            <s:fill>
+                <!--- @private
+                      Defines the  PanelSkin class's background fill. The default color is 0xFFFFFF. -->
+                <s:SolidColor id="backgroundFill" color="#FFFFFF"/>
+            </s:fill>
+        </s:Rect>
         
         <!-- layer 3: contents -->
         <!--- Contains the vertical stack of titlebar content and controlbar. -->
-        <s:Group left="1" right="1" top="0" bottom="1" id="contents" alpha="1" >
+        <s:Group left="1" right="1" top="1" bottom="1" id="contents">
             <s:layout>
-                <s:VerticalLayout gap="0" horizontalAlign="center" />
+                <s:VerticalLayout gap="0" horizontalAlign="justify" />
             </s:layout>
             
             <!--- @private -->
-            <s:Group id="topGroup" mask="{topGroupMask}" alpha="1" contentBackgroundAlpha="0">
+            <s:Group id="topGroup" mask="{topGroupMask}">
                 
                 <!-- layer 0: title bar fill -->
                 <!--- @private -->
+                <s:Rect id="tbFill" left="0" right="0" top="0" bottom="1">
+                </s:Rect>
                 
                 <!-- layer 1: title bar highlight -->
                 <!--- @private -->
+                <s:Rect id="tbHilite" left="0" right="0" top="0" bottom="0">
+                </s:Rect>
                 
                 <!-- layer 2: title bar divider -->
+                <!--- @private -->
+                <s:Rect id="tbDiv" left="0" right="0" height="1" bottom="0">
+                </s:Rect>
                 
                 <!-- layer 3: text -->
                 <!--- @copy spark.components.Panel#titleDisplay -->
-				<s:Group id ="moveButton">
-					<s:Graphic buttonMode="true" id = "moveDrag" mouseDown="{hostComponent.beginDrag(event)}">
-						<s:Image source="@Embed('images/agoraMoveLR.png')" left= "-20"  top = "20"  width = "150" />
-
-					</s:Graphic>
-					<s:Label id="titleDisplay" left="50" right="3" top="60" bottom="0" minHeight="30" width = "100%"
-							 fontWeight="bold" maxDisplayedLines="1" textAlign="start"
-							 verticalAlign="middle"
-							 fontSize.normal="16" fontWeight.normal="normal" backgroundAlpha="0" horizontalCenter="0">
-					</s:Label>				
-				</s:Group>
-
+                <s:Label id="titleDisplay" maxDisplayedLines="1"
+                         left="9" right="3" top="1" bottom="0" minHeight="0"
+                         verticalAlign="middle" textAlign="start" fontWeight="bold">
+                </s:Label>
             </s:Group>
             
             <!--
@@ -219,14 +233,27 @@ in accordance with the terms of the license agreement accompanying it.
             </s:Group>
             
             <!--- @private -->
-            <s:Group id="bottomGroup" minWidth="0" minHeight="0"  contentBackgroundAlpha="0"
+            <s:Group id="bottomGroup" minWidth="0" minHeight="0"
                      includeIn="normalWithControlBar, disabledWithControlBar" >
                 
                 <s:Group left="0" right="0" top="0" bottom="0" mask="{bottomGroupMask}">
 
                     <!-- layer 0: control bar divider line -->
+                    <s:Rect left="0" right="0" top="0" height="1" alpha="0.22">
+                        <s:fill>
+                            <s:SolidColor color="0x000000" />
+                        </s:fill>
+                    </s:Rect>
                     
                     <!-- layer 1: control bar highlight -->
+                    <s:Rect left="0" right="0" top="1" bottom="0">
+                        <s:stroke>
+                            <s:LinearGradientStroke rotation="90" weight="1">
+                                <s:GradientEntry color="0xE5E5E5" />
+                                <s:GradientEntry color="0xD8D8D8" />
+                            </s:LinearGradientStroke>
+                        </s:stroke>
+                    </s:Rect>
                     
                     <!-- layer 2: control bar fill -->
                     <s:Rect left="1" right="1" top="2" bottom="1">

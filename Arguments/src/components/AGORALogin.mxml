@@ -105,7 +105,7 @@
 		<s:SkinnableContainer id="mainWelcome" width="564" height="300" backgroundColor="#FFFFFF"  horizontalCenter="124" verticalCenter="0">
 			<s:layout><s:BasicLayout/></s:layout>
 			<mx:Image id="loader1" horizontalCenter="0"
-					  source="@Embed(source='introBackground.png')" verticalCenter="0"/> 
+					  source="@Embed(source='images/introBackground.png')" verticalCenter="0"/> 
 			<!--This is the banner for that goes above the login/register buttons-->
 			<s:Label  id="welcomeLabel" width="206" height="129" fontSize="35" horizontalCenter="-7" 
 					  text="{Language.lookup('WelcomeHere')}" textAlign="center" verticalCenter="-26"/>

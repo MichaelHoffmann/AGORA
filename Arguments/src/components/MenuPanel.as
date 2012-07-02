@@ -26,10 +26,16 @@ package components
 	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	
+	import Skins.AddButtonSkin;
+	import Skins.MenuPanelSkin;
+	import Skins.SchemeButtonSkin;
+	import Skins.ToggleButtonSkin;
+	
 	import ValueObjects.AGORAParameters;
 	
 	import classes.Language;
 	
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
@@ -47,11 +53,6 @@ package components
 	import spark.components.Button;
 	import spark.components.HGroup;
 	import spark.primitives.Ellipse;
-	import flash.display.Sprite;
-	import Skins.AddButtonSkin;
-	import Skins.SchemeButtonSkin;
-	import Skins.MenuPanelSkin;
-	import Skins.ToggleButtonSkin;
 
 	public class MenuPanel extends GridPanel
 	{
@@ -131,7 +132,7 @@ package components
 				if(value == null){
 					changeSchemeBtn.label = Language.lookup("Scheme");
 				}else{
-					changeSchemeBtn.label = value;
+					changeSchemeBtn.label = "("+value;
 				}
 			}
 		}
@@ -168,14 +169,15 @@ package components
 			changeButton = new Button;
 			changeSchemeBtn = new Button;
 			changeButton.setStyle("skinClass",ToggleButtonSkin);
-
-			changeSchemeBtn.label = "("+( (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme"))+")";
-			changeSchemeBtn.percentWidth = 100;
+			var endParen:Label=new Label();
+			endParen.text=")";
+			changeSchemeBtn.label = "("+( (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme"));
 			//titleDisplay.setStyle("textAlign","center");
 			changeSchemeBtn.setStyle("skinClass",SchemeButtonSkin);
-			vgroup.addElement(changeButton);
-
+	
 			vgroup.addElement(changeSchemeBtn);
+			vgroup.addElement(changeButton);
+			vgroup.addElement(endParen);
 			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			

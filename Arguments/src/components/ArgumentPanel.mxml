@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					  xmlns:s="library://ns.adobe.com/flex/spark" 
-					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" width="250" minHeight="100" preinitialize="preInit();" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" width="250" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
 
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -15,7 +15,7 @@
 			</s:fill>
 		</s:Ellipse>
 	<s:Image id="dragButton" mouseDown ="beginDrag(event)"
-			 source="@Embed('components/agoraMove.png')" left= "-35"  top = "-25" height = "30" width = "30" />
+			 source="@Embed('images/agoraMove.png')" left= "-35"  top = "-25" height = "30" width = "30" />
 	</s:Group>
 
 	<s:Group >
@@ -31,8 +31,8 @@
 							<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
 						</s:fill>
 					</s:Ellipse>	
-					<s:Image  left = "3" top = "0" horizontalAlign="center"   scaleX=".1" source="@Embed('components/agoraMasterImages_Triangle.png')" scaleY="-.1" />
-					<s:Image  left = "3" top = "7"  horizontalAlign="center"    scaleX=".1" source="@Embed('components/agoraMasterImages_Triangle.png')" scaleY=".1" />
+					<s:Image  left = "3" top = "0" horizontalAlign="center"   scaleX=".1" source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY="-.1" />
+					<s:Image  left = "3" top = "7"  horizontalAlign="center"    scaleX=".1" source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY=".1" />
 
 				</s:Graphic>
 				<!--Displays the user id-->
@@ -47,7 +47,7 @@
 
 				<!--label for displaying 'It is not the case that' for negated statements-->
 				<s:Label id = "negatedLbl"/>
-				<mx:Text id = "displayTxt" minHeight="50" minWidth="50"/>
+				<s:Label id = "displayTxt" minHeight="50" minWidth="50"/>
 			</s:VGroup>
 	</s:VGroup>
 
@@ -86,14 +86,14 @@
 					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8"/>
 					<s:Image id="hideButton"   width="10" height="10"
 							 click="{showButton.visible = true; bottomSlideout.visible=false; }"
-							 source="@Embed('components/agoraMasterImages_Triangle.png')" scaleY="-1" bottom ="0"/>
+							 source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY="-1" bottom ="0"/>
 					<!-- add button-->
 
 				</s:HGroup>
 				</s:Group>
 		<s:Image right="56.5" bottom="-35" id="showButton"  width="10" height="10"
 				 mouseOver="{showButton.visible = false; bottomSlideout.visible=true; }"
-				 source="@Embed('components/agoraMasterImages_Triangle.png')"/>
+				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
 
 	</s:Group>
 
