@@ -99,6 +99,8 @@
 
 			<s:Button x="49" width="154" height="40" label="{Language.lookup('EnterGuest')}"
 					  click="guestButton_onClick(event)" verticalCenter="9"/>
+			<components:SponsorPanel x="0" y="466" width="250" height="114" bottom="0">
+			</components:SponsorPanel>
 
 		</s:SkinnableContainer>
 		<!--The right side of the page that houses the login and register buttons and the links-->

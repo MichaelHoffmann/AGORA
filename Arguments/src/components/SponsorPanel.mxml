@@ -2,7 +2,7 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" 
-		 gap ="0" horizontalAlign="center" horizontalCenter="0"
+		 gap ="0" horizontalAlign="center" horizontalCenter="0" bottom="0"
 		 creationComplete="vgroup1_creationCompleteHandler(event)">
 	
 	<fx:Script>
@@ -40,9 +40,12 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Label text="{Language.lookup('FundedByText')}" horizontalCenter="0"/>
-	<s:Image id = "fipseProjectButton" width = "33%" height="30"  source="@Embed('images/FIPSElogoblue-jpg.jpg')" 
-			 click="fipseProjectButton_clickHandler(event)" horizontalAlign="center" horizontalCenter="0"/>
+	<s:HGroup gap="0">
+		<s:Label text="{'\n'} {Language.lookup('FundedByText')}" horizontalCenter="0"/>
+		<s:Image id = "fipseProjectButton" width = "30" height="30"  source="@Embed('images/FIPSElogoblue-jpg.jpg')" 
+			 	click="fipseProjectButton_clickHandler(event)" horizontalAlign="center" horizontalCenter="0"></s:Image>
+		<s:Label text="{'\n'}," />
+	</s:HGroup>
 	<s:Label text="{Language.lookup('USDepartmentOfEdu')}" horizontalCenter="0" verticalAlign="bottom"/>	
 			 
 </s:VGroup>

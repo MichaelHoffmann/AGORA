@@ -28,39 +28,36 @@
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 				var xB:int = 0;
-				hidePanelButton.setActualSize(hidePanelButton.getExplicitOrMeasuredWidth(), hidePanelButton.getExplicitOrMeasuredHeight());
 				hidePanelButton.move(2, xB);
 				xB = xB + hidePanelButton.getExplicitOrMeasuredHeight() + 3;
+				youAreHereLabel.setActualSize(youAreHereLabel.getExplicitOrMeasuredWidth(), youAreHereLabel.getExplicitOrMeasuredHeight());
+				youAreHereLabel.move(2, xB);
+				xB = xB + youAreHereLabel.getExplicitOrMeasuredHeight() + 3;
+				categoryChain.setActualSize(categoryChain.getExplicitOrMeasuredWidth(), categoryChain.getExplicitOrMeasuredHeight());
+				categoryChain.move(2, xB);
+				xB = xB + categoryChain.getExplicitOrMeasuredHeight() + 25;
 				if(visibility.visible){
 					mapOwner.visible = true;
 					mapTitle.visible = true;
 					titleOfMap.visible = true;
 					clickableMapOwnerInformation.visible = true;
-					mapOwner.setActualSize(mapOwner.getExplicitOrMeasuredWidth(), mapOwner.getExplicitOrMeasuredHeight());
-					mapOwner.move(2, xB);
-					clickableMapOwnerInformation.setActualSize
-						(clickableMapOwnerInformation.getExplicitOrMeasuredWidth(), clickableMapOwnerInformation.getExplicitOrMeasuredHeight());
-					clickableMapOwnerInformation.move(mapOwner.getExplicitOrMeasuredWidth()+3, xB - 4);
-					xB = xB + clickableMapOwnerInformation.getExplicitOrMeasuredHeight() + 3;
-					titleOfMap.setActualSize(titleOfMap.getExplicitOrMeasuredWidth(), titleOfMap.getExplicitOrMeasuredHeight());
-					titleOfMap.move(2,xB);
-					xB = xB + titleOfMap.getExplicitOrMeasuredHeight() + 1;
-					mapTitle.setActualSize(mapTitle.getExplicitOrMeasuredWidth(), mapTitle.getExplicitOrMeasuredHeight());
-					mapTitle.move(2, xB);
-					xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 10;
-					
+									
 				} else {
 					mapOwner.visible = false;
 					mapTitle.visible = false;
 					titleOfMap.visible = false;
 					clickableMapOwnerInformation.visible = false;
 				}
-				youAreHereLabel.setActualSize(youAreHereLabel.getExplicitOrMeasuredWidth(), youAreHereLabel.getExplicitOrMeasuredHeight());
-				youAreHereLabel.move(2, xB);
-				xB = xB + youAreHereLabel.getExplicitOrMeasuredHeight() + 5;
-				categoryChain.setActualSize(categoryChain.getExplicitOrMeasuredWidth(), categoryChain.getExplicitOrMeasuredHeight());
-				categoryChain.move(2, xB);
-				xB = xB + categoryChain.getExplicitOrMeasuredHeight() + 60;
+				mapOwner.setActualSize(mapOwner.getExplicitOrMeasuredWidth(), mapOwner.getExplicitOrMeasuredHeight());
+				mapOwner.move(2, xB);
+				clickableMapOwnerInformation.move(mapOwner.getExplicitOrMeasuredWidth()+3, xB - 4);
+				xB = xB + clickableMapOwnerInformation.getExplicitOrMeasuredHeight() + 3;
+				titleOfMap.setActualSize(titleOfMap.getExplicitOrMeasuredWidth(), titleOfMap.getExplicitOrMeasuredHeight());
+				titleOfMap.move(2,xB);
+				xB = xB + titleOfMap.getExplicitOrMeasuredHeight() + 1;
+				mapTitle.setActualSize(mapTitle.getExplicitOrMeasuredWidth(), mapTitle.getExplicitOrMeasuredHeight());
+				mapTitle.move(2, xB);
+				xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 25;
 				chat.setActualSize(chat.getExplicitOrMeasuredWidth(), chat.getExplicitOrMeasuredHeight());
 				chat.move(2, xB); 
 				xB = xB + chat.getExplicitOrMeasuredHeight();
@@ -101,17 +98,18 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>		
-	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0"/>
+	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0" height="100"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
 	<s:Button id="clickableMapOwnerInformation" visible="false" toolTip="{Language.lookup('MapOwnerURLWarning')}"/>
-	<s:TextArea id="mapTitle" visible="false" heightInLines="4" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
-	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" 
+	<s:TextArea id="mapTitle" visible="false" heightInLines="4" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"
+				percentWidth="100"/>
+	<s:Button id="hidePanelButton" left="0" top="0" label="{Language.lookup('HidePanel')}" percentWidth="100"
 			  click="{
 			  		this.visible = false; 
 			  		FlexGlobals.topLevelApplication.invalidateProperties(); 
 			  		FlexGlobals.topLevelApplication.invalidateDisplayList();
 			  		FlexGlobals.topLevelApplication.map.topPanel._unhideRSP.visible = true;
-			  }" visible="{visibility.visible}"/>
+			  }" enabled="{visibility.visible}"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}"/>
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
 	<components:CategoryChain id="categoryChain"/>
