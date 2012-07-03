@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" gap ="0">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" 
+		 gap ="0" horizontalAlign="center" horizontalCenter="0"
+		 creationComplete="vgroup1_creationCompleteHandler(event)">
 	
 	<fx:Script>
 		<![CDATA[
 			import classes.Language;
+			
+			import mx.events.FlexEvent;
 			protected function fipseProjectButton_clickHandler(event:MouseEvent):void
 			{
-				navigateToURL(new URLRequest('http://agora.gatech.edu'), 'quote');
+				navigateToURL(new URLRequest('http://fipsedatabase.ed.gov/fipse/'), 'quote');
 				
 			}
 			
@@ -24,6 +28,12 @@
 				
 			}
 			
+			protected function vgroup1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.setStyle("chromeColor", 0x00000);
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -32,7 +42,7 @@
 	</fx:Declarations>
 	<s:Label text="{Language.lookup('FundedByText')}" horizontalCenter="0"/>
 	<s:Image id = "fipseProjectButton" width = "33%" height="30"  source="@Embed('images/FIPSElogoblue-jpg.jpg')" 
-			 click="fipseProjectButton_clickHandler(event)" horizontalAlign="center"/>
+			 click="fipseProjectButton_clickHandler(event)" horizontalAlign="center" horizontalCenter="0"/>
 	<s:Label text="{Language.lookup('USDepartmentOfEdu')}" horizontalCenter="0" verticalAlign="bottom"/>	
 			 
 </s:VGroup>
