@@ -3,7 +3,7 @@
 					  xmlns:s="library://ns.adobe.com/flex/spark"
 					  xmlns:mx="library://ns.adobe.com/flex/mx"
 					  xmlns:components="components.*"
-					  width="250" height="682"
+					  width="255" height="682"
 					  backgroundColor="#29ABE2"
 					  >
 	<fx:Script>
