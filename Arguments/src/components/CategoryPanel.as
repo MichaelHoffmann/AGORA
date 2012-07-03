@@ -200,7 +200,6 @@ package components
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
 			},false, 0, false);
-			rsp.mapTitle.text = event.target.label;
 			rsp.invalidateDisplayList();
 			mapMetaDataVector = null;
 			ArgumentController.getInstance().loadMap(event.target.name);

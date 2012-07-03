@@ -10,6 +10,7 @@
 			import classes.Language;
 			
 			import mx.events.FlexEvent;
+			import mx.managers.CursorManager;
 			protected function fipseProjectButton_clickHandler(event:MouseEvent):void
 			{
 				navigateToURL(new URLRequest('http://fipsedatabase.ed.gov/fipse/'), 'quote');
@@ -34,6 +35,18 @@
 				
 			}
 			
+			protected function fipseProjectButton_mouseOverHandler(event:MouseEvent):void
+			{
+				//Change the cursor on mouseover of image
+				
+			}
+			
+			protected function fipseProjectButton_mouseOutHandler(event:MouseEvent):void
+			{
+				
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -43,7 +56,8 @@
 	<s:HGroup gap="0">
 		<s:Label text="{'\n'} {Language.lookup('FundedByText')}" horizontalCenter="0"/>
 		<s:Image id = "fipseProjectButton" width = "30" height="30"  source="@Embed('images/FIPSElogoblue-jpg.jpg')" 
-			 	click="fipseProjectButton_clickHandler(event)" horizontalAlign="center" horizontalCenter="0"></s:Image>
+			 	click="fipseProjectButton_clickHandler(event)" horizontalAlign="center" horizontalCenter="0" mouseOver="fipseProjectButton_mouseOverHandler(event)"
+				mouseOut="fipseProjectButton_mouseOutHandler(event)"></s:Image>
 		<s:Label text="{'\n'}," />
 	</s:HGroup>
 	<s:Label text="{Language.lookup('USDepartmentOfEdu')}" horizontalCenter="0" verticalAlign="bottom"/>	

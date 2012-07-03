@@ -165,6 +165,7 @@
 				if(stage){
 					if(rightSidePanel.visible){
 						map.percentWidth = undefined;
+						
 						map.width = stage.stageWidth - rightSidePanel.width;
 					} else {
 						map.width = undefined;
