@@ -182,7 +182,7 @@ in accordance with the terms of the license agreement accompanying it.
 		<s:Rect id="border" left="0" right="0" top="0" bottom="0" >
 			<s:stroke>
 				<!--- @private -->
-				<s:SolidColorStroke id="borderStroke" weight="10" />
+				<s:SolidColorStroke id="borderStroke" weight="15" />
 			</s:stroke>
 		</s:Rect>
 		<s:Ellipse width = "25" height = "25" bottom="-10" right = "75"  >
