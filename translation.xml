@@ -33,23 +33,25 @@
 	<BeforeYouStart>
 		<EN-US text="What you should know before you start" />
 		<RUS text="What you should know before you start" />
-		<GER text="What you should know before you start" />
+		<GER text="Was du wissen solltest bevor du beginnst" />
 	</BeforeYouStart>
+
 	<FundedByText>
 		<EN-US text="AGORA-Net is funded by " />
 		<RUS text="AGORA-Net is funded by " />
-		<GER text="AGORA-Net is funded by " />
+		<GER text="AGORA-Net ist gefördert durch " />
 	</FundedByText>
+
 	<USDepartmentOfEdu>
 		<EN-US text="United States Department of Education" />
-		<RUS text="United States Department of Education" />
-		<GER text="United States Department of Education" />
+		<RUS text="United States Department of Education" /><!--DO NOT Translate -->
+		<GER text="United States Department of Education" /><!--DO NOT Translate -->
 	</USDepartmentOfEdu>
 	
 	<HowToDeleteMaps>
 		<EN-US text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />
 		<RUS text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />
-		<GER text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />
+		<GER text="Um Argumente zu löschen, markiere zuerst das Argument oder die Argumente durch Klick auf das oder die Kästchen in der Liste und klicke dann auf 'Löschen'. Du kannst nur Argumente löschen zu denen allein du beigetragen hast." />
 	</HowToDeleteMaps>
                                      
 	<ClickToPublishMap>

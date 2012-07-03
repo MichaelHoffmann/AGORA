@@ -52,7 +52,7 @@ package classes
 			xml = x;
 			ready=true;
 		}
-	
+		
 		/**The key function. Use this to look up a label from the translation document according to the set language.*/
 		
 		public static function lookup(label:String):String{
