@@ -52,7 +52,7 @@
              */
             override protected function initializationComplete():void
             {
-                useChromeColor = true;
+                useChromeColor = false;
                 super.initializationComplete();
             }  
             
@@ -92,24 +92,14 @@
         <s:State name="down" />
         <s:State name="disabled" />
     </s:states>
-	<s:HGroup>
-		<s:Group>
-			<s:Ellipse height ="{this.height}" width = "{this.width}" id = "stmtellipse">
-				<s:fill>
-					<s:SolidColor color="#29ABE2" alpha = "1"/>
-				</s:fill>
-			</s:Ellipse>	
-			<s:Image  left = "3" top = "0" horizontalAlign="center"   scaleX=".1" source="@Embed('/images/agoraMasterImages_Triangle.png')" scaleY="-.1" />
-			<s:Image  left = "3" top = "7"  horizontalAlign="center"    scaleX=".1" source="@Embed('/images/agoraMasterImages_Triangle.png')" scaleY=".1" />
-		</s:Group>
 
-	</s:HGroup>
+	<s:Group width="15" height="15">	
+
 	
 
     <!-- layer 1: shadow -->
     <!--- @private -->
-    <s:Rect id="shadow">
-
+	<s:Rect id="shadow" visible = "false">
     </s:Rect>
     
     <!-- layer 2: fill -->
@@ -153,7 +143,15 @@
 
     <!-- layer 8: text -->
     <!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay  -->
-	<s:Label id="labelDisplay"  >
-	</s:Label>
+		<s:Label id="labelDisplay" height = "0"  >
+			</s:Label>
+		<s:Ellipse  height = "15" width = "15" id = "stmtellipse"  >
+					<s:fill>
+									<s:SolidColor color="#29ABE2" alpha = "1"/>
+									</s:fill>
+					</s:Ellipse>	
+		<s:Image horizontalCenter = "0" top ="2"   scaleX=".1" scaleY="-.1"  source="@Embed('/images/agoraMasterImages_Triangle.png')" />
+		<s:Image horizontalCenter = "0" bottom = "2"       scaleX=".1" scaleY=".1" source="@Embed('/images/agoraMasterImages_Triangle.png')"  />
+	</s:Group>
 
 </s:SparkButtonSkin>

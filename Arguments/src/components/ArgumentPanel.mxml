@@ -9,13 +9,13 @@
 	<!--dragbutton formerly toparea-->
 	<s:Group id="dragBtnGroup" >
 		
-		<s:Ellipse width="30" height="30" left = "-35" top ="-25">
+		<s:Ellipse width="30" height="30" left = "-37" top ="-27">
 			<s:fill>
 				<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
 			</s:fill>
 		</s:Ellipse>
 	<s:Image id="dragButton" mouseDown ="beginDrag(event)"
-			 source="@Embed('images/agoraMove.png')" left= "-35"  top = "-25" height = "30" width = "30" />
+			 source="@Embed('images/agoraMove.png')" left= "-37"  top = "-27" height = "30" width = "30" />
 	</s:Group>
 
 	<s:Group >
@@ -25,16 +25,9 @@
 			<!--Within the topHG. It holds the author information and the type of statement-->
 			<s:HGroup id = "stmtInfoVG" width = "100%" fontSize="12"  >
 				<s:Label id = "stmtTypeLbl" alpha=".50"/>
-				<s:Graphic  click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" >
-					<s:Ellipse height ="12" width = "12" id = "stmtellipse">
-						<s:fill>
-							<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
-						</s:fill>
-					</s:Ellipse>	
-					<s:Image  left = "3" top = "0" horizontalAlign="center"   scaleX=".1" source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY="-.1" />
-					<s:Image  left = "3" top = "7"  horizontalAlign="center"    scaleX=".1" source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY=".1" />
+				<s:Button  click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkin"   >
 
-				</s:Graphic>
+				</s:Button>
 				<!--Displays the user id-->
 				<s:Label id = "userIdLbl"    maxDisplayedLines="1" width="{100}"  right = "0" alpha=".50"/>
 			</s:HGroup>
@@ -91,7 +84,7 @@
 
 				</s:HGroup>
 				</s:Group>
-		<s:Image right="56.5" bottom="-35" id="showButton"  width="10" height="10"
+		<s:Image right="57.5" bottom="-35" id="showButton"  width="10" height="10"
 				 mouseOver="{showButton.visible = false; bottomSlideout.visible=true; }"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
 
@@ -158,7 +151,7 @@
 			import mx.events.MenuEvent;
 			import mx.managers.DragManager;
 			import mx.skins.Border;
-			
+			import Model.UserSessionModel;
 			import spark.components.Button;
 			import spark.components.Group;
 			import spark.components.HGroup;
@@ -568,6 +561,7 @@
 				var constructArgData:XML = <root><menuitem label={addReason} type="TopLevel" /><menuitem label={completeArgument} type="TopLevel"/></root>;
 				var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 				menu.labelField = "@label";
+				menu.toolTip=Language.lookup("AnotherReasonHelp");
 				menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
 				var globalPosition:Point = localToGlobal(new Point(0,this.height));
 				menu.show(globalPosition.x,globalPosition.y);	
@@ -632,12 +626,13 @@
 					topHG.removeElement(stmtInfoVG);
 					topHG.removeElement(theLine);
 					this.toolTip = Language.lookup("Enabler");
+					deleteBtn.toolTip=Language.lookup("WarnDelEnabl");
 				}
 				userIdLbl.text = "AU: " + author;
-				var userInfoStr:String = Language.lookup("Username")+ ": " +
-					AGORAModel.getInstance().userSessionModel.firstName + "\n" +
-					"User ID: " + AGORAModel.getInstance().userSessionModel.uid
-				userIdLbl.toolTip = author;
+				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				var userInfoStr:String = "Name:"+theAuthor.firstName+" "+theAuthor.lastName+" URL:"+theAuthor.URL;
+				userIdLbl.toolTip =userInfoStr;
+
 				
 				
 				negatedLbl.text = Language.lookup("ArgNotCase");
@@ -685,7 +680,7 @@
 					if(statementTypeChangedDF){
 						statementTypeChangedDF = false;
 						if(statementType == StatementModel.UNIVERSAL){
-							skin.setStyle("cornerRadius","60");
+							skin.setStyle("cornerRadius","30");
 						}
 						else{
 							skin.setStyle("cornerRadius","15");

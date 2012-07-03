@@ -165,7 +165,7 @@ in accordance with the terms of the license agreement accompanying it.
         
         <!-- layer 1: border -->
         <!--- @private -->
-        <s:Rect id="border" left="0" right="0" top="0" bottom="0" >
+        <s:Rect id="border" left="0" right="0" top="0" bottom="0" bottomLeftRadiusX="15" topRightRadiusX="15" >
             <s:stroke>
                 <!--- @private -->
                 <s:SolidColorStroke id="borderStroke" weight="1" />
@@ -197,8 +197,7 @@ in accordance with the terms of the license agreement accompanying it.
                 <!--- @copy spark.components.Panel#titleDisplay -->
 				<s:Group id ="moveButton">
 					<s:Graphic buttonMode="true" id = "moveDrag" mouseDown="{hostComponent.beginDrag(event)}">
-						<s:Image source="@Embed('images/agoraMoveLR.png')" left= "-20"  top = "20"  width = "150" />
-
+					<s:Image source="@Embed('images/agoraMoveLR.png')"  left="35" top = "20"  width = "50" />
 					</s:Graphic>
 					<s:Label id="titleDisplay" left="50" right="3" top="60" bottom="0" minHeight="30" width = "100%"
 							 fontWeight="bold" maxDisplayedLines="1" textAlign="start"

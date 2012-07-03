@@ -160,31 +160,34 @@ package components
 			vgroup = new HGroup;
 			vgroup.gap = 0;
 			addElement(vgroup);
-			hgroup = new HGroup;
-			vgroup.addElement(hgroup);
 			addReasonBtn = new Button;
-			hgroup.gap = 0;
 			vgroup.percentWidth = 100;
+			vgroup.verticalAlign = "middle";
 			addReasonBtn.setStyle("skinClass",AddButtonSkin);
+			addReasonBtn.toolTip=Language.lookup('AnotherReasonHelp2');
 			changeButton = new Button;
 			changeSchemeBtn = new Button;
+			changeButton.toolTip=changeButton.toolTip=Language.lookup("ArgSchemeChange");
+			changeSchemeBtn.toolTip=changeButton.toolTip=Language.lookup("ArgSchemeChange");
 			changeButton.setStyle("skinClass",ToggleButtonSkin);
 			var endParen:Label=new Label();
 			endParen.text=")";
 			changeSchemeBtn.label = "("+( (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme"));
 			//titleDisplay.setStyle("textAlign","center");
 			changeSchemeBtn.setStyle("skinClass",SchemeButtonSkin);
-	
+			addReasonBtn.top = -20;
+			addReasonBtn.right = -10;
+			
+			this.addElement(addReasonBtn);
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(changeButton);
 			vgroup.addElement(endParen);
-			vgroup.addElement(addReasonBtn);
 			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			
 			addReasonBtn.addEventListener(MouseEvent.CLICK, onAddReasonClicked);
 			changeSchemeBtn.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);
 			changeButton.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);
-
+			changeButton.verticalCenter=0;
 			//set bind setters
 			BindingUtils.bindSetter(enableAddReason, model, "reasonsCompleted");
 			BindingUtils.bindSetter(enableChangeScheme, model, "reasonsCompleted");

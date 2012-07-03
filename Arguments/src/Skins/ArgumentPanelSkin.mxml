@@ -78,10 +78,10 @@ in accordance with the terms of the license agreement accompanying it.
 				{
 					border.visible = true;
 					background.left =15;
-					background.top =10;
-					background.right=10;
-					background.bottom = 10;
-					contents.left = contents.top = contents.right = contents.bottom = 15 	;
+					background.top =15;
+					background.right=15;
+					background.bottom = 15;
+					contents.left = contents.top = contents.right = contents.bottom = 17 	;
 				}
 				else
 				{
@@ -129,7 +129,7 @@ in accordance with the terms of the license agreement accompanying it.
 				target.topLeftRadiusX = 0;
 				target.topRightRadiusX = cornerRadius;
 				target.bottomLeftRadiusX = cornerRadius;
-				target.bottomRightRadiusX = 10;
+				target.bottomRightRadiusX = 15;
 			}
 			
 			private var cornerRadius:Number;

@@ -53,7 +53,7 @@
              */
             override protected function initializationComplete():void
             {
-                useChromeColor = true;
+                useChromeColor = false;
                 super.initializationComplete();
             }  
             
