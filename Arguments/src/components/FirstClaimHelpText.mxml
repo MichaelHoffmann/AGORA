@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/mx" width="150"
+		   xmlns:mx="library://ns.adobe.com/flex/mx" width="100"
 		   backgroundColor="0xffff00">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Text width="150" height="140" id="helpTxt">
-		<mx:htmlText>
-			<![CDATA[<u>Support:</u><br /> <br />Keep in mind that a claim can be descriptive ("it is the case that …") or normative (e.g., "we should do x")
-			]]>
-			<!-- Todo: how does syntax work for changing this? -->
-		</mx:htmlText>
+	<fx:Script>
+		<![CDATA[
+			import classes.Language
+		]]>
+	</fx:Script>
+	<mx:Text width="100"  id="helpTxt" text="{Language.lookup('WhatIsMainClaim')}">
+		
 	</mx:Text>
 </mx:Canvas>

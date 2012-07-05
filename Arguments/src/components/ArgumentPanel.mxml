@@ -86,26 +86,6 @@
 
 	<fx:Script>
 		<![CDATA[
-			/**
-			 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			 reflection, critique, deliberation, and creativity in individual argument construction 
-			 and in collaborative or adversarial settings. 
-			 Copyright (C) 2011 Georgia Institute of Technology
-			 
-			 This program is free software: you can redistribute it and/or modify
-			 it under the terms of the GNU Affero General Public License as
-			 published by the Free Software Foundation, either version 3 of the
-			 License, or (at your option) any later version.
-			 
-			 This program is distributed in the hope that it will be useful,
-			 but WITHOUT ANY WARRANTY; without even the implied warranty of
-			 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-			 GNU Affero General Public License for more details.
-			 
-			 You should have received a copy of the GNU Affero General Public License
-			 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-			 
-			 */
 			import Controller.ArgumentController;
 			import Controller.UpdateController;
 			import Controller.ViewController;
@@ -118,6 +98,8 @@
 			import Model.SimpleStatementModel;
 			import Model.StatementModel;
 			import Model.UserSessionModel;
+			
+			import Skins.TopBarLessPanel;
 			
 			import ValueObjects.AGORAParameters;
 			
@@ -144,6 +126,7 @@
 			import mx.events.FlexEvent;
 			import mx.events.MenuEvent;
 			import mx.managers.DragManager;
+			import mx.managers.PopUpManager;
 			import mx.skins.Border;
 			
 			import spark.components.Button;
@@ -163,7 +146,8 @@
 			private var  dta:DynamicTextArea;
 			private var doneBtn:Button;
 			private var agoraLabels:AGORAParameters;
-			
+			private var argPopUp:Panel=new Panel;
+
 			//Input boxes
 			public var inputs:Vector.<DynamicTextArea>;
 			public var changeWatchers:Vector.<ChangeWatcher>;
@@ -500,6 +484,26 @@
 			protected function hideOption(event:KeyboardEvent):void
 			{
 			}
+			protected function completeArgumentClicked(event:MouseEvent):void
+			{
+				
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+				} else {
+					Alert.show("Guests cannot edit maps");
+				}
+				PopUpManager.removePopUp(argPopUp);
+			}
+			protected function addReasonClicked(event:MouseEvent):void
+			{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+						ArgumentController.getInstance().addReason(model.argumentTypeModel);
+				} else {
+					Alert.show("Guests cannot edit maps");
+				}
+				PopUpManager.removePopUp(argPopUp);
+
+			}
 			
 			protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
@@ -578,14 +582,29 @@
 			
 			public function showMenu():void
 			{
-				var addReason:String = Language.lookup("AddReason");
-				var completeArgument:String = Language.lookup("Construct");
-				var constructArgData:XML = <root><menuitem label={addReason} tooltip = {Language.lookup("AnotherReasonHelp")} type="TopLevel" /><menuitem label={completeArgument} type="TopLevel"/></root>;
-				var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
-				menu.labelField = "@label";
-				menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
-				var globalPosition:Point = localToGlobal(new Point(0,0));
-				menu.show(globalPosition.x,globalPosition.y);	
+				var vgroup:VGroup=new VGroup;
+				
+				var addReason:Button=new Button;
+				var completeArgument:Button= new Button;
+				addReason.label= Language.lookup("AddReason");
+				completeArgument.label= Language.lookup("Construct");
+				completeArgument.addEventListener(MouseEvent.CLICK,completeArgumentClicked );
+				addReason.addEventListener(MouseEvent.CLICK,addReasonClicked);
+				var orLabel:Label = new Label;
+				orLabel.text = Language.lookup("or");
+				vgroup.horizontalAlign="center";
+				argPopUp.setStyle("skinClass", TopBarLessPanel);
+				addReason.toolTip=Language.lookup("AnotherReasonHelp");
+				argPopUp.titleDisplay=null;
+				vgroup.addElement(addReason);
+				vgroup.addElement(orLabel);
+				vgroup.addElement(completeArgument);
+				addReason.percentWidth=completeArgument.percentWidth=100;
+				argPopUp.addElement(vgroup);
+
+				
+				PopUpManager.addPopUp(argPopUp, this.parent, true);
+				PopUpManager.centerPopUp(argPopUp);
 			}
 			
 			public function toEditState():void{

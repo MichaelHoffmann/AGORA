@@ -158,7 +158,7 @@ package components
 		{
 			super.createChildren();
 			vgroup = new HGroup;
-			vgroup.top=-13;
+			vgroup.top=-10;
 			vgroup.gap = 0;
 			addElement(vgroup);
 			addReasonBtn = new Button;
@@ -172,11 +172,15 @@ package components
 			changeSchemeBtn.toolTip=changeButton.toolTip=Language.lookup("ArgSchemeChange");
 			changeButton.setStyle("skinClass",ToggleButtonSkin);
 			var endParen:Label=new Label();
+			
 			endParen.text=")";
+			changeSchemeBtn.width=140;
 			changeSchemeBtn.label = "("+( (model != null)?(model.logicClass != null? model.logicClass: Language.lookup("Scheme")) : Language.lookup("Scheme"));
 			//titleDisplay.setStyle("textAlign","center");
 			changeSchemeBtn.setStyle("skinClass",SchemeButtonSkin);
-			addReasonBtn.top = -20;
+			addReasonBtn.top = -23;
+			addReasonBtn.scaleX=.8;
+			addReasonBtn.scaleY=.8;
 			addReasonBtn.right = -20;
 			
 			this.addElement(addReasonBtn);

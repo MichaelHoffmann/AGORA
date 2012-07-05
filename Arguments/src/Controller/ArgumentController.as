@@ -293,7 +293,7 @@ package Controller
 			}
 			model.agoraMapModel.argUnderConstruction = true;
 			var helpText:HelpText = map.agoraMap.helpText;
-			helpText.visible = true;
+			helpText.visible = false;
 			helpText.parent.setChildIndex(helpText, map.agoraMap.numChildren -1);
 			//get the first reason
 			var firstReason:ArgumentPanel = AgoraMap(helpText.parent).panelsHash[ argumentTypeModel.reasonModels[0].ID];
@@ -404,9 +404,7 @@ package Controller
 		
 		//--------------------- delete Map -------------------------------//
 		public function deleteNodes(gridPanel:GridPanel):void{
-			if(checkArgUnderConstruction()){
-				return;
-			}
+
 			if(!AGORAModel.getInstance().requested){
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
 				if(model.statementFunction == StatementModel.STATEMENT){
@@ -443,6 +441,9 @@ package Controller
 					map.sBar.displayLoading();
 					model.deleteMe();
 				}
+			}
+			if(checkArgUnderConstruction()){
+				return;
 			}
 		}
 		
@@ -651,6 +652,7 @@ package Controller
 			var inference:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
 			PopUpManager.addPopUp(inference.addArgumentsInfo, inference.parent, true);
 			PopUpManager.centerPopUp(inference.addArgumentsInfo);
+			
 			inference.depth=300;
 			inference.addArgumentsInfo.visible=true;
 			//infobox on top of the claim and the reason
