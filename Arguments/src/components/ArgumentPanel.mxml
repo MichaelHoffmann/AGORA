@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					  xmlns:s="library://ns.adobe.com/flex/spark" 
-					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" width="250" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" cornerRadius="30" width="250" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
 
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -9,13 +9,13 @@
 	<!--dragbutton formerly toparea-->
 	<s:Group id="dragBtnGroup" >
 		
-		<s:Ellipse width="30" height="30" left = "-37" top ="-27">
+		<s:Ellipse width="30" height="30" left = "-35" top ="-26">
 			<s:fill>
 				<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
 			</s:fill>
 		</s:Ellipse>
 	<s:Image id="dragButton" mouseDown ="beginDrag(event)"
-			 source="@Embed('images/agoraMove.png')" left= "-37"  top = "-27" height = "30" width = "30" />
+			 source="@Embed('images/agoraMove.png')" left= "-35"  top = "-26" height = "30" width = "30" />
 	</s:Group>
 
 	<s:Group >
@@ -29,7 +29,7 @@
 
 				</s:Button>
 				<!--Displays the user id-->
-				<s:Label id = "userIdLbl"    maxDisplayedLines="1" width="{100}"  right = "0" alpha=".50"/>
+				<s:Label id = "userIdLbl" click="{navigateToURL(new URLRequest(URL))}"    maxDisplayedLines="1" width="{100}"  right = "0" alpha=".50"/>
 			</s:HGroup>
 			<s:Line width ="95%" height ="0" id = "theLine" >
 				<s:stroke>
@@ -53,13 +53,6 @@
 		<!--the logical container that contains everything above the group container-->
 
 		<!-- contains the doneHG and bottomHG-->
-		<s:Group id = "btnG" >
-			<!--Container that holds the done button-->
-			<s:HGroup id = "doneHG" visible = "false">
-				<!--doneButton-->
-				<s:Button id = "doneBtn"/>
-			</s:HGroup>
-		</s:Group>
 			<!--contains the add and the delete button-->
 	<s:Group id = "bottomSlideout" visible = "false"  right = "50" bottom ="0">	
 		<s:Graphic>
@@ -124,6 +117,7 @@
 			import Model.AGORAModel;
 			import Model.SimpleStatementModel;
 			import Model.StatementModel;
+			import Model.UserSessionModel;
 			
 			import ValueObjects.AGORAParameters;
 			
@@ -151,7 +145,7 @@
 			import mx.events.MenuEvent;
 			import mx.managers.DragManager;
 			import mx.skins.Border;
-			import Model.UserSessionModel;
+			
 			import spark.components.Button;
 			import spark.components.Group;
 			import spark.components.HGroup;
@@ -167,7 +161,7 @@
 			[Bindable]
 			private var _model:StatementModel;
 			private var  dta:DynamicTextArea;
-
+			private var doneBtn:Button;
 			private var agoraLabels:AGORAParameters;
 			
 			//Input boxes
@@ -195,6 +189,9 @@
 			private var _statementType:String;
 			[Bindable]
 			private var _author:String;
+			private var _firstName:String;
+			private var _lastName:String;
+			private var _URL:String;
 			
 			//dirty flags
 			private var _statementNegatedDF:Boolean;		
@@ -253,12 +250,34 @@
 			{
 				return _author;
 			}
-			
+			public function get firstName():String
+			{
+				return _firstName;
+			}
+			public function get lastName():String
+			{
+				return _lastName;
+			}
+			public function get URL():String
+			{
+				return _URL;
+			}		
+			public function set firstName(value:String):void
+			{
+				_firstName = value;
+			}
+			public function set lastName(value:String):void
+			{
+				_lastName = value;
+			}
+			public function set URL(value:String):void
+			{
+				_URL = value;
+			}
 			public function set author(value:String):void
 			{
 				_author = value;
-			}
-			
+			}			
 			public function get statementNegated():Boolean
 			{
 				return _statementNegated;
@@ -315,6 +334,9 @@
 					BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
 					
 					author = model.author;
+					firstName=model.firstName;
+					lastName=model.lastName;
+					URL=model.URL;
 					statementsAddedDF = true;
 					invalidateProperties();
 					invalidateSize();
@@ -558,12 +580,11 @@
 			{
 				var addReason:String = Language.lookup("AddReason");
 				var completeArgument:String = Language.lookup("Construct");
-				var constructArgData:XML = <root><menuitem label={addReason} type="TopLevel" /><menuitem label={completeArgument} type="TopLevel"/></root>;
+				var constructArgData:XML = <root><menuitem label={addReason} tooltip = {Language.lookup("AnotherReasonHelp")} type="TopLevel" /><menuitem label={completeArgument} type="TopLevel"/></root>;
 				var menu:mx.controls.Menu = mx.controls.Menu.createMenu(null,constructArgData,false);
 				menu.labelField = "@label";
-				menu.toolTip=Language.lookup("AnotherReasonHelp");
 				menu.addEventListener(MenuEvent.ITEM_CLICK, argConstructionMenuClicked);
-				var globalPosition:Point = localToGlobal(new Point(0,this.height));
+				var globalPosition:Point = localToGlobal(new Point(0,0));
 				menu.show(globalPosition.x,globalPosition.y);	
 			}
 			
@@ -610,7 +631,7 @@
 				stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
 				
 				bottomHG = new HGroup();
-				doneHG = new HGroup;
+
 				doneBtn = new Button;
 				doneBtn.label = Language.lookup("Done");
 				doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
@@ -630,7 +651,7 @@
 				}
 				userIdLbl.text = "AU: " + author;
 				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				var userInfoStr:String = "Name:"+theAuthor.firstName+" "+theAuthor.lastName+" URL:"+theAuthor.URL;
+				var userInfoStr:String = "Name:"+firstName+" "+lastName+" URL:"+URL;
 				userIdLbl.toolTip =userInfoStr;
 
 				
@@ -659,6 +680,7 @@
 						for each(dta in inputs){
 							try{
 								group.removeElement(dta);
+								group.removeElement(doneBtn);
 							}catch(error:Error){
 								//trace("error: Trying to remove an element that is not present");
 							}
@@ -700,10 +722,10 @@
 							}
 							for each(dta in inputs){
 								group.addElement(dta);
+								group.addElement(doneBtn);
 								stage.focus = dta;
 							}	
 							
-							doneHG.visible = true;
 						}else{setDisplayStatement(model.statement.text);
 							group.addElement(displayTxt);
 						}
@@ -721,7 +743,6 @@
 							displayTxt.minHeight=10;
 							displayTxt.minWidth=100;
 							//add button
-							btnG.addElement(bottomHG);
 						}
 					}
 					if(panelType == StatementModel.OBJECTION){
@@ -745,7 +766,7 @@
 
 					group.addElement(displayTxt);
 					//add button
-					btnG.addElement(bottomHG);
+
 					//set corner radius
 					stmtInfoVG.removeAllElements();					
 				}

@@ -7,6 +7,9 @@ package ValueObjects
 		public var ID:int;
 		public var type:String;
 		public var author:String;
+		public var firstName:String;
+		public var lastName:String;
+		public var URL:String;
 		public var x:int;
 		public var y:int;
 		public var typed:Boolean;
@@ -31,6 +34,18 @@ package ValueObjects
 						author = nodeObject.Author;
 					else
 						throw new PropNotFoundError("node object does not have property 'Author'");
+					if(nodeObject.hasOwnProperty('FirstName'))
+						firstName = nodeObject.FirstName;
+					else
+						throw new PropNotFoundError("node object does not have property 'FirstName'");
+					if(nodeObject.hasOwnProperty('LastName'))
+						lastName = nodeObject.LastName;
+					else
+						throw new PropNotFoundError("node object does not have property 'FirstName'");
+					if(nodeObject.hasOwnProperty('URL'))
+						URL = nodeObject.URL;
+					else
+						throw new PropNotFoundError("node object does not have property 'FirstName'");
 					if(nodeObject.hasOwnProperty("x"))
 						x = nodeObject.x;
 					else

@@ -167,7 +167,7 @@ package ValueObjects
 			mapRemoveURL = "http://agora.gatech.edu/release/remove_map.php";
 			deleteURL = "http://agora.gatech.edu/release/remove.php";
 			insertURL = "http://agora.gatech.edu/release/insert.php";
-			loadMapURL = "http://agora.gatech.edu/release/load_map.php";
+			loadMapURL = "http://agora.gatech.edu/release/load_map1.php";
 			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
 			projectListURL = "http://agora.gatech.edu/testing/list_projects.php";
 			myProjectsURL = "http://agora.gatech.edu/testing/my_projects.php";

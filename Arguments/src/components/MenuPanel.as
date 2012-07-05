@@ -158,6 +158,7 @@ package components
 		{
 			super.createChildren();
 			vgroup = new HGroup;
+			vgroup.top=-13;
 			vgroup.gap = 0;
 			addElement(vgroup);
 			addReasonBtn = new Button;
@@ -176,13 +177,12 @@ package components
 			//titleDisplay.setStyle("textAlign","center");
 			changeSchemeBtn.setStyle("skinClass",SchemeButtonSkin);
 			addReasonBtn.top = -20;
-			addReasonBtn.right = -10;
+			addReasonBtn.right = -20;
 			
 			this.addElement(addReasonBtn);
 			vgroup.addElement(changeSchemeBtn);
 			vgroup.addElement(changeButton);
 			vgroup.addElement(endParen);
-			this.titleDisplay.addEventListener(MouseEvent.MOUSE_DOWN,beginDrag);
 			
 			addReasonBtn.addEventListener(MouseEvent.CLICK, onAddReasonClicked);
 			changeSchemeBtn.addEventListener(MouseEvent.CLICK, onChangeSchemeClicked);

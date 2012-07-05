@@ -81,7 +81,7 @@ in accordance with the terms of the license agreement accompanying it.
 					background.top =15;
 					background.right=15;
 					background.bottom = 15;
-					contents.left = contents.top = contents.right = contents.bottom = 17 	;
+					contents.left = contents.top = contents.right = contents.bottom = 15 	;
 				}
 				else
 				{

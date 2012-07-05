@@ -437,6 +437,9 @@ package Model
 					}
 					
 					statementModel.author = nodeVO.author;
+					statementModel.firstName = nodeVO.firstName;
+					statementModel.lastName = nodeVO.lastName;
+					statementModel.URL = nodeVO.URL;
 					if(statementModel.statementFunction == StatementModel.STATEMENT){
 						statementModel.statementType = nodeVO.type;
 					}

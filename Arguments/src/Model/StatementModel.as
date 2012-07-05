@@ -31,6 +31,9 @@ package Model
 		public static const OBJECTION:String = "Objection";
 		
 		private var _author:String;
+		private var _firstName:String;
+		private var _lastName:String;
+		private var _URL:String;
 		//Enabler, Objection or a generic statement - Statement is the default option
 		private var _statementFunction:String;
 		private var _statement:SimpleStatementModel;
@@ -159,12 +162,38 @@ package Model
 		{
 			return _author;
 		}
-		
+		public function get firstName():String
+		{
+			return _firstName;
+		}
+		public function get lastName():String
+		{
+			return _lastName;
+		}
+		public function get URL():String
+		{
+			return _URL;
+		}
+
+			
 		public function set author(value:String):void
 		{
 			_author = value;
 		}
-		
+		public function set firstName(value:String):void
+		{	
+			_firstName=value;
+		}
+
+
+		public function set lastName(value:String):void
+		{
+			_lastName=value;
+		}
+		public function set URL(value:String):void
+		{
+			_URL=value;
+		}
 		public function get ygrid():int
 		{
 			return _ygrid;
