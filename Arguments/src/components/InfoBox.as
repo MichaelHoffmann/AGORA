@@ -9,9 +9,10 @@ package components
 	
 	import mx.controls.Text;
 	import mx.core.UIComponent;
-	
+
 	import spark.components.Button;
-	
+	import mx.managers.PopUpManager;
+
 	public class InfoBox extends UIComponent
 	{
 		private var bgSprite:Sprite;
@@ -106,7 +107,8 @@ package components
 		
 		//--------------------- Event Handlers -----------------------------------------//
 		protected function onOKButtonClicked(event:MouseEvent):void{
-			this.visible = false;
+			
+			PopUpManager.removePopUp(this);
 		}
 	}
 }
