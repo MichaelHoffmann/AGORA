@@ -1600,7 +1600,11 @@ als neuer Benutzer" />
 		<RUS text="схему" />
 		<GER text="Schema" />
 	</Scheme>
-
+	<Select>
+         <EN-US text="Select" />
+         <RUS text="Выбрать" />
+         <GER text="Wähle aus" />
+     </Select>
 	<SeeObjection>
 		<EN-US
 			text="See the following objection against this claim in another argument map" />

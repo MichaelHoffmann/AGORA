@@ -520,10 +520,10 @@ package Model
 		public function object(x:int):void{
 				var y:int;
 				if(objections.length == 0){
-					y = ygrid + 10;
+					y = ygrid + 11;
 				}
 				else{
-					y = objections[objections.length-1].ygrid+1;
+					y = objections[objections.length-1].ygrid;
 				}
 				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
