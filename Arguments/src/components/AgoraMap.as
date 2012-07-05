@@ -289,7 +289,7 @@ package components
 							
 							//Line from first vertical line to menu Panel
 							drawUtility.graphics.moveTo(fvlspx, menuPanel.y + 72);
-							drawUtility.graphics.lineTo(menuPanel.x+20, menuPanel.y + 72);
+							drawUtility.graphics.lineTo(menuPanel.x+10, menuPanel.y + 72);
 							
 							//Line from menuPanel to Inference
 							var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];

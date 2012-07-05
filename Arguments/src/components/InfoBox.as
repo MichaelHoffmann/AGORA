@@ -90,7 +90,7 @@ package components
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			//draw background
 			bgSprite.graphics.clear();
-			bgSprite.graphics.beginFill(0x99FF99);
+			bgSprite.graphics.beginFill(0xffff00);
 			bgSprite.graphics.drawRect(0,0,measuredWidth, measuredHeight);
 			bgSprite.graphics.endFill();
 			
