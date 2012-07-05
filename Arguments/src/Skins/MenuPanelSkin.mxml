@@ -197,7 +197,7 @@ in accordance with the terms of the license agreement accompanying it.
                 <!--- @copy spark.components.Panel#titleDisplay -->
 				<s:Group id ="moveButton">
 					<s:Graphic buttonMode="true" horizontalCenter="-5" id = "moveDrag" mouseDown="{hostComponent.beginDrag(event)}">
-					<s:Image source="@Embed('images/agoraMoveLR.png')"  left="-10" top = "30"  width = "70" />
+					<s:Image source="@Embed('images/agoraMoveLR.png')"  left="-10" top = "25"  width = "70" />
 					</s:Graphic>
 					<s:Label id="titleDisplay"  top="60" bottom="0" minHeight="30" width = "80"
 							 fontWeight="bold" maxDisplayedLines="1" textAlign="start"
@@ -239,9 +239,9 @@ in accordance with the terms of the license agreement accompanying it.
                 </s:Group>
                 <!-- layer 3: control bar -->
                 <!--- @copy spark.components.Panel#controlBarGroup -->
-                <s:Group id="controlBarGroup" left="0" right="0" top="1" bottom="1" minWidth="0" minHeight="0">
+                <s:Group id="controlBarGroup" left="0" right="0" top="5" bottom="1" minWidth="0" minHeight="0">
                     <s:layout>
-                        <s:HorizontalLayout paddingLeft="0" paddingRight="10" paddingTop="7" paddingBottom="7" gap="10" />
+                        <s:HorizontalLayout paddingLeft="0" paddingRight="10" paddingTop="10" paddingBottom="7" gap="10" />
                     </s:layout>
                 </s:Group>
             </s:Group>

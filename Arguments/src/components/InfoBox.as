@@ -49,7 +49,7 @@ package components
 			addChild(bgSprite);
 			
 			_textBox = new TextField;
-			_textBox.x = 50;
+			_textBox.x = 10;
 			_textBox.y = 20;
 			_textBox.width = boxWidth - 30;
 			_textBox.multiline = true;
@@ -90,7 +90,7 @@ package components
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			//draw background
 			bgSprite.graphics.clear();
-			bgSprite.graphics.beginFill(0x3BB9FF);
+			bgSprite.graphics.beginFill(0x99FF99);
 			bgSprite.graphics.drawRect(0,0,measuredWidth, measuredHeight);
 			bgSprite.graphics.endFill();
 			

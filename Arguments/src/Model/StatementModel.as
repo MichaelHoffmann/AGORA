@@ -432,16 +432,16 @@ package Model
 										<textbox text={SimpleStatementModel.DEPENDENT_TEXT} TID="11" />
 									</map>;
 			
-			var reasonNodeXML:XML = <node TID= "4" Type="Particular" typed="0" is_positive="1" x={x} y={ygrid + 25}>
+			var reasonNodeXML:XML = <node TID= "4" Type="Particular" typed="0" is_positive="1" x={x} y={ygrid + 22}>
 											<nodetext TID="5" textboxTID="1"/>
 									</node>;
 			
-			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 15} y={ygrid + 12}>
+			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 5} y={ygrid + 14}>
 											<nodetext TID="7" textboxTID="10"/>
 											<nodetext TID="8" textboxTID="11"/>
 									</node>;
 			
-			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid +12} targetnodeID={ID}>
+			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid +15} targetnodeID={ID}>
 										<sourcenode TID="12" nodeTID="6" />
 										<sourcenode TID="13" nodeTID="4" />
 									 </connection>;

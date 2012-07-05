@@ -209,12 +209,12 @@ package Controller
 					//Find out the inference
 					var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
 					var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
-					var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + 2;
+					var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + .10;
 					//find out hte last reason
 					var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
 					var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
 					//find the last grid
-					var xgridReason:int = (reason.y + reason.height ) / agoraParameters.gridWidth +2;
+					var xgridReason:int = (reason.y + reason.height ) / agoraParameters.gridWidth +10;
 					//compare and figure out the max
 					var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
 				}else{
@@ -649,9 +649,10 @@ package Controller
 			
 			//infobox beside enabler
 			var inference:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
-			inference.addArgumentsInfo.x =  inference.x + inference.width + 20;
-			inference.addArgumentsInfo.y = inference.y;
-			inference.addArgumentsInfo.depth = inference.parent.numChildren;
+			inference.addArgumentsInfo.x = 0;
+			inference.addArgumentsInfo.y = 0;
+			inference.depth=300;
+			inference.addArgumentsInfo.depth=300;
 			inference.addArgumentsInfo.visible = true;
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
