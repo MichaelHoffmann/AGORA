@@ -409,6 +409,9 @@ package Controller
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
+						if(checkArgUnderConstruction()){
+							return;
+						}
 						AGORAModel.getInstance().requested = true;
 						map.sBar.displayLoading();
 						model.deleteMe();
@@ -416,6 +419,7 @@ package Controller
 					else{
 						Alert.show(Language.lookup("DeleteFirstClaim"));
 					}
+					
 				}
 				else if(model.statementFunction == StatementModel.INFERENCE){
 					if(model.supportingArguments.length > 0 || model.objections.length > 0){
@@ -428,6 +432,9 @@ package Controller
 							return;
 						}
 					}
+					if(checkArgUnderConstruction()){
+						return;
+					}
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
@@ -437,14 +444,16 @@ package Controller
 						Alert.show(Language.lookup("DeleteSuppStmt"));
 						return;
 					}
+					if(checkArgUnderConstruction()){
+						return;
+					}
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
 				}
 			}
-			if(checkArgUnderConstruction()){
-				return;
-			}
+
+			
 		}
 		
 		public function onStatementDeleted(event:AGORAEvent):void{

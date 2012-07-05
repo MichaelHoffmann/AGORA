@@ -432,11 +432,11 @@ package Model
 										<textbox text={SimpleStatementModel.DEPENDENT_TEXT} TID="11" />
 									</map>;
 			
-			var reasonNodeXML:XML = <node TID= "4" Type="Particular" typed="0" is_positive="1" x={x} y={ygrid + 22}>
+			var reasonNodeXML:XML = <node TID= "4" Type="Particular" typed="0" is_positive="1" x={x} y={ygrid + 25}>
 											<nodetext TID="5" textboxTID="1"/>
 									</node>;
 			
-			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 5} y={ygrid + 14}>
+			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 5} y={ygrid + 13}>
 											<nodetext TID="7" textboxTID="10"/>
 											<nodetext TID="8" textboxTID="11"/>
 									</node>;
@@ -523,7 +523,7 @@ package Model
 					y = ygrid + 10;
 				}
 				else{
-					y = objections[objections.length-1].ygrid;
+					y = objections[objections.length-1].ygrid+1;
 				}
 				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
