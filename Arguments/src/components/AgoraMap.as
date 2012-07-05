@@ -294,7 +294,7 @@ package components
 							//Line from menuPanel to Inference
 							var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
 							if(inferencePanel.visible){
-								drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height);
+								drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height+10);
 								drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2, inferencePanel.y);
 							}
 							for each(statementModel in argumentTypeModel.reasonModels){
