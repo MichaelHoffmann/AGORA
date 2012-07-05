@@ -58,6 +58,7 @@
 				if(stage){
 					this.height = stage.stageHeight;
 					this.width = stage.stageWidth;
+					
 				}
 			}
 			
@@ -282,6 +283,7 @@
 
 		</s:HGroup>
 	</s:VGroup>
+	
 	<s:VGroup id="navigtorGroup" percentWidth="100" percentHeight="100" horizontalAlign="center">
 		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
 						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.25}" textAlign="center"
@@ -392,5 +394,5 @@
 			</s:HGroup>
 		</s:VGroup>
 	</s:VGroup>
-
+	<s:Button id="hidePanelButton" label="{Language.lookup('UnhidePanel')}"/>
 </s:Group>
