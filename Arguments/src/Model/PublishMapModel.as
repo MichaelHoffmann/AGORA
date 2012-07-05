@@ -61,6 +61,9 @@ package Model
 				FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("UnsuccessfullyPublished");
 			} else {
 				FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("SuccessfullyPublished");
+				FlexGlobals.topLevelApplication.publishMap.okayButton.visible = false;
+				FlexGlobals.topLevelApplication.publishMap.cancelButton.label = Language.lookup('OK');
+				
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_PUBLISHED));
 		}

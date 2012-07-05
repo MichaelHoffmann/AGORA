@@ -24,6 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		   xmlns:classes="classes.*" 
 		   xmlns:components="components.*"
 		   xmlns:value_objects="ValueObjects.*"
+		   horizontalScrollPolicy="off"
+		   verticalScrollPolicy="off"
 		   >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -38,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin">	
 			<s:Group>
 				<mx:Canvas x="0">
-					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff" >	
+					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
 					</components:AgoraMap>	
 				</mx:Canvas>
 			</s:Group>
@@ -63,6 +65,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
+			import mx.events.ScrollEvent;
 			
 			import spark.components.Group;
 			import spark.primitives.Graphic;
@@ -74,6 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			import classes.Language;
 			
+			
 			public function discardChanges(event:Event):void
 			{
 				AGORAController.getInstance().hideMap();
@@ -81,8 +85,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			public function setWidth(event: Event):void
 			{
-				agora.height =  stage.stageHeight - topPanel.height-25;
-				agora.width = stage.stageWidth - agora.x;
+//				agora.height =  stage.stageHeight - topPanel.height-25;
+//				agora.width = stage.stageWidth - agora.x;
 				topPanel.width = stage.stageWidth;
 			}
 			
@@ -97,7 +101,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				sBar.setActualSize(sBar.getExplicitOrMeasuredWidth(),sBar.getExplicitOrMeasuredHeight());
 				theMap.move(0, topPanel.getExplicitOrMeasuredHeight() + sBar.getExplicitOrMeasuredHeight());
 			}
+			
 
+			
 		]]>
 	</fx:Script>
 </mx:Canvas>

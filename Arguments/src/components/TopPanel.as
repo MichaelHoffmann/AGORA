@@ -210,8 +210,7 @@ package components
 		protected function unhideButton_ClickHandler(event:MouseEvent):void{
 			FlexGlobals.topLevelApplication.rightSidePanel.visible = true;
 			_unhideRSP.visible = false;
-			FlexGlobals.topLevelApplication.invalidateProperties();
-			FlexGlobals.topLevelApplication.invalidateDisplayList();
+			FlexGlobals.topLevelApplication.map.agora.width = stage.stageWidth - FlexGlobals.topLevelApplication.rightSidePanel.width;
 		}
 	}
 }

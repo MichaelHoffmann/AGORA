@@ -45,6 +45,7 @@ package components
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
+	import mx.events.ScrollEvent;
 	import mx.managers.DragManager;
 	import mx.states.State;
 	

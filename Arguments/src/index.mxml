@@ -8,7 +8,6 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:components="components.*"
 			   minWidth="800" minHeight="600"
-			   addedToStage="application1_addedToStageHandler(event)"
 			   applicationComplete="application1_applicationCompleteHandler(event)"
 			   pageTitle="Welcome to AGORA" preinitialize="application_preinitializeHandler(event)"
 			   resize="application1_resizeHandler(event)">
@@ -21,7 +20,7 @@
 			<!--Adds a visible AGORALogin object to the main index panel-->
 			<components:AGORALogin id="agoraMain" visible="true" percentWidth="80" percentHeight="100" name="agoraMain"/>
 			<!--Adds an invisible AGORAMenu object to the main index panel-->
-			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" width="800" height="600"
+			<components:AGORAMenu id="agoraMenu" name="agoraMenu" visible="false" percentWidth="100" percentHeight="100"
 								  verticalCenter="0" horizontalCenter="0"/>
 			<!--Adds an invisible map object to the main index panel-->
 			<components:Map id="map" name="map" visible="false"/>
@@ -45,6 +44,7 @@
 			import components.PublishMapPopUpPanel;
 			import components.RegisterPanel;
 			
+			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.events.ResizeEvent;
@@ -89,7 +89,7 @@
 			
 			public var publishMap:PublishMapPopUpPanel;
 			
-			//A boolean representing the active/inactive variable of the scroller
+
 
 			/**
 			 * Runs when the object is instantiated. This instantiates the universal "model"
@@ -105,7 +105,6 @@
 			protected function application_preinitializeHandler(event:FlexEvent):void
 			{
 				model = AGORAModel.getInstance();
-				addEventListener(ResizeEvent.RESIZE,application1_addedToStageHandler);
 			}
 			
 			/**
@@ -116,22 +115,7 @@
 			protected function application1_applicationCompleteHandler(event:FlexEvent):void
 			{
 				LayoutController.getInstance().setApplicationLayoutProperties();
-				this.addEventListener(ResizeEvent.RESIZE, application1_addedToStageHandler);
 			}
-			
-			protected function application1_addedToStageHandler(event:Event):void
-			{		
-				if(rightSidePanel.x < 1080){
-					agoraMenu.horizontalCenter = undefined;
-					agoraMenu.left = 0;
-				}
-				else{
-					agoraMenu.left = undefined;
-					agoraMenu.horizontalCenter = 0;
-				}
-			}
-			
-
 			
 			/**
 			 * Listens for resize events and does a lot of amazing work. Believe me, just read below. It is amazing...
@@ -160,18 +144,8 @@
 				}				
 			}
 			
-			override protected function commitProperties():void{
-				super.commitProperties();
-				if(stage){
-					if(rightSidePanel.visible){
-						map.percentWidth = undefined;
-						
-						map.width = stage.stageWidth - rightSidePanel.width;
-					} else {
-						map.width = undefined;
-						map.percentWidth = 100;
-					}
-				}
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
+				super.updateDisplayList(unscaledWidth,unscaledHeight);
 			}
 			
 

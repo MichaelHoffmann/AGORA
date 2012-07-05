@@ -2,9 +2,9 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 xmlns:components="components.*"
-		 width="1166" height="596" 
+		 xmlns:components="components.*" 
 		 creationComplete="creationCompleteHandler(event)"
+		 horizontalCenter="0" verticalCenter="0"
 		 >
 	<fx:Script>
 		<![CDATA[
@@ -54,13 +54,6 @@
 				AGORAController.getInstance().fetchDataProjectList();
 			}
 			
-			protected function resizeScreen(event:Event):void{
-				if(stage){
-					this.height = stage.stageHeight;
-					this.width = stage.stageWidth;
-					
-				}
-			}
 			
 			/**
 			 * Gets called every time the timer is fired. 
@@ -250,6 +243,12 @@
 				
 			}
 			
+			protected function group1_addedToStageHandler(event:Event):void
+			{
+				hidePanelButton.x = stage.stageWidth - hidePanelButton.getExplicitOrMeasuredWidth();
+				hidePanelButton.y = 0;
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -284,7 +283,7 @@
 		</s:HGroup>
 	</s:VGroup>
 	
-	<s:VGroup id="navigtorGroup" percentWidth="100" percentHeight="100" horizontalAlign="center">
+	<s:VGroup id="navigtorGroup"  width="800" height="600" horizontalAlign="center" horizontalCenter="0" verticalAlign="middle" verticalCenter="0">
 		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
 						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.25}" textAlign="center"
 						 >
@@ -394,5 +393,11 @@
 			</s:HGroup>
 		</s:VGroup>
 	</s:VGroup>
-	<s:Button id="hidePanelButton" label="{Language.lookup('UnhidePanel')}"/>
+	<s:Button id="hidePanelButton" label="{Language.lookup('UnhidePanel')}" 
+			  click="
+			  {
+			  	FlexGlobals.topLevelApplication.rightSidePanel.visible = true; 
+			  	FlexGlobals.topLevelApplication.map.agora.width = stage.stageWidth - FlexGlobals.topLevelApplication.rightSidePanel.width;
+			  }" 
+			  height="30" top="0" right="0"/>
 </s:Group>

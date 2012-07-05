@@ -31,6 +31,7 @@ package Controller
 	import components.GridPanel;
 	import components.Map;
 	import components.MenuPanel;
+	import components.RightSidePanel;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -56,7 +57,8 @@ package Controller
 		private static var instance: LayoutController
 		private var _model:AGORAModel;
 		private var map:Map;
-		
+		[Bindable] private var tempPanelVisibility:Boolean = FlexGlobals.topLevelApplication.rightSidePanel.visible;
+
 		public var panelList:Vector.<GridPanel>;
 		public var uwidth:int;
 		public var yPadding:int;
@@ -116,8 +118,8 @@ package Controller
 		
 		//------------------------- other public functions --------------------//
 		public function setApplicationLayoutProperties():void{
-			map.agora.height =  map.stage.stageHeight - map.topPanel.height - 10 * 2 - 30;
-			map.agora.width = map.stage.stageWidth - 30;
+			map.agora.width = map.stage.stageWidth - FlexGlobals.topLevelApplication.rightSidePanel.width;			
+			map.agora.height =  map.stage.stageHeight - map.topPanel.height - 25;
 			map.stage.addEventListener(Event.RESIZE, FlexGlobals.topLevelApplication.map.setWidth);
 			map.topPanel.width = map.stage.stageWidth;
 		}

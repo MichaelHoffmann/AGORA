@@ -99,11 +99,6 @@
 				}
 			}
 			
-			protected function hide_all():void{
-				for(var i:int = 1; i < this.numElements; i++){
-					this.getElementAt(i).visible = !this.getElementAt(i).visible;
-				}
-			}
 			
 			
 		]]>
@@ -111,29 +106,18 @@
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>	
-	<s:Button id="hidePanelButton" left="5" top="0" right="5" label="{Language.lookup('HidePanel')}" percentWidth="100"
-			  click="{
-			  this.hide_all();
-
-			  if(hidePanelButton.left == 5){
-			  	this.height = hidePanelButton.getExplicitOrMeasuredHeight();
-			  	hidePanelButton.label = Language.lookup('UnhidePanel');
-			  	hidePanelButton.left = hidePanelButton.right = 0;
-			  } else {
-			  	hidePanelButton.left = hidePanelButton.right = 5;
-			  	hidePanelButton.label = Language.lookup('HidePanel');
-			  	this.height = undefined;
-			  	this.percentHeight = 100;
-			  }
-			  FlexGlobals.topLevelApplication.invalidateProperties(); 
-			  FlexGlobals.topLevelApplication.invalidateDisplayList();
-			  FlexGlobals.topLevelApplication.map.topPanel._unhideRSP.visible = true;
-			  }"/>
+	</fx:Declarations>		
 	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0" height="100"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
 	<s:Button id="clickableMapOwnerInformation" visible="false" toolTip="{Language.lookup('MapOwnerURLWarning')}"/>
 	<s:TextArea id="mapTitle" visible="false" heightInLines="4" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
+	<s:Button id="hidePanelButton" left="5" top="0" right="5" label="{Language.lookup('HidePanel')}" percentWidth="100"
+			  click="{
+			  		this.visible = false; 
+			  		FlexGlobals.topLevelApplication.map.agora.width = stage.stageWidth;
+			  		FlexGlobals.topLevelApplication.map.agora.height = stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - 25;
+			  		FlexGlobals.topLevelApplication.map.topPanel._unhideRSP.visible = true;
+			  }"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
 	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>

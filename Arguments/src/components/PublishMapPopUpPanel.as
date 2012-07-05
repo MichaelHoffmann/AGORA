@@ -53,8 +53,8 @@ package components
 		public var scroller:Scroller;
 		public var categoryTiles:Group;
 		private var tl:TileLayout;
-		private var cancelButton:Button;
-		private var okayButton:Button;
+		public var cancelButton:Button;
+		public var okayButton:Button;
 		private var bottomButtonGroup:HGroup;
 		private var groupContainer:VGroup;
 		private var cc:CategoryChain;
@@ -100,7 +100,9 @@ package components
 			/*Making the two bottom buttons*/
 			cancelButton = new Button();
 			cancelButton.addEventListener(MouseEvent.CLICK,removePupUp);
+			cancelButton.id = "cancelButton";
 			okayButton = new Button();
+			okayButton.id = "okayButton";
 			cancelButton.label = Language.lookup('Back');
 			okayButton.label = Language.lookup('Submit');
 			okayButton.visible = false;
@@ -169,6 +171,7 @@ package components
 		
 		protected function removePupUp(event:MouseEvent):void{
 			informationLabel.text = "";
+			cancelButton.label = Language.lookup('Back');
 			PopUpManager.removePopUp(this);
 		}
 		
