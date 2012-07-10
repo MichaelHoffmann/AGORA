@@ -30,6 +30,228 @@
 
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
+	
+	<PrivacyPolicyTOS>
+		<EN-US text="
+			
+			Terms of Service
+
+			Your use of AGORA-net constitutes your agreement with these Terms and Conditions.
+
+			DESCRIPTION OF THE SERVICE. AGORA-net is a collaborative platform that allows users to participate
+			in online debates. Every entry that is not stored in a protected project is publicly visible.
+			Everything is stored on a central server. Argument maps cannot be saved on individual computers, but
+			you can use the “Print” button to export your map as a pdf-file if you have a pdf-converter installed on
+			your computer.
+
+			YOUR DUTIES. Be a good citizen and respect other participants. AGORA-net stimulates debates and allows
+			you to criticize other people’s arguments and assumptions, but you should do so in a style that respects
+			other’s integrity, dignity, and honor. Remember, AGORA-net is used across many different cultures and
+			amongst people with different views of the world.
+
+			COST. There is no cost associated with use of AGORA-net. However, an Internet connection is required
+			so, if it applies, check with your Internet Service Provider (ISP) to ensure that you are not close to or
+			exceeding your allotted Internet usage time.
+
+			HELP. If you require help with the system please first click the &quot;Help&quot; button on the screen. In the
+			event that the documentation provided by the system does not solve your problem, feel free to send an
+			email via “Contact us.” Please send bug reports to xyz.agorabugreport@gmail.com.xyz (remove spam
+			protection “xyz” and both the first and last &quot;.&quot;) and describe exactly what happened in which situation.
+
+			OPTING OUT. AGORA-net will contact you only if you click the “Forgot Password?” button. If you do
+			not want to be contacted by other users, do not provide a URL in the registration process, or delete any
+			URL later by clicking on &quot;Change your registration data.&quot;, delete the URL you provided, and click save.
+			Your privacy is our number one priority and the data you provide to the System is never sold or given to
+			any third party agency unless required by law.
+
+			ACCESSIBILITY. The System works on any computer with an Internet Browser as long as the latest
+			version of the Flash Player is installed. However, on certain screen resolutions and browsers, AGORA-net
+			may format incorrectly or improperly. In this event, it is advised that another Browser be used. Please
+			send also a bug report to xyz.agorabugreport@gmail.com.xyz (remove spam protection “xyz” and both the 
+			first and last &quot;.&quot;) with the subject &quot;AGORA-Net Screen Format Bug,&quot; along with a thorough description of 
+			the problem.
+
+			VERIFICATION. By registering and participating in the System, you acknowledge and agree that the
+			registration data (Firstname, Lastname, Email, and URL) you provided is your own and that you will not
+			register or provide the data of another person unless legally allowed.
+
+			LICENSE. This program is free software: you can redistribute it and/or modify it under the terms of the GNU 
+			Affero General Public License as published by the Free Software Foundation, either version 3 of the License, 
+			or (at your option) any later version. This program is distributed in the hope that it will be useful, but 
+			WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+			See the GNU Affero General Public License for more details.
+
+			LIABILITY/DISCLAIMER. The System is provided &quot;as is&quot;, and the Georgia Institute of Technology (the &quot;Institute&quot;), 
+			the Institute's School of Public Policy, the employees of the Institute, the software developers of the System, or 
+			any other person affiliated with the creation, implementation, and upkeep of the System's code base, knowledge base, 
+			and servers (collectively, the &quot;Entities&quot;) shall not be held liable for your use of the content or any data content 
+			within the System.  The Entities do not warrant or make any representations of any kind or nature with respect to the 
+			System, and the Entities do not assume or have any responsibility or liability for any claims, damages, or losses 
+			resulting from your use of the System.  None of the Entities shall have any liability to you for use charges related 
+			to any device that you use to access the System or use and receive the System, including, without limitation, charges 
+			for Internet data packages and Personal Computers. THE ENTITIES DISCLAIM ALL WARRANTIES WITH REGARD TO THE SERVICE, 
+			INCLUDING WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE TO THE FULLEST EXTENT 
+			ALLOWED BY LAW.
+
+			PRIVACY. The Entities will never divulge, sell, or give any information you provided at the time of registration for the 
+			System including your First name, Last name, Email, and URL to any third party agency. However, the Entities reserve the 
+			right to disclose any and all information provided to the System as necessary to satisfy any law, regulation, or governmental 
+			request in order to avoid liability and to protect the rights and property of the Entities. When you register you guarantee 
+			that all the information supplied by you is accurate and understand that, at the sole discretion of the Entities, your 
+			registration and participation in the System may be refused or terminated. The System is bound by the Institute's Terms of 
+			Service and Privacy Policy so, at any time, if anything within this Terms of Service or Privacy Policy conflicts with the 
+			Terms of Service or Privacy Policy of the Institute, the Institute's Terms of Service and Privacy Policy are to supersede these. 
+			Please see the Georgia Institute of Technology' Terms of Service and Privacy Policy and the Georgia Institute of Technology's 
+			School of Public Policy's Terms of Service and Privacy Policy for more information." 
+			
+		/>
+		<RUS text="
+		
+			Terms of Service
+
+			Your use of AGORA-net constitutes your agreement with these Terms and Conditions.
+
+			DESCRIPTION OF THE SERVICE. AGORA-net is a collaborative platform that allows users to participate
+			in online debates. Every entry that is not stored in a protected project is publicly visible.
+			Everything is stored on a central server. Argument maps cannot be saved on individual computers, but
+			you can use the “Print” button to export your map as a pdf-file if you have a pdf-converter installed on
+			your computer.
+
+			YOUR DUTIES. Be a good citizen and respect other participants. AGORA-net stimulates debates and allows
+			you to criticize other people’s arguments and assumptions, but you should do so in a style that respects
+			other’s integrity, dignity, and honor. Remember, AGORA-net is used across many different cultures and
+			amongst people with different views of the world.
+
+			COST. There is no cost associated with use of AGORA-net. However, an Internet connection is required
+			so, if it applies, check with your Internet Service Provider (ISP) to ensure that you are not close to or
+			exceeding your allotted Internet usage time.
+
+			HELP. If you require help with the system please first click the &quot;Help&quot; button on the screen. In the
+			event that the documentation provided by the system does not solve your problem, feel free to send an
+			email via “Contact us.” Please send bug reports to xyz.agorabugreport@gmail.com.xyz (remove spam
+			protection “xyz” and both the first and last &quot;.&quot;) and describe exactly what happened in which situation.
+
+			OPTING OUT. AGORA-net will contact you only if you click the “Forgot Password?” button. If you do
+			not want to be contacted by other users, do not provide a URL in the registration process, or delete any
+			URL later by clicking on &quot;Change your registration data.&quot;, delete the URL you provided, and click save.
+			Your privacy is our number one priority and the data you provide to the System is never sold or given to
+			any third party agency unless required by law.
+
+			ACCESSIBILITY. The System works on any computer with an Internet Browser as long as the latest
+			version of the Flash Player is installed. However, on certain screen resolutions and browsers, AGORA-net
+			may format incorrectly or improperly. In this event, it is advised that another Browser be used. Please
+			send also a bug report to xyz.agorabugreport@gmail.com.xyz (remove spam protection “xyz” and both the 
+			first and last &quot;.&quot;) with the subject &quot;AGORA-Net Screen Format Bug,&quot; along with a thorough description of 
+			the problem.
+
+			VERIFICATION. By registering and participating in the System, you acknowledge and agree that the
+			registration data (Firstname, Lastname, Email, and URL) you provided is your own and that you will not
+			register or provide the data of another person unless legally allowed.
+
+			LICENSE. This program is free software: you can redistribute it and/or modify it under the terms of the GNU 
+			Affero General Public License as published by the Free Software Foundation, either version 3 of the License, 
+			or (at your option) any later version. This program is distributed in the hope that it will be useful, but 
+			WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+			See the GNU Affero General Public License for more details.
+
+			LIABILITY/DISCLAIMER. The System is provided &quot;as is&quot;, and the Georgia Institute of Technology (the &quot;Institute&quot;), 
+			the Institute's School of Public Policy, the employees of the Institute, the software developers of the System, or 
+			any other person affiliated with the creation, implementation, and upkeep of the System's code base, knowledge base, 
+			and servers (collectively, the &quot;Entities&quot;) shall not be held liable for your use of the content or any data content 
+			within the System.  The Entities do not warrant or make any representations of any kind or nature with respect to the 
+			System, and the Entities do not assume or have any responsibility or liability for any claims, damages, or losses 
+			resulting from your use of the System.  None of the Entities shall have any liability to you for use charges related 
+			to any device that you use to access the System or use and receive the System, including, without limitation, charges 
+			for Internet data packages and Personal Computers. THE ENTITIES DISCLAIM ALL WARRANTIES WITH REGARD TO THE SERVICE, 
+			INCLUDING WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE TO THE FULLEST EXTENT 
+			ALLOWED BY LAW.
+
+			PRIVACY. The Entities will never divulge, sell, or give any information you provided at the time of registration for the 
+			System including your First name, Last name, Email, and URL to any third party agency. However, the Entities reserve the 
+			right to disclose any and all information provided to the System as necessary to satisfy any law, regulation, or governmental 
+			request in order to avoid liability and to protect the rights and property of the Entities. When you register you guarantee 
+			that all the information supplied by you is accurate and understand that, at the sole discretion of the Entities, your 
+			registration and participation in the System may be refused or terminated. The System is bound by the Institute's Terms of 
+			Service and Privacy Policy so, at any time, if anything within this Terms of Service or Privacy Policy conflicts with the 
+			Terms of Service or Privacy Policy of the Institute, the Institute's Terms of Service and Privacy Policy are to supersede these. 
+			Please see the Georgia Institute of Technology' Terms of Service and Privacy Policy and the Georgia Institute of Technology's 
+			School of Public Policy's Terms of Service and Privacy Policy for more information." 
+		
+		/>
+		<GER text="
+		
+			Terms of Service
+
+			Your use of AGORA-net constitutes your agreement with these Terms and Conditions.
+
+			DESCRIPTION OF THE SERVICE. AGORA-net is a collaborative platform that allows users to participate
+			in online debates. Every entry that is not stored in a protected project is publicly visible.
+			Everything is stored on a central server. Argument maps cannot be saved on individual computers, but
+			you can use the “Print” button to export your map as a pdf-file if you have a pdf-converter installed on
+			your computer.
+
+			YOUR DUTIES. Be a good citizen and respect other participants. AGORA-net stimulates debates and allows
+			you to criticize other people’s arguments and assumptions, but you should do so in a style that respects
+			other’s integrity, dignity, and honor. Remember, AGORA-net is used across many different cultures and
+			amongst people with different views of the world.
+
+			COST. There is no cost associated with use of AGORA-net. However, an Internet connection is required
+			so, if it applies, check with your Internet Service Provider (ISP) to ensure that you are not close to or
+			exceeding your allotted Internet usage time.
+
+			HELP. If you require help with the system please first click the &quot;Help&quot; button on the screen. In the
+			event that the documentation provided by the system does not solve your problem, feel free to send an
+			email via “Contact us.” Please send bug reports to xyz.agorabugreport@gmail.com.xyz (remove spam
+			protection “xyz” and both the first and last &quot;.&quot;) and describe exactly what happened in which situation.
+
+			OPTING OUT. AGORA-net will contact you only if you click the “Forgot Password?” button. If you do
+			not want to be contacted by other users, do not provide a URL in the registration process, or delete any
+			URL later by clicking on &quot;Change your registration data.&quot;, delete the URL you provided, and click save.
+			Your privacy is our number one priority and the data you provide to the System is never sold or given to
+			any third party agency unless required by law.
+
+			ACCESSIBILITY. The System works on any computer with an Internet Browser as long as the latest
+			version of the Flash Player is installed. However, on certain screen resolutions and browsers, AGORA-net
+			may format incorrectly or improperly. In this event, it is advised that another Browser be used. Please
+			send also a bug report to xyz.agorabugreport@gmail.com.xyz (remove spam protection “xyz” and both the 
+			first and last &quot;.&quot;) with the subject &quot;AGORA-Net Screen Format Bug,&quot; along with a thorough description of 
+			the problem.
+
+			VERIFICATION. By registering and participating in the System, you acknowledge and agree that the
+			registration data (Firstname, Lastname, Email, and URL) you provided is your own and that you will not
+			register or provide the data of another person unless legally allowed.
+
+			LICENSE. This program is free software: you can redistribute it and/or modify it under the terms of the GNU 
+			Affero General Public License as published by the Free Software Foundation, either version 3 of the License, 
+			or (at your option) any later version. This program is distributed in the hope that it will be useful, but 
+			WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+			See the GNU Affero General Public License for more details.
+
+			LIABILITY/DISCLAIMER. The System is provided &quot;as is&quot;, and the Georgia Institute of Technology (the &quot;Institute&quot;), 
+			the Institute's School of Public Policy, the employees of the Institute, the software developers of the System, or 
+			any other person affiliated with the creation, implementation, and upkeep of the System's code base, knowledge base, 
+			and servers (collectively, the &quot;Entities&quot;) shall not be held liable for your use of the content or any data content 
+			within the System.  The Entities do not warrant or make any representations of any kind or nature with respect to the 
+			System, and the Entities do not assume or have any responsibility or liability for any claims, damages, or losses 
+			resulting from your use of the System.  None of the Entities shall have any liability to you for use charges related 
+			to any device that you use to access the System or use and receive the System, including, without limitation, charges 
+			for Internet data packages and Personal Computers. THE ENTITIES DISCLAIM ALL WARRANTIES WITH REGARD TO THE SERVICE, 
+			INCLUDING WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE TO THE FULLEST EXTENT 
+			ALLOWED BY LAW.
+
+			PRIVACY. The Entities will never divulge, sell, or give any information you provided at the time of registration for the 
+			System including your First name, Last name, Email, and URL to any third party agency. However, the Entities reserve the 
+			right to disclose any and all information provided to the System as necessary to satisfy any law, regulation, or governmental 
+			request in order to avoid liability and to protect the rights and property of the Entities. When you register you guarantee 
+			that all the information supplied by you is accurate and understand that, at the sole discretion of the Entities, your 
+			registration and participation in the System may be refused or terminated. The System is bound by the Institute's Terms of 
+			Service and Privacy Policy so, at any time, if anything within this Terms of Service or Privacy Policy conflicts with the 
+			Terms of Service or Privacy Policy of the Institute, the Institute's Terms of Service and Privacy Policy are to supersede these. 
+			Please see the Georgia Institute of Technology' Terms of Service and Privacy Policy and the Georgia Institute of Technology's 
+			School of Public Policy's Terms of Service and Privacy Policy for more information." 
+		/>
+	</PrivacyPolicyTOS>
+	
 	<BeforeYouStart>
 		<EN-US text="What you should know before you start" />
 		<RUS text="What you should know before you start" />
