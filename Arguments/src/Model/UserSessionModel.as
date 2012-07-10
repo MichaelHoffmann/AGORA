@@ -162,6 +162,17 @@ package Model
 				url:userData.URL});
 		}
 		
+		/*
+			Change this
+		*/
+		public function getRegistrationData(uid:int):void{
+			var registrationRequestService:HTTPService = new HTTPService;
+			//registrationRequestService.url = AGORAParameters.getInstance().getRegistrationURL;
+			//registrationRequestService.addEventListener(ResultEvent.RESULT, onGotRegistrationData);
+			registrationRequestService.addEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
+			registrationRequestService.send({uid: uid});
+		}
+		
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);

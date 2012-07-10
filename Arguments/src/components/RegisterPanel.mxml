@@ -71,7 +71,10 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Controller.AGORAController;
 			import Controller.UserSessionController;
+			
+			import Model.AGORAModel;
 			
 			import ValueObjects.AGORAParameters;
 			import ValueObjects.UserDataVO;
@@ -98,6 +101,9 @@
 				
 			public function init():void
 			{
+			if(AGORAModel.getInstance().userSessionModel.loggedIn() || AGORAModel.getInstance().userSessionModel.username != "Guest"){
+				//Work here
+			}
 				focusManager.setFocus(username);
 				agoraConstants = AGORAParameters.getInstance();
 			}
