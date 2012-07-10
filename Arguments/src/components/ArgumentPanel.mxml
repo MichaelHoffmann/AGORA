@@ -591,8 +591,9 @@
 				completeArgument.addEventListener(MouseEvent.CLICK,completeArgumentClicked );
 				addReason.addEventListener(MouseEvent.CLICK,addReasonClicked);
 				var orLabel:Label = new Label;
+				var bigGroup:VGroup = new VGroup;
 				var selectLabel:Label = new Label;
-				selectLabel.text = Language.lookup("Select");
+				selectLabel.left=0;
 				orLabel.text = Language.lookup("ArgOr");
 				vgroup.horizontalAlign="center";
 				argPopUp.setStyle("skinClass", TopBarLessPanel);
@@ -603,7 +604,14 @@
 				vgroup.addElement(orLabel);
 				vgroup.addElement(completeArgument);
 				addReason.percentWidth=completeArgument.percentWidth=100;
-				argPopUp.addElement(vgroup);
+				selectLabel.text = Language.lookup("Select")+":";
+				selectLabel.top=10;
+				
+				bigGroup.addElement(selectLabel);
+				bigGroup.addElement(vgroup);
+				argPopUp.addElement(bigGroup);
+				argPopUp.setStyle("borderVisible",true);
+				argPopUp.setStyle("cornerRadius",15);
 
 				
 				PopUpManager.addPopUp(argPopUp, this.parent, true);

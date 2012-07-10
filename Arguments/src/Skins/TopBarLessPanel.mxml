@@ -22,7 +22,7 @@ in accordance with the terms of the license agreement accompanying it.
 -->
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
 			 xmlns:fb="http://ns.adobe.com/flashbuilder/2009" blendMode="normal" mouseEnabled="false" 
-			 minWidth="131" minHeight="50" alpha.disabled="0.5" alpha.disabledWithControlBar="0.5">
+			 minWidth="131" minHeight="50" alpha.disabled="0.5" alpha.disabledWithControlBar="0.5" >
 	
 	<fx:Metadata>
 		<![CDATA[ 
@@ -65,7 +65,7 @@ in accordance with the terms of the license agreement accompanying it.
 			 */
 			override protected function initializationComplete():void
 			{
-				useChromeColor = true;
+				useChromeColor = false;
 				super.initializationComplete();
 			}
 			
@@ -77,14 +77,14 @@ in accordance with the terms of the license agreement accompanying it.
 				if (getStyle("borderVisible") == true)
 				{
 					border.visible = true;
-					background.left = background.top = background.right = background.bottom = 1;
-					contents.left = contents.top = contents.right = contents.bottom = 1;
+					background.left = background.top = background.right = background.bottom = 15;
+					contents.left = contents.top = contents.right = contents.bottom = 20;
 				}
 				else
 				{
-					border.visible = false;
-					background.left = background.top = background.right = background.bottom = 0;
-					contents.left = contents.top = contents.right = contents.bottom = 0;
+					border.visible = true;
+					background.left = background.top = background.right = background.bottom = 15;
+					contents.left = contents.top = contents.right = contents.bottom = 15;
 				}
 				
 				dropShadow.visible = getStyle("dropShadowVisible");
@@ -100,8 +100,8 @@ in accordance with the terms of the license agreement accompanying it.
 					
 					dropShadow.tlRadius = cornerRadius;
 					dropShadow.trRadius = cornerRadius;
-					dropShadow.blRadius = withControls ? cornerRadius : 0;
-					dropShadow.brRadius = withControls ? cornerRadius : 0;
+					dropShadow.blRadius = cornerRadius;
+					dropShadow.brRadius = cornerRadius;
 					
 					setPartCornerRadii(topMaskRect, withControls); 
 					setPartCornerRadii(border, withControls); 
@@ -125,8 +125,8 @@ in accordance with the terms of the license agreement accompanying it.
 			{            
 				target.topLeftRadiusX = cornerRadius;
 				target.topRightRadiusX = cornerRadius;
-				target.bottomLeftRadiusX = includeBottom ? cornerRadius : 0;
-				target.bottomRightRadiusX = includeBottom ? cornerRadius : 0;
+				target.bottomLeftRadiusX = cornerRadius;
+				target.bottomRightRadiusX =  cornerRadius;
 			}
 			
 			private var cornerRadius:Number;
@@ -173,10 +173,10 @@ in accordance with the terms of the license agreement accompanying it.
 		
 		<!-- layer 1: border -->
 		<!--- @private -->
-		<s:Rect id="border" left="0" right="0" top="0" bottom="0" >
+		<s:Rect id="border" left="0" right="0" top="0" bottom="0"  >
 			<s:stroke>
 				<!--- @private -->
-				<s:SolidColorStroke id="borderStroke" weight="1" />
+				<s:SolidColorStroke color="0x99FF99" id="borderStroke" weight="15" />
 			</s:stroke>
 		</s:Rect>
 		

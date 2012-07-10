@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/mx" width="100"
+		   xmlns:mx="library://ns.adobe.com/flex/mx" width="150"
 		   backgroundColor="0xffff00">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -11,7 +11,7 @@
 			import classes.Language
 		]]>
 	</fx:Script>
-	<mx:Text width="100"  id="helpTxt" text="{Language.lookup('WhatIsMainClaim')}">
+	<mx:Text width="150"  id="helpTxt" text="{Language.lookup('WhatIsMainClaim')+' '+ Language.lookup('ClaimReminder')}">
 		
 	</mx:Text>
 </mx:Canvas>
