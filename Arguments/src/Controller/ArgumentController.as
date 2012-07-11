@@ -348,7 +348,7 @@ package Controller
 			
 			//show the menu
 			//if(argumentTypeModel.logicClass != agoraParameters.DIS_SYLL && argumentTypeModel.logicClass != agoraParameters.NOT_ALL_SYLL){
-			schemeSelector.visible = true;
+			menuPanel.showArgSelector();
 			//}
 		}
 		
@@ -554,7 +554,10 @@ package Controller
 			argumentTypeModel.logicClass = scheme;
 			logicClassController = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			logicClassController.link(argumentTypeModel);
-			
+			//if(argSchemeSelector.mainSchemes.selectedItem||){
+			//	argSchemeSelector.mainToolTip.text =argSchemeSelector.mainSchemes.selectedItem.Label;
+			//}
+
 			//show language options or display text
 			if(logicClassController.hasLanguageOptions()){
 				if(argumentTypeModel.reasonModels.length > 1){
@@ -565,6 +568,7 @@ package Controller
 				}
 				argSchemeSelector.typeSelector.x = argSchemeSelector.mainSchemes.width;
 				argSchemeSelector.typeSelector.visible=true;
+				
 			}
 			else{
 				argSchemeSelector.typeSelector.visible = false;
@@ -649,8 +653,9 @@ package Controller
 			model.agoraMapModel.argUnderConstruction = false;
 			map.sBar.hideStatus();
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			var menuPanel:MenuPanel = agoraMap.menuPanelsHash[argumentTypeModel.ID]
 			var argumentSelector:ArgSelector = agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
-			argumentSelector.hide();
+			menuPanel.hideArgSelector();
 			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
 				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 				logicController.deleteLinks(argumentTypeModel);
@@ -690,8 +695,9 @@ package Controller
 			CursorManager.removeAllCursors();
 			model.agoraMapModel.argUnderConstruction = false;
 			var argumentTypeModel:ArgumentTypeModel = event.eventData as ArgumentTypeModel;
+			var menuPanel:MenuPanel=FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID];
 			var argumentSelector:ArgSelector = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash[argumentTypeModel.ID].schemeSelector;
-			argumentSelector.hide();
+			menuPanel.hideArgSelector();
 			if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
 				var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 				logicController.deleteLinks(argumentTypeModel);

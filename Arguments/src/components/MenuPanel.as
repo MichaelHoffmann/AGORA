@@ -49,10 +49,13 @@ package components
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
+	import mx.managers.PopUpManager;
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
 	import spark.primitives.Ellipse;
+
+	import classes.Language;
 
 	public class MenuPanel extends GridPanel
 	{
@@ -78,7 +81,14 @@ package components
 			this.title = agoraConstants.THEREFORE;
 		}
 		
-		
+		public function showArgSelector():void{
+			schemeSelector.visible= true;
+			PopUpManager.addPopUp(schemeSelector,this.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent);
+			PopUpManager.centerPopUp(schemeSelector);
+		}
+		public function hideArgSelector():void{
+			PopUpManager.removePopUp(schemeSelector);
+		}
 		public function get agoraConstants():AGORAParameters
 		{
 			return _agoraConstants;

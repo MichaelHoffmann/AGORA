@@ -25,27 +25,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Canvas>
-		<mx:List id="mainSchemes"
-				 dataProvider="{scheme}"
-				 rollOverColor="#b2c4e7"
-				 textRollOverColor="#FFFFFF"
-				 selectionColor="#5577b8"  
-				 focusRoundedCorners="tr br tl bl"
-				 paddingLeft="8"
-				 labelField="name"/>
+	<s:Panel skinClass="Skins.TopBarLessPanel" width = "430">
+		<s:Label  width="100" id = "mainToolTip" left = "500" text ="" backgroundColor="0xffff00" paddingTop="10" paddingRight="10" paddingLeft="10" paddingBottom="10" visible = "false"  click="{supportPopUp()}"/>
+
+<s:Group width = "400">
+	<s:Label text = "?" right = "10" toolTip="Click here for more info"/><!--add translate>-->
+	<s:HGroup top = "10">
+		<s:VGroup>
+			<s:Label text ="Select..."/><!--add translate>-->
+			<mx:List id="mainSchemes"
+					 dataProvider="{scheme}"
+					 rollOverColor="#b2c4e7"
+					 textRollOverColor="#FFFFFF"
+					 selectionColor="#5577b8"  
+					 focusRoundedCorners="tr br tl bl"
+					 paddingLeft="8"
+					 labelField="name" 
+					 toolTip=""/>
+		</s:VGroup>
+		<s:VGroup>
+			<s:Label text ="...and select:" visible="{typeSelector.visible}"/>
+			<mx:List id="typeSelector" 
+					 dataProvider="{languageTypes}"
+					 x="{mainSchemes.width}"
+					 rollOverColor="#b2c4e7"
+					 textRollOverColor="#FFFFFF"
+					 selectionColor="#5577b8"  
+					 focusRoundedCorners="tr br tl bl"
+					 paddingLeft="8"
+					 width="220" visible = "false"/>
+		</s:VGroup>
 		<!-- itemClick="changeTitle(event)" -->
-		
-		<mx:List id="typeSelector" 
-				 dataProvider="{languageTypes}"
-				 x="{mainSchemes.width}"
-				 rollOverColor="#b2c4e7"
-				 textRollOverColor="#FFFFFF"
-				 selectionColor="#5577b8"  
-				 visible="false"
-				 focusRoundedCorners="tr br tl bl"
-				 paddingLeft="8"
-				 width="220"/>
+
 		
 		<mx:List id="andor" 
 				 x="{mainSchemes.width+typeSelector.width}"
@@ -53,10 +64,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				 rollOverColor="#b2c4e7"
 				 textRollOverColor="#FFFFFF"
 				 selectionColor="#5577b8"  
-				 visible="false"
 				 focusRoundedCorners="tr br tl bl"
-				 paddingLeft="8"/>
-	</mx:Canvas>
+				 paddingLeft="8" 
+				 visible = "false" click = "{this.visible=false}"/>
+	</s:HGroup>
+</s:Group>				
+
+
+	</s:Panel>
 	
 	<fx:Script>
 		<![CDATA[
@@ -64,6 +79,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import Controller.logic.*;
 			
 			import Model.ArgumentTypeModel;
+			
+			import classes.Language;
 			
 			import flash.events.Event;
 			import flash.events.MouseEvent;
@@ -74,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
-			
+			import mx.managers.PopUpManager;
 			private var _languageTypes:Array;
 			private var _scheme:Array;
 			private var _options:Array;
@@ -84,7 +101,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			
 			//------------- Getters and Setters -----------------------//
-			
 			public function get argumentTypeModel():ArgumentTypeModel
 			{
 				return _argumentTypeModel;
@@ -150,17 +166,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			}
 			
 			//----------------- Other public functions -----------------------------------//
-			public function show():void{
-				this.parent.setChildIndex(this, parent.numChildren - 1);
-				this.visible = true;
-			}
-			
-			public function hide():void{
-				//also hide the map's(parent's help text)
-				typeSelector.visible = false;
-				andor.visible = false;
-				this.visible = false;
-			}
 			
 			//----------------- Event Handlers --------------------------------------------//
 			protected function addEventHandlers(event:FlexEvent):void{
@@ -177,6 +182,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			protected function onSchemeItemRollOver(event:ListEvent):void{
 				var scheme:String = event.itemRenderer.data.toString();
 				ArgumentController.getInstance().displayLanguageType(this, scheme);
+				displayToolTip(scheme);
 			}
 			
 			protected function onLanguageTypeItemRollOver(event:ListEvent):void{
@@ -192,6 +198,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			protected function onSchemeItemClicked(event:ListEvent):void{
 				var scheme:String = event.itemRenderer.data.toString();
 				ArgumentController.getInstance().setSchemeType(this, scheme);
+				displayToolTip(scheme);
+
 			}
 			
 			protected function onLanguageTypeItemClicked(event:ListEvent):void{
@@ -203,11 +211,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				var option:String = event.itemRenderer.data.toString();
 				ArgumentController.getInstance().setSchemeLanguageOptionType(this, option);
 			}
-			
 			protected function onRollOver(event:MouseEvent):void{
 				this.parent.setChildIndex(this, parent.numChildren - 1);
 			}
-			
+			protected function supportPopUp():void{
+				
+			}
+			protected function displayToolTip(scheme:String){
+				var schemetoDesc:String;
+				if(scheme =="modus ponens") {
+					schemetoDesc="MPDesc";
+				}else if(scheme =="modus tollens") {
+					schemetoDesc="MTDesc";
+				}else if(scheme =="EQinferring") {
+					schemetoDesc="equivalence";
+				}else if(scheme =="DisSylDesc") {
+					schemetoDesc="disjunctive syllogism";
+				}else if(scheme =="not all syllogism") {
+					schemetoDesc="NotAllDesc";
+				}else if(scheme =="conditional syllogism") {
+					schemetoDesc="CondSylDesc";
+				}else if(scheme =="constructive dilemma") {
+					schemetoDesc="ConsDilDesc";
+				}else if(scheme =="either way") {
+					schemetoDesc="EitherWayDesc";
+				}
+				mainToolTip.text=Language.lookup(schemetoDesc);
+				mainToolTip.visible=true;
+
+			}
+
 		]]>
 	</fx:Script>
 </s:Group>
