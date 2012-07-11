@@ -2160,128 +2160,128 @@ gelesen und verstanden" />
 	<CondSylDesc>
 		<EN-US
 			text="Conditional Syllogism:
-					p --> q
-					q --> r
-					Therefore, p --> r" />
+	p --> q
+	q --> r
+	Therefore, p --> r" />
 		<RUS
 			text="Условный силлогизм:
-					p --> q
-					q --> r
-					Поэтому, p --> r" />
+	p --> q
+	q --> r
+	Поэтому, p --> r" />
 		<GER
 			text="Konditionaler Syllogismus:
-					p --> q
-					q --> r
-					Deshalb, p --> r" />
+	p --> q
+	q --> r
+	Deshalb, p --> r" />
 	</CondSylDesc>
 
 	<ConsDilDesc>
 		<EN-US
 			text="Constructive dilemma:
-					p v q
-					p --> r
-					q --> s
-					Therefore, r v s" />
+	p v q
+	p --> r
+	q --> s
+	Therefore, r v s" />
 		<RUS
 			text="Конструктивная дилемма:
-					p v q
-					p --> r
-					q --> s
-					Поэтому, r v s" />
+	p v q
+	p --> r
+	q --> s
+	Поэтому, r v s" />
 		<GER
 			text="Konstruktives Dilemma:
-					p v q
-					p --> r
-					q --> s
-					Deshalb, r v s" />
+	p v q
+	p --> r
+	q --> s
+	Deshalb, r v s" />
 	</ConsDilDesc>
 
 	<DisSylDesc>
 		<EN-US
 			text="Disjunctive Syllogism:
-					p v q
-					not p
-					Therefore, q" />
+	p v q
+	not p
+	Therefore, q" />
 		<RUS text="Дизъюнктивный силлогизм:
-					p v q
-					not p
-					Поэтому, q" />
+	p v q
+	not p
+	Поэтому, q" />
 		<GER text="Disjunktiver Syllogism:
-					p v q
-					nicht p
-					Deshalb, q" />
+	p v q
+	nicht p
+	Deshalb, q" />
 	</DisSylDesc>
 
 	<EitherWayDesc>
 		<EN-US
 			text="Either way:
-					p v q
-					p --> r
-					q --> r
-					Therefore, r" />
+	p v q
+	p --> r
+	q --> r
+	Therefore, r" />
 		<RUS
 			text="Так или иначе:
-					p v q
-					p --> r
-					q --> r
-					Поэтому, r" />
+	p v q
+	p --> r
+	q --> r
+	Поэтому, r" />
 		<GER
 			text="Wie-auch-immer:
-					p v q
-					p --> r
-					q --> r
-					Deshalb, r" />
+	p v q
+	p --> r
+	q --> r
+	Deshalb, r" />
 	</EitherWayDesc>
 
 	<EQinferring>
 		<EN-US
 			text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer
-		--p from q
-		--q from p
-		--not-p from not-q, or
-		--not-q from not-p" />
+	--p from q
+	--q from p
+	--not-p from not-q, or
+	--not-q from not-p" />
 		<RUS
 			text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести
-		- p от q
-		- q от p
-		- не-p от не-q, или
-		- не-q от не-p" />
+	- p от q
+	- q от p
+	- не-p от не-q, или
+	- не-q от не-p" />
 		<GER
 			text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder
-		-- p von q,
-		-- q von p,
-		--nicht-p von nicht-q, oder
-		-- nicht-q von nicht-p erschließen" />
+	-- p von q,
+	-- q von p,
+	--nicht-p von nicht-q, oder
+	-- nicht-q von nicht-p erschließen" />
 	</EQinferring>
 
 	<MPDesc>
 		<EN-US text="Modus ponens:
-					p --> q
-					p
-					Therefore, q" />
+	p --> q
+	p
+	Therefore, q" />
 		<RUS text="Модус поненс:
-					p --> q
-					p
-					Поэтому, q" />
+	p --> q
+	p
+	Поэтому, q" />
 		<GER text="Modus ponens:
-					p --> q
-					p
-					Deshalb, q" />
+	p --> q
+	p
+	Deshalb, q" />
 	</MPDesc>
 
 	<MTDesc>
 		<EN-US text="Modus tollens:
-					p --> q
-					not q
-					Therefore, not p" />
+	p --> q
+	not q
+	Therefore, not p" />
 		<RUS text="Модус толленс:
-					p --> q
-					не q
-					Поэтому, не p" />
+	p --> q
+	не q
+	Поэтому, не p" />
 		<GER text="Modus tollens:
-					p --> q
-					nicht q
-					Deshalb, nicht p" />
+	p --> q
+	nicht q
+	Deshalb, nicht p" />
 	</MTDesc>
 
 	<NotAllDesc>

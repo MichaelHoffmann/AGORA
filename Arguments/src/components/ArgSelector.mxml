@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:Panel skinClass="Skins.TopBarLessPanel" width = "430">
-		<s:Label  width="100" id = "mainToolTip" left = "500" text ="" backgroundColor="0xffff00" paddingTop="10" paddingRight="10" paddingLeft="10" paddingBottom="10" visible = "false"  click="{supportPopUp()}"/>
+		<s:Label  width="170" id = "mainToolTip" left = "500" text ="" backgroundColor="0xffff00" paddingTop="10" paddingRight="10" paddingLeft="10" paddingBottom="10" visible = "false"  click="{supportPopUp()}"/>
 
 <s:Group width = "400">
 	<s:Label text = "?" right = "10" toolTip="Click here for more info"/><!--add translate>-->
