@@ -219,21 +219,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			}
 			protected function displayToolTip(scheme:String):void{
 				var schemetoDesc:String;
-				if(scheme =="modus ponens") {
+				if(scheme ==Language.lookup("ModusPonens")) {
 					schemetoDesc="MPDesc";
-				}else if(scheme =="modus tollens") {
+				}else if(scheme ==Language.lookup("ModusTollens")) {
 					schemetoDesc="MTDesc";
-				}else if(scheme =="EQinferring") {
-					schemetoDesc="equivalence";
-				}else if(scheme =="DisSylDesc") {
-					schemetoDesc="disjunctive syllogism";
-				}else if(scheme =="not all syllogism") {
+				}else if(scheme ==Language.lookup("EQ")) {
+					schemetoDesc="EQinferring";
+				}else if(scheme ==Language.lookup("DisSylDesc")) {
+					schemetoDesc="DisjunctSyl";
+				}else if(scheme ==Language.lookup("NotAllSyl")) {
 					schemetoDesc="NotAllDesc";
-				}else if(scheme =="conditional syllogism") {
+				}else if(scheme ==Language.lookup("ConSyl")) {
 					schemetoDesc="CondSylDesc";
-				}else if(scheme =="constructive dilemma") {
+				}else if(scheme ==Language.lookup("ConsDil")) {
 					schemetoDesc="ConsDilDesc";
-				}else if(scheme =="either way") {
+				}else if(scheme ==Language.lookup("EitherWay")) {
 					schemetoDesc="EitherWayDesc";
 				}
 				mainToolTip.text=Language.lookup(schemetoDesc);
