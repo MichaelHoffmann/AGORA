@@ -32,6 +32,7 @@ package Controller
 			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.REGISTRATION_SUCCEEDED, onRegistrationRequestSuccess);
 			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.REGISTRATION_FAILED, onRegistrationRequestFailure);
 			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FAULT, onFault);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.REGISTRATION_DATA_GOTTEN, onRegInfoGotten);
 		}
 		
 		//----------------get Instance ----------------------------//
@@ -108,11 +109,19 @@ package Controller
 			Alert.show(Language.lookup("RegisterSuccess"));
 		}
 		
+		protected function onRegInfoGotten(event:AGORAEvent):void{
+	
+		}
+		
 		protected function onRegistrationRequestFailure(event:AGORAEvent):void{
 			//TODO: Get the appropriate text from the XML
 			trace(event.xmlData.text);
 			Alert.show(event.xmlData.@text);
 			Alert.show(Language.lookup("RegisterFailed"));
+		}
+		
+		public function pullRegistrationInfo():void{
+			AGORAModel.getInstance().userSessionModel.getRegistrationData();
 		}
 		
 		//---------------Generic Network Fault----------------------//

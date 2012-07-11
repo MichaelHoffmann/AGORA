@@ -217,7 +217,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			protected function supportPopUp():void{
 				
 			}
-			protected function displayToolTip(scheme:String){
+			protected function displayToolTip(scheme:String):void{
 				var schemetoDesc:String;
 				if(scheme =="modus ponens") {
 					schemetoDesc="MPDesc";

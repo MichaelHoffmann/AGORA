@@ -31,6 +31,7 @@ package ValueObjects
 		public var chatPullURL:String;
 		public var childMapURL:String;
 		public var mapToPrivateProjURL:String;
+		public var pullRegistrationURL:String;
 		
 		
 		
@@ -183,6 +184,7 @@ package ValueObjects
 			childMapURL="http://agora.gatech.edu/release/map_category.php";
 			createMapHereURL = "http://agora.gatech.edu/release/create_map_in_current_category.php";
 			mapToPrivateProjURL = "http://agora.gatech.edu/release/map_to_private_project.php";
+			pullRegistrationURL = "http://agora.gatech.edu/release/pull_registration_info.php";
 			initialize();		
 		}
 		

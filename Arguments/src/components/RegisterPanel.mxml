@@ -102,7 +102,7 @@
 			public function init():void
 			{
 			if(AGORAModel.getInstance().userSessionModel.loggedIn() || AGORAModel.getInstance().userSessionModel.username != "Guest"){
-				//Work here
+				UserSessionController.getInstance().pullRegistrationInfo();
 			}
 				focusManager.setFocus(username);
 				agoraConstants = AGORAParameters.getInstance();
@@ -130,6 +130,11 @@
 					Alert.show(Language.lookup("RegisterSuccess"));
 				}
 				PopUpManager.removePopUp(this);
+			}
+			
+			private function populateFields(event:Event):void{
+				var xml:XML = XML(event.target.data);
+				
 			}
 			
 			public function errorHandler(event: IOErrorEvent):void
