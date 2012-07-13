@@ -84,7 +84,8 @@ package components
 		public function showArgSelector():void{
 			schemeSelector.visible= true;
 			PopUpManager.addPopUp(schemeSelector,parent,true);
-			PopUpManager.centerPopUp(schemeSelector);
+			schemeSelector.x= this.x+schemeSelector.width;
+			schemeSelector.y=this.y+200;
 		}
 		public function hideArgSelector():void{
 			PopUpManager.removePopUp(schemeSelector);
