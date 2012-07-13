@@ -1832,6 +1832,11 @@ als neuer Benutzer" />
 		<GER
 			text="Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen." />
 	</SelectLanguageForm>
+       <SelectArgScheme>
+                <EN-US text="Select ..." />
+                <RUS text="Select ..." /><!--TODO: translation needed-->
+                <GER text="Wähle aus ..." />
+        </SelectArgScheme>
 
        <SelectArgScheme>
                 <EN-US text="Select ..." />
@@ -1984,7 +1989,6 @@ Projekte zu sehen" />
 		<RUS text="Каково главное заявление Вашего аргумента?" />
 		<GER text="Was ist die zentrale Behauptung deines Argumentes?" />
 	</WhatIsMainClaim>
-
 	<RegistrationNote>
 		<EN-US
 			text="Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. 
@@ -2008,15 +2012,27 @@ Projekte zu sehen" />
 		Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. 
 		Das AGORA-Projekt folgt den Richtlinien die in Georgia Techs Data Protection Safeguards niedergelegt sind:Georgia Tech's Data Protection Safeguards" />
 	</RegistrationNote>
+	<MustAgree>
+			<EN-US text="You must agree to the terms and conditions and the privacy policy to use Agora" />
+			<RUS text="You must agree to the terms and conditions and the privacy policy to use Agora"/><!-- todo translate -->
+			<GER text="You must agree to the terms and conditions and the privacy policy to use Agora" />
+	</MustAgree>
 
+	<RegistrationAge>
+		<EN-US text="I am 13 years or older or have parental permission to use AGORA-net." />
+		<RUS text="I am 13 years or older or have parental permission to use AGORA-net." /><!-- todo translate -->
+		<GER text="I am 13 years or older or have parental permission to use AGORA-net." />
+	</RegistrationAge>
+	<RegistrationAgeError>
+		<EN-US text="You must be 13 years or older or have parental permission to use AGORA-net." />
+		<RUS text="You must be 13 years or older or have parental permission to use AGORA-net." /><!-- todo translate -->
+		<GER text="You must be 13 years or older or have parental permission to use AGORA-net." />
+	</RegistrationAgeError>
 	<ReadRegistrationNote>
-		<EN-US text="I have read and understood the Privacy Policy" />
-		<RUS text="Я прочитал и понял Политику 
-Конфиденциальности" />
-		<GER text="Ich habe die Datenschutz-Vereinbarung 
-gelesen und verstanden" />
-	</ReadRegistrationNote>
-
+		<EN-US text="I have read and understood the Privacy Policy, and I agree to the AGORA-net Terms of Service" />
+		<RUS text="Я прочитал и понял Политику Конфиденциальности" />
+		<GER text="Ich habe die Datenschutz-Vereinbarung gelesen und verstanden, und ich stimme der Nutzungsvereinbarung zu" />
+	</ReadRegistrationNote>	
 	<RegistrationFailed>
 		<EN-US text="Error: Registration Failed. Please try again." />
 		<RUS

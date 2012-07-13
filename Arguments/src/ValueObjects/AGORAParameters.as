@@ -54,6 +54,7 @@ package ValueObjects
 		
 		//Labels
 		public var READ_REGISTRATION_NOTE:String;
+		public var TOS:String;
 		
 		//constants
 		public var MOD_PON:String = Language.lookup("ModusPonens");;
@@ -223,6 +224,7 @@ package ValueObjects
 			REGISTRATION_FAILED_MESSAGE = Language.lookup('RegistrationFailed');
 			REGISTRATION_NOTE = Language.lookup('RegistrationNote');
 			READ_REGISTRATION_NOTE = Language.lookup('ReadRegistrationNote');
+			TOS = Language.lookup('TermsOfService');
 			NOTE = Language.lookup('Note');
 			OK = Language.lookup('OK');
 			SAVE_AND_HOME = Language.lookup('SaveAndHome');

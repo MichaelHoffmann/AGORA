@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400"
-		 creationComplete="init(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height = "600"
+		 creationComplete="init(event)"  close = "{OK_btn_clickHandler()}"
 >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -11,7 +11,7 @@
 		<![CDATA[
 			import mx.managers.PopUpManager;
 
-			protected function OK_btn_clickHandler(event:MouseEvent):void
+			protected function OK_btn_clickHandler():void
 			{
 				// TODO Auto-generated method stub
 				PopUpManager.removePopUp(this);
@@ -25,9 +25,12 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import classes.Language;
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
 			import ValueObjects.AGORAParameters;
+			import flashx.textLayout.conversion.TextConverter;
+
 			[Bindable]
 			private var agoraConstants:AGORAParameters = AGORAParameters.getInstance();
 			
@@ -37,8 +40,13 @@
 		]]>
 		
 	</fx:Script>
-	<s:VGroup paddingBottom="10" paddingLeft="10" paddingTop="10" gap="20">
-		<mx:Text id="helpTxt" width="350" htmlText="{agoraConstants.REGISTRATION_NOTE}" />
-		<s:Button id="OK_btn" click="OK_btn_clickHandler(event)" label="{agoraConstants.OK}" />		
-	</s:VGroup>
-</s:Panel>
+		<s:TextArea  editable="false"
+					 paddingBottom="10"
+					 paddingLeft="10"
+					 paddingRight="10"
+					 paddingTop="10"
+					 width = "100%"
+					 height = "100%"
+					 textFlow="{ TextConverter.importToFlow(agoraConstants.TOS, TextConverter.TEXT_FIELD_HTML_FORMAT)}"
+					 />
+</s:TitleWindow>

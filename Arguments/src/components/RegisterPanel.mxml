@@ -23,7 +23,7 @@
 		  xmlns:mx="library://ns.adobe.com/flex/mx"  
 		  preinitialize="setProperties();" 
 		  creationComplete="init();"
-		  keyDown="panel1_keyDownHandler(event)" xmlns:components="components.*">
+		  keyDown="panel1_keyDownHandler(event)" xmlns:components="components.*" >
 
 	<fx:Script>
 		<![CDATA[
@@ -88,7 +88,7 @@
 			import mx.events.ValidationResultEvent;
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
-			
+
 			//import org.osmf.layout.AbsoluteLayoutFacet;
 			
 			private static var _salt:String = "AGORA";
@@ -149,24 +149,34 @@
 			
 			public function submit_form():void
 			{
-				if(pass_hash.text != pass_hash_dup.text)
-				{
-					Alert.show(Language.lookup("PassMismatch"));
-					return;
+				if(policyTermsRead.selected){			
+					if( is13orOlder.selected ){
+						if(pass_hash.text != pass_hash_dup.text)
+						{
+							Alert.show(Language.lookup("PassMismatch"));
+							return;
+						}
+						
+						var userDataVO:UserDataVO = new UserDataVO;
+						userDataVO.firstName = firstname.text;
+						userDataVO.lastName = lastname.text;
+						userDataVO.userName = username.text;
+						userDataVO.password = pass_hash.text;
+						userDataVO.email = email.text;
+						userDataVO.URL = url.text;
+						userDataVO.URL = url.text;
+						userDataVO.URL = url.text;
+						
+						var userSessionController:UserSessionController = UserSessionController.getInstance();
+						userSessionController.register(userDataVO);
+						}else{
+							Alert.show(Language.lookup("RegistrationAgeError"));
+						}
+					}else{
+						Alert.show(Language.lookup("MustAgree"));
+							
 				}
-				
-				var userDataVO:UserDataVO = new UserDataVO;
-				userDataVO.firstName = firstname.text;
-				userDataVO.lastName = lastname.text;
-				userDataVO.userName = username.text;
-				userDataVO.password = pass_hash.text;
-				userDataVO.email = email.text;
-				userDataVO.URL = url.text;
-				
-				var userSessionController:UserSessionController = UserSessionController.getInstance();
-				userSessionController.register(userDataVO);
 			}
-
 			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
 			{
 				Alert.show(Language.lookup("EnterValidEmail"));
@@ -184,8 +194,9 @@
 		]]>
 		
 	</fx:Script>
-	
-	<mx:Form id="form">
+	<s:VGroup  horizontalAlign="center">
+		
+	<mx:Form id="form" >
 		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}" required="true">
 			<s:TextInput id="username">
 			</s:TextInput>
@@ -214,16 +225,29 @@
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem>
-			<s:Label textDecoration="underline" text="{agoraConstants.READ_REGISTRATION_NOTE}" id="registrationNote" click="registrationNote_clickHandler(event)" />
+		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}">
+			<s:TextInput tabIndex="7" id="url2">
+			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem>
-			<s:HGroup>
-				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="7" id="submit_btn" click="submit_form();">		
-				</s:Button>
-				<s:Button label="{Language.lookup(&quot;Back&quot;)}"  tabIndex="8" id="back_btn" click="clear_form();">		
-				</s:Button>
-			</s:HGroup>		
+		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}">
+			<s:TextInput tabIndex="8" id="url3">
+			</s:TextInput>
 		</mx:FormItem>
 	</mx:Form>
+		<s:HGroup >
+			<s:CheckBox id = "policyTermsRead"  tabIndex="9"/>
+			<s:Label textDecoration="underline" toolTip="{agoraConstants.REGISTRATION_NOTE}" text="{Language.lookup('ReadRegistrationNote')}" id="registrationNote" click="registrationNote_clickHandler(event)" width="200" />
+		</s:HGroup>
+		<s:HGroup>
+			<s:CheckBox id = "is13orOlder" tabIndex="10"/>
+			<s:Label  id="registrationAge" text="{Language.lookup('RegistrationAge')}" width="200" />
+		</s:HGroup>
+		<s:HGroup paddingBottom="30">
+			<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="11" id="submit_btn" click="submit_form();">		
+			</s:Button>
+			<s:Button label="{Language.lookup(&quot;Back&quot;)}"  tabIndex="12" id="back_btn" click="clear_form();">		
+			</s:Button>
+		</s:HGroup >			
+	</s:VGroup>
+
 </mx:Panel>
