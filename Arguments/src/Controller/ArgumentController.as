@@ -664,10 +664,10 @@ package Controller
 			
 			//infobox beside enabler
 			var inference:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
-			PopUpManager.addPopUp(inference.addArgumentsInfo, inference.parent, true);
-			PopUpManager.centerPopUp(inference.addArgumentsInfo);
-			
-			inference.depth=300;
+			inference.addArgumentsInfo.depth = inference.parent.numChildren;
+			inference.addArgumentsInfo.y =  inference.y + inference.height + 20;
+			inference.addArgumentsInfo.x = inference.x;
+			trace(map.parent);
 			inference.addArgumentsInfo.visible=true;
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];

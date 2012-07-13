@@ -14,7 +14,7 @@
 				<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
 			</s:fill>
 		</s:Ellipse>
-	<s:Image id="dragButton" mouseDown ="beginDrag(event)"
+	<s:Image id="dragButton" mouseDown ="beginDrag(event)" buttonMode="true"
 			 source="@Embed('images/agoraMove.png')" left= "-35"  top = "-26" height = "30" width = "30" />
 	</s:Group>
 
@@ -71,13 +71,13 @@
 					<!--delete button-->
 					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8"/>
 					<s:Image id="hideButton"   width="10" height="10"
-							 click="{showButton.visible = true; bottomSlideout.visible=false; }"
+							 click="{showButton.visible = true; bottomSlideout.visible=false; }" buttonMode="true"
 							 source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY="-1" bottom ="0"/>
 					<!-- add button-->
 
 				</s:HGroup>
 				</s:Group>
-		<s:Image right="57.5" bottom="-35" id="showButton"  width="10" height="10"
+		<s:Image right="57.5" bottom="-35" id="showButton"  width="10" height="10" 
 				 mouseOver="{showButton.visible = false; bottomSlideout.visible=true; }"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
 

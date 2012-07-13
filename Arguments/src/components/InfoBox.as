@@ -108,7 +108,7 @@ package components
 		//--------------------- Event Handlers -----------------------------------------//
 		protected function onOKButtonClicked(event:MouseEvent):void{
 			
-			PopUpManager.removePopUp(this);
+			this.visible=false;
 		}
 	}
 }
