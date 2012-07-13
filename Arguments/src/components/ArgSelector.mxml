@@ -25,14 +25,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Panel skinClass="Skins.TopBarLessPanel" width = "430">
-		<s:Label  width="170" id = "mainToolTip" left = "500" text ="" backgroundColor="0xffff00" paddingTop="10" paddingRight="10" paddingLeft="10" paddingBottom="10" visible = "false"  click="{supportPopUp()}"/>
+	<s:Panel skinClass="Skins.TopBarLessPanel" width = "430" >
+		<s:Label  width="170" id = "mainToolTip" left = "500" text ="" backgroundColor="0xffff00" paddingTop="10" paddingRight="10" paddingLeft="10" paddingBottom="10" visible = "false" />
 
-<s:Group width = "400">
-	<s:Label text = "?" right = "10" toolTip="Click here for more info"/><!--add translate>-->
+<s:Group width = "400" id="theMainGroup">
+	<s:Label text = "?" right = "10" toolTip="{Language.lookup('NoteIntro')}"   click="{supportPopUp()}" buttonMode="true" /><!--add translate>-->
 	<s:HGroup top = "10">
 		<s:VGroup>
-			<s:Label text ="Select..."/><!--add translate>-->
+			<s:Label text ="{Language.lookup('SelectArgScheme')}" toolTip="{Language.lookup('NoteSelectArgScheme')}" /><!--add translate>-->
 			<mx:List id="mainSchemes"
 					 dataProvider="{scheme}"
 					 rollOverColor="#b2c4e7"
@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					 toolTip=""/>
 		</s:VGroup>
 		<s:VGroup>
-			<s:Label text ="...and select:" visible="{typeSelector.visible}"/>
+			<s:Label text ="{Language.lookup('SelectLanguage')}" visible="{typeSelector.visible}" toolTip="{Language.lookup('NoteSelectLanguage')}" />
 			<mx:List id="typeSelector" 
 					 dataProvider="{languageTypes}"
 					 x="{mainSchemes.width}"
@@ -68,8 +68,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				 paddingLeft="8" 
 				 visible = "false" click = "{this.visible=false}"/>
 	</s:HGroup>
-</s:Group>				
 
+
+</s:Group>				
+			<s:TitleWindow id = "popUpSupport"  close ="{popUpSupport.visible=false;}" width="500" left = "{theMainGroup.width}" visible="false" top = "-200" >
+				<s:TextArea  editable="false"
+									 paddingBottom="10"
+									 paddingLeft="10"
+									 paddingRight="10"
+									 paddingTop="10"
+									 width = "100%"
+									 
+									 textFlow="{TextConverter.importToFlow(Language.lookup('Intro'), TextConverter.TEXT_FIELD_HTML_FORMAT)}"
+									 />
+			</s:TitleWindow>
 
 	</s:Panel>
 	
@@ -96,6 +108,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			private var _scheme:Array;
 			private var _options:Array;
 			
+			import flashx.textLayout.conversion.TextConverter;
+
 			private var _argumentTypeModel:ArgumentTypeModel;
 			
 			
@@ -215,7 +229,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				this.parent.setChildIndex(this, parent.numChildren - 1);
 			}
 			protected function supportPopUp():void{
-				
+				popUpSupport.visible=true;
+
 			}
 			protected function displayToolTip(scheme:String):void{
 				var schemetoDesc:String;
@@ -225,8 +240,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					schemetoDesc="MTDesc";
 				}else if(scheme ==Language.lookup("EQ")) {
 					schemetoDesc="EQinferring";
-				}else if(scheme ==Language.lookup("DisSylDesc")) {
-					schemetoDesc="DisjunctSyl";
+				}else if(scheme ==Language.lookup("DisjunctSyl")) {
+					schemetoDesc="DisSylDesc";
 				}else if(scheme ==Language.lookup("NotAllSyl")) {
 					schemetoDesc="NotAllDesc";
 				}else if(scheme ==Language.lookup("ConSyl")) {
