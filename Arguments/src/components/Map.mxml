@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</components:StatusBar>
 	
 	<s:Group id="theMap">
-		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin">	
+		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
 			<s:Group>
 				<mx:Canvas x="0">
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
@@ -89,7 +89,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //				agora.width = stage.stageWidth - agora.x;
 				topPanel.width = stage.stageWidth;
 			}
-			
+			public function setScrollers(hBar:int, vBar:int):void {
+				if(agoraMap.width<hBar){
+					agoraMap.width=hBar+screen.height;
+				}
+				if(agoraMap.height<vBar+screen.height){
+					agoraMap.height=vBar+screen.height;
+				}
+				agora.horizontalScrollBar.value=hBar;
+				agora.verticalScrollBar.value=vBar;
+			}
 			override protected function measure():void{
 				super.measure();
 			}

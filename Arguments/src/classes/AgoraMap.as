@@ -545,6 +545,7 @@ package classes
 						inference.myschemeSel.typeSelector.dataProvider = inference.myArg._langTypes;
 					}
 					inference.myschemeSel.typeSelector.visible = true;
+					inference.myschemeSel.typeSelectorText.visible = true;
 					inference.myArg.createLinks();
 					inference.argType.changeSchemeBtn.label = inference.myschemeSel.selectedScheme;
 					inference.selectedBool = true;

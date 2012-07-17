@@ -172,11 +172,11 @@ package components
 					panelsHash[inference.model.ID] = inference;
 					addChild(inference);
 					//add the next infobox
-					inference.addArgumentsInfo = new InfoBox;
-					inference.addArgumentsInfo.visible = false;
-					inference.addArgumentsInfo.text = Language.lookup('ArgComplete');
-					inference.addArgumentsInfo.boxWidth = 500;
-					addChild(inference.addArgumentsInfo);
+					var addArgumentsInfo:InfoBox = new InfoBox;
+					addArgumentsInfo.visible = false;
+					addArgumentsInfo.text = Language.lookup('ArgComplete');
+					addArgumentsInfo.boxWidth = 500;
+					addChild(addArgumentsInfo);
 				}
 					
 				else if(newPanels[i] is StatementModel){
@@ -314,7 +314,7 @@ package components
 							
 							var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
 							fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 30;
-							fvlspy = argumentPanel.y + argumentPanel.getExplicitOrMeasuredHeight();
+							fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 							fvlfpy = bottomObjection.y + 72;
 							//draw a line from the first objection to the last objection
 							//and an arrow

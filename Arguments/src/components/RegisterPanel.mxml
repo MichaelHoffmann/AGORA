@@ -225,14 +225,6 @@
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}">
-			<s:TextInput tabIndex="7" id="url2">
-			</s:TextInput>
-		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}">
-			<s:TextInput tabIndex="8" id="url3">
-			</s:TextInput>
-		</mx:FormItem>
 	</mx:Form>
 		<s:HGroup >
 			<s:CheckBox id = "policyTermsRead"  tabIndex="9"/>

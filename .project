@@ -31,5 +31,25 @@
 			<type>2</type>
 			<location>C:/Users/pwill/Desktop/release</location>
 		</link>
+		<link>
+			<name>bin-release3</name>
+			<type>2</type>
+			<location>C:/Users/pwill/Desktop/release/german</location>
+		</link>
+		<link>
+			<name>bin-release4</name>
+			<type>2</type>
+			<location>C:/Users/pwill/Desktop/release/Russian</location>
+		</link>
+		<link>
+			<name>bin-release5</name>
+			<type>2</type>
+			<location>C:/Users/pwill/Desktop/release/german</location>
+		</link>
+		<link>
+			<name>bin-release6</name>
+			<type>2</type>
+			<location>C:/Users/pwill/Desktop/release/English</location>
+		</link>
 	</linkedResources>
 </projectDescription>
