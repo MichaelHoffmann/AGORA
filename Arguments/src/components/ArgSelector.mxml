@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					 toolTip=""/>
 		</s:VGroup>
 		<s:VGroup>
-			<s:Label text ="{Language.lookup('SelectLanguage')}" visible="{typeSelector.visible}" toolTip="{Language.lookup('NoteSelectLanguage')}" />
+			<s:Label id= "typeSelectorText" text ="{Language.lookup('SelectLanguage')}" visible="{typeSelector.visible}" toolTip="{Language.lookup('NoteSelectLanguage')}" />
 			<mx:List id="typeSelector" 
 					 dataProvider="{languageTypes}"
 					 x="{mainSchemes.width}"

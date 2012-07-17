@@ -109,25 +109,25 @@
 		]]>
 		
 	</fx:Script>
-	<mx:Form id="form">
-		<mx:FormItem label="{Language.lookup(&quot;Username&quot;)}" >
-			<s:TextInput id="username">
-			</s:TextInput>
-		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}">
-			<s:TextInput id="pass_hash" displayAsPassword="true">
-			</s:TextInput>
-		</mx:FormItem>
-		<mx:FormItem>
-			<s:HGroup>
-				<s:Button label="{Language.lookup(&quot;Submit&quot;)}" id="submit_btn" click="submitButton_onClick();">		
-				</s:Button>
-				<s:Button label="{Language.lookup(&quot;Back&quot;)}" id="back_btn" click="backButton_onClick();">		
-				</s:Button>
-				<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="registerButton_onClick(event)">		
-				</s:Button>
-			</s:HGroup>		
-		</mx:FormItem>
-		
-	</mx:Form>
+	<s:VGroup horizontalCenter="0" gap="0" paddingBottom="0">
+		<mx:Form id="form" >
+			<mx:FormItem label="{Language.lookup(&quot;Username&quot;)}" >
+				<s:TextInput id="username">
+				</s:TextInput>
+			</mx:FormItem>
+			<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}">
+				<s:TextInput id="pass_hash" displayAsPassword="true">
+				</s:TextInput>
+			</mx:FormItem>
+		</mx:Form>
+		<s:HGroup horizontalCenter="0">
+			<s:Button label="{Language.lookup(&quot;Submit&quot;)}" id="submit_btn" click="submitButton_onClick();">		
+			</s:Button>
+			<s:Button label="{Language.lookup(&quot;Back&quot;)}" id="back_btn" click="backButton_onClick();">		
+			</s:Button>
+			<s:Button label="{Language.lookup(&quot;Register&quot;)}" id="register_btn" click="registerButton_onClick(event)">		
+			</s:Button>
+		</s:HGroup>			
+	</s:VGroup>
+
 </mx:Panel>

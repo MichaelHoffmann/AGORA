@@ -66,6 +66,7 @@ package components
 			
 			if(!saveAsBtn){
 				saveAsBtn = new Button;
+				saveAsBtn.visible=false;
 				BindingUtils.bindProperty(saveAsBtn, 'label', agoraConstants, 'SAVE_AS');
 				BindingUtils.bindProperty(saveAsBtn,  'toolTip', agoraConstants, 'SUPPORT_SAVEAS');
 				addChild(saveAsBtn);

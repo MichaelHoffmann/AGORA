@@ -68,7 +68,6 @@ package components
 		public var changeButton:Button;
 		
 		
-		
 		private var _schemeSelector:ArgSelector;
 		
 		public function MenuPanel()
@@ -82,10 +81,12 @@ package components
 		}
 		
 		public function showArgSelector():void{
+			var map:Map= FlexGlobals.topLevelApplication.map;
+			map.setScrollers(x+width*4/2-screen.width/2,y-screen.height/2+height*3);
 			schemeSelector.visible= true;
 			PopUpManager.addPopUp(schemeSelector,parent,true);
-			schemeSelector.x= this.x+schemeSelector.width;
-			schemeSelector.y=this.y+200;
+			PopUpManager.centerPopUp(schemeSelector);
+			schemeSelector.x+=300
 		}
 		public function hideArgSelector():void{
 			PopUpManager.removePopUp(schemeSelector);

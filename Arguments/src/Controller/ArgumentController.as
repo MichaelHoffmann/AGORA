@@ -23,6 +23,7 @@ package Controller
 	import components.ArgumentPanel;
 	import components.GridPanel;
 	import components.HelpText;
+	import components.InfoBox;
 	import components.Map;
 	import components.MenuPanel;
 	import components.Option;
@@ -567,10 +568,12 @@ package Controller
 					argSchemeSelector.typeSelector.dataProvider = logicClassController.langTypes;
 				}
 				argSchemeSelector.typeSelector.x = argSchemeSelector.mainSchemes.width;
+				argSchemeSelector.typeSelectorText.visible=true;
 				argSchemeSelector.typeSelector.visible=true;
 				
 			}
 			else{
+				argSchemeSelector.typeSelectorText.visible = false;
 				argSchemeSelector.typeSelector.visible = false;
 				updateEnablerText(argSchemeSelector, null)
 			}
@@ -664,11 +667,13 @@ package Controller
 			
 			//infobox beside enabler
 			var inference:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
-			inference.addArgumentsInfo.depth = inference.parent.numChildren;
-			inference.addArgumentsInfo.y =  inference.y + inference.height + 20;
-			inference.addArgumentsInfo.x = inference.x;
-			trace(map.parent);
-			inference.addArgumentsInfo.visible=true;
+			var addArgumentsInfo:InfoBox=new InfoBox();
+			addArgumentsInfo.boxWidth=500;
+			addArgumentsInfo.text = Language.lookup('ArgComplete');
+			agoraMap.addElement(addArgumentsInfo);
+			addArgumentsInfo.y =  inference.y + inference.height + 20;
+			addArgumentsInfo.x = inference.x;
+			addArgumentsInfo.visible=true;
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
 			if(claim.panelType != StatementModel.INFERENCE){
