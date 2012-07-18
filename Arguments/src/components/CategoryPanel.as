@@ -195,6 +195,7 @@ package components
 		protected function onMapObjectClicked(event:MouseEvent):void{
 			var thisMapInfo:MapMetaData = mapMetaDataVector[parseInt((Button) (event.target).id)];
 			rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
+			rsp.mapTitle.text=thisMapInfo.mapName;
 			rsp.clickableMapOwnerInformation.toolTip = 
 				thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
