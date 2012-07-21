@@ -46,7 +46,9 @@ package Model
 		}
 		
 		public function publishMap(mapID:int, currCatID:int):void{
-			publishTheMap.send({map_id: mapID, current_category: currCatID});
+			publishTheMap.send({map_id: mapID, current_category: currCatID,
+				uid: AGORAModel.getInstance().userSessionModel._uid,
+				passhash: AGORAModel.getInstance().userSessionModel.passHash});
 		}
 		
 		public function sendForChildren(categoryName:String):void{
@@ -58,7 +60,10 @@ package Model
 		}
 		protected function onMapPublished(event:ResultEvent):void{
 			if(event.result.hasOwnProperty("error")){
-				FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("UnsuccessfullyPublished");
+				if(event.result.error.@code == "311" || event.result.error.@code == 311)
+					FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("NotProjMember");
+				else
+					FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("UnsuccessfullyPublished");
 			} else {
 				FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("SuccessfullyPublished");
 				FlexGlobals.topLevelApplication.publishMap.okayButton.visible = false;

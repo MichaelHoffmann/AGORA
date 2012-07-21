@@ -31,6 +31,13 @@
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 	
+	<NotProjMember>
+		<EN-US text="You cannot publish a map into a project which you are not a member" />
+		<RUS text="You cannot publish a map into a project which you are not a member" />
+		<GER text="You cannot publish a map into a project which you are not a member" />
+	</NotProjMember>
+	
+	
 	<PrivacyPolicyTOS>
 		<EN-US text="
 			
