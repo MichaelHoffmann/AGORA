@@ -51,5 +51,10 @@
 			<type>2</type>
 			<location>C:/Users/pwill/Desktop/release/English</location>
 		</link>
+		<link>
+			<name>bin-release7</name>
+			<type>2</type>
+			<location>C:/Users/pwill/Desktop/release/German</location>
+		</link>
 	</linkedResources>
 </projectDescription>

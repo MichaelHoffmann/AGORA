@@ -656,7 +656,7 @@
 					stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
 				}
 				
-				BindingUtils.bindProperty(stmtTypeLbl, "text",this, ["statementType"]);
+				stmtTypeLbl.text=statementType;
 				stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
 				
 				bottomHG = new HGroup();
@@ -737,6 +737,7 @@
 							skin.setStyle("cornerRadius","15");
 
 						}
+						stmtTypeLbl.text=Language.lookup(statementType+"Name");
 					}
 					
 					//Handle state change between DISPLAY AND EDIT.

@@ -66,6 +66,9 @@
 				xB = xB + chat.getExplicitOrMeasuredHeight();
 				
 			}
+			public function differentData():void{
+				
+			}
 			
 			protected function mapTitle_focusInHandler(event:FocusEvent):void
 			{

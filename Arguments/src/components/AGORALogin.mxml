@@ -115,7 +115,7 @@
 			<s:Button id="loginButton" width="120" height="40" label="{Language.lookup('Login')}" horizontalCenter="-71"
 					  verticalCenter="19" click = "loginButton_onClick(event)"/>
 			<!--This is the New User Registration button-->
-			<s:Button id="registerButton" width="124" height="40" label="{Language.lookup('Register')}" click = "registerButton_onClick(event)" horizontalCenter="59" verticalCenter="19"/>
+			<s:Button id="registerButton" width="124" height="40" label="{Language.lookup('Register')}" toolTip="{Language.lookup('RegistrationNote')}" click = "registerButton_onClick(event)" horizontalCenter="59" verticalCenter="19"/>
 			<!--This is the box group that forms the smaller links below Login/Register"-->
 			<mx:HBox id="bottomLinks"  height="29" horizontalCenter="8" textAlign="center" verticalCenter="69">
 				<!--The "About Us" link-->

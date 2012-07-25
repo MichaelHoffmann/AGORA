@@ -353,7 +353,7 @@ package classes
 					{
 						inferencePanel = Inference(panel);
 						currXML.@ID = inferencePanel.ID;
-						currXML.@Type = "Inference";
+						currXML.@Type = Language.lookup("Inference");
 						currXML.@is_positive = 1;
 					}
 					else if(panel is ArgumentPanel)
@@ -361,10 +361,10 @@ package classes
 						argumentPanel = ArgumentPanel(panel);
 						currXML.@ID = argumentPanel.ID;
 						if(argumentPanel.state == 0){
-							currXML.@Type="Universal";
+							currXML.@Type=Language.lookup("Universal");
 						}
 						else{
-							currXML.@Type = "Particular";
+							currXML.@Type = Language.lookup("Particular");
 						}
 						
 						var nodeText:XML = <nodetext></nodetext>;

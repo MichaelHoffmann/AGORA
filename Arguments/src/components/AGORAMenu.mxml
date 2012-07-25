@@ -26,6 +26,8 @@
 			
 			import flash.system.Capabilities;
 			
+			import flashx.textLayout.conversion.TextConverter;
+			
 			import mx.collections.ArrayList;
 			import mx.containers.Box;
 			import mx.controls.Alert;
@@ -43,7 +45,6 @@
 			import spark.components.Panel;
 			import spark.components.Scroller;
 			import spark.components.TitleWindow;
-			import flashx.textLayout.conversion.TextConverter;
 			
 			public var timer:Timer = new Timer(10000);
 			public var numClicks:int=0;
@@ -65,6 +66,7 @@
 				AGORAController.getInstance().fetchDataCategory();
 				AGORAController.getInstance().fetchDataMapList();
 				AGORAController.getInstance().fetchDataProjectList();
+				getRegistrationNote();
 			}
 			
 			
@@ -262,6 +264,12 @@
 				hidePanelButton.x = stage.stageWidth - hidePanelButton.getExplicitOrMeasuredWidth();
 				hidePanelButton.y = 0;
 			}
+			protected function getRegistrationNote():void{
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if( userSession.username=='Guest'){
+					privacyPolicyBtn.toolTip= Language.lookup('RegistrationNote');
+				}
+			}
 			
 		]]>
 	</fx:Script>
@@ -382,7 +390,6 @@
 						  click="registerBtn_clickHandler(event)" />
 				<s:Button id="privacyPolicyBtn"
 						  label="{Language.lookup('PrivacyPolicy')}"
-						  toolTip="{Language.lookup('RegistrationNote')}"
 						  click="privacyPolicyBtn_clickHandler(event)"/>
 				<s:Button id="backBtn"
 						  label="{Language.lookup('Back')}"

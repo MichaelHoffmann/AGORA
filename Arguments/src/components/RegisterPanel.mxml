@@ -75,6 +75,7 @@
 			import Controller.UserSessionController;
 			
 			import Model.AGORAModel;
+			import Model.UserSessionModel;
 			
 			import ValueObjects.AGORAParameters;
 			import ValueObjects.UserDataVO;
@@ -98,21 +99,30 @@
 			public static function get salt():String{
 				return _salt;
 			}
-				
 			public function init():void
 			{
-			if(AGORAModel.getInstance().userSessionModel.loggedIn() || AGORAModel.getInstance().userSessionModel.username != "Guest"){
+			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				UserSessionController.getInstance().pullRegistrationInfo();
+
+				if(AGORAModel.getInstance().userSessionModel.username != "Guest"){
+					setRegData(AGORAModel.getInstance().userSessionModel);
+				}
 			}
-				focusManager.setFocus(username);
-				agoraConstants = AGORAParameters.getInstance();
+					focusManager.setFocus(username);
+					agoraConstants = AGORAParameters.getInstance();
 			}
 			
 			public function setProperties():void
 			{
 				title=Language.lookup("Register");
 			}
-			
+			public function setRegData(user:UserSessionModel):void{
+				 firstname.text = user.firstName;
+				 lastname.text=user.lastName;
+				 username.text=user.username;
+				 email.text=user.email;
+				 url.text=user.URL;
+			}
 			private function displayStatus(event:Event):void
 			{
 				var xml:XML = XML(event.target.data);
