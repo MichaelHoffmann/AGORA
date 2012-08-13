@@ -73,11 +73,14 @@
 	</fx:Script>
 	
 	<!--Creates a form-->
-	<mx:Form id="form">
+	<mx:Form id="form" horizontalCenter="0">
 		
 		<!--Declares the first item of the form-->
-		<mx:FormItem tabIndex="1" label="{Language.lookup('EnterMapName')}">
+		<mx:FormItem tabIndex="1">
 			
+			<s:Label text="{Language.lookup('EnterMapName')}" width="{width/2}">
+				
+			</s:Label>
 			<!--The text field that allows the user to input the map name-->
 			<s:TextInput id="mapName">
 			</s:TextInput>

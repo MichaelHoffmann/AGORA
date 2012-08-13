@@ -131,6 +131,8 @@ package Model
 				uid = event.result.login.ID;
 				firstName = event.result.login.firstname;
 				lastName = event.result.login.lastname;
+				email = event.result.login.email;
+				URL = event.result.login.url;
 				if(!uid){
 					dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
 					return;
@@ -162,7 +164,48 @@ package Model
 				email:userData.email,
 				url:userData.URL});
 		}
-		
+		public function changeInfo(userData:UserDataVO,newPass:String):void{
+			var changeInfoRequestService:HTTPService = new HTTPService;
+			trace (userData.password);
+			passHash = MD5.hash(userData.password + _salt);
+			trace (userData.userName);
+			trace (passHash);
+			
+			newPass = MD5.hash(newPass + _salt);
+			changeInfoRequestService.url = AGORAParameters.getInstance().changeInfoURL;
+			changeInfoRequestService.addEventListener(ResultEvent.RESULT, onChangeInfo);
+			changeInfoRequestService.addEventListener(FaultEvent.FAULT, onChangeInfo);
+			changeInfoRequestService.send({username:userData.userName,
+				pass_hash:passHash,
+				firstname:userData.firstName,
+				lastname:userData.lastName,
+				email:userData.email,
+				url:userData.URL,
+				newpass:newPass});
+
+		}
+		protected function onChangeInfo(event:ResultEvent):void{
+			event.target.removeEventListener(ResultEvent.RESULT, onChangeInfo);
+			event.target.removeEventListener(FaultEvent.FAULT, onChangeInfo);
+
+			try{
+				trace("starting try");
+				username = event.result.changeinfo.ID;
+				trace("new username"+username);
+				firstName = event.result.changeinfo.firstname;
+				trace("new firstName"+firstName);
+				lastName = event.result.changeinfo.lastname;
+				trace("new lastName"+lastName);
+				email = event.result.changeinfo.email;
+				trace("new email"+email);
+				URL = event.result.changeinfo.url;
+				trace("new url"+URL);
+			}catch(e:Error){
+				trace(e.message);
+				trace("In UserSessionModel.onLoginRequestServiceResult: expected attributes were not present either because of invalid credentials or change in server ");
+				dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
+			}
+		}
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
@@ -177,36 +220,16 @@ package Model
 		}
 		
 		protected function onRegistrationRequestServiceFault(event:ResultEvent):void{
-			//trace(event.result.toXMLString());
+			trace(event.result.toXMLString());
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 		
 		
-		public function getRegistrationData():void{
-			var registrationRequestService:HTTPService = new HTTPService;
-			registrationRequestService.url = AGORAParameters.getInstance().pullRegistrationURL
-			registrationRequestService.addEventListener(ResultEvent.RESULT, onGotRegistrationData);
-			registrationRequestService.addEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
-			registrationRequestService.send({uid: this._uid});
-		}
+
 		
-		protected function onGotRegistrationData(event:ResultEvent):void{
-			var xml:XML = event.result as XML;
-			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
-			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
-			var tempReg:RegisterPanel = FlexGlobals.topLevelApplication.registrationWindow;
-			Alert.show(xml.regInfo.@username);
-			tempReg.username.text = xml.@username;
-			tempReg.username.enabled = false;
-			tempReg.pass_hash.enabled = false;
-			tempReg.pass_hash_dup.enabled = false;
-			tempReg.email.text = xml.@email;
-			tempReg.firstname.text = xml.@firstname;
-			tempReg.lastname.text = xml.@lastname;
-			tempReg.url.text = xml.@url;
-		}
+
 		
 		
 	}

@@ -92,7 +92,7 @@
 			<s:layout><s:BasicLayout/></s:layout>
 
 			<!--This is the new user label on the side panel-->
-			<s:Label id="VisitorGreeting" x="7" width="230" height="71" fontFamily="Arial"
+			<s:Label id="VisitorGreeting" x="7" width="230"  fontFamily="Arial"
 					 fontSize="20" text="{Language.lookup('NewHere')}"
 					 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
 			<!--The Guest Login button-->

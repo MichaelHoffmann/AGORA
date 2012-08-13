@@ -18,12 +18,12 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx"  
-		  preinitialize="setProperties();" 
-		  creationComplete="init();"
-		  keyDown="panel1_keyDownHandler(event)" xmlns:components="components.*" >
+<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:components="components.*"
+		  creationComplete="init();" currentState="Register" keyDown="panel1_keyDownHandler(event)"
+		  preinitialize="setProperties();">
 
 	<fx:Script>
 		<![CDATA[
@@ -35,6 +35,10 @@
 			}
 		]]>
 	</fx:Script>
+	<mx:states>
+		<s:State name="Register"/>
+		<s:State name="ChangeInfo"/>
+	</mx:states>
 
 	
 	<fx:Declarations>
@@ -102,10 +106,10 @@
 			public function init():void
 			{
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
-				UserSessionController.getInstance().pullRegistrationInfo();
 
 				if(AGORAModel.getInstance().userSessionModel.username != "Guest"){
-					setRegData(AGORAModel.getInstance().userSessionModel);
+					setRegData();
+					currentState="ChangeInfo";
 				}
 			}
 					focusManager.setFocus(username);
@@ -116,12 +120,13 @@
 			{
 				title=Language.lookup("Register");
 			}
-			public function setRegData(user:UserSessionModel):void{
-				 firstname.text = user.firstName;
-				 lastname.text=user.lastName;
-				 username.text=user.username;
-				 email.text=user.email;
-				 url.text=user.URL;
+			public function setRegData():void{
+				var userSessionModel:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				username.text=userSessionModel.username;
+				email.text=userSessionModel.email;
+				firstname.text=userSessionModel.firstName;
+				lastname.text=userSessionModel.lastName;
+				url.text=userSessionModel.URL;
 			}
 			private function displayStatus(event:Event):void
 			{
@@ -158,33 +163,39 @@
 			}
 			
 			public function submit_form():void
-			{
-				if(policyTermsRead.selected){			
-					if( is13orOlder.selected ){
-						if(pass_hash.text != pass_hash_dup.text)
-						{
-							Alert.show(Language.lookup("PassMismatch"));
-							return;
-						}
-						
-						var userDataVO:UserDataVO = new UserDataVO;
-						userDataVO.firstName = firstname.text;
-						userDataVO.lastName = lastname.text;
-						userDataVO.userName = username.text;
-						userDataVO.password = pass_hash.text;
-						userDataVO.email = email.text;
-						userDataVO.URL = url.text;
-						userDataVO.URL = url.text;
-						userDataVO.URL = url.text;
-						
-						var userSessionController:UserSessionController = UserSessionController.getInstance();
-						userSessionController.register(userDataVO);
-						}else{
-							Alert.show(Language.lookup("RegistrationAgeError"));
-						}
-					}else{
-						Alert.show(Language.lookup("MustAgree"));
+			{	var userSessionController:UserSessionController = UserSessionController.getInstance();
+				var userDataVO:UserDataVO = new UserDataVO;
+				userDataVO.firstName = firstname.text;
+				userDataVO.lastName = lastname.text;
+				userDataVO.userName = username.text;
+				userDataVO.password = pass_hash.text;
+				userDataVO.email = email.text;
+				userDataVO.URL = url.text;
+
+				if(currentState=="Register"){
+					if(policyTermsRead.selected){			
+						if( is13orOlder.selected ){
+							if(pass_hash.text != pass_hash_dup.text)
+							{
+								Alert.show(Language.lookup("PassMismatch"));
+								return;
+							}
 							
+							//userDataVO.URL2 = url2.text;
+							//userDataVO.URL3 = url3.text;
+							
+							userSessionController.register(userDataVO);
+							}else{
+								Alert.show(Language.lookup("RegistrationAgeError"));
+							}
+						}else{
+							Alert.show(Language.lookup("MustAgree"));
+								
+					}
+				}else if(currentState=="ChangeInfo"){
+					userDataVO.password=oldPass.text;
+					userSessionController.changeInfo(userDataVO,newpass.text);
+
 				}
 			}
 			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
@@ -207,27 +218,27 @@
 	<s:VGroup  horizontalAlign="center">
 		
 	<mx:Form id="form" >
-		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}" required="true">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}" required.Register="true">
 			<s:TextInput id="username">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}" required="true">
+		<mx:FormItem includeIn="Register" label="{Language.lookup(&quot;Password&quot;)}" required="true">
 			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="{Language.lookup(&quot;PassRepeat&quot;)}" required="true" >
+		<mx:FormItem includeIn="Register" label="{Language.lookup(&quot;PassRepeat&quot;)}" required="true" >
 			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}" required.Register="true">
 			<s:TextInput tabIndex="4" id="firstname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}" required="true">
+		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}" required.Register="true">
 			<s:TextInput tabIndex="5" id="lastname">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="{Language.lookup(&quot;Email&quot;)}" required="true">
+		<mx:FormItem  label="{Language.lookup(&quot;Email&quot;)}" required.Register="true">
 			<s:TextInput tabIndex="6" id="email">
 			</s:TextInput>
 		</mx:FormItem>
@@ -235,14 +246,26 @@
 			<s:TextInput tabIndex="6" id="url">
 			</s:TextInput>
 		</mx:FormItem>
+		<mx:FormItem includeIn="ChangeInfo" label="{Language.lookup(&quot;NewPassword&quot;)}">
+			<s:TextInput  id="newpass" tabIndex="7" displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem id="newPass" includeIn="ChangeInfo" label="{Language.lookup(&quot;OldPassword&quot;)}" required="true">
+			<s:TextInput id="oldPass" tabIndex="8" displayAsPassword="true">
+			</s:TextInput>
+		</mx:FormItem>
 	</mx:Form>
-		<s:HGroup >
-			<s:CheckBox id = "policyTermsRead"  tabIndex="9"/>
-			<s:Label textDecoration="underline" toolTip="{agoraConstants.REGISTRATION_NOTE}" text="{Language.lookup('ReadRegistrationNote')}" id="registrationNote" click="registrationNote_clickHandler(event)" width="200" />
+		<s:HGroup includeIn="Register" >
+			<s:CheckBox id="policyTermsRead"  tabIndex="9"/>
+			<s:Label id="registrationNote" width="200"
+					 click="registrationNote_clickHandler(event)"
+					 text="{Language.lookup('ReadRegistrationNote')}" textDecoration="underline"
+					 toolTip="{agoraConstants.REGISTRATION_NOTE}"/>
 		</s:HGroup>
-		<s:HGroup>
-			<s:CheckBox id = "is13orOlder" tabIndex="10"/>
-			<s:Label  id="registrationAge" text="{Language.lookup('RegistrationAge')}" width="200" />
+		<s:HGroup includeIn="Register">
+			<s:CheckBox id="is13orOlder" tabIndex="10"/>
+			<s:Label id="registrationAge"  width="200"
+					 text="{Language.lookup('RegistrationAge')}"/>
 		</s:HGroup>
 		<s:HGroup paddingBottom="30">
 			<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="11" id="submit_btn" click="submit_form();">		

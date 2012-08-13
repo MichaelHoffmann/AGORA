@@ -32,6 +32,7 @@ package ValueObjects
 		public var childMapURL:String;
 		public var mapToPrivateProjURL:String;
 		public var pullRegistrationURL:String;
+		public var changeInfoURL:String;
 		
 		
 		
@@ -158,7 +159,7 @@ package ValueObjects
 		
 		//agreements
 		public var REGISTRATION_NOTE:String;
-		
+		 
 		
 		public function AGORAParameters()
 		{
@@ -186,6 +187,7 @@ package ValueObjects
 			createMapHereURL = "http://agora.gatech.edu/release/create_map_in_current_category.php";
 			mapToPrivateProjURL = "http://agora.gatech.edu/release/map_to_private_project.php";
 			pullRegistrationURL = "http://agora.gatech.edu/release/pull_registration_info.php";
+			changeInfoURL="http://agora.gatech.edu/release/changeinfo.php"
 			initialize();		
 		}
 		
