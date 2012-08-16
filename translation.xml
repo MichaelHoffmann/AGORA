@@ -723,16 +723,7 @@
 		<RUS text="Измените свои регистрационные данные" />
 		<GER text="Ändere deine Registrierungsdaten" />
 	</ChangeRegData>
-	<OldPassword>
-		<EN-US text="Old Password" />
-		<RUS text="Old Password" /><!-- todo translate GER -->
-		<GER text="Old Password" />
-	</OldPassword>
-	<NewPassword>
-		<EN-US text="New Password" />
-		<RUS text="New Password" /><!-- todo translate GER -->
-		<GER text="New Password" />
-	</NewPassword>
+
 	<Claim>
 		<EN-US text="What is your claim? " />
 		<RUS text="Каково Ваше заявление? " />
@@ -1176,7 +1167,21 @@
 		<RUS
 			text="Извините, на общественных картах Вы не можете изменить текст или аргумент, который был создан другим пользователем. Вы можете только добавить дополнительные и независимые аргументы." />
 	</CannotModify>
-
+	<CurrentPass>
+		<EN-US text="Current Password" />
+		<RUS text="Registration data updated" />
+		<GER text="gegenwärtiges Passwort" />
+	</CurrentPass>
+	<NewPassword>
+		<EN-US text="New Password" />
+		<RUS text="Registration data updated" />
+		<GER text="Neues Passwort" />
+	</NewPassword>
+	<RegChange>
+		<EN-US text="Registration data updated" />
+		<RUS text="Registration data updated" />
+		<GER text="Registration data updated" />
+	</RegChange>
 	<ChangeInfo>
 		<EN-US text="Change Personal Information" />
 		<RUS text="Измените Личную Информацию" />

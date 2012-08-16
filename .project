@@ -56,5 +56,10 @@
 			<type>2</type>
 			<location>C:/Users/pwill/Desktop/release/German</location>
 		</link>
+		<link>
+			<name>bin-release8</name>
+			<type>2</type>
+			<location>C:/Users/pwill/Desktop/release/English1</location>
+		</link>
 	</linkedResources>
 </projectDescription>

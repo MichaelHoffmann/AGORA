@@ -195,7 +195,7 @@
 				}else if(currentState=="ChangeInfo"){
 					userDataVO.password=oldPass.text;
 					userSessionController.changeInfo(userDataVO,newpass.text);
-
+					this.visible=false;
 				}
 			}
 			protected function emailValidator_invalidHandler(event:ValidationResultEvent):void
@@ -250,7 +250,7 @@
 			<s:TextInput  id="newpass" tabIndex="7" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem id="newPass" includeIn="ChangeInfo" label="{Language.lookup(&quot;OldPassword&quot;)}" required="true">
+		<mx:FormItem id="newPass" includeIn="ChangeInfo" label="{Language.lookup(&quot;CurrentPass&quot;)}" required="true">
 			<s:TextInput id="oldPass" tabIndex="8" displayAsPassword="true">
 			</s:TextInput>
 		</mx:FormItem>

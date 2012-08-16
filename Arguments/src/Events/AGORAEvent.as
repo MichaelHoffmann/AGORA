@@ -52,7 +52,7 @@ package Events
 		public static const CATEGORY_FETCHED_FOR_PUBLISH:String = "CategoryFetchedForPublish";
 		public static const MAP_PUBLISHED:String = "MapPublished";
 		public static const REGISTRATION_DATA_GOTTEN:String = "RegistrationDataGotten";
-		
+		public static const REG_CHANGE:String="RegChange";
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
 		

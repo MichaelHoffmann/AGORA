@@ -23,6 +23,7 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.mxml.HTTPService;
+	import classes.Language;
 	
 	import org.osmf.utils.URL;
 	
@@ -166,15 +167,11 @@ package Model
 		}
 		public function changeInfo(userData:UserDataVO,newPass:String):void{
 			var changeInfoRequestService:HTTPService = new HTTPService;
-			trace (userData.password);
 			passHash = MD5.hash(userData.password + _salt);
-			trace (userData.userName);
-			trace (passHash);
-			
 			newPass = MD5.hash(newPass + _salt);
 			changeInfoRequestService.url = AGORAParameters.getInstance().changeInfoURL;
 			changeInfoRequestService.addEventListener(ResultEvent.RESULT, onChangeInfo);
-			changeInfoRequestService.addEventListener(FaultEvent.FAULT, onChangeInfo);
+			changeInfoRequestService.addEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			changeInfoRequestService.send({username:userData.userName,
 				pass_hash:passHash,
 				firstname:userData.firstName,
@@ -186,25 +183,19 @@ package Model
 		}
 		protected function onChangeInfo(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onChangeInfo);
-			event.target.removeEventListener(FaultEvent.FAULT, onChangeInfo);
-
+			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
+				
 			try{
-				trace("starting try");
-				username = event.result.changeinfo.ID;
-				trace("new username"+username);
-				firstName = event.result.changeinfo.firstname;
-				trace("new firstName"+firstName);
-				lastName = event.result.changeinfo.lastname;
-				trace("new lastName"+lastName);
-				email = event.result.changeinfo.email;
-				trace("new email"+email);
-				URL = event.result.changeinfo.url;
-				trace("new url"+URL);
+				firstName = event.result.agora.success.firstname;
+				lastName = event.result.agora.success.lastname;
+				email = event.result.agora.success.email;
+				URL = event.result.agora.success.url;
 			}catch(e:Error){
 				trace(e.message);
-				trace("In UserSessionModel.onLoginRequestServiceResult: expected attributes were not present either because of invalid credentials or change in server ");
-				dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
 			}
+			mx.controls.Alert.show(Language.lookup("RegChange"));
+			dispatchEvent(new AGORAEvent(AGORAEvent.REG_CHANGE));
+
 		}
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
@@ -220,7 +211,6 @@ package Model
 		}
 		
 		protected function onRegistrationRequestServiceFault(event:ResultEvent):void{
-			trace(event.result.toXMLString());
 			event.target.removeEventListener(ResultEvent.RESULT, onRegistrationRequestServiceResult);
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
