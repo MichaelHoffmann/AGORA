@@ -8,8 +8,10 @@ package Model
 	import ValueObjects.AGORAParameters;
 	
 	import com.adobe.crypto.MD5;
+	import com.adobe.serialization.json.JSON;
 	
 	import flash.events.EventDispatcher;
+	import classes.Language;
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
@@ -46,9 +48,9 @@ package Model
 		 */
 		public function sendRequest():void{
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			if(userSessionModel.loggedIn()){
-				request.send({uid: userSessionModel.uid, pass_hash: userSessionModel.passHash, 
-					newpass: AGORAModel.getInstance().agoraMapModel.projectPassword, projID: 0, title: AGORAModel.getInstance().agoraMapModel.name, is_hostile: 0});	
+			if(userSessionModel.loggedIn()){				
+				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash, projID: 0, title: AGORAModel.getInstance().agoraMapModel.projectName, is_hostile: AGORAModel.getInstance().agoraMapModel.projectType,'user_count':AGORAModel.getInstance().agoraMapModel.numberUsers,'proj_users[]':AGORAModel.getInstance().agoraMapModel.projectUsers};		
+				request.send(params);
 			}
 		}
 		
@@ -56,6 +58,13 @@ package Model
 		 * If the sendRequest method comes back normally, we enter here and broadcast PROJECT_PUSHED event
 		 */
 		protected function onResult(event:ResultEvent):void{
+			//check for error
+			if(event.result.hasOwnProperty("proj")){
+				if(event.result.proj.hasOwnProperty("error")){
+					dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSH_FAILED));
+					return;
+				}
+			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
 		

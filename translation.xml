@@ -262,7 +262,7 @@
 		<RUS text="Coming Soon" /><!--TODO Translate RUS-->
 		<GER text="Demnächst verfügbar" />
 	</ComingSoon>
-
+	
 	<AddMapToCategory>
 		<EN-US text="Map will be added to category: " />
 		<RUS text="Map will be added to category: " /><!--TODO Translate RUS-->
@@ -1182,6 +1182,7 @@
 		<RUS text="Registration data updated" />
 		<GER text="Registration data updated" />
 	</RegChange>
+
 	<ChangeInfo>
 		<EN-US text="Change Personal Information" />
 		<RUS text="Измените Личную Информацию" />
@@ -1470,11 +1471,17 @@
 	</MyMapsEtc>
 
 	<MyPPProjects>
-		<EN-US text="My Password Protected Projects" />
-		<RUS text="Мои Защищённые паролем Проекты" />
-		<GER text="Meine Passwort-geschützten Projekte" />
+		<EN-US text="My Projects" />
+		<RUS text="Мои Защищённые паролем Проекты" /> <!--TODO Translate RUS-->
+		<GER text="Meine Passwort-geschützten Projekte" /> <!--TODO Translate GER-->
 	</MyPPProjects>
 
+	<MyContributions>
+		<EN-US text="My Contributions" />
+		<RUS text="My Contributions" /><!--TODO Translate RUS-->
+		<GER text="My Contributions" /><!--TODO Translate GER-->
+	</MyContributions>
+	
 	<NetworkError>
 		<EN-US text="Network error" />
 		<RUS text="сетевая ошибка" />
@@ -1489,19 +1496,17 @@
 
 	<NewMapInProj>
 		<EN-US
-			text="Create a new argument map within this password-protected project space" />
+			text="Create a new argument map within this project space" />
 		<RUS
-			text="Создать новую карту аргумента в пределах этого защищённого паролем проектного пространства" />
+			text="Создать новую карту аргумента в пределах этого защищённого паролем проектного пространства" /><!-- translate RUS -->
 		<GER
-			text="Beginne eine neue Argumentation innerhalb von diesem Passwort-geschützten Projektbereich" />
+			text="Beginne eine neue Argumentation innerhalb von diesem Passwort-geschützten Projektbereich" /> <!-- translate GER -->
 	</NewMapInProj>
 
 	<NewProject>
-		<EN-US text="Create a password-protected project space" />
-		<RUS text="Создайте защищённое паролем 
-проектное пространство" />
-		<GER text="Eröffne einen Passwort-geschützten 
-Projektbereich" />
+		<EN-US text="Create a project space" />
+		<RUS text="Создайте защищённое паролем проектное пространство" /><!-- translate RUS -->
+		<GER text="Eröffne einen Passwort-geschützten Projektbereich" /><!-- translate GER -->
 	</NewProject>
 
 	<NewReason>
@@ -1588,14 +1593,6 @@ Projektbereich" />
 		<GER text="Gib dein Projekt-Passwort ein oder..." />
 	</ProjPass>
 
-	<ProjPassCreate>
-		<EN-US
-			text="Project password, different from your user password (required)" />
-		<RUS
-			text="Пароль проекта, отличающийся от Вашего пользовательского пароля, (требуется)" />
-		<GER
-			text="Projekt-Passwort (muss eingegeben werden und muss verschieden von deinem Benutzer-Passwort sein)" />
-	</ProjPassCreate>
 
 	<ProjPassIs>
 		<EN-US text="The password for this project is:" />
@@ -1892,13 +1889,12 @@ Projekte zu sehen" />
 	<RegistrationAge>
 		<EN-US text="I am 13 years or older or have parental permission to use AGORA-net." />
 		<RUS text="I am 13 years or older or have parental permission to use AGORA-net." /><!-- todo translate RUS-->
-		<GER text="Ich bin 13 Jahre alt oder älter oder habe die Erlaubnis meiner Eltern, AGORA-net zu benutzen." /><!-- translate GER -->
-	</RegistrationAge>
+		<GER text="Ich bin 13 Jahre alt oder älter oder habe die Erlaubnis meiner Eltern, AGORA-net zu benutzen." /><!-- translate GER -->	
+		</RegistrationAge>
 	<RegistrationAgeError>
 		<EN-US text="You must be 13 years or older or have parental permission to use AGORA-net." />
 		<RUS text="You must be 13 years or older or have parental permission to use AGORA-net." /><!-- todo translate RUS-->
-		<GER text="älter sein, um AGORA-net zu benutzen, oder die Erlaubnis deiner Eltern haben." />
-	</RegistrationAgeError>
+		<GER text="älter sein, um AGORA-net zu benutzen, oder die Erlaubnis deiner Eltern haben." />	</RegistrationAgeError>
 	<ReadRegistrationNote>
 		<EN-US text="I have read and understood the Privacy Policy, and I agree to the AGORA-net Terms of Service" />
 		<RUS text="Я прочитал и понял Политику Конфиденциальности" />
@@ -2870,9 +2866,98 @@ Projekte zu sehen" />
 		<RUS text="- вторая альтернатива" />
 		<GER text="--der zweiten Alternative" />
 	</SecondAlt>
-
-
-
+	
+	
+	<!--  create a new project -->
+	<ProjectName>
+		<EN-US text="[Enter a name for your project]" />
+		<RUS text="[Enter a name for your project]" />  <!--TODO Translate RUS-->
+		<GER text="[Enter a name for your project]" />  <!--TODO Translate GER-->
+	</ProjectName>
+	
+	<ProjectType>
+		<EN-US text="Select" />
+		<RUS text="Select" />  <!--TODO Translate RUS-->
+		<GER text="Select" />  <!--TODO Translate GER-->
+	</ProjectType>
+	
+	<ProjectTypeCollaborative>
+		<EN-US text="Collaborative" />
+		<RUS text="Collaborative" />  <!--TODO Translate RUS-->
+		<GER text="Collaborative" />  <!--TODO Translate GER-->
+	</ProjectTypeCollaborative>
+	
+	<ProjectTypeCollaborativeHelp>
+		<EN-US text="In a &quot;collaborative project&quot; every project member can change or delete any entry on a map" />
+		<RUS text="In a &quot;collaborative project&quot; every project member can change or delete any entry on a map" />  <!--TODO Translate RUS-->
+		<GER text="In a &quot;collaborative project&quot; every project member can change or delete any entry on a map" />  <!--TODO Translate GER-->
+	</ProjectTypeCollaborativeHelp>
+	
+	<ProjectTypeAdversarial>
+		<EN-US text="Adversarial" />
+		<RUS text="Adversarial" />  <!--TODO Translate RUS-->
+		<GER text="Adversarial" />  <!--TODO Translate GER-->
+	</ProjectTypeAdversarial>
+	
+	<AddProjectMembers>
+		<EN-US text="Add members" />
+		<RUS text="Add members" />  <!--TODO Translate RUS-->
+		<GER text="Add members" />  <!--TODO Translate GER-->
+	</AddProjectMembers>
+	
+	<AddProjectMembersHelp>
+		<EN-US text="Add members" />
+		<RUS text="Add members" />  <!--TODO Translate RUS-->
+		<GER text="Add members" />  <!--TODO Translate GER-->
+	</AddProjectMembersHelp>
+	
+	<ProjectTypeAdversarialHelp>
+		<EN-US text="In a &quot;adversarial project&quot; same rules and permissions apply as on public maps" />
+		<RUS text="In a &quot;adversarial project&quot; same rules and permissions apply as on public maps" />  <!--TODO Translate RUS-->
+		<GER text="In a &quot;adversarial project&quot; same rules and permissions apply as on public maps" />  <!--TODO Translate GER-->
+	</ProjectTypeAdversarialHelp>
+	
+	<ProjectNameUnique>
+		<EN-US text="Project name already taken.Could not create a project" />
+		<RUS text="Project name already taken.Could not create a project" />  <!--TODO Translate RUS-->
+		<GER text="Project name already taken.Could not create a project" />  <!--TODO Translate GER-->
+	</ProjectNameUnique>
+	
+	<ProjectCreated>
+		<EN-US text="Project has been created." />
+		<RUS text="Project has been created." />  <!--TODO Translate RUS-->
+		<GER text="Project has been created." />  <!--TODO Translate GER-->
+	</ProjectCreated>
+<SelectAdmin>
+		<EN-US text="Select New Project Administrator" />
+		<RUS text="Select New Project Administrator." />  <!--TODO Translate RUS-->
+		<GER text="Select New Project Administrator" />  <!--TODO Translate GER-->
+</SelectAdmin>
+<RemoveMembers>
+		<EN-US text="Remove Members" />
+		<RUS text="Remove Members" />  <!--TODO Translate RUS-->
+		<GER text="Remove Members" />  <!--TODO Translate GER-->
+</RemoveMembers>
+<Projects>
+		<EN-US text="Projects" />
+		<RUS text="Projects" />  <!--TODO Translate RUS-->
+		<GER text="Projects" />  <!--TODO Translate GER-->
+</Projects>
+<Maps>
+		<EN-US text="Maps" />
+		<RUS text="Maps" />  <!--TODO Translate RUS-->
+		<GER text="Maps" />  <!--TODO Translate GER-->
+</Maps>
+<Members>
+		<EN-US text="Members" />
+		<RUS text="Members" />  <!--TODO Translate RUS-->
+		<GER text="Members" />  <!--TODO Translate GER-->
+</Members>
+<CreateMapInProject>
+		<EN-US text="Create a map within this project" />
+		<RUS text="Create a map within this project" />  <!--TODO Translate RUS-->
+		<GER text="Create a map within this project" />  <!--TODO Translate GER-->
+</CreateMapInProject>
 	<!-- SPECIAL -->
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <ИМЯ> <объекта> GERMAN: 
 		<Name>s <object> -->

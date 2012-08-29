@@ -90,7 +90,7 @@
 				userDataVO.password = pass_hash.text;
 				
 				var userLoginController:UserSessionController = UserSessionController.getInstance();
-				userLoginController.login(userDataVO);	
+				userLoginController.login(userDataVO);
 			}
 			
 			/**

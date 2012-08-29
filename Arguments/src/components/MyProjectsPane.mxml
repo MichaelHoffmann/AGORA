@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"  width = "100%" initialize="{init()}">
+	<fx:Script>
+		<![CDATA[
+			import Model.*;
+			
+			import mx.controls.Alert;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<fx:XML xmlns="" id = "projXML">
+			
+		</fx:XML>
+		<fx:Boolean id = "inited">false</fx:Boolean>
+		<s:RadioButtonGroup id="projectListRadio"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.http.HTTPService;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import spark.components.RadioButton;
+			import spark.components.ToggleButton;
+			import Controller.ArgumentController;
+			import Controller.UserSessionController;
+			
+			import ValueObjects.AGORAParameters;
+			
+			import Events.AGORAEvent;
+			
+			import Model.AGORAModel;
+			import Model.LoadProjectMapsModel;
+			import Model.MapMetaData;
+			import Model.ProjectsModel;
+			import Model.UserSessionModel;
+			
+			import Skins.ScrollerSkin;
+			
+			import classes.Language;
+			
+			import flash.display.DisplayObject;
+			import flash.events.Event;
+			import flash.events.MouseEvent;
+			
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.managers.PopUpManager;
+			import spark.components.Button;
+			import spark.components.Group;
+			import spark.components.Label;
+			import spark.components.Panel;
+			import spark.components.Scroller;
+			import spark.components.VGroup;
+			import spark.layouts.VerticalLayout;
+
+			public var model:ProjectsModel;
+			public var projMapModel:LoadProjectMapsModel;
+			private var back:Button;
+			
+			
+			public function init():void
+			{
+				projMapModel = AGORAModel.getInstance().loadProjMaps;
+				model = AGORAModel.getInstance().myProjectsModel;
+				loadingDisplay.text = Language.lookup("Loading");
+				signIn.horizontalCenter = 0;
+				signIn.setStyle("textDecoration","underline");
+				signIn.text = Language.lookup("SignInToViewProj");
+				signIn.addEventListener(MouseEvent.CLICK, showSignInBox);
+			}
+
+			
+			public function setCurrentProject(projID:String):void{
+				var projDetRequest:HTTPService= new HTTPService;
+				var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				projDetRequest.resultFormat = "e4x";
+				projDetRequest.url=  AGORAParameters.getInstance().projectDetailsURL;
+				projDetRequest.addEventListener(ResultEvent.RESULT, onDetails);
+				projDetRequest.addEventListener(FaultEvent.FAULT, onFault);
+				projDetRequest.send({uid: userSessionModel.uid, pass_hash: userSessionModel.passHash,projID:projID});	
+				AGORAModel.getInstance().agoraMapModel.projectID=projID as int;
+				AGORAModel.getInstance().agoraMapModel.projID=projID as int;
+			}
+			protected function onFault(event:FaultEvent):void{
+				removeEventListener(ResultEvent.RESULT, onDetails);
+				removeEventListener(FaultEvent.FAULT, onFault);
+				dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
+			}
+			protected function onDetails(event:ResultEvent):void{
+				removeEventListener(ResultEvent.RESULT, onDetails);
+				removeEventListener(FaultEvent.FAULT, onFault);
+				projXML=event.result.proj[0]as XML;
+				var userListXML:XMLList=projXML.users  ;
+				usersXML.source=userListXML.children();
+				
+			}
+
+
+
+			override protected function commitProperties():void{
+				super.commitProperties();
+				var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(usm.loggedIn()){
+					signIn.visible=false;
+					projectList.visible=true;
+						if(model.projectList){
+						for each(var xml:XML in model.projectList.proj){
+							var button:RadioButton = new RadioButton;
+							button.group=projectListRadio;
+							button.name = xml.@ID;
+							button.label = xml.@title;
+							button.toolTip = xml.@creator;
+							button.percentWidth=100;
+							projectList.addElement(button);
+							button.addEventListener('click',function(e:Event):void{
+								mapList.visible = true;
+								memberList.visible = true;
+								e.stopImmediatePropagation();
+								AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+								AGORAModel.getInstance().agoraMapModel.projectName = e.target.label;
+								setCurrentProject((e.target as RadioButton).name);
+							}, false, 1,false);
+							
+						}
+						FlexGlobals.topLevelApplication.agoraMenu.backToProjectList.visible = true;
+						FlexGlobals.topLevelApplication.agoraMenu.createProjectBtn.label = Language.lookup("CreateMapInProject");
+						var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
+						if(!projMapModel || !projMapModel.projectMapList) return;
+						for each (var projectMapList:XML in projMapModel.projectMapList.map){
+							try{
+								if(projectMapList.@is_deleted == "1"){
+									
+									continue;
+								}
+							}catch(error:Error){
+								trace("is_deleted not available yet");
+							}
+							
+							//var mapObject:Object = new Object;
+							mapMetaData = new MapMetaData;
+							mapMetaData.mapID = int(projectMapList.attribute("ID")); 
+							mapMetaData.mapName = projectMapList.attribute("title");
+							//mapMetaData.mapCreator = map.attribute("creator");
+							mapMetaDataVector.push(mapMetaData);						
+							
+							
+							mapMetaDataVector.sort(MapMetaData.isGreater);	
+						}
+						for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+							var mapButton:Button = new Button;
+							mapButton.width = 170;
+							mapButton.name = mapMetaData.mapID.toString();
+							mapButton.addEventListener('click', onMapObjectClicked);
+							mapButton.label = mapMetaData.mapName;
+							//mapButton.toolTip = mapMetaData.mapCreator;
+							mapList.addElement(mapButton);
+						}
+					}
+				}
+				
+			}
+			
+			
+			private function getProjectPanel(event:MouseEvent):void{
+				var button:Button = event.target as Button;
+				//call controller
+				
+			}
+			
+			protected function onMapObjectClicked(event:MouseEvent):void{
+				ArgumentController.getInstance().loadMap(event.target.name);					
+			}
+			
+			private function showSignInBox(event:MouseEvent):void{
+				UserSessionController.getInstance().showSignInBox();
+				
+			}
+			
+
+			
+		]]>
+	</fx:Script>
+	<s:VGroup width="100%" horizontalAlign="center">
+		
+	<mx:Text id="loadingDisplay">
+		
+	</mx:Text>
+	<mx:Text id="signIn">
+		
+	</mx:Text>
+	</s:VGroup>
+
+	<s:HGroup width = "100%" horizontalAlign="center" top = "0" gap="25" minHeight="350" horizontalCenter="0">
+		<s:VGroup width="30%">
+			<s:Label text="Projects">
+				
+			</s:Label>
+
+		<s:Scroller width = "100%" height = "300">
+
+			<s:VGroup   id =  "projectList" visible="false">
+				<s:HGroup>
+					<s:Button label = "delete" visible ="false"/>
+					<s:Button label = "rename" visible ="false"/>
+				</s:HGroup>
+			</s:VGroup>
+		</s:Scroller>
+		</s:VGroup>
+
+		<s:VGroup width="30%"  id ="mapList" visible="false">
+			<s:Label text="Maps"/>
+			<s:Scroller width = "100%" height="300"  >
+				<s:VGroup width = "100%" height="260">
+				</s:VGroup>		
+			</s:Scroller>
+		</s:VGroup>
+
+
+		<s:VGroup width = "30%" id ="memberList" height = "150" visible="false" >
+			<s:Label text="Members"/>
+
+			<s:List height = "150" width="100%"  labelField="@name" id = "usersList">
+				<s:dataProvider>
+					<s:XMLListCollection id="usersXML" />
+				</s:dataProvider>
+			</s:List>
+			<s:Button label="{Language.lookup('AddProjectMembers')}"  click="{}" visible = "false"/>
+			<s:Button label="{Language.lookup('RemoveMembers')}" click="{}" visible = "false"/>
+			<s:Button label="{Language.lookup('SelectAdmin')}Select as new administrator" visible= "false" click="{mx.controls.Alert.show('Coming Soon')}"/>
+		</s:VGroup>
+	</s:HGroup>
+
+</s:VGroup>

@@ -8,11 +8,13 @@ package Controller
 	import ValueObjects.UserDataVO;
 	
 	import classes.Language;
-	
+	import flash.net.*;
 	import components.LoginWindow;
+	import components.Projects;
 	import components.RegisterPanel;
 	
 	import flash.display.DisplayObject;
+	import flash.net.URLRequest;
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
@@ -106,6 +108,7 @@ package Controller
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			userSessionModel.changeInfo(userDataVO,newPass);
 		}	
+
 		protected function onRegistrationRequestSuccess(event:AGORAEvent):void{
 			removeRegistrationBox();
 			Alert.show(Language.lookup("RegisterSuccess"));
@@ -158,6 +161,10 @@ package Controller
 				AGORAModel.getInstance().userSessionModel.uid = 0;
 				FlexGlobals.topLevelApplication.invalidateProperties();
 				FlexGlobals.topLevelApplication.invalidateDisplayList();
+				var urlRequest:URLRequest = new URLRequest(FlexGlobals.topLevelApplication.url);
+				 navigateToURL(urlRequest,"_self");
+				
+
 			}
 			else{
 				showSignInBox();

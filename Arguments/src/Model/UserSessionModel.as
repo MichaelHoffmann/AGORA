@@ -7,6 +7,8 @@ package Model
 	import ValueObjects.ChatDataVO;
 	import ValueObjects.UserDataVO;
 	
+	import classes.Language;
+	
 	import com.adobe.crypto.MD5;
 	
 	import components.RegisterPanel;
@@ -23,7 +25,6 @@ package Model
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.mxml.HTTPService;
-	import classes.Language;
 	
 	import org.osmf.utils.URL;
 	
@@ -71,7 +72,6 @@ package Model
 			_valueObject.URL = this.URL;
 			return _valueObject;
 		}
-		
 
 		public function get uid():int{
 			return _uid;
@@ -116,7 +116,7 @@ package Model
 			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.chat.invalidateDisplayList();
 		}
-		
+
 		/**
 		 * @param event Result Event that is typically ust event 
 		 * 
@@ -143,6 +143,7 @@ package Model
 				trace("In UserSessionModel.onLoginRequestServiceResult: expected attributes were not present either because of invalid credentials or change in server ");
 				dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
 			}
+			//getProjects();
 		}
 		
 		protected function onLoginRequestServiceFault(event:FaultEvent):void{
@@ -150,8 +151,8 @@ package Model
 			event.target.removeEventListener(FaultEvent.FAULT, onLoginRequestServiceFault);
 			dispatchEvent( new AGORAEvent(AGORAEvent.FAULT));
 		}
-		
 		//---------------- Registration-----------------------------//
+
 		public function register(userData:UserDataVO):void{
 			var registrationRequestService:HTTPService = new HTTPService;
 			passHash = MD5.hash(userData.password + _salt);
@@ -181,9 +182,11 @@ package Model
 				newpass:newPass});
 
 		}
+
+
 		protected function onChangeInfo(event:ResultEvent):void{
 			event.target.removeEventListener(ResultEvent.RESULT, onChangeInfo);
-			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
+			event.target.removeEventListener(FaultEvent.FAULT,onRegistrationRequestServiceFault		);
 				
 			try{
 				firstName = event.result.agora.success.firstname;
@@ -194,7 +197,7 @@ package Model
 				trace(e.message);
 			}
 			mx.controls.Alert.show(Language.lookup("RegChange"));
-			dispatchEvent(new AGORAEvent(AGORAEvent.REG_CHANGE));
+
 
 		}
 		protected function onRegistrationRequestServiceResult(event:ResultEvent):void{
@@ -215,12 +218,5 @@ package Model
 			event.target.removeEventListener(FaultEvent.FAULT, onRegistrationRequestServiceFault);
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
-		
-		
-
-		
-
-		
-		
 	}
 }

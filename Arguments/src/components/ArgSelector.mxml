@@ -195,7 +195,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			protected function onSchemeItemRollOver(event:ListEvent):void{
 				var scheme:String = event.itemRenderer.data.toString();
-				ArgumentController.getInstance().displayLanguageType(this, scheme);
+				ArgumentController.getInstance().displayLanguageType(this,scheme);
 				displayToolTip(scheme);
 			}
 			

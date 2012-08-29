@@ -73,7 +73,7 @@
 					myCategory.label = mapMetaData.category;
 					myCategory.id = mapMetaData.mapID.toString();
 					myCategory.toolTip = Language.lookup("ClickToPublishMap");
-					myCategory.setStyle("skinClass",LeftAlignTextButtonSkin);
+					//myCategory.setStyle("skinClass",LeftAlignTextButtonSkin);
 					myCategory.setStyle("chromeColor", 0xA0CADB);
 					myCategory.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void{
 						if(!FlexGlobals.topLevelApplication.publishMap){

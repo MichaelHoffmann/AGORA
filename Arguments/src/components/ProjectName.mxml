@@ -2,44 +2,55 @@
 <s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="400" height="200"
+		 width="600" height="400"
 		 creationComplete="panel_creationCompleteHandler(event)"
 		 addedToStage="panel1_addedToStageHandler(event)"
-		 keyDown="panel_keyDownHandler(event)">
+		 keyDown="panel_keyDownHandler(event)"
+		 title="{Language.lookup(&quot;NewProject&quot;)}">
 	<fx:Declarations>
+		<s:RadioButtonGroup id="projectType"/>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
 			import Controller.ArgumentController;
+			
 			import Model.AGORAModel;
+			
 			import classes.Language;
 			
 			import com.adobe.crypto.MD5;
+			import com.adobe.serialization.json.JSON;
 			
+			import mx.collections.ArrayList;
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.managers.FocusManager;
 			import mx.managers.PopUpManager;
+			import mx.utils.StringUtil;
 			
 			private var _password:String;
-			public function map_name():void{
-				if(passwordSet.text == confirmPassword.text){
-					this._password = passwordSet.text;
-					AGORAModel.getInstance().agoraMapModel.name = projectName.text;				
-					AGORAModel.getInstance().agoraMapModel.projectPassword =  MD5.hash(_password);					
-					this.visible=false;
-					
+			public function project_add():void{
+						AGORAModel.getInstance().agoraMapModel.projectName = projectName.text;
+					AGORAModel.getInstance().agoraMapModel.projectType = projectType.selectedValue.valueOf();
+					var users:Array = new Array();
+					var userDetail:String = new String();
+					for(var c:int=0;c<projectUserNames.numChildren;c++){
+						var textinp:TextInput = (projectUserNames.getChildAt(c) as HGroup).getChildAt(0) as TextInput;
+						var username:String = textinp.text;
+						if(username!=null && StringUtil.trim(username)!=""){
+							userDetail = StringUtil.trim(username);
+							users.push(userDetail);
+						}
+					}
+				
+					AGORAModel.getInstance().agoraMapModel.numberUsers = users.length;
+					AGORAModel.getInstance().agoraMapModel.projectUsers = users;
 					AGORAController.getInstance().pushNewProject();
-					AGORAController.getInstance().fetchDataProjectList();
-					AGORAController.getInstance().fetchDataMyProjects();
-					//ArgumentController.getInstance().createMap(projectName.text);
-				}else{
-					Alert.show(Language.lookup("PassMismatch"));
-					return;
-				}
+					//AGORAController.getInstance().fetchDataProjectList();
+					//AGORAController.getInstance().fetchDataMyProjects();
 			}
 			
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
@@ -52,7 +63,7 @@
 			protected function panel_keyDownHandler(event:KeyboardEvent):void
 			{
 				if(event.keyCode == Keyboard.ENTER){
-					map_name();
+					project_add();
 				}
 			}
 			
@@ -62,28 +73,107 @@
 				stage.focus= null;
 			}
 			
+			protected function addNewUserOpt(event:Event):void
+			{
+				var newTextBox:TextInput = new TextInput();
+				newTextBox.width=160;
+				var newAddButton:Button = new Button();
+				var newRemButton:Button = new Button();
+				newAddButton.width=newRemButton.width=30;
+				newAddButton.label="+";
+				newRemButton.label="-";
+				newAddButton.addEventListener(MouseEvent.CLICK,addNewUserOpt);
+				newRemButton.addEventListener("click",removeNewUserOpt);
+				var newVGrp:HGroup = new HGroup();
+				newVGrp.addElement(newTextBox);		
+				newVGrp.addElement(newAddButton);
+				newVGrp.addElement(newRemButton);
+				projectUserNames.addElement(newVGrp);
+			}
+			
+				protected function removeNewUserOpt(event:Event):void
+				{
+					var clickedbutton:Button = event.target as Button;
+					var hgrp:HGroup = clickedbutton.parent as HGroup;
+					if(hgrp.id == "firstUserName"){
+						return;
+					}
+					var addButton:Button = hgrp.getChildAt(1) as Button;
+					clickedbutton.removeEventListener(MouseEvent.CLICK,removeNewUserOpt);
+					addButton.removeEventListener(MouseEvent.CLICK,addNewUserOpt);
+					(hgrp).removeAllElements();	
+					projectUserNames.removeElement(hgrp);		
+				}
+			
+			
 		]]>
 	</fx:Script>
-	<mx:Form id="form">
-		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;EnterMapName&quot;)}" required="true">
-			<s:TextInput id="projectName">
+	<mx:Form id="form" verticalGap="15">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;ProjectName&quot;)}" required="true">			
+			<s:TextInput id="projectName" width="200">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;Password&quot;)}" required="true">
-			<s:TextInput id="passwordSet" displayAsPassword="true">
-			</s:TextInput>
+		<mx:FormItem tabIndex="2" required="true" label="{Language.lookup(&quot;ProjectType&quot;)}">
+			<s:HGroup>	
+				<s:RadioButton label="{Language.lookup('ProjectTypeCollaborative')}" value="0" selected="true" group="{projectType}">		
+				</s:RadioButton>
+				<s:RadioButton label="{Language.lookup('ProjectTypeAdversarial')}" value="1" group="{projectType}">		
+				</s:RadioButton>
+			</s:HGroup>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;PassRepeat&quot;)}" required="true">
-			<s:TextInput id="confirmPassword" displayAsPassword="true">
+		<mx:FormItem tabIndex="3" label="{Language.lookup(&quot;AddProjectMembers&quot;)}" verticalGap="12">	
+			<s:BorderContainer borderColor="#B6BDC6" borderWeight="2" cornerRadius="5">
+			<s:Scroller height="225" width="325">
+			<s:VGroup id="projectUserNames" paddingTop="10" paddingBottom="10" paddingLeft="10">
+			<s:HGroup id="firstUserName">
+			<s:TextInput width="160">
 			</s:TextInput>
+			<s:Button label="+" width="30" click="addNewUserOpt(event);">				
+			</s:Button>			
+			</s:HGroup>
+			<s:HGroup>
+				<s:TextInput width="160">
+				</s:TextInput>
+				<s:Button label="+" width="30" click="addNewUserOpt(event);">				
+				</s:Button>
+				<s:Button label="-" width="30" click="removeNewUserOpt(event);">				
+				</s:Button>
+			</s:HGroup>
+			<s:HGroup>
+				<s:TextInput width="160">
+				</s:TextInput>
+				<s:Button label="+" width="30" click="addNewUserOpt(event);">				
+				</s:Button>
+				<s:Button label="-" width="30" click="removeNewUserOpt(event);">				
+				</s:Button>
+			</s:HGroup>
+			<s:HGroup>
+				<s:TextInput width="160">
+				</s:TextInput>
+				<s:Button label="+" width="30" click="addNewUserOpt(event);">				
+				</s:Button>
+				<s:Button label="-" width="30" click="removeNewUserOpt(event);">				
+				</s:Button>
+			</s:HGroup>
+			<s:HGroup>
+				<s:TextInput width="160">
+				</s:TextInput>
+				<s:Button label="+" width="30" click="addNewUserOpt(event);">				
+				</s:Button>
+				<s:Button label="-" width="30" click="removeNewUserOpt(event);">				
+				</s:Button>
+			</s:HGroup>
+			</s:VGroup>
+			</s:Scroller>
+			</s:BorderContainer>
 		</mx:FormItem>
 		<mx:FormItem>
 			<s:HGroup>
-				<s:Button label="{Language.lookup('OK')}" tabIndex="7" id="OK_btn" click="map_name();">		
+				<s:Button label="{Language.lookup('OK')}" tabIndex="4" id="OK_btn" click="project_add();">		
 				</s:Button>
-				<s:Button label="{Language.lookup('Back')}" tabIndex="7" id="CANECL_btn" click="this.visible=false;">		
+				<s:Button label="{Language.lookup('Back')}" tabIndex="5" id="CANECL_btn" click="this.visible=false;">		
 				</s:Button>
 			</s:HGroup>		
-		</mx:FormItem>
-	</mx:Form>
+		</mx:FormItem>		
+	</mx:Form>	
 </s:Panel>

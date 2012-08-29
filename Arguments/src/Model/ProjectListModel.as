@@ -6,6 +6,7 @@ package Model
 	
 	import flash.events.EventDispatcher;
 	
+	import mx.controls.Alert;
 	import mx.controls.List;
 	import mx.messaging.messages.HTTPRequestMessage;
 	import mx.rpc.events.FaultEvent;
@@ -27,7 +28,11 @@ package Model
 		}
 		
 		public function requestProjectList():void{
-			request.send();
+			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			if(userSessionModel.loggedIn()){
+				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash};
+				request.send(params);
+			}
 		}
 		
 		protected function onProjectListFetched(event:ResultEvent):void{

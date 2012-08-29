@@ -184,7 +184,7 @@
 							//userDataVO.URL2 = url2.text;
 							//userDataVO.URL3 = url3.text;
 							
-							userSessionController.register(userDataVO);
+							//userSessionController.register(userDataVO);
 							}else{
 								Alert.show(Language.lookup("RegistrationAgeError"));
 							}
@@ -194,7 +194,7 @@
 					}
 				}else if(currentState=="ChangeInfo"){
 					userDataVO.password=oldPass.text;
-					userSessionController.changeInfo(userDataVO,newpass.text);
+				//	userSessionController.changeInfo(userDataVO,newpass.text);
 					this.visible=false;
 				}
 			}

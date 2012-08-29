@@ -62,6 +62,9 @@ package Model
 		private var _projectID:int;
 		private var _projectPassword:String;
 		private var _projectName:String;
+		private var _projectType:int;
+		private var _projectUsers:Array;
+		private var _numberUsers:int;
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
@@ -113,6 +116,26 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get numberUsers():int
+		{
+			return _numberUsers;
+		}
+
+		public function set numberUsers(value:int):void
+		{
+			_numberUsers = value;
+		}
+
+		public function get projectUsers():Array
+		{
+			return _projectUsers;
+		}
+
+		public function set projectUsers(value:Array):void
+		{
+			_projectUsers = value;
+		}
+
 		public function get argUnderConstruction():Boolean
 		{
 			return _argUnderConstruction;
@@ -835,6 +858,17 @@ package Model
 		{
 			_projectName = value;
 		}
+		
+		public function get projectType():int
+		{
+			return _projectType;
+		}
+		
+		public function set projectType(value:int):void
+		{
+			_projectType = value;
+		}
+
 
 		
 	}

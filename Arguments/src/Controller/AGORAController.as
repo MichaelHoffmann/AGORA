@@ -79,6 +79,8 @@ package Controller
 			model.verifyProjModel.addEventListener(AGORAEvent.PROJECT_USER_VERIFIED, onProjectUserVerified);
 			model.publishMapModel.addEventListener(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH, onCategoryFetchedForPublish);
 			model.publishMapModel.addEventListener(AGORAEvent.MAP_PUBLISHED, onMapPublished);
+			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSHED,onProjectPush);
+			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSH_FAILED,onProjectPushFail);
 			
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
@@ -200,8 +202,8 @@ package Controller
 		}
 		
 		public function pushNewProject():void{
-			var pp:PushProject = new PushProject;
-			pp.sendRequest();
+			//var pp:PushProject = new PushProject;
+			model.pushprojects.sendRequest();
 		}
 		
 		public function verifyProjectMember(parentCategory:String):void{
@@ -255,6 +257,16 @@ package Controller
 				menu.myProjects.loadingDisplay.visible = true;
 				model.myProjectsModel.sendRequest();
 			}
+		}
+		
+		protected function onProjectPushFail(event:AGORAEvent):void{
+			Alert.show(Language.lookup("ProjectNameUnique"));
+		}
+		
+		protected function onProjectPush(event:AGORAEvent):void{
+			Alert.show(Language.lookup("ProjectCreated"));
+			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			AGORAController.getInstance().fetchDataProjectList();
 		}
 		
 		protected function onMyProjectsListFetched(event:AGORAEvent):void{

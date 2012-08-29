@@ -6,12 +6,15 @@ package Model
 	
 	import flash.events.EventDispatcher;
 	
+	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 
 	public class ProjectsModel extends EventDispatcher
 	{
+		public var mapList:XML;
+		public var userList:XML;
 		public var projectList:XML;
 		private var request:HTTPService;
 		
@@ -36,9 +39,7 @@ package Model
 			request.addEventListener(ResultEvent.RESULT, onResult);
 			request.addEventListener(FaultEvent.FAULT, onFault);
 		}
-		
-		/**
-		 * Method that officially sends the request to the PHP on the server. Here, we send both the user's ID and
+		/** Method that officially sends the request to the PHP on the server. Here, we send both the user's ID and
 		 * the password hash so that we can tell if they are logged in or not. If they are, dispatch the appropriate
 		 * event and if they are not, do nothing.
 		 */
@@ -48,7 +49,7 @@ package Model
 				request.send({uid: userSessionModel.uid, pass_hash: userSessionModel.passHash});	
 			}
 		}
-		
+
 		/**
 		 * This is an event driven function that is called when the PHP returns without an error.
 		 * It first places the result of the event into the projectList variable and then broadcasts
@@ -65,5 +66,11 @@ package Model
 		protected function onFault(event:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
+		/**
+		 * This is an event driven function that is called when the PHP returns without an error.
+		 * It first places the result of the event into the projectList variable and then broadcasts
+		 * that that we are now finished and have fetched the data from the projects.
+		 */
+		
 	}
 }

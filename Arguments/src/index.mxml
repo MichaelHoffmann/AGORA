@@ -35,7 +35,7 @@
 			
 			import Model.AGORAModel;
 			
-			import components.Join_Project;
+
 			import components.LoginWindow;
 			import components.Map;
 			import components.MapName;
@@ -83,7 +83,6 @@
 			//Universally accessible projectName box
 			public var projectNameBox:ProjectName;
 			//Universal Join_Project box
-			public var join_project:Join_Project;
 			//Universal moveMapToProject box
 			public var move_map:MapToProject;
 			

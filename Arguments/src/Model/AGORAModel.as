@@ -25,6 +25,7 @@ package Model
 		public var userSessionModel:UserSessionModel;
 		public var agoraMapModel:AGORAMapModel;
 		public var projectListModel:ProjectListModel;
+		public var pushprojects:PushProject;
 		public var myProjectsModel:ProjectsModel;
 		public var loadProjMaps:LoadProjectMapsModel;
 		public var categoryModel:CategoryModel;
@@ -56,6 +57,7 @@ package Model
 			pushChatModel = new PushChatModel;
 			verifyProjModel = new VerifyProjectMemberModel;
 			publishMapModel = new PublishMapModel;
+			pushprojects = new PushProject();
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';

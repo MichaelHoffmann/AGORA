@@ -2,13 +2,13 @@ package components
 {
 	import Controller.ArgumentController;
 	
-	import Skins.ScrollerSkin;
-	
 	import Model.AGORAModel;
 	import Model.LoadProjectMapsModel;
 	import Model.MapMetaData;
 	import Model.ProjectListModel;
 	import Model.VerifyProjectMemberModel;
+	
+	import Skins.ScrollerSkin;
 	
 	import classes.Language;
 	
@@ -79,11 +79,9 @@ package components
 		
 		override protected function commitProperties():void{
 			super.commitProperties();
-			
 			vContentGroup.removeAllElements();
 			//add elements
 			if(model.projectList && !loadMapsHere){
-				
 				for each(var projXML:XML in model.projectList.proj){
 					var button:Button = new Button;
 					button.name = projXML.@ID;

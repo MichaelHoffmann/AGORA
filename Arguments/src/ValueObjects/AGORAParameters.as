@@ -11,6 +11,7 @@ package ValueObjects
 		public var myMapsURL:String;
 		public var loginURL:String;
 		public var registrationURL:String;
+		public var getProjectsURL:String;
 		public var mapRemoveURL:String;
 		public var insertURL:String;
 		public var loadMapURL:String;
@@ -33,8 +34,7 @@ package ValueObjects
 		public var mapToPrivateProjURL:String;
 		public var pullRegistrationURL:String;
 		public var changeInfoURL:String;
-		
-		
+		public var projectDetailsURL:String;
 		
 		
 		
@@ -159,10 +159,11 @@ package ValueObjects
 		
 		//agreements
 		public var REGISTRATION_NOTE:String;
-		 
+		
 		
 		public function AGORAParameters()
 		{
+			
 			listMapsURL = "http://agora.gatech.edu/release/list_maps.php";
 			myMapsURL = "http://agora.gatech.edu/release/my_maps.php";
 			loginURL = "http://agora.gatech.edu/release/login.php";
@@ -172,9 +173,9 @@ package ValueObjects
 			insertURL = "http://agora.gatech.edu/release/insert.php";
 			loadMapURL = "http://agora.gatech.edu/release/load_map1.php";
 			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
-			projectListURL = "http://agora.gatech.edu/testing/list_projects.php";
-			myProjectsURL = "http://agora.gatech.edu/testing/my_projects.php";
-			pushProjectsURL = "http://agora.gatech.edu/testing/projects.php";
+			projectListURL = "http://agora.gatech.edu/release/list_projects.php";
+			myProjectsURL = "http://agora.gatech.edu/release/my_projects.php";
+			pushProjectsURL = "http://agora.gatech.edu/release/projects.php";
 			joinProjectURL = "http://agora.gatech.edu/release/verifyProject.php";
 			loadProjectMapsURL = "http://agora.gatech.edu/release/load_project_maps.php";
 			getMapFromProjURL = "http://agora.gatech.edu/release/getMapFromProjID.php";
@@ -187,7 +188,9 @@ package ValueObjects
 			createMapHereURL = "http://agora.gatech.edu/release/create_map_in_current_category.php";
 			mapToPrivateProjURL = "http://agora.gatech.edu/release/map_to_private_project.php";
 			pullRegistrationURL = "http://agora.gatech.edu/release/pull_registration_info.php";
-			changeInfoURL="http://agora.gatech.edu/release/changeinfo.php"
+			changeInfoURL="http://agora.gatech.edu/release/changeinfo.php";
+			projectDetailsURL = "http://agora.gatech.edu/release/projectdetails.php";
+
 			initialize();		
 		}
 		

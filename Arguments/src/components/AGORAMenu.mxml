@@ -61,8 +61,8 @@
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				tabNav.addEventListener(IndexChangedEvent.CHANGE, checkForMyMapsTab);
-				timer.addEventListener(TimerEvent.TIMER, timerFired);
-				timer.start();
+				//timer.addEventListener(TimerEvent.TIMER, timerFired);
+				//timer.start();
 				AGORAController.getInstance().fetchDataCategory();
 				AGORAController.getInstance().fetchDataMapList();
 				AGORAController.getInstance().fetchDataProjectList();
@@ -159,11 +159,6 @@
 			 */ 
 			protected function backToMajorProjectList(event:MouseEvent):void {
 				backToProjectList.visible = false;
-				myProjects.loadMapsHere = false;
-				AGORAModel.getInstance().agoraMapModel.projectID = 0;
-				AGORAModel.getInstance().agoraMapModel.projID = 0;
-				myProjects.invalidateDisplayList();
-				myProjects.invalidateProperties();
 				createProjectBtn.label = Language.lookup('NewProject');
 			}
 			
@@ -307,7 +302,7 @@
 	
 	<s:VGroup id="navigtorGroup"  width="800" height="600" horizontalAlign="center" horizontalCenter="0" verticalAlign="middle" verticalCenter="0">
 		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
-						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.25}" textAlign="center"
+						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.20}" textAlign="center"
 						 >
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}" verticalCenter="0" horizontalCenter="0">
 						<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0">
@@ -359,10 +354,8 @@
 			
 			<s:NavigatorContent id="projectsTab" percentWidth="100" percentHeight="100" label="{Language.lookup('MyPPProjects')}">
 				<s:VGroup percentWidth="100" percentHeight="100">
-					<components:Projects id="myProjects" percentWidth="100" percentHeight="90"
-										 borderVisible="false" controlBarVisible="false"
-										 dropShadowVisible="false">
-					</components:Projects> 
+					<components:MyProjectsPane id="myProjects">
+					</components:MyProjectsPane> 
 					<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
 						<s:Button id="createProjectBtn" label="{Language.lookup(&quot;NewProject&quot;)}"
 								  click="projectsButton_OnClick(event)">
@@ -373,7 +366,10 @@
 					</s:HGroup>
 				</s:VGroup>
 			</s:NavigatorContent>
-			<s:NavigatorContent percentWidth="100" percentHeight="100" label="Search">
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}">
+				<s:Label id="MyContributions" text="{Language.lookup('ComingSoon')}"/>
+			</s:NavigatorContent>
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('Search')}">
 				<s:Label id="ComingSoon" text="{Language.lookup('ComingSoon')}"/>
 			</s:NavigatorContent>
 		</mx:TabNavigator>

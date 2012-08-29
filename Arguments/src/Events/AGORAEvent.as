@@ -42,6 +42,7 @@ package Events
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
 		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
 		public static const PROJECT_PUSHED:String = "ProjectPushed";
+		public static const PROJECT_PUSH_FAILED:String = "ProjectPushedFailed";
 		public static const MY_PROJECTS_LIST_FETCHED:String = "MyProjectsListFetched";
 		public static const CATEGORY_FETCHED:String = "CategoryFetched";
 		public static const CHAT_FETCHED:String = "ChatFetched";
@@ -52,7 +53,7 @@ package Events
 		public static const CATEGORY_FETCHED_FOR_PUBLISH:String = "CategoryFetchedForPublish";
 		public static const MAP_PUBLISHED:String = "MapPublished";
 		public static const REGISTRATION_DATA_GOTTEN:String = "RegistrationDataGotten";
-		public static const REG_CHANGE:String="RegChange";
+		
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
 		

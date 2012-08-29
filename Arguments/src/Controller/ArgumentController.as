@@ -762,6 +762,11 @@ package Controller
 			map.agoraMap.initializeMapStructures();
 			LoadController.getInstance().fetchMapData();
 		}
+		
+		// Projects 
+			protected function onProjectAddFailed(event:AGORAEvent):void{
+			Alert.show(Language.lookup("ProjectNameUnique"));
+		}
 	}
 }
 
