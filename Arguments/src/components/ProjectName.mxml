@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 width="600" height="400" addedToStage="panel1_addedToStageHandler(event)"
-		 creationComplete="panel_creationCompleteHandler(event)" currentState="new"
-		 keyDown="panel_keyDownHandler(event)" title="{Language.lookup(&quot;NewProject&quot;)}">
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="600" height="400"
+		 creationComplete="panel_creationCompleteHandler(event)"
+		 addedToStage="panel1_addedToStageHandler(event)"
+		 keyDown="panel_keyDownHandler(event)"
+		 title="{Language.lookup(&quot;NewProject&quot;)}">
 	<fx:Declarations>
 		<s:RadioButtonGroup id="projectType"/>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:states>
-		<s:State name = "new"/>
-		<s:State name = "addUsers"/>
-	</s:states>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -51,26 +49,10 @@
 					AGORAModel.getInstance().agoraMapModel.numberUsers = users.length;
 					AGORAModel.getInstance().agoraMapModel.projectUsers = users;
 					AGORAController.getInstance().pushNewProject();
+					//AGORAController.getInstance().fetchDataProjectList();
+					//AGORAController.getInstance().fetchDataMyProjects();
 			}
-			public function project_addUsers():void{
-				AGORAModel.getInstance().agoraMapModel.projectName = projectName.text;
-				AGORAModel.getInstance().agoraMapModel.projectType = projectType.selectedValue.valueOf();
-				var users:Array = new Array();
-				var userDetail:String = new String();
-				for(var c:int=0;c<projectUserNames.numChildren;c++){
-					var textinp:TextInput = (projectUserNames.getChildAt(c) as HGroup).getChildAt(0) as TextInput;
-					var username:String = textinp.text;
-					if(username!=null && StringUtil.trim(username)!=""){
-						userDetail = StringUtil.trim(username);
-						users.push(userDetail);
-					}
-				}
-				
-				AGORAModel.getInstance().agoraMapModel.numberUsers = users.length;
-				AGORAModel.getInstance().agoraMapModel.projectUsers = users;
-				AGORAController.getInstance().pushNewProject();
-				AGORAController.getInstance().fetchDataMyProjects();
-			}		
+			
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
 				projectName.text=" ";
@@ -128,7 +110,7 @@
 	</fx:Script>
 	<mx:Form id="form" verticalGap="15">
 		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;ProjectName&quot;)}" required="true">			
-			<s:TextInput id="projectName" width="200" editable.addUsers="false" >
+			<s:TextInput id="projectName" width="200">
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem tabIndex="2" required="true" label="{Language.lookup(&quot;ProjectType&quot;)}">
@@ -189,7 +171,7 @@
 			<s:HGroup>
 				<s:Button label="{Language.lookup('OK')}" tabIndex="4" id="OK_btn" click="project_add();">		
 				</s:Button>
-				<s:Button label="{Language.lookup('Back')}" tabIndex="5" id="CANCEL_btn" click="this.visible=false;">		
+				<s:Button label="{Language.lookup('Back')}" tabIndex="5" id="CANECL_btn" click="this.visible=false;">		
 				</s:Button>
 			</s:HGroup>		
 		</mx:FormItem>		

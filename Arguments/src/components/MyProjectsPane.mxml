@@ -55,7 +55,7 @@
 			import spark.components.Scroller;
 			import spark.components.VGroup;
 			import spark.layouts.VerticalLayout;
-			public var currentProj;
+
 			public var model:ProjectsModel;
 			public var projMapModel:LoadProjectMapsModel;
 			private var back:Button;
@@ -72,22 +72,8 @@
 				signIn.addEventListener(MouseEvent.CLICK, showSignInBox);
 			}
 
-			public function removeMembers():void{
-				var request:HTTPService= new HTTPService;
-				var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-				request.resultFormat = "e4x";
-				request.url=  AGORAParameters.getInstance().projectUsersURL;
-				request.addEventListener(ResultEvent.RESULT, onRemoved);
-				request.addEventListener(FaultEvent.FAULT, onFault);
-				usersList.selectedItem.label="blag";
-				mx.controls.Alert.show()
-				request.send({action:"remove", uid: userSessionModel.uid, pass_hash: userSessionModel.passHash,projID:currentProj,userid:usersXML[usersList.selectedIndex].@name});	
-			}
-			public function addMembers():void{
-				
-			}
+			
 			public function setCurrentProject(projID:String):void{
-				currentProj=projID;
 				var projDetRequest:HTTPService= new HTTPService;
 				var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 				projDetRequest.resultFormat = "e4x";
@@ -102,15 +88,6 @@
 				removeEventListener(ResultEvent.RESULT, onDetails);
 				removeEventListener(FaultEvent.FAULT, onFault);
 				dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
-				mx.controls.Alert.show(event.message.toString());
-
-			}
-			protected function onRemoved(event:ResultEvent):void{
-				removeEventListener(ResultEvent.RESULT, onRemoved);
-				removeEventListener(FaultEvent.FAULT, onFault);
-				mx.controls.Alert.show(event.message.toString());
-
-				init();
 			}
 			protected function onDetails(event:ResultEvent):void{
 				removeEventListener(ResultEvent.RESULT, onDetails);
@@ -118,6 +95,7 @@
 				projXML=event.result.proj[0]as XML;
 				var userListXML:XMLList=projXML.users  ;
 				usersXML.source=userListXML.children();
+				
 			}
 
 
@@ -130,25 +108,13 @@
 					projectList.visible=true;
 						if(model.projectList){
 						for each(var xml:XML in model.projectList.proj){
-							var buttonG:HGroup=new HGroup;
 							var button:RadioButton = new RadioButton;
-							var isHostile:ToggleButton=new ToggleButton;
 							button.group=projectListRadio;
 							button.name = xml.@ID;
 							button.label = xml.@title;
-							if (!xml.@isHostile==0){
-								isHostile.selected=true;
-								isHostile.label="yes";
-							}else{
-								isHostile.selected=false;
-								isHostile.label="no";
-							}
 							button.toolTip = xml.@creator;
-							button.percentWidth=90;
-							buttonG.percentWidth=100;
-							buttonG.addElement(button);
-							buttonG.addElement(isHostile);
-							projectList.addElement(buttonG);
+							button.percentWidth=100;
+							projectList.addElement(button);
 							button.addEventListener('click',function(e:Event):void{
 								mapList.visible = true;
 								memberList.visible = true;
@@ -160,6 +126,7 @@
 							
 						}
 						FlexGlobals.topLevelApplication.agoraMenu.backToProjectList.visible = true;
+						FlexGlobals.topLevelApplication.agoraMenu.createProjectBtn.label = Language.lookup("CreateMapInProject");
 						var mapMetaDataVector:Vector.<MapMetaData> = new Vector.<MapMetaData>(0,false);
 						if(!projMapModel || !projMapModel.projectMapList) return;
 						for each (var projectMapList:XML in projMapModel.projectMapList.map){
@@ -228,29 +195,19 @@
 
 	<s:HGroup width = "100%" horizontalAlign="center" top = "0" gap="25" minHeight="350" horizontalCenter="0">
 		<s:VGroup width="30%">
-			<s:HGroup>
-				<s:Label text="Projects">
-				</s:Label>	
-				<s:Label text="Is Collaborative" right = "0">
-				</s:Label>	
-			</s:HGroup>
-
+			<s:Label text="Projects">
+				
+			</s:Label>
 
 		<s:Scroller width = "100%" height = "300">
-			<s:HGroup>
-				<s:VGroup   id =  "projectList" visible="false">
-					
-				</s:VGroup>
-				<s:VGroup   id =  "isHostileList" visible="false">
-					
-				</s:VGroup>				
-			</s:HGroup>
 
+			<s:VGroup   id =  "projectList" visible="false">
+				<s:HGroup>
+					<s:Button label = "delete" visible ="false"/>
+					<s:Button label = "rename" visible ="false"/>
+				</s:HGroup>
+			</s:VGroup>
 		</s:Scroller>
-			<s:HGroup>
-				<s:Button label = "delete" visible ="false"/>
-				<s:Button label = "rename" visible ="false"/>
-			</s:HGroup>
 		</s:VGroup>
 
 		<s:VGroup width="30%"  id ="mapList" visible="false">
@@ -270,9 +227,9 @@
 					<s:XMLListCollection id="usersXML" />
 				</s:dataProvider>
 			</s:List>
-			<s:Button label="{Language.lookup('AddProjectMembers')}"  click="{addMembers()}"  />
-			<s:Button label="{Language.lookup('RemoveMembers')}" click="{removeMembers()}"  />
-			<s:Button label="{Language.lookup('SelectAdmin')}"  click="{mx.controls.Alert.show('Are you sure you want to make this user the administrator?  You will no longer be admin of this project')}"/>
+			<s:Button label="{Language.lookup('AddProjectMembers')}"  click="{}" visible = "false"/>
+			<s:Button label="{Language.lookup('RemoveMembers')}" click="{}" visible = "false"/>
+			<s:Button label="{Language.lookup('SelectAdmin')}Select as new administrator" visible= "false" click="{mx.controls.Alert.show('Coming Soon')}"/>
 		</s:VGroup>
 	</s:HGroup>
 

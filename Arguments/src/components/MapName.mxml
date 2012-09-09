@@ -9,12 +9,6 @@
 		 creationComplete="panel_creationCompleteHandler(event)"
 		 addedToStage="panel1_addedToStageHandler(event)"
 		 keyDown="panel_keyDownHandler(event)">
-	<s:states>
-		<s:State name = "createInProj">
-		</s:State>
-		<s:State name = "createInCategory">
-		</s:State>
-	</s:states>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -44,10 +38,7 @@
 				AGORAController.getInstance().freeze();
 				ArgumentController.getInstance().createMap(mapName.text);
 			}
-			public function createMapInProj():void{
-				AGORAController.getInstance().freeze();
-				ArgumentController.getInstance().createMap(mapName.text);
-			}			
+			
 			/**
 			 * Handles the effects of the text field input box. 
 			 * 

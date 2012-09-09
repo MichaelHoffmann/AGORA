@@ -35,7 +35,6 @@ package ValueObjects
 		public var pullRegistrationURL:String;
 		public var changeInfoURL:String;
 		public var projectDetailsURL:String;
-		public var projectUsersURL:String;
 		
 		
 		
@@ -191,7 +190,6 @@ package ValueObjects
 			pullRegistrationURL = "http://agora.gatech.edu/release/pull_registration_info.php";
 			changeInfoURL="http://agora.gatech.edu/release/changeinfo.php";
 			projectDetailsURL = "http://agora.gatech.edu/release/projectdetails.php";
-			projectUsersURL = "http://agora.gatech.edu/release/projusers.php";
 
 			initialize();		
 		}
