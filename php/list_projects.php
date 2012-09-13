@@ -1,8 +1,8 @@
 <?php
 	/**
-	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			reflection, critique, deliberation, and creativity in individual argument construction 
-			and in collaborative or adversarial settings. 
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning,
+			reflection, critique, deliberation, and creativity in individual argument construction
+			and in collaborative or adversarial settings.
     Copyright (C) 2011 Georgia Institute of Technology
 
     This program is free software: you can redistribute it and/or modify
@@ -17,20 +17,21 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	
+
 	*/
 	require 'configure.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
+	require 'utilfuncs.php';
 	/**
 	*	Function for getting the project list.
 	*/
-	function list_projects(){
+	function list_projects($userID, $pass_hash){
 		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 		$output = new SimpleXMLElement($xmlstr);
-		
+
 		$linkID= establishLink();
 		if(!$linkID){
 			badDBLink($output);
@@ -41,8 +42,14 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id ORDER BY projects.title";
-		$resultID = mysql_query($query, $linkID); 
+
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+					incorrectLogin($output);
+					return $output;
+		}
+
+		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projusers.user_id=$userID ORDER BY projects.title";
+		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;
@@ -52,16 +59,23 @@
 			//This is a better alternative than reporting an error.
 			return $output;
 		}else{
-			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
 				$row = mysql_fetch_assoc($resultID);
 				$proj = $output->addChild("proj");
+				error_log("proj",0);
 				$proj->addAttribute("ID", $row['proj_id']);
 				$proj->addAttribute("title", $row['title']);
-				$proj->addAttribute("creator", $row['username']);			
+				$proj->addAttribute("creator", $row['username']);
+				$proj->addAttribute("role", $row['user_level']);
+				$proj->addAttribute("type", $row['is_hostile']);
 			}
 		}
 		return $output;
 	}
-	$output=list_projects();
+
+	$userID = mysql_real_escape_string($_REQUEST['uid']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$output=list_projects($userID, $pass_hash);
+	error_log($output->asXML(),0);
 	print($output->asXML());
 ?>

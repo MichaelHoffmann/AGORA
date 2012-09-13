@@ -1,8 +1,8 @@
 <?php
 	/**
-	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			reflection, critique, deliberation, and creativity in individual argument construction 
-			and in collaborative or adversarial settings. 
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning,
+			reflection, critique, deliberation, and creativity in individual argument construction
+			and in collaborative or adversarial settings.
     Copyright (C) 2011 Georgia Institute of Technology
 
     This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	
+
 	*/
 	require 'configure.php';
 	require 'errorcodes.php';
@@ -31,7 +31,7 @@
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 		$output = new SimpleXMLElement($xmlstr);
-		
+
 		$linkID= establishLink();
 		if(!$linkID){
 			badDBLink($output);
@@ -47,29 +47,99 @@
 			return $output;
 		}
 		
-		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id WHERE users.user_id=$userID ORDER BY projects.title";
-		$resultID = mysql_query($query, $linkID); 
+		// This is My private Project Space - username is userid	
+		$username = getUserNameFromUserId($userID,$linkID);
+		$query="SELECT category_id,category_name FROM category WHERE category_name='$username'";
+		$found_category_id=mysql_query($query, $linkID);
+		if( mysql_num_rows($found_category_id) < 1){
+			$create_private_proj="INSERT INTO category (category_name, is_project) VALUES ((SELECT username FROM users WHERE user_id='$userID'), 1)";
+			$create_parent_link="INSERT INTO parent_categories (category_id, parent_category_name,parent_categoryid) 
+								VALUES ((SELECT category_id FROM category WHERE category_name=(SELECT username FROM users WHERE user_id='$userID')),'Private, for individual users',38)";
+			$make_user_admin = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES 
+									((SELECT category_id FROM category WHERE category_name=(SELECT username FROM users WHERE user_id='$userID')), '$userID', 9)";
+			mysql_query($create_private_proj, $linkID);
+			mysql_query($create_parent_link, $linkID);
+			mysql_query($make_user_admin, $linkID);
+			$query="SELECT category_id,category_name FROM category WHERE category_name='$username'";
+			$found_category_id=mysql_query($query, $linkID);
+		}
+		$row = mysql_fetch_assoc($found_category_id);
+		$output->addAttribute("privateCategoryName",  $row['category_name']);
+		$output->addAttribute("privateCategoryID",  $row['category_id']);
+
+		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projects.user_id=$userID and projusers.user_level=9 ORDER BY projects.title";
+		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;
 		}
+		
 		if(mysql_num_rows($resultID)==0){
 			$output->addAttribute("proj_count", "0");
 			//This is a better alternative than reporting an error.
 			return $output;
 		}else{
-			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
+			$count = 0 ;
+			$projects = Array();
+			$projectListing = $output->addChild("ProjectList");
+			$projectPath = $output->addChild("Path");
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
 				$row = mysql_fetch_assoc($resultID);
-				$proj = $output->addChild("proj");
+				$proj = $projectListing->addChild("proj");
 				$proj->addAttribute("ID", $row['proj_id']);
+				$projects[$x] = $row['proj_id'];
 				$proj->addAttribute("title", $row['title']);
-				$proj->addAttribute("creator", $row['username']);			
+				$proj->addAttribute("creator", $row['username']);
+				$proj->addAttribute("role", $row['user_level']);
+				$proj->addAttribute("type", $row['is_hostile']);
+				$count++;
 			}
+			$output->addAttribute("proj_count", $count);
+		
+		// Form the hierarchy for the projects ...			
+		$query = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category as c left join `parent_categories` as child on c.category_id = child.category_id";
+		$resultID = mysql_query($query, $linkID);
+		$catMap = Array();
+		$catNameMap = Array();
+		if($resultID && mysql_num_rows($resultID)>0){
+			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
+				$row = mysql_fetch_assoc($resultID);
+				$detailsMap = Array();			
+				$catIdVal = $row['catid'];
+				// details ...
+				$catName = $row['catname'];
+				$catParent = $row['parent_categoryid'];
+				$catType = $row['is_project'];
+				$detailsMap['name'] = $catName;
+				$detailsMap['isproject']=$catType;
+				if($catParent!=NULL){
+					$catMap[$catIdVal] = $catParent;	
+				} 			
+			$catNameMap[$catIdVal] = $detailsMap;		
+			}	
+		}
+		
+		for($x = 0 ; $x < count($projects) ; $x++){
+			$pid = $projects[$x];
+			header("Content-type: text/xml");
+			$vistedNodes = Array();
+			$path = $projectPath->addChild("path");			
+			$hierarchy = fetchTreeXmlForProj($pid,$catMap,$catNameMap,$path,$vistedNodes);
+		}
+		
+		
+		/*error_log("HH",0);
+		$keys = array_keys($catMap);
+		for($x = 0 ; $x < count($keys) ; $x++){
+			error_log($keys[$x]."-->".$catMap[$keys[$x]],0);
+		}*/
+		
 		}
 		return $output;
 	}
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$output = my_projects($userID, $pass_hash);
+	error_log("myy",0);
 	print($output->asXML());
 ?>

@@ -1,8 +1,8 @@
 <?php
 	/**
-	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			reflection, critique, deliberation, and creativity in individual argument construction 
-			and in collaborative or adversarial settings. 
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning,
+			reflection, critique, deliberation, and creativity in individual argument construction
+			and in collaborative or adversarial settings.
     Copyright (C) 2011 Georgia Institute of Technology
 
     This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	
+
 	*/
-	
+
 	/**
 		List of variables for project creation:
 		uid: ID number for the user
@@ -27,14 +27,14 @@
 		projID: The ID of the project.
 		userID: The ID of the user to be added or removed.
 		action: "add" or "remove". Pretty self-explanatory, really.
-		
+
 		THIS IS NOT THE CODE FOR A USER JOINING THE PROJECT WITH THE PASSWORD!
 	**/
 	require 'configure.php';
 	require 'errorcodes.php';
 	require 'establish_link.php';
 	require 'utilfuncs.php';
-	
+
 	/**
 	* Convenience function.
 	* Selects the last auto-generated ID (AUTO_INCREMENT) from the Database.
@@ -48,8 +48,8 @@
 		$row = mysql_fetch_assoc($resultID);
 		return $row['LAST_INSERT_ID()'];
 	}
-	
-	function addUser($otheruserID, $projID, $userID, $level, $pass_hash, $output){
+
+	function addUser($userID, $pass_hash,$projID,$proj_users,$level,$output){
 		$output->addAttribute("ID", $projID);
 		global $dbName, $version;
 		header("Content-type: text/xml");
@@ -78,27 +78,109 @@
 			notProjectAdmin($output);
 			return $output;
 		}
-		$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $otheruserID, $level)";
+		
+		foreach($proj_users as $otheruserID){
+		$userid = getUserIdFromUserName($otheruserID,$linkID);
+		if($userid==-1){
+			error_log("user not found !!",0);
+			continue;
+		}
+		$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($projID, $userid, $level)";
 		$success = mysql_query($query, $linkID);
 		if($success){
 			$otheruser=$output->addChild("user");
 			$otheruser->addAttribute("ID", $otheruserID);
 			$otheruser->addAttribute("added", true);
-			return $output;
 		}else{
 			$otheruser=$output->addChild("user");
 			$otheruser->addAttribute("ID", $otheruserID);
 			$otheruser->addAttribute("added", false);
-			updateFailed($output, $query);
-			//Note that the UNIQUE pu_combo field ensures that a user can't be added to a project twice.
-			return $output;
 		}
-		
+		}
 		return $output;
 	}
-	
-	function removeUser($otheruserID, $projID, $userID, $pass_hash, $output){
+
+	function removeUser($projID, $userID, $pass_hash,$userList, $output){
 		$output->addAttribute("ID", $projID);
+		global $dbName, $version;
+		header("Content-type: text/xml");
+		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
+		$output = new SimpleXMLElement($xmlstr);
+		$linkID= establishLink();
+		if(!$linkID){
+			badDBLink($output);
+			return $output;
+		}
+		$status=mysql_select_db($dbName, $linkID);
+		if(!$status){
+			 databaseNotFound($output);
+			 return $output;
+		}
+		if(!checkLogin($userID, $pass_hash, $linkID)){
+			incorrectLogin($output);
+			return $output;
+		}
+		//Basic boilerplate is done.
+		if(!checkForAdmin($projID, $userID, $linkID)){
+			error_log("na",0);
+			notProjectAdmin($output);
+			return $output;
+		}
+
+		foreach($userList as $otheruserID){
+		if($otheruserID == $userID){
+				error_log("Admin User cannot be removed..",0);
+				continue;
+		}
+		mysql_query("START TRANSACTION");
+		$query = "DELETE FROM projusers WHERE proj_id=$projID AND user_id=$otheruserID";
+		$success = mysql_query($query, $linkID);
+		if($success){
+			//Remove all of this user's maps from the project and make a new project for them.
+			$getAutoProjName = generateAutoProjName($otheruserID,$linkID);
+			$catname = $getAutoProjName['Name'];
+			$newID = $getAutoProjName['Id'];
+			error_log("error".$newID.$catname,0);
+			/*$query = "INSERT INTO projects (user_id, title, is_hostile) VALUES
+										($otheruserID, '$catname', 1)";
+			$status = mysql_query($query, $linkID);
+			$newID = getLastInsert($linkID);
+			if(!$status){
+				mysql_query("ROLLBACK");
+				rolledBack($output);
+				return $output;
+			}*/
+
+			$uquery = "UPDATE maps SET proj_id=$newID WHERE user_id=$otheruserID AND proj_id=$projID";
+			$status = mysql_query($uquery, $linkID);
+
+			//$query = "INSERT INTO category (category_name, is_project) VALUES ('$getAutoProjName', 1)";
+			//$status = mysql_query($query, $linkID);
+			if(!$status){
+				mysql_query("ROLLBACK");
+				rolledBack($output);
+				return $output;
+			}
+			$otheruser=$output->addChild("user");
+			$otheruser->addAttribute("ID", $otheruserID);
+			$otheruser->addAttribute("removed", true);
+			mysql_query("COMMIT");
+			//return $output;
+		}else{
+			$otheruser=$output->addChild("user");
+			$otheruser->addAttribute("ID", $otheruserID);
+			$otheruser->addAttribute("removed", false);
+			updateFailed($output, $query);
+			mysql_query("ROLLBACK");
+			rolledBack($output);
+			//return $output;
+		}
+		}
+		error_log($output,0);
+		return $output;
+	}
+
+	function verifyUser($projID, $userID, $pass_hash, $output){
 		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
@@ -122,46 +204,17 @@
 			notProjectAdmin($output);
 			return $output;
 		}
-		mysql_query("START TRANSACTION");
-		$query = "DELETE FROM projusers WHERE proj_id=$projID AND user_id=$otheruserID";
-		
+		$query = "SELECT * FROM projusers WHERE proj_id='$projID' AND user_id='$userID'";
+
 		$success = mysql_query($query, $linkID);
-		if($success){
-			//Remove all of this user's maps from the project and make a new project for them.
-			
-			$query = "INSERT INTO projects (user_id, title, password, is_hostile) VALUES
-										($otheruserID, 'Automatically created project', NULL, 1)";
-			$status = mysql_query($query, $linkID);
-			$newID = getLastInsert($linkID);
-			if(!$status){
-				mysql_query("ROLLBACK");
-				rolledBack($output);
-				return $output;
-			}
-			
-			$uquery = "UPDATE maps SET proj_id=$newID WHERE user_id=$otheruserID AND proj_id=$projID";
-			$status = mysql_query($uquery, $linkID);
-			if(!$status){
-				mysql_query("ROLLBACK");
-				rolledBack($output);
-				return $output;
-			}
-			$otheruser=$output->addChild("user");
-			$otheruser->addAttribute("ID", $otheruserID);
-			$otheruser->addAttribute("removed", true);
-			mysql_query("COMMIT");
-			return $output;
+		if(mysql_num_rows($success) > 0){
+			return true;
 		}else{
-			$otheruser=$output->addChild("user");
-			$otheruser->addAttribute("ID", $otheruserID);
-			$otheruser->addAttribute("removed", false);
-			updateFailed($output, $query);
-			mysql_query("ROLLBACK");
-			rolledBack($output);
-			return $output;
-		}		
+			return false;
+		}
 		return $output;
 	}
+
 
 	function modifyUser($otheruserID, $projID, $userID, $level, $pass_hash, $output){
 		$output->addAttribute("ID", $projID);
@@ -189,7 +242,7 @@
 			return $output;
 		}
 		$query = "UPDATE projusers SET user_level=$level WHERE proj_id=$projID AND user_id=$otheruserID";
-		
+
 		$success = mysql_query($query, $linkID);
 		if($success){
 			$otheruser=$output->addChild("user");
@@ -202,30 +255,36 @@
 			$otheruser->addAttribute("modified", false);
 			updateFailed($output, $query);
 			return $output;
-		}		
+		}
 		return $output;
 	}
-	
+
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$projID = mysql_real_escape_string($_REQUEST['projID']);
-	$otheruserID =  mysql_real_escape_string($_REQUEST['otheruserID']);
-	$level = mysql_real_escape_string($_REQUEST['level']);
+	//$otheruserID =  mysql_real_escape_string($_REQUEST['otheruserID']);
+	//$level = mysql_real_escape_string($_REQUEST['level']);
 	$action = $_REQUEST['action'];
-	
+
 	header("Content-type: text/xml");
 	$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
 	$output = new SimpleXMLElement($xmlstr);
 
 	if($action=="add"){
-		$output=addUser($otheruserID, $projID, $userID, $level, $pass_hash, $output);
+		$userList = $_REQUEST['usersList'];
+		$level=0;
+		$output=addUser($userID,$pass_hash, $projID,$userList, $level, $output);
 	}else if($action=="remove"){
-		$output=removeUser($otheruserID, $projID, $userID, $pass_hash, $output);
+		$userList = $_REQUEST['usersList'];
+		$output=removeUser( $projID, $userID, $pass_hash,$userList, $output);
+	}else if($action=="validate"){
+		$output=validateUser($userID, $pass_hash, $projID, $output);
 	}else if($action=="modify"){
 		$output=modifyUser($otheruserID, $projID, $userID, $level, $pass_hash, $output);
 	}else{
 		meaninglessQueryVariables($output, "The 'action' variable must be set to either add or remove.");
 	}
+	error_log($output->asXML(),0);
 	print $output->asXML();
-	
+
 ?>

@@ -44,17 +44,29 @@
 			databaseNotFound($output);
 			return $output;
 		}
-		
+		$success = $output->addChild("success");
+			$success ->addAttribute("username",$username );
+			$success ->addAttribute("Pass",$pass_hash );
+			$success ->addAttribute("lastname ",$lastname );
+			$success ->addAttribute("firstname ",$firstname );
+			$success ->addAttribute("email ",$email );
+			$success ->addAttribute("url ",$url );
+			$success ->addAttribute("newpass ",$newpass );
+
 		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;
+		}else{
+			$success ->addAttribute("foundIDandPass", true);
+
 		}
-		
 		$row = mysql_fetch_assoc($resultID);
 		$uid = $row['user_id'];
-		if($uid=="") // If user doesn't exist...
+		$success ->addAttribute("uid ",$uid );
+
+		if(!$uid) // If user doesn't exist...
 		{
 			$login->addAttribute("modified", false);
 		}else{
@@ -77,19 +89,17 @@
 				updateFailed($login, $iquery);
 				return $output;
 			}else{
-				$login->addAttribute("modified", true); // Successfully modified the user info.
+				$login->addAttribute("modified", true); // Successfully created the username.
 			}
 		}
 		return $output;
 	}
-
 	$username = mysql_real_escape_string($_REQUEST['username']);
-	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$firstname = mysql_real_escape_string($_REQUEST['firstname']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$lastname = mysql_real_escape_string($_REQUEST['lastname']);
 	$email = mysql_real_escape_string($_REQUEST['email']);
 	$url = mysql_real_escape_string($_REQUEST['url']);
-	$new_pass= mysql_real_escape_string($_REQUEST['newpass']);
-	$output = changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $new_pass);
+	$output = changeinfo($username,$pass_hash, $firstname,  $lastname, $email, $url);
 print($output->asXML());
 ?>
