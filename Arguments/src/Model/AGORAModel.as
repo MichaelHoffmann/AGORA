@@ -34,6 +34,8 @@ package Model
 		public var moveToProject:Boolean;
 		public var verifyProjModel:VerifyProjectMemberModel;
 		public var publishMapModel:PublishMapModel;
+		public var addUsers:AddUsers;
+		public var removeUsers:RemoveUsers;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -58,6 +60,8 @@ package Model
 			verifyProjModel = new VerifyProjectMemberModel;
 			publishMapModel = new PublishMapModel;
 			pushprojects = new PushProject();
+			addUsers= new AddUsers();
+			removeUsers=new RemoveUsers();
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';

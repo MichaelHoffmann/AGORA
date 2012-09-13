@@ -136,21 +136,14 @@
 			 */
 			protected function projectsButton_OnClick(event:MouseEvent):void{
  				
-				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-				if(userSession.username == "Guest"){
-					Alert.show(Language.lookup('GuestCreateMapError'));
-				} else if (event.currentTarget == createProjectBtn) {
-					if(createProjectBtn.label == "Create a map within this project"){
-						AGORAModel.getInstance().moveToProject = true;
-						AGORAController.getInstance().displayMapInfoBox();
-						
-					} else {
-						AGORAController.getInstance().displayProjectInfoBox();
-					}
-				}
-				else
+				var usm:*=Model.AGORAModel.getInstance().userSessionModel;
+				if (usm.username != "Guest") 
 				{
-					AGORAController.getInstance().displayProjectInfoBox();
+					Controller.AGORAController.getInstance().displayProjectInfoBox("newInMyProjects");
+				}
+				else 
+				{
+					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
 				}
 				
 			}

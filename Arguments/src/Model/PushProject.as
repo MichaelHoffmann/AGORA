@@ -7,11 +7,12 @@ package Model
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import com.adobe.crypto.MD5;
 	import com.adobe.serialization.json.JSON;
 	
 	import flash.events.EventDispatcher;
-	import classes.Language;
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
@@ -67,7 +68,27 @@ package Model
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
-		
+		public function inProject():void
+		{
+
+			var usm:*=Model.AGORAModel.getInstance().userSessionModel;
+			if (usm.loggedIn()) 
+			{
+				var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":usm.projID};
+				this.request.send(params);
+			}
+			return;
+		}
+		public function inCategory():void
+		{
+			var usm:*=Model.AGORAModel.getInstance().userSessionModel;
+			if (usm.loggedIn()) 
+			{
+				var params:Object= {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
+				this.request.send(params);
+			}
+			return;
+		}
 		/**
 		 * If the sendRequest method comes back poorly, we enter here and broadcast the FAULT event
 		 */

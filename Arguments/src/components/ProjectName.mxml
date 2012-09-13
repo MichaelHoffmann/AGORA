@@ -33,7 +33,7 @@
 			
 			private var _password:String;
 			public function project_add():void{
-						AGORAModel.getInstance().agoraMapModel.projectName = projectName.text;
+					AGORAModel.getInstance().agoraMapModel.projectName = projectName.text;
 					AGORAModel.getInstance().agoraMapModel.projectType = projectType.selectedValue.valueOf();
 					var users:Array = new Array();
 					var userDetail:String = new String();
@@ -48,7 +48,17 @@
 				
 					AGORAModel.getInstance().agoraMapModel.numberUsers = users.length;
 					AGORAModel.getInstance().agoraMapModel.projectUsers = users;
-					AGORAController.getInstance().pushNewProject();
+					if (currentState != "newInWoA") 
+					{
+						if (currentState == "newInMyProjects") 
+						{
+							Controller.AGORAController.getInstance().addProjectToMyProject();
+						}
+					}
+					else 
+					{
+						Controller.AGORAController.getInstance().addProjectToWoM();
+					}
 					//AGORAController.getInstance().fetchDataProjectList();
 					//AGORAController.getInstance().fetchDataMyProjects();
 			}
@@ -108,17 +118,19 @@
 			
 		]]>
 	</fx:Script>
+	<s:states>
+		<s:State name = "addUsers"/>
+		<s:State name = "newInMyProjects"/>
+		<s:State name = "newInWoA"/>
+	</s:states>
 	<mx:Form id="form" verticalGap="15">
 		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;ProjectName&quot;)}" required="true">			
-			<s:TextInput id="projectName" width="200">
-			</s:TextInput>
+			<s:TextInput id="projectName" width="200" excludeFrom="addUsers"/>
 		</mx:FormItem>
 		<mx:FormItem tabIndex="2" required="true" label="{Language.lookup(&quot;ProjectType&quot;)}">
 			<s:HGroup>	
-				<s:RadioButton label="{Language.lookup('ProjectTypeCollaborative')}" value="0" selected="true" group="{projectType}">		
-				</s:RadioButton>
-				<s:RadioButton label="{Language.lookup('ProjectTypeAdversarial')}" value="1" group="{projectType}">		
-				</s:RadioButton>
+				<s:RadioButton label="{Language.lookup('ProjectTypeCollaborative')}" value="0" selected="true" group="{projectType}"/>		
+				<s:RadioButton label="{Language.lookup('ProjectTypeAdversarial')}" value="1" group="{projectType}"/>		
 			</s:HGroup>
 		</mx:FormItem>
 		<mx:FormItem tabIndex="3" label="{Language.lookup(&quot;AddProjectMembers&quot;)}" verticalGap="12">	

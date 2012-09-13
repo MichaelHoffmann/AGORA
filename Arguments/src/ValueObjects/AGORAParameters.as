@@ -36,7 +36,9 @@ package ValueObjects
 		public var pullRegistrationURL:String;
 		public var changeInfoURL:String;
 		public var projectDetailsURL:String;
-		
+		public var listProjMaps:String;
+		public var moveMapToProjectURL:String;
+		public var projUsersURL:String;
 		
 		
 		//Error Codes TODO: Enter these in the Languages.xml
@@ -148,7 +150,7 @@ package ValueObjects
 		public var SUPPORT_ARGUMENT_SCHEME_COMPLETED:String;
 		public var SUPPORT_ADD_OBJECTION:String;
 		public var SUPPORT_SELECT_ARG_SCHEME:String;
-		
+	
 		//labels
 		public var DONE:String;
 		public var NOTE:String;
@@ -165,33 +167,36 @@ package ValueObjects
 		public function AGORAParameters()
 		{
 			
-			listMapsURL = "http://localhost/agora_test/list_maps.php";
-			myMapsURL = "http://localhost/agora_test/my_maps.php";
-			loginURL = "http:/localhost/agora_test/login.php";
-			registrationURL = "http://localhost/agora_test/register.php";
-			mapRemoveURL = "http://localhost/agora_test/remove_map.php";
-			deleteURL = "http://localhost/agora_test/remove.php";
-			insertURL = "http://localhost/agora_test/insert.php";
-			loadMapURL = "http://localhost/agora_test/load_map1.php";
-			nameUpdateURL = "http://localhost/agora_test/mapinfo.php";
-			projectListURL = "http://localhost/agora_test/list_projects.php";
-			myProjectsURL = "http://localhost/agora_test/my_projects.php";
-			pushProjectsURL = "http://localhost/agora_test/projects.php";
-			joinProjectURL = "http://localhost/agora_test/verifyProject.php";
-			loadProjectMapsURL = "http://localhost/agora_test/load_project_maps.php";
-			getMapFromProjURL = "http://localhost/agora_test/getMapFromProjID.php";
-			publishMapURL = "http://localhost/agora_test/publishMap.php";
-			categoryURL= "http://localhost/agora_test/category.php"; //category
-			chatPushURL= "http://localhost/agora_test/push_chat.php"; //chat
-			chatPullURL= "http://localhost/agora_test/pull_chat.php"; //chat
-			childCategoryURL = "http://localhost/agora_test/child_category.php";
-			childMapURL="http://localhost/agora_test/map_category.php";
-			childProjectURL="http://localhost/agora_test/project_category.php";
-			createMapHereURL = "http://localhost/agora_test/create_map_in_current_category.php";
-			mapToPrivateProjURL = "http://localhost/agora_test/map_to_private_project.php";
-			pullRegistrationURL = "http://localhost/agora_test/pull_registration_info.php";
-			changeInfoURL="http://localhost/agora_test/changeinfo.php";
-			projectDetailsURL = "http://localhost/agora_test/projectdetails.php";
+			listMapsURL = "http://agora.gatech.edu/Paul_testing/list_maps.php";
+			myMapsURL = "http://agora.gatech.edu/Paul_testing/my_maps.php";
+			loginURL = "http:/agora.gatech.edu/Paul_testing/login.php";
+			registrationURL = "http://agora.gatech.edu/Paul_testing/register.php";
+			mapRemoveURL = "http://agora.gatech.edu/Paul_testing/remove_map.php";
+			deleteURL = "http://agora.gatech.edu/Paul_testing/remove.php";
+			insertURL = "http://agora.gatech.edu/Paul_testing/insert.php";
+			loadMapURL = "http://agora.gatech.edu/Paul_testing/load_map1.php";
+			nameUpdateURL = "http://agora.gatech.edu/Paul_testing/mapinfo.php";
+			projectListURL = "http://agora.gatech.edu/Paul_testing/list_projects.php";
+			myProjectsURL = "http://agora.gatech.edu/Paul_testing/my_projects.php";
+			pushProjectsURL = "http://agora.gatech.edu/Paul_testing/projects.php";
+			joinProjectURL = "http://agora.gatech.edu/Paul_testing/verifyProject.php";
+			loadProjectMapsURL = "http://agora.gatech.edu/Paul_testing/load_project_maps.php";
+			getMapFromProjURL = "http://agora.gatech.edu/Paul_testing/getMapFromProjID.php";
+			publishMapURL = "http://agora.gatech.edu/Paul_testing/publishMap.php";
+			categoryURL= "http://agora.gatech.edu/Paul_testing/category.php"; //category
+			chatPushURL= "http://agora.gatech.edu/Paul_testing/push_chat.php"; //chat
+			chatPullURL= "http://agora.gatech.edu/Paul_testing/pull_chat.php"; //chat
+			childCategoryURL = "http://agora.gatech.edu/Paul_testing/child_category.php";
+			childMapURL="http://agora.gatech.edu/Paul_testing/map_category.php";
+			childProjectURL="http://agora.gatech.edu/Paul_testing/project_category.php";
+			createMapHereURL = "http://agora.gatech.edu/Paul_testing/create_map_in_current_category.php";
+			mapToPrivateProjURL = "http://agora.gatech.edu/Paul_testing/map_to_private_project.php";
+			pullRegistrationURL = "http://agora.gatech.edu/Paul_testing/pull_registration_info.php";
+			changeInfoURL="http://agora.gatech.edu/Paul_testing/changeinfo.php";
+			projectDetailsURL = "http://agora.gatech.edu/Paul_testing/projectdetails.php";
+			listProjMaps = "http://agora.gatech.edu/Paul_testing/listProjectMaps.php";
+			moveMapToProjectURL = "http://agora.gatech.edu/Paul_testing/moveMapToProject.php";
+			projUsersURL = "http://agora.gatech.edu/Paul_testing/projusers.php";
 
 			initialize();		
 		}

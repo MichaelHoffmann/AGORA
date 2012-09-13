@@ -205,7 +205,22 @@ package Controller
 			//var pp:PushProject = new PushProject;
 			model.pushprojects.sendRequest();
 		}
-		
+		public function addProjectToMyProject():*
+		{
+			this.model.pushprojects.inCategory();
+			return;
+		}
+		public function removeMembers():void
+		{
+			this.model.removeUsers.sendRequest();
+			return;
+		}
+
+		public function addProjectToWoM():*
+		{
+			this.model.pushprojects.inCategory();
+			return;
+		}
 		public function verifyProjectMember(parentCategory:String):void{
 			this.tempParentCategory = parentCategory;
 			model.verifyProjModel.send();
@@ -409,13 +424,14 @@ package Controller
 			}
 		}
 		
-		public function displayProjectInfoBox():void{
+		public function displayProjectInfoBox(state:String):void{
 			var agoraModel:AGORAModel = AGORAModel.getInstance();
 			if(agoraModel.userSessionModel.loggedIn()){
 				FlexGlobals.topLevelApplication.projectNameBox = new ProjectName;
-				var pojectNameDialog:ProjectName = FlexGlobals.topLevelApplication.projectNameBox;
-				PopUpManager.addPopUp(pojectNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
-				PopUpManager.centerPopUp(pojectNameDialog);
+				var projectNameDialog:ProjectName = FlexGlobals.topLevelApplication.projectNameBox;
+				projectNameDialog.currentState=state;
+				PopUpManager.addPopUp(projectNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
+				PopUpManager.centerPopUp(projectNameDialog);
 			}
 			else{
 				Alert.show(Language.lookup("MustRegister"));

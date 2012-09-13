@@ -6,13 +6,13 @@ package Model
     import mx.rpc.events.*;
     import mx.rpc.http.*;
     
-    public class ProjectsModel extends flash.events.EventDispatcher
+    public class RemoveUsers extends flash.events.EventDispatcher
     {
-        public function ProjectsModel()
+        public function RemoveUsers()
         {
             super();
             this.request = new mx.rpc.http.HTTPService();
-            this.request.url = ValueObjects.AGORAParameters.getInstance().projectListURL;
+            this.request.url = ValueObjects.AGORAParameters.getInstance().projUsersURL;
             this.request.resultFormat = "e4x";
             this.request.requestTimeout = 3;
             this.request.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onResult);
@@ -22,18 +22,27 @@ package Model
 
         public function sendRequest():void
         {
+            var loc2:*=null;
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
-                this.request.send({"uid":loc1.uid, "pass_hash":loc1.passHash});
+                loc2 = {"action":"remove", "projID":loc1.selectedProjID, "uid":loc1.uid, "pass_hash":loc1.passHash, "usersList[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
+                this.request.send(loc2);
             }
             return;
         }
 
         protected function onResult(arg1:mx.rpc.events.ResultEvent):void
         {
-            this.projectList = arg1.result as XML;
-            dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.MY_PROJECTS_LIST_FETCHED));
+            if (arg1.result.hasOwnProperty("proj")) 
+            {
+                if (arg1.result.proj.hasOwnProperty("error")) 
+                {
+                    dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.REMOVE_USERS_FAILED));
+                    return;
+                }
+            }
+            dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.REMOVED_USERS));
             return;
         }
 
@@ -42,12 +51,6 @@ package Model
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.FAULT));
             return;
         }
-
-        public var mapList:XML;
-
-        public var userList:XML;
-
-        public var projectList:XML;
 
         internal var request:mx.rpc.http.HTTPService;
     }
