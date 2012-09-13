@@ -31,6 +31,7 @@ package ValueObjects
 		public var chatPushURL:String;
 		public var chatPullURL:String;
 		public var childMapURL:String;
+		public var childProjectURL:String;
 		public var mapToPrivateProjURL:String;
 		public var pullRegistrationURL:String;
 		public var changeInfoURL:String;
@@ -164,32 +165,33 @@ package ValueObjects
 		public function AGORAParameters()
 		{
 			
-			listMapsURL = "http://agora.gatech.edu/release/list_maps.php";
-			myMapsURL = "http://agora.gatech.edu/release/my_maps.php";
-			loginURL = "http://agora.gatech.edu/release/login.php";
-			registrationURL = "http://agora.gatech.edu/release/register.php";
-			mapRemoveURL = "http://agora.gatech.edu/release/remove_map.php";
-			deleteURL = "http://agora.gatech.edu/release/remove.php";
-			insertURL = "http://agora.gatech.edu/release/insert.php";
-			loadMapURL = "http://agora.gatech.edu/release/load_map1.php";
-			nameUpdateURL = "http://agora.gatech.edu/release/mapinfo.php";
-			projectListURL = "http://agora.gatech.edu/release/list_projects.php";
-			myProjectsURL = "http://agora.gatech.edu/release/my_projects.php";
-			pushProjectsURL = "http://agora.gatech.edu/release/projects.php";
-			joinProjectURL = "http://agora.gatech.edu/release/verifyProject.php";
-			loadProjectMapsURL = "http://agora.gatech.edu/release/load_project_maps.php";
-			getMapFromProjURL = "http://agora.gatech.edu/release/getMapFromProjID.php";
-			publishMapURL = "http://agora.gatech.edu/release/publishMap.php";
-			categoryURL= "http://agora.gatech.edu/release/category.php"; //category
-			chatPushURL= "http://agora.gatech.edu/release/push_chat.php"; //chat
-			chatPullURL= "http://agora.gatech.edu/release/pull_chat.php"; //chat
-			childCategoryURL = "http://agora.gatech.edu/release/child_category.php";
-			childMapURL="http://agora.gatech.edu/release/map_category.php";
-			createMapHereURL = "http://agora.gatech.edu/release/create_map_in_current_category.php";
-			mapToPrivateProjURL = "http://agora.gatech.edu/release/map_to_private_project.php";
-			pullRegistrationURL = "http://agora.gatech.edu/release/pull_registration_info.php";
-			changeInfoURL="http://agora.gatech.edu/release/changeinfo.php";
-			projectDetailsURL = "http://agora.gatech.edu/release/projectdetails.php";
+			listMapsURL = "http://localhost/agora_test/list_maps.php";
+			myMapsURL = "http://localhost/agora_test/my_maps.php";
+			loginURL = "http:/localhost/agora_test/login.php";
+			registrationURL = "http://localhost/agora_test/register.php";
+			mapRemoveURL = "http://localhost/agora_test/remove_map.php";
+			deleteURL = "http://localhost/agora_test/remove.php";
+			insertURL = "http://localhost/agora_test/insert.php";
+			loadMapURL = "http://localhost/agora_test/load_map1.php";
+			nameUpdateURL = "http://localhost/agora_test/mapinfo.php";
+			projectListURL = "http://localhost/agora_test/list_projects.php";
+			myProjectsURL = "http://localhost/agora_test/my_projects.php";
+			pushProjectsURL = "http://localhost/agora_test/projects.php";
+			joinProjectURL = "http://localhost/agora_test/verifyProject.php";
+			loadProjectMapsURL = "http://localhost/agora_test/load_project_maps.php";
+			getMapFromProjURL = "http://localhost/agora_test/getMapFromProjID.php";
+			publishMapURL = "http://localhost/agora_test/publishMap.php";
+			categoryURL= "http://localhost/agora_test/category.php"; //category
+			chatPushURL= "http://localhost/agora_test/push_chat.php"; //chat
+			chatPullURL= "http://localhost/agora_test/pull_chat.php"; //chat
+			childCategoryURL = "http://localhost/agora_test/child_category.php";
+			childMapURL="http://localhost/agora_test/map_category.php";
+			childProjectURL="http://localhost/agora_test/project_category.php";
+			createMapHereURL = "http://localhost/agora_test/create_map_in_current_category.php";
+			mapToPrivateProjURL = "http://localhost/agora_test/map_to_private_project.php";
+			pullRegistrationURL = "http://localhost/agora_test/pull_registration_info.php";
+			changeInfoURL="http://localhost/agora_test/changeinfo.php";
+			projectDetailsURL = "http://localhost/agora_test/projectdetails.php";
 
 			initialize();		
 		}

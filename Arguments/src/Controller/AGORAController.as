@@ -151,7 +151,7 @@ package Controller
 			categoryM.requestChildCategories(parentCategory);
 		}
 		protected function onChildCategoryFetched(event:AGORAEvent):void{
-			
+			trace (" child category fetched");
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();

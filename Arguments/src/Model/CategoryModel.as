@@ -19,9 +19,11 @@ package Model
 	{
 		public var category:XML;
 		public var map:XML;
+		public var project:XML;
 		private var request: HTTPService;
 		private var requestChildren: HTTPService;
 		private var requestChildMap: HTTPService;
+		private var requestChildProject: HTTPService;
 		public function CategoryModel()
 		{
 
@@ -40,6 +42,11 @@ package Model
 			requestChildMap.resultFormat="e4x";
 			requestChildMap.addEventListener(ResultEvent.RESULT, onMapFetched);
 			requestChildMap.addEventListener(FaultEvent.FAULT, onFault);
+			requestChildProject = new HTTPService;
+			requestChildProject.url = AGORAParameters.getInstance().projectDetailsURL;
+			requestChildProject.resultFormat="e4x";
+			requestChildProject.addEventListener(ResultEvent.RESULT, onProjectFetched);
+			requestChildProject.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
 		public function requestCategory():void{
@@ -60,6 +67,11 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_FETCHED));
 		}
 		
+		protected function onProjectFetched(event:ResultEvent):void{
+			project = event.result as XML;
+			//dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_FETCHED));
+		}
+		
 		protected function onFault(event:FaultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
@@ -69,6 +81,11 @@ package Model
 			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
 			
 			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			if(userSessionModel.loggedIn()){
+				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash ,projID: AGORAModel.getInstance().agoraMapModel.projectID };
+				requestChildProject.send(params);
+		}
 		}
 		
 	}

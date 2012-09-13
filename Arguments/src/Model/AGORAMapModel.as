@@ -60,6 +60,7 @@ package Model
 		private var _projID:int;
 		
 		private var _projectID:int;
+		private var _parentProjID:int;
 		private var _projectPassword:String;
 		private var _projectName:String;
 		private var _projectType:int;
@@ -844,6 +845,16 @@ package Model
 			return _projID;
 		}
 
+		public function set parentProjID(value:int):void
+		{
+			_parentProjID = value;
+		}
+		
+		public function get parentProjID():int
+		{
+			return _parentProjID;
+		}
+		
 		public function set projID(value:int):void
 		{
 			_projID = value;

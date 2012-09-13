@@ -135,12 +135,11 @@
 			 * 				then displays a map info box 		
 			 */
 			protected function projectsButton_OnClick(event:MouseEvent):void{
-
-				
+ 				
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 				if(userSession.username == "Guest"){
 					Alert.show(Language.lookup('GuestCreateMapError'));
-				} else {
+				} else if (event.currentTarget == createProjectBtn) {
 					if(createProjectBtn.label == "Create a map within this project"){
 						AGORAModel.getInstance().moveToProject = true;
 						AGORAController.getInstance().displayMapInfoBox();
@@ -149,6 +148,11 @@
 						AGORAController.getInstance().displayProjectInfoBox();
 					}
 				}
+				else
+				{
+					AGORAController.getInstance().displayProjectInfoBox();
+				}
+				
 			}
 			
 			/**
@@ -176,9 +180,10 @@
 			 * Basically, this just makes a DB call that retrieves the parent category's
 			 * list and populates the category pane with it.
 			 */
-			protected function backButton_OnClick():void{
+			protected function backButton_OnClick(event:MouseEvent):void{
 				var cg:ArrayList = AGORAController.getInstance().categoryChain;
 				var temp:CategoryDataV0 = null;
+				var temp1:Number= AGORAModel.getInstance().agoraMapModel.projectID;
 				if(cg.length>0){
 					temp = (CategoryDataV0)(cg.removeItemAt(cg.length-1));
 					trace("Fetching category: " + temp);
@@ -187,9 +192,11 @@
 						this.mainPanel.visible=false;
 						AGORAController.getInstance().categoryChain = cg;
 						AGORAController.getInstance().fetchDataCategory();
+						//AGORAModel.getInstance().agoraMapModel.projectID = AGORAModel.getInstance().agoraMapModel.parentProjID;
 					} else {
 						
 						AGORAController.getInstance().categoryChain = cg;
+						
 						AGORAController.getInstance().fetchDataChildCategory(temp.parent, false);
 					}
 					FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current); //Get the arrow (-->)
@@ -313,16 +320,16 @@
 													  title="category" verticalCenter="0">	
 							</components:CategoryPanel>
 							<!--Button to create a new map-->
-							<s:HGroup horizontalAlign="center" verticalAlign="top">
-								<s:VGroup percentWidth="100" percentHeight="100" horizontalAlign="center">
+							<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
+								
 									<s:Button id="createMapBtn" verticalCenter="0"
 											  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
 											  toolTip="{Language.lookup('NewMapToolTip')}">
 									</s:Button >
 									<s:Button id="createProjBtn" enabled="false" visible="false"
-											  label="{Language.lookup('CategoryProject')}" click="createMapBtn_clickHandler(event)">
+											  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
 									</s:Button >
-								</s:VGroup>
+							
 							</s:HGroup>
 							
 						</s:VGroup>
@@ -389,7 +396,7 @@
 						  click="privacyPolicyBtn_clickHandler(event)"/>
 				<s:Button id="backBtn"
 						  label="{Language.lookup('Back')}"
-						  click="backButton_OnClick()"/>
+						  click="backButton_OnClick(event)"/>
 				<!--s:Button id="hackBtn"
 				label="{Language.lookup('Back')}"
 				click="hackButton_OnClick()"/-->

@@ -8,6 +8,7 @@ package components
 	import Model.AGORAModel;
 	import Model.CategoryModel;
 	import Model.MapMetaData;
+
 	
 	import ValueObjects.CategoryDataV0;
 	
@@ -26,12 +27,13 @@ package components
 	
 	import mx.collections.ArrayList;
 	import mx.controls.Alert;
-	import mx.controls.Label;
 	import mx.core.FlexGlobals;
 	import mx.skins.Border;
 	
 	import spark.components.Button;
 	import spark.components.Group;
+	import spark.components.HGroup;
+	import spark.components.Label;
 	import spark.components.Panel;
 	import spark.components.Scroller;
 	import spark.components.TileGroup;
@@ -48,9 +50,13 @@ package components
 		public var categoryTiles:Group;
 		private var mapPanel:VGroup;
 		private var projectPanel:VGroup;
+		private var createProjectPanel : HGroup;
+		private var projectMemberPanel : VGroup;
+		private var projectTypePanel : VGroup;
 		private var is_project_level:Boolean;
 		private var tl:TileLayout;
 		private var mapMetaDataVector:Vector.<MapMetaData>;
+
 		private var rsp:RightSidePanel;
 		public function CategoryPanel()
 		{
@@ -61,6 +67,10 @@ package components
 			tl = new TileLayout();
 			mapPanel = new VGroup;
 			projectPanel = new VGroup;
+			projectMemberPanel = new VGroup;
+			projectTypePanel : new VGroup;
+			createProjectPanel = new HGroup;
+			projectTypePanel = new VGroup;
 			loadingDisplay = new Label;
 			model = AGORAModel.getInstance().categoryModel;
 			/*Setting the UI components to the proper places and sizes*/
@@ -69,8 +79,11 @@ package components
 			scroller.x = scroller.y = 25;
 			categoryTiles.percentHeight = 100;
 			categoryTiles.percentWidth = 100;
-			mapPanel.percentWidth = 50;
-			projectPanel.percentWidth = 50;
+			mapPanel.percentWidth = 25;
+			projectPanel.percentWidth = 25;
+			createProjectPanel.percentWidth = 50;
+			projectMemberPanel.percentWidth = 25;
+			projectTypePanel.percentWidth = 25;
 			/*Editing how the layout will be for the buttons*/		
 			tl.requestedColumnCount = 3;
 			tl.requestedRowCount = 3;
@@ -95,14 +108,20 @@ package components
 			super.commitProperties();
 			categoryTiles.removeAllElements();
 			projectPanel.removeAllElements();
+			projectMemberPanel.removeAllElements();
+			projectTypePanel.removeAllElements();
 			mapPanel.removeAllElements();
 			//add elements
 			if(model.category){
-				if(model.category.@category_count == 0 || model.category.category.@is_project == 1){
+				
+				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
+
 					is_project_level = true;
 					this.categoryTiles.layout = new HorizontalLayout;
 					categoryTiles.addElement(mapPanel);
 					categoryTiles.addElement(projectPanel);
+					categoryTiles.addElement(projectMemberPanel);
+					categoryTiles.addElement(projectTypePanel);
 					if(model.map != null){
 						populateMaps();
 					}
@@ -113,7 +132,31 @@ package components
 					trace("Changing back to normal layout");
 				}
 				//Loop over the categories that were pulled from the DB
-				
+				if(is_project_level)
+				{
+					var label1: Label = new Label();
+					label1.setStyle("skinClass",TextWrapSkin);
+					label1.setStyle("chromeColor", 0xA0CADB);	
+					label1.height = undefined;
+					label1.width = undefined;
+					if(model.project.proj.@isHostile == 0)
+					label1.text = "adversarial" ;
+					else if(model.project.proj.@isHostile == 1)
+						label1.text = "collaborative";
+					
+					projectTypePanel.addElement (label1);
+				for each (var projectXML:XML in model.project.proj.users.userDetail)
+				{
+					var label:Label = new Label();
+					label.setStyle("skinClass",TextWrapSkin);
+					label.setStyle("chromeColor", 0xA0CADB);	
+					label.height = undefined;
+					label.width = undefined;
+					label.text = projectXML.@name;
+									
+					projectMemberPanel.addElement (label);
+				}
+				}
 				for each(var categoryXML:XML in model.category.category){
 					trace("Adding buttons");
 					/*Create and setup buttons corresponding to categories*/
@@ -131,8 +174,12 @@ package components
 						e.stopImmediatePropagation();	
 						//Checks to see if the current category is a project
 						if(categoryXML.@is_project == 1){
+							AGORAModel.getInstance().agoraMapModel.parentProjID = AGORAModel.getInstance().agoraMapModel.projectID;
+							var temp:Number= AGORAModel.getInstance().agoraMapModel.parentProjID;
+							
 							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 							AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
+							var temp1:Number = AGORAModel.getInstance().agoraMapModel.projectID;
 							AGORAController.getInstance().verifyProjectMember(e.target.label);
 						} else {
 							AGORAController.getInstance().fetchDataChildCategory(e.target.label, true);
@@ -144,8 +191,17 @@ package components
 						button.width = undefined;
 						button.height = undefined;
 						projectPanel.addElement(button);
+						
+						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = true;
+						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = true;
+					
 					}
-					else categoryTiles.addElement(button);
+					else 
+					{
+						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = false;
+						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = false;
+						categoryTiles.addElement(button);
+					}
 				}
 				trace("The category count is: " + (model.category.@category_count));
 				
@@ -206,6 +262,8 @@ package components
 			ArgumentController.getInstance().loadMap(event.target.name);
 		}
 		
+
+	
 		
 		override protected function measure():void{
 			super.measure();	
