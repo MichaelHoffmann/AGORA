@@ -154,11 +154,40 @@
 			 * Calls the correct invalidateDisplayLists of each of the two project zones. This
 			 * repopulates the lists with the top level projects.
 			 */ 
-			protected function backToMajorProjectList(event:MouseEvent):void {
-				backToProjectList.visible = false;
-				createProjectBtn.label = Language.lookup('NewProject');
+
+			protected function projectInProjectButton_OnClick(arg1:flash.events.MouseEvent):void
+			{
+				var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
+				if (loc1.username != "Guest") 
+				{
+					Controller.AGORAController.getInstance().displayProjectInfoBox("newInMyProjects");
+				}
+				else 
+				{
+					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
+				}
+				return;
 			}
-			
+
+			protected function createMapinProjBtn_clickHandler(arg1:flash.events.MouseEvent):void
+			{
+				var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
+				if (loc1.username == "Guest") 
+				{
+					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
+				}
+				if (Model.AGORAModel.getInstance().agoraMapModel.projectName) 
+				{
+					Controller.AGORAController.getInstance().displayMapInfoBox();
+					Model.AGORAModel.getInstance().moveToProject = true;
+				}
+				else 
+				{
+					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
+				}
+				return;
+			}
+
 			/**
 			 * Handles what happens when the back button is click within AGORAMenu
 			 * 
@@ -357,12 +386,22 @@
 					<components:MyProjectsPane id="myProjects">
 					</components:MyProjectsPane> 
 					<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
-						<s:Button id="createProjectBtn" label="{Language.lookup(&quot;NewProject&quot;)}"
-								  click="projectsButton_OnClick(event)">
-						</s:Button>
-						<s:Button id="backToProjectList" label="{Language.lookup(&quot;Back&quot;)}"
-								  click="backToMajorProjectList(event)">
-						</s:Button>
+						<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth="100" percentHeight="10">
+								<s:Button label="Create a new project in selected project" click="
+										  {
+										  this.projectInProjectButton_OnClick(event);
+										  return;
+										  }
+										  
+										  " id="createProjInProjBtn" />
+								<s:Button label="Create a Map in selected project" click="
+										  {
+										  this.createMapinProjBtn_clickHandler(event);
+										  return;
+										  }
+										  
+										  " id="createMapinProjectBtn" />
+							</s:HGroup>
 					</s:HGroup>
 				</s:VGroup>
 			</s:NavigatorContent>
