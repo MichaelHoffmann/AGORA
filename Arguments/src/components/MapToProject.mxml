@@ -46,7 +46,7 @@
 			 */
 			protected function submitButton_OnClick():void{
 				this.visible = false;
-				AGORAController.getInstance().addMapToProject(AGORAModel.getInstance().agoraMapModel.ID, projName.text); 
+				AGORAController.getInstance().moveMap(AGORAModel.getInstance().agoraMapModel.ID, projName.text); 
 			}
 			
 		]]>

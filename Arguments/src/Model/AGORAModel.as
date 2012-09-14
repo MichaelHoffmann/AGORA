@@ -36,6 +36,7 @@ package Model
 		public var publishMapModel:PublishMapModel;
 		public var addUsers:AddUsers;
 		public var removeUsers:RemoveUsers;
+		public var moveMap:MoveMap;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -62,6 +63,7 @@ package Model
 			pushprojects = new PushProject();
 			addUsers= new AddUsers();
 			removeUsers=new RemoveUsers();
+			moveMap=new MoveMap();
 			reference = this;
 			leafDelete = true;
 			language = 'EN-US';

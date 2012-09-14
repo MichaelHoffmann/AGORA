@@ -39,8 +39,10 @@ package Model
 		public var passHash:String;
 		public var email:String;
 		public var URL:String;
-		public var selectedProjID:String;
 		private var _valueObject:UserDataVO;
+		public var selectedProjID:String;
+		public var selectedTab:String="WoA";
+
 		private static var _salt:String = "AGORA";
 		
 

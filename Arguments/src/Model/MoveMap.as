@@ -27,19 +27,19 @@ package Model
 	 * the map's project ID field.
 	 *
 	 */
-	public class MoveMapToProjectModel extends EventDispatcher
+	public class MoveMap extends EventDispatcher
 	{
 		private var request: HTTPService;
 		
 		/**
 		 * Constructor that sets up the request that eventually sends the data off to the database
 		 */
-		public function MoveMapToProjectModel()
+		public function MoveMap()
 		{
 			
 			super();
 			request = new HTTPService;
-			//request.url = AGORAParameters.getInstance().moveMapToProjectURL;
+			request.url = AGORAParameters.getInstance().moveMapToProjectURL;
 			request.resultFormat="e4x";
 			request.addEventListener(ResultEvent.RESULT, onSuccessfulJoin);
 			request.addEventListener(FaultEvent.FAULT, onFault);
@@ -49,9 +49,10 @@ package Model
 		 * The method that sends the request off to the database loaded with the correct info
 		 */
 		public function send(mapID:int, projName:String):void{
-			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			if(userSessionModel.loggedIn()){
-				request.send({map_id: mapID, proj_name: projName});	
+			mx.controls.Alert.show("moving map id"+mapID+"to"+projName);
+			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			if(usm.loggedIn()){
+				request.send({uid:usm.uid,pass_hash:usm.passHash, map_id:mapID, category_id:projName});	
 			}
 		}
 		

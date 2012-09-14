@@ -53,6 +53,7 @@ package components
 		private var createProjectPanel : HGroup;
 		private var projectMemberPanel : VGroup;
 		private var projectTypePanel : VGroup;
+		private var mapPanelLbl:Label;
 		private var is_project_level:Boolean;
 		private var tl:TileLayout;
 		private var mapMetaDataVector:Vector.<MapMetaData>;
@@ -72,6 +73,7 @@ package components
 			createProjectPanel = new HGroup;
 			projectTypePanel = new VGroup;
 			loadingDisplay = new Label;
+			mapPanelLbl = new Label();
 			model = AGORAModel.getInstance().categoryModel;
 			/*Setting the UI components to the proper places and sizes*/
 			this.percentHeight = this.percentWidth = 100;
@@ -110,6 +112,7 @@ package components
 			projectPanel.removeAllElements();
 			projectMemberPanel.removeAllElements();
 			projectTypePanel.removeAllElements();
+			
 			mapPanel.removeAllElements();
 			//add elements
 			if(model.category){
@@ -118,11 +121,29 @@ package components
 
 					is_project_level = true;
 					this.categoryTiles.layout = new HorizontalLayout;
-					categoryTiles.addElement(mapPanel);
+					if(model.project.proj.users.userDetail[0])
+					{
 					categoryTiles.addElement(projectPanel);
-					categoryTiles.addElement(projectMemberPanel);
 					categoryTiles.addElement(projectTypePanel);
+					categoryTiles.addElement(mapPanel);
+					categoryTiles.addElement(projectMemberPanel);
+					mapPanelLbl.text = Language.lookup('MapsinProject')+"\n \n \n ";
+					var labeltest:Label = new Label();
+					labeltest.text = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).current + "\n \t";
+					projectPanel.addElement(labeltest);
+
+					}
+					else
+					{ 					
+						mapPanelLbl.text = Language.lookup('ArgMaps')+"\n ";
+						mapPanel.percentWidth=50;
+						mapPanel.percentWidth=50;
+						categoryTiles.addElement(mapPanel);
+						categoryTiles.addElement(projectPanel);
+					}
+					
 					if(model.map != null){
+						mapPanel.addElement(mapPanelLbl);
 						populateMaps();
 					}
 				} else {
@@ -134,22 +155,33 @@ package components
 				//Loop over the categories that were pulled from the DB
 				if(is_project_level)
 				{
+					var projectPanelLbl:Label = new Label();
+					projectPanelLbl.text = Language.lookup('Project')+"\n ";
+					projectPanel.addElementAt(projectPanelLbl,0);
+
+					var labelType: Label = new Label();
+					labelType.text = Language.lookup('ProjType')+"\n \n \n ";
+						
 					var label1: Label = new Label();
-					label1.setStyle("skinClass",TextWrapSkin);
-					label1.setStyle("chromeColor", 0xA0CADB);	
+					//label1.setStyle("skinClass",TextWrapSkin);
+					label1.setStyle("chromeColor", 0xF99653);	
 					label1.height = undefined;
 					label1.width = undefined;
 					if(model.project.proj.@isHostile == 0)
 					label1.text = "adversarial" ;
 					else if(model.project.proj.@isHostile == 1)
 						label1.text = "collaborative";
-					
+					projectTypePanel.addElement (labelType);
 					projectTypePanel.addElement (label1);
+
+					var labelUsers: Label = new Label();
+					labelUsers.text = Language.lookup('ProjectMembers')+"\n \n \n ";
+					projectMemberPanel.addElement (labelUsers);
+					
 				for each (var projectXML:XML in model.project.proj.users.userDetail)
 				{
 					var label:Label = new Label();
-					label.setStyle("skinClass",TextWrapSkin);
-					label.setStyle("chromeColor", 0xA0CADB);	
+
 					label.height = undefined;
 					label.width = undefined;
 					label.text = projectXML.@name;
@@ -174,14 +206,12 @@ package components
 						e.stopImmediatePropagation();	
 						//Checks to see if the current category is a project
 						if(categoryXML.@is_project == 1){
-							AGORAModel.getInstance().agoraMapModel.parentProjID = AGORAModel.getInstance().agoraMapModel.projectID;
-							var temp:Number= AGORAModel.getInstance().agoraMapModel.parentProjID;
-							
+
 							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 							AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
-							var temp1:Number = AGORAModel.getInstance().agoraMapModel.projectID;
 							AGORAController.getInstance().verifyProjectMember(e.target.label);
-						} else {
+											} 
+						else {
 							AGORAController.getInstance().fetchDataChildCategory(e.target.label, true);
 						}
 						trace("From for loop, count is: " + categoryXML.@category_count);
@@ -203,6 +233,18 @@ package components
 						categoryTiles.addElement(button);
 					}
 				}
+				if(is_project_level){
+					
+					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = true;
+					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = true;
+					
+				}
+				else 
+				{
+					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = false;
+					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = false;
+				}
+				
 				trace("The category count is: " + (model.category.@category_count));
 				
 			}
@@ -262,7 +304,6 @@ package components
 			ArgumentController.getInstance().loadMap(event.target.name);
 		}
 		
-
 	
 		
 		override protected function measure():void{

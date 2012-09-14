@@ -7,7 +7,7 @@ package Controller
 	import Model.CategoryModel;
 	import Model.ChatModel;
 	import Model.MapListModel;
-	import Model.MoveMapToProjectModel;
+	import Model.MoveMap;
 	import Model.ProjectListModel;
 	import Model.ProjectsModel;
 	import Model.PublishMapModel;
@@ -81,7 +81,11 @@ package Controller
 			model.publishMapModel.addEventListener(AGORAEvent.MAP_PUBLISHED, onMapPublished);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSHED,onProjectPush);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSH_FAILED,onProjectPushFail);
-			
+			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onMapCreated);
+			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onMapCreated);
+			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapCreated);
+
+
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
 			userSession = AGORAModel.getInstance().userSessionModel;
@@ -97,7 +101,11 @@ package Controller
 			return instance;
 		}
 		
-		
+		public function addUsers():void
+		{
+			this.model.addUsers.sendRequest();
+			return;
+		}
 		//--------------------Fetch Map List------------------------------//
 		public function fetchDataMapList():void{
 
@@ -127,7 +135,6 @@ package Controller
 			
 		}
 		protected function onCategoryFetched(event:AGORAEvent):void{
-			trace("Here");
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
@@ -165,6 +172,11 @@ package Controller
 		
 		public function fetchDataChildCategoryForPublish(parentCategory:String):void{
 			model.publishMapModel.sendForChildren(parentCategory);
+		}
+		public function onMapCreated():void{
+			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			menu.myProjects.setCurrentProject(usm.selectedProjID);	
+
 		}
 		public function publishMap(mapID:int, currCatID:int):void{
 			model.publishMapModel.publishMap(mapID, currCatID);
@@ -205,20 +217,20 @@ package Controller
 			//var pp:PushProject = new PushProject;
 			model.pushprojects.sendRequest();
 		}
-		public function addProjectToMyProject():*
-		{
-			this.model.pushprojects.inCategory();
-			return;
-		}
 		public function removeMembers():void
 		{
 			this.model.removeUsers.sendRequest();
 			return;
 		}
 
-		public function addProjectToWoM():*
+		public function addProjectToWoM():void
 		{
-			this.model.pushprojects.inCategory();
+			this.model.pushprojects.inWoA();
+			return;
+		}
+		public function addProjectToMyProjects():*
+		{
+			this.model.pushprojects.inProjectsList();
 			return;
 		}
 		public function verifyProjectMember(parentCategory:String):void{
@@ -234,9 +246,9 @@ package Controller
 		 * This sends an HTTPRequest. Todo... check which function is calling it to determine
 		 * where to send the open call...
 		 */
-		public function addMapToProject(mapID:int, projName:String):void{
-			var mapToProject:MoveMapToProjectModel = new MoveMapToProjectModel;
-			mapToProject.send(mapID,projName);
+		public function moveMap(mapID:int, projName:String):void{
+			var mapToProject:MoveMap = new MoveMap;
+			mapToProject.send(mapID, projName);
 		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
@@ -271,6 +283,7 @@ package Controller
 				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
 				menu.myProjects.loadingDisplay.visible = true;
 				model.myProjectsModel.sendRequest();
+				FlexGlobals.topLevelApplication.agoraMenu.myProjects.populateMaps();
 			}
 		}
 		
@@ -281,13 +294,12 @@ package Controller
 		protected function onProjectPush(event:AGORAEvent):void{
 			Alert.show(Language.lookup("ProjectCreated"));
 			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
-			AGORAController.getInstance().fetchDataProjectList();
+			fetchDataProjectList();
+			fetchDataMyProjects();
 		}
 		
 		protected function onMyProjectsListFetched(event:AGORAEvent):void{
-			menu.myProjects.loadingDisplay.visible = false;
-			menu.myProjects.invalidateProperties();
-			menu.myProjects.invalidateDisplayList();
+			menu.myProjects.init();
 		}
 		
 		protected function onProjectVerified(event:AGORAEvent):void{
@@ -321,7 +333,7 @@ package Controller
 		
 		protected function onMyMapsDeletionFailed(event:AGORAEvent):void{
 		}
-		
+
 		public function printMap():void{
 			var flexPrintJob:FlexPrintJob = new FlexPrintJob;
 			flexPrintJob.start();

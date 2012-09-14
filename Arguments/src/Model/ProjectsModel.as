@@ -1,8 +1,12 @@
 package Model 
 {
     import Events.*;
+    
     import ValueObjects.*;
+    
     import flash.events.*;
+    
+    import mx.controls.Alert;
     import mx.rpc.events.*;
     import mx.rpc.http.*;
     
@@ -22,6 +26,7 @@ package Model
 
         public function sendRequest():void
         {
+			
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
@@ -42,10 +47,6 @@ package Model
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.FAULT));
             return;
         }
-
-        public var mapList:XML;
-
-        public var userList:XML;
 
         public var projectList:XML;
 

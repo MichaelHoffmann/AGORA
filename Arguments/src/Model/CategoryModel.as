@@ -69,7 +69,7 @@ package Model
 		
 		protected function onProjectFetched(event:ResultEvent):void{
 			project = event.result as XML;
-			//dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_FETCHED));
+			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_FETCHED));
 		}
 		
 		protected function onFault(event:FaultEvent):void{
@@ -83,7 +83,7 @@ package Model
 			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
-				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash ,projID: AGORAModel.getInstance().agoraMapModel.projectID };
+				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash ,projID:-1, projName:categoryName};
 				requestChildProject.send(params);
 		}
 		}

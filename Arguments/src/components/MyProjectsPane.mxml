@@ -99,34 +99,42 @@
     </s:mxmlContent>
     <fx:Script>
         <![CDATA[
-        import Controller.*;
-        import Events.*;
-        import Model.*;
-        import ValueObjects.*;
-        import __AS3__.vec.*;
-        import classes.*;
-        import flash.accessibility.*;
-        import flash.debugger.*;
-        import flash.display.*;
-        import flash.errors.*;
-        import flash.events.*;
-        import flash.external.*;
-        import flash.geom.*;
-        import flash.media.*;
-        import flash.net.*;
-        import flash.printing.*;
-        import flash.profiler.*;
-        import flash.system.*;
-        import flash.text.*;
-        import flash.ui.*;
-        import flash.utils.*;
-        import flash.xml.*;
-        import mx.core.*;
-        import mx.events.*;
-        import mx.filters.*;
-        import mx.rpc.events.*;
-        import mx.rpc.http.*;
-        import mx.styles.*;
+			import Controller.*;
+			
+			import Events.*;
+			
+			import Model.*;
+			
+			import ValueObjects.*;
+			
+			import __AS3__.vec.*;
+			
+			import classes.*;
+			
+			import flash.accessibility.*;
+			import flash.debugger.*;
+			import flash.display.*;
+			import flash.errors.*;
+			import flash.events.*;
+			import flash.external.*;
+			import flash.geom.*;
+			import flash.media.*;
+			import flash.net.*;
+			import flash.printing.*;
+			import flash.profiler.*;
+			import flash.system.*;
+			import flash.text.*;
+			import flash.ui.*;
+			import flash.utils.*;
+			import flash.xml.*;
+			
+			import mx.controls.Alert;
+			import mx.core.*;
+			import mx.events.*;
+			import mx.filters.*;
+			import mx.rpc.events.*;
+			import mx.rpc.http.*;
+			import mx.styles.*;
         
         public function init():void
         {
@@ -143,67 +151,60 @@
 
         public function removeMembers():void
         {
-            var loc1:*=new Array();
-            loc1.push(this.usersXML[this.usersList.selectedIndex].@userid);
-            Model.AGORAModel.getInstance().agoraMapModel.projectUsers = loc1;
+            var usersDetail:Array=new Array();
+			usersDetail.push(this.usersXML[this.usersList.selectedIndex].@userid);
+            Model.AGORAModel.getInstance().agoraMapModel.projectUsers = usersDetail;
             Controller.AGORAController.getInstance().removeMembers();
-            return;
         }
 
         public function addMembers():void
         {
             Controller.AGORAController.getInstance().displayProjectInfoBox("addUsers");
-            return;
         }
 
-        public function setCurrentProject(arg1:String):void
+        public function setCurrentProject(projID:String):void
         {
-            var loc1:*=new mx.rpc.http.HTTPService();
-            var loc2:*=new mx.rpc.http.HTTPService();
-            var loc3:*;
-            (loc3 = Model.AGORAModel.getInstance().userSessionModel).selectedProjID = arg1;
-            loc2.resultFormat = "e4x";
-            loc2.url = ValueObjects.AGORAParameters.getInstance().listProjMaps;
-            loc2.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onMaps);
-            loc2.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
-            loc2.send({"uid":loc3.uid, "pass_hash":loc3.passHash, "category_id":arg1});
-            loc1.resultFormat = "e4x";
-            loc1.url = ValueObjects.AGORAParameters.getInstance().projectDetailsURL;
-            loc1.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onDetails);
-            loc1.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
-            loc1.send({"uid":loc3.uid, "pass_hash":loc3.passHash, "projID":arg1});
-            Model.AGORAModel.getInstance().agoraMapModel.projectID = arg1 as int;
-            return;
-        }
+            var projDetails:HTTPService=new mx.rpc.http.HTTPService();
+            var listProjMaps:HTTPService=new mx.rpc.http.HTTPService();
+            var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+            listProjMaps.resultFormat = "e4x";
+			listProjMaps.url = ValueObjects.AGORAParameters.getInstance().listProjMaps;
+			listProjMaps.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onMaps);
+			listProjMaps.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+			listProjMaps.send({"uid":usm.uid, "pass_hash":usm.passHash, "category_id":projID});
+			projDetails.resultFormat = "e4x";
+			projDetails.url = ValueObjects.AGORAParameters.getInstance().projectDetailsURL;
+			projDetails.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onDetails);
+			projDetails.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+			projDetails.send({"uid":usm.uid, "pass_hash":usm.passHash, "projID":projID});
+			usm.selectedProjID = projID;
+        }			
 
-        protected function onFault(arg1:mx.rpc.events.FaultEvent):void
+
+        protected function onFault(fault:FaultEvent):void
         {
             removeEventListener(mx.rpc.events.ResultEvent.RESULT, this.onDetails);
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.FAULT));
-            return;
         }
 
-        protected function onDetails(arg1:mx.rpc.events.ResultEvent):void
+        protected function onDetails(resut:ResultEvent):void
         {
             removeEventListener(mx.rpc.events.ResultEvent.RESULT, this.onDetails);
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
-            this.projXML = arg1.result.proj[0] as XML;
-            var loc1:*=this.projXML.users;
-            this.usersXML.source = loc1.children();
-            return;
+            this.projXML = resut.result.proj[0] as XML;
+            var users=this.projXML.users;
+            this.usersXML.source = users.children();
         }
-
-        protected function onMaps(arg1:mx.rpc.events.ResultEvent):void
+        protected function onMaps(event:ResultEvent):void
         {
             removeEventListener(mx.rpc.events.ResultEvent.RESULT, this.onMaps);
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
-            this.mapListXML = arg1.result as XML;
+            this.mapListXML = event.result as XML;
             this.populateMaps();
-            return;
         }
 
-        protected function populateMaps():void
+        public function populateMaps():void
         {
             var map:XML;
             var i:int;
@@ -286,6 +287,8 @@
                 this.projectList.visible = true;
                 if (this.model.projectList) 
                 {
+					trace("loadingProjects")
+
                     var loc2:*=0;
                     var loc3:*=this.model.projectList.proj;
                     for each (xml in loc3) 
@@ -296,6 +299,7 @@
                         button.group = this.projectListRadio;
                         button.name = xml.@ID;
                         button.label = xml.@title;
+						button.width=150;
                         if (!xml.@type != 0) 
                         {
                             isHostile.selected = false;

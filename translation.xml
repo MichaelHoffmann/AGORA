@@ -1487,7 +1487,7 @@
 		<RUS text="сетевая ошибка" />
 		<GER text="Netzwerk-Fehler" />
 	</NetworkError>
-
+    
 	<NewMap>
 		<EN-US text="Create a new argument map" />
 		<RUS text="Создайте новую карту аргумента" />
@@ -1504,17 +1504,41 @@
 	</NewMapInProj>
 
 	<NewProject>
-		<EN-US text="Create a project space" />
+		<EN-US text="Create a project here" />
 		<RUS text="Создайте защищённое паролем проектное пространство" /><!-- translate RUS -->
 		<GER text="Eröffne einen Passwort-geschützten Projektbereich" /><!-- translate GER -->
 	</NewProject>
-
+	
+    <MapsinProject>
+    <EN-US text="Maps in this Project" />
+		<RUS text="Maps in this Project" /><!--TODO Translate RUS-->
+		<GER text="Maps in this Project" /><!--TODO Translate GER-->
+    </MapsinProject>
+    
+    <Project>
+    <EN-US text="Project" />
+		<RUS text="Project" /><!--TODO Translate RUS-->
+		<GER text="Project" /><!--TODO Translate GER-->
+    </Project>
+    
+    <ProjType>
+   <EN-US text="Project Type" />
+		<RUS text="Project type" /><!--TODO Translate RUS-->
+		<GER text="Project type" /><!--TODO Translate GER-->
+    </ProjType>
+    
+     <ProjectMembers>
+    <EN-US text="Project Members" />
+		<RUS text="Project Members" /><!--TODO Translate RUS-->
+		<GER text="Project Members" /><!--TODO Translate GER-->
+    </ProjectMembers>
 	<NewReason>
 		<EN-US text="Enter your new reason" />
 		<RUS text="Введите свою новую причину" />
 		<GER text="Gib deinen neuen Grund ein" />
 	</NewReason>
 
+     
 	<NewUsername>
 		<EN-US text="Desired Username" />
 		<RUS text="Желаемое Имя пользователя" />

@@ -48,6 +48,7 @@
 			
 			public var timer:Timer = new Timer(10000);
 			public var numClicks:int=0;
+			public var selectedTab;
 			[Bindable] private var buttonWidth:uint = 200;
 			[Bindable] private var buttonHeight:uint = 80;
 			
@@ -139,7 +140,7 @@
 				var usm:*=Model.AGORAModel.getInstance().userSessionModel;
 				if (usm.username != "Guest") 
 				{
-					Controller.AGORAController.getInstance().displayProjectInfoBox("newInMyProjects");
+					Controller.AGORAController.getInstance().displayProjectInfoBox("newInWoA");
 				}
 				else 
 				{
@@ -168,22 +169,20 @@
 				}
 				return;
 			}
+			protected function setTab(current:String){
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				usm.selectedTab = current;
 
+			}
 			protected function createMapinProjBtn_clickHandler(arg1:flash.events.MouseEvent):void
 			{
 				var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
 				if (loc1.username == "Guest") 
 				{
 					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
-				}
-				if (Model.AGORAModel.getInstance().agoraMapModel.projectName) 
-				{
-					Controller.AGORAController.getInstance().displayMapInfoBox();
+				} else {
 					Model.AGORAModel.getInstance().moveToProject = true;
-				}
-				else 
-				{
-					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
+					Controller.AGORAController.getInstance().displayMapInfoBox();
 				}
 				return;
 			}
@@ -330,8 +329,8 @@
 	</s:VGroup>
 	
 	<s:VGroup id="navigtorGroup"  width="800" height="600" horizontalAlign="center" horizontalCenter="0" verticalAlign="middle" verticalCenter="0">
-		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0"
-						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.20}" textAlign="center"
+		<mx:TabNavigator id="tabNav" percentWidth="100" percentHeight="90" borderVisible="true" cornerRadius="0" change ="{setTab(tabNav.selectedChild.label)}" 
+						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.20}" textAlign="center" 
 						 >
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}" verticalCenter="0" horizontalCenter="0">
 						<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0">
@@ -359,7 +358,7 @@
 			
 			<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
 			
-			<s:NavigatorContent id="myMapsTab" percentWidth="100" percentHeight="100" label="{Language.lookup(&quot;MyMaps&quot;)}">
+			<s:NavigatorContent id="myMapsTab" percentWidth="100" percentHeight="100" label="{Language.lookup(&quot;MyMaps&quot;)}" >
 				<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0">
 					<s:HGroup id="myMapsHorizGroup" percentWidth="100" percentHeight="100">
 						<components:MyMapPanel id="myMaps" percentWidth="100" percentHeight="100">
@@ -381,7 +380,7 @@
 			
 			<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
 			
-			<s:NavigatorContent id="projectsTab" percentWidth="100" percentHeight="100" label="{Language.lookup('MyPPProjects')}">
+			<s:NavigatorContent id="projectsTab" percentWidth="100" percentHeight="100" label="{Language.lookup('MyPPProjects')}"  focusIn ="{setTab('MyContributions')}">
 				<s:VGroup percentWidth="100" percentHeight="100">
 					<components:MyProjectsPane id="myProjects">
 					</components:MyProjectsPane> 
@@ -405,7 +404,7 @@
 					</s:HGroup>
 				</s:VGroup>
 			</s:NavigatorContent>
-			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}">
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}" click ="{selectedTab='MyProjects'}">
 				<s:Label id="MyContributions" text="{Language.lookup('ComingSoon')}"/>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('Search')}">

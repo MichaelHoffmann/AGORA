@@ -79,7 +79,7 @@ package Model
 			
 			mapToPrivateProjService = new HTTPService;
 			mapToPrivateProjService.url = AGORAParameters.getInstance().mapToPrivateProjURL;
-			//mapToPrivateProjService.addEventListener(ResultEvent.RESULT,  onMapMovedToProj);
+			mapToPrivateProjService.addEventListener(ResultEvent.RESULT,  onMapMovedToPrivProj);
 			mapToPrivateProjService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			//create first claim service
@@ -296,14 +296,19 @@ package Model
 			mapMetaData.mapID = resultEvent.result.map.ID;
 			mapMetaData.mapName = resultEvent.result.map.title;
 			ID = resultEvent.result.map.ID;
-			if(AGORAModel.getInstance().moveToProject){
-				AGORAController.getInstance().addMapToProject(resultEvent.result.map.ID, projectName);
-				AGORAModel.getInstance().moveToProject = false;
-			}
 			moveMapToPrivProj();
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
 		}
-		
+		protected function onMapMovedToPrivProj(resultEvent:ResultEvent):void{
+
+			if(AGORAModel.getInstance().moveToProject){
+
+				Model.AGORAModel.getInstance().moveToProject = false;
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedProjID);
+			}
+
+		}
 		protected function moveMapToPrivProj():void{
 			var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			mapToPrivateProjService.send({user_id:usModel.uid, pass_hash:usModel.passHash, map_id:ID});

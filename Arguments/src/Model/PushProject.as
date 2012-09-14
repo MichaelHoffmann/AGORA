@@ -68,23 +68,23 @@ package Model
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
-		public function inProject():void
+		public function inProjectsList():void
 		{
 
 			var usm:*=Model.AGORAModel.getInstance().userSessionModel;
 			if (usm.loggedIn()) 
 			{
-				var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":usm.projID};
+				var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":usm.selectedProjID};
 				this.request.send(params);
 			}
 			return;
 		}
-		public function inCategory():void
+		public function inWoA():void
 		{
 			var usm:*=Model.AGORAModel.getInstance().userSessionModel;
 			if (usm.loggedIn()) 
 			{
-				var params:Object= {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
+				var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":AGORAModel.getInstance().agoraMapModel.projectID};
 				this.request.send(params);
 			}
 			return;
