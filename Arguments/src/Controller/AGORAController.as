@@ -173,7 +173,7 @@ package Controller
 		public function fetchDataChildCategoryForPublish(parentCategory:String):void{
 			model.publishMapModel.sendForChildren(parentCategory);
 		}
-		public function onMapCreated():void{
+		public function onMapCreated(event:AGORAEvent):void{
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 			menu.myProjects.setCurrentProject(usm.selectedProjID);	
 

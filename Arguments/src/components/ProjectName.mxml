@@ -65,9 +65,11 @@
 			
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
-				projectName.text=" ";
-				projectName.setFocus();
-				projectName.text = "";
+				if(currentState!="addUsers"){
+					projectName.text=" ";
+					projectName.setFocus();
+					projectName.text = "";
+				}
 			}
 			
 			protected function panel_keyDownHandler(event:KeyboardEvent):void

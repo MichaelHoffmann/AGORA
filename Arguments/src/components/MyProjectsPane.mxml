@@ -67,7 +67,6 @@
                         <s:Button click="
                                     {
                                         this.addMembers();
-                                        return;
                                     }
                                     
                                     " id="_MyProjectsPane_Button3" label='{classes.Language.lookup("AddProjectMembers")}' />
@@ -299,7 +298,7 @@
                         button.group = this.projectListRadio;
                         button.name = xml.@ID;
                         button.label = xml.@title;
-						button.width=150;
+						button.width=30;
                         if (!xml.@type != 0) 
                         {
                             isHostile.selected = false;
