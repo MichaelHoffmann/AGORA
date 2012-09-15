@@ -47,8 +47,28 @@
 					incorrectLogin($output);
 					return $output;
 		}
+		
+		// This is My private Project Space - username is userid	
+		$username = getUserNameFromUserId($userID,$linkID);
+		$query="SELECT category_id,category_name FROM category WHERE category_name='$username'";
+		$found_category_id=mysql_query($query, $linkID);
+		if( mysql_num_rows($found_category_id) < 1){
+			$create_private_proj="INSERT INTO category (category_name, is_project) VALUES ((SELECT username FROM users WHERE user_id='$userID'), 1)";
+			$create_parent_link="INSERT INTO parent_categories (category_id, parent_category_name,parent_categoryid) 
+								VALUES ((SELECT category_id FROM category WHERE category_name=(SELECT username FROM users WHERE user_id='$userID')),'Private, for individual users',38)";
+			$make_user_admin = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES 
+									((SELECT category_id FROM category WHERE category_name=(SELECT username FROM users WHERE user_id='$userID')), '$userID', 9)";
+			mysql_query($create_private_proj, $linkID);
+			mysql_query($create_parent_link, $linkID);
+			mysql_query($make_user_admin, $linkID);
+			$query="SELECT category_id,category_name FROM category WHERE category_name='$username'";
+			$found_category_id=mysql_query($query, $linkID);
+		}
+		$row = mysql_fetch_assoc($found_category_id);
+		$output->addAttribute("privateCategoryName",  $row['category_name']);
+		$output->addAttribute("privateCategoryID",  $row['category_id']);
 
-		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projusers.user_id=$userID ORDER BY projects.title";
+		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projects.user_id=$userID and projusers.user_level=9 ORDER BY projects.title";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
