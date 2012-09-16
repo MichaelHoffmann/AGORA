@@ -91,7 +91,7 @@
         <s:HGroup horizontalAlign="center" percentWidth="100">
             <s:mxmlContent>
                 <fx:Array>
-                    <s:Label text="If you want to create a project outside of your own projects, you must navigate to it through the World of Arguments." />
+                    <s:Label text="If you want to create a new project elsewhere, determine its location in the 'World of Arguments'" />
                 </fx:Array>
             </s:mxmlContent>
         </s:HGroup>
@@ -289,7 +289,7 @@
 					trace("loadingProjects")
 
                     var loc2:*=0;
-                    var loc3:*=this.model.projectList.proj;
+                    var loc3:*=this.model.projectList.ProjectList.proj;
                     for each (xml in loc3) 
                     {
                         buttonG = new spark.components.HGroup();

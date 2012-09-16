@@ -49,7 +49,6 @@ package Model
 		 * The method that sends the request off to the database loaded with the correct info
 		 */
 		public function send(mapID:int, projName:String):void{
-			mx.controls.Alert.show("moving map id"+mapID+"to"+projName);
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(usm.loggedIn()){
 				request.send({uid:usm.uid,pass_hash:usm.passHash, map_id:mapID, category_id:projName});	

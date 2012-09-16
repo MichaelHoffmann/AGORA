@@ -46,6 +46,7 @@
 			incorrectLogin($output);
 			return $output;
 		}
+	$projectListing = $output->addChild("ProjectList");
 		
 		// This is My private Project Space - username is userid	
 		$username = getUserNameFromUserId($userID,$linkID);
@@ -64,8 +65,13 @@
 			$found_category_id=mysql_query($query, $linkID);
 		}
 		$row = mysql_fetch_assoc($found_category_id);
-		$output->addAttribute("privateCategoryName",  $row['category_name']);
-		$output->addAttribute("privateCategoryID",  $row['category_id']);
+	$privproj = $projectListing->addChild("proj");
+	$privproj->addAttribute("title", $row['category_name']);
+	$privproj->addAttribute("ID", $row['category_id']);
+	$privproj->addAttribute("is_myprivate", "1");
+	$privproj->addAttribute("creator", getUserNameFromUserId($userID,$linkID));
+	$privproj->addAttribute("role", "9"); // surely admin
+	$privproj->addAttribute("type", "0"); // default for private projects
 
 		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projects.user_id=$userID and projusers.user_level=9 ORDER BY projects.title";
 		$resultID = mysql_query($query, $linkID);
@@ -81,7 +87,7 @@
 		}else{
 			$count = 0 ;
 			$projects = Array();
-			$projectListing = $output->addChild("ProjectList");
+
 			$projectPath = $output->addChild("Path");
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
 				$row = mysql_fetch_assoc($resultID);
@@ -92,6 +98,7 @@
 				$proj->addAttribute("creator", $row['username']);
 				$proj->addAttribute("role", $row['user_level']);
 				$proj->addAttribute("type", $row['is_hostile']);
+			$proj->addAttribute("is_myprivate", "0");
 				$count++;
 			}
 			$output->addAttribute("proj_count", $count);

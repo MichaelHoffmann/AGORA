@@ -3,6 +3,8 @@ package Model
     import Events.*;
     import ValueObjects.*;
     import flash.events.*;
+    
+    import mx.controls.Alert;
     import mx.rpc.events.*;
     import mx.rpc.http.*;
     
@@ -34,7 +36,7 @@ package Model
 
         protected function onResult(arg1:mx.rpc.events.ResultEvent):void
         {
-            if (arg1.result.hasOwnProperty("proj")) 
+            if (arg1.result.hasOwnProperty("project")) 
             {
                 if (arg1.result.proj.hasOwnProperty("error")) 
                 {
@@ -42,6 +44,12 @@ package Model
                     return;
                 }
             }
+			
+			if (arg1.result.hasOwnProperty("userError")) 
+			{
+						Alert.show("Users not found:"+arg1.result.userError.@message);
+			}
+			
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.ADDED_USERS));
             return;
         }

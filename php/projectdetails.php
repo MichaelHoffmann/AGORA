@@ -79,7 +79,7 @@
 			return $output;
 		}
 
-		$query = "SELECT * FROM projects INNER JOIN projusers ON projects.proj_id = projusers.proj_id INNER JOIN users ON users.user_id = projusers.user_id where projects.user_id=$userID and projects.proj_id = $projID ORDER BY users.username";
+		$query = "SELECT projects.proj_id,projects.user_id,projusers.proj_id,projusers.user_level role,users.user_id,users.username FROM projects INNER JOIN projusers ON projects.proj_id = projusers.proj_id INNER JOIN users ON users.user_id = projusers.user_id where projects.user_id=$userID and projects.proj_id = $projID ORDER BY users.username";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -97,11 +97,18 @@
 			$count = 0 ;
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
 				$row = mysql_fetch_assoc($resultID);
+				if($row['role']==9){
+				$userDtl = $proj->addChild("admin");
+				$userDtl->addAttribute("name", $row['username']);
+				$userDtl->addAttribute("userid", $row['user_id']);				
+				$userDtl->addAttribute("role", $row['role']);
+				}else{ 
 				$userDtl = $users->addChild("userDetail");
 				$userDtl->addAttribute("name", $row['username']);
-				$userDtl->addAttribute("userid", $row['user_id']);
-				$userDtl->addAttribute("role", $row['user_level']);
+				$userDtl->addAttribute("userid", $row['user_id']);				
+				$userDtl->addAttribute("role", $row['role']);
 				$count++;
+				}
 			}
 			$proj->addAttribute("user_count", $count);
 		}
