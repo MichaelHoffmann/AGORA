@@ -55,7 +55,16 @@
 			projectNotFoundID($output);
 			return $output;
 		}
-		//Basic boilerplate complete. Next step is to verify that the user is the owner of the project.
+		
+		//Basic boilerplate complete. Next step is to verify that the user is the a part of the project.
+		$query = "SELECT * FROM projusers INNER JOIN users ON users.user_id = projusers.user_id WHERE proj_id = $projID";
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			modifyOther($output);
+			return $output;
+		}
+		
+		// get the admin details .. fetch all the project details ...
 		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id WHERE proj_id = $projID";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
@@ -74,12 +83,12 @@
 		$title  = $row['title'];
 		$ishostile = $row['is_hostile'];
 
-		if($UID!=$userID){
+		/*if($UID!=$userID){
 			modifyOther($output);
 			return $output;
-		}
+		}*/
 
-		$query = "SELECT projects.proj_id,projects.user_id,projusers.proj_id,projusers.user_level role,users.user_id,users.username FROM projects INNER JOIN projusers ON projects.proj_id = projusers.proj_id INNER JOIN users ON users.user_id = projusers.user_id where projects.user_id=$userID and projects.proj_id = $projID ORDER BY users.username";
+		$query = "SELECT projects.proj_id,projects.user_id,projusers.proj_id,projusers.user_level role,users.user_id,users.username FROM projects INNER JOIN projusers ON projects.proj_id = projusers.proj_id INNER JOIN users ON users.user_id = projusers.user_id where projects.user_id=$UID and projects.proj_id = $projID ORDER BY users.username";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);

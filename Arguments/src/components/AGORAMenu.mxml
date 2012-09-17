@@ -333,7 +333,7 @@
 						 creationPolicy="all" horizontalAlign="left" name="tabNav" tabWidth="{navigtorGroup.width*.20}" textAlign="center" 
 						 >
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MainTab')}" verticalCenter="0" horizontalCenter="0">
-						<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0">
+						<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0" horizontalAlign="center">
 							
 							<components:CategoryPanel id="categories" percentWidth="100" percentHeight="100"
 													  horizontalCenter="0"
@@ -341,18 +341,20 @@
 													  title="category" verticalCenter="0">	
 							</components:CategoryPanel>
 							<!--Button to create a new map-->
-							<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
+							<s:HGroup  percentHeight="10" horizontalAlign="center"
+									  percentWidth="100" verticalAlign="middle">
+								<s:Button id="createMapBtn" 
+										  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
+										  toolTip="{Language.lookup('NewMapToolTip')}">
+								</s:Button >
+								<s:Button id="createProjBtn" enabled="false" visible="false"
+										  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
+								</s:Button >
 								
-									<s:Button id="createMapBtn" verticalCenter="0"
-											  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
-											  toolTip="{Language.lookup('NewMapToolTip')}">
-									</s:Button >
-									<s:Button id="createProjBtn" enabled="false" visible="false"
-											  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
-									</s:Button >
 							
 							</s:HGroup>
-							
+							<s:Button id="clickthroughCategories" visible="false" 
+									  label="If you want to create a private project space, click through the categories above to determine its location"/>
 						</s:VGroup>
 			</s:NavigatorContent>
 			

@@ -8,7 +8,6 @@ package components
 	import Model.AGORAModel;
 	import Model.CategoryModel;
 	import Model.MapMetaData;
-
 	
 	import ValueObjects.CategoryDataV0;
 	
@@ -21,6 +20,7 @@ package components
 	import flash.events.TimerEvent;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
+	import flash.text.TextFormat;
 	import flash.utils.Timer;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
@@ -53,7 +53,7 @@ package components
 		private var createProjectPanel : HGroup;
 		private var projectMemberPanel : VGroup;
 		private var projectTypePanel : VGroup;
-		private var mapPanelLbl:Label;
+		private var mapPanelBtn:Button;
 		private var is_project_level:Boolean;
 		private var tl:TileLayout;
 		private var mapMetaDataVector:Vector.<MapMetaData>;
@@ -73,7 +73,7 @@ package components
 			createProjectPanel = new HGroup;
 			projectTypePanel = new VGroup;
 			loadingDisplay = new Label;
-			mapPanelLbl = new Label();
+			mapPanelBtn = new Button();
 			model = AGORAModel.getInstance().categoryModel;
 			/*Setting the UI components to the proper places and sizes*/
 			this.percentHeight = this.percentWidth = 100;
@@ -127,15 +127,20 @@ package components
 					categoryTiles.addElement(projectTypePanel);
 					categoryTiles.addElement(mapPanel);
 					categoryTiles.addElement(projectMemberPanel);
-					mapPanelLbl.text = Language.lookup('MapsinProject')+"\n \n \n ";
-					var labeltest:Label = new Label();
-					labeltest.text = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).current + "\n \t";
-					projectPanel.addElement(labeltest);
+					mapPanelBtn.label = Language.lookup('MapsinProject');
+					var currProjButton:Button = new Button();
+					//currProjButton.setStyle("chromeColor", 0xA0CADB);
+					currProjButton.label = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).current;
+					projectPanel.addElement(currProjButton);
 
 					}
 					else
 					{ 					
-						mapPanelLbl.text = Language.lookup('ArgMaps')+"\n ";
+						mapPanelBtn.label = Language.lookup('ArgMaps');
+						var projectPanelBtn:Button = new Button();
+						projectPanelBtn.label = Language.lookup('Project');
+						projectPanelBtn.setStyle("chromeColor", 0xFFFFFF);
+						projectPanel.addElementAt(projectPanelBtn,0);
 						mapPanel.percentWidth=50;
 						mapPanel.percentWidth=50;
 						categoryTiles.addElement(mapPanel);
@@ -143,7 +148,8 @@ package components
 					}
 					
 					if(model.map != null){
-						mapPanel.addElement(mapPanelLbl);
+						mapPanelBtn.setStyle("chromeColor", 0xFFFFFF);
+						mapPanel.addElement(mapPanelBtn);
 						populateMaps();
 					}
 				} else {
@@ -155,38 +161,38 @@ package components
 				//Loop over the categories that were pulled from the DB
 				if(is_project_level)
 				{
-					var projectPanelLbl:Label = new Label();
-					projectPanelLbl.text = Language.lookup('Project')+"\n ";
-					projectPanel.addElementAt(projectPanelLbl,0);
+					
 
-					var labelType: Label = new Label();
-					labelType.text = Language.lookup('ProjType')+"\n \n \n ";
+					var btnType: Button = new Button();
+					btnType.label = Language.lookup('ProjType');
+					btnType.setStyle("chromeColor", 0xFFFFFF);
 						
-					var label1: Label = new Label();
+					var btnProjType: Button = new Button();
 					//label1.setStyle("skinClass",TextWrapSkin);
-					label1.setStyle("chromeColor", 0xF99653);	
-					label1.height = undefined;
-					label1.width = undefined;
+					btnProjType.setStyle("chromeColor", 0xA0CADB);	
+					btnProjType.height = undefined;
+					btnProjType.width = undefined;
 					if(model.project.proj.@isHostile == 0)
-					label1.text = "adversarial" ;
+						btnProjType.label = "adversarial" ;
 					else if(model.project.proj.@isHostile == 1)
-						label1.text = "collaborative";
-					projectTypePanel.addElement (labelType);
-					projectTypePanel.addElement (label1);
+						btnProjType.label = "collaborative";
+					projectTypePanel.addElement (btnType);
+					projectTypePanel.addElement (btnProjType);
 
-					var labelUsers: Label = new Label();
-					labelUsers.text = Language.lookup('ProjectMembers')+"\n \n \n ";
-					projectMemberPanel.addElement (labelUsers);
+					var btnUsers: Button = new Button();
+					btnUsers.label = Language.lookup('ProjectMembers');
+					btnUsers.setStyle("chromeColor",0xFFFFFF);
+					projectMemberPanel.addElement (btnUsers);
 					
 				for each (var projectXML:XML in model.project.proj.users.userDetail)
 				{
-					var label:Label = new Label();
-
-					label.height = undefined;
-					label.width = undefined;
-					label.text = projectXML.@name;
+					var btnProjMembers:Button = new Button();
+					btnProjMembers.height = undefined;
+					btnProjMembers.width = undefined;
+					btnProjMembers.label = projectXML.@name ;
+					btnProjMembers.setStyle("chromeColor", 0xF99653);
 									
-					projectMemberPanel.addElement (label);
+					projectMemberPanel.addElement (btnProjMembers);
 				}
 				}
 				for each(var categoryXML:XML in model.category.category){
@@ -205,13 +211,15 @@ package components
 						trace("button \"" + e.target.label + "\" clicked");
 						e.stopImmediatePropagation();	
 						//Checks to see if the current category is a project
+						AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+						AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
 						if(categoryXML.@is_project == 1){
 
-							AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
-							AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
+							
 							AGORAController.getInstance().verifyProjectMember(e.target.label);
 											} 
 						else {
+							
 							AGORAController.getInstance().fetchDataChildCategory(e.target.label, true);
 						}
 						trace("From for loop, count is: " + categoryXML.@category_count);
@@ -234,13 +242,15 @@ package components
 					}
 				}
 				if(is_project_level){
-					
+					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.visible=false;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = true;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = true;
 					
 				}
 				else 
 				{
+					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.visible=true;	
+					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.setStyle("chromeColor", 0xF99653);
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = false;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = false;
 				}
