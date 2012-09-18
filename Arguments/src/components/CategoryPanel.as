@@ -121,7 +121,7 @@ package components
 
 					is_project_level = true;
 					this.categoryTiles.layout = new HorizontalLayout;
-					if(model.project.proj.users.userDetail[0])
+					if(model.project.proj[0])
 					{
 					categoryTiles.addElement(projectPanel);
 					categoryTiles.addElement(projectTypePanel);
@@ -162,7 +162,8 @@ package components
 				if(is_project_level)
 				{
 					
-
+                    if (model.project.proj.@isHostile[0])
+					{
 					var btnType: Button = new Button();
 					btnType.label = Language.lookup('ProjType');
 					btnType.setStyle("chromeColor", 0xFFFFFF);
@@ -178,11 +179,23 @@ package components
 						btnProjType.label = "collaborative";
 					projectTypePanel.addElement (btnType);
 					projectTypePanel.addElement (btnProjType);
+					}
 
 					var btnUsers: Button = new Button();
 					btnUsers.label = Language.lookup('ProjectMembers');
 					btnUsers.setStyle("chromeColor",0xFFFFFF);
 					projectMemberPanel.addElement (btnUsers);
+					if(model.project.proj.admin[0])
+					{
+						var btnProjAdmin:Button = new Button();
+						btnProjAdmin.height = undefined;
+						btnProjAdmin.width = undefined;
+						btnProjAdmin.label = model.project.proj.admin.@name ;
+						btnProjAdmin.setStyle("chromeColor", 0xF99653);
+						
+						projectMemberPanel.addElement (btnProjAdmin);
+						
+					}
 					
 				for each (var projectXML:XML in model.project.proj.users.userDetail)
 				{
@@ -190,8 +203,7 @@ package components
 					btnProjMembers.height = undefined;
 					btnProjMembers.width = undefined;
 					btnProjMembers.label = projectXML.@name ;
-					btnProjMembers.setStyle("chromeColor", 0xF99653);
-									
+					btnProjMembers.setStyle("chromeColor", 0xF99653);								
 					projectMemberPanel.addElement (btnProjMembers);
 				}
 				}
