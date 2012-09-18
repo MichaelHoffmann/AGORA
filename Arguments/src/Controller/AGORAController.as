@@ -300,6 +300,7 @@ package Controller
 		protected function onProjectPush(event:AGORAEvent):void{
 			Alert.show(Language.lookup("ProjectCreated"));
 			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,true);
 			fetchDataProjectList();
 			fetchDataMyProjects();
 		}
