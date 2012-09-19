@@ -1516,10 +1516,16 @@
     </MapsinProject>
     
     <Project>
+    <EN-US text="Projects" />
+		<RUS text="Projects" /><!--TODO Translate RUS-->
+		<GER text="Projects" /><!--TODO Translate GER-->
+    </Project>
+    
+    <Proj>
     <EN-US text="Project" />
 		<RUS text="Project" /><!--TODO Translate RUS-->
 		<GER text="Project" /><!--TODO Translate GER-->
-    </Project>
+    </Proj>
     
     <ProjType>
    <EN-US text="Project Type" />
@@ -1532,6 +1538,12 @@
 		<RUS text="Project Members" /><!--TODO Translate RUS-->
 		<GER text="Project Members" /><!--TODO Translate GER-->
     </ProjectMembers>
+    
+     <ProjectAdmin>
+    <EN-US text="Project Administrator" />
+		<RUS text="Project Administrator" /><!--TODO Translate RUS-->
+		<GER text="Project Administrator" /><!--TODO Translate GER-->
+    </ProjectAdmin>
 	<NewReason>
 		<EN-US text="Enter your new reason" />
 		<RUS text="Введите свою новую причину" />
