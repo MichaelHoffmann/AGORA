@@ -85,6 +85,7 @@ package Controller
 			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onMapCreated);
 			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onMapCreated);
 			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapCreated);
+			
 
 
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
@@ -180,9 +181,8 @@ package Controller
 			model.publishMapModel.sendForChildren(parentCategory);
 		}
 		public function onMapCreated(event:AGORAEvent):void{
-			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-			menu.myProjects.setCurrentProject(usm.selectedProjID);	
-
+			
+			menu.myProjects.setCurrentProject(model.userSessionModel.selectedProjID);
 		}
 		public function publishMap(mapID:int, currCatID:int):void{
 			model.publishMapModel.publishMap(mapID, currCatID);
@@ -194,6 +194,9 @@ package Controller
 		
 		protected function onMapPublished(event:AGORAEvent):void{
 			fetchDataMyMaps();
+			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			menu.myProjects.setCurrentProject(usm.selectedProjID);	
+
 		}
 		
 		
@@ -214,7 +217,8 @@ package Controller
 			projectListM.requestProjectList();	
 		}
 		protected function onProjectListFetched(event:AGORAEvent):void{
-			menu.projects.loadingDisplay.visible = false;
+			mx.controls.Alert.show("butt");
+			menu.myProjects.loadingDisplay.visible = false;
 			menu.projects.invalidateProperties();
 			menu.projects.invalidateDisplayList();
 		}
@@ -300,13 +304,17 @@ package Controller
 		protected function onProjectPush(event:AGORAEvent):void{
 			Alert.show(Language.lookup("ProjectCreated"));
 			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
-			fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,true);
+			if(this.categoryChain.length - 1>0){
+				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,true);
+			}
 			fetchDataProjectList();
 			fetchDataMyProjects();
 		}
 		
 		protected function onMyProjectsListFetched(event:AGORAEvent):void{
-			menu.myProjects.init();
+			menu.myProjects.populateProjects();
+			menu.myProjects.loadingDisplay.visible = false;
+
 		}
 		
 		protected function onProjectVerified(event:AGORAEvent):void{

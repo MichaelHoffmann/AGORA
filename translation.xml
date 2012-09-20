@@ -1493,7 +1493,11 @@
 		<RUS text="Создайте новую карту аргумента" />
 		<GER text="Beginne eine neue Argumentation" />
 	</NewMap>
-
+	<NewMaphere>
+		<EN-US text="Create a new argument map here" />
+		<RUS text="Create a new argument map here" />
+		<GER text="Create a new argument map here" />
+	</NewMaphere>
 	<NewMapInProj>
 		<EN-US
 			text="Create a new argument map within this project space" />

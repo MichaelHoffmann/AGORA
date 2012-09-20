@@ -1,63 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<s:VGroup percentWidth="100" initialize="
-{
-    this.init();
-    return;
-}
-
-" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">
+<s:VGroup percentWidth="100" initialize="{init()}" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" >
     <fx:Declarations>
         <fx:XML id="projXML">
         </fx:XML>
         <s:RadioButtonGroup id="projectListRadio" />
     </fx:Declarations>
-    <s:mxmlContent>
         <s:VGroup percentWidth="100" horizontalAlign="center">
-            <s:mxmlContent>
                 <mx:Text id="loadingDisplay" />
                 <mx:Text id="signIn" />
-            </s:mxmlContent>
         </s:VGroup>
         <s:HGroup percentWidth="100" horizontalAlign="center" top="0" gap="25" minHeight="350" horizontalCenter="0">
-            <s:mxmlContent>
                 <s:VGroup percentWidth="30">
-                    <s:mxmlContent>
-                        <s:HGroup percentWidth="100">
-                            <s:mxmlContent>
-                                <s:Label text="Projects" />
-                                <s:Label text="Type" right="0" />
-                            </s:mxmlContent>
-                        </s:HGroup>
-                        <s:Scroller percentWidth="100" height="300">
-                            <s:viewport>
-                                <s:HGroup>
-                                    <s:mxmlContent>
-                                        <s:VGroup visible="false" id="projectList" />
-                                        <s:VGroup visible="false" id="isHostileList" />
-                                    </s:mxmlContent>
-                                </s:HGroup>
-                            </s:viewport>
-                        </s:Scroller>
-                        <s:HGroup percentWidth="100">
-                            <s:mxmlContent>
-                                <s:Button label="delete" />
-                                <s:Button label="rename" />
-                            </s:mxmlContent>
-                        </s:HGroup>
-                    </s:mxmlContent>
+                    <s:HGroup percentWidth="100">
+                            <s:Label text="Projects" width = "120" />
+                            <s:Label text="Type" right="0" />
+                    </s:HGroup>
+                    <s:Scroller percentWidth="100" height="300">
+                        <s:viewport>
+                            <s:HGroup>
+                                    <s:VGroup visible="false" id="projectList" />
+                                    <s:VGroup visible="false" id="isHostileList" />
+                            </s:HGroup>
+                        </s:viewport>
+                    </s:Scroller>
+                    <s:HGroup percentWidth="100">
+                            <s:Button id = "delProj" label="delete" />
+                            <s:Button id="renameProj" label="rename" />
+                    </s:HGroup>
                 </s:VGroup>
                 <s:VGroup percentWidth="30" visible="false" id="mapList">
-                    <s:mxmlContent>
                         <s:Label text="Maps in project" />
                         <s:Scroller percentWidth="100" height="300">
                             <s:viewport>
                                 <s:VGroup percentWidth="100" height="260" id="listMyMaps" />
                             </s:viewport>
                         </s:Scroller>
-                    </s:mxmlContent>
                 </s:VGroup>
                 <s:VGroup percentWidth="30" height="150" visible="false" id="memberList">
-                    <s:mxmlContent>
                         <s:Label text="Project Members" />
                         <s:List height="150" percentWidth="100" labelField="@name" id="usersList">
                             <s:dataProvider>
@@ -84,18 +63,13 @@
                                     }
                                     
                                     ' id="_MyProjectsPane_Button5" label='{classes.Language.lookup("SelectAdmin")}' />
-                    </s:mxmlContent>
                 </s:VGroup>
-            </s:mxmlContent>
         </s:HGroup>
         <s:HGroup horizontalAlign="center" percentWidth="100">
-            <s:mxmlContent>
                 <fx:Array>
                     <s:Label text="If you want to create a new project elsewhere, determine its location in the 'World of Arguments'" />
                 </fx:Array>
-            </s:mxmlContent>
         </s:HGroup>
-    </s:mxmlContent>
     <fx:Script>
         <![CDATA[
 			import Controller.*;
@@ -144,7 +118,7 @@
             this.signIn.setStyle("textDecoration", "underline");
             this.signIn.text = classes.Language.lookup("SignInToViewProj");
             this.signIn.addEventListener(flash.events.MouseEvent.CLICK, this.showSignInBox);
-            this.commitProperties();
+            this.populateProjects();
             return;
         }
 
@@ -160,24 +134,26 @@
         {
             Controller.AGORAController.getInstance().displayProjectInfoBox("addUsers");
         }
-
-        public function setCurrentProject(projID:String):void
-        {
-            var projDetails:HTTPService=new mx.rpc.http.HTTPService();
-            var listProjMaps:HTTPService=new mx.rpc.http.HTTPService();
-            var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-            listProjMaps.resultFormat = "e4x";
-			listProjMaps.url = ValueObjects.AGORAParameters.getInstance().listProjMaps;
-			listProjMaps.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onMaps);
-			listProjMaps.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
-			listProjMaps.send({"uid":usm.uid, "pass_hash":usm.passHash, "category_id":projID});
-			projDetails.resultFormat = "e4x";
-			projDetails.url = ValueObjects.AGORAParameters.getInstance().projectDetailsURL;
-			projDetails.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onDetails);
-			projDetails.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
-			projDetails.send({"uid":usm.uid, "pass_hash":usm.passHash, "projID":projID});
-			usm.selectedProjID = projID;
-        }			
+			public function setCurrentProject(projID:String):void
+			{
+				this.loadingDisplay.visible=true;
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				usm.selectedProjID = projID;			var listProjMaps:HTTPService=new mx.rpc.http.HTTPService();
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				listProjMaps.resultFormat = "e4x";
+				listProjMaps.url = ValueObjects.AGORAParameters.getInstance().listProjMaps;
+				listProjMaps.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onMaps);
+				listProjMaps.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+				listProjMaps.send({"uid":usm.uid, "pass_hash":usm.passHash, "category_id":projID});
+				var projDetails:HTTPService=new mx.rpc.http.HTTPService();
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				projDetails.resultFormat = "e4x";
+				projDetails.url = ValueObjects.AGORAParameters.getInstance().projectDetailsURL;
+				projDetails.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onDetails);
+				projDetails.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+				projDetails.send({"uid":usm.uid, "pass_hash":usm.passHash, "projID":projID});
+				usm.selectedProjID = projID;
+		}
 
 
         protected function onFault(fault:FaultEvent):void
@@ -192,17 +168,139 @@
             removeEventListener(mx.rpc.events.ResultEvent.RESULT, this.onDetails);
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             this.projXML = resut.result.proj[0] as XML;
-            var users=this.projXML.users;
-            this.usersXML.source = users.children();
+			if(this.projXML){
+            	var users=this.projXML.users;
+				this.usersXML.source = users.children();
+
+			}else{
+				this.usersXML.source=null;
+			}
+			this.loadingDisplay.visible=false;
+
+			populateProjects();
+
+
         }
         protected function onMaps(event:ResultEvent):void
         {
             removeEventListener(mx.rpc.events.ResultEvent.RESULT, this.onMaps);
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             this.mapListXML = event.result as XML;
-            this.populateMaps();
-        }
+			this.loadingDisplay.visible=false;
 
+			populateProjects();
+		}
+		public function populateProjects():void{
+			var usm:Model.UserSessionModel;
+			var xml:XML;
+			var buttonG:spark.components.HGroup;
+			var button:spark.components.RadioButton;
+			var isHostile:spark.components.ToggleButton;
+			var baseID;
+			var loc1:*;
+			buttonG = null;
+			button = null;
+			isHostile = null;
+			usm = Model.AGORAModel.getInstance().userSessionModel;
+			this.projectList.removeAllElements();
+			this.listMyMaps.removeAllElements();
+			this.populateMaps();
+			if (usm.loggedIn()) 
+			{
+				this.signIn.visible = false;
+				this.projectList.visible = true;
+				if (this.model.projectList) 
+				{
+					trace("loadingProjects")
+					var loc2:*=0;
+					var loc3:*=this.model.projectList.ProjectList.proj;
+
+					for each (xml in loc3) 
+					{
+						buttonG = new spark.components.HGroup();
+						button = new spark.components.RadioButton();
+						button.maxWidth=100;
+						isHostile = new spark.components.ToggleButton();
+						button.group = this.projectListRadio;
+						button.name = xml.@ID;
+						button.label = xml.@title;
+						button.width=30;
+						if (!xml.@type != 0) 
+						{
+							isHostile.selected = false;
+							isHostile.label = "Collaborative";
+						}
+						else 
+						{
+							isHostile.selected = true;
+							isHostile.label = "Adversarial";
+						}
+						isHostile.enabled = false;
+						button.toolTip = xml.@creator;
+						button.percentWidth = 90;
+						buttonG.percentWidth = 100;
+
+						if(usm.selectedProjID){
+							if(xml.@ID==usm.selectedProjID){
+								button.selected=true;
+								usm.selectedProjID=xml.@ID;
+							}
+						}
+						
+						buttonG.addElement(button);
+						buttonG.addElement(isHostile);
+						this.projectList.addElement(buttonG);
+						if(xml.@is_myprivate==1){
+							if(!usm.selectedProjID){
+								usm.selectedProjID=xml.@ID;
+								setCurrentProject(button.name);
+								button.selected=true;
+
+							mapList.visible=true;
+							renameProj.visible=false;
+							memberList.visible=false;
+							delProj.visible=false;
+							}
+
+							button.addEventListener("click", function (arg1:flash.events.Event):void
+							{
+								memberList.visible = false;
+								mapList.visible=true;
+								renameProj.visible=false;
+								delProj.visible=false;								arg1.stopImmediatePropagation();
+								setCurrentProject(arg1.target.name);
+								return;
+							}, false, 1, false)
+
+						}
+						else{
+							
+							button.addEventListener("click", function (arg1:flash.events.Event):void
+							{	mapList.visible=true;
+								renameProj.visible=true;
+								delProj.visible=true;
+							memberList.visible = true;
+							arg1.stopImmediatePropagation();
+							setCurrentProject(arg1.target.name);
+							return;
+							if(usm.selectedProjID==button.name){
+								button.selected=true;
+								setCurrentProject(button.name);
+								memberList.visible = true;
+								mapList.visible=true;
+								renameProj.visible=true;
+								delProj.visible=true;								arg1.stopImmediatePropagation();
+
+							}
+						}, false, 1, false)
+					}
+				}
+			}
+		}
+		}
+		protected function populateUsers():void{
+				
+		}
         public function populateMaps():void
         {
             var map:XML;
@@ -262,75 +360,6 @@
             return;
         }
 
-        protected override function commitProperties():void
-        {
-            var usm:Model.UserSessionModel;
-            var xml:XML;
-            var buttonG:spark.components.HGroup;
-            var button:spark.components.RadioButton;
-            var isHostile:spark.components.ToggleButton;
-
-            var loc1:*;
-            xml = null;
-            buttonG = null;
-            button = null;
-            isHostile = null;
-            super.commitProperties();
-            usm = Model.AGORAModel.getInstance().userSessionModel;
-            this.projectList.removeAllElements();
-            this.listMyMaps.removeAllElements();
-            this.populateMaps();
-            if (usm.loggedIn()) 
-            {
-                this.signIn.visible = false;
-                this.projectList.visible = true;
-                if (this.model.projectList) 
-                {
-					trace("loadingProjects")
-
-                    var loc2:*=0;
-                    var loc3:*=this.model.projectList.ProjectList.proj;
-                    for each (xml in loc3) 
-                    {
-                        buttonG = new spark.components.HGroup();
-                        button = new spark.components.RadioButton();
-                        isHostile = new spark.components.ToggleButton();
-                        button.group = this.projectListRadio;
-                        button.name = xml.@ID;
-                        button.label = xml.@title;
-						button.width=30;
-                        if (!xml.@type != 0) 
-                        {
-                            isHostile.selected = false;
-                            isHostile.label = "Collaborative";
-                        }
-                        else 
-                        {
-                            isHostile.selected = true;
-                            isHostile.label = "Adversarial";
-                        }
-                        isHostile.enabled = false;
-                        button.toolTip = xml.@creator;
-                        button.percentWidth = 90;
-                        buttonG.percentWidth = 100;
-                        buttonG.addElement(button);
-                        buttonG.addElement(isHostile);
-                        this.projectList.addElement(buttonG);
-                        button.addEventListener("click", function (arg1:flash.events.Event):void
-                        {
-                            mapList.visible = true;
-                            memberList.visible = true;
-                            arg1.stopImmediatePropagation();
-                            Model.AGORAModel.getInstance().agoraMapModel.projectID = arg1.target.name;
-                            Model.AGORAModel.getInstance().agoraMapModel.projectName = arg1.target.label;
-                            setCurrentProject(arg1.target.name);
-                            return;
-                        }, false, 1, false)
-                    }
-                }
-            }
-            return;
-        }
 
         internal function getProjectPanel(arg1:flash.events.MouseEvent):void
         {

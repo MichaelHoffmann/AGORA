@@ -154,8 +154,8 @@
 		</mx:FormItem>
 		<mx:FormItem tabIndex="2" required="true" label="{Language.lookup(&quot;ProjectType&quot;)}" includeIn="newInMyProjects,newInWoA">
 			<s:HGroup>	
-				<s:RadioButton label="{Language.lookup('ProjectTypeCollaborative')}" value="0" selected="true" group="{projectType}" enabled="false"/>		
-				<s:RadioButton label="{Language.lookup('ProjectTypeAdversarial')}" value="1" group="{projectType}"/>		
+				<s:RadioButton label="{Language.lookup('ProjectTypeCollaborative')}" value="0"  group="{projectType}" enabled="false"/>		
+				<s:RadioButton label="{Language.lookup('ProjectTypeAdversarial')}" value="1" selected="true" group="{projectType}"/>		
 			</s:HGroup>
 		</mx:FormItem>
 		<mx:FormItem tabIndex="3" label="{Language.lookup(&quot;AddProjectMembers&quot;)}" verticalGap="12">	

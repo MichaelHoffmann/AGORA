@@ -274,6 +274,7 @@ package components
 					}
 				}
 				if(is_project_level){
+					FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.label=Language.lookup("NewMaphere");	
 					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.visible=false;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = true;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = true;
@@ -281,6 +282,7 @@ package components
 				}
 				else 
 				{
+					FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.label=Language.lookup("NewMap");	
 					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.visible=true;	
 					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.setStyle("chromeColor", 0xF99653);
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = false;

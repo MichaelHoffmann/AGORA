@@ -54,12 +54,13 @@ package Model
 				request.send({uid:usm.uid,pass_hash:usm.passHash, map_id:mapID, category_id:projName});	
 			}
 		}
-		
+
 		/**
 		 * When we do not return with an error enters here
 		 */
 		protected function onSuccessfulJoin(event:ResultEvent):void{
-			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_ADDED));
+			dispatchEvent(new AGORAEvent(AGORAEvent.REMOVED_USERS));
+
 		}
 		
 		/**
