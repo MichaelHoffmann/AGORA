@@ -191,4 +191,39 @@
 		$fail->addAttribute("text", "Project does not exist.");
 		$fail->addAttribute("code", 313);
 	}
+	
+	function notValidUser($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "user id not valid.");
+		$fail->addAttribute("code", 314);
+	}
+	
+	function deleteParentCatrgory($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "This Project has sub projects. Hence cannot be deleted.");
+		$fail->addAttribute("code", 315);
+	}
+	
+	function deleteProjectWithMaps($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "This Project has maps belonging to other members. Hence cannot be deleted.");
+		$fail->addAttribute("code", 315);
+	}
+	
+	function notProperProjectMovePath($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "Source and destination cannot be the same");
+		$fail->addAttribute("code", 316);
+	}
+	function notProjectTargetUser($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "You are not a member of this target project.");
+		$fail->addAttribute("code", 317);
+	}
+	function notProjectDestination($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "You cannot move the project here.");
+		$fail->addAttribute("code", 318);
+	}
+		
 ?>
