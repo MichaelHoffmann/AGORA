@@ -1,5 +1,6 @@
 <?php
 
+
 /**
 AGORA - an interactive and web-based argument mapping tool that stimulates reasoning,
 		reflection, critique, deliberation, and creativity in individual argument construction
@@ -49,6 +50,7 @@ function list_projects($userID, $pass_hash) {
 		return $output;
 	}
 	$projectListing = $output->addChild("ProjectList");
+	$mapsListing = $output->addChild("MapsList");
 
 	$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projusers.user_id=$userID and projusers.user_level=1 ORDER BY projects.title";
 	$resultID = mysql_query($query, $linkID);
@@ -77,45 +79,72 @@ function list_projects($userID, $pass_hash) {
 			$count++;
 		}
 		$output->addAttribute("proj_count", $count);
+	}
 
-		// Form the hierarchy for the projects ...			
-		$query = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category as c left join `parent_categories` as child on c.category_id = child.category_id";
+		// list of maps i have added modified ! 
+
+		$query = "SELECT maps.map_id,maps.title,maps.user_id,count(node_id),username FROM maps INNER JOIN nodes ON maps.map_id = nodes.map_id INNER JOIN users ON maps.user_id = users.user_id where nodes.user_id=$userID and maps.is_deleted=0 group by maps.map_id ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID);
-		$catMap = Array ();
-		$catNameMap = Array ();
-		if ($resultID && mysql_num_rows($resultID) > 0) {
+		if (!$resultID) {
+			dataNotFound($output, $query);
+			return $output;
+		}
+		if (mysql_num_rows($resultID) == 0) {
+			$output->addAttribute("map_count", "0");
+			//This is a better alternative than reporting an error.
+			return $output;
+		} else {
+			$count = 0;
+			$projects = Array ();
 			for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
 				$row = mysql_fetch_assoc($resultID);
-				$detailsMap = Array ();
-				$catIdVal = $row['catid'];
-				// details ...
-				$catName = $row['catname'];
-				$catParent = $row['parent_categoryid'];
-				$catType = $row['is_project'];
-				$detailsMap['name'] = $catName;
-				$detailsMap['isproject'] = $catType;
-				if ($catParent != NULL) {
-					$catMap[$catIdVal] = $catParent;
-				}
-				$catNameMap[$catIdVal] = $detailsMap;
+				$map = $mapsListing->addChild("map");
+				$map->addAttribute("ID", $row['map_id']);
+				$map->addAttribute("title", $row['title']);
+				$map->addAttribute("creator", $row['username']);
+				$map->addAttribute("creatorid", $row['user_id']);
+				$count++;
 			}
-		}
+			$output->addAttribute("map_count", $count);
 
-		for ($x = 0; $x < count($projects); $x++) {
-			$pid = $projects[$x];
-			header("Content-type: text/xml");
-			$vistedNodes = Array ();
-			$path = $projectPath->addChild("path");
-			$hierarchy = fetchTreeXmlForProj($pid, $catMap, $catNameMap, $path, $vistedNodes);
-		}
+			// Form the hierarchy for the projects ...			
+			$query = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category as c left join `parent_categories` as child on c.category_id = child.category_id";
+			$resultID = mysql_query($query, $linkID);
+			$catMap = Array ();
+			$catNameMap = Array ();
+			if ($resultID && mysql_num_rows($resultID) > 0) {
+				for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
+					$row = mysql_fetch_assoc($resultID);
+					$detailsMap = Array ();
+					$catIdVal = $row['catid'];
+					// details ...
+					$catName = $row['catname'];
+					$catParent = $row['parent_categoryid'];
+					$catType = $row['is_project'];
+					$detailsMap['name'] = $catName;
+					$detailsMap['isproject'] = $catType;
+					if ($catParent != NULL) {
+						$catMap[$catIdVal] = $catParent;
+					}
+					$catNameMap[$catIdVal] = $detailsMap;
+				}
+			}
 
+			for ($x = 0; $x < count($projects); $x++) {
+				$pid = $projects[$x];
+				header("Content-type: text/xml");
+				$vistedNodes = Array ();
+				$path = $projectPath->addChild("path");
+				$hierarchy = fetchTreeXmlForProj($pid, $catMap, $catNameMap, $path, $vistedNodes);
+			}
+
+		}
+		return $output;
 	}
-	return $output;
-}
 
-$userID = mysql_real_escape_string($_REQUEST['uid']);
-$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
-$output = list_projects($userID, $pass_hash);
-error_log($output->asXML(), 0);
-print ($output->asXML());
+	$userID = mysql_real_escape_string($_REQUEST['uid']);
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$output = list_projects($userID, $pass_hash);
+	error_log($output->asXML(), 0);
+	print ($output->asXML());
 ?>
