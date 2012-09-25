@@ -145,7 +145,8 @@ package Controller
 		public function fetchDataChildCategory(parentCategory:String, addOne:Boolean):void{
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
-			/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
+			//model.userSessionModel.selectedWoAProjectID=parentCategory;
+				/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
 			trace("Adding to the cc with category: " + parentCategory);
 			if(addOne){
 				if(categoryChain.length == 0){
@@ -182,7 +183,7 @@ package Controller
 		}
 		public function onMapCreated(event:AGORAEvent):void{
 			
-			menu.myProjects.setCurrentProject(model.userSessionModel.selectedProjID);
+			menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
 		}
 		public function publishMap(mapID:int, currCatID:int):void{
 			model.publishMapModel.publishMap(mapID, currCatID);
@@ -195,7 +196,7 @@ package Controller
 		protected function onMapPublished(event:AGORAEvent):void{
 			fetchDataMyMaps();
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-			menu.myProjects.setCurrentProject(usm.selectedProjID);	
+			menu.myProjects.setCurrentProject(usm.selectedMyProjProjID);	
 
 		}
 		
@@ -293,7 +294,6 @@ package Controller
 				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
 				menu.myProjects.loadingDisplay.visible = true;
 				model.myProjectsModel.sendRequest();
-				FlexGlobals.topLevelApplication.agoraMenu.myProjects.populateMaps();
 			}
 		}
 		

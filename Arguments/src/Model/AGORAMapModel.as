@@ -305,7 +305,7 @@ package Model
 
 				Model.AGORAModel.getInstance().moveToProject = false;
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedProjID);
+				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyProjProjID);
 			}
 
 		}

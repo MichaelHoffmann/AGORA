@@ -28,7 +28,7 @@ package Model
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
-                loc2 = {"action":"add", "projID":loc1.selectedProjID, "uid":loc1.uid, "pass_hash":loc1.passHash, "usersList[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
+                loc2 = {"action":"add", "projID":loc1.selectedMyProjProjID, "uid":loc1.uid, "pass_hash":loc1.passHash, "usersList[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
                 this.request.send(loc2);
             }
             return;

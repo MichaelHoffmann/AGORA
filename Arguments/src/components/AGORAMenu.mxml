@@ -186,7 +186,12 @@
 				}
 				return;
 			}
-
+			protected function backInProj_clickHandler(e:Event):void{
+				myProjects.currentState="listOfProjects";
+				ProjBtn.visible=false;
+				createMapinProjectBtn.visible=false;
+				backInProj.visible=false;
+			}
 			/**
 			 * Handles what happens when the back button is click within AGORAMenu
 			 * 
@@ -388,20 +393,21 @@
 					</components:MyProjectsPane> 
 					<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
 						<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth="100" percentHeight="10">
-								<s:Button label="Create a new project in selected project" click="
+								<s:Button label="Create a new project in this project" visible = "false" click="
 										  {
 										  this.projectInProjectButton_OnClick(event);
 										  return;
 										  }
 										  
-										  " id="createProjInProjBtn" />
-								<s:Button label="Create a Map in selected project" click="
+										  " id="ProjBtn" />
+								<s:Button label="Create a Map in this project" visible = "false" click="
 										  {
 										  this.createMapinProjBtn_clickHandler(event);
 										  return;
 										  }
 										  
 										  " id="createMapinProjectBtn" />
+							<s:Button label="back" click=" backInProj_clickHandler(event);" id="backInProj" visible = "false"/>
 							</s:HGroup>
 					</s:HGroup>
 				</s:VGroup>

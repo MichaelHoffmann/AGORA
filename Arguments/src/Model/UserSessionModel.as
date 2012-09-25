@@ -40,7 +40,8 @@ package Model
 		public var email:String;
 		public var URL:String;
 		private var _valueObject:UserDataVO;
-		public var selectedProjID:String;
+		public var selectedMyProjProjID:String;
+		public var selectedWoAProjID:String;
 		public var selectedTab:String="WoA";
 
 		private static var _salt:String = "AGORA";
