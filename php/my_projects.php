@@ -50,7 +50,7 @@
 		
 		// This is My private Project Space - username is userid	
 		$username = getUserNameFromUserId($userID,$linkID);
-		$query="SELECT category_id,category_name FROM category WHERE category_name='$username'";
+	$query = "SELECT category.category_name cname,category.category_id cid,par.category_id pcid,c.category_id pcid,c.category_name pcname FROM category inner join parent_categories par on category.category_id = par.category_id inner join category c on par.parent_categoryid = c.category_id WHERE category.category_name='$username'";
 		$found_category_id=mysql_query($query, $linkID);
 		if( mysql_num_rows($found_category_id) < 1){
 			$create_private_proj="INSERT INTO category (category_name, is_project) VALUES ((SELECT username FROM users WHERE user_id='$userID'), 1)";
@@ -66,14 +66,16 @@
 		}
 		$row = mysql_fetch_assoc($found_category_id);
 	$privproj = $projectListing->addChild("proj");
-	$privproj->addAttribute("title", $row['category_name']);
-	$privproj->addAttribute("ID", $row['category_id']);
+	$privproj->addAttribute("title", $row['cname']);
+	$privproj->addAttribute("ID", $row['cid']);
 	$privproj->addAttribute("is_myprivate", "1");
 	$privproj->addAttribute("creator", getUserNameFromUserId($userID,$linkID));
 	$privproj->addAttribute("role", "9"); // surely admin
 	$privproj->addAttribute("type", "0"); // default for private projects
+	$privproj->addAttribute("parent_name", $row['pcname']); // default for private projects
+	$privproj->addAttribute("parent_id", $row['pcid']); // default for private projects
 
-		$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projects.user_id=$userID and projusers.user_level=9 ORDER BY projects.title";
+	$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id inner join parent_categories par on projects.proj_id = par.category_id inner join category c on par.parent_categoryid = c.category_id where projects.user_id=$userID and projusers.user_level=9 ORDER BY projects.title";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -98,6 +100,8 @@
 				$proj->addAttribute("creator", $row['username']);
 				$proj->addAttribute("role", $row['user_level']);
 				$proj->addAttribute("type", $row['is_hostile']);
+			$proj->addAttribute("parent_name", $row['category_name']);
+			$proj->addAttribute("parent_id", $row['parent_categoryid']);
 			$proj->addAttribute("is_myprivate", "0");
 				$count++;
 			}

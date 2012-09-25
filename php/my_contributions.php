@@ -52,7 +52,32 @@ function list_projects($userID, $pass_hash) {
 	$projectListing = $output->addChild("ProjectList");
 	$mapsListing = $output->addChild("MapsList");
 
-	$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id where projusers.user_id=$userID and projusers.user_level=1 ORDER BY projects.title";
+		// list of maps i have added modified ! 
+		$query = "SELECT maps.map_id,maps.title,maps.user_id,count(node_id),username FROM maps INNER JOIN nodes ON maps.map_id = nodes.map_id INNER JOIN users ON maps.user_id = users.user_id where nodes.user_id=$userID and maps.is_deleted=0 group by maps.map_id ORDER BY maps.title";
+		$resultID = mysql_query($query, $linkID);
+		if (!$resultID) {
+			dataNotFound($output, $query);
+			return $output;
+		}
+		if (mysql_num_rows($resultID) == 0) {
+			$output->addAttribute("map_count", "0");
+			//This is a better alternative than reporting an error.
+			//return $output;
+		} else {
+			$count = 0;
+			$projects = Array ();
+			for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
+				$row = mysql_fetch_assoc($resultID);
+				$map = $mapsListing->addChild("map");
+				$map->addAttribute("ID", $row['map_id']);
+				$map->addAttribute("title", $row['title']);
+				$map->addAttribute("creator", $row['username']);
+				$map->addAttribute("creatorid", $row['user_id']);
+				$count++;
+			}
+			$output->addAttribute("map_count", $count);
+		}
+	$query = "SELECT * FROM projects INNER JOIN users ON users.user_id = projects.user_id INNER JOIN projusers ON projects.proj_id = projusers.proj_id inner join parent_categories par on projects.proj_id = par.category_id inner join category c on par.parent_categoryid = c.category_id where projusers.user_id=$userID and projusers.user_level=1 ORDER BY projects.title";
 	$resultID = mysql_query($query, $linkID);
 	if (!$resultID) {
 		dataNotFound($output, $query);
@@ -75,37 +100,15 @@ function list_projects($userID, $pass_hash) {
 			$proj->addAttribute("creator", $row['username']);
 			$proj->addAttribute("role", $row['user_level']);
 			$proj->addAttribute("type", $row['is_hostile']);
+			$proj->addAttribute("parent_name", $row['category_name']);
+			$proj->addAttribute("parent_id", $row['parent_categoryid']);
 			$proj->addAttribute("is_myprivate", "0");
 			$count++;
 		}
 		$output->addAttribute("proj_count", $count);
-	}
+	
 
-		// list of maps i have added modified ! 
 
-		$query = "SELECT maps.map_id,maps.title,maps.user_id,count(node_id),username FROM maps INNER JOIN nodes ON maps.map_id = nodes.map_id INNER JOIN users ON maps.user_id = users.user_id where nodes.user_id=$userID and maps.is_deleted=0 group by maps.map_id ORDER BY maps.title";
-		$resultID = mysql_query($query, $linkID);
-		if (!$resultID) {
-			dataNotFound($output, $query);
-			return $output;
-		}
-		if (mysql_num_rows($resultID) == 0) {
-			$output->addAttribute("map_count", "0");
-			//This is a better alternative than reporting an error.
-			return $output;
-		} else {
-			$count = 0;
-			$projects = Array ();
-			for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
-				$row = mysql_fetch_assoc($resultID);
-				$map = $mapsListing->addChild("map");
-				$map->addAttribute("ID", $row['map_id']);
-				$map->addAttribute("title", $row['title']);
-				$map->addAttribute("creator", $row['username']);
-				$map->addAttribute("creatorid", $row['user_id']);
-				$count++;
-			}
-			$output->addAttribute("map_count", $count);
 
 			// Form the hierarchy for the projects ...			
 			$query = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category as c left join `parent_categories` as child on c.category_id = child.category_id";
