@@ -169,7 +169,7 @@ package ValueObjects
 			
 			listMapsURL = "http://agora.gatech.edu/Paul_testing/list_maps.php";
 			myMapsURL = "http://agora.gatech.edu/Paul_testing/my_maps.php";
-			loginURL = "http:/agora.gatech.edu/Paul_testing/login.php";
+			loginURL = "http://agora.gatech.edu/Paul_testing/login.php";
 			registrationURL = "http://agora.gatech.edu/Paul_testing/register.php";
 			mapRemoveURL = "http://agora.gatech.edu/Paul_testing/remove_map.php";
 			deleteURL = "http://agora.gatech.edu/Paul_testing/remove.php";

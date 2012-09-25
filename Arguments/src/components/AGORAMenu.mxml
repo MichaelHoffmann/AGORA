@@ -95,6 +95,10 @@
 					Alert.show(Language.lookup('GuestCreateMapError'));
 				} else {
 					AGORAController.getInstance().displayMapInfoBox();
+					if((event.target as Button).label==Language.lookup("NewMaphere")){
+						AGORAModel.getInstance().moveToWOA=true;
+					}
+
 				}
 			}
 			
@@ -223,7 +227,7 @@
 						
 						AGORAController.getInstance().categoryChain = cg;
 						
-						AGORAController.getInstance().fetchDataChildCategory(temp.parent, false);
+						AGORAController.getInstance().fetchDataChildCategory(temp.parent,temp.parentID, false);
 					}
 					FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current); //Get the arrow (-->)
 

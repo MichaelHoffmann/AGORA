@@ -19,6 +19,7 @@ package Model
 	
 	import com.adobe.protocols.dict.Dict;
 	
+	import components.CategoryChain;
 	import components.Map;
 	
 	import flash.events.EventDispatcher;
@@ -28,6 +29,7 @@ package Model
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
@@ -306,6 +308,12 @@ package Model
 				Model.AGORAModel.getInstance().moveToProject = false;
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyProjProjID);
+			}else if (AGORAModel.getInstance().moveToWOA){
+				Model.AGORAModel.getInstance().moveToWOA = false;
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				var categoryChain:ArrayList=AGORAController.getInstance().categoryChain;
+				Controller.AGORAController.getInstance().moveMap(this.ID,(categoryChain.getItemAt(categoryChain.length-1)as CategoryDataV0).currentID);
+
 			}
 
 		}

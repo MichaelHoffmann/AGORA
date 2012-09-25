@@ -142,7 +142,7 @@ package Controller
 			menu.categories.invalidateDisplayList();
 		}
 		
-		public function fetchDataChildCategory(parentCategory:String, addOne:Boolean):void{
+		public function fetchDataChildCategory(parentCategory:String,parentID, addOne:Boolean):void{
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
 			//model.userSessionModel.selectedWoAProjectID=parentCategory;
@@ -150,10 +150,10 @@ package Controller
 			trace("Adding to the cc with category: " + parentCategory);
 			if(addOne){
 				if(categoryChain.length == 0){
-					categoryChain.addItem(new CategoryDataV0(parentCategory, null));
+					categoryChain.addItem(new CategoryDataV0(parentCategory,parentID,null, null));
 				}else{	
 					trace("Adding pair" + (CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).current + "-->" + parentCategory);
-					categoryChain.addItem(new CategoryDataV0(parentCategory, (CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).current));	
+					categoryChain.addItem(new CategoryDataV0(parentCategory,parentID,(CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).current, (CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).currentID));	
 				}
 				FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.addCategory(parentCategory);
 			}
@@ -250,7 +250,7 @@ package Controller
 		}
 		
 		protected function onProjectUserVerified(event:AGORAEvent):void{
-			fetchDataChildCategory(tempParentCategory, true);
+			fetchDataChildCategory(tempParentCategory,null, true);
 		}
 		
 		/**
@@ -305,7 +305,7 @@ package Controller
 			Alert.show(Language.lookup("ProjectCreated"));
 			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			if(this.categoryChain.length - 1>0){
-				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,true);
+				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
 			}
 			fetchDataProjectList();
 			fetchDataMyProjects();
@@ -400,7 +400,7 @@ package Controller
 			if(categoryChain.length <= 0){
 				fetchDataCategory();
 			} else {
-				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current, false);
+				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID, false);
 			}
 			//reinitializes the map model
 			mapModel.reinitializeModel();
@@ -439,6 +439,7 @@ package Controller
 		
 		//------------------------Creating a Map---------------//
 		public function displayMapInfoBox():void{
+
 			var agoraModel:AGORAModel = AGORAModel.getInstance();
 			if(agoraModel.userSessionModel.loggedIn()){
 				FlexGlobals.topLevelApplication.mapNameBox = new MapName;

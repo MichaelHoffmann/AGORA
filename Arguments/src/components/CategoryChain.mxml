@@ -154,7 +154,7 @@
 						thisParent.removeCategory((CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1)).current);	
 					}
 					controller.categoryChain = thisParent.categoryChain;
-					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current), false);
+					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current),((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).currentID), false);
 					
 				},false,1,false);
 				this.addElement(button);

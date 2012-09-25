@@ -131,7 +131,7 @@ package Controller
 			model.agoraMapModel.createMap(mapName);	
 			map.agoraMap.initializeMapStructures();
 		}
-		
+
 		protected function onMapCreated(event:AGORAEvent):void{
 			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
 			AGORAController.getInstance().unfreeze();

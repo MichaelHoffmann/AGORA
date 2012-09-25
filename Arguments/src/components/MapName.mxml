@@ -71,7 +71,10 @@
 
 		]]>
 	</fx:Script>
-	
+	<s:states>
+		<s:State name="WOA"/>
+		<s:State name="MyProj"/>
+	</s:states>
 	<!--Creates a form-->
 	<mx:Form id="form" horizontalCenter="0">
 		

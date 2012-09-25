@@ -10,6 +10,7 @@ package components
 	import Model.MapMetaData;
 	
 	import ValueObjects.CategoryDataV0;
+
 	
 	import classes.Language;
 	
@@ -48,6 +49,7 @@ package components
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
 		public var categoryTiles:Group;
+
 		private var mapPanel:VGroup;
 		private var subprojectPanel:VGroup;
 		private var createProjectPanel : HGroup;
@@ -251,7 +253,7 @@ package components
 											} 
 						else {
 							
-							AGORAController.getInstance().fetchDataChildCategory(e.target.label, true);
+							AGORAController.getInstance().fetchDataChildCategory(e.target.label,e.target.name, true);
 						}
 						trace("From for loop, count is: " + categoryXML.@category_count);
 					}, false, 1,false);

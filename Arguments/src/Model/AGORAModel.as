@@ -32,6 +32,7 @@ package Model
 		public var chatModel:ChatModel;
 		public var pushChatModel:PushChatModel;
 		public var moveToProject:Boolean;
+		public var moveToWOA:Boolean;
 		public var verifyProjModel:VerifyProjectMemberModel;
 		public var publishMapModel:PublishMapModel;
 		public var addUsers:AddUsers;
@@ -68,6 +69,7 @@ package Model
 			leafDelete = true;
 			language = 'EN-US';
 			moveToProject = false;
+			moveToWOA = false;
 			initializeHashMaps();
 		}
 		
