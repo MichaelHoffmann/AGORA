@@ -129,6 +129,8 @@
 			import mx.rpc.http.*;
 			import mx.styles.*;
 			
+			import Skins.LeftAlignTextButtonSkin;
+			
 			import spark.components.RadioButton;
         
         public function init():void
@@ -202,11 +204,7 @@
 			}else{
 				//this.usersXML.source=null;
 			}
-			if(!event.result.proj[0].@title){
-				projectName.text=event.result.proj[0].@title;
-			}else{
-				projectName.text="Private project"
-			}
+
 			this.loadingDisplay.visible=false;
 			populateUsers();
 
@@ -253,11 +251,15 @@
 						button = new Button();
 						isHostile = new spark.components.ToggleButton();
 						button.name = xml.@ID;
-						button.percentWidth=40;
+						button.percentWidth=60;
 						button.label = xml.@title;
 						pbutton = new Button();
-						pbutton.percentWidth=40;
-						pbutton.label= xml.@pname;
+						pbutton.percentWidth=20;
+						pbutton.label= xml.@parent_name;
+						pbutton.setStyle("chromeColor", 0xA0CADB);
+						pbutton.setStyle("skinClass",LeftAlignTextButtonSkin);
+						button.setStyle("chromeColor", 0xA0CADB);
+						button.setStyle("skinClass",LeftAlignTextButtonSkin);
 
 						if (!xml.@type != 0) 
 						{
@@ -271,10 +273,11 @@
 						}
 						isHostile.enabled = false;
 						button.toolTip = xml.@creator;						
-						buttonG.addElement(button);
 						buttonG.addElement(isHostile);
+						buttonG.addElement(button);
 						buttonG.addElement(isIn);
 						buttonG.addElement(pbutton);
+						
 						this.projectList.addElement(buttonG);
 							
 							button.addEventListener("click", function (arg1:flash.events.Event):void
@@ -289,7 +292,7 @@
 									memberList.visible=false;
 								}else{
 									memberList.visible=true;
-									
+								projectName.text=arg1.target.label;
 
 								}
 						}, false, 1, false)
