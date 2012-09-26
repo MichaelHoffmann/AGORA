@@ -22,7 +22,7 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  width="350" height="150" creationComplete="init();" layout="absolute"
-		  title="{Language.lookup('Login')}">
+		  title="{Language.lookup('Login')}" 		 keyDown="panel_keyDownHandler(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:StringValidator id="unameValidator"
@@ -43,6 +43,7 @@
 			
 			import classes.Language;
 			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import mx.validators.Validator;
 			
@@ -104,6 +105,12 @@
 			{
 				var userSessionController:UserSessionController = UserSessionController.getInstance();
 				userSessionController.showRegistrationBox();
+			}
+			protected function panel_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.ENTER){
+					submitButton_onClick();
+				}
 			}
 
 		]]>

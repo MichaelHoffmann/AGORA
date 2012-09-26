@@ -24,6 +24,7 @@ package Model
 		private var requestChildren: HTTPService;
 		private var requestChildMap: HTTPService;
 		private var requestChildProject: HTTPService;
+		public var  forMyProjects:Boolean;
 		public function CategoryModel()
 		{
 
@@ -60,7 +61,9 @@ package Model
 		}
 		protected function onChildCategoryFetched(event:ResultEvent):void{
 			category= event.result as XML;
-			//dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED));
+			if(forMyProjects){
+				dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED));
+			}
 		}
 		protected function onMapFetched(event:ResultEvent):void{
 			map = event.result as XML;

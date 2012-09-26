@@ -112,6 +112,10 @@
 			<s:Label  id="welcomeLabel" width="350" height="129" fontSize="35" horizontalCenter="-7" 
 					  text="{Language.lookup('WelcomeHere')}" textAlign="center" verticalCenter="-26"/>
 			<!--This is the login button-->
+			<s:Label  id="versionNum" width="30" height="30" fontSize="12" right = "153" bottom="10"
+					  text="V 3.1" textAlign="center" />
+			<!--This is the login button-->
+
 			<s:Button id="loginButton" width="120" height="40" label="{Language.lookup('Login')}" horizontalCenter="-71"
 					  verticalCenter="19" click = "loginButton_onClick(event)"/>
 			<!--This is the New User Registration button-->

@@ -2969,9 +2969,9 @@ Projekte zu sehen" />
 		<GER text="Project has been created." />  <!--TODO Translate GER-->
 	</ProjectCreated>
 <SelectAdmin>
-		<EN-US text="Select New Project Administrator" />
-		<RUS text="Select New Project Administrator." />  <!--TODO Translate RUS-->
-		<GER text="Select New Project Administrator" />  <!--TODO Translate GER-->
+		<EN-US text="Select As New Administrator" />
+		<RUS text="Select New New Administrator." />  <!--TODO Translate RUS-->
+		<GER text="Select New New Administrator" />  <!--TODO Translate GER-->
 </SelectAdmin>
 <RemoveMembers>
 		<EN-US text="Remove Members" />

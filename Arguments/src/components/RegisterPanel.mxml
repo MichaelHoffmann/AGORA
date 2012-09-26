@@ -112,7 +112,7 @@
 	
 				}
 			}
-					focusManager.setFocus(username);
+					//focusManager.setFocus(username);
 					agoraConstants = AGORAParameters.getInstance();
 			}
 			

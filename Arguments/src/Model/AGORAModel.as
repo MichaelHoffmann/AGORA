@@ -71,9 +71,10 @@ package Model
 			moveToProject = false;
 			moveToWOA = false;
 			initializeHashMaps();
+			
 		}
 		
-		
+
 		//-----------------------------Getters and Setters--------------------------------------------------------//
 
 		public function get language():String

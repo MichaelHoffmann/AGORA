@@ -82,9 +82,9 @@ package Controller
 			model.publishMapModel.addEventListener(AGORAEvent.MAP_PUBLISHED, onMapPublished);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSHED,onProjectPush);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSH_FAILED,onProjectPushFail);
-			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onMapCreated);
-			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onMapCreated);
-			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapCreated);
+			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onUsersChanged);
+			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onUsersChanged);
+			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapAdded);
 			
 
 
@@ -177,17 +177,21 @@ package Controller
 			menu.categories.loadingDisplay.visible = false;
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
+			menu.myProjects.populateProjects();
 		}
 		public function fetchDataChildCategoryForPublish(parentCategory:String):void{
 			model.publishMapModel.sendForChildren(parentCategory);
 		}
-		public function onMapCreated(event:AGORAEvent):void{
-			
+		public function onMapAdded():void{
 			menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
 		}
 		public function publishMap(mapID:int, currCatID:int):void{
 			model.publishMapModel.publishMap(mapID, currCatID);
 		}
+		public function onUsersChanged(e:Event):void{
+			menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
+		}
+
 		protected function onCategoryFetchedForPublish(event:AGORAEvent):void{
 			FlexGlobals.topLevelApplication.publishMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.publishMap.invalidateDisplayList();
@@ -221,6 +225,8 @@ package Controller
 			menu.myProjects.loadingDisplay.visible = false;
 			menu.projects.invalidateProperties();
 			menu.projects.invalidateDisplayList();
+			menu.myProjects.populateProjects();
+
 		}
 		
 		public function pushNewProject():void{
@@ -313,7 +319,6 @@ package Controller
 		protected function onMyProjectsListFetched(event:AGORAEvent):void{
 			menu.myProjects.populateProjects();
 			menu.myProjects.loadingDisplay.visible = false;
-
 		}
 		
 		protected function onProjectVerified(event:AGORAEvent):void{

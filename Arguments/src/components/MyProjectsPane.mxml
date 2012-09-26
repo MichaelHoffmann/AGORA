@@ -2,7 +2,7 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  currentState="listOfProjects" initialize="{init()}" percentWidth="100">
+		  currentState="listOfProjects" initialize="{init()}" percentWidth="100" horizontalAlign="center">
     <fx:Declarations>
         <fx:XML id="projXML">
         </fx:XML>
@@ -16,29 +16,28 @@
 		<s:State name ="listOfProjects"/>
 		<s:State name="projectsInfo"/>
 	</s:states>
+
 		<s:VGroup percentWidth="100" horizontalAlign="center">
                 <mx:Text id="loadingDisplay" />
                 <mx:Text id="signIn" />
         </s:VGroup>
-	
-        <s:HGroup percentWidth="100" horizontalAlign="center" top="0" gap="25" minHeight="350" horizontalCenter="0" includeIn="listOfProjects">
+	 
+        <s:HGroup percentWidth="95" verticalAlign="middle" horizontalAlign="center" top="0"  minHeight="350" horizontalCenter="0" includeIn="listOfProjects">
 			<s:Scroller percentWidth="100" height="300" >
-				<s:viewport>
-						<s:VGroup visible="false" id="projectList" percentWidth="100"/>
-				</s:viewport>
+						<s:VGroup gap="5" visible="false" id="projectList" percentWidth="100"/>
 			</s:Scroller>
 		</s:HGroup>
 
-		<s:HGroup percentWidth="100"  gap="25" minHeight="350" horizontalCenter="0" includeIn="projectsInfo">
-				
-                <s:VGroup percentWidth="100">
-                    <s:HGroup percentWidth="100" gap ="20">
+		<s:HGroup percentWidth="100"  minHeight="350" horizontalAlign="center" includeIn="projectsInfo" accentColor="20">
+                <s:VGroup percentWidth="100" gap ="10">
+					<s:Label text="" id="projectName"  fontSize="32" paddingLeft="32"/>
+
+                    <s:HGroup percentWidth="80" gap ="20" height = "20" >
                             <s:VGroup percentWidth="30">
-								<s:Label text="Project" width = "120" />
-								<s:Label text="" id="projectName"/>
+								<s:Label text="Project" width = "120" visible = "false" />
 								<s:HGroup percentWidth="100">
-									<s:Button id = "delProj" label="delete" />
-									<s:Button id="renameProj" label="rename" />
+									<s:Button id = "delProj" label="delete" visible = "false"/>
+									<s:Button id="renameProj" label="rename" visible = "false"/>
 								</s:HGroup>
 							</s:VGroup>
 							<s:VGroup percentWidth="15">
@@ -98,6 +97,8 @@
 			
 			import Model.*;
 			
+			import Skins.LeftAlignTextButtonSkin;
+			
 			import ValueObjects.*;
 			
 			import __AS3__.vec.*;
@@ -129,8 +130,6 @@
 			import mx.rpc.http.*;
 			import mx.styles.*;
 			
-			import Skins.LeftAlignTextButtonSkin;
-			
 			import spark.components.RadioButton;
         
         public function init():void
@@ -161,7 +160,7 @@
 			public function setCurrentProject(projID:String):void
 			{
 				this.loadingDisplay.visible=true;
-				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			 	var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				usm.selectedMyProjProjID = projID;			var listProjMaps:HTTPService=new mx.rpc.http.HTTPService();
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				listProjMaps.resultFormat = "e4x";
@@ -177,9 +176,12 @@
 				projDetails.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
 				projDetails.send({"uid":usm.uid, "pass_hash":usm.passHash, "projID":projID});
 				usm.selectedMyProjProjID = projID;
+				
 		}
-	
 
+		protected function populateSubProjects(){
+			
+		}
         protected function onFault(fault:FaultEvent):void
         {
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
@@ -196,6 +198,8 @@
         {
             removeEventListener(mx.rpc.events.ResultEvent.RESULT, this.onUserDetails);
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+			usersXML = new XMLList();
+
             this.projXML = event.result.proj[0] as XML;
 			if(this.projXML){
             	var users=this.projXML.users;
@@ -235,6 +239,8 @@
 			{
 				this.signIn.visible = false;
 				this.projectList.visible = true;
+				projectList.removeAllElements();
+
 				if (this.model.projectList) 
 				{
 					trace("loadingProjects")
@@ -244,17 +250,20 @@
 					for each (xml in loc3) 
 					{
 						var isIn:Label = new Label();
-						isIn.text="is in";
-
+						isIn.text= "\n"+Language.lookup('IsIn');
 						buttonG = new spark.components.HGroup();
+						buttonG.verticalAlign="middle";
+
 						buttonG.percentWidth = 100;
+						buttonG.height =32;
 						button = new Button();
 						isHostile = new spark.components.ToggleButton();
 						button.name = xml.@ID;
 						button.percentWidth=60;
 						button.label = xml.@title;
 						pbutton = new Button();
-						pbutton.percentWidth=20;
+						pbutton.percentWidth=30;
+						isIn.percentWidth=10;
 						pbutton.label= xml.@parent_name;
 						pbutton.setStyle("chromeColor", 0xA0CADB);
 						pbutton.setStyle("skinClass",LeftAlignTextButtonSkin);
@@ -273,13 +282,15 @@
 						}
 						isHostile.enabled = false;
 						button.toolTip = xml.@creator;						
-						buttonG.addElement(isHostile);
 						buttonG.addElement(button);
 						buttonG.addElement(isIn);
 						buttonG.addElement(pbutton);
+						pbutton.height=32;
+						isIn.height=32;
+						button.height=24;
 						
 						this.projectList.addElement(buttonG);
-							
+						if(xml.@is_myprivate==1){
 							button.addEventListener("click", function (arg1:flash.events.Event):void
 							{
 								currentState="projectsInfo";
@@ -288,14 +299,24 @@
 								FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
 								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
 								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
-								if(xml.@is_myprivate==1){
-									memberList.visible=false;
-								}else{
-									memberList.visible=true;
 								projectName.text=arg1.target.label;
+								memberList.visible=false;
+							}, false, 1, false)
 
-								}
-						}, false, 1, false)
+						}else{
+							button.addEventListener("click", function (arg1:flash.events.Event):void
+							{
+								currentState="projectsInfo";
+								setCurrentProject(arg1.target.name);
+								usm.selectedMyProjProjID=arg1.target.name;
+								FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
+								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
+								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
+								projectName.text=arg1.target.label;
+								memberList.visible=true;
+
+							}, false, 1, false)
+						}
 					}
 				}
 			}
@@ -343,16 +364,22 @@
 		}
 			private function populateUsers():void{
 				projectMemberPanel.removeAllElements();
+
 				for each (var projectXML:XML in usersXML)
 				{
-					var btnProjMembers:RadioButton = new RadioButton();
-					btnProjMembers.group=usersList;
-					btnProjMembers.value=projectXML.@ID;
-					btnProjMembers.height = undefined;
-					btnProjMembers.width = undefined;
-					btnProjMembers.label = projectXML.@name ;
-					btnProjMembers.setStyle("chromeColor", 0xF99653);
-					projectMemberPanel.addElement (btnProjMembers);
+						if(!(projectXML.@userid==AGORAModel.getInstance().userSessionModel._uid)){
+						
+						var btnProjMembers:RadioButton = new RadioButton();
+						btnProjMembers.group=usersList;
+						btnProjMembers.value=projectXML.@userid;
+						btnProjMembers.height = undefined;
+						btnProjMembers.width = undefined;
+						btnProjMembers.label = projectXML.@name ;
+						btnProjMembers.setStyle("chromeColor", 0xF99653);
+						projectMemberPanel.addElement (btnProjMembers);
+
+					}
+
 				}
 			}
 
