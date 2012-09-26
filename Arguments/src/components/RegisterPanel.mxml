@@ -108,8 +108,8 @@
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 
 				if(AGORAModel.getInstance().userSessionModel.username != "Guest"){
-					setRegData();
 					currentState="ChangeInfo";
+	
 				}
 			}
 					focusManager.setFocus(username);
@@ -122,7 +122,6 @@
 			}
 			public function setRegData():void{
 				var userSessionModel:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				username.text=userSessionModel.username;
 				email.text=userSessionModel.email;
 				firstname.text=userSessionModel.firstName;
 				lastname.text=userSessionModel.lastName;
@@ -180,11 +179,7 @@
 								Alert.show(Language.lookup("PassMismatch"));
 								return;
 							}
-							
-							//userDataVO.URL2 = url2.text;
-							//userDataVO.URL3 = url3.text;
-							
-							//userSessionController.register(userDataVO);
+							userSessionController.register(userDataVO);
 							}else{
 								Alert.show(Language.lookup("RegistrationAgeError"));
 							}
@@ -194,7 +189,7 @@
 					}
 				}else if(currentState=="ChangeInfo"){
 					userDataVO.password=oldPass.text;
-				//	userSessionController.changeInfo(userDataVO,newpass.text);
+					userSessionController.changeInfo(userDataVO,newpass.text);
 					this.visible=false;
 				}
 			}
@@ -218,8 +213,8 @@
 	<s:VGroup  horizontalAlign="center">
 		
 	<mx:Form id="form" >
-		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}" required.Register="true">
-			<s:TextInput id="username">
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}"   required.Register="true">
+			<s:TextInput id="username" editable.ChangeInfo="false">
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem includeIn="Register" label="{Language.lookup(&quot;Password&quot;)}" required="true">

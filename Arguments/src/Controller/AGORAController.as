@@ -218,7 +218,6 @@ package Controller
 			projectListM.requestProjectList();	
 		}
 		protected function onProjectListFetched(event:AGORAEvent):void{
-			mx.controls.Alert.show("butt");
 			menu.myProjects.loadingDisplay.visible = false;
 			menu.projects.invalidateProperties();
 			menu.projects.invalidateDisplayList();

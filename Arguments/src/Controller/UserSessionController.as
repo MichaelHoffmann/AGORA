@@ -58,6 +58,7 @@ package Controller
 		//--------------Displaying Registration Box---------------//
 		public function showRegistrationBox():void{
 			FlexGlobals.topLevelApplication.registrationWindow = new RegisterPanel;
+			FlexGlobals.topLevelApplication.registrationWindow.init();
 			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.registrationWindow, DisplayObject(FlexGlobals.topLevelApplication), true);
 			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.registrationWindow);
 		}
