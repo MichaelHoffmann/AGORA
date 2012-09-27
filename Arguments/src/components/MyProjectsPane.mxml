@@ -72,7 +72,7 @@
 												  }
 												  
 												  " id="_MyProjectsPane_Button4" label='{classes.Language.lookup("RemoveMembers")}' />
-										<s:Button percentWidth="100" click='
+										<s:Button visible ="false" percentWidth="100" click='
 												  {
 												  mx.controls.Alert.show("Are you sure you want to make this user the administrator?  You will no longer be admin of this project");
 												  return;
