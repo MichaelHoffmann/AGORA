@@ -34,9 +34,19 @@
 				youAreHereLabel.setActualSize(youAreHereLabel.getExplicitOrMeasuredWidth(), youAreHereLabel.getExplicitOrMeasuredHeight());
 				youAreHereLabel.move(2, xB);
 				xB = xB + youAreHereLabel.getExplicitOrMeasuredHeight() + 3;
+				var selectedTab:String= AGORAModel.getInstance().userSessionModel.selectedTab;
+				if(selectedTab == "WoA" || selectedTab == "A World of Arguments")
+					{
 				categoryChain.setActualSize(categoryChain.getExplicitOrMeasuredWidth(), categoryChain.getExplicitOrMeasuredHeight());
 				categoryChain.move(2, xB);
 				xB = xB + categoryChain.getExplicitOrMeasuredHeight() + 25;
+					}
+					else if(selectedTab == "My Contributions")
+					{
+						contributionscategoryChain.setActualSize(contributionscategoryChain.getExplicitOrMeasuredWidth(), contributionscategoryChain.getExplicitOrMeasuredHeight());
+						contributionscategoryChain.move(2, xB);
+						xB = xB + contributionscategoryChain.getExplicitOrMeasuredHeight() + 25;
+					}
 				if(visibility.visible){
 					mapOwner.visible = true;
 					mapTitle.visible = true;
@@ -124,6 +134,7 @@
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
 	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
+	<components:ContributionsCategoryChain id="contributionscategoryChain" visible="false"/>
 	<components:SponsorPanel id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
 	
 	

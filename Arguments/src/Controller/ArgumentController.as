@@ -69,6 +69,7 @@ package Controller
 			agoraParameters = AGORAParameters.getInstance();	
 			//Event handlers
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
+			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATION_FAILED, onMapCreatedFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
@@ -132,6 +133,12 @@ package Controller
 			map.agoraMap.initializeMapStructures();
 		}
 
+		protected function onMapCreatedFault(event:AGORAEvent):void{
+			Alert.show("Map name needs to be unique");
+			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
+			AGORAController.getInstance().unfreeze();
+			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
+			}
 		protected function onMapCreated(event:AGORAEvent):void{
 			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
 			AGORAController.getInstance().unfreeze();

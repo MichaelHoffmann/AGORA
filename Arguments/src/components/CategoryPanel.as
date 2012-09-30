@@ -133,6 +133,9 @@ package components
 					this.categoryTiles.layout = new HorizontalLayout;
 					if(model.project && model.project.proj[0])
 					{
+						projectTypePanel.paddingTop = 65;
+						mapPanel.paddingTop = 65;
+						projectMemberPanel.paddingTop = 65;
 					projectPanel.addElement(projectTitlePanel);
 					projectPanel.addElement(subprojectPanel);
 					categoryTiles.addElement(projectPanel);
@@ -140,19 +143,21 @@ package components
 					categoryTiles.addElement(mapPanel);
 					categoryTiles.addElement(projectMemberPanel);
 					mapPanelLbl.text = Language.lookup('MapsinProject');
-					projectPanelLbl.text = Language.lookup('Proj');
-					var currProjButton:Button = new Button();
-					//currProjButton.setStyle("chromeColor", 0xA0CADB);
-					currProjButton.label = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).current;
+					projectPanelLbl.text = Language.lookup('SubProj');
+					var currProjLbl:Label = new Label();
+					currProjLbl.text= AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).current;
+					currProjLbl.setStyle("fontSize",32);
 					projectTitlePanel.paddingBottom = 10;
-					projectTitlePanel.addElementAt(projectPanelLbl,0);
-					projectTitlePanel.addElement(currProjButton);
+					subprojectPanel.paddingTop = 20;
+					subprojectPanel.addElement(projectPanelLbl);
+					projectTitlePanel.addElement(currProjLbl);
 
 					}
 					else
 					{ 					
 						mapPanelLbl.text = Language.lookup('ArgMaps');
-						
+						mapPanel.paddingTop = 0;
+						subprojectPanel.paddingTop = 0;
 						projectPanelLbl.text = Language.lookup('Project');
 						subprojectPanel.addElementAt(projectPanelLbl,0);
 						mapPanel.percentWidth=50;

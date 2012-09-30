@@ -1525,11 +1525,11 @@
 		<GER text="Projects" /><!--TODO Translate GER-->
     </Project>
     
-    <Proj>
-    <EN-US text="Project" />
-		<RUS text="Project" /><!--TODO Translate RUS-->
-		<GER text="Project" /><!--TODO Translate GER-->
-    </Proj>
+    <SubProj>
+    <EN-US text="Sub Projects" />
+		<RUS text="Sub Projects" /><!--TODO Translate RUS-->
+		<GER text="Sub Projects" /><!--TODO Translate GER-->
+    </SubProj>
     
     <ProjType>
    <EN-US text="Project Type" />

@@ -176,6 +176,17 @@
 			protected function setTab(current:String){
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				usm.selectedTab = current;
+				if(current == "My Contributions")
+				{
+				FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.visible = true;
+				FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.visible = false;	
+				}
+				else
+				{
+					FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.visible = false;	
+					FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.visible = true;	
+				}
+				var cat:ArrayList = AGORAController.getInstance().categoryChain;
 
 			}
 			protected function createMapinProjBtn_clickHandler(arg1:flash.events.MouseEvent):void
@@ -212,9 +223,14 @@
 			 */
 			protected function backButton_OnClick(event:MouseEvent):void{
 				var cg:ArrayList = AGORAController.getInstance().categoryChain;
+				var contricg:ArrayList = AGORAController.getInstance().contributionsCategoryChain;
 				var temp:CategoryDataV0 = null;
 				var temp1:Number= AGORAModel.getInstance().agoraMapModel.projectID;
+				var selectT:String = AGORAModel.getInstance().userSessionModel.selectedTab;				
+						if (selectT == "WoA" || selectT =="A World of Arguments")
+						{
 				if(cg.length>0){
+					//AGORAModel.getInstance().agoraMapModel.projectID = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).currentID;
 					temp = (CategoryDataV0)(cg.removeItemAt(cg.length-1));
 					trace("Fetching category: " + temp);
 					if(!temp.parent){
@@ -222,15 +238,34 @@
 						this.mainPanel.visible=false;
 						AGORAController.getInstance().categoryChain = cg;
 						AGORAController.getInstance().fetchDataCategory();
-						//AGORAModel.getInstance().agoraMapModel.projectID = AGORAModel.getInstance().agoraMapModel.parentProjID;
-					} else {
+							}
+							else {
 						
 						AGORAController.getInstance().categoryChain = cg;
-						
 						AGORAController.getInstance().fetchDataChildCategory(temp.parent,temp.parentID, false);
+							}
+							FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current);
+							}
+						}
+						else if (selectT == "My Contributions")
+						{
+							if(contricg.length>0){
+								temp = (CategoryDataV0)(contricg.removeItemAt(contricg.length-1));
+								//AGORAModel.getInstance().agoraMapModel.projectID=AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).currentID;
+								trace("Fetching category: " + temp);
+								if(!temp.parent){
+									this.tabNav.setVisible(true,true);
+									this.mainPanel.visible=false;
+									AGORAController.getInstance().contributionsCategoryChain = contricg;
+									AGORAController.getInstance().fetchContributions();
+								}
+								else {
+						
+									AGORAController.getInstance().contributionsCategoryChain = contricg;
+									AGORAController.getInstance().fetchChildCategorycontributions(temp.parent,temp.parentID, false);
 					}
-					FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current); //Get the arrow (-->)
-
+								FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.removeCategory(temp.current); 
+							}
 				} 
 				
 			}
@@ -417,7 +452,26 @@
 				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}" click ="{selectedTab='MyProjects'}">
-				<s:Label id="MyContributions" text="{Language.lookup('ComingSoon')}"/>
+				<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0" horizontalAlign="center">
+					<components:MyContributionsPanel id="contributions" percentWidth="100" percentHeight="100"
+											  horizontalCenter="0"
+											  skinClass="spark.skins.spark.SkinnableContainerSkin"
+											  title="category" verticalCenter="0">	
+					</components:MyContributionsPanel>
+					<!--Button to create a new map-->
+					<s:HGroup  percentHeight="10" horizontalAlign="center"
+							   percentWidth="100" verticalAlign="middle">
+						<s:Button id="createMapBtnContributions" 
+								  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
+								  toolTip="{Language.lookup('NewMapToolTip')}">
+						</s:Button >
+						<s:Button id="createProjBtnContributions" enabled="false" visible="false"
+								  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
+						</s:Button >
+					</s:HGroup>
+					<s:Label id="clickthruCategories" visible="false" 
+							 text="If you want to create a private project space, click through the categories above to determine its location"/>
+				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('Search')}">
 				<s:Label id="ComingSoon" text="{Language.lookup('ComingSoon')}"/>

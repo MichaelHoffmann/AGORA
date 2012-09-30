@@ -8,6 +8,7 @@ package Controller
 	import Model.ChatModel;
 	import Model.MapListModel;
 	import Model.MoveMap;
+	import Model.MyContributionsModel;
 	import Model.ProjectListModel;
 	import Model.ProjectsModel;
 	import Model.PublishMapModel;
@@ -54,6 +55,7 @@ package Controller
 		private var model:AGORAModel;
 		private var project:Boolean;
 		private var _categoryChain:ArrayList;
+		private var _contributionsCategoryChain:ArrayList;
 		private var tempParentCategory:String;
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
@@ -75,6 +77,9 @@ package Controller
 			model.categoryModel.addEventListener(AGORAEvent.MAP_FETCHED,onChildMapFetched);
 			model.categoryModel.addEventListener(AGORAEvent.PROJECT_FETCHED,onProjectFetched);
 			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
+			model.mycontributionsModel.addEventListener(AGORAEvent.CONTRIBUTIONS_FETCHED,onContributionsFetched);
+			model.mycontributionsModel.addEventListener(AGORAEvent.CHILD_PROJECT_FETCHED,onProjectFetchedContributions);
+			model.mycontributionsModel.addEventListener(AGORAEvent.CHILD_MAP_FETCHED,onChildMapFetchedContributions);
 			model.chatModel.addEventListener(AGORAEvent.CHAT_FETCHED,onChatFetched);
 			model.chatModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.verifyProjModel.addEventListener(AGORAEvent.PROJECT_USER_VERIFIED, onProjectUserVerified);
@@ -93,9 +98,18 @@ package Controller
 			userSession = AGORAModel.getInstance().userSessionModel;
 			mapModel = AGORAModel.getInstance().agoraMapModel;
 			categoryChain = new ArrayList();
+			contributionsCategoryChain = new ArrayList();
 		}
 		
 		//----------------------Get Instance------------------------------//
+		public function get contributionsCategoryChain():ArrayList
+		{
+			return _contributionsCategoryChain;
+		}
+		public function set contributionsCategoryChain(value:ArrayList):void
+		{
+			_contributionsCategoryChain = value;
+		}
 		public static function getInstance():AGORAController{
 			if(!instance){
 				instance = new AGORAController(new SingletonEnforcer);
@@ -160,6 +174,23 @@ package Controller
 			var categoryM:CategoryModel = model.categoryModel;
 			categoryM.requestChildCategories(parentCategory);
 		}
+		public function fetchChildCategorycontributions(parentCategory:String,parentID:String, addOne:Boolean):void{
+			menu.contributions.loadingDisplay.text = Language.lookup("Loading");
+			menu.contributions.loadingDisplay.visible = true;
+			/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
+			trace("Adding to the cc with category: " + parentCategory);
+			if(addOne){
+				if(contributionsCategoryChain.length == 0){
+					contributionsCategoryChain.addItem(new CategoryDataV0(parentCategory,parentID,null, null));
+				}else{	
+					trace("Adding pair" + (CategoryDataV0)(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)).current + "-->" + parentCategory);
+					contributionsCategoryChain.addItem(new CategoryDataV0(parentCategory,parentID, (CategoryDataV0)(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)).current, (CategoryDataV0)(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)).currentID));	
+				}
+				FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.addCategory(parentCategory);
+			}
+			var contributionsM:MyContributionsModel = model.mycontributionsModel;
+			contributionsM.requestChildCategories(parentCategory);
+		}
 		protected function onChildCategoryFetched(event:AGORAEvent):void{
 			trace (" child category fetched");
 			menu.categories.loadingDisplay.visible = false;
@@ -178,6 +209,25 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 			menu.myProjects.populateProjects();
+		}
+		
+		protected function onChildMapFetchedContributions(event:AGORAEvent):void{
+			menu.contributions.loadingDisplay.visible = false;
+			menu.contributions.invalidateProperties();
+			menu.contributions.invalidateDisplayList();
+		}
+		
+		protected function onProjectFetchedContributions(event:AGORAEvent):void{
+			menu.contributions.loadingDisplay.visible = false;
+			menu.contributions.invalidateProperties();
+			menu.contributions.invalidateDisplayList();
+		}
+		
+		protected function onContributionsFetched(event:AGORAEvent):void{
+			menu.contributions.loadingDisplay.visible = false;
+			menu.contributions.invalidateProperties();
+			menu.contributions.invalidateDisplayList();
+			
 		}
 		public function fetchDataChildCategoryForPublish(parentCategory:String):void{
 			model.publishMapModel.sendForChildren(parentCategory);
@@ -221,6 +271,10 @@ package Controller
 			var projectListM:ProjectListModel = model.projectListModel;
 			projectListM.requestProjectList();	
 		}
+		public function fetchContributions():void{
+			var myContributionsM:MyContributionsModel = model.mycontributionsModel;
+			myContributionsM.requestMyContributions();
+		}
 		protected function onProjectListFetched(event:AGORAEvent):void{
 			menu.myProjects.loadingDisplay.visible = false;
 			menu.projects.invalidateProperties();
@@ -255,6 +309,7 @@ package Controller
 		}
 		
 		protected function onProjectUserVerified(event:AGORAEvent):void{
+			if(AGORAModel.getInstance().userSessionModel.selectedTab!="My Contributions")
 			fetchDataChildCategory(tempParentCategory,null, true);
 		}
 		
@@ -309,11 +364,16 @@ package Controller
 		protected function onProjectPush(event:AGORAEvent):void{
 			Alert.show(Language.lookup("ProjectCreated"));
 			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			fetchDataProjectList();
+			fetchDataMyProjects();
+			if(AGORAModel.getInstance().userSessionModel.selectedTab=="My Contributions")
+			{
+				fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
+			}
+			else
 			if(this.categoryChain.length - 1>0){
 				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
 			}
-			fetchDataProjectList();
-			fetchDataMyProjects();
 		}
 		
 		protected function onMyProjectsListFetched(event:AGORAEvent):void{

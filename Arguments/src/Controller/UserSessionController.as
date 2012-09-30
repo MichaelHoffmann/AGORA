@@ -92,6 +92,7 @@ package Controller
 			FlexGlobals.topLevelApplication.rightSidePanel.setVisible(true,true);
 			var agoraController:AGORAController = AGORAController.getInstance();
 			agoraController.fetchDataMyMaps();
+			agoraController.fetchContributions();
 			agoraController.fetchDataMyProjects();
 		}
 		

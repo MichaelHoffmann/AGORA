@@ -29,6 +29,7 @@ package Model
 		public var myProjectsModel:ProjectsModel;
 		public var loadProjMaps:LoadProjectMapsModel;
 		public var categoryModel:CategoryModel;
+		public var mycontributionsModel:MyContributionsModel;
 		public var chatModel:ChatModel;
 		public var pushChatModel:PushChatModel;
 		public var moveToProject:Boolean;
@@ -57,6 +58,7 @@ package Model
 			myProjectsModel = new ProjectsModel;
 			loadProjMaps = new LoadProjectMapsModel;
 			categoryModel= new CategoryModel;
+			mycontributionsModel = new MyContributionsModel;
 			chatModel = new ChatModel;
 			pushChatModel = new PushChatModel;
 			verifyProjModel = new VerifyProjectMemberModel;

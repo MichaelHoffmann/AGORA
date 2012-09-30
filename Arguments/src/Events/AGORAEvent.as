@@ -48,6 +48,9 @@ package Events
 		public static const CHAT_FETCHED:String = "ChatFetched";
 		public static const CHAT_PUSHED:String = "ChatPushed";
 		public static const MAP_FETCHED:String ="MapFetched";
+		public static const CONTRIBUTIONS_FETCHED:String = "ContributionsFetched";
+		public static const CHILD_PROJECT_FETCHED:String = "ChildprojectFetched";
+		public static const CHILD_MAP_FETCHED:String = "ChildMapFetched";
 		public static const PROJECT_USER_VERIFIED:String = "ProjectJoined";
 		public static const MAP_ADDED:String = "MapAdded";
 		public static const CATEGORY_FETCHED_FOR_PUBLISH:String = "CategoryFetchedForPublish";

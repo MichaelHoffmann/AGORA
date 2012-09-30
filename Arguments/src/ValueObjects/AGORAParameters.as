@@ -39,6 +39,7 @@ package ValueObjects
 		public var listProjMaps:String;
 		public var moveMapToProjectURL:String;
 		public var projUsersURL:String;
+		public var myContributionsURL:String;
 		
 		
 		//Error Codes TODO: Enter these in the Languages.xml
@@ -167,37 +168,37 @@ package ValueObjects
 		public function AGORAParameters()
 		{
 			
-			listMapsURL = "http://agora.gatech.edu/Paul_testing/list_maps.php";
-			myMapsURL = "http://agora.gatech.edu/Paul_testing/my_maps.php";
-			loginURL = "http://agora.gatech.edu/Paul_testing/login.php";
-			registrationURL = "http://agora.gatech.edu/Paul_testing/register.php";
-			mapRemoveURL = "http://agora.gatech.edu/Paul_testing/remove_map.php";
-			deleteURL = "http://agora.gatech.edu/Paul_testing/remove.php";
-			insertURL = "http://agora.gatech.edu/Paul_testing/insert.php";
-			loadMapURL = "http://agora.gatech.edu/Paul_testing/load_map1.php";
-			nameUpdateURL = "http://agora.gatech.edu/Paul_testing/mapinfo.php";
-			projectListURL = "http://agora.gatech.edu/Paul_testing/list_projects.php";
-			myProjectsURL = "http://agora.gatech.edu/Paul_testing/my_projects.php";
-			pushProjectsURL = "http://agora.gatech.edu/Paul_testing/projects.php";
-			joinProjectURL = "http://agora.gatech.edu/Paul_testing/verifyProject.php";
-			loadProjectMapsURL = "http://agora.gatech.edu/Paul_testing/load_project_maps.php";
-			getMapFromProjURL = "http://agora.gatech.edu/Paul_testing/getMapFromProjID.php";
-			publishMapURL = "http://agora.gatech.edu/Paul_testing/publishMap.php";
-			categoryURL= "http://agora.gatech.edu/Paul_testing/category.php"; //category
-			chatPushURL= "http://agora.gatech.edu/Paul_testing/push_chat.php"; //chat
-			chatPullURL= "http://agora.gatech.edu/Paul_testing/pull_chat.php"; //chat
-			childCategoryURL = "http://agora.gatech.edu/Paul_testing/child_category.php";
-			childMapURL="http://agora.gatech.edu/Paul_testing/map_category.php";
-			childProjectURL="http://agora.gatech.edu/Paul_testing/project_category.php";
-			createMapHereURL = "http://agora.gatech.edu/Paul_testing/create_map_in_current_category.php";
-			mapToPrivateProjURL = "http://agora.gatech.edu/Paul_testing/map_to_private_project.php";
-			pullRegistrationURL = "http://agora.gatech.edu/Paul_testing/pull_registration_info.php";
-			changeInfoURL="http://agora.gatech.edu/Paul_testing/changeinfo.php";
-			projectDetailsURL = "http://agora.gatech.edu/Paul_testing/projectdetails.php";
-			listProjMaps = "http://agora.gatech.edu/Paul_testing/listProjectMaps.php";
-			moveMapToProjectURL = "http://agora.gatech.edu/Paul_testing/moveMapToProject.php";
-			projUsersURL = "http://agora.gatech.edu/Paul_testing/projusers.php";
-
+			listMapsURL = "http://localhost/pmtesting/list_maps.php";
+			myMapsURL = "http://localhost/pmtesting/my_maps.php";
+			loginURL = "http://localhost/pmtesting/login.php";
+			registrationURL = "http://localhost/pmtesting/register.php";
+			mapRemoveURL = "http://localhost/pmtesting/remove_map.php";
+			deleteURL = "http://localhost/pmtesting/remove.php";
+			insertURL = "http://localhost/pmtesting/insert.php";
+			loadMapURL = "http://localhost/pmtesting/load_map1.php";
+			nameUpdateURL = "http://localhost/pmtesting/mapinfo.php";
+			projectListURL = "http://localhost/pmtesting/list_projects.php";
+			myProjectsURL = "http://localhost/pmtesting/my_projects.php";
+			pushProjectsURL = "http://localhost/pmtesting/projects.php";
+			joinProjectURL = "http://localhost/pmtesting/verifyProject.php";
+			loadProjectMapsURL = "http://localhost/pmtesting/load_project_maps.php";
+			getMapFromProjURL = "http://localhost/pmtesting/getMapFromProjID.php";
+			publishMapURL = "http://localhost/pmtesting/publishMap.php";
+			categoryURL= "http://localhost/pmtesting/category.php"; //category
+			chatPushURL= "http://localhost/pmtesting/push_chat.php"; //chat
+			chatPullURL= "http://localhost/pmtesting/pull_chat.php"; //chat
+			childCategoryURL = "http://localhost/pmtesting/child_category.php";
+			childMapURL="http://localhost/pmtesting/map_category.php";
+			childProjectURL="http://localhost/pmtesting/project_category.php";
+			createMapHereURL = "http://localhost/pmtesting/create_map_in_current_category.php";
+			mapToPrivateProjURL = "http://localhost/pmtesting/map_to_private_project.php";
+			pullRegistrationURL = "http://localhost/pmtesting/pull_registration_info.php";
+			changeInfoURL="http://localhost/pmtesting/changeinfo.php";
+			projectDetailsURL = "http://localhost/pmtesting/projectdetails.php";
+			listProjMaps = "http://localhost/pmtesting/listProjectMaps.php";
+			moveMapToProjectURL = "http://localhost/pmtesting/moveMapToProject.php";
+			projUsersURL = "http://localhost/pmtesting/projusers.php";
+			myContributionsURL = "http://localhost/pmtesting/my_contributions.php";
 			initialize();		
 		}
 		
