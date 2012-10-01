@@ -23,7 +23,7 @@
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  xmlns:components="components.*"
 		  creationComplete="init();" currentState="Register" keyDown="panel1_keyDownHandler(event)"
-		  preinitialize="setProperties();">
+		  preinitialize="setProperties();" >
 
 	<fx:Script>
 		<![CDATA[
@@ -43,7 +43,7 @@
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-		<mx:EmailValidator id="emailValidator" 
+		<mx:EmailValidator id="emailValidator"  invalid="emailValidator_invalidHandler(event)"
 						   source="{email}" property="text">
 		</mx:EmailValidator>
 		
@@ -106,9 +106,9 @@
 			public function init():void
 			{
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
-
 				if(AGORAModel.getInstance().userSessionModel.username != "Guest"){
 					currentState="ChangeInfo";
+					setRegData();
 	
 				}
 			}
@@ -122,6 +122,8 @@
 			}
 			public function setRegData():void{
 				var userSessionModel:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				username.text=userSessionModel.username;
+				username.enabled=false;
 				email.text=userSessionModel.email;
 				firstname.text=userSessionModel.firstName;
 				lastname.text=userSessionModel.lastName;
@@ -170,7 +172,7 @@
 				userDataVO.password = pass_hash.text;
 				userDataVO.email = email.text;
 				userDataVO.URL = url.text;
-
+				emailValidator.validate();
 				if(currentState=="Register"){
 					if(policyTermsRead.selected){			
 						if( is13orOlder.selected ){
