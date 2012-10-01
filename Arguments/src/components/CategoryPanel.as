@@ -254,7 +254,7 @@ package components
 						if(categoryXML.@is_project == 1){
 
 							
-							AGORAController.getInstance().verifyProjectMember(e.target.label);
+							AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
 											} 
 						else {
 							

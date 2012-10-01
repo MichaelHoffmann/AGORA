@@ -57,6 +57,7 @@ package Controller
 		private var _categoryChain:ArrayList;
 		private var _contributionsCategoryChain:ArrayList;
 		private var tempParentCategory:String;
+		private var tempParentCategoryID:String;
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
@@ -303,14 +304,15 @@ package Controller
 			this.model.pushprojects.inProjectsList();
 			return;
 		}
-		public function verifyProjectMember(parentCategory:String):void{
+		public function verifyProjectMember(parentCategory:String,parentID:String):void{
 			this.tempParentCategory = parentCategory;
+			this.tempParentCategoryID = parentID;
 			model.verifyProjModel.send();
 		}
 		
 		protected function onProjectUserVerified(event:AGORAEvent):void{
 			if(AGORAModel.getInstance().userSessionModel.selectedTab!="My Contributions")
-			fetchDataChildCategory(tempParentCategory,null, true);
+			fetchDataChildCategory(tempParentCategory,tempParentCategoryID, true);
 		}
 		
 		/**

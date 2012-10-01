@@ -228,7 +228,7 @@ package components
 								//Checks to see if the current category is a project
 								AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 								AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
-								AGORAController.getInstance().verifyProjectMember(e.target.label);
+								AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
 								AGORAController.getInstance().fetchChildCategorycontributions(e.target.label,e.target.name, true);
 							}, false, 1,false);
 						}

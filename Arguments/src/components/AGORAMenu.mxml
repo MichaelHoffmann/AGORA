@@ -245,6 +245,9 @@
 						AGORAController.getInstance().fetchDataChildCategory(temp.parent,temp.parentID, false);
 							}
 							FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current);
+							if(cg.length!=0)
+							AGORAModel.getInstance().agoraMapModel.projectID = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).currentID;
+							
 							}
 						}
 						else if (selectT == "My Contributions")
@@ -265,6 +268,9 @@
 									AGORAController.getInstance().fetchChildCategorycontributions(temp.parent,temp.parentID, false);
 					}
 								FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.removeCategory(temp.current); 
+								if(contricg.length!=0)
+									AGORAModel.getInstance().agoraMapModel.projectID=AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).currentID;
+								
 							}
 				} 
 				
