@@ -26,10 +26,10 @@
 	/**
 	*	Function for getting the project Details.
 	*/
-	function getDuplicateMapDetails(){ 
+	function getDuplicateMapDetails($output){ 		
 		global $dbName, $version;
 		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
+		$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
 		$output = new SimpleXMLElement($xmlstr);
 		$linkID= establishLink();
 		if(!$linkID){
@@ -42,7 +42,7 @@
 			return $output;
 		}
 
-		$query = "SELECT * FROM maps m INNER JOIN users u ON m.user_id = u.user_id";
+		$query = "SELECT * FROM maps m INNER JOIN users u ON m.user_id = u.user_id and m.is_deleted=0";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -60,27 +60,52 @@
 				$name = $row['title'];
 				$id = $row['map_id'];
 				$username = $row['username'];
-				$query = "SELECT * FROM maps m INNER JOIN users u ON m.user_id = u.user_id and m.title = '$name'";
+				$query = "SELECT * FROM maps m INNER JOIN users u ON m.user_id = u.user_id and m.title = '$name' and m.is_deleted=0";
 				$resultIDmap = mysql_query($query, $linkID);
 				if($resultIDmap && mysql_num_rows($resultIDmap)>1){
 					if(!in_array($name,$duplicateMaps)){ 
-					$duplicateMaps[$count] = $name;				
-					$duplicateOwners[$count++] = $username;	
+					$duplicateMaps[$count] = $name;		
+					$duplicateOwners[$count++] = $id;				
+					//$duplicateOwners[$count++] = $username;	
 					}			
 				}							
 		}
-		
+		$duplicatemapsStr = "";
 		for($dupCnt=0;$dupCnt<count($duplicateMaps);$dupCnt++){
-			
-			error_log($duplicateMaps[$dupCnt]." -- ".$duplicateOwners[$dupCnt],0);	
-		}		
-		return $output;
+			$duplicatemapsStr = $duplicateMaps[$dupCnt]." -- ".$duplicateOwners[$dupCnt];	
+			$details = $output->addChild("details");
+			$details->addAttribute("maps",$duplicatemapsStr);			
+			checkIfNameIsUnique($duplicateMaps[$dupCnt],$duplicateOwners[$dupCnt],$linkID);
+		}				
 	}
+			return $output;
 	}
+	
+		function checkIfNameIsUnique($projName,$id,$linkID){
+				$query = "SELECT * FROM maps m INNER JOIN users u ON m.user_id = u.user_id and m.title = '$projName' and m.map_id != $id and m.is_deleted=0";
+				$resultIDmap = mysql_query($query, $linkID);
+				error_log("chagning".$projName,0);
+				if($resultIDmap && mysql_num_rows($resultIDmap)>0){
+							for($x = 0 ; $x < mysql_num_rows($resultIDmap) ; $x++){
+								$row = mysql_fetch_assoc($resultIDmap);
+								error_log("chagning",0);
+								$name = $row['title'];
+								$id1 = $row['map_id'];
+								$username = $row['username'];
+								$newName = $name.($x+1)."-".$username;
+								error_log("chagning".$name." ".$newName,0);
+								$query1 = "UPDATE maps set title='$newName' where map_id = $id1";
+								$updateMapQuery = mysql_query($query1, $linkID);
+							}
+			     }
+	}	
 
-	
-	getDuplicateMapDetails();
-	
+header("Content-type: text/xml");
+$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
+$output = new SimpleXMLElement($xmlstr);	
+$output = getDuplicateMapDetails($output);
+error_log($output->asXML(),0);
+print $output->asXML();
 ?>
 
 

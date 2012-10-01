@@ -53,6 +53,13 @@
 			repeatEmail($output);
 			return $output;
 		}
+		$query = "SELECT * FROM category WHERE category_name='$username'";
+		$resultID = mysql_query($query, $linkID); 
+		if($resultID && mysql_num_rows($resultID) > 0){
+			$login=$output->addChild("error");
+			$login->addAttribute("text", "That username already exists!"); // Username exists. Do NOT add to the db!
+			return $output;
+		}
 		$query = "SELECT * FROM users WHERE username='$username'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
@@ -79,7 +86,7 @@
 		return $output;
 	}
 	
-	$username = mysql_real_escape_string($_REQUEST['username']);
+	$username = mysql_real_escape_string($_REQUEST['username']);  //TODO: Change this back to a GET when all testing is done.
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$firstname = mysql_real_escape_string($_REQUEST['firstname']);
 	$lastname = mysql_real_escape_string($_REQUEST['lastname']);

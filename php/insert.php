@@ -481,6 +481,12 @@ List of variables for insertion:
 			if(!$lang){
 				$lang="EN-US";
 			}
+					$queryname = "SELECT * FROM maps m where m.title = '$title' and m.is_deleted=0";
+					$resultIDmap = mysql_query($queryname, $linkID);
+					if($resultIDmap && mysql_num_rows($resultIDmap)>0){
+								mapNameTaked($output);
+								return $output;
+					}
 			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
 										($userID, '$title', '$desc', '$lang', NOW(), NOW())";
 			mysql_query($iquery, $linkID);						
@@ -489,8 +495,9 @@ List of variables for insertion:
 				insertFailed($output, $iquery);
 				return $output;
 			}
-		}
+		
 		$output->addAttribute("ID", $mapClause);
+		}
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){

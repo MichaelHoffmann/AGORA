@@ -47,7 +47,7 @@ package Model
 		
 		public function publishMap(mapID:int, currCatID:int):void{
 			publishTheMap.send({map_id: mapID, current_category: currCatID,
-				uid: AGORAModel.getInstance().userSessionModel._uid,
+				uid: AGORAModel.getInstance().userSessionModel.uid,
 				passhash: AGORAModel.getInstance().userSessionModel.passHash});
 		}
 		

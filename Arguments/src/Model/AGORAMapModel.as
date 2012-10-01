@@ -294,12 +294,18 @@ package Model
 		}
 		
 		protected function onMapCreated(resultEvent:ResultEvent):void{
+		if(!resultEvent.result.map.hasOwnProperty('error')){
 			var mapMetaData:MapMetaData = new MapMetaData;
 			mapMetaData.mapID = resultEvent.result.map.ID;
 			mapMetaData.mapName = resultEvent.result.map.title;
 			ID = resultEvent.result.map.ID;
 			moveMapToPrivProj();
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
+			}else{
+				if(resultEvent.result.map.error.code=="319" || resultEvent.result.map.error.code==319){
+					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATION_FAILED, null, null));
+					}
+			}
 		}
 		protected function onMapMovedToPrivProj(resultEvent:ResultEvent):void{
 

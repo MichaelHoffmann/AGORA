@@ -225,5 +225,15 @@
 		$fail->addAttribute("text", "You cannot move the project here.");
 		$fail->addAttribute("code", 318);
 	}
+	function mapNameTaked($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "This map name has already been taken.Kindly choose a different map name.");
+		$fail->addAttribute("code", 319);
+	}
+	function userNameAlreadyTaken($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "Please choose another username.");
+		$fail->addAttribute("code", 319);
+	}
 		
 ?>
