@@ -40,7 +40,7 @@ package ValueObjects
 		public var moveMapToProjectURL:String;
 		public var projUsersURL:String;
 		public var myContributionsURL:String;
-		
+		public var moveprojectToProjectURL:String;
 		
 		//Error Codes TODO: Enter these in the Languages.xml
 		public var ERROR_106:String;
@@ -199,6 +199,7 @@ package ValueObjects
 			moveMapToProjectURL = "http://agora.gatech.edu/Paul_testing/moveMapToProject.php";
 			projUsersURL = "http://agora.gatech.edu/Paul_testing/projusers.php";
 			myContributionsURL = "http://agora.gatech.edu/Paul_testing/my_contributions.php";
+			moveprojectToProjectURL = "http://agora.gatech.edu/Paul_testing/moveProject.php";
 			initialize();		
 		}
 		

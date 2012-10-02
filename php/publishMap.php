@@ -51,7 +51,7 @@
 		$checkIfProj = "SELECT * FROM category WHERE category_id=$category_id
 		        AND is_project=1";
 		$result_IsProj = mysql_query($checkIfProj, $linkID);
-		if(mysql_num_rows($result_IsProj) > 0){
+		if($result_IsProj && mysql_num_rows($result_IsProj) > 0){
 			$output->addAttribute("Proj", "Yes");
 			$verifyProjMember = "SELECT proj_id FROM projusers 
                     		WHERE proj_id=$category_id AND user_id = $uid";

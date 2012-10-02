@@ -36,6 +36,7 @@ package Model
 		public var moveToWOA:Boolean;
 		public var verifyProjModel:VerifyProjectMemberModel;
 		public var publishMapModel:PublishMapModel;
+		public var moveProjectModel:MoveProject;
 		public var addUsers:AddUsers;
 		public var removeUsers:RemoveUsers;
 		public var moveMap:MoveMap;
@@ -63,6 +64,7 @@ package Model
 			pushChatModel = new PushChatModel;
 			verifyProjModel = new VerifyProjectMemberModel;
 			publishMapModel = new PublishMapModel;
+			moveProjectModel=new MoveProject;
 			pushprojects = new PushProject();
 			addUsers= new AddUsers();
 			removeUsers=new RemoveUsers();

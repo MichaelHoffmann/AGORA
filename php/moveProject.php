@@ -62,10 +62,18 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 		return $output;
 	}
 
+	// check if private project is being moved !!!
+	$username = getUserNameFromUserId($uid,$linkID);
+	$query = "SELECT * FROM category WHERE category_id=$category_id AND category_name='$username'";
+	$resultID = mysql_query($query, $linkID);
+	if ($resultID && mysql_num_rows($resultID) > 0) {
+		privateProjectMovePath($output);
+		return $output;
+	}
 	$checkIfProj = "SELECT * FROM category WHERE category_id=$target_proj_id
 			        AND is_project=1";
 	$result_IsProj = mysql_query($checkIfProj, $linkID);
-	if (mysql_num_rows($result_IsProj) > 0) {
+	if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
 		$output->addAttribute("Proj", "Yes");
 		$verifyProjMember = "SELECT proj_id FROM projusers 
 		                    		WHERE proj_id=$target_proj_id AND user_id = $uid";
@@ -82,8 +90,8 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 	$result_IsProj = mysql_query($checkIfCatLeaf, $linkID);
 	if (mysql_num_rows($result_IsProj) > 0) {
 		$output->addAttribute("Proj", "No");
-		$verifyProjMember = "SELECT category_id FROM parent_categories 
-		                    		WHERE parent_categoryid=$target_proj_id";
+		$verifyProjMember = "SELECT * FROM parent_categories inner join category on parent_categories.category_id = category.category_id
+				                    		WHERE parent_categoryid=$target_proj_id and category.is_project=0";
 		$result_VerifyLeaf = mysql_query($verifyProjMember, $linkID);
 		if (mysql_num_rows($result_VerifyLeaf) > 0) {
 			$output->addAttribute("Verified", "No");

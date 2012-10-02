@@ -40,6 +40,7 @@
 			import components.Map;
 			import components.MapName;
 			import components.MapToProject;
+			import components.MoveProjectPopUpPanel;
 			import components.ProjectName;
 			import components.PublishMapPopUpPanel;
 			import components.RegisterPanel;
@@ -87,6 +88,7 @@
 			public var move_map:MapToProject;
 			
 			public var publishMap:PublishMapPopUpPanel;
+			public var moveProject:MoveProjectPopUpPanel;
 			
 
 

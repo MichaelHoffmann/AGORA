@@ -49,9 +49,9 @@
 			return $output;
 		}
 
-		$query = "SELECT maps.map_id, maps.title, users.username, maps.modified_date, lastviewed.lv_date 
+		$query = "SELECT maps.map_id, maps.title, users.username, users.firstname, users.lastname, users.url, maps.modified_date, lastviewed.lv_date 
 		FROM maps LEFT JOIN lastviewed ON lastviewed.map_id=maps.map_id LEFT JOIN users ON maps.user_id=users.user_id 
-		WHERE users.user_id=$userID AND maps.is_deleted=0 AND maps.proj_id IS NULL ORDER BY title, maps.map_id";
+		WHERE users.user_id=$userID AND maps.is_deleted=0 ORDER BY title, maps.map_id";
 				
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
@@ -66,19 +66,29 @@
 		
 		for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 			$row = mysql_fetch_assoc($resultID);
+			$currMapID = $row['map_id'];
 			$map = $output->addChild("map");
+			$map->addAttribute("currMapID", $currMapID);
+			$queryForCats = "SELECT category_name FROM category WHERE category_id = 
+						(SELECT category_id FROM category_map WHERE map_id = $currMapID)";
+			$resultingCat = mysql_query($queryForCats, $linkID);
+			$mapCategory = mysql_fetch_array($resultingCat);
 			$map->addAttribute("ID", $row['map_id']);
+			$map->addAttribute("category", $mapCategory[0]);
 			$map->addAttribute("title", $row['title']);
 			$map->addAttribute("creator", $row['username']);
 			$map->addAttribute("last_modified", $row['modified_date']);
 			$map->addAttribute("last_viewed", $row['lv_date']);
+			$map->addAttribute("firstname", $row['firstname']);
+			$map->addAttribute("lastname", $row['lastname']);
+			$map->addAttribute("url", $row['url']);
 		}
 		return $output;
 	}
 	
 	
-	$userID = mysql_real_escape_string($_REQUEST['uid']);
-	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$userID = mysql_real_escape_string($_REQUEST['uid']);  //TODO: Change this back to a GET when all testing is done.
+	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']); //TODO: Change this back to a GET when all testing is done.
 	$output = my_maps($userID, $pass_hash);
 	print($output->asXML());
 ?>

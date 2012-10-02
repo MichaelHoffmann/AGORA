@@ -31,13 +31,16 @@ function findSubCategory()
 			//This is a better alternative than reporting an error.
 			return $output;
 		}else{
+			$count=0;
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);			
 				$map = $output->addChild("category");
 				$map->addAttribute("ID", $row['category_id']);
 				$map->addAttribute("Name", $row['category_name']);
-
+				$count++;
 			}
+					$output->addAttribute("category_count", $count);
+						$output->addAttribute("project_count", "0");
 		}
 		mysql_close($linkID);//closing the connection
 		return $output;

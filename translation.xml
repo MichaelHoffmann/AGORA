@@ -38,6 +38,11 @@
 	</NotProjMember>
 	
 	
+	<NotProjMemberProjects>
+		<EN-US text="You cannot move a project into a project which you are not a member" />
+		<RUS text="You cannot move a project into a project which you are not a member" /> <!--TODO: Translate RUS -->
+		<GER text="You cannot move a project into a project which you are not a member" /> <!--TODO: Translate GER -->
+	</NotProjMemberProjects>
 	<TermsOfService>
 		<EN-US text=" &lt;p ALIGN='CENTER' &gt;&lt;font size = '18'&gt; Terms of Service&lt;/font&gt;&lt;/p&gt;
 			&lt;p&gt;Your use of AGORA-net constitutes your agreement with these Terms and Conditions.&lt;/p&gt;
@@ -191,6 +196,16 @@
 		<RUS text="An error occurred while trying to publish your map. Please close the window and try again." /><!--TODO Translate RUS -->
 		<GER text="Während des Versuches, dein Argument zu publizieren, ist ein Fehler aufgetreten. Bitte schließe das Fenster und probier's noch einmal." />
 	</UnsuccessfullyPublished>
+	<SuccessfullyPublishedProject>
+		<EN-US text="Your project was successfully moved. It is now available inside the category you chose" />
+		<RUS text="Your project was successfully moved. It is now available inside the category you chose" /><!--TODO Translate RUS -->
+		<GER text="Your project was successfully moved. It is now available inside the category you chose" /><!--TODO Translate GER -->
+	</SuccessfullyPublishedProject>
+	<UnsuccessfullyPublishedProject>
+		<EN-US text="An error occurred while trying to move your project Please close the window and try again." />
+		<RUS text="An error occurred while trying to move your project Please close the window and try again." /><!--TODO Translate RUS -->
+		<GER text="An error occurred while trying to move your project Please close the window and try again." />
+	</UnsuccessfullyPublishedProject>
 
 	<ClickThroughCategory>
 		<EN-US text="Click through the categories below to determine where you want to publish your map" />

@@ -215,6 +215,11 @@
 		$fail->addAttribute("text", "Source and destination cannot be the same");
 		$fail->addAttribute("code", 316);
 	}
+	function privateProjectMovePath($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "This project cannot be moved.");
+		$fail->addAttribute("code", 316);
+	}
 	function notProjectTargetUser($output){
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "You are not a member of this target project.");

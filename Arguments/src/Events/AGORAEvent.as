@@ -53,8 +53,11 @@ package Events
 		public static const CHILD_MAP_FETCHED:String = "ChildMapFetched";
 		public static const PROJECT_USER_VERIFIED:String = "ProjectJoined";
 		public static const MAP_ADDED:String = "MapAdded";
+		public static const PROJECT_MOVED:String = "ProjectMoved";
 		public static const CATEGORY_FETCHED_FOR_PUBLISH:String = "CategoryFetchedForPublish";
+		public static const CATEGORY_FETCHED_FOR_MOVEPROJECT:String = "CategoryFetchedForMoveProject";
 		public static const MAP_PUBLISHED:String = "MapPublished";
+		public static const PROJECT_PUBLISHED:String = "ProjectPublished";
 		public static const REGISTRATION_DATA_GOTTEN:String = "RegistrationDataGotten";
 		public static const ADD_USERS_FAILED:String = "AddUsersFailed";
 		public static const ADDED_USERS:String = "AddedUsers";

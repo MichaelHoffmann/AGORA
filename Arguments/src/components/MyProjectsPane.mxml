@@ -124,6 +124,7 @@
 			
 			import mx.controls.Alert;
 			import mx.core.*;
+			import mx.managers.PopUpManager;
 			import mx.events.*;
 			import mx.filters.*;
 			import mx.rpc.events.*;
@@ -265,8 +266,19 @@
 						pbutton.percentWidth=30;
 						isIn.percentWidth=10;
 						pbutton.label= xml.@parent_name;
+						pbutton.id= xml.@ID;
 						pbutton.setStyle("chromeColor", 0xA0CADB);
 						pbutton.setStyle("skinClass",LeftAlignTextButtonSkin);
+						pbutton.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void{
+							if(!FlexGlobals.topLevelApplication.moveProject){
+								FlexGlobals.topLevelApplication.moveProject = new MoveProjectPopUpPanel();
+							}
+							trace("moving a project"+parseInt(((Button)(e.target).id)));
+							FlexGlobals.topLevelApplication.moveProject.projectID = parseInt(((Button)(e.target).id));
+							AGORAModel.getInstance().moveProjectModel.sendForTopLevel();
+							PopUpManager.addPopUp(FlexGlobals.topLevelApplication.moveProject,FlexGlobals.topLevelApplication.agoraMenu,true);
+							PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.moveProject);
+						},false,0);
 						button.setStyle("chromeColor", 0xA0CADB);
 						button.setStyle("skinClass",LeftAlignTextButtonSkin);
 

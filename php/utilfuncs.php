@@ -230,7 +230,6 @@ function getUserNameFromUserId($userid,$linkID){
 	}
 	
 	function getCategoryIDfromName($cat_name,$linkID){
-		error_log("not matching categories found".$cat_name,0);
 			$query = "SELECT * FROM category WHERE category_name='$cat_name'";
 			$resultID = mysql_query($query, $linkID);
 			if(!$resultID){

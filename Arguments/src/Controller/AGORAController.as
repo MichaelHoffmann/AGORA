@@ -86,7 +86,10 @@ package Controller
 			model.verifyProjModel.addEventListener(AGORAEvent.PROJECT_USER_VERIFIED, onProjectUserVerified);
 			model.publishMapModel.addEventListener(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH, onCategoryFetchedForPublish);
 			model.publishMapModel.addEventListener(AGORAEvent.MAP_PUBLISHED, onMapPublished);
+			model.moveProjectModel.addEventListener(AGORAEvent.CATEGORY_FETCHED_FOR_MOVEPROJECT, onCategoryFetchedForMoveProject);
+			//model.moveProjectModel.addEventListener(AGORAEvent.MAP_PUBLISHED, onProjectPublished);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSHED,onProjectPush);
+			model.moveProjectModel.addEventListener(AGORAEvent.PROJECT_MOVED,onProjectMoved);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSH_FAILED,onProjectPushFail);
 			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onUsersChanged);
 			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onUsersChanged);
@@ -233,6 +236,9 @@ package Controller
 		public function fetchDataChildCategoryForPublish(parentCategory:String):void{
 			model.publishMapModel.sendForChildren(parentCategory);
 		}
+		public function fetchDataChildCategoryForMoveProject(parentCategory:String):void{
+			model.moveProjectModel.sendForChildren(parentCategory);
+		}
 		public function onMapAdded():void{
 			menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
 		}
@@ -243,16 +249,28 @@ package Controller
 			menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
 		}
 
+		public function moveProject(catID:int, parentCatID:int):void{
+			model.moveProjectModel.moveProject(catID, parentCatID);
+		}
 		protected function onCategoryFetchedForPublish(event:AGORAEvent):void{
 			FlexGlobals.topLevelApplication.publishMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.publishMap.invalidateDisplayList();
 		}
 		
+		protected function onCategoryFetchedForMoveProject(event:AGORAEvent):void{
+			FlexGlobals.topLevelApplication.moveProject.invalidateProperties();
+			FlexGlobals.topLevelApplication.moveProject.invalidateDisplayList();
+		}
 		protected function onMapPublished(event:AGORAEvent):void{
 			fetchDataMyMaps();
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 			menu.myProjects.setCurrentProject(usm.selectedMyProjProjID);	
 
+		}
+		protected function onProjectPublished(event:AGORAEvent):void{
+		/*	fetchDataMyMaps();
+			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			menu.myProjects.setCurrentProject(usm.selectedMyProjProjID);	*/
 		}
 		
 		
@@ -373,6 +391,13 @@ package Controller
 				fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
 			}
 			else
+			if(this.categoryChain.length - 1>0){
+				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
+			}
+		}
+		protected function onProjectMoved(event:AGORAEvent):void{
+			fetchDataProjectList();
+			fetchDataMyProjects();
 			if(this.categoryChain.length - 1>0){
 				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
 			}
