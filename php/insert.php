@@ -1,5 +1,6 @@
 <?php
 	/**
+	Adding as a test
 	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
 			reflection, critique, deliberation, and creativity in individual argument construction 
 			and in collaborative or adversarial settings. 
@@ -92,7 +93,7 @@ List of variables for insertion:
 	/**
 	*	Takes a textbox and gets the necessary information from XML into the DB.
 	*/
-	function textboxToDB($tb, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
+	function textboxToDB($tb, $mapID, $linkID, $userID, $output)
 	{
 		global $tbTIDarray;
 		$attr = $tb->attributes();
@@ -103,7 +104,7 @@ List of variables for insertion:
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			if($userID == $dbUID or $mapType=='cooperate'){
+			if($userID == $dbUID){
 				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
 				$status = mysql_query($uquery, $linkID);
 			}else{
@@ -132,7 +133,7 @@ List of variables for insertion:
 	/**
 	*	Takes a nodetext link and inserts it into the database.
 	*/
-	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $ownmap, $mapType, $output)
+	function nodeTextToDB($nt, $nodeID, $linkID, $userID, $position, $output)
 	{
 		global $tbTIDarray; //use the global variable
 		$attr = $nt->attributes();
@@ -178,7 +179,7 @@ List of variables for insertion:
 					insertFailed($output, $iquery);
 					return false;
 				}
-			}else if($tgtNodeTID){
+			}else if($tgtNodeID){
 				//We have a target node TID, rather than an ID. Stubbing out space in case this is needed.
 				
 			}else{ //insert with textbox TID
@@ -208,7 +209,7 @@ List of variables for insertion:
 	/**
 	*	Takes a node from XML and puts it in the database.
 	*/
-	function nodeToDB($node, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
+	function nodeToDB($node, $mapID, $linkID, $userID, $output)
 	{
 		global $nodeTIDarray;
 		$nodeOut = null; // Done for later scoping
@@ -233,7 +234,7 @@ List of variables for insertion:
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			if($userID == $dbUID or $mapType=='cooperate'){
+			if($userID == $dbUID){
 				$uquery = "UPDATE nodes SET nodetype_id=$typeID, modified_date=NOW(), x_coord=$x, y_coord=$y, 
 							typed=$typed, is_positive=$positivity, connected_by='$cBy'
 							WHERE node_id=$nodeID";
@@ -280,7 +281,7 @@ List of variables for insertion:
 		{
 			$pos++;
 			//$nodeOut is still in scope here because PHP's scoping rules are relaxed.
-			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $ownmap, $mapType, $nodeOut);
+			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $nodeOut);
 			
 			//Note that this won't be done if the owner check failed on an UPDATE
 			//because the update will return false.
@@ -294,7 +295,7 @@ List of variables for insertion:
 	/**
 	*	Links between nodes and connections in the DB.
 	*/
-	function sourceNodeToDB($source, $connID, $linkID, $ownmap, $mapType, $output)
+	function sourceNodeToDB($source, $connID, $linkID, $output)
 	{	
 		global $nodeTIDarray;
 		//Source Nodes don't have to worry about being updated.
@@ -326,7 +327,7 @@ List of variables for insertion:
 	/**
 	*	Defines the "argument" part of a connection in the DB.
 	*/
-	function connectionToDB($conn, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
+	function connectionToDB($conn, $mapID, $linkID, $userID, $output)
 	{
 		global $nodeTIDarray;
 		$connection = $output->addChild("connection");
@@ -365,8 +366,6 @@ List of variables for insertion:
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the connection is targeting.
-			$dbUID = $row["user_id"];
-			if($userID == $dbUID or $mapType=='cooperate'){
 				$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
 				$success=mysql_query($uquery, $linkID);
 				if(!$success){
@@ -375,17 +374,13 @@ List of variables for insertion:
 				}
 				$connection->addAttribute("ID", $id);
 				$connection->addAttribute("new_type", $typeID);
-			}else{
-				modifyOther($output);
-				return false;
-			}
 
 		}
 		//Get the source nodes
 		$children = $conn->children();
 		foreach ($children as $child)
 		{
-			sourceNodeToDB($child, $id, $linkID, $ownmap, $mapType, $connection);
+			sourceNodeToDB($child, $id, $linkID, $connection);
 		}
 		return true;
 	}
@@ -395,7 +390,7 @@ List of variables for insertion:
 	*	Separated out for clarity.
 	*	Order doesn't matter, so long as there's nothing referencing things that don't exist yet.
 	*/
-	function xmlToDB($xml, $mapID, $linkID, $userID, $ownmap, $mapType, $output)
+	function xmlToDB($xml, $mapID, $linkID, $userID, $output)
 	{
 		$children = $xml->children();
 		foreach ($children as $child)
@@ -403,19 +398,19 @@ List of variables for insertion:
 			switch($child->getName())
 			{
 				case "textbox":
-					$success = textboxToDB($child, $mapID, $linkID, $userID, $ownmap, $mapType, $output);
+					$success = textboxToDB($child, $mapID, $linkID, $userID, $output);
 					if(!$success){
 						return false;
 					}
 					break;
 				case "node":
-					$success = nodeToDB($child, $mapID, $linkID, $userID, $ownmap, $mapType, $output);
+					$success = nodeToDB($child, $mapID, $linkID, $userID, $output);
 					if(!$success){
 						return false;
 					}
 					break;
 				case "connection":
-					$success = connectionToDB($child, $mapID, $linkID, $userID, $ownmap, $mapType, $output);
+					$success = connectionToDB($child, $mapID, $linkID, $userID, $output);
 					if(!$success){
 						return false;
 					}
@@ -510,21 +505,20 @@ List of variables for insertion:
 		//If so, $ownMap is set to true.
 		
 		$author = $row['user_id'];
-		$mapType = $row['map_type'];
-		$projID = $row['proj_id'];
 		$ownMap = false;
 		if($author == $userID){
 			$ownMap=true;
-		}else if (!$proj_id && !$mapID && !isUserInMapProject($userID, $mapID, $linkID)){
-			//You can't do anything if the map is in a project and you're not in it!
-			notInProject($output, "User $userID is not in Project $projID!");
-			return $output;
+			//TODO: Use this to determine if the INSERTIONS are legal
+			//We need to establish a clear policy on what insertions *are* legal, though.
+			//That will be done on the Node and Connection levels.
+			//It hinges on the TYPES of nodes and connections, which haven't been fully established yet.
+			//(Note that UPDATES are checked against ownership of that individual thing)
 		}
 		
 		//This part neatly handles all possibilities of failure. All we have to do is chain back "false" returns.
 		mysql_query("START TRANSACTION");
 		
-		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $ownMap, $mapType, $output);
+		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
 		//Update map last modified time
 		
 		if($success===true){
@@ -544,7 +538,7 @@ List of variables for insertion:
 		
 	}
 	
-	$xmlparam = to_utf8($_REQUEST['xml']);
+	$xmlparam = to_utf8($_GET['xml']); //TODO: Change this back to a GET when all testing is done.
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$output = insert($xmlparam, $userID, $pass_hash); 
