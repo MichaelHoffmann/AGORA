@@ -33,32 +33,40 @@
 			
 			private var _password:String;
 			public function project_add():void{
-					AGORAModel.getInstance().agoraMapModel.projectName = projectName.text;
-					AGORAModel.getInstance().agoraMapModel.projectType = projectType.selectedValue.valueOf();
-					var users:Array = new Array();
-					var userDetail:String = new String();
-					for(var c:int=0;c<projectUserNames.numChildren;c++){
-						var textinp:TextInput = (projectUserNames.getChildAt(c) as HGroup).getChildAt(0) as TextInput;
-						var username:String = textinp.text;
-						if(username!=null && StringUtil.trim(username)!=""){
-							userDetail = StringUtil.trim(username);
-							users.push(userDetail);
+					if(currentState!="rename"){
+						if(currentState!="addUsers"){
+							AGORAModel.getInstance().agoraMapModel.projectName = projectName.text;
+						AGORAModel.getInstance().agoraMapModel.projectType = projectType.selectedValue.valueOf();
 						}
-					}
-				
-					AGORAModel.getInstance().agoraMapModel.numberUsers = users.length;
-					AGORAModel.getInstance().agoraMapModel.projectUsers = users;
-					if (currentState != "newInWoA") 
-					{
-						if (currentState == "newInMyProjects") 
+
+						var users:Array = new Array();
+						var userDetail:String = new String();
+						for(var c:int=0;c<projectUserNames.numChildren;c++){
+							var textinp:TextInput = (projectUserNames.getChildAt(c) as HGroup).getChildAt(0) as TextInput;
+							var username:String = textinp.text;
+							if(username!=null && StringUtil.trim(username)!=""){
+								userDetail = StringUtil.trim(username);
+								users.push(userDetail);
+							}
+						}
+					
+						AGORAModel.getInstance().agoraMapModel.numberUsers = users.length;
+						AGORAModel.getInstance().agoraMapModel.projectUsers = users;
+						if (currentState != "newInWoA") 
 						{
-							Controller.AGORAController.getInstance().addProjectToMyProjects();
+							if (currentState == "newInMyProjects") 
+							{
+								Controller.AGORAController.getInstance().addProjectToMyProjects();
+							}
 						}
+						else 
+						{
+							Controller.AGORAController.getInstance().addProjectToWoM();
+						}
+					}else{
+						AGORAController.getInstance().renameProject(projectName.text);
 					}
-					else 
-					{
-						Controller.AGORAController.getInstance().addProjectToWoM();
-					}
+
 					//AGORAController.getInstance().fetchDataProjectList();
 					//AGORAController.getInstance().fetchDataMyProjects();
 			}
@@ -145,20 +153,21 @@
 	</fx:Script>
 	<s:states>
 		<s:State name = "addUsers"/>
+		<s:State name = "rename"/>
 		<s:State name = "newInMyProjects"/>
 		<s:State name = "newInWoA"/>
 	</s:states>
 	<mx:Form id="form" verticalGap="15">
-		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;ProjectName&quot;)}" required="true" includeIn="newInMyProjects,newInWoA">			
+		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;ProjectName&quot;)}" required="true" includeIn="rename,newInMyProjects,newInWoA">			
 			<s:TextInput id="projectName" width="200" excludeFrom="addUsers"/>
 		</mx:FormItem>
-		<mx:FormItem tabIndex="2" required="true" label="{Language.lookup(&quot;ProjectType&quot;)}" includeIn="newInMyProjects,newInWoA">
+		<mx:FormItem tabIndex="2"   required="true" label="{Language.lookup(&quot;ProjectType&quot;)}" includeIn="newInMyProjects,newInWoA">
 			<s:HGroup>	
 				<s:RadioButton label="{Language.lookup('ProjectTypeCollaborative')}" value="0"  group="{projectType}" enabled="false"/>		
 				<s:RadioButton label="{Language.lookup('ProjectTypeAdversarial')}" value="1" selected="true" group="{projectType}"/>		
 			</s:HGroup>
 		</mx:FormItem>
-		<mx:FormItem tabIndex="3" label="{Language.lookup(&quot;AddProjectMembers&quot;)}" verticalGap="12">	
+		<mx:FormItem tabIndex="3" label="{Language.lookup(&quot;AddProjectMembers&quot;)}" verticalGap="12" excludeFrom="rename" >	
 			<s:BorderContainer borderColor="#B6BDC6" borderWeight="2" cornerRadius="5">
 			<s:Scroller height="225" width="325">
 			<s:VGroup id="projectUserNames" paddingTop="10" paddingBottom="10" paddingLeft="10">

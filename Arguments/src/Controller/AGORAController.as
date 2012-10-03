@@ -73,10 +73,15 @@ package Controller
 			model.projectListModel.addEventListener(AGORAEvent.PROJECT_LIST_FETCHED, onProjectListFetched);
 			model.projectListModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_LIST_FETCHED, onMyProjectsListFetched);
+			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_SUB_DETAILS, updateProjectSub);
+			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_MAP_DETAILS, updateProjectMap);
+			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_USER_DETAILS, updateProjectUser);
 			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.categoryModel.addEventListener(AGORAEvent.CATEGORY_FETCHED,onCategoryFetched);
 			model.categoryModel.addEventListener(AGORAEvent.MAP_FETCHED,onChildMapFetched);
 			model.categoryModel.addEventListener(AGORAEvent.PROJECT_FETCHED,onProjectFetched);
+			model.categoryModel.addEventListener(AGORAEvent.EDITED_PROJECT,updateProject);
+			model.categoryModel.addEventListener(AGORAEvent.DELETED_PROJECT,onProjectDeleted);
 			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.mycontributionsModel.addEventListener(AGORAEvent.CONTRIBUTIONS_FETCHED,onContributionsFetched);
 			model.mycontributionsModel.addEventListener(AGORAEvent.CHILD_PROJECT_FETCHED,onProjectFetchedContributions);
@@ -91,8 +96,8 @@ package Controller
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSHED,onProjectPush);
 			model.moveProjectModel.addEventListener(AGORAEvent.PROJECT_MOVED,onProjectMoved);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSH_FAILED,onProjectPushFail);
-			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onUsersChanged);
-			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onUsersChanged);
+			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,updateProjectUser);
+			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,updateProjectUser);
 			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapAdded);
 			
 
@@ -219,6 +224,7 @@ package Controller
 			menu.contributions.loadingDisplay.visible = false;
 			menu.contributions.invalidateProperties();
 			menu.contributions.invalidateDisplayList();
+			menu.myProjects.populateProjects();
 		}
 		
 		protected function onProjectFetchedContributions(event:AGORAEvent):void{
@@ -245,10 +251,31 @@ package Controller
 		public function publishMap(mapID:int, currCatID:int):void{
 			model.publishMapModel.publishMap(mapID, currCatID);
 		}
-		public function onUsersChanged(e:Event):void{
-			menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
+		public function renameProject(newName:String):void{
+			model.editProject.rename(newName);
+		}
+		public function selectAsAdmin(userID:String):void{
+			model.selectAsAdmin.sendRequest(userID);
+		}
+		public function deleteProject(projID:String):void{
+			model.deleteProject.sendRequest(projID);
+		}
+		public function onProjectDeleted(e:Event):void{
+			menu.myProjects.currentState="listOfProjects";
 		}
 
+		public function updateProject(e:Event):void{
+			menu.myProjects.updateProject();
+		}
+		public function updateProjectSub(e:Event):void{
+			menu.myProjects.populateProjects();
+		}
+		public function updateProjectMap(e:Event):void{
+			menu.myProjects.populateMap();
+		}
+		public function updateProjectUser(e:Event):void{
+			menu.myProjects.populateUser();
+		}
 		public function moveProject(catID:int, parentCatID:int):void{
 			model.moveProjectModel.moveProject(catID, parentCatID);
 		}

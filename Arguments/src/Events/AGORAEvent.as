@@ -64,8 +64,16 @@ package Events
 		public static const REMOVE_USERS_FAILED:String = "RemoveUsersFailed";
 		public static const REMOVED_USERS:String = "RemovedUsers";
 		public static const PROJECT_FETCHED:String = "ProjectFetched";
-
-		
+		public static const EDIT_PROJECT_FAILED:String = "EditProjectFailed";
+		public static const EDITED_PROJECT:String = "EditedProject";
+		public static const ADMIN_CHANGE_FAILED:String = "AdminChangeFailed";
+		public static const ADMIN_CHANGED:String = "AdminChanged";
+		public static const DELETE_PROJECT_FAILED:String = "DeleteProjectFailed";
+		public static const DELETED_PROJECT:String = "DeletedProject";
+		public static const MY_PROJECTS_DETAILS ="MyProjectDetails";
+		public static const MY_PROJECTS_SUB_DETAILS="UpdateSubs";
+		public static const MY_PROJECTS_MAP_DETAILS="UpdateMaps "
+		public static const MY_PROJECTS_USER_DETAILS="UpdateUsers "
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
 		

@@ -36,6 +36,9 @@ package Model
 		public var moveToWOA:Boolean;
 		public var verifyProjModel:VerifyProjectMemberModel;
 		public var publishMapModel:PublishMapModel;
+		public var editProject:EditProject;
+		public var deleteProject:DeleteProject;
+		public var selectAsAdmin:SelectAsAdmin;
 		public var moveProjectModel:MoveProject;
 		public var addUsers:AddUsers;
 		public var removeUsers:RemoveUsers;
@@ -75,7 +78,10 @@ package Model
 			moveToProject = false;
 			moveToWOA = false;
 			initializeHashMaps();
-			
+			editProject= new EditProject();
+			deleteProject= new DeleteProject();
+			selectAsAdmin= new SelectAsAdmin();
+
 		}
 		
 
