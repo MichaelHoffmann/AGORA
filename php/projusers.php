@@ -303,6 +303,8 @@ function makeAdmin($otheruserID, $projID, $userID, $pass_hash, $output) {
 
 	$query = "UPDATE projusers SET user_level=9 WHERE proj_id=$projID AND user_id=$otheruserID";
 	$success = mysql_query($query, $linkID);
+	$query = "UPDATE projects SET user_id=$otheruserID WHERE proj_id=$projID";
+	$success = mysql_query($query, $linkID);
 	if ($success) {
 		$otheruser = $output->addChild("user");
 		$otheruser->addAttribute("ID", $otheruserID);
