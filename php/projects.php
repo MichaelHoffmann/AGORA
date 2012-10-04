@@ -182,7 +182,7 @@
 		if(strcasecmp($proj_name,$title) != 0){
 		// 1. check if project name is unique ..
 		// 2. check if users - project mapping in proj users is 1:1
-		if(isProjectNameTaken($title,$linkID)){
+		if (isProjectNameTakenEdit($title, $linkID, $projID)) {
 			$proj=$output->addChild("proj");
 			projectNameUsed($proj);
 			error_log("project name already used",0);
@@ -191,7 +191,10 @@
 		}
 
 		error_log("updated project name",0);
-
+	$query = "UPDATE category SET category_name='$title' WHERE category_id=$projID";
+	$success = mysql_query($query, $linkID);
+	$query = "UPDATE parent_categories SET parent_category_name='$title' WHERE parent_categoryid=$projID";
+	$success = mysql_query($query, $linkID);
 		$query = "UPDATE projects SET title='$title', is_hostile=$is_hostile WHERE proj_id=$projID";
 		$success = mysql_query($query, $linkID);
 		if($success){

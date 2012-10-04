@@ -153,6 +153,22 @@
 		return false;
 	}
 	
+	function isProjectNameTakenEdit($projName, $linkID,$projID){
+		$puquery = "SELECT * FROM projects WHERE title ='$projName' and proj_id!=$projID";
+		$resultID = mysql_query($puquery, $linkID);
+		if((!$resultID) || (mysql_num_rows($resultID)>0)){
+			return true;
+			//The name already taken
+		}
+	// Check in category as well ... ...
+		$puquery = "SELECT * FROM category WHERE category_name ='$projName' and category_id!=$projID";
+		$resultID = mysql_query($puquery, $linkID);
+		if((!$resultID) || (mysql_num_rows($resultID)>0)){
+					return true;
+					//The name already taken
+		}
+		return false;
+	}
 		function isCategoryIdValid($catId, $linkID){
 		$puquery = "SELECT * FROM category WHERE category_id =$catId";
 		$resultID = mysql_query($puquery, $linkID);
