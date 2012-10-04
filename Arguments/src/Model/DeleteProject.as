@@ -39,19 +39,16 @@ package Model
         protected function onResult(arg1:mx.rpc.events.ResultEvent):void
         {
 
-            if (arg1.result.hasOwnProperty("project")) 
-            {
-                if (arg1.result.proj.hasOwnProperty("error")) 
+
+
+                if (arg1.result.hasOwnProperty("error")) 
                 {
+					mx.controls.Alert.show(arg1.result.error.@text);
+
                     dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.DELETE_PROJECT_FAILED));
                     return;
                 }
-            }
 			
-			if (arg1.result.hasOwnProperty("userError")) 
-			{
-						Alert.show("Users not found:"+arg1.result.userError.@message);
-			}
 
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.DELETED_PROJECT));
             return;
