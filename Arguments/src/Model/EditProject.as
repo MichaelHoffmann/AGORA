@@ -30,7 +30,7 @@ package Model
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
-                loc2 = { "projID":loc1.selectedMyProjProjID,"title":String, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":1};
+                loc2 = { "projID":loc1.selectedMyProjProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":1};
                 this.request.send(loc2);
             }
             return;
@@ -38,19 +38,16 @@ package Model
 
         protected function onResult(arg1:mx.rpc.events.ResultEvent):void
         {
-            if (arg1.result.hasOwnProperty("project")) 
+            if (arg1.result.hasOwnProperty("proj")) 
             {
                 if (arg1.result.proj.hasOwnProperty("error")) 
                 {
+					Alert.show(arg1.result.proj.error.@text);
                     dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.EDIT_PROJECT_FAILED));
                     return;
                 }
             }
-			
-			if (arg1.result.hasOwnProperty("userError")) 
-			{
-						Alert.show("Users not found:"+arg1.result.userError.@message);
-			}
+
 			
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.EDITED_PROJECT));
             return;

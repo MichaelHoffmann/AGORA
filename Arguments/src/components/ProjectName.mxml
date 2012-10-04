@@ -74,7 +74,7 @@
 			protected function panel_creationCompleteHandler(event:FlexEvent):void
 			{
 				if(currentState!="addUsers"){
-					projectName.text=" ";
+					projectName.text="";
 					projectName.setFocus();
 					projectName.text = "";
 				}

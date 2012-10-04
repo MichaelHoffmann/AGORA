@@ -30,7 +30,7 @@ package Model
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
-                loc2 = {"action":"makeAdmin","otheruserID":newAdmin, "projID":loc1.selectedMyProjProjID, "uid:":loc1.uid, "pass_hash":loc1.passHash};
+                loc2 = {"action":"makeAdmin","newAdminUserId":newAdmin, "projID":loc1.selectedMyProjProjID, "uid":loc1.uid, "pass_hash":loc1.passHash};
                 this.request.send(loc2);
             }
             return;

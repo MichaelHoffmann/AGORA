@@ -76,12 +76,14 @@ package Controller
 			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_SUB_DETAILS, updateProjectSub);
 			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_MAP_DETAILS, updateProjectMap);
 			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_USER_DETAILS, updateProjectUser);
+			model.selectAsAdmin.addEventListener(Events.AGORAEvent.ADMIN_CHANGED,onAdminChanged);
+			model.editProject.addEventListener(Events.AGORAEvent.ADMIN_CHANGED,updateProject);
 			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
+			model.deleteProject.addEventListener(AGORAEvent.DELETED_PROJECT,onProjectDeleted);
 			model.categoryModel.addEventListener(AGORAEvent.CATEGORY_FETCHED,onCategoryFetched);
 			model.categoryModel.addEventListener(AGORAEvent.MAP_FETCHED,onChildMapFetched);
 			model.categoryModel.addEventListener(AGORAEvent.PROJECT_FETCHED,onProjectFetched);
-			model.categoryModel.addEventListener(AGORAEvent.EDITED_PROJECT,updateProject);
-			model.categoryModel.addEventListener(AGORAEvent.DELETED_PROJECT,onProjectDeleted);
+			model.editProject.addEventListener(AGORAEvent.EDITED_PROJECT,updateProject);
 			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.mycontributionsModel.addEventListener(AGORAEvent.CONTRIBUTIONS_FETCHED,onContributionsFetched);
 			model.mycontributionsModel.addEventListener(AGORAEvent.CHILD_PROJECT_FETCHED,onProjectFetchedContributions);
@@ -96,8 +98,8 @@ package Controller
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSHED,onProjectPush);
 			model.moveProjectModel.addEventListener(AGORAEvent.PROJECT_MOVED,onProjectMoved);
 			model.pushprojects.addEventListener(AGORAEvent.PROJECT_PUSH_FAILED,onProjectPushFail);
-			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,updateProjectUser);
-			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,updateProjectUser);
+			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onUsersChanged);
+			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onUsersChanged);
 			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapAdded);
 			
 
@@ -218,6 +220,8 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 			menu.myProjects.populateProjects();
+			menu.myProjects.populateMap();
+			menu.myProjects.populateUser();
 		}
 		
 		protected function onChildMapFetchedContributions(event:AGORAEvent):void{
@@ -261,14 +265,30 @@ package Controller
 			model.deleteProject.sendRequest(projID);
 		}
 		public function onProjectDeleted(e:Event):void{
+			menu.createMapinProjectBtn.visible=false;
+			menu.ProjBtn.visible=false;
+			menu.backInProj.visible=false;
+			menu.myProjects.currentState="listOfProjects";
+			fetchDataMyProjects();
+			fetchDataProjectList();
+		}
+		public function onUsersChanged(e:Event):void{
+			fetchDataMyProjects();
+		}
+		public function updateProject(e:Event):void{
+			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			menu.myProjects.updateProject();
+			fetchDataProjectList();
+			fetchDataMyProjects();
+			
+			
+		}
+		public function onAdminChanged(e:Event):void{
+			fetchDataMyProjects();
 			menu.myProjects.currentState="listOfProjects";
 		}
-
-		public function updateProject(e:Event):void{
-			menu.myProjects.updateProject();
-		}
 		public function updateProjectSub(e:Event):void{
-			menu.myProjects.populateProjects();
+			menu.myProjects.populateSubProjects();
 		}
 		public function updateProjectMap(e:Event):void{
 			menu.myProjects.populateMap();
@@ -278,6 +298,7 @@ package Controller
 		}
 		public function moveProject(catID:int, parentCatID:int):void{
 			model.moveProjectModel.moveProject(catID, parentCatID);
+			
 		}
 		protected function onCategoryFetchedForPublish(event:AGORAEvent):void{
 			FlexGlobals.topLevelApplication.publishMap.invalidateProperties();
@@ -298,6 +319,8 @@ package Controller
 		/*	fetchDataMyMaps();
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 			menu.myProjects.setCurrentProject(usm.selectedMyProjProjID);	*/
+			fetchDataProjectList();
+
 		}
 		
 		
@@ -397,10 +420,16 @@ package Controller
 		
 		//------------------Fetch my Projects ------------------------------//
 		public function fetchDataMyProjects():void{
-			if(model.userSessionModel.loggedIn()){
+			var usm:UserSessionModel=model.userSessionModel;
+			if(usm.loggedIn()){
 				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
 				menu.myProjects.loadingDisplay.visible = true;
 				model.myProjectsModel.sendRequest();
+				if(usm.selectedMyProjProjID){
+					model.myProjectsModel.requestProjDetails(usm.selectedMyProjProjID);
+					model.myProjectsModel.requestChildCategories(usm.selectedMyProjProjID);
+					model.myProjectsModel.listProjMaps(usm.selectedMyProjProjID);
+				}
 			}
 		}
 		
@@ -431,6 +460,7 @@ package Controller
 		}
 		
 		protected function onMyProjectsListFetched(event:AGORAEvent):void{
+			menu.myProjects.populateProjects();
 			menu.myProjects.populateProjects();
 			menu.myProjects.loadingDisplay.visible = false;
 		}

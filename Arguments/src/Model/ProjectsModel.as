@@ -31,7 +31,7 @@ package Model
             this.request.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             return;
 			requestChildProject = new HTTPService;
-			requestChildProject.url = AGORAParameters.getInstance().projectDetailsURL;
+			requestChildProject.url = AGORAParameters.getInstance().projectDetailsURL;x
 			requestChildProject.resultFormat="e4x";
 			requestChildProject.addEventListener(ResultEvent.RESULT, onProjectFetched);
 			requestChildProject.addEventListener(FaultEvent.FAULT, onFault);
@@ -59,12 +59,11 @@ package Model
 			
 		}
 		public function requestChildCategories(projID:String):void{
-			mx.controls.Alert.show(projID);
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 			if(usm.loggedIn()){
 				var requestChildProject:HTTPService=new mx.rpc.http.HTTPService();
 				requestChildProject.resultFormat = "e4x";
-				requestChildProject.url = ValueObjects.AGORAParameters.getInstance().childCategoryURL;
+				requestChildProject.url = ValueObjects.AGORAParameters.getInstance().childProjectsURL;
 				requestChildProject.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.updateMyProjSub);
 				requestChildProject.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
 				var params:Object = {uid: usm.uid, pass_hash: usm.passHash ,projID:projID};

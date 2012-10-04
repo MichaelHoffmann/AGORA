@@ -28,6 +28,7 @@ package ValueObjects
 		public var publishMapURL:String;
 		public var categoryURL:String;
 		public var childCategoryURL:String;
+		public var childProjectsURL:String;
 		public var chatPushURL:String;
 		public var chatPullURL:String;
 		public var childMapURL:String;
@@ -189,6 +190,7 @@ package ValueObjects
 			chatPushURL= "http://agora.gatech.edu/Paul_testing/push_chat.php"; //chat
 			chatPullURL= "http://agora.gatech.edu/Paul_testing/pull_chat.php"; //chat
 			childCategoryURL = "http://agora.gatech.edu/Paul_testing/child_category.php";
+			childProjectsURL = "http://agora.gatech.edu/Paul_testing/child_projects.php";
 			childMapURL="http://agora.gatech.edu/Paul_testing/map_category.php";
 			childProjectURL="http://agora.gatech.edu/Paul_testing/project_category.php";
 			createMapHereURL = "http://agora.gatech.edu/Paul_testing/create_map_in_current_category.php";

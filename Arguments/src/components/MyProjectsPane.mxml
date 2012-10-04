@@ -19,7 +19,7 @@
 	</s:states>
 
 		<s:VGroup percentWidth="100" horizontalAlign="center" height="10">
-                <mx:Text id="loadingDisplay" />
+                <mx:Text id="loadingDisplay" /> 
                 <mx:Text id="signIn" />
         </s:VGroup>
 	 
@@ -29,25 +29,26 @@
 			</s:Scroller>
 		</s:HGroup>
 
-		<s:HGroup percentWidth="100"  minHeight="350" horizontalAlign="center" includeIn="projectsInfo" accentColor="20">
+		<s:HGroup percentWidth="100"  minHeight="350" horizontalAlign="center" includeIn="projectsInfo" accentColor="20" horizontalCenter="0">
                 <s:VGroup percentWidth="100" gap ="10" horizontalAlign="left">
 					<s:HGroup percentWidth="100" horizontalAlign="left">
-						<s:Label text="" id="projectName"  fontSize="32" paddingLeft="32" width="75%"  left = "0"/>
+						<s:Label text="" id="projectName"  fontSize="32" paddingLeft="32" width="75%"  left = "0" textAlign="left"/>
+						<s:ToggleButton label="Adversarial" enabled="false" />
 						<s:Button id = "delProj" label="delete" click="deleteHandler()"/>
 						<s:Button id="renameProj" label="rename" click="AGORAController.getInstance().displayProjectInfoBox('rename')"/>
 					</s:HGroup>
-                    <s:HGroup percentWidth="80" gap ="20" height = "20" >
-                            <s:VGroup percentWidth="30">
-								<s:Label text="Project" width = "120" visible = "false" />
+                    <s:HGroup  paddingLeft="32" percentWidth="90" gap ="20" height = "20" horizontalAlign="center">
+                            <s:VGroup percentWidth="35">
+								<s:Label text= "Projects within this project" />
 								<s:Scroller percentWidth="100" height="300" >
-									<s:VGroup gap="5" visible="true" id="subprojectList" percentWidth="100"/>
+									<s:VGroup  gap="5" visible="true" id="subprojectList" percentWidth="100"/>
 								</s:Scroller>
 
 							</s:VGroup>
-							<s:VGroup percentWidth="15">
+							<!--<s:VGroup percentWidth="15" visible="false">
                             	<s:Label text="Project Type" />	
 								<s:ToggleButton label="Adversarial" enabled="false" percentWidth="100"/>
-							</s:VGroup>
+							</s:VGroup>-->
 							<s:VGroup percentWidth="35">
 								<s:Label text= "Maps in this Project" />
 								<s:Scroller percentWidth="100">
@@ -56,7 +57,7 @@
 									</s:VGroup>
 								</s:Scroller>
 							</s:VGroup>
-							<s:VGroup percentWidth="20">
+							<s:VGroup percentWidth="30">
 								<s:Label text= "Users" />
 								<s:Scroller percentWidth="100">
 									<s:VGroup id="memberList" percentWidth="100">
@@ -173,36 +174,40 @@
 				this.loadingDisplay.visible=true;
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				model.requestProjDetails(projID);
+				model.requestChildCategories(projID);
 				model.listProjMaps(projID);
 				usm.selectedMyProjProjID = projID;
 				SelectAdmin.enabled="false";
 		}
 		public function updateProject(){
+			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			setCurrentProject(usm.selectedMyProjProjID);
+			populateUser();
 		}
-		protected function populateSubProjects(){
-			/*var subprojects:*=this.model.category.category;
+		public function populateSubProjects(){
+			loadingDisplay.visible=false;
+
+			subprojectList.removeAllElements();
+			var subprojects:XMLList=this.model.subProjectList.child;
 			for each(var categoryXML:XML in subprojects){
 				trace("Adding buttons");
 				var button:Button = new Button;
+				
 				button.setStyle("skinClass",TextWrapSkin);
 				button.height = undefined;
-				button.width = undefined;
-				button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
-				button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
-				
-				button.setStyle("chromeColor", 0xA0CADB);	
-
+				button.width = 150
+				button.name = categoryXML.@projID; //The ID (unique DB identifier) of the category
+				button.label = categoryXML.@name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+				button.setStyle("chromeColor", 0xA0CADB);
 				subprojectList.addElement(button);
 				button.addEventListener('click',function(e:Event):void{
-					//Begin private inner click event function for button
 					trace("button \"" + e.target.label + "\" clicked");
 					e.stopImmediatePropagation();	
 					//Checks to see if the current category is a project
-					AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
-					AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
-					AGORAController.getInstance().fetchDataMyProjects();
+					setCurrentProject(e.target.name);
+					projectName.text=e.target.label;
 				}, false, 1,false);
-			}/*/
+			}
 
 			
 		}
@@ -214,7 +219,8 @@
 		}
 		protected function selectAdminHandler():void{
 			if(usersList.selectedValue){
-			 AGORAController.getInstance().selectAsAdmin(usersList.selectedValue as String);
+			 AGORAController.getInstance().selectAsAdmin(usersList.selectedValue.toString());
+
 			}else{
 				mx.controls.Alert.show("You must select a user to make the  administrator of this project");
 			}
@@ -227,6 +233,8 @@
 
 
 		public function populateProjects():void{
+			loadingDisplay.visible=false;
+
 			var usm:Model.UserSessionModel;
 			var xml:XML;
 			var buttonG:spark.components.HGroup;
@@ -316,6 +324,8 @@
 								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
 								projectName.text=arg1.target.label;
 								memberList.visible=false;
+								renameProj.visible=false;
+								delProj.visible=false;
 							}, false, 1, false)
 
 						}else{
@@ -328,6 +338,8 @@
 								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
 								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
 								projectName.text=arg1.target.label;
+								delProj.visible=true;
+								renameProj.visible=true;
 								memberList.visible=true;
 
 							}, false, 1, false)
@@ -337,7 +349,11 @@
 			}
 		}
 		public function populateMap():void{
+			loadingDisplay.visible=false;
+
+			
 			mapPanel.removeAllElements();
+			loadingDisplay.visible=false;
 			mapMetaDataVector = new Vector.<MapMetaData>(0,false);
 			trace("loading maps for the project");
 			for each (var map:XML in model.mapList.map)
@@ -373,12 +389,15 @@
 			}			
 		}
 			public  function populateUser():void{
+				loadingDisplay.visible=false;
+				projectName.text=model.userList.proj.@title;
 				projectMemberPanel.removeAllElements();
 				for each (var projectXML:XML in model.userList.proj.users.userDetail)
 				{
 						if(!(projectXML.@userid==AGORAModel.getInstance().userSessionModel._uid)){
 						var btnProjMembers:RadioButton = new RadioButton();
 						btnProjMembers.group=usersList;
+						
 						btnProjMembers.value=projectXML.@userid;
 						btnProjMembers.height = undefined;
 						btnProjMembers.width = undefined;
