@@ -71,7 +71,7 @@ function findChildCategories($projID, $userID, $pass_hash) {
 	mysql_close($linkID); //closing the connection
 	return $output;
 }
-$parentCategory = ($_REQUEST['projID']);
+$parentCategory = $_REQUEST['projID'];
 $pass_hash = $_REQUEST['pass_hash'];
 $uid = $_REQUEST['uid'];
 $output = findChildCategories($parentCategory, $uid, $pass_hash);

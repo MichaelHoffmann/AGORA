@@ -52,10 +52,17 @@ package Model
 		}
 		
 		public function sendForChildren(categoryName:String):void{
-			requestChildren.send({parentCategory: "'" + categoryName + "'"});
+			requestChildren.send({parentCategory:  categoryName ,uid: AGORAModel.getInstance().userSessionModel.uid,
+				passhash: AGORAModel.getInstance().userSessionModel.passHash});
 		}
 		protected function onCategoryFetched(event:ResultEvent):void{
 			category= event.result as XML;
+			var result:XML = event.result as XML;
+			if(result.hasOwnProperty("error") && result.error.@Verified != 1){
+				Alert.show(Language.lookup('NotProjMember') + 
+					result.error.@project_admin_firstname + " " + result.error.@project_admin_lastname + '\n' + "URL: " + result.error.@admin_url);
+				return;
+			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH));
 		}
 		protected function onMapPublished(event:ResultEvent):void{
@@ -65,6 +72,9 @@ package Model
 				else
 					FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("UnsuccessfullyPublished");
 			} else {
+				if(event.result.hasOwnProperty("Proj") && event.result.Proj.@isproject == "1")
+					FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("SuccessfullyPublishedInProject");
+				else
 				FlexGlobals.topLevelApplication.publishMap.informationLabel.text = Language.lookup("SuccessfullyPublished");
 				FlexGlobals.topLevelApplication.publishMap.okayButton.visible = false;
 				FlexGlobals.topLevelApplication.publishMap.cancelButton.label = Language.lookup('OK');

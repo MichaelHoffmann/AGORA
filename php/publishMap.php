@@ -51,16 +51,19 @@
 		$checkIfProj = "SELECT * FROM category WHERE category_id=$category_id
 		        AND is_project=1";
 		$result_IsProj = mysql_query($checkIfProj, $linkID);
+					$projart = $output->addChild("Proj");
 		if($result_IsProj && mysql_num_rows($result_IsProj) > 0){
-			$output->addAttribute("Proj", "Yes");
+			$projart = $projart->addAttribute("isproject","1");
 			$verifyProjMember = "SELECT proj_id FROM projusers 
                     		WHERE proj_id=$category_id AND user_id = $uid";
 			$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
 			if(!mysql_num_rows($result_VerifyMem) > 0){
 				$output->addAttribute("Verified", "No");
-				notInProject($output);
+				notInProject($output,$linkID);
 				return $output;
 			}
+		}else{
+			$projart = $projart->addAttribute("isproject","0");
 		}
 		$query = "UPDATE category_map SET category_id=$category_id WHERE map_id='$map_id'";
 		$output->addAttribute("Category", $category_id);

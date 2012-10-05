@@ -191,6 +191,11 @@
 		<GER text="Dein Argument wurde erfolgreich publiziert. Es ist nun öffentlich verfügbar in der Kategorie, die du ausgewählt hast." />
 	</SuccessfullyPublished>
 
+	<SuccessfullyPublishedInProject>
+		<EN-US text="Your map was successfully published. It is now available inside the project you chose" />
+		<RUS text="Your map was successfully published. It is now available inside the project you chose" /><!--TODO Translate RUS -->
+		<GER text="Your map was successfully published. It is now available inside the project you chose" /><!--TODO Translate GER -->
+	</SuccessfullyPublishedInProject>
 	<UnsuccessfullyPublished>
 		<EN-US text="An error occurred while trying to publish your map. Please close the window and try again." />
 		<RUS text="An error occurred while trying to publish your map. Please close the window and try again." /><!--TODO Translate RUS -->

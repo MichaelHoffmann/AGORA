@@ -141,10 +141,11 @@ package components
 			categoryTiles.removeAllElements();
 			//begin sequence of adding elements
 			if(model.category){
-				if(model.category.@category_count == 0 || model.category.category.@is_project == 1)
+				okayButton.visible = false;
+				if(model.category.@category_count == 0){
 					okayButton.visible = true;
-				else{
-					okayButton.visible = false;
+				}
+				if(model.category.@category_count > 0 || model.category.@project_count >0){
 					//Loop over the categories that were pulled from the DB
 					for each(var categoryXML:XML in model.category.category){
 						/*Create and setup buttons corresponding to categories*/
