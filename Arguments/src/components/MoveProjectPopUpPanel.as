@@ -177,6 +177,7 @@ package components
 		}
 		
 		protected function removePupUp(event:MouseEvent):void{
+			projectID = -1;
 			informationLabel.text = "";
 			cancelButton.label = Language.lookup('Back');
 			PopUpManager.removePopUp(this);
@@ -185,7 +186,6 @@ package components
 		protected function submitPublish(event:MouseEvent):void{
 		//////3	if(projectID == -1) projectID = AGORAModel.getInstance().myProjectsModel.;
 			AGORAController.getInstance().moveProject(projectID,currCatID);
-			projectID = -1;
 		}
 		
 		override protected function measure():void{

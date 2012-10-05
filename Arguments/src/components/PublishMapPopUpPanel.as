@@ -171,6 +171,7 @@ package components
 		}
 		
 		protected function removePupUp(event:MouseEvent):void{
+			mapID = -1;
 			informationLabel.text = "";
 			cancelButton.label = Language.lookup('Back');
 			PopUpManager.removePopUp(this);
@@ -179,7 +180,7 @@ package components
 		protected function submitPublish(event:MouseEvent):void{
 			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
 			AGORAController.getInstance().publishMap(mapID,currCatID);
-			mapID = -1;
+			
 		}
 		
 		override protected function measure():void{
