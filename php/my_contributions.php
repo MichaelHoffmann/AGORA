@@ -53,7 +53,7 @@ function list_projects($userID, $pass_hash) {
 	$mapsListing = $output->addChild("MapsList");
 
 		// list of maps i have added modified ! 
-		$query = "SELECT maps.map_id,maps.title,maps.user_id,count(node_id),username FROM maps INNER JOIN nodes ON maps.map_id = nodes.map_id INNER JOIN users ON maps.user_id = users.user_id where nodes.user_id=$userID and maps.is_deleted=0 group by maps.map_id ORDER BY maps.title";
+		$query = "SELECT maps.map_id,maps.title,maps.user_id,count(node_id),username FROM maps INNER JOIN nodes ON maps.map_id = nodes.map_id INNER JOIN users ON maps.user_id = users.user_id where maps.user_id!=$userID and nodes.user_id=$userID and maps.is_deleted=0 and nodes.is_deleted=0 group by maps.map_id ORDER BY maps.title";
 		$resultID = mysql_query($query, $linkID);
 		if (!$resultID) {
 			dataNotFound($output, $query);
