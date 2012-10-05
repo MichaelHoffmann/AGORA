@@ -94,7 +94,18 @@
 				$row = mysql_fetch_assoc($found_category_id);
 				$parent_cat = $row['category_id'];
 			}
+	}else{
+		// check before getting in ....		
+			$verifyProjMember = "SELECT proj_id FROM projusers 
+			                    		WHERE proj_id=$parent_cat AND user_id = $userID";
+			$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
+			if (!$result_VerifyMem || mysql_num_rows($result_VerifyMem) <= 0) {
+				$errorchild= $output->addChild("error");
+				$errorchild->addAttribute("Verified", "No");
+				notInProject($errorchild, $linkID);
+				return $output;
 		}
+		}			
 		
 		$query = "INSERT INTO category (category_name,is_project) VALUES ('$title', 1)";
 		mysql_query($query, $linkID);
