@@ -60,7 +60,7 @@ package components
 		private var tl:TileLayout;
 		private var mapMetaDataVector:Vector.<MapMetaData>;
 		private var projectPanelLbl:Label;
-		private var projectTitlePanel: VGroup;
+		private var projectTitlePanel: HGroup;
 		private var projectPanel :VGroup;
 
 		private var rsp:RightSidePanel;
@@ -75,9 +75,8 @@ package components
 			subprojectPanel = new VGroup;
 			projectPanelLbl = new Label();
 			projectPanel = new VGroup();
-			projectTitlePanel = new VGroup();
+			projectTitlePanel = new HGroup();
 			projectMemberPanel = new VGroup;
-			projectTypePanel : new VGroup;
 			createProjectPanel = new HGroup;
 			projectTypePanel = new VGroup;
 			loadingDisplay = new Label;
@@ -89,11 +88,11 @@ package components
 			scroller.x = scroller.y = 25;
 			categoryTiles.percentHeight = 100;
 			categoryTiles.percentWidth = 100;
-			mapPanel.percentWidth = 25;
-			subprojectPanel.percentWidth = 25;
+			mapPanel.percentWidth =33 ;
+			projectPanel.percentWidth = 33;
+			//subprojectPanel.percentWidth = 33;
 			createProjectPanel.percentWidth = 50;
-			projectMemberPanel.percentWidth = 25;
-			projectTypePanel.percentWidth = 25;
+			projectMemberPanel.percentWidth = 33;
 			/*Editing how the layout will be for the buttons*/		
 			tl.requestedColumnCount = 3;
 			tl.requestedRowCount = 3;
@@ -133,13 +132,12 @@ package components
 					this.categoryTiles.layout = new HorizontalLayout;
 					if(model.project && model.project.proj[0])
 					{
-						projectTypePanel.paddingTop = 65;
 						mapPanel.paddingTop = 65;
+						projectPanel.percentWidth=33;
 						projectMemberPanel.paddingTop = 65;
 					projectPanel.addElement(projectTitlePanel);
 					projectPanel.addElement(subprojectPanel);
 					categoryTiles.addElement(projectPanel);
-					categoryTiles.addElement(projectTypePanel);
 					categoryTiles.addElement(mapPanel);
 					categoryTiles.addElement(projectMemberPanel);
 					mapPanelLbl.text = Language.lookup('MapsinProject');
@@ -183,20 +181,19 @@ package components
 					var lblType: Label = new Label();
 					lblType.text = Language.lookup('ProjType');
 						
-					var btnProjType: Button = new Button();
-					//label1.setStyle("skinClass",TextWrapSkin);
-					btnProjType.setStyle("chromeColor", 0xA0CADB);	
-					btnProjType.height = undefined;
-					btnProjType.width = undefined;
-					if(model.project.proj.@isHostile == 0)
-						btnProjType.label = "adversarial" ;
-					else if(model.project.proj.@isHostile == 1)
-						btnProjType.label = "collaborative";
+					var btnProjLbl: Label = new Label();
+					btnProjLbl.height = undefined;
+					btnProjLbl.width = undefined;
+					if(model.project.proj.@isHostile == 1)
+						btnProjLbl.text = "adversarial" ;
+					else if(model.project.proj.@isHostile == 0)
+						btnProjLbl.text = "collaborative";
 					if(model.project.proj.@isHostile[0])
 					{
-						projectTypePanel.paddingLeft = 30;
-					projectTypePanel.addElement (lblType);
-					projectTypePanel.addElement (btnProjType);
+						projectTypePanel.addElement(btnProjLbl);
+					//	projectTypePanel.paddingLeft = 100;
+						projectTypePanel.paddingTop = 10;
+						projectTitlePanel.addElement(projectTypePanel);
 					}
 					
 					

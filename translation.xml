@@ -3003,6 +3003,16 @@ Projekte zu sehen" />
 		<RUS text="Projects" />  <!--TODO Translate RUS-->
 		<GER text="Projects" />  <!--TODO Translate GER-->
 </Projects>
+<MemberProjects>
+		<EN-US text="Projects in which I am a Member" />
+		<RUS text="Projects in which I am a Member" />  <!--TODO Translate RUS-->
+		<GER text="Projects in which I am a Member" />  <!--TODO Translate GER-->
+</MemberProjects>
+<ContributionMaps>
+		<EN-US text="Maps to which I contributed" />
+		<RUS text="Maps to which I contributed" />  <!--TODO Translate RUS-->
+		<GER text="Maps to which I contributed" />  <!--TODO Translate GER-->
+</ContributionMaps>
 <Maps>
 		<EN-US text="Maps" />
 		<RUS text="Maps" />  <!--TODO Translate RUS-->

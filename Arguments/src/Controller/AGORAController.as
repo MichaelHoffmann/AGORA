@@ -381,6 +381,8 @@ package Controller
 		protected function onProjectUserVerified(event:AGORAEvent):void{
 			if(AGORAModel.getInstance().userSessionModel.selectedTab!="My Contributions")
 			fetchDataChildCategory(tempParentCategory,tempParentCategoryID, true);
+			else
+				AGORAController.getInstance().fetchChildCategorycontributions(tempParentCategory,tempParentCategoryID, true);
 		}
 		
 		/**
