@@ -276,8 +276,12 @@ package Controller
 			fetchDataMyProjects();
 		}
 		public function updateProject(e:Event):void{
-			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
-			menu.myProjects.updateProject();
+			if(FlexGlobals.topLevelApplication.projectNameBox){
+				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			}
+			if(menu.myProjects.currentState=="projectsInfo"){
+				menu.myProjects.updateProject();
+			}
 			fetchDataProjectList();
 			fetchDataMyProjects();
 			

@@ -56,7 +56,7 @@
 									</s:VGroup>
 								</s:Scroller>
 							</s:VGroup>
-							<s:VGroup percentWidth="30">
+							<s:VGroup percentWidth="30" id="memberGroup">
 								<s:Label text= "Users" />
 								<s:Scroller percentWidth="100">
 									<s:VGroup id="memberList" percentWidth="100">
@@ -86,6 +86,10 @@
         </s:HGroup>
         <s:HGroup horizontalAlign="center" percentWidth="100">
                     <s:Label text="If you want to create a new project elsewhere, determine its location in the 'World of Arguments'" />
+			<s:Button label="refresh" click = "Controller.AGORAController.getInstance().updateProject(event)"
+>
+				
+			</s:Button>
         </s:HGroup>
     <fx:Script>
         <![CDATA[
@@ -161,7 +165,7 @@
             var usersDetail:Array=new Array();
 			usersDetail.push(usersList.selectedValue);
             Model.AGORAModel.getInstance().agoraMapModel.projectUsers = usersDetail;
-            Controller.AGORAController.getInstance().removeMembers();
+			Controller.AGORAController.getInstance().removeMembers();
         }
 
         public function addMembers():void
@@ -193,7 +197,6 @@
 				var button:Button = new Button;
 				
 				button.setStyle("skinClass",TextWrapSkin);
-				button.height = undefined;
 				button.width = 150
 				button.name = categoryXML.@projID; //The ID (unique DB identifier) of the category
 				button.label = categoryXML.@name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
@@ -216,13 +219,21 @@
 			
 
 		}
+			private function alertListener(eventObj:CloseEvent):void {
+				// Check to see if the OK button was pressed.
+				if (eventObj.detail==Alert.OK) {
+					AGORAController.getInstance().selectAsAdmin(usersList.selectedValue.toString());
+				}
+			}
 		protected function selectAdminHandler():void{
 			if(usersList.selectedValue){
-			 AGORAController.getInstance().selectAsAdmin(usersList.selectedValue.toString());
+				Alert.show("If you select a new admin, you will no longer be the admin for this project" ,"Are you sure?", Alert.OK | Alert.CANCEL, null, alertListener, null, Alert.CANCEL);
 
 			}else{
 				mx.controls.Alert.show("You must select a user to make the  administrator of this project");
 			}
+			
+
 		}
         protected function onFault(fault:FaultEvent):void
         {
@@ -313,6 +324,7 @@
 						
 						this.projectList.addElement(buttonG);
 						if(xml.@is_myprivate==1){
+							pbutton.enabled=false;
 							button.addEventListener("click", function (arg1:flash.events.Event):void
 							{
 								currentState="projectsInfo";
@@ -322,7 +334,7 @@
 								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
 								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
 								projectName.text=arg1.target.label;
-								memberList.visible=false;
+								memberGroup.visible=false;
 								renameProj.visible=false;
 								delProj.visible=false;
 							}, false, 1, false)
@@ -337,9 +349,9 @@
 								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
 								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
 								projectName.text=arg1.target.label;
-								delProj.visible=true;
+								memberGroup.visible=true;
 								renameProj.visible=true;
-								memberList.visible=true;
+								delProj.visible=true;
 
 							}, false, 1, false)
 						}
@@ -401,8 +413,6 @@
 						btnProjMembers.group=usersList;
 						
 						btnProjMembers.value=projectXML.@userid;
-						btnProjMembers.height = undefined;
-						btnProjMembers.width = undefined;
 						btnProjMembers.label = projectXML.@name ;
 						btnProjMembers.setStyle("chromeColor", 0xF99653);
 						projectMemberPanel.addElement (btnProjMembers);
