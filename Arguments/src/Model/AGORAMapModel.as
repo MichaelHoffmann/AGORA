@@ -60,7 +60,8 @@ package Model
 		private var _mapConstructedFromArgument:Boolean;
 		private var _argUnderConstruction:Boolean;
 		private var _projID:int;
-		
+		private var _tempprojID:int;
+		private var _tempprojectID:int;
 		private var _projectID:int;
 		private var _parentProjID:int;
 		private var _projectPassword:String;
@@ -119,6 +120,22 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get tempprojID():int
+		{
+			return _tempprojID;
+		}
+		public function set tempprojID(value:int):void
+		{
+			_tempprojID = value;
+		}
+		public function get tempprojectID():int
+		{
+			return _tempprojectID;
+		}
+		public function set tempprojectID(value:int):void
+		{
+			_tempprojectID = value;
+		}
 		public function get numberUsers():int
 		{
 			return _numberUsers;

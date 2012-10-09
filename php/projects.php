@@ -96,6 +96,9 @@
 			}
 	}else{
 		// check before getting in ....		
+		$checkIfProj = "SELECT * FROM category WHERE category_id=$parent_cat AND is_project=1";
+		$result_IsProj = mysql_query($checkIfProj, $linkID);
+		if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
 			$verifyProjMember = "SELECT proj_id FROM projusers 
 			                    		WHERE proj_id=$parent_cat AND user_id = $userID";
 			$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
@@ -106,6 +109,7 @@
 				return $output;
 		}
 		}			
+		}				
 		
 		$query = "INSERT INTO category (category_name,is_project) VALUES ('$title', 1)";
 		mysql_query($query, $linkID);
