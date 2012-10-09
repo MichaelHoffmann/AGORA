@@ -106,7 +106,7 @@
 				$count++;
 			}
 			$output->addAttribute("proj_count", $count);
-		
+		/*
 		// Form the hierarchy for the projects ...			
 		$query = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category as c left join `parent_categories` as child on c.category_id = child.category_id";
 		$resultID = mysql_query($query, $linkID);
@@ -136,7 +136,7 @@
 			$vistedNodes = Array();
 			$path = $projectPath->addChild("path");			
 			$hierarchy = fetchTreeXmlForProj($pid,$catMap,$catNameMap,$path,$vistedNodes);
-		}
+		}*/
 		
 		
 		/*error_log("HH",0);

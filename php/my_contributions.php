@@ -107,7 +107,7 @@ function list_projects($userID, $pass_hash) {
 		}
 		$output->addAttribute("proj_count", $count);
 	
-
+	/*
 
 
 			// Form the hierarchy for the projects ...			
@@ -140,7 +140,7 @@ function list_projects($userID, $pass_hash) {
 				$path = $projectPath->addChild("path");
 				$hierarchy = fetchTreeXmlForProj($pid, $catMap, $catNameMap, $path, $vistedNodes);
 			}
-
+*/
 		}
 		return $output;
 	}
