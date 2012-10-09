@@ -367,5 +367,20 @@ function getUserNameFromUserId($userid,$linkID){
 			return $root;
 		
 	}
+		function fetchTreeNodesForProj($pid,$catmap,$tree) {
+		// to prevent cyclic tree structures ...
+		if(array_key_exists($pid,$tree)){
+			return $tree;	
+		}
+		if(array_key_exists($pid,$catmap)){
+			$parent = $catmap[$pid];
+			if($parent!=0){
+			$tree = fetchTreeNodesForProj($parent,$catmap,$tree);
+			$tree[$pid]=$pid;
+			}
+		}			
+			$tree[$pid]=$pid;
+			return $tree;
+	}	
 
 ?>

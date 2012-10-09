@@ -84,6 +84,29 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 			return $output;
 		}
 	}
+	// get the children of the project and check for cyclic paths ..
+	$vistedNodes = Array ();
+	// Form the hierarchy for the projects ...			
+	$query = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category as c left join `parent_categories` as child on c.category_id = child.category_id";
+	$resultID = mysql_query($query, $linkID);
+	$catMap = Array ();
+	if ($resultID && mysql_num_rows($resultID) > 0) {
+		for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
+			$row = mysql_fetch_assoc($resultID);
+			$catIdVal = $row['catid'];
+			// details ...
+			$catParent = $row['parent_categoryid'];
+			if ($catParent != NULL) {
+				$catMap[$catIdVal] = $catParent;
+			}
+		}
+	}	
+	$vistedNodes = fetchTreeNodesForProj($target_proj_id,$catMap, $vistedNodes);	
+	if(array_key_exists($category_id,$vistedNodes)){
+		$output->addAttribute("Verified", "No");
+			cyclicPathPrevented($output);
+			return $output;
+	}
 	
 	$checkIfCatLeaf = "SELECT * FROM category WHERE category_id=$target_proj_id
 			        AND is_project=0";

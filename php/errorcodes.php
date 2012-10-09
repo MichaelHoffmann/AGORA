@@ -225,6 +225,11 @@
 		$fail->addAttribute("text", "You are not a member of this target project.");
 		$fail->addAttribute("code", 317);
 	}
+	function cyclicPathPrevented($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "Cyclic folder structure, hence cannot be formed.");
+		$fail->addAttribute("code", 317);
+	}
 	function notProjectDestination($output){
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "You cannot move the project here.");
