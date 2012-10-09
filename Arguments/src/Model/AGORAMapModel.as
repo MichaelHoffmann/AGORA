@@ -334,9 +334,16 @@ package Model
 			}else if (AGORAModel.getInstance().moveToWOA){
 				Model.AGORAModel.getInstance().moveToWOA = false;
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				if(AGORAModel.getInstance().userSessionModel.selectedTab == "My Contributions")
+				{
+					var contributionsCategoryChain:ArrayList = AGORAController.getInstance().contributionsCategoryChain;
+					Controller.AGORAController.getInstance().moveMap(this.ID,(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)as CategoryDataV0).currentID);
+				}
+				else
+				{
 				var categoryChain:ArrayList=AGORAController.getInstance().categoryChain;
 				Controller.AGORAController.getInstance().moveMap(this.ID,(categoryChain.getItemAt(categoryChain.length-1)as CategoryDataV0).currentID);
-
+				}
 			}
 
 		}

@@ -127,7 +127,7 @@ package components
 					this.categoryTiles.layout = new HorizontalLayout;
 					mapPanel.percentWidth=33;
 					projectPanel.percentWidth=33;
-					FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.label = Language.lookup('NewMapInProj');
+					FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.label = Language.lookup('NewMaphere');
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.enabled = true;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.visible = true;
 					FlexGlobals.topLevelApplication.agoraMenu.clickthruCategories.visible = true;
@@ -234,6 +234,7 @@ package components
 					{
 						FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.enabled = false;
 						FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.visible = false;
+						FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.label = Language.lookup('NewMap');
 						FlexGlobals.topLevelApplication.agoraMenu.clickthruCategories.visible = true;
 						mapPanel.percentWidth=50;
 						projectPanel.percentWidth=50;
