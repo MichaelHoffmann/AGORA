@@ -153,8 +153,7 @@ package components
 						lblType.text = Language.lookup('ProjType');
 						
 						var btnProjLbl: Label = new Label();
-						btnProjLbl.height = undefined;
-						btnProjLbl.width = undefined;
+						btnProjLbl.width = 100;
 						if(model.project.proj.@isHostile == 1)
 							btnProjLbl.text = "adversarial" ;
 						else if(model.project.proj.@isHostile == 0)
@@ -175,8 +174,7 @@ package components
 							for each (var projectXML:XML in model.project.proj.admin)
 							{
 								var btnProjAdmin:Button = new Button();
-								btnProjAdmin.height = undefined;
-								btnProjAdmin.width = undefined;
+								btnProjAdmin.width = 100;
 								btnProjAdmin.label = projectXML.@name ;
 								btnProjAdmin.setStyle("chromeColor", 0xF99653);
 								
@@ -195,11 +193,9 @@ package components
 						}
 						for each (var projectXML:XML in model.project.proj.users.userDetail)
 						{
-							var btnProjMembers:Button = new Button();
-							btnProjMembers.height = undefined;
-							btnProjMembers.width = undefined;
-							btnProjMembers.label = projectXML.@name ;
-							btnProjMembers.setStyle("chromeColor", 0xF99653);
+							var btnProjMembers:Label = new Label();
+							btnProjMembers.width = 100;
+							btnProjMembers.text = projectXML.@name ;
 							
 							projectMemberPanel.addElement (btnProjMembers);
 						}
@@ -208,8 +204,7 @@ package components
 							/*Create and setup buttons corresponding to categories*/
 							var button:Button = new Button;
 							button.setStyle("skinClass",TextWrapSkin);
-							button.height = undefined;
-							button.width = undefined;
+							button.width = 100;
 							button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 							button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
 							
@@ -252,8 +247,7 @@ package components
 					/*Create and setup buttons corresponding to categories*/
 					var button:Button = new Button;
 					button.setStyle("skinClass",TextWrapSkin);
-					button.height = undefined;
-					button.width = undefined;
+					button.width = 200;
 					button.name = projectXML.@ID; //The ID (unique DB identifier) of the category
 					button.label = projectXML.@title; //The title of the category (e.g. Philosophy, Biology, or Projects)
 					

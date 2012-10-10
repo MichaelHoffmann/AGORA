@@ -86,10 +86,6 @@
         </s:HGroup>
         <s:HGroup horizontalAlign="center" percentWidth="100">
                     <s:Label text="If you want to create a new project elsewhere, determine its location in the 'World of Arguments'" />
-			<s:Button label="refresh" click = "Controller.AGORAController.getInstance().updateProject(event)"
->
-				
-			</s:Button>
         </s:HGroup>
     <fx:Script>
         <![CDATA[
@@ -332,7 +328,6 @@
 								usm.selectedMyProjProjID=arg1.target.name;
 								FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
 								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
-								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
 								projectName.text=arg1.target.label;
 								memberGroup.visible=false;
 								renameProj.visible=false;
@@ -347,7 +342,6 @@
 								usm.selectedMyProjProjID=arg1.target.name;
 								FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
 								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
-								FlexGlobals.topLevelApplication.agoraMenu.backInProj.visible=true;
 								projectName.text=arg1.target.label;
 								memberGroup.visible=true;
 								renameProj.visible=true;
@@ -428,6 +422,8 @@
 
         protected function onMapObjectClicked(arg1:flash.events.MouseEvent):void
         {
+			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+			rsp.mapTitle.text=(arg1.target as Button).label.toString();
             Controller.ArgumentController.getInstance().loadMap(arg1.target.name);
             return;
         }

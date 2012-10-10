@@ -31,6 +31,7 @@ package Controller
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
@@ -220,8 +221,6 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 			menu.myProjects.populateProjects();
-			menu.myProjects.populateMap();
-			menu.myProjects.populateUser();
 		}
 		
 		protected function onChildMapFetchedContributions(event:AGORAEvent):void{
@@ -250,7 +249,9 @@ package Controller
 			model.moveProjectModel.sendForChildren(parentCategory);
 		}
 		public function onMapAdded():void{
-			menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
+			if(model.userSessionModel.selectedMyProjProjID){
+				menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
+			}
 		}
 		public function publishMap(mapID:int, currCatID:int):void{
 			model.publishMapModel.publishMap(mapID, currCatID);
@@ -267,13 +268,23 @@ package Controller
 		public function onProjectDeleted(e:Event):void{
 			menu.createMapinProjectBtn.visible=false;
 			menu.ProjBtn.visible=false;
-			menu.backInProj.visible=false;
 			menu.myProjects.currentState="listOfProjects";
 			fetchDataMyProjects();
 			fetchDataProjectList();
 		}
 		public function onUsersChanged(e:Event):void{
 			fetchDataMyProjects();
+		}
+		public function refresh(event:MouseEvent):void{
+			updateProject(event);
+			updateMyContributions(event);
+			updateWOA(event);
+		}
+		public function updateMyContributions(event:MouseEvent):void{
+			fetchContributions();
+		}
+		public function updateWOA(event:MouseEvent):void{
+					
 		}
 		public function updateProject(e:Event):void{
 			if(FlexGlobals.topLevelApplication.projectNameBox){

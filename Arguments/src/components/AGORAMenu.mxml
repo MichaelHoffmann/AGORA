@@ -113,7 +113,16 @@
 			{
 				UserSessionController.getInstance().signInSignOut();
 			}
-			
+			/**
+			 * Handles what happens when the user clicks the refresh button when the AGORAMenu is present.
+			 * 
+			 * Simply calls a refresh for each tab of the project
+			 */
+			protected function refresh(event:MouseEvent):void
+			{
+				Controller.AGORAController.getInstance().refresh(event);
+				
+			}			
 			/**
 			 * Handles what happens when the user clicks the register button when the AGORAMenu is present.
 			 * 
@@ -205,7 +214,6 @@
 				myProjects.currentState="listOfProjects";
 				ProjBtn.visible=false;
 				createMapinProjectBtn.visible=false;
-				backInProj.visible=false;
 			}
 			/**
 			 * Handles what happens when the back button is click within AGORAMenu
@@ -249,6 +257,9 @@
 							AGORAModel.getInstance().agoraMapModel.projectID = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).currentID;
 							
 							}
+						}
+						else if (selectT== "My Projects"){
+							backInProj_clickHandler(event);
 						}
 						else if (selectT == "My Contributions")
 						{
@@ -432,7 +443,7 @@
 			
 			<!--The my projects tab. Loads the users projects from the DB and populates the canvas-->
 			
-			<s:NavigatorContent id="projectsTab" percentWidth="100" percentHeight="100" label="{Language.lookup('MyPPProjects')}"  focusIn ="{setTab('MyContributions')}">
+			<s:NavigatorContent id="projectsTab" percentWidth="100" percentHeight="100" label="{Language.lookup('MyPPProjects')}">
 				<s:VGroup percentWidth="100" percentHeight="100">
 					<components:MyProjectsPane id="myProjects">
 					</components:MyProjectsPane> 
@@ -452,7 +463,6 @@
 										  }
 										  
 										  " id="createMapinProjectBtn" />
-							<s:Button label="back" click=" backInProj_clickHandler(event);" id="backInProj" visible = "false"/>
 							</s:HGroup>
 					</s:HGroup>
 				</s:VGroup>
@@ -500,6 +510,8 @@
 				<s:Button id="backBtn"
 						  label="{Language.lookup('Back')}"
 						  click="backButton_OnClick(event)"/>
+				<s:Button label="refresh" click = "{refresh(event)}" />
+
 				<!--s:Button id="hackBtn"
 				label="{Language.lookup('Back')}"
 				click="hackButton_OnClick()"/-->
