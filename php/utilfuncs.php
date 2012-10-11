@@ -182,13 +182,10 @@
 	function getUserIdFromUserName($username,$linkID){
 		$query = "SELECT * FROM users WHERE username='$username'";
 		$resultID = mysql_query($query, $linkID);
-		error_log($username,0);
 		if(!$resultID){
-			error_log("got userid for -1",0);
 			return -1;
 		}
 		if((mysql_num_rows($resultID)==0)){
-			error_log("got userid for -1 -1",0);
 			return -1;
 		}
 		$row = mysql_fetch_assoc($resultID);
@@ -196,8 +193,6 @@
 			return -1;
 		}
 		$newuser = $row['user_id'];
-		error_log("got userid for ",0);
-		error_log($newuser,0);
 		return $row['user_id'];
 	}
 

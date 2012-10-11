@@ -16,7 +16,7 @@ function findMapCategory($parentCategory)
 			badDBLink($output);
 			return $output;
 		}
-		$status=mysql_select_db("agora", $linkID);
+		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			databaseNotFound($output);
 			return $output;
