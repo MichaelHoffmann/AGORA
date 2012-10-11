@@ -3028,6 +3028,16 @@ Projekte zu sehen" />
 		<RUS text="Create a map within this project" />  <!--TODO Translate RUS-->
 		<GER text="Create a map within this project" />  <!--TODO Translate GER-->
 </CreateMapInProject>
+<FileEmptyError>
+		<EN-US text="Empty file has been specified hence could not import" />
+		<RUS text="Empty file has been specified hence could not import" />  <!--TODO Translate RUS-->
+		<GER text="Empty file has been specified hence could not import" />  <!--TODO Translate GER-->
+</FileEmptyError>
+<FileEmptyError>
+		<EN-US text="File could not be imported." />
+		<RUS text="File could not be imported." />  <!--TODO Translate RUS-->
+		<GER text="File could not be imported." />  <!--TODO Translate GER-->
+</FileEmptyError>
 	<!-- SPECIAL -->
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <ИМЯ> <объекта> GERMAN: 
 		<Name>s <object> -->

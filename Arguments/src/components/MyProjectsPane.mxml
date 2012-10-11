@@ -60,9 +60,11 @@
 								<s:Label text= "Users" />
 								<s:Scroller percentWidth="100">
 									<s:VGroup id="memberList" percentWidth="100">
+										<s:Scroller percentWidth="100">
 										<s:VGroup height="150" percentWidth="100"  id="projectMemberPanel">
 
 										</s:VGroup>
+										</s:Scroller>
 										<s:Button percentWidth="100" click="
 												  {
 												  this.addMembers();
@@ -77,6 +79,7 @@
 												  
 												  " id="_MyProjectsPane_Button4" label='{classes.Language.lookup("RemoveMembers")}' />
 										<s:Button enabled ="false" percentWidth="100" click=' selectAdminHandler()' id="SelectAdmin" label='{classes.Language.lookup("SelectAdmin")}' />
+										<s:Button enabled ="true" percentWidth="100" click=' importUsers()' id="importUsersBtn" label='Import Users' />
 
 									</s:VGroup>
 								</s:Scroller>
@@ -102,6 +105,9 @@
 			import __AS3__.vec.*;
 			
 			import classes.*;
+			import com.as3xls.xls.Cell;
+			import com.as3xls.xls.ExcelFile;
+			import com.as3xls.xls.Sheet;
 			
 			import flash.accessibility.*;
 			import flash.debugger.*;
@@ -120,6 +126,7 @@
 			import flash.utils.*;
 			import flash.xml.*;
 			
+			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.core.*;
 			import mx.events.*;
@@ -128,6 +135,9 @@
 			import mx.rpc.events.*;
 			import mx.rpc.http.*;
 			import mx.styles.*;
+	        private var fileReference:FileReference;
+	        private var xls:Class;
+	        private var sheet:Sheet;
 			
 			import spark.components.RadioButton;
 			[Bindable]
@@ -140,6 +150,7 @@
 			public var mapListXML:XML;
 			
 			public var mapMetaDataVector:__AS3__.vec.Vector.<Model.MapMetaData>;
+			private var fileImportElm:FileReference;
 			
 			internal var back:spark.components.Button;
 		
@@ -228,9 +239,55 @@
 			}else{
 				mx.controls.Alert.show("You must select a user to make the  administrator of this project");
 			}
-			
-
 		}
+			
+			private function importUsers():void{
+				fileImportElm = new FileReference(); 
+				fileImportElm.addEventListener(Event.SELECT, importFileSelect); 
+				fileImportElm.addEventListener(Event.CANCEL,importFileCancel);
+				var fileFilter:FileFilter = new FileFilter("Excel (.xls)", "*.xls;"); 
+				fileImportElm.browse([fileFilter]);
+			}
+			private function importFileSelect(event:Event):void{
+				fileImportElm.removeEventListener(Event.SELECT, importFileSelect); 
+				fileImportElm.addEventListener(Event.COMPLETE, importFileComplete); 
+				fileImportElm.addEventListener(IOErrorEvent.IO_ERROR,fileImportError);
+				this.loadingDisplay.visible=true;
+				fileImportElm.load();
+		}
+			private function fileImportError(event:Event):void{
+				Alert.show(Language.lookup("FileError"));
+			}
+			private function importFileCancel(event:Event):void{
+				fileImportElm=null;
+			}
+			private function importFileComplete(event:Event):void{
+				this.loadingDisplay.visible=false;
+				var unames:Array = new Array();
+				var bdata:ByteArray = new ByteArray();
+				bdata = fileImportElm.data;
+				var ef:ExcelFile = new ExcelFile;
+				ef.loadFromByteArray(bdata);
+				var sheet:Sheet = ef.sheets[0];
+				var tCols:int = sheet.cols;
+				var tRows:int = sheet.rows;
+				for(var i:int=0; i<=tRows; i++){
+					var unamestr:String;
+					unamestr = sheet.getCell(i,0).value;
+					if(unamestr != ""){
+						unames.push(unamestr);
+					}
+				}	
+				if(unames.length<=0){
+					Alert.show(Language.lookup("FileEmptyError"));
+				}else{
+					Model.AGORAModel.getInstance().agoraMapModel.numberUsers = unames.length;
+					Model.AGORAModel.getInstance().agoraMapModel.projectUsers = unames;
+					Controller.AGORAController.getInstance().addUsers();
+					Controller.AGORAController.getInstance().fetchDataMyProjects();
+					return;
+				}
+			}
         protected function onFault(fault:FaultEvent):void
         {
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
