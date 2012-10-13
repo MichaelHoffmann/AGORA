@@ -9,6 +9,8 @@ package components
 	import Model.CategoryModel;
 	import Model.MapMetaData;
 	
+	import Skins.LeftAlignTextButtonSkin;
+	
 	import ValueObjects.CategoryDataV0;
 
 	
@@ -142,9 +144,9 @@ package components
 					categoryTiles.addElement(projectMemberPanel);
 					mapPanelLbl.text = Language.lookup('MapsinProject');
 					projectPanelLbl.text = Language.lookup('SubProj');
-					var currProjLbl:Label = new Label();
+					var currProjLbl:mx.controls.Label = new mx.controls.Label;
 					currProjLbl.text= AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).current;
-					currProjLbl.setStyle("fontSize",32);
+					currProjLbl.setStyle("fontSize",14);
 					projectTitlePanel.paddingBottom = 10;
 					subprojectPanel.paddingTop = 20;
 					subprojectPanel.addElement(projectPanelLbl);
@@ -211,6 +213,16 @@ package components
 						btnProjAdmin.setStyle("chromeColor", 0xF99653);
 						
 						projectMemberPanel.addElement (btnProjAdmin);
+						btnProjAdmin.addEventListener('click',function(e:Event):void{
+							var url:String;
+							for each (var adminXML:XML in model.project.proj.admin)
+							{
+								if(adminXML.@name == e.target.label)
+									url = adminXML.@url;
+							}
+							var myURL:URLRequest = new URLRequest(url);
+							navigateToURL(myURL, "_blank");
+						}, false, 1,false);
 						}
 					}
 					if(model.project.proj.users.userDetail[0])
@@ -228,6 +240,16 @@ package components
 					btnProjMembers.setStyle("chromeColor", 0xF99653);
 									
 					projectMemberPanel.addElement (btnProjMembers);
+					btnProjMembers.addEventListener('click',function(e:Event):void{
+						var url:String;
+						for each (var adminXML:XML in model.project.proj.users.userDetail)
+						{
+							if(adminXML.@name == e.target.label)
+								url = adminXML.@url;
+						}
+						var myURL:URLRequest = new URLRequest(url);
+						navigateToURL(myURL, "_blank");
+					}, false, 1,false);
 				}
 				}
 				for each(var categoryXML:XML in model.category.category){
@@ -263,8 +285,9 @@ package components
 					}, false, 1,false);
 					//Add the button related to the category to the view
 					if(is_project_level){
-						//button.width = undefined;
-						button.height = undefined;
+						button.width = 300;
+						button.height = 24;
+						button.setStyle("skinClass",LeftAlignTextButtonSkin);
 					   subprojectPanel.paddingLeft = 25;
 						subprojectPanel.addElement(button);
 						

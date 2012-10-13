@@ -37,6 +37,12 @@
 		<GER text="Du kannst eine Argumentation nur in Projekten veröffentlichen, in denen du Mitglied bist" />
 	</NotProjMember>
 	
+	<NotMember>
+		<EN-US text="This project is accessible for members only" />
+		<RUS text="This project is accessible for members only" />
+		<GER text="This project is accessible for members only" />
+	</NotMember>
+	
 	
 	<NotProjMemberProjects>
 		<EN-US text="You cannot move a project into a project which you are not a member" />
@@ -1546,9 +1552,9 @@
     </Project>
     
     <SubProj>
-    <EN-US text="Sub Projects" />
-		<RUS text="Sub Projects" /><!--TODO Translate RUS-->
-		<GER text="Sub Projects" /><!--TODO Translate GER-->
+    <EN-US text="Projects within this Project" />
+		<RUS text="Projects within this Project" /><!--TODO Translate RUS-->
+		<GER text="Projects within this Project" /><!--TODO Translate GER-->
     </SubProj>
     
     <ProjType>

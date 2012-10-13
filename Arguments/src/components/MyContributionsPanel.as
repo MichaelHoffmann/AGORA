@@ -9,6 +9,8 @@ package components
 	import Model.MapMetaData;
 	import Model.MyContributionsModel;
 	
+	import Skins.LeftAlignTextButtonSkin;
+	
 	import ValueObjects.CategoryDataV0;
 	
 	import classes.Language;
@@ -127,6 +129,7 @@ package components
 					this.categoryTiles.layout = new HorizontalLayout;
 					mapPanel.percentWidth=33;
 					projectPanel.percentWidth=33;
+					FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.visible = true;
 					FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.label = Language.lookup('NewMaphere');
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.enabled = true;
 					FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.visible = true;
@@ -140,9 +143,10 @@ package components
 						categoryTiles.addElement(projectMemberPanel);
 						mapPanelLbl.text = Language.lookup('MapsinProject');
 						subprojectPanelLbl.text = Language.lookup('SubProj');
-						var currProjLbl:Label = new Label();
+						var currProjLbl:mx.controls.Label = new mx.controls.Label();
 						currProjLbl.text= AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).current;
-						currProjLbl.setStyle("fontSize",32);
+						currProjLbl.setStyle("fontSize",14);
+						currProjLbl.width = 360;
 					//	var currProjButton:Button = new Button();
 					//	currProjButton.label = AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).current;
 						projectTitlePanel.paddingBottom = 10;
@@ -153,7 +157,8 @@ package components
 						lblType.text = Language.lookup('ProjType');
 						
 						var btnProjLbl: Label = new Label();
-						btnProjLbl.width = 100;
+						btnProjLbl.height = undefined;
+						btnProjLbl.width = undefined;
 						if(model.project.proj.@isHostile == 1)
 							btnProjLbl.text = "adversarial" ;
 						else if(model.project.proj.@isHostile == 0)
@@ -174,11 +179,22 @@ package components
 							for each (var projectXML:XML in model.project.proj.admin)
 							{
 								var btnProjAdmin:Button = new Button();
-								btnProjAdmin.width = 100;
+								btnProjAdmin.height = undefined;
+								btnProjAdmin.width = undefined;
 								btnProjAdmin.label = projectXML.@name ;
 								btnProjAdmin.setStyle("chromeColor", 0xF99653);
 								
 								projectMemberPanel.addElement (btnProjAdmin);
+								btnProjAdmin.addEventListener('click',function(e:Event):void{
+									var url:String;
+									for each (var adminXML:XML in model.project.proj.admin)
+									{
+										if(adminXML.@name == e.target.label)
+										  url = adminXML.@url;
+									}
+									var myURL:URLRequest = new URLRequest(url);
+									navigateToURL(myURL, "_blank");
+								}, false, 1,false);		
 							}
 						}
 						if(model.project.proj.users.userDetail[0])
@@ -193,23 +209,38 @@ package components
 						}
 						for each (var projectXML:XML in model.project.proj.users.userDetail)
 						{
-							var btnProjMembers:Label = new Label();
-							btnProjMembers.width = 100;
-							btnProjMembers.text = projectXML.@name ;
+							var btnProjMembers:Button = new Button();
+							btnProjMembers.height = undefined;
+							btnProjMembers.width = undefined;
+							btnProjMembers.label = projectXML.@name ;
+							btnProjMembers.setStyle("chromeColor", 0xF99653);
 							
 							projectMemberPanel.addElement (btnProjMembers);
+							btnProjMembers.addEventListener('click',function(e:Event):void{
+								var url:String;
+								for each (var adminXML:XML in model.project.proj.users.userDetail)
+								{
+									if(adminXML.@name == e.target.label)
+										url = adminXML.@url;
+								}
+								var myURL:URLRequest = new URLRequest(url);
+								navigateToURL(myURL, "_blank");
+							}, false, 1,false);
 						}
 						for each(var categoryXML:XML in model.category.category){
 							trace("Adding buttons");
 							/*Create and setup buttons corresponding to categories*/
 							var button:Button = new Button;
-							button.setStyle("skinClass",TextWrapSkin);
-							button.width = 100;
+							
+							button.height = 24;
+							button.width = 300;
+							button.toolTip = categoryXML.@Name;
 							button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 							button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
 							
 							button.setStyle("chromeColor", 0xA0CADB);	
-							subprojectPanel.paddingLeft = 25;
+							button.setStyle("skinClass",LeftAlignTextButtonSkin);
+							//subprojectPanel.paddingLeft = 25;
 							subprojectPanel.addElement(button);
 							button.addEventListener('click',function(e:Event):void{
 								//Begin private inner click event function for button
@@ -229,7 +260,7 @@ package components
 					{
 						FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.enabled = false;
 						FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.visible = false;
-						FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.label = Language.lookup('NewMap');
+						FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.visible = false;
 						FlexGlobals.topLevelApplication.agoraMenu.clickthruCategories.visible = true;
 						mapPanel.percentWidth=50;
 						projectPanel.percentWidth=50;
@@ -246,12 +277,16 @@ package components
 					trace("Adding buttons");
 					/*Create and setup buttons corresponding to categories*/
 					var button:Button = new Button;
-					button.setStyle("skinClass",TextWrapSkin);
-					button.width = 200;
+
+					button.height = 24;
+					button.width = 300;
+					button.toolTip = projectXML.@title;
 					button.name = projectXML.@ID; //The ID (unique DB identifier) of the category
 					button.label = projectXML.@title; //The title of the category (e.g. Philosophy, Biology, or Projects)
 					
-					button.setStyle("chromeColor", 0xA0CADB);	
+					button.setStyle("chromeColor", 0xA0CADB);
+					button.setStyle("skinClass",LeftAlignTextButtonSkin);
+	
 					projectPanel.addElement(button);
 					button.addEventListener('click',function(e:Event):void{
 						//Begin private inner click event function for button
