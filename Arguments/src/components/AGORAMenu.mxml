@@ -118,11 +118,21 @@
 			 * 
 			 * Simply calls a refresh for each tab of the project
 			 */
-			protected function refresh(event:MouseEvent):void
+			protected function updateProject(event:MouseEvent):void
 			{
-				Controller.AGORAController.getInstance().refresh(event);
+				Controller.AGORAController.getInstance().updateProject(event);
 				
 			}			
+			protected function updateMyContributions(event:MouseEvent):void
+			{
+				Controller.AGORAController.getInstance().updateMyContributions(event);
+			}			
+			protected function updateWOA(event:MouseEvent):void
+			{
+				Controller.AGORAController.getInstance().updateWOA(event);
+				
+			}			
+
 			/**
 			 * Handles what happens when the user clicks the register button when the AGORAMenu is present.
 			 * 
@@ -411,8 +421,7 @@
 								<s:Button id="createProjBtn" enabled="false" visible="false"
 										  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
 								</s:Button >
-								
-							
+								<s:Button label="refresh" click = "{updateWOA(event)}" />
 							</s:HGroup>
 							<s:Label id="clickthroughCategories" visible="false" 
 									  text="If you want to create a private project space, click through the categories above to determine its location"/>
@@ -436,6 +445,7 @@
 								  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
 								  toolTip="{Language.lookup('NewMapToolTip')}">
 						</s:Button >
+
 	
 					</s:HGroup>
 				</s:VGroup>
@@ -463,6 +473,8 @@
 										  }
 										  
 										  " id="createMapinProjectBtn" />
+							<s:Button label="refresh" click = "{updateProject(event)}" />
+
 							</s:HGroup>
 					</s:HGroup>
 				</s:VGroup>
@@ -474,6 +486,7 @@
 											  skinClass="spark.skins.spark.SkinnableContainerSkin"
 											  title="category" verticalCenter="0">	
 					</components:MyContributionsPanel>
+					
 					<!--Button to create a new map-->
 					<s:HGroup  percentHeight="10" horizontalAlign="center"
 							   percentWidth="100" verticalAlign="middle">
@@ -484,6 +497,8 @@
 						<s:Button id="createProjBtnContributions" enabled="false" visible="false"
 								  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
 						</s:Button >
+						<s:Button label="refresh" click = "{updateMyContributions(event)}" />
+
 					</s:HGroup>
 					<s:Label id="clickthruCategories" visible="false" 
 							 text="If you want to create a private project space, click through the categories above to determine its location"/>
@@ -510,7 +525,6 @@
 				<s:Button id="backBtn"
 						  label="{Language.lookup('Back')}"
 						  click="backButton_OnClick(event)"/>
-				<s:Button label="refresh" click = "{refresh(event)}" />
 
 				<!--s:Button id="hackBtn"
 				label="{Language.lookup('Back')}"

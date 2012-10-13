@@ -252,7 +252,7 @@ package components
 								AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 								AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
 								AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
-							//	AGORAController.getInstance().fetchChildCategorycontributions(e.target.label,e.target.name, true);
+								AGORAController.getInstance().fetchChildCategorycontributions(e.target.label,e.target.name, true);
 							}, false, 1,false);
 						}
 			}
@@ -318,13 +318,22 @@ package components
 			else
 				mapList= model.map;
 			trace("loading maps for the project");
+
 			for each (var map:XML in mapList.map)
 			{
 				//var mapObject:Object = new Object;
 				mapMetaData = new MapMetaData;
 				trace("map " +  map.@Name + " being loaded");
 				mapMetaData.mapID = map.@ID;
-				mapMetaData.mapName = map.@title;
+				if(map.@title){
+					mapMetaData.mapName = map.@title;
+
+				}
+				else if(map.@Name){
+						mapMetaData.mapName = map.@Name;
+						mx.controls.Alert.show(map.@Name);
+
+				}
 				mapMetaData.mapCreator = map.@creator;
 			//	mapMetaData.firstname = map.@firstname;
 				//mapMetaData.lastname = map.@lastname;

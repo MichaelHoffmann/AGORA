@@ -311,6 +311,7 @@ package components
 				}
 				else 
 				{
+					
 					FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.label=Language.lookup("NewMap");	
 					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.visible=true;	
 					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.setStyle("chromeColor", 0xF99653);

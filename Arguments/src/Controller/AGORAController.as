@@ -275,16 +275,11 @@ package Controller
 		public function onUsersChanged(e:Event):void{
 			fetchDataMyProjects();
 		}
-		public function refresh(event:MouseEvent):void{
-			updateProject(event);
-			updateMyContributions(event);
-			updateWOA(event);
-		}
 		public function updateMyContributions(event:MouseEvent):void{
-			fetchContributions();
+			updateMapProj();
 		}
 		public function updateWOA(event:MouseEvent):void{
-					
+			updateMapProj();
 		}
 		public function updateProject(e:Event):void{
 			if(FlexGlobals.topLevelApplication.projectNameBox){
@@ -456,7 +451,9 @@ package Controller
 		
 		protected function onProjectPush(event:AGORAEvent):void{
 			Alert.show(Language.lookup("ProjectCreated"));
-			FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			if( FlexGlobals.topLevelApplication.projectNameBox){
+				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			}
 			fetchDataProjectList();
 			fetchDataMyProjects();
 			if(AGORAModel.getInstance().userSessionModel.selectedTab=="My Contributions")
@@ -467,6 +464,21 @@ package Controller
 			if(this.categoryChain.length - 1>0){
 				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
 			}
+		}
+		protected function updateMapProj(){
+			if( FlexGlobals.topLevelApplication.projectNameBox){
+				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			}
+			fetchDataProjectList();
+			fetchDataMyProjects();
+			if(AGORAModel.getInstance().userSessionModel.selectedTab=="My Contributions")
+			{
+				fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
+			}
+			else
+				if(this.categoryChain.length - 1>0){
+					fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
+				}
 		}
 		protected function onProjectMoved(event:AGORAEvent):void{
 			fetchDataProjectList();
