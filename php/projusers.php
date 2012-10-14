@@ -345,7 +345,7 @@ $output = new SimpleXMLElement($xmlstr);
 
 if ($action == "add") {
 	$userList = $_REQUEST['usersList'];
-	$level = 0;
+	$level = 1;
 	$output = addUser($userID, $pass_hash, $projID, $userList, $level, $output);
 } else
 	if ($action == "remove") {
