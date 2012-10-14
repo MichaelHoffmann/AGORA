@@ -21,10 +21,10 @@ function findChildCategory($parentCategory, $verify, $userID) {
 	}
 	// check before getting in ....
 	if ($verify) {
-		$checkIfProj = "SELECT * FROM category WHERE category_name='$parentCategory' AND is_project=1";
+		$checkIfProj = "SELECT * FROM category WHERE category_name=$parentCategory AND is_project=1";
 		$result_IsProj = mysql_query($checkIfProj, $linkID);
 		if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
-			$category_id = getCategoryIDfromName($parentCategory, $linkID);
+			$category_id = getCategoryIDfromNameStr($parentCategory, $linkID);
 			$verifyProjMember = "SELECT proj_id FROM projusers 
 									                    		WHERE proj_id=$category_id AND user_id = $userID";
 			$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
@@ -42,7 +42,7 @@ function findChildCategory($parentCategory, $verify, $userID) {
 			}
 		}
 	}
-	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = '$parentCategory' ORDER BY category.category_name";
+	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = $parentCategory ORDER BY category.category_name";
 	$resultID = mysql_query($query, $linkID);
 	if (!$resultID) {
 		dataNotFound($output, $query);
@@ -91,10 +91,10 @@ function findChildCategoryMoveProjects($parentCategory, $userID) {
 			return $output;
 		}
 	// check before getting in ....
-	$checkIfProj = "SELECT * FROM category WHERE category_name='$parentCategory' AND is_project=1";
+	$checkIfProj = "SELECT * FROM category WHERE category_name=$parentCategory AND is_project=1";
 	$result_IsProj = mysql_query($checkIfProj, $linkID);
 	if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
-		$category_id = getCategoryIDfromName($parentCategory, $linkID);
+		$category_id = getCategoryIDfromNameStr($parentCategory, $linkID);
 		$verifyProjMember = "SELECT proj_id FROM projusers 
 				                    		WHERE proj_id=$category_id AND user_id = $userID";
 		$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
@@ -115,7 +115,7 @@ function findChildCategoryMoveProjects($parentCategory, $userID) {
 		
 		
 		
-	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = '$parentCategory' ORDER BY category.category_name";
+	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = $parentCategory ORDER BY category.category_name";
 	$resultID = mysql_query($query, $linkID);
 	if (!$resultID) {
 		dataNotFound($output, $query);

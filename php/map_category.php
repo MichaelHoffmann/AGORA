@@ -41,6 +41,7 @@ function findMapCategory($parentCategory)
 				$map = $output->addChild("map");
 				$map->addAttribute("ID", $row['map_id']);
 				$map->addAttribute("Name", $row['title']);
+				$map->addAttribute("title", $row['title']);
 				$map->addAttribute("creator", $row['username']);
 				$map->addAttribute("last_modified", $row['modified_date']);
 				$map->addAttribute("proj_id", $row['proj_id']);
@@ -50,7 +51,7 @@ function findMapCategory($parentCategory)
 			}
 		}
 			
-		$category_id = getCategoryIDfromName($parentCategory,$linkID);
+		$category_id = getCategoryIDfromNameStr($parentCategory,$linkID);
 		$query = "SELECT * FROM category child inner join `parent_categories` parent on child.category_id=parent.category_id inner join projects p on child.category_id=proj_id inner join users u on p.user_id=u.user_id  where parent_categoryid = $category_id and is_project=1";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){

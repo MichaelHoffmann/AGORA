@@ -256,6 +256,21 @@ function getUserNameFromUserId($userid,$linkID){
 			$cat_id = $row['category_id'];
 			return $cat_id;
 	}
+	function getCategoryIDfromNameStr($cat_name,$linkID){
+			$query = "SELECT * FROM category WHERE category_name=$cat_name";
+			$resultID = mysql_query($query, $linkID);
+			if(!$resultID){
+				error_log("not matching categories found",0);
+				return null;
+			}
+			if((mysql_num_rows($resultID)==0)){
+				error_log("not matching categories found",0);
+				return null;
+			}
+			$row = mysql_fetch_assoc($resultID);
+			$cat_id = $row['category_id'];
+			return $cat_id;
+	}
 
 	function getProjectNamefromID($projID,$linkID){
 

@@ -82,7 +82,7 @@ package Model
 		}
 		
 		public function requestChildCategories(categoryName:String):void{
-			requestChildren.send({parentCategory: categoryName });
+			requestChildren.send({parentCategory: "'"+categoryName+"'" });
 			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
 			
 			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
