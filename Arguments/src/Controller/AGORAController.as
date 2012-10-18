@@ -276,7 +276,7 @@ package Controller
 			fetchDataMyProjects();
 		}
 		public function updateMyContributions(event:MouseEvent):void{
-			updateMapProj();
+			fetchContributions();
 		}
 		public function updateWOA(event:MouseEvent):void{
 			updateMapProj();

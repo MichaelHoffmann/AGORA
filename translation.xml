@@ -33,14 +33,14 @@
 	
 	<NotProjMember>
 		<EN-US text="You cannot publish a map into a project which you are not a member" />
-		<RUS text="You cannot publish a map into a project which you are not a member" />
+		<RUS text="You cannot publish a map into a project which you are not a member" /><!-- todo: Translate RUS -->
 		<GER text="Du kannst eine Argumentation nur in Projekten veröffentlichen, in denen du Mitglied bist" />
 	</NotProjMember>
 	
 	<NotMember>
 		<EN-US text="This project is accessible for members only" />
-		<RUS text="This project is accessible for members only" />
-		<GER text="This project is accessible for members only" />
+		<RUS text="This project is accessible for members only" /><!-- todo: Translate RUS -->
+		<GER text="This project is accessible for members only" /><!-- todo: Translate RUS -->
 	</NotMember>
 	
 	
