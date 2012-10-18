@@ -81,11 +81,10 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 		
-		public function requestChildCategories(categoryName:String):void{
-			requestChildren.send({parentCategory: "'"+categoryName+"'" });
-			//requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+		public function requestChildCategories(categoryName:String,categoryID:String):void{
+			requestChildren.send({usecatid:1,parentCategoryID:categoryID,parentCategory: "'"+categoryName+"'" });
 			
-			requestChildMap.send({parentCategory: "'" + categoryName + "'"});
+			requestChildMap.send({parentCategory: categoryID });
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
 				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash ,projID:-1, projName:categoryName};

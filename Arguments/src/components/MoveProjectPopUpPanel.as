@@ -162,7 +162,7 @@ package components
 						button.addEventListener('click',function(e:Event):void{
 							//Begin private inner click event function for button
 							e.stopImmediatePropagation();
-							AGORAController.getInstance().fetchDataChildCategoryForMoveProject(e.target.label);
+							AGORAController.getInstance().fetchDataChildCategoryForMoveProject(e.target.label,e.target.name);
 							currCatID = e.target.name;
 						}, false, 1,false);
 						//Add the button related to the category to the view

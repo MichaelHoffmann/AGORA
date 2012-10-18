@@ -51,8 +51,8 @@ package Model
 				pass_hash: AGORAModel.getInstance().userSessionModel.passHash});
 		}
 		
-		public function sendForChildren(categoryName:String):void{
-			requestChildren.send({parentCategory: "'"+categoryName+"'",action:'projects',uid:AGORAModel.getInstance().userSessionModel.uid});
+		public function sendForChildren(categoryName:String,categoryID:String):void{
+			requestChildren.send({usecatid:1,parentCategoryID:categoryID,parentCategory: "'"+categoryName+"'",action:'projects',uid:AGORAModel.getInstance().userSessionModel.uid});
 		}
 		protected function onCategoryFetched(event:ResultEvent):void{
 			category= event.result as XML;

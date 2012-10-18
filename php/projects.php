@@ -129,10 +129,13 @@
 		// Add an entry into the Parent - Cat table
 		$parent_category_name = getCategoryNamefromID($parent_cat,$linkID);
 		if($parent_category_name!=null && $parent_category_name!=""){
+		$parent_category_name = mysql_real_escape_string($parent_category_name);
 		$query = "INSERT INTO parent_categories (category_id,parent_category_name,parent_categoryid) VALUES ($proj_catID,'$parent_category_name',$parent_cat)";
 		mysql_query($query, $linkID);
 		}
 
+	$usersNotFound = "";
+	$userNotFoundCount = 0;
 		// assign other users to project *** check if they are not already assigned and change ****
 	// here the proj_id is actually the cat id .......
 		foreach($proj_users as $user){
@@ -140,12 +143,19 @@
 			if($newuser_id != -1 && !isUserInProjectSpace($newuser_id,$projID,$linkID)){
 				$query = "INSERT INTO projusers (proj_id, user_id, user_level) VALUES ($proj_catID, $newuser_id, 1)";
 				mysql_query($query, $linkID);
+		}else{
+			$userNotFoundCount++;
+			$usersNotFound .= " ".$user;
 			}
 		}
 
 		//This is a lame hack that shouldn't be needed, but it'll work.
 		$proj = $output->addChild("project");
 		$proj->addAttribute("ID", $projID);
+		if($userNotFoundCount>0){
+			$otheruser = $output->addChild("userError");
+			$otheruser->addAttribute("message", $usersNotFound);
+			}
 		return $output;
 	}
 

@@ -184,7 +184,7 @@ package Controller
 				FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.addCategory(parentCategory);
 			}
 			var categoryM:CategoryModel = model.categoryModel;
-			categoryM.requestChildCategories(parentCategory);
+			categoryM.requestChildCategories(parentCategory,parentID);
 		}
 		public function fetchChildCategorycontributions(parentCategory:String,parentID:String, addOne:Boolean):void{
 			menu.contributions.loadingDisplay.text = Language.lookup("Loading");
@@ -201,7 +201,7 @@ package Controller
 				FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.addCategory(parentCategory);
 			}
 			var contributionsM:MyContributionsModel = model.mycontributionsModel;
-			contributionsM.requestChildCategories(parentCategory);
+			contributionsM.requestChildCategories(parentCategory,parentID);
 		}
 		protected function onChildCategoryFetched(event:AGORAEvent):void{
 			trace (" child category fetched");
@@ -242,11 +242,11 @@ package Controller
 			menu.contributions.invalidateDisplayList();
 			
 		}
-		public function fetchDataChildCategoryForPublish(parentCategory:String):void{
-			model.publishMapModel.sendForChildren(parentCategory);
+		public function fetchDataChildCategoryForPublish(parentCategory:String,parentCategoryID:String):void{
+			model.publishMapModel.sendForChildren(parentCategory,parentCategoryID);
 		}
-		public function fetchDataChildCategoryForMoveProject(parentCategory:String):void{
-			model.moveProjectModel.sendForChildren(parentCategory);
+		public function fetchDataChildCategoryForMoveProject(parentCategory:String,parentCategoryID:String):void{
+			model.moveProjectModel.sendForChildren(parentCategory,parentCategoryID);
 		}
 		public function onMapAdded():void{
 			if(model.userSessionModel.selectedMyProjProjID){

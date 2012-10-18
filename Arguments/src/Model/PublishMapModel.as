@@ -51,8 +51,8 @@ package Model
 				passhash: AGORAModel.getInstance().userSessionModel.passHash});
 		}
 		
-		public function sendForChildren(categoryName:String):void{
-			requestChildren.send({parentCategory:  "'"+categoryName+"'" ,action:"maps",uid: AGORAModel.getInstance().userSessionModel.uid,
+		public function sendForChildren(categoryName:String,categoryID:String):void{
+			requestChildren.send({usecatid:1,parentCategoryID:categoryID,parentCategory:  "'"+categoryName+"'" ,action:"maps",uid: AGORAModel.getInstance().userSessionModel.uid,
 				passhash: AGORAModel.getInstance().userSessionModel.passHash});
 		}
 		protected function onCategoryFetched(event:ResultEvent):void{

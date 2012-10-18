@@ -124,6 +124,7 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 	}
 	
 	$parent_catname = getCategoryNamefromID($target_proj_id,$linkID);
+	$parent_catname = mysql_real_escape_string($parent_catname);
 	$query = "UPDATE parent_categories SET parent_categoryid=$target_proj_id,parent_category_name='$parent_catname' WHERE category_id=$category_id";
 	$output->addAttribute("Category", $category_id);
 	$resultID = mysql_query($query, $linkID);

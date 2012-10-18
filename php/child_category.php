@@ -3,7 +3,7 @@
 	require 'errorcodes.php';
 	require 'establish_link.php';
 require 'utilfuncs.php';
-function findChildCategory($parentCategory, $verify, $userID) {
+function findChildCategory($parentCategory, $verify, $userID, $parent_catid) {
 		global $dbName, $version;
 		header("Content-type: text/xml");
 		$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
@@ -22,9 +22,16 @@ function findChildCategory($parentCategory, $verify, $userID) {
 	// check before getting in ....
 	if ($verify) {
 		$checkIfProj = "SELECT * FROM category WHERE category_name=$parentCategory AND is_project=1";
+		if($parent_catid!=-1){
+					$checkIfProj = "SELECT * FROM category WHERE category_id=$parent_catid AND is_project=1";			
+		}
 		$result_IsProj = mysql_query($checkIfProj, $linkID);
 		if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
+			if($parent_catid==-1){ 
 			$category_id = getCategoryIDfromNameStr($parentCategory, $linkID);
+			}else{
+			$category_id = $parent_catid;
+			}
 			$verifyProjMember = "SELECT proj_id FROM projusers 
 									                    		WHERE proj_id=$category_id AND user_id = $userID";
 			$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
@@ -43,9 +50,14 @@ function findChildCategory($parentCategory, $verify, $userID) {
 		}
 	}
 	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = $parentCategory ORDER BY category.category_name";
+	if($parent_catid!=-1){
+	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_categoryid = $parent_catid ORDER BY category.category_name";	
+	}
 	$resultID = mysql_query($query, $linkID);
 	if (!$resultID) {
 		dataNotFound($output, $query);
+		$output->addAttribute("category_count", "0");
+		$output->addAttribute("project_count", "0");
 		return $output;
 	}
 	if (mysql_num_rows($resultID) == 0) {
@@ -75,7 +87,7 @@ function findChildCategory($parentCategory, $verify, $userID) {
 	mysql_close($linkID); //closing the connection
 	return $output;
 }
-function findChildCategoryMoveProjects($parentCategory, $userID) {
+function findChildCategoryMoveProjects($parentCategory, $userID,$parentcatid) {
 	global $dbName, $version;
 	header("Content-type: text/xml");
 	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
@@ -92,9 +104,16 @@ function findChildCategoryMoveProjects($parentCategory, $userID) {
 		}
 	// check before getting in ....
 	$checkIfProj = "SELECT * FROM category WHERE category_name=$parentCategory AND is_project=1";
+	if($parentcatid!=-1){
+	$checkIfProj = "SELECT * FROM category WHERE category_id=$parentcatid AND is_project=1";		
+	}
 	$result_IsProj = mysql_query($checkIfProj, $linkID);
 	if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
+		if($parentcatid==-1){ 
 		$category_id = getCategoryIDfromNameStr($parentCategory, $linkID);
+		}else{
+			$category_id = $parentcatid;
+		}
 		$verifyProjMember = "SELECT proj_id FROM projusers 
 				                    		WHERE proj_id=$category_id AND user_id = $userID";
 		$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
@@ -116,6 +135,9 @@ function findChildCategoryMoveProjects($parentCategory, $userID) {
 		
 		
 	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = $parentCategory ORDER BY category.category_name";
+	if($parentcatid!=-1){
+	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_categoryid = $parentcatid ORDER BY category.category_name";	
+	}
 	$resultID = mysql_query($query, $linkID);
 	if (!$resultID) {
 		dataNotFound($output, $query);
@@ -148,16 +170,23 @@ function findChildCategoryMoveProjects($parentCategory, $userID) {
 	mysql_close($linkID); //closing the connection
 	return $output;
 }
-$parentCategory= ($_REQUEST['parentCategory']);
+$parentCategory = mysql_real_escape_string($_REQUEST['parentCategory']);
+$parentCategoryIDD = -1;
+if (array_key_exists("usecatid", $_REQUEST)) {
+	$useid = mysql_real_escape_string($_REQUEST['usecatid']);
+	if ($useid == 1) {
+		$parentCategoryIDD = mysql_real_escape_string($_REQUEST['parentCategoryID']);
+	}
+}
 $action = "map";
 
 if (array_key_exists("action", $_REQUEST)) {
 	$action = $_REQUEST['action'];
 	$uid = $_REQUEST['uid'];
 if ($action == "projects") {
-	$output = findChildCategoryMoveProjects($parentCategory, $uid);
+		$output = findChildCategoryMoveProjects($parentCategory, $uid,$parentCategoryIDD);
 } else {
-		$output = findChildCategory($parentCategory, true, $uid);
+		$output = findChildCategory($parentCategory, true, $uid,$parentCategoryIDD);
 	}
 } else {
 	$output = findChildCategory($parentCategory, false, -1);
