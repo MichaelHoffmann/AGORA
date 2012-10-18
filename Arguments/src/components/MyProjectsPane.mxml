@@ -54,6 +54,7 @@
 							</s:VGroup>
 							<s:VGroup percentWidth="30" id="memberGroup">
 								<s:Label text= "Users" />
+								<s:Label id="admin"/>
 								<s:Scroller percentWidth="100">
 									<s:VGroup id="memberList" percentWidth="100">
 										<s:Scroller percentWidth="100">
@@ -61,21 +62,24 @@
 
 										</s:VGroup>
 										</s:Scroller>
-										<s:Button percentWidth="100" click="
-												  {
-												  this.addMembers();
-												  }
-												  
-												  " id="_MyProjectsPane_Button3" label='{classes.Language.lookup("AddProjectMembers")}' />
-										<s:Button percentWidth="100" click="
-												  {
-												  this.removeMembers();
-												  return;
-												  }
-												  
-												  " id="_MyProjectsPane_Button4" label='{classes.Language.lookup("RemoveMembers")}' />
-										<s:Button enabled ="false" percentWidth="100" click=' selectAdminHandler()' id="SelectAdmin" label='{classes.Language.lookup("SelectAdmin")}' />
-										<s:Button enabled ="true" percentWidth="100" click=' importUsers()' id="importUsersBtn" label='Import Users' />
+										<s:VGroup id = "membersAdmin">
+											<s:Button percentWidth="100" click="
+													  {
+													  this.addMembers();
+													  }
+													  
+													  " id="_MyProjectsPane_Button3" label='{classes.Language.lookup("AddProjectMembers")}' />
+											<s:Button percentWidth="100" click="
+													  {
+													  this.removeMembers();
+													  return;
+													  }
+													  
+													  " id="_MyProjectsPane_Button4" label='{classes.Language.lookup("RemoveMembers")}' />
+											<s:Button enabled ="false" percentWidth="100" click=' selectAdminHandler()' id="SelectAdmin" label='{classes.Language.lookup("SelectAdmin")}' />
+											<s:Button enabled ="true" percentWidth="100" click=' importUsers()' id="importUsersBtn" label='Import Users' />
+
+										</s:VGroup>
 
 									</s:VGroup>
 								</s:Scroller>
@@ -101,6 +105,7 @@
 			import __AS3__.vec.*;
 			
 			import classes.*;
+			
 			import com.as3xls.xls.Cell;
 			import com.as3xls.xls.ExcelFile;
 			import com.as3xls.xls.Sheet;
@@ -198,23 +203,25 @@
 			for each(var categoryXML:XML in subprojects){
 				trace("Adding buttons");
 				var button:Button = new Button;
-				
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+
 				button.setStyle("skinClass",TextWrapSkin);
 				button.width = 150
 				button.name = categoryXML.@projID; //The ID (unique DB identifier) of the category
 				button.label = categoryXML.@name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 				button.setStyle("chromeColor", 0xA0CADB);
 				subprojectList.addElement(button);
-				button.addEventListener('click',function(e:Event):void{
-					trace("button \"" + e.target.label + "\" clicked");
-					e.stopImmediatePropagation();	
-					//Checks to see if the current category is a project
-					setCurrentProject(e.target.name);
-					projectName.text=e.target.label;
-				}, false, 1,false);
+			if(categoryXML.@creator==usm.username){
+			button.addEventListener("click",showAdmin);
+				
+			}else{
+				button.addEventListener("click", showOther);
+				//admin.text = Language.lookup('ProjectAdmin')+": "+xml.@creator;
 			}
 
+
 			
+		}
 		}
 		protected function deleteHandler():void{
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
@@ -222,6 +229,7 @@
 			
 
 		}
+
 			private function alertListener(eventObj:CloseEvent):void {
 				// Check to see if the OK button was pressed.
 				if (eventObj.detail==Alert.OK) {
@@ -289,7 +297,51 @@
             removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.FAULT));
         }
+		 protected function showAdmin(arg1:Event){
+			 currentState="projectsInfo";
+			 setCurrentProject(arg1.target.name);
+			 var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+			 usm.selectedMyProjProjID=arg1.target.name;
+			 FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
+			 FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
+			 projectName.text=arg1.target.label;
+			 memberGroup.visible=true;
+			 membersAdmin.visible=true;
+			 renameProj.visible=true;
+			 delProj.visible=true;
+			 admin.visible= false;
+			 renameProj.visible=true; 
+		 }
+		protected function showOwn(arg1:Event){
+			currentState="projectsInfo";
+			setCurrentProject(arg1.target.name);
+			var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+			usm.selectedMyProjProjID=arg1.target.name;
+			FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
+			FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
+			projectName.text=arg1.target.label;
+			membersAdmin.visible=false;
+			renameProj.visible=false;
+			delProj.visible=false;
+			admin.visible= false;
+			renameProj.visible=false;
+			
+		}
+		protected function showOther(arg1:Event){
+			currentState="projectsInfo";
+			setCurrentProject(arg1.target.name);
+			var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+			usm.selectedMyProjProjID=arg1.target.name;
+			FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
+			FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
+			projectName.text=arg1.target.label;
+			memberGroup.visible=false;
+			renameProj.visible=false;
+			delProj.visible=false;
+			admin.visible= true;
 
+			renameProj.visible=false;
+		}
 
 		public function populateProjects():void{
 			loadingDisplay.visible=false;
@@ -374,33 +426,15 @@
 						this.projectList.addElement(buttonG);
 						if(xml.@is_myprivate==1){
 							pbutton.enabled=false;
-							button.addEventListener("click", function (arg1:flash.events.Event):void
-							{
-								currentState="projectsInfo";
-								setCurrentProject(arg1.target.name);
-								usm.selectedMyProjProjID=arg1.target.name;
-								FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
-								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
-								projectName.text=arg1.target.label;
-								memberGroup.visible=false;
-								renameProj.visible=false;
-								delProj.visible=false;
-							}, false, 1, false)
+							button.addEventListener(MouseEvent.CLICK, showOwn);
 
-						}else{
-							button.addEventListener("click", function (arg1:flash.events.Event):void
-							{
-								currentState="projectsInfo";
-								setCurrentProject(arg1.target.name);
-								usm.selectedMyProjProjID=arg1.target.name;
-								FlexGlobals.topLevelApplication.agoraMenu.createMapinProjectBtn.visible=true;
-								FlexGlobals.topLevelApplication.agoraMenu.ProjBtn.visible=true;
-								projectName.text=arg1.target.label;
-								memberGroup.visible=true;
-								renameProj.visible=true;
-								delProj.visible=true;
 
-							}, false, 1, false)
+						}else if (xml.@creator == usm.username){
+							button.addEventListener("click",showAdmin);
+
+							}else{
+								button.addEventListener("click", showOther);
+								admin.text = Language.lookup('ProjectAdmin')+": "+xml.@creator;
 						}
 					}
 				}
@@ -473,11 +507,19 @@
             return;
         }
 
-        protected function onMapObjectClicked(arg1:flash.events.MouseEvent):void
+        protected function onMapObjectClicked(event:flash.events.MouseEvent):void
         {
 			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
-			rsp.mapTitle.text=(arg1.target as Button).label.toString();
-            Controller.ArgumentController.getInstance().loadMap(arg1.target.name);
+			var thisMapInfo:MapMetaData = mapMetaDataVector[parseInt((Button) (event.target).id)];
+			rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
+			rsp.mapTitle.text=thisMapInfo.mapName;
+			rsp.clickableMapOwnerInformation.toolTip = 
+				thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+			},false, 0, false);
+			rsp.invalidateDisplayList();
+            Controller.ArgumentController.getInstance().loadMap(event.target.name);
             return;
         }
 

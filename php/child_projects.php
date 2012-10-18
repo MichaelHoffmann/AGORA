@@ -40,7 +40,7 @@ function findChildCategories($projID, $userID, $pass_hash) {
 		}
 	}
 
-	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_categoryid = $projID ORDER BY category.category_name";
+	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id left join projects on category.category_id = projects.proj_id left join users on projects.user_id = users.user_id WHERE parent_categories.parent_categoryid = $projID ORDER BY category.category_name";
 	$resultID = mysql_query($query, $linkID);
 	if (!$resultID) {
 		dataNotFound($output, $query);
@@ -58,6 +58,8 @@ function findChildCategories($projID, $userID, $pass_hash) {
 			$map = $output->addChild("child");
 			$map->addAttribute("projID", $row['category_id']);
 			$map->addAttribute("name", $row['category_name']);
+			$map->addAttribute("creator", $row['username']);
+			$map->addAttribute("user_id", $row['user_id']);
 			$isprpject = $row['is_project'];
 			if ($isprpject == 1) {
 				$projCount++;

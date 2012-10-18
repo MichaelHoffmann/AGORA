@@ -114,7 +114,6 @@ package Controller
 				//hide and show view components
 				menu.visible = false;
 				map.visible = true;
-				
 				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 				map.agora.visible = true;
 				//reinitialize map view

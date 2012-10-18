@@ -468,7 +468,7 @@
 					}
 					catch(error:Error)
 					{
-						Alert.show(error.toString());
+						Alert.show(error.toString()+"1");
 					}
 				} else {
 					Alert.show("Guests to AGORA cannot edit maps");

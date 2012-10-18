@@ -99,7 +99,12 @@
 		<RUS text="What you should know before you start" /><!-- translate RUS -->
 		<GER text="Was du wissen solltest bevor du beginnst" />
 	</BeforeYouStart>
-
+	
+	<EditOther>
+		<EN-US text="You do not have the permission to edit statements created by other users"/><!-- translate GER -->
+		<RUS text="You do not have the permission to edit statements created by other users" /><!-- translate RUS -->
+		<GER text="You do not have the permission to edit statements created by other users" />
+	</EditOther>
 	<FundedByText>
 		<EN-US text="AGORA-Net is funded by " />
 		<RUS text="AGORA-Net is funded by " /><!-- translate RUS -->

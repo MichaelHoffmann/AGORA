@@ -212,7 +212,8 @@ package ValueObjects
 			gridWidth = 25;
 			version = "11.9.28";
 			reference = this;
-			
+			EDIT_OTHER = Language.lookup('EditOther');
+
 			PROMPT_MT_ONLY_IF = Language.lookup('SelectLanguageForm');
 			THEREFORE = Language.lookup('Therefore');
 			SUPPORT_SELECT_ARG_SCHEME = Language.lookup('InterArgScheme');

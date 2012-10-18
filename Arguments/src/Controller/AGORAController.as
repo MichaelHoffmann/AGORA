@@ -473,7 +473,10 @@ package Controller
 			fetchDataMyProjects();
 			if(AGORAModel.getInstance().userSessionModel.selectedTab=="My Contributions")
 			{
-				fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
+				if(this.contributionsCategoryChain.length - 1>0){
+					fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
+
+				}
 			}
 			else
 				if(this.categoryChain.length - 1>0){
