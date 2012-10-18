@@ -279,7 +279,6 @@ package Controller
 			if(this.contributionsCategoryChain.length - 1>-1){
 			fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
 			}else{
-				mx.controls.Alert.show(""+(this.contributionsCategoryChain.length - 1));
 				fetchContributions();
 			}
 		}

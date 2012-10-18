@@ -331,7 +331,6 @@ package components
 				}
 				else if(map.@Name){
 						mapMetaData.mapName = map.@Name;
-						mx.controls.Alert.show(map.@Name);
 
 				}
 				mapMetaData.mapCreator = map.@creator;
