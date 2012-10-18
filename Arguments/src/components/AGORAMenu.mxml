@@ -195,7 +195,7 @@
 			protected function setTab(current:String){
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				usm.selectedTab = current;
-				if(current == "My Contributions")
+				if(current == Language.lookup("MyContributions"))
 				{
 				FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.visible = true;
 				FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.visible = false;	
@@ -245,7 +245,7 @@
 				var temp:CategoryDataV0 = null;
 				var temp1:Number= AGORAModel.getInstance().agoraMapModel.projectID;
 				var selectT:String = AGORAModel.getInstance().userSessionModel.selectedTab;				
-						if (selectT == "WoA" || selectT =="A World of Arguments")
+						if (selectT == "WoA" || selectT == Language.lookup("MainTab"))
 						{
 				if(cg.length>0){
 					//AGORAModel.getInstance().agoraMapModel.projectID = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).currentID;
@@ -271,7 +271,7 @@
 						else if (selectT== "My Projects"){
 							backInProj_clickHandler(event);
 						}
-						else if (selectT == "My Contributions")
+						else if (selectT == Language.lookup("MyContributions"))
 						{
 							if(contricg.length>0){
 								temp = (CategoryDataV0)(contricg.removeItemAt(contricg.length-1));
