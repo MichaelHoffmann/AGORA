@@ -276,7 +276,12 @@ package Controller
 			fetchDataMyProjects();
 		}
 		public function updateMyContributions(event:MouseEvent):void{
-			fetchContributions();
+			if(this.contributionsCategoryChain.length - 1>-1){
+			fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
+			}else{
+				mx.controls.Alert.show(""+(this.contributionsCategoryChain.length - 1));
+				fetchContributions();
+			}
 		}
 		public function updateWOA(event:MouseEvent):void{
 			updateMapProj();
@@ -389,7 +394,7 @@ package Controller
 		}
 		
 		protected function onProjectUserVerified(event:AGORAEvent):void{
-			if(AGORAModel.getInstance().userSessionModel.selectedTab!="My Contributions")
+			if(AGORAModel.getInstance().userSessionModel.selectedTab!=Language.lookup("MyContributions"))
 			fetchDataChildCategory(tempParentCategory,tempParentCategoryID, true);
 			else
 				AGORAController.getInstance().fetchChildCategorycontributions(tempParentCategory,tempParentCategoryID, true);
@@ -456,7 +461,7 @@ package Controller
 			}
 			fetchDataProjectList();
 			fetchDataMyProjects();
-			if(AGORAModel.getInstance().userSessionModel.selectedTab=="My Contributions")
+			if(AGORAModel.getInstance().userSessionModel.selectedTab==Language.lookup("MyContributions"))
 			{
 				fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
 			}
@@ -471,7 +476,7 @@ package Controller
 			}
 			fetchDataProjectList();
 			fetchDataMyProjects();
-			if(AGORAModel.getInstance().userSessionModel.selectedTab=="My Contributions")
+			if(AGORAModel.getInstance().userSessionModel.selectedTab==Language.lookup("MyContributions"))
 			{
 				if(this.contributionsCategoryChain.length - 1>0){
 					fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);

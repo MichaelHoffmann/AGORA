@@ -387,6 +387,7 @@
 						pbutton = new Button();
 						pbutton.percentWidth=30;
 						isIn.percentWidth=10;
+						pbutton.height =24;
 						pbutton.label= xml.@parent_name;
 						pbutton.id= xml.@ID;
 						pbutton.setStyle("chromeColor", 0xA0CADB);

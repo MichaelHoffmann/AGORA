@@ -66,6 +66,11 @@ package Model
 					return;
 				}
 			}
+			if (event.result.hasOwnProperty("userError")) 
+			{
+				Alert.show("Users not found:"+event.result.userError.@message);
+			}
+			
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
 		public function inProjectsList():void
