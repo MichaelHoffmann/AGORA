@@ -53,7 +53,8 @@ package Model
 			var result:XML = event.result as XML;
 			if(result.@verified != 1){
 				verified = false;
-				Alert.show(Language.lookup('NotMember')); 
+				Alert.show(Language.lookup('NotMember') + 
+					result.@project_admin_firstname + " " + result.@project_admin_lastname + '\n' + "URL: " + result.@admin_url);
 				AGORAModel.getInstance().agoraMapModel.projectID = AGORAModel.getInstance().agoraMapModel.tempprojectID;				
 				AGORAModel.getInstance().agoraMapModel.projID = AGORAModel.getInstance().agoraMapModel.tempprojID;	
 				return;
