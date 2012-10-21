@@ -276,7 +276,7 @@ package Controller
 			fetchDataMyProjects();
 		}
 		public function updateMyContributions(event:MouseEvent):void{
-			if(this.contributionsCategoryChain.length - 1>-1){
+			if(this.contributionsCategoryChain.length - 1>-1&&this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1))!=this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID){
 			fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
 			}else{
 				fetchContributions();
