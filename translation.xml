@@ -28,27 +28,99 @@
 
 		Additional languages can be added later. -->
 
+<!--NOTE translators for RUSSIAN: Search for one of the following:--><!--TODO Translate RUS--><!--TODO: Translate RUS --> 
+
+<!--NOTE: This document needs to be OPENED by using the character set Unicode (UTF-8) as ASCI filter. Otherwise things like Cyrillic letters and German Umlaute cannot be READ and EDITED -->
+
+<!--newly added texts that need to be referred to in the code; copy to the correct location in this document. -->
+
+<!--TODO Connect top level categories with the translations you find under:--><!--Categories-->
+
+<!--TODO “Guests to AGORA cannot edit maps” is hard coded. This is the error message when you try to edit a node. Use instead:--><!--GuestEditMapError-->
+
+<!--TODO “Map name needs to be unique” is hard coded. Use instead:--><!-- MapNameUnique-->
+
+<!--TODO on Screen IX (my contributions, last -level categories) it says “Project MembersProjectMembers in all your translations, Lokesh.” One is enough. But it is fine in the released version-->
+
+<!--TODO Almost the entire screen VIb is hard coded, last level my projects. Copy from Screen IX, my contributions, last -level categories, where everything is fine. Additionally, you need the following (from top down):-->
+
+<!--TODO Additionally, we need the following for this screen:-->
+<Rename>
+	 <EN-US text="Rename"/> 
+	 <RUS text="Rename"/> <!--TODO Translate RUS-->
+	 <GER text="Ändere Namen"/> 
+</Rename>
+
+<!--TODO Additionally, we need the following for this screen (instead of the hard-coded “Import users”:-->
+<ImportMembers>
+	 <EN-US text="Import members from file"/> 
+	 <RUS text="Import members from file"/> <!--TODO Translate RUS-->
+	 <GER text="Lade Mitglieder aus Datei"/> 
+</ImportMembers>
+
+<!--TODO “The project has sub project. Hence cannot be deleted” is hard coded. Use instead:-->
+<ErrorDeleteProject>
+		<EN-US text="This project contains sub-projects or maps created by other users. It cannot be deleted." />
+		<RUS text="This project contains sub-projects or maps created by other users. It cannot be deleted" />  <!--TODO Translate RUS-->
+		<GER text="Dieses Projekt enthält andere Projekte oder Argumente, die von anderen Nutzern geschaffen wurden. Es kann nicht gelöscht werden." />  
+</ErrorDeleteProject>
+
+<!--TODO For moving projects to another location, we need a new text (not the one for maps):-->
+<MoveProject>
+		<EN-US text="Click through the categories or projects below to determine the new location of your project" />
+		<RUS text="Click through the categories or projects below to determine the new location of your project" /><!--TODO Translate RUS -->
+		<GER text="Klicke dich durch die Kategorien oder Projekte unten um den Ort zu bestimmen, wo du dein Projekt hinschieben willst." />
+</MoveProject>
+
+<!--TODO We need on all category pages:-->
+<Refresh>
+ <EN-US text="Refresh"/> 
+ <RUS text="Refresh"/> <!--TODO Translate RUS-->
+ <GER text="Erneuere"/> 
+ </Refresh>
+
+<!--TODO We need on all category pages:-->
+<CreateProject>
+	 <EN-US text="If you want to create a private project space, click through the categories or projects above to determine its location"/> 
+	 <RUS text="If you want to create a private project space, click through the categories or projects above to determine its location"/> <!--TODO Translate RUS-->
+	 <GER text="Wenn du einen privaten Projektbereich schaffen willst, klicke durch die Kategorien oder Projekte oben um seinen Ort zu bestimmen"/> 
+ </CreateProject>
+
+<!--TODO We need within projects (Screen Vib and IX):-->
+<CreateProjectElsewhere>
+ <EN-US text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> 
+ <RUS text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> <!--TODO Translate RUS-->
+ <GER text="Wenn du ein neues Projekt woanders erstellen willst, bestimme seinen Ort in der &quot;Welt der Argumente&quot; "/> 
+ </CreateProjectElsewhere>
+ 
+<ImportUsersIntoProject>
+ <EN-US text="Import Users"/> 
+ <RUS text="Import Users"/> <!--TODO Translate RUS-->
+ <GER text="Import Users"/> <!--TODO Translate GER-->
+ </ImportUsersIntoProject>
+
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
 	
 	<NotProjMember>
-		<EN-US text="You cannot publish a map into a project which you are not a member" />
-		<RUS text="You cannot publish a map into a project which you are not a member" /><!-- todo: Translate RUS -->
+		<EN-US text="You cannot publish a map into a project which you are not a member of" />
+		<RUS text="You cannot publish a map into a project which you are not a member of" />
 		<GER text="Du kannst eine Argumentation nur in Projekten veröffentlichen, in denen du Mitglied bist" />
 	</NotProjMember>
 	
 	<NotMember>
-		<EN-US text="This project is accessible for members only" />
-		<RUS text="This project is accessible for members only" /><!-- todo: Translate RUS -->
-		<GER text="This project is accessible for members only" /><!-- todo: Translate RUS -->
+		<EN-US text="This project is accessible for members only. If you want more information, please contact " />
+		<RUS text="This project is accessible for members only. If you want more information, please contact " /><!--TODO: Translate RUS -->
+		<GER text="Dieses Projekt ist nur für Mitglieder zugänglich. Für mehr Informationen, kontaktiere bitte " />
 	</NotMember>
 	
 	
 	<NotProjMemberProjects>
-		<EN-US text="You cannot move a project into a project which you are not a member" />
-		<RUS text="You cannot move a project into a project which you are not a member" /> <!--TODO: Translate RUS -->
-		<GER text="You cannot move a project into a project which you are not a member" /> <!--TODO: Translate GER -->
+		<EN-US text="You cannot move a project into a project which you are not a member of" />
+		<RUS text="You cannot move a project into a project which you are not a member of" /> <!--TODO: Translate RUS -->
+		<GER text="Du kannst nicht ein Projekt in ein Projekt schieben, in dem du nicht Mitglied bist" /> 
 	</NotProjMemberProjects>
+
 	<TermsOfService>
 		<EN-US text=" &lt;p ALIGN='CENTER' &gt;&lt;font size = '18'&gt; Terms of Service&lt;/font&gt;&lt;/p&gt;
 			&lt;p&gt;Your use of AGORA-net constitutes your agreement with these Terms and Conditions.&lt;/p&gt;
@@ -61,7 +133,7 @@
 			&lt;p&gt;&lt;h5&gt;VERIFICATION.&lt;/h5&gt; By registering and participating in the System, you acknowledge and agree that the registration data (Firstname, Lastname, Email, and URL) you provided is your own and that you will not register or provide the data of another person unless legally allowed.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;LICENSE.&lt;/h5&gt; This program is open source software: you can redistribute it and/or modify it under the terms of the &lt;a target='_blank' HREF='http://www.gnu.org/licenses/agpl.html' &gt;GNU Affero General Public License&lt;/a&gt; as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;LIABILITY/DISCLAIMER.&lt;/h5&gt; The System is provided &amp;quot;as is&amp;quot;, and the Georgia Institute of Technology (the &amp;quot;Institute&amp;quot;), the Institute's School of Public Policy, the employees of the Institute, the software developers of the System, or any other person affiliated with the creation, implementation, and upkeep of the System's code base, knowledge base, and servers (collectively, the &amp;quot;Entities&amp;quot;) shall not be held liable for your use of the content or any data content within the System. The Entities do not warrant or make any representations of any kind or nature with respect to the System, and the Entities do not assume or have any responsibility or liability for any claims, damages, or losses resulting from your use of the System. None of the Entities shall have any liability to you for use charges related to any device that you use to access the System or use and receive the System, including, without limitation, charges for Internet data packages and Personal Computers. THE ENTITIES DISCLAIM ALL WARRANTIES WITH REGARD TO THE SERVICE,INCLUDING WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE TO THE FULLEST EXTENT ALLOWED BY LAW.&lt;/p&gt;
-			&lt;p&gt;&lt;h5&gt;PRIVACY.&lt;/h5&gt; The Entities will never divulge, sell, or give any information you provided at the time of registration for the System including your First name, Last name, Email, and URL to any third party agency. However, the Entities reserve the right to disclose any and all information provided to the System as necessary to satisfy any law, regulation, or governmental request in order to avoid liability and to protect the rights and property of the Entities. When you register you guarantee that all the information supplied by you is accurate and understand that, at the sole discretion of the Entities, your registration and participation in the System may be refused or terminated. System is bound by Georgia Tech Institute Level Policies so that, at any time, if anything within these Terms of Service and Privacy Policy conflicts with Georgia Tech Institute Level Policies, the Institute's policies are to supersede these. Please see  &lt;a target='_blank' HREF='http://www.oit.gatech.edu/georgia-tech-institute-level-policies' &gt;Georgia Tech Institute Level Policies for more information.”&lt;/a&gt; 
+			&lt;p&gt;&lt;h5&gt;PRIVACY.&lt;/h5&gt; The Entities will never divulge, sell, or give any information you provided at the time of registration for the System including your First name, Last name, Email, and URL to any third party agency. However, the Entities reserve the right to disclose any and all information provided to the System as necessary to satisfy any law, regulation, or governmental request in order to avoid liability and to protect the rights and property of the Entities. When you register you guarantee that all the information supplied by you is accurate and understand that, at the sole discretion of the Entities, your registration and participation in the System may be refused or terminated. System is bound by Georgia Tech Institute Level Policies so that, at any time, if anything within these Terms of Service and Privacy Policy conflicts with Georgia Tech Institute Level Policies, the Institute's policies are to supersede these. Please see  &lt;a target='_blank' HREF='http://www.oit.gatech.edu/georgia-tech-institute-level-policies' &gt;Georgia Tech Institute Level Policies for more information.�?&lt;/a&gt; 
 			&lt;p&gt; &lt;/p&gt;&lt;p&gt;&lt;h5&gt; The AGORA-net project is in compliance with&lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;&lt;/p&gt;
 			"/>
 			
@@ -78,7 +150,7 @@
 			&lt;p&gt;&lt;h5&gt;LIABILITY/DISCLAIMER.&lt;/h5&gt; The System is provided &amp;quot;as is&amp;quot;, and the Georgia Institute of Technology (the &amp;quot;Institute&amp;quot;), the Institute's School of Public Policy, the employees of the Institute, the software developers of the System, or any other person affiliated with the creation, implementation, and upkeep of the System's code base, knowledge base, and servers (collectively, the &amp;quot;Entities&amp;quot;) shall not be held liable for your use of the content or any data content within the System. The Entities do not warrant or make any representations of any kind or nature with respect to the System, and the Entities do not assume or have any responsibility or liability for any claims, damages, or losses resulting from your use of the System. None of the Entities shall have any liability to you for use charges related to any device that you use to access the System or use and receive the System, including, without limitation, charges for Internet data packages and Personal Computers. THE ENTITIES DISCLAIM ALL WARRANTIES WITH REGARD TO THE SERVICE,INCLUDING WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE TO THE FULLEST EXTENT ALLOWED BY LAW.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;PRIVACY.&lt;/h5&gt; The Entities will never divulge, sell, or give any information you provided at the time of registration for the System including your First name, Last name, Email, and URL to any third party agency. However, the Entities reserve the right to disclose any and all information provided to the System as necessary to satisfy any law, regulation, or governmental request in order to avoid liability and to protect the rights and property of the Entities. When you register you guarantee that all the information supplied by you is accurate and understand that, at the sole discretion of the Entities, your registration and participation in the System may be refused or terminated. The System is bound by the  Institute's Terms of Service and Privacy Policy so, at any time, if anything within this Terms of Service or Privacy Policy conflicts with the Terms of Service or Privacy Policy of the Institute, the Institute's Terms of Service and Privacy Policy are to supersede these. Please see the Georgia Institute of Technology' Terms of Service and Privacy Policy and the Georgia Institute of Technology's School of Public Policy's Terms of Service and Privacy Policy for more information.&lt;/p&gt;
 			&lt;p&gt; &lt;/p&gt;&lt;p&gt;&lt;h5&gt; The AGORA-net project is in compliance with&lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;&lt;/p&gt;
-			"/><!--translate RUS  -->
+			"/><!--TODO Translate RUS  -->
 		<GER text=" &lt;p ALIGN='CENTER' &gt;&lt;font size = '18'&gt;Nutzungsbedingungen&lt;/font&gt;&lt;/p&gt;
 			&lt;p&gt;Deine Verwendung von AGORA-net bedeutet, dass du den folgenden Nutzungsbedingungen zustimmst.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;BESCHREIBUNG DES SERVICES.&lt;/h5&gt; AGORA-net ist eine kollaborative Plattform welche Nutzern erlaubt an Online-Debatten teilzunehmen. Jede Eingabe, die du machst, ist öffentlich sichtbar solange sie nicht in einem privaten Projekt gespeichert ist. Alles ist auf einem zentralen Server gespeichert. Argumente können nicht auf einzelnen Computern gespeichert werden, aber du kannst den Befehl &amp;quot;Drucken&amp;quot; benutzen, um dein Argument als PDF Dokument zu exportieren sofern du einen PDF Konverter auf deinem Computer installiert hast.&lt;/p&gt;
@@ -90,24 +162,27 @@
 			&lt;p&gt;&lt;h5&gt;BESTÄTIGUNG.&lt;/h5&gt; Durch deine Registrierung bestätigst du, dass die Registrierungsdaten, die du eingegeben hast (Vorname, Nachname, E-mail Adresse und URL) deine eigenen sind, und dass du nicht die Daten anderer Personen verwendest, außer wenn es gesetzlich zugelassen ist.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;LIZENZ.&lt;/h5&gt; AGORA-net ist Open-source Software: du kannst das Program anderen zur Verfügung stellen und/oder verändern solange du den Bedingungen folgst, welche die  Free Software Foundation als die  &lt;a target='_blank' HREF='http://www.gnu.org/licenses/agpl.html' &gt;GNU Affero General Public License&lt;/a&gt; veröffentlicht hat (entweder in Version 3 dieser Lizenz oder jeder späteren Version). Wir stellen die Software in der Hoffnung öffentlich zur Verfügung, dass sie nützlich sein wird, aber OHNE JEGLICHE GARANTIE, nicht einmal der eingeschränkten Garantie der ALLGEMEINEN GEBRAUCHSTAUGLICHKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Für mehr Details, siehe die GNU Affero General Public License.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;HAFTUNGS-ABLEHNUNG.&lt;/h5&gt; AGORA-net wird hier &amp;quot;wie es ist&amp;quot; zur Verfügung gestellt, und das Georgia Institute of Technology (das &amp;quot;Institut&amp;quot;), des Instituts School of Public Policy, die Beschäftigten des Instituts, die Software-Entwickler des Systems, oder jegliche andere Person, die mit der Entwicklung, Veröffentlichung, und Instandhaltung des Software-Codes, der Informationsbasis, und der Server verbunden ist (zusammen genommen: die &amp;quot;Entitäten&amp;quot;) ist oder sind nicht haftbar für deinen Gebrauch des Inhaltes oder irgendwelcher Daten des Systems. Die Entitäten gewähren keine Garantie irgendeiner Art in Bezug auf das System, und sie übernehmen keinerlei Verantwortung oder Haftung gegenüber irgendwelchen Ansprüchen, Schäden oder Verlusten, die sich aus deiner Nutzung des Systems ergeben. Keine der Entitäten übernimmt irgendeine Haftung dir gegenüber für Kosten, die sich für dich aus der Nutzung irgendwelcher Geräte oder Technologien ergeben wenn du AGORA-net nutzt oder herunterlädst, einschließlich Kosten für die Nutzung des Internets und von Computern. DIE ENTITÄTEN LEHNEN JEDWEDE GARANTIE ODER HAFTUNG AB IN BEZUG AUF DEN SERVICE, EINSCHLIESSLICH GARANTIEN FÜR GEBRAUCHSTAUGLICHKEIT, VERLETZUNG VON RECHTEN, UND EIGNUNG FÜR BESTIMMTE ZWECKE, ALL DIES ZUM VOLLSTEN AUSMASS, DAS GESETZLICH MÖGLICH IST.&lt;/p&gt;
-			&lt;p&gt;&lt;h5&gt;DATENSCHUTZ.&lt;/h5&gt; Die Entitäten werden niemals irgendeine der von dir bei der Registrierung bereit gestellten Informationen an Dritte preisgeben, verkaufen oder weitergeben, einschließlich deines Vornamens, Nachnamens, E-mail Adresse und URL. Allerdings reservieren sich die Entitäten das Recht, bestimmte oder alle der von dir eingegebenen Informationen dann preiszugeben wenn es gesetzlich erforderlich ist um eine Haftung der Entitäten abzuwehren und die Rechte und das Eigentum der Entitäten zu schützen. Mit deiner Registrierung garantierst du, dass alle von dir bereit gestellten Informationen akurat sind, und du akzeptierst, dass es in der alleinigen Verantwortung der Entitäten liegt, deine Registrierung und Teilnahme am System abzulehnen oder zu beenden. Das System ist gebunden durch die Nutzungsbedingungen und Datenschutzbestimmungen des Instituts, so dass jederzeit in möglichen Konflikten der hier formulierten Nutzungsbedingungen mit den  Nutzungsbedingungen und Datenschutzbestimmungen des Instituts letztere das hier Formulierte ersetzen. Bitte konsultiere die Nutzungsbedingungen und Datenschutzbestimmungen des Georgia Institute of Technology und die von Georgia Tech’s School of Public Policy für weitere Informationen.&lt;/p&gt;
-			&lt;p&gt; &lt;/p&gt;&lt;p&gt;&lt;h5&gt; The AGORA-net project is in compliance with&lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;&lt;/p&gt;
-			"/><!--translate GER -->
+			&lt;p&gt;&lt;h5&gt;DATENSCHUTZ.&lt;/h5&gt; Die Entitäten werden niemals irgendeine der von dir bei der Registrierung bereit gestellten Informationen an Dritte preisgeben, verkaufen oder weitergeben, einschließlich deines Vornamens, Nachnamens, E-mail Adresse und URL. Allerdings reservieren sich die Entitäten das Recht, bestimmte oder alle der von dir eingegebenen Informationen dann preiszugeben wenn es gesetzlich erforderlich ist um eine Haftung der Entitäten abzuwehren und die Rechte und das Eigentum der Entitäten zu schützen. Mit deiner Registrierung garantierst du, dass alle von dir bereit gestellten Informationen akurat sind, und du akzeptierst, dass es in der alleinigen Verantwortung der Entitäten liegt, deine Registrierung und Teilnahme am System abzulehnen oder zu beenden. Das System ist gebunden durch die Nutzungsbedingungen und Datenschutzbestimmungen des Instituts, so dass jederzeit in möglichen Konflikten der hier formulierten Nutzungsbedingungen mit den Nutzungsbedingungen und Datenschutzbestimmungen des Instituts letztere das hier Formulierte ersetzen. Bitte konsultiere die Nutzungsbedingungen und Datenschutzbestimmungen des Georgia Institute of Technology und die von Georgia Tech’s School of Public Policy für weitere Informationen.&lt;/p&gt;
+			&lt;p&gt; &lt;/p&gt;&lt;p&gt;&lt;h5&gt; Das AGORA-net Projekt folgt den hier dargelegten Richtlinien:&lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;&lt;/p&gt;
+			"/>
     </TermsOfService>
+
+
 	<BeforeYouStart>
 		<EN-US text="What you should know before you start" />
-		<RUS text="What you should know before you start" /><!-- translate RUS -->
+		<RUS text="What you should know before you start" /><!--TODO: Translate RUS -->
 		<GER text="Was du wissen solltest bevor du beginnst" />
 	</BeforeYouStart>
 	
 	<EditOther>
-		<EN-US text="You do not have the permission to edit statements created by other users"/><!-- translate GER -->
-		<RUS text="You do not have the permission to edit statements created by other users" /><!-- translate RUS -->
-		<GER text="You do not have the permission to edit statements created by other users" />
+		<EN-US text="You do not have the permission to edit statements created by other users"/>
+		<RUS text="You do not have the permission to edit statements created by other users" /><!--TODO: Translate RUS -->
+		<GER text="Du hast nicht die Erlaubnis, Formulierungen anderer Nutzer zu verändern" />
 	</EditOther>
+
 	<FundedByText>
 		<EN-US text="AGORA-Net is funded by " />
-		<RUS text="AGORA-Net is funded by " /><!-- translate RUS -->
+		<RUS text="AGORA-Net is funded by " /><!--TODO: Translate RUS -->
 		<GER text="AGORA-Net ist gefördert durch " />
 	</FundedByText>
 
@@ -118,58 +193,59 @@
 	</USDepartmentOfEdu>
 	
 	<HowToDeleteMaps>
-		<EN-US text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." />
-		<RUS text="To delete one of your maps, first, click the check box next to all the maps you desire to delete and, second, click the [DELETE] button. You may only delete maps to which you are the only contributer." /><!-- translate RUS -->
-		<GER text="Um Argumente zu löschen, markiere zuerst das Argument oder die Argumente durch Klick auf das oder die Kästchen in der Liste und klicke dann auf 'Löschen'. Du kannst nur Argumente löschen zu denen allein du beigetragen hast." />
+		<EN-US text="Mark the check-boxes above. You can only delete maps to which only you contributed." />
+		<RUS text="Mark the check-boxes above. You can only delete maps to which only you contributed." /><!--TODO: Translate RUS -->
+		<GER text="Markiere die Argumente oben. Du kannst nur Argumente löschen zu denen allein du beigetragen hast." />
 	</HowToDeleteMaps>
-                                     
-	<ClickToPublishMap>
-		<EN-US text="Click on the category to bring up a window that allows you to either publish your map or relocate it to another category. In order to relocate your map into a private project, you need to be a member of this project." />
-		<RUS text="Click on the category to bring up a window that allows you to either publish your map or relocate it to another category. In order to relocate your map into a private project, you need to be a member of this project." /><!-- translate RUS -->
-		<GER text="Klicke auf diese Kategorie um ein Fenster zu öffnen welches dir erlaubt dein Argument entweder zu publizieren oder in eine andere Kategorie zu verschieben. Um ein Argument in ein privates Projekt zu verschieben musst du Mitglied dieses Projektes sein." />
-	</ClickToPublishMap>
-	
-	<NewMapToolTip>
-		 <EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
-		 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." /><!-- translate RUS -->
-		 <GER text="Jedes Argument wird in einem privaten Projektbereich erstellt welches deinen Namen trägt und zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, gehe zu &quot;Meine Argumente&quot; und klicke auf den Funktionsknopf der anzeigt, wo dein Argument derzeit gespeichert ist." />
-	</NewMapToolTip>
-	
-	<IsIn>
-		<EN-US text="is in" />
-		<RUS text="is in" /><!-- translate -->
-		<GER text="ist in" />
-	</IsIn>
-	
-	<MapOwnerURLWarning>
-		<EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
-		<RUS text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." /><!-- translate RUS -->
+ 
+	 <ClickToPublishMap>
+		 <EN-US text="Click on the category to bring up a window that allows you to either publish your map or relocate it to another category. In order to relocate your map into a private project, you need to be a member of this project." />
+		 <RUS text="Click on the category to bring up a window that allows you to either publish your map or relocate it to another category. In order to relocate your map into a private project, you need to be a member of this project." /><!-- TODO Translate RUS -->
+		 <GER text="Klicke auf diese Kategorie um ein Fenster zu öffnen welches dir erlaubt dein Argument entweder zu publizieren oder in eine andere Kategorie zu verschieben. Um ein Argument in ein privates Projekt zu verschieben musst du Mitglied dieses Projektes sein." />
+	 </ClickToPublishMap>
+ 
+ <NewMapToolTip>
+	 <EN-US text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." />
+	 <RUS text="Every map will be created in a private project space that carries your name and to which only you have access. If you want to publish your map in the World of Arguments, go to 'My maps' and click on the button that specifies the location of your map." /><!--TODO: Translate RUS -->
+	 <GER text="Jedes Argument wird in einem privaten Projektbereich erstellt welches deinen Namen trägt und zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, gehe zu &quot;Meine Argumente&quot; und klicke auf den Funktionsknopf der anzeigt, wo dein Argument derzeit gespeichert ist." />
+ </NewMapToolTip>
+ 
+ <IsIn>
+ <EN-US text="is in" />
+ <RUS text="is in" /><!--TODO: Translate RUS -->
+ <GER text="ist in" />
+ </IsIn>
+ 
+ <MapOwnerURLWarning>
+ <EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
+ <RUS text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." /><!--TODO: Translate RUS -->
 		<GER text="Wenn Du hier klickst, und wenn der Eigentümer dieses Argumentes eine URL zugänglich gemacht hat, dann öffnet sich die entsprechende Webseite in einem neuen Fenster. Bitte beachte, dass das AGORA-net Projekt keine Verantwortung für den Inhalt von Webseiten übernimmt, die von Nutzern des Systems zur Verfügung gestellt werden." />
 	</MapOwnerURLWarning>
 	
 	<ChangeMapName>
 		<EN-US text="Change Map Name?" />
-		<RUS text="Change Map Name?" /><!-- translate RUS -->
+		<RUS text="Change Map Name?" /><!--TODO: Translate RUS -->
 		<GER text="Willst du den Namen deines Argumentes verändern?" />
 	</ChangeMapName>
 	
 	
 	<WarnDelEnabl>
 		<EN-US text="Click deletes the entire argument. If you want to change the argument scheme, please click on the name of the currently selected argument scheme that is named under &quot;therefore&quot;" />
-		<RUS text="Click deletes the entire argument. If you want to change the argument scheme, please click on the name of the currently selected argument scheme that is named under &quot;therefore&quot;" /><!-- translate RUS -->
-		<GER text="Klick löscht das ganze Argument. Wenn du nur das Argumentschema wechseln willst, klicke auf das gegenwärtig ausgewählte Argumentschema under &quot;deshalb&quot;" />
+		<RUS text="Click deletes the entire argument. If you want to change the argument scheme, please click on the name of the currently selected argument scheme that is named under &quot;therefore&quot;" /><!--TODO: Translate RUS -->
+		<GER text="Klick löscht das ganze Argument. Wenn du nur das Argumentschema wechseln willst, klicke auf das gegenwärtig ausgewählte Argumentschema unter &quot;deshalb&quot;" />
 	</WarnDelEnabl>
 
 	
 	<AddEqForm>
 		<EN-US text="an equivalent reformulation of this statement" />
 		<RUS text="an equivalent reformulation of this statement" /> <!--TODO: Translate RUS -->
-		<GER text="eine äquivalente Formulierung fÃ¼r diese Aussage" />
+		<GER text="eine äquivalente Formulierung für diese Aussage" />
 	</AddEqForm>
+
 	<EnterResourceName>
 		<EN-US text="Enter name for this resource" />
 		<RUS text="Enter name for this resource" /> <!--TODO: Translate RUS -->
-		<GER text="Gib einen Namen fÃ¼r diese Resource ein" />
+		<GER text="Gib einen Namen für diese Resource ein" />
 	</EnterResourceName>
 
 	<PrivacyPolicy>
@@ -187,7 +263,7 @@
 	<TitleClickToChange>
 		<EN-US text="Map Title (Click, edit, hit 'Enter' to change): " />
 		<RUS text="Map Title (Click, edit, hit 'Enter' to change): " /><!--TODO Translate RUS -->
-		<GER text="Names deines Argumentes (Klicke, verändere und drück 'Eingabe' zum Speichern): " />
+		<GER text="Name deines Argumentes (Klick hier, verändere und drück 'Eingabe' zum Speichern): " />
 	</TitleClickToChange>
 
 	<OwnerOfMap>
@@ -197,36 +273,39 @@
 	</OwnerOfMap>
 	
 	<SuccessfullyPublished>
-		<EN-US text="Your map was successfully published. It is now publically available inside the category you chose" />
-		<RUS text="Your map was successfully published. It is now publically available inside the category you chose" /><!--TODO Translate RUS -->
+		<EN-US text="Your map was successfully published. It is now publicly available inside the category you chose" />
+		<RUS text="Your map was successfully published. It is now publicly available inside the category you chose" /><!--TODO Translate RUS -->
 		<GER text="Dein Argument wurde erfolgreich publiziert. Es ist nun öffentlich verfügbar in der Kategorie, die du ausgewählt hast." />
 	</SuccessfullyPublished>
 
 	<SuccessfullyPublishedInProject>
 		<EN-US text="Your map was successfully published. It is now available inside the project you chose" />
 		<RUS text="Your map was successfully published. It is now available inside the project you chose" /><!--TODO Translate RUS -->
-		<GER text="Your map was successfully published. It is now available inside the project you chose" /><!--TODO Translate GER -->
+		<GER text="Die Publikation deines Argument war erfolgreich. Es ist nun innerhalb des von dir ausgewählten Projektes verfügbar." />
 	</SuccessfullyPublishedInProject>
+
 	<UnsuccessfullyPublished>
-		<EN-US text="An error occurred while trying to publish your map. Please close the window and try again." />
-		<RUS text="An error occurred while trying to publish your map. Please close the window and try again." /><!--TODO Translate RUS -->
-		<GER text="Während des Versuches, dein Argument zu publizieren, ist ein Fehler aufgetreten. Bitte schließe das Fenster und probier's noch einmal." />
-	</UnsuccessfullyPublished>
+ <EN-US text="An error occurred while trying to publish your map. Please close the window and try again." />
+ <RUS text="An error occurred while trying to publish your map. Please close the window and try again." /><!--TODO Translate RUS -->
+ <GER text="Während des Versuches, dein Argument zu publizieren, ist ein Fehler aufgetreten. Bitte schließe das Fenster und probier's noch einmal." />
+ </UnsuccessfullyPublished>
+
 	<SuccessfullyPublishedProject>
 		<EN-US text="Your project was successfully moved. It is now available inside the category you chose" />
 		<RUS text="Your project was successfully moved. It is now available inside the category you chose" /><!--TODO Translate RUS -->
-		<GER text="Your project was successfully moved. It is now available inside the category you chose" /><!--TODO Translate GER -->
+		<GER text="Dein Projekt wurde verschoben. Es ist nun innerhalb der von dir gewählten Kategorie verfügbar" />
 	</SuccessfullyPublishedProject>
+
 	<UnsuccessfullyPublishedProject>
 		<EN-US text="An error occurred while trying to move your project Please close the window and try again." />
 		<RUS text="An error occurred while trying to move your project Please close the window and try again." /><!--TODO Translate RUS -->
-		<GER text="An error occurred while trying to move your project Please close the window and try again." />
+		<GER text="Während des Versuches, dein Argument zu verschieben, ist ein Fehler aufgetreten. Bitte schließe das Fenster und probier's noch einmal." />
 	</UnsuccessfullyPublishedProject>
 
 	<ClickThroughCategory>
-		<EN-US text="Click through the categories below to determine where you want to publish your map" />
-		<RUS text="Click through the categories below to determine where you want to publish your map" /><!--TODO Translate RUS -->
-		<GER text="Klicke dich durch die Kategorien unten um den Ort zu bestimmen, wo du dein Argument veröffentlichen willst." />
+		<EN-US text="Click through the categories or projects below to determine the new location of your map" />
+		<RUS text="Click through the categories or projects below to determine the new location of your map" /><!--TODO Translate RUS -->
+		<GER text="Klicke dich durch die Kategorien oder Projekte unten um den Ort zu bestimmen, wo du dein Argument hinschieben willst." />
 	</ClickThroughCategory>
 
 
@@ -239,7 +318,7 @@
 
 	<FAQTT>
 		<EN-US text="Have a question? Check here first!" />
-		<RUS text="Have a question? Check here first!" /><!--TODO TranslateRUS -->
+		<RUS text="Have a question? Check here first!" /><!--TODO Translate RUS -->
 		<GER text="Hast Du eine Frage? Klicke zuerst hier!" />
 	</FAQTT>
 
@@ -277,9 +356,9 @@
 	</CategoryMap>
 
 	<CategoryProject>
-		<EN-US text="If you want to create a protected project space, click through the categories above to determine its location" />
-		<RUS text="If you want to create a protected project space, click through the categories above to determine its location" /><!--TODO  Translate RUS-->
-		<GER text="Wenn du einen geschützten Projekt-Bereich schaffen willst, klick dich durch die Kategorien oben um zu bestimmen wo" />
+		<EN-US text="If you want to create a protected project space, click through the categories or projects above to determine its location" />
+		<RUS text="If you want to create a protected project space, click through the categories or projects above to determine its location" /><!--TODO  Translate RUS-->
+		<GER text="Wenn du einen geschützten Projekt-Bereich schaffen willst, klick dich durch die Kategorien oder Projekte oben um zu bestimmen wo" />
 	</CategoryProject>
 
 	<CategoryChainLead>
@@ -295,57 +374,57 @@
 	</ComingSoon>
 	
 	<AddMapToCategory>
-		<EN-US text="Map will be added to category: " />
-		<RUS text="Map will be added to category: " /><!--TODO Translate RUS-->
-		<GER text="Argument wird der Kategorie hinzugefügt: " />
-	</AddMapToCategory>
+		 <EN-US text="Map will be added to category: " />
+		 <RUS text="Map will be added to category: " /><!--TODO Translate RUS-->
+		 <GER text="Argument wird der Kategorie hinzugefügt: " />
+	 </AddMapToCategory>
 
-	<CategoryTopLevel>
-		<EN-US text="Top Level" />
-		<RUS text="Top Level" /><!--TODO Translate RUS-->
-		<GER text="Höchster Level" />
-	</CategoryTopLevel>
+ <CategoryTopLevel>
+	 <EN-US text="Top Level" />
+	 <RUS text="Top Level" /><!--TODO Translate RUS-->
+	 <GER text="Höchste Ebene" />
+ </CategoryTopLevel>
 
-	<CategoryLoadError>
-		<EN-US text="Error loading categories" />
-		<RUS text="Error loading categories" /><!--TODO Translate RUS-->
-		<GER text="Fehler beim Laden der Kategorien" />
-	</CategoryLoadError>
+ <CategoryLoadError>
+	 <EN-US text="Error loading categories" />
+	 <RUS text="Error loading categories" /><!--TODO Translate RUS-->
+	 <GER text="Fehler beim Laden der Kategorien" />
+ </CategoryLoadError>
 
-	<MapToProject>
-		<EN-US text="Move Map to a Project" />
-		<RUS text="Move Map To Project" /><!--TODO Translate RUS-->
-		<GER text="Verschiebe dieses Argument in ein Projekt" />
-	</MapToProject>
+ <MapToProject>
+	 <EN-US text="Move Map to a Project" />
+	 <RUS text="Move Map To Project" /><!--TODO Translate RUS-->
+	 <GER text="Verschiebe dieses Argument in ein Projekt" />
+ </MapToProject>
 
-	<PublishMap>
-		<EN-US text="Publish your map in the World of Arguments" />
-		<RUS text="Publish your map in the World of Arguments" /><!--TODO Translate RUS-->
-		<GER text="Veröffentliche dein Argument in der Welt der Argumente" />
-	</PublishMap>
-	
-	<Send>
-		<EN-US text="Send" />
-		<RUS text="Send" /><!--TODO Translate RUS-->
-		<GER text="Sende" />
-	</Send>
-	
-	<Clear>
-		<EN-US text="Clear" />
-		<RUS text="Clear" /><!--TODO Translate RUS-->
-		<GER text="Lösche alles" />
-	</Clear>
+ <PublishMap>
+ <EN-US text="Publish your map in the World of Arguments" />
+ <RUS text="Publish your map in the World of Arguments" /><!--TODO Translate RUS-->
+ <GER text="Veröffentliche dein Argument in der Welt der Argumente" />
+ </PublishMap>
+ 
+ <Send>
+ <EN-US text="Send" />
+ <RUS text="Send" /><!--TODO Translate RUS-->
+ <GER text="Sende" />
+ </Send>
+ 
+ <Clear>
+ <EN-US text="Clear" />
+ <RUS text="Clear" /><!--TODO Translate RUS-->
+ <GER text="Lösche alles" />
+ </Clear>
 
-	<HidePanel>
-		<EN-US text="Hide Panel" />
-		<RUS text="Hide Panel" /><!--TODO Translate RUS-->
-		<GER text="Verberge dieses Feld" />
-	</HidePanel>
+ <HidePanel>
+ <EN-US text="Hide Panel" />
+ <RUS text="Hide Panel" /><!--TODO Translate RUS-->
+ <GER text="Verberge dieses Feld" />
+ </HidePanel>
 
-	<ChatLabel>
-		<EN-US text="Chat with other users" />
-		<RUS text="Chat with other users" /><!--TODO Translate RUS-->
-		<GER text="Chat mit anderen" />
+ <ChatLabel>
+ <EN-US text="Chat with other users" />
+ <RUS text="Chat with other users" /><!--TODO Translate RUS-->
+		<GER text="Sprich mit anderen" />
 	</ChatLabel>
 
 	<TypeMessage>
@@ -367,11 +446,6 @@
 		<GER text="Du musst dich einloggen, wenn du mitmachen willst" />
 	</GuestEditMapError>
 
-	<InputProjName>
-		<EN-US text="Input project name to move map to" /><!--Don’t use it. This must be replaced by going through the categories and selecting one -->
-		<RUS text="Input project name to move map to" /><!--TODO Translate RUS-->
-		<GER text="Input project name to move map to" />
-	</InputProjName>
 
 	<ChatError>
 		<EN-US text="Network Error While Loading Chat Information" />
@@ -386,24 +460,24 @@
 	</MapInCatError>
 
 	<MapToProjError>
-		<EN-US text="Could not move the map to the selected project" />
-		<RUS text="Could not move the map to the selected project" /><!--TODO Translate RUS-->
-		<GER text="Es gab ein Problem beim Verschieben des Arguments zum ausgewählten Projekt" />
+		<EN-US text="Could not move the map to the selected project. Please try again." />
+		<RUS text="Could not move the map to the selected project. Please try again" /><!--TODO Translate RUS-->
+		<GER text="Es gab ein Problem beim Verschieben des Arguments zum ausgewählten Projekt. Bitte versuchs noch einmal" />
 	</MapToProjError>
 
 	<NotProjMember>
 		<EN-US text="This project is accessible for members only. Project administrator: " />
 		<RUS text="This project is accessible for members only. Project administrator: " /><!--TODO Translate RUS-->
-		<GER text="This project is accessible for members only. Project administrator: " />
+		<GER text="Dieses Project ist nur für Mitglieder zugänglich. Der Projekt Verwalter ist: " />
 	</NotProjMember>
 
 
 	<!--Categories-->
 	
 	<ClassProjects>
-		<EN-US text="Class Projects (password protected)" />
-		<RUS text="Class Projects (password protected)" /><!--TODO Translate RUS-->
-		<GER text="Seminar Projekte (Passwort-geschützt)" />
+		<EN-US text="Class Projects (Restricted)" />
+		<RUS text="Class Projects (Restricted)" /><!--TODO Translate RUS-->
+		<GER text="Seminar / Klassen Projekte (nur für Mitglieder)" />
 	</ClassProjects>
 
 
@@ -428,9 +502,9 @@
 	</EnvironmentClimate>
 
 	<Projects>
-		<EN-US text="Projects (password protected)" />
-		<RUS text="Projects (password protected)" /><!--TODO Translate RUS-->
-		<GER text="Projekte (Passwort-geschützt)" />
+		<EN-US text="Projects (Restricted)" />
+		<RUS text="Projects (Restricted)" /><!--TODO Translate RUS-->
+		<GER text="Projekte (nur für Mitglieder)" />
 	</Projects>
 
 	<TheoryofRepresentation>
@@ -462,197 +536,6 @@
 
 
 
-<!--DELETE from here to ... -->
-	<EngineeringEthics>
-		<EN-US text="Engineering Ethics" />
-		<RUS text="Engineering Ethics" /><!--TODO Translate -->
-		<GER text="Ethik für Ingeneure" />
-	</EngineeringEthics>
-
-	<PHIL3109>
-		<EN-US text="PHIL 3109, Georgia Tech" />
-		<RUS text="PHIL 3109, Georgia Tech" /><!-- translate RUS-->
-		<GER text="PHIL 3109, Georgia Tech" />
-	</PHIL3109>
-
-	<Date2011>
-		<EN-US text="2011" />
-		<RUS text="2011" /><!-- translate RUS-->
-		<GER text="2011" />
-	</Date2011>
-
-	<BMSTU>
-		<EN-US text="Bauman Moscow State Technical University" />
-		<RUS
-			text="Московский государственный технический университет им. Н.Э. Баумана" />
-		<GER text="Staatliche Technische Universität Moskau, Baumann" />
-	</BMSTU>
-
-	<PublicPolicy>
-		<EN-US text="Public Policy" />
-		<RUS text="Public Policy" /><!-- translate RUS-->
-		<GER text="Public Policy" />
-	</PublicPolicy>
-
-	<Date2012>
-		<EN-US text="2012" />
-		<RUS text="2012" /><!-- translate RUS-->
-		<GER text="2012" />
-	</Date2012>
-
-	<PubP6010>
-		<EN-US text="PUBP 6010, Georgia Tech" />
-		<RUS text=" PUBP 6010, Georgia Tech" /><!-- translate RUS-->
-		<GER text=" PUBP 6010, Georgia Tech" />
-	</PubP6010>
-
-	<PHIL2025>
-		<EN-US text="PHIL 2025, Georgia Tech" />
-		<RUS text="PHIL 2025, Georgia Tech" /><!-- translate RUS-->
-		<GER text="PHIL 2025, Georgia Tech" />
-	</PHIL2025>
-
-	<IntroPhilo>
-		<EN-US text="Intro Philosophy" />
-		<RUS text="Intro Philosophy" /><!-- translate RUS-->
-		<GER text="Einführung Philosophie" />
-	</IntroPhilo>
-
-	<PHIL2010>
-		<EN-US text="PHIL 2010, Georgia Tech" />
-		<RUS text="PHIL 2010, Georgia Tech" /><!-- translate RUS-->
-		<GER text="PHIL 2010, Georgia Tech" />
-	</PHIL2010>
-
-	<AGORAapproach>
-		<EN-US text="AGORA approach" />
-		<RUS text="AGORA approach" /><!-- translate RUS-->
-		<GER text="AGORA Ansatz" />
-	</AGORAapproach>
-
-	<ArgumentSchemes>
-		<EN-US text="Argument Schemes" />
-		<RUS text="Argument Schemes" /><!-- translate RUS-->
-		<GER text="Argumentations Schemata" />
-	</ArgumentSchemes>
-
-	<AGORAversionsWRM>
-		<EN-US
-			text="AGORA versions of schemes listed by Walton, Reed, and Macagno (2008)" />
-		<RUS
-			text="AGORA versions of schemes listed by Walton, Reed, and Macagno (2008)" /><!-- translate RUS-->
-		<GER
-			text="AGORA Versionen von Schemata die bei Walton, Reed and Macagno (2008) gelistet sind" />
-	</AGORAversionsWRM>
-
-
-	<Epistemology>
-		<EN-US text="Epistemology (Theory of Knowledge)" />
-		<RUS text="Epistemology (Theory of Knowledge)" /><!-- translate RUS-->
-		<GER text="Erkenntnistheorie" />
-	</Epistemology>
-
-	<DavidHume>
-		<EN-US text="David Hume" />
-		<RUS text="David Hume" /><!-- translate RUS-->
-		<GER text="David Hume" />
-	</DavidHume>
-
-	<ImmanuelKant>
-		<EN-US text="Immanuel Kant " />
-		<RUS text="Immanuel Kant" /><!-- translate RUS-->
-		<GER text="Immanuel Kant" />
-	</ImmanuelKant>
-
-	<TranscendentalArguments>
-		<EN-US text="Transcendental Arguments" />
-		<RUS text="Transcendental Arguments" /><!-- translate RUS-->
-		<GER text="Transzendentale Argumente" />
-	</TranscendentalArguments>
-
-	<Existenceoftheexternalworld>
-		<EN-US text="Existence of the external world" />
-		<RUS text="Existence of the external world" /><!-- translate RUS-->
-		<GER text="Existenz der Außenwelt" />
-	</Existenceoftheexternalworld>
-
-	<Problemofinduction>
-		<EN-US text="Problem of induction" />
-		<RUS text="Problem of induction" /><!-- translate RUS-->
-		<GER text="Problem der Induktion" />
-	</Problemofinduction>
-
-	<Causality>
-		<EN-US text="Causality" />
-		<RUS text="Causality" /><!-- translate RUS-->
-		<GER text="Kausalität" />
-	</Causality>
-
-	<Ethics>
-		<EN-US text="Ethics" />
-		<RUS text="Ethics" /><!-- translate RUS-->
-		<GER text="Ethik" />
-	</Ethics>
-
-	<AbductiveInference>
-		<EN-US text="Abductive Inference" />
-		<RUS text="Abductive Inference" /><!-- translate RUS-->
-		<GER text="Abduktive Schlüsse" />
-	</AbductiveInference>
-
-	<Metaphysics>
-		<EN-US text="Metaphysics" />
-		<RUS text="Metaphysics" /><!-- translate RUS-->
-		<GER text="Metaphysik" />
-	</Metaphysics>
-
-
-	<Learningwithexternalrepresentations>
-		<EN-US text="Learning with external representations" />
-		<RUS text="Learning with external representations" /><!-- translate RUS-->
-		<GER text="Lernen mit externen Repräsentationen" />
-	</Learningwithexternalrepresentations>
-
-
-	<MichaelHoffmann>
-		<EN-US text="Michael Hoffmann" />
-		<RUS text="Michael Hoffmann" /><!-- translate RUS-->
-		<GER text="Michael Hoffmann" />
-	</MichaelHoffmann>
-
-	<AGORAinstructors>
-		<EN-US text="AGORA instructors" />
-		<RUS text="AGORA instructors" /><!-- translate RUS-->
-		<GER text="AGORA Lehre" />
-	</AGORAinstructors>
-
-	<CSAGORAteam2012>
-		<EN-US text="CS AGORA team 2012" />
-		<RUS text="CS AGORA team 2012" /><!-- translate RUS-->
-		<GER text="CS AGORA team 2012" />
-	</CSAGORAteam2012>
-
-	<Biology>
-		<EN-US text="Biology" />
-		<RUS text="Biology" /><!-- translate RUS-->
-		<GER text="Biologie" />
-	</Biology>
-
-	<Genetics>
-		<EN-US text="Genetics" />
-		<RUS text="Genetics" /><!-- translate RUS-->
-		<GER text="Genetik" />
-	</Genetics>
-
-	<Psychiatry>
-		<EN-US text="Psychiatry" />
-		<RUS text="Psychiatry" /><!-- translate RUS-->
-		<GER text="Psychiatrie" />
-	</Psychiatry>
-
-<!--... to here DELETE -->
-
-
 
 
 	<!--BUTTONS, LABELS, AND SINGLE WORDS -->
@@ -661,13 +544,13 @@
 
 	<NewHere>
 		<EN-US text="New to AGORA-net? Visit a world of debates and discussion." />
-		<RUS text="New to AGORA-net? Visit a world of debates and discussion." /><!-- translate RUS-->
+		<RUS text="New to AGORA-net? Visit a world of debates and discussion." /><!--TODO Translate RUS-->
 		<GER text="Neu im AGORA-net? Besuche eine Welt voller Debatten und Diskussionen!" />
 	</NewHere>
 
 	<EnterGuest>
 		<EN-US text="Enter As Guest" />
-		<RUS text="Enter As Guest" /><!-- translate RUS-->
+		<RUS text="Enter As Guest" /><!-- TODO Translate RUS-->
 		<GER text="Tritt ein als Gast" />
 	</EnterGuest>
 
@@ -679,25 +562,25 @@
 
 	<AboutUs>
 		<EN-US text="About us" />
-		<RUS text="About us" /><!-- translate RUS-->
+		<RUS text="About us" /><!--TODO Translate RUS-->
 		<GER text="Über uns" />
 	</AboutUs>
 
 	<FAQ>
 		<EN-US text="FAQ" />
-		<RUS text="FAQ" /><!-- translate RUS-->
+		<RUS text="FAQ" /><!--TODO Translate RUS-->
 		<GER text="Fragen?" />
 	</FAQ>
 
 	<ContactUS>
 		<EN-US text="Contact us" />
-		<RUS text="Contact us" /><!-- translate RUS-->
+		<RUS text="Contact us" /><!--TODO Translate RUS-->
 		<GER text="Kontaktiere uns" />
 	</ContactUS>
 
 	<Help>
 		<EN-US text="Help" />
-		<RUS text="Help" /><!-- translate RUS-->
+		<RUS text="Help" /><!--TODO Translate RUS-->
 		<GER text="Hilfe" />
 	</Help>
 
@@ -733,7 +616,7 @@
 
 	<ArgScheme>
 		<EN-US text="ArgScheme" />
-		<RUS text="ArgScheme" />
+		<RUS text="ArgScheme" /><!--TODO Translate RUS-->
 		<GER text="ArgSchema" />
 	</ArgScheme>
 
@@ -764,10 +647,8 @@
 	<ClaimReminder>
 		<EN-US
 			text="Keep in mind that a claim can be descriptive (&quot;it is the case that ...&quot;) or normative (e.g., &quot;we should do x&quot;)" />
-		<RUS
-			text="Имейте в виду, что заявление может быть описательным (&quot;оно имеет место, что ...&quot;) или нормативным (например, &quot;мы должны сделать x&quot;)," />
-		<GER
-			text="Vergiss nicht, dass es deskriptive (&quot;es ist der Fall, dass ...&quot;) und normative (z.B. &quot;wir sollten x tun&quot;) Behauptungen gibt." />
+		<RUS text="Имейте в виду, что заявление может быть описательным (&quot;оно имеет место, что ...&quot;) или нормативным (например, &quot;мы должны сделать x&quot;)," />
+		<GER text="Vergiss nicht, dass es deskriptive (&quot;es ist der Fall, dass ...&quot;) und normative (z.B. &quot;wir sollten x tun&quot;) Behauptungen gibt." />
 	</ClaimReminder>
 
 	<CombineSearch>
@@ -856,7 +737,8 @@
 
 	<LastName>
 		<EN-US text="Last Name" />
-		<RUS text="Фамилия" />
+		<RUS
+ text="Фамилия" />
 		<GER text="Nachname" />
 	</LastName>
 
@@ -910,9 +792,15 @@
 
 	<PrintMap>
 		<EN-US text="Print Map" />
-		<RUS text="Print Map" /><!-- translate RUS-->
+		<RUS text="Print Map" /><!-- TODO Translate RUS-->
 		<GER text="Drucken" />
 	</PrintMap>
+
+	<PrintMapHelp>
+		<EN-US text="Besides normal printing, you can use this button also to export maps as pdf-files (if you have a pdf converter installed on your computer or if your browser allows this). Keep in mind that everything you create here is stored on a central server and only accessible when you have an internet connection. " />
+		<RUS text="Besides normal printing, you can use this button also to export maps as pdf-files (if you have a pdf converter installed on your computer or if your browser allows this). Keep in mind that everything you create here is stored on a central server and only accessible when you have an internet connection." /><!-- TODO Translate RUS-->
+		<GER text="Neben normalem Drucken kannst du diese Schaltfläche auch nutzen, um pdf-Dateien von Argumentationen zu erzeugen (falls du einen pdf-Konverter als Druckertreiber installiert hast oder dein Internet-Browser einen bereit stellt). Vergiss nicht, dass alles was du hier erstellst in einem zentralen Server gespeichert ist, auf den du nur Zugriff hast wenn eine Internetverbindung besteht." />
+	</PrintMapHelp>
 
 	<Therefore>
 		<EN-US text="therefore" />
@@ -927,10 +815,10 @@
 	</Password>
 
 	<ProjectPP>
-		<EN-US text="Projects (password protected)" />
+		<EN-US text="Projects (Restricted)" />
 		<RUS text="(Защищённые паролем) 
 		проекты" />
-		<GER text="Projekte (Passwort geschützt)" />
+		<GER text="Projekte (nur für Mitglieder)" />
 	</ProjectPP>
 
 	<Questions>
@@ -956,6 +844,13 @@
 		<RUS text="Сохранить и вернуться к Началу" />
 		<GER text="Ab nach Hause (mit speichern)" />
 	</SaveAndHome>
+
+
+	<SaveAndHomeHelp>
+		<EN-US text="Don't worry. Every entry in a text field and each selection you make is immediately saved after pressing 'Enter' or clicking on 'Done.' Use this button to get back to the previous screen. ALSO: Use it if something goes wrong while constructing your argument. Simply reload the map from the previous list." />
+		<RUS text="Don't worry. Every entry in a text field and each selection you make is immediately saved after pressing 'Enter' or clicking on 'Done.' Use this button to get back to the previous screen. ALSO: Use it if something goes wrong while constructing your argument. Simply reload the map from the previous list." />
+		<GER text="Mach dir keine Sorgen. Jeder Texteintrag und jede Auswahl wird sofort gespeichert. Nutze diese Schaltfläche um zur vorangehenden Bildschirmansicht zurückzukommen oder wenn irgendetwas in der Konstruktion deines Arguments schief geht. Gehe einfach zurück und lade die Argumentation noch einmal." />
+	</SaveAndHomeHelp>
 
 	<SaveMapAs>
 		<EN-US text="Save Map As" />
@@ -1031,75 +926,79 @@
 		<RUS text="Эта особенность находится в разработке." />
 		<GER text="Diese Funktion ist derzeit noch nicht verfügbar." />
 	</UnderConstructionLong>
+
 	<UniversalName>
 			<EN-US text="Universal" />
-			<RUS text="универсальное" /><!-- translate RUS-->
-			<GER text="Universelle" />
+			<RUS text="универсальное" /><!--TODO Translate RUS-->
+			<GER text="Universel" />
 	</UniversalName>
+
 	<ParticularName>
 		<EN-US text="Particular " />
-		<RUS text="особое" /><!-- translate RUS -->
-		<GER text="Einzel" /><!-- translate GER -->
+		<RUS text="Particular" /><!--TODO Translate RUS-->
+		<GER text="Einzel" />
 	</ParticularName>
+
 	<ObjectionName>
-			<EN-US text="Universal" />
-			<RUS text="универсальное утверждение" /><!-- translate RUS-->
-			<GER text="Einwad" />
+			<EN-US text="Objection" />
+			<RUS text="возражение" /><!--TODO Translate RUS-->
+			<GER text="Einwand" />
 	</ObjectionName>
+
 	<Universal>
-		<EN-US text="Universal Statement" />
-		<RUS text="универсальное утверждение" />
-		<GER text="Universelle Aussage" />
-	</Universal>
+ <EN-US text="Universal Statement" />
+ <RUS text="универсальное утверждение" />
+ <GER text="Universelle Aussage" />
+ </Universal>
 
-	<Upload>
-		<EN-US text="upload!" />
-		<RUS text="Закачка на сайт!" />
-		<GER text="Lade hoch!" />
-	</Upload>
+ <Upload>
+ <EN-US text="upload!" />
+ <RUS text="Закачка на сайт!" />
+ <GER text="Lade hoch!" />
+ </Upload>
 
-	<URL>
-		<EN-US text="URL (Optional)" />
-		<RUS text="URL (опционально)" />
-		<GER text="URL (optional)" />
-	</URL>
+ <URL>
+ <EN-US text="URL (optional)" />
+ <RUS text="URL (опционально)" />
+ <GER text="URL (optional)" />
+ </URL>
 
-	<use>
-		<EN-US text="use as " />
-		<RUS text="используйте в качестве " />
-		<GER text="verwende als " />
-	</use>
+ <use>
+ <EN-US text="use as " />
+ <RUS text="используйте в качестве " />
+ <GER text="verwende als " />
+ </use>
 
-	<Username>
-		<EN-US text="Username" />
-		<RUS text="Имя пользователя" />
-		<GER text="Benutzername" />
-	</Username>
+ <Username>
+ <EN-US text="Username" />
+ <RUS text="Имя пользователя" />
+ <GER text="Benutzername" />
+ </Username>
 
-	<Version>
-		<EN-US text="Version" />
-		<RUS text="версия" />
-		<GER text="Version" />
-	</Version>
+ <Version>
+ <EN-US text="Version" />
+ <RUS text="версия" />
+ <GER text="Version" />
+ </Version>
 
-	<Yes>
-		<EN-US text="Yes" />
-		<RUS text="Да" />
-		<GER text="Ja" />
-	</Yes>
+ <Yes>
+ <EN-US text="Yes" />
+ <RUS text="Да" />
+ <GER text="Ja" />
+ </Yes>
 
-	<OK>
-		<EN-US text="OK" />
-		<RUS text="OK" /> <!--TODO:Translate RUS -->
-		<GER text="OK" />
-	</OK>
+ <OK>
+ <EN-US text="OK" />
+ <RUS text="OK" /> <!--TODO:Translate RUS -->
+ <GER text="OK" />
+ </OK>
 
-	<!--SHORT DESCRIPTIONS -->
+ <!--SHORT DESCRIPTIONS -->
 
-	<AddArgument>
-		<EN-US text="an argument for this statement" />
-		<RUS text="добавьте аргумент для этого утверждения" />
-		<GER text="ein Argument für diese Behauptung" />
+ <AddArgument>
+ <EN-US text="an argument for this statement" />
+ <RUS text="добавьте аргумент для этого утверждения" />
+ <GER text="ein Argument für diese Behauptung" />
 	</AddArgument>
 
 	<AddObjection>
@@ -1134,12 +1033,9 @@
 	</AGORAPass>
 
 	<AnotherReason>
-		<EN-US
-			text="another reason for this argument so that only the combination of all reasons justifies the claim" />
-		<RUS
-			text="другую причину для этого аргумента так, чтобы только комбинация всех причин оправдала заявление" />
-		<GER
-			text="weiteren Grund für dieses Argument hinzufügen, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt" />
+		<EN-US text="another reason for this argument so that only the combination of all reasons justifies the claim" />
+		<RUS text="другую причину для этого аргумента так, чтобы только комбинация всех причин оправдала заявление" />
+		<GER text="weiteren Grund für dieses Argument hinzufügen, so dass allein die Kombination aller Gründe die Behauptung rechtfertigt" />
 	</AnotherReason>
 
 	<ArgMapOn>
@@ -1173,21 +1069,15 @@
 	</AUInfo>
 
 	<CannotBePositive>
-		<EN-US
-			text="This argument scheme cannot be used in an argument for a statement that is positively formulated (that is: one that is not negated by &quot;it is not the case that...&quot;)." />
-		<RUS
-			text="This argument scheme cannot be used in an argument for a statement that is positively formulated (that is: one that is not negated by &quot;it is not the case that...&quot;)." />
-		<GER
-			text="Dieses Argument-Schema kann nicht in einem Argument für eine Aussage verwendet werden, welche positiv formuliert ist (das heißt: eine Aussage, welche nicht durch &quot;es ist nicht der Fall, dass ...&quot; negiert wurde)." />
+		<EN-US text="This argument scheme cannot be used in an argument for a statement that is positively formulated (that is: one that is not negated by &quot;it is not the case that...&quot;)." />
+		<RUS text="This argument scheme cannot be used in an argument for a statement that is positively formulated (that is: one that is not negated by &quot;it is not the case that...&quot;)." /><!--TODO Translate RUS-->
+		<GER text="Dieses Argument-Schema kann nicht in einem Argument für eine Aussage verwendet werden, welche positiv formuliert ist (das heißt: eine Aussage, welche nicht durch &quot;es ist nicht der Fall, dass ...&quot; negiert wurde)." />
 	</CannotBePositive>
 
 	<CannotBeNegative>
-		<EN-US
-			text="This argument scheme cannot be used in an argument for a negated statement (that is: one that starts with &quot;it is not the case that ...&quot;)." />
-		<RUS
-			text="This argument scheme cannot be used in an argument for a negated statement (that is: one that starts with &quot;it is not the case that ...&quot;)." />
-		<GER
-			text="Dieses Argument-Schema kann nicht in einem Argument für eine negierte Aussage verwendet werden (das heißt: eine Aussage, welche mit &quot;es ist nicht der Fall, dass ...&quot; beginnt)." />
+		<EN-US text="This argument scheme cannot be used in an argument for a negated statement (that is: one that starts with &quot;it is not the case that ...&quot;)." />
+		<RUS text="This argument scheme cannot be used in an argument for a negated statement (that is: one that starts with &quot;it is not the case that ...&quot;)." /><!--TODO Translate RUS-->
+		<GER text="Dieses Argument-Schema kann nicht in einem Argument für eine negierte Aussage verwendet werden (das heißt: eine Aussage, welche mit &quot;es ist nicht der Fall, dass ...&quot; beginnt)." />
 	</CannotBeNegative>
 
 	<CannotModify>
@@ -1198,19 +1088,21 @@
 		<RUS
 			text="Извините, на общественных картах Вы не можете изменить текст или аргумент, который был создан другим пользователем. Вы можете только добавить дополнительные и независимые аргументы." />
 	</CannotModify>
+
 	<CurrentPass>
 		<EN-US text="Current Password" />
-		<RUS text="Registration data updated" />
+		<RUS text="Current Password" /><!--TODO Translate RUS-->
 		<GER text="gegenwärtiges Passwort" />
 	</CurrentPass>
+
 	<NewPassword>
 		<EN-US text="New Password" />
-		<RUS text="Registration data updated" />
+		<RUS text="New Password" /><!--TODO Translate RUS-->
 		<GER text="Neues Passwort" />
 	</NewPassword>
 	<RegChange>
 		<EN-US text="Registration data updated" />
-		<RUS text="Registration data updated" />
+		<RUS text="Registration data updated" /><!--TODO Translate RUS-->
 		<GER text="Registration data updated" />
 	</RegChange>
 
@@ -1230,7 +1122,7 @@
 		<EN-US
 			text="Choose this option if you want to use a scheme that is not available otherwise or to learn more about how argument schemes work (play around and see what happens)" />
 		<RUS
-			text="Выберите эту опцию, если Вы хотите использовать схему, которая не доступна иначе или узнать больше, о том как схемы аргументов работают (проиграть и посмотреть, что происходит)," />
+			text="Выберите эту опцию, если Вы хотите использовать схему, которая не доступна иначе или узнать больше, о том как схемы аргументов работают (проиграть и посмотреть, что происходит)" />
 		<GER
 			text="Wähle diese Option wenn du ein Schema nutzen willst, das sonst nicht verfügbar ist, oder um mehr darüber zu erfahren, wie Argumentschemata funktionieren (Spiel herum und schau was passiert)" />
 	</ChooseToLearn>
@@ -1247,8 +1139,7 @@
 	<ClaimInNewWOLink>
 		<EN-US text="claim in a new map without creating a link" />
 		<RUS text="заявление новой карты, не создавая связь" />
-		<GER
-			text="Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen" />
+		<GER text="Behauptung in einer neu zu beginnenden Argumentation ohne eine Verbindung zu knüpfen" />
 	</ClaimInNewWOLink>
 
 	<ClickToView>
@@ -1325,14 +1216,6 @@
 		<GER text="widerlegt durch Gegenbeispiel" />
 	</DefeatsByCounterEx>
 
-	<DescriptionSupport>
-		<EN-US
-			text="Here you can enter a description of the map that then appears on the top of you map" />
-		<RUS
-			text="Здесь Вы можете ввести описание карты, которое  появляется  в начале Вашей карты" />
-		<GER
-			text="Hier kannst du eine Beschreibung eingeben, die dann oben auf der Seite erscheint." />
-	</DescriptionSupport>
 
 	<DivideToSubclaims>
 		<EN-US
@@ -1371,6 +1254,7 @@
 		<EN-US text="Enter your objection" />
 		<RUS text="Введите свое возражение " />
 		<GER text="Gib deinen Einwand ein " />
+
 	</EnterObjection>
 
 	<EnterQ>
@@ -1390,6 +1274,7 @@
 		<RUS text="Введите допустимый адрес электронной почты." />
 		<GER text="Gib eine gültige e-mail Adresse ein." />
 	</EnterValidEmail>
+
 
 	<ForgotPass>
 		<EN-US text="Forgot your password?" />
@@ -1422,10 +1307,10 @@
 
 	<GenPass>
 		<EN-US
-			text="AGORA-net will generate a new password for you. This action is irreversible." />
+			text="AGORA will generate a new password for you. This action is irreversible." />
 		<RUS text="АГОРА создаст новый пароль для Вас. Это действие необратимо." />
 		<GER
-			text="AGORA-net wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden." />
+			text="AGORA wird ein neues Passwort für dich erstellen. Diese Aktion kann nicht rückgängig gemacht werden." />
 	</GenPass>
 
 	<IncompleteInfo>
@@ -1445,8 +1330,7 @@
 
 	<InterArgScheme>
 		<EN-US
-			text="Select an argument scheme and a language form from the list on the right to complete your argument" /><!--TODO: 
-			Change later after issue 54 is realized -->
+			text="Select an argument scheme and a language form from the list on the right to complete your argument" /><!--TODO: Change later after issue 54 is realized. Issue already closed. Probably replaced by something else. -->
 		<RUS
 			text="Выберите схему аргумента и языковую форму из списков ниже для завершения Вашего аргумента " />
 		<GER
@@ -1474,7 +1358,7 @@
 	<LoginFailed>
 		<EN-US text="Login failed. Please try again." />
 		<RUS text="Ошибка регистрации. Пожалуйста, попробуйте еще раз." />
-		<GER text="Login ist fehlgeschlagen. Bitte versuch's noch einmal." />
+		<GER text="Log-in ist fehlgeschlagen. Bitte versuch's noch einmal." />
 	</LoginFailed>
 
 	<MapSaveError>
@@ -1492,25 +1376,20 @@
 	<MyMaps>
 		<EN-US text="My Maps" />
 		<RUS text="Мои карты" />
-		<GER text="Meine Argumente" />
+		<GER text="Meine Argumente"/>
 	</MyMaps>
 
-	<MyMapsEtc>
-		<EN-US text="My maps and those to which I contributed" />
-		<RUS text="Мои карты и те, которым я способствовал" />
-		<GER text="Meine Argumente und solche, an denen ich mitgewirkt habe" />
-	</MyMapsEtc>
 
 	<MyPPProjects>
 		<EN-US text="My Projects" />
-		<RUS text="Мои Защищённые паролем Проекты" /> <!--TODO Translate RUS-->
-		<GER text="Meine Passwort-geschützten Projekte" /> <!--TODO Translate GER-->
+		<RUS text="My Projects" /> <!--TODO Translate RUS-->
+		<GER text="Meine Projekte" />
 	</MyPPProjects>
 
 	<MyContributions>
 		<EN-US text="My Contributions" />
 		<RUS text="My Contributions" /><!--TODO Translate RUS-->
-		<GER text="My Contributions" /><!--TODO Translate GER-->
+		<GER text="Meine Beiträge" />
 	</MyContributions>
 	
 	<NetworkError>
@@ -1524,68 +1403,74 @@
 		<RUS text="Создайте новую карту аргумента" />
 		<GER text="Beginne eine neue Argumentation" />
 	</NewMap>
+
 	<NewMaphere>
 		<EN-US text="Create a new argument map here" />
-		<RUS text="Create a new argument map here" />
-		<GER text="Create a new argument map here" />
+		<RUS text="Create a new argument map here" /><!--TODO Translate RUS-->
+		<GER text="Beginne eine neue Argumentation hier" />
 	</NewMaphere>
+
 	<NewMapInProj>
-		<EN-US
-			text="Create a new argument map within this project space" />
-		<RUS
-			text="Создать новую карту аргумента в пределах этого защищённого паролем проектного пространства" /><!-- translate RUS -->
-		<GER
-			text="Beginne eine neue Argumentation innerhalb von diesem Passwort-geschützten Projektbereich" /> <!-- translate GER -->
+		<EN-US text="Create a new argument map within this project space" />
+		<RUS text="Create a new argument map within this project space" /><!--TODO Translate RUS-->
+		<GER text="Beginne eine neue Argumentation innerhalb dieses Projektbereiches" /> 
 	</NewMapInProj>
 
 	<NewProject>
 		<EN-US text="Create a project here" />
-		<RUS text="Создайте защищённое паролем проектное пространство" /><!-- translate RUS -->
-		<GER text="Eröffne einen Passwort-geschützten Projektbereich" /><!-- translate GER -->
+		<RUS text="Создайте защищённое паролем
+проектное пространство" /><!--TODO Translate RUS-->
+		<GER text="Bilde ein Projekt hier" />
 	</NewProject>
 	
     <MapsinProject>
     <EN-US text="Maps in this Project" />
 		<RUS text="Maps in this Project" /><!--TODO Translate RUS-->
-		<GER text="Maps in this Project" /><!--TODO Translate GER-->
+		<GER text="Argumente in diesem Projekt" />
     </MapsinProject>
     
     <Project>
     <EN-US text="Projects" />
 		<RUS text="Projects" /><!--TODO Translate RUS-->
-		<GER text="Projects" /><!--TODO Translate GER-->
+		<GER text="Projekte" />
     </Project>
     
     <SubProj>
     <EN-US text="Projects within this Project" />
 		<RUS text="Projects within this Project" /><!--TODO Translate RUS-->
-		<GER text="Projects within this Project" /><!--TODO Translate GER-->
+		<GER text="Projekte innerhalb dieses Projektes" />
     </SubProj>
+    
+      <Users>
+    <EN-US text="Users" />
+		<RUS text="Users" /><!--TODO Translate RUS-->
+		<GER text="Users" /><!--TODO Translate GER-->
+    </Users>
     
     <ProjType>
    <EN-US text="Project Type" />
 		<RUS text="Project type" /><!--TODO Translate RUS-->
-		<GER text="Project type" /><!--TODO Translate GER-->
+		<GER text="Art des Projekts" />
     </ProjType>
     
      <ProjectMembers>
     <EN-US text="Project Members" />
 		<RUS text="Project Members" /><!--TODO Translate RUS-->
-		<GER text="Project Members" /><!--TODO Translate GER-->
+		<GER text="Projekt Mitglieder" />
     </ProjectMembers>
     
      <ProjectAdmin>
     <EN-US text="Project Administrator" />
 		<RUS text="Project Administrator" /><!--TODO Translate RUS-->
-		<GER text="Project Administrator" /><!--TODO Translate GER-->
+		<GER text="Projekt Verwalter" />
     </ProjectAdmin>
+
 	<NewReason>
 		<EN-US text="Enter your new reason" />
 		<RUS text="Введите свою новую причину" />
 		<GER text="Gib deinen neuen Grund ein" />
 	</NewReason>
 
-     
 	<NewUsername>
 		<EN-US text="Desired Username" />
 		<RUS text="Желаемое Имя пользователя" />
@@ -1658,43 +1543,6 @@
 			text="Dieser Projekt-Name ist bereits vergeben! Versuche einen anderen." />
 	</ProjNameTaken>
 
-	<ProjPass>
-		<EN-US text="Enter your project password or..." />
-		<RUS text="Введите свой проектный пароль или..." />
-		<GER text="Gib dein Projekt-Passwort ein oder..." />
-	</ProjPass>
-
-
-	<ProjPassIs>
-		<EN-US text="The password for this project is:" />
-		<RUS text="Пароль для этого проекта -" />
-		<GER text="Passwort für dieses Project ist:" />
-	</ProjPassIs>
-
-	<PublicMaps>
-		<EN-US text="Publicly Accessible Argument Maps" />
-		<RUS text="Публично Доступные Карты Аргументов" />
-		<GER text="Öffentlich zugängliche Argumentationen" />
-	</PublicMaps>
-
-	<PublicMyMaps>
-		<EN-US text="My Publicly Accessible Maps and those to which I contributed" />
-		<RUS text="Мои Публично Доступные Карты и те, которым я способствовал" />
-		<GER
-			text="Meine öffentlich zugänglichen Argumentationen und solche, zu denen ich beigetragen habe" />
-	</PublicMyMaps>
-
-	<PublicUserMaps>
-		<EN-US text="Publicly Accessible Maps" />
-		<RUS text="Публично Доступные Карты" /> <!-- NOTE: username comes AFTER in Russian -->
-		<GER text="öffentlich zugängliche Argumentationen" />
-	</PublicUserMaps>
-
-	<PublicUserProj>
-		<EN-US text="Password Protected Projects" />
-		<RUS text="Защищённые паролем Проекты" /> <!-- NOTE: username comes AFTER in Russian -->
-		<GER text="Passwort-geschützte Projekte" />
-	</PublicUserProj>
 
 	<Question>
 		<EN-US text="Enter a statement that questions this statement" />
@@ -1747,11 +1595,13 @@ als neuer Benutzer" />
 		<RUS text="схему" />
 		<GER text="Schema" />
 	</Scheme>
+
 	<Select>
          <EN-US text="Select" />
          <RUS text="Выбрать" />
          <GER text="Wähle aus" />
      </Select>
+
 	<SeeObjection>
 		<EN-US
 			text="See the following objection against this claim in another argument map" />
@@ -1777,28 +1627,30 @@ als neuer Benutzer" />
 		<GER
 			text="Wähle die Form, die du brauchst, von der Liste rechts aus um dein Argument zu vervollständigen." />
 	</SelectLanguageForm>
+
+
        <SelectArgScheme>
                 <EN-US text="Select ..." />
-                <RUS text="Select ..." /><!--TODO: translation needed-->
+                <RUS text="Выбрать ..." />
                 <GER text="Wähle aus ..." />
         </SelectArgScheme>
 
         <SelectLanguage>
                 <EN-US text="... and select:" />
-                <RUS text="... and select:" /><!--TODO: translation needed-->
+                <RUS text="... and select:" /><!--TODO Translate RUS-->
                 <GER text="... und wähle aus:" />
         </SelectLanguage>
    
         <NoteSelectArgScheme>
                 <EN-US text="Select an argument scheme from the list below to complete your argument" />
-                <RUS text="Выберите схему аргумента и языковую форму из списков ниже для завершения Вашего аргумента " /><!--TODO: Please modify according to the English version-->
+                <RUS text="Select an argument scheme from the list below to complete your argument" /><!--TODO Translate RUS-->
                 <GER text="Wähle ein Argumentschema aus der Liste unten aus um dein Argument zu vervollständigen" />
         </NoteSelectArgScheme>
    
    
         <NoteSelectLanguage>
                 <EN-US text="Select the form you need to complete your argument" />
-                <RUS text="Выберите форму, в которой Вы нуждаетесь от списка справа, чтобы завершить Ваш аргумент" /><!--TODO: Please modify according to the English version-->
+                <RUS text="Выберите форму, в которой Вы нуждаетесь от списка справа, чтобы завершить Ваш аргумент" /><!--TODO Translate RUS--><!--TODO: Please modify according to the English version-->
                 <GER text="Wähle die Form aus, die du brauchst, um dein Argument zu vervollständigen." />
         </NoteSelectLanguage>
 
@@ -1807,12 +1659,6 @@ als neuer Benutzer" />
 		<RUS text="самоопределенная связь" />
 		<GER text="Selbst-definierte Verknüpfung " />
 	</SelfDefConn>
-
-	<SendEmail> <!-- Note: This is followed by the username -->
-		<EN-US text="Send e-mail to" />
-		<RUS text="Послать электронное письмо" />
-		<GER text="Sende eine e-mail an" />
-	</SendEmail>
 
 	<SignInToViewMaps>
 		<EN-US text="Sign in to view your maps" />
@@ -1846,7 +1692,7 @@ Projekte zu sehen" />
 		<EN-US text="Enter more statements" />
 		<RUS text="Введите большее количество заявлений" />
 		<GER text="Gib weitere Teilbehauptungen ein" />
-	</StatementMore>
+	 </StatementMore>
 
 	<Subclaim>
 		<EN-US text="Enter sub-claim" />
@@ -1888,22 +1734,13 @@ Projekte zu sehen" />
 			text="Bitte markiere die entsprechenden Kästchen um Argumentationen zu löschen" />
 	</UseCheckboxes>
 
+
 	<UsernameTaken>
 		<EN-US text="This username is already taken! Try another username." />
-		<RUS
-			text="Это имя пользователя уже взято! Попробуйте другое имя пользователя." />
-		<GER
-			text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen." />
+		<RUS text="Это имя пользователя уже взято! Попробуйте другое имя пользователя." />
+		<GER text="Dieser Benutzername ist bereits vergeben! Versuche einen anderen." />
 	</UsernameTaken>
 
-	<Welcome>
-		<EN-US
-			text="Welcome to AGORA-net! Please choose one of the following tasks to continue..." />
-		<RUS
-			text="Добро пожаловать в СЕТЬ АГОРЫ! Пожалуйста, выберите одну из следующих задач для продолжения..." />
-		<GER
-			text="Willkommen im AGORA-net! Wähle eine der folgenden Aufgaben aus um fortzufahren..." />
-	</Welcome>
 
 	<Note>
 		<EN-US text="Note" />
@@ -1913,9 +1750,11 @@ Projekte zu sehen" />
 
 	<Loading>
 		<EN-US text="Loading..." />
-		<RUS text="Loading..." /><!--TODO: Translate RUS-->
+		<RUS text="Loading..." /><!--TODO: Translate -->
 		<GER text="lädt... " />
 	</Loading>
+
+
 
 	<WelcomeShort>
 		<EN-US text="Welcome to AGORA-net!" />
@@ -1928,21 +1767,22 @@ Projekte zu sehen" />
 		<RUS text="Каково главное заявление Вашего аргумента?" />
 		<GER text="Was ist die zentrale Behauptung deines Argumentes?" />
 	</WhatIsMainClaim>
-	<RegistrationNote>
-		<EN-US
-			text="Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. 
-		Additionally, the following information will become visible  by hovering over the username: first name; last name; URL (if provided). 
-		Please do not use your Georgia Tech or other passwords. You might choose a username that does not reveal your identity. 
-		Your e-mail address will never be given out publicly. It will be used only for providing you with a replacement password in the event you forget your current one. 
+
+ <RegistrationNote>
+ <EN-US
+ text="Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. 
+ Additionally, the following information will become visible  by hovering over the username: first name; last name; URL (if provided). 
+ Please do not use your Georgia Tech or other passwords. You might choose a username that does not reveal your identity. 
+ Your e-mail address will never be given out publicly. It will be used only for providing you with a replacement password in the event you forget your current one. 
 		We recommend that you provide a URL so that other users can find a way to contact you, for example if they want to join a password protected project that you created or if they want to collaborate with you outside of AGORA-net. Provide your Facebook address or any other URL. 
 		The AGORA-net project is in compliance with Georgia Tech's Data Protection Safeguards" />
 		<RUS
 			text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя-автора, потому что должно быть ясно, кто заявляет что. 
-		Дополнительно, следующая информация станет видимой , нависая над именем пользователя: имя; фамилия; URL (если предоставлен) .  
+		Дополнительно, следующая информация станет видимой (только для зарегистрированных участников), нависая над именем пользователя: имя; фамилия; URL (если предоставлен) .  
 		Пожалуйста, не используйте свой Georgia Tech или другие пароли. Вы можете выбрать имя пользователя, которое не раскрывает Вашей личности.  
 		Ваш адрес электронной почты никогда не будет выдаваться публично. Он будет использоваться только для предоставления Вам пароля замены в случае, если  Вы забываете свой текущий.  
 		Мы рекомендуем, чтобы Вы обеспечили URL так, чтобы другие пользователи могли найти способ связаться с Вами, например если они хотят присоединиться к защищённому паролем проекту, который Вы создали или если они хотят сотрудничать с Вами за пределами СЕТИ АГОРЫ. Предоставьте Ваш Facebook-адрес для обращения или любой другой URL.  
-		Проект АГОРА соответствует Техническим Гарантиям Защиты данных Georgia Tech's -Georgia Tech's Data Protection Safeguards" />
+		Проект АГОРА соответствует Техническим Гарантиям Защиты данных Georgia Tech's - &lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;" />
 		<GER
 			text="BEACHTE: Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA-net Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. 
 		Außerdem werden die folgenden Informationen sichtbar wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). 
@@ -1951,6 +1791,7 @@ Projekte zu sehen" />
 		Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. 
 		Das AGORA-Projekt folgt den Richtlinien die in Georgia Techs Data Protection Safeguards niedergelegt sind:Georgia Tech's Data Protection Safeguards" />
 	</RegistrationNote>
+
 	<MustAgree><!--when a user clicks submit but does not have I agree to the TOS checkbox clicked-->
 		<EN-US text="You must agree to the terms and conditions and the privacy policy to use AGORA-net" />
 		<RUS text="You must agree to the terms and conditions and the privacy policy to use AGORA-net "/><!-- todo translate RUS-->
@@ -1959,24 +1800,25 @@ Projekte zu sehen" />
 
 	<RegistrationAge>
 		<EN-US text="I am 13 years or older or have parental permission to use AGORA-net." />
-		<RUS text="I am 13 years or older or have parental permission to use AGORA-net." /><!-- todo translate RUS-->
-		<GER text="Ich bin 13 Jahre alt oder älter oder habe die Erlaubnis meiner Eltern, AGORA-net zu benutzen." /><!-- translate GER -->	
+		<RUS text="I am 13 years or older or have parental permission to use AGORA-net." /><!--TODO Translate RUS-->
+		<GER text="Ich bin 13 Jahre alt oder älter oder habe die Erlaubnis meiner Eltern, AGORA-net zu benutzen." />	
 		</RegistrationAge>
+
 	<RegistrationAgeError>
 		<EN-US text="You must be 13 years or older or have parental permission to use AGORA-net." />
-		<RUS text="You must be 13 years or older or have parental permission to use AGORA-net." /><!-- todo translate RUS-->
-		<GER text="älter sein, um AGORA-net zu benutzen, oder die Erlaubnis deiner Eltern haben." />	</RegistrationAgeError>
+		<RUS text="You must be 13 years or older or have parental permission to use AGORA-net." /><!--TODO Translate RUS-->
+		<GER text="älter sein, um AGORA-net zu benutzen, oder die Erlaubnis deiner Eltern haben." /> </RegistrationAgeError>
+
 	<ReadRegistrationNote>
 		<EN-US text="I have read and understood the Privacy Policy, and I agree to the AGORA-net Terms of Service" />
-		<RUS text="Я прочитал и понял Политику Конфиденциальности" />
+		<RUS text="I have read and understood the Privacy Policy, and I agree to the AGORA-net Terms of Service" /><!-- TODO: Translate RUS -->
 		<GER text="Ich habe die Datenschutz-Vereinbarung gelesen und verstanden, und ich stimme der Nutzungsvereinbarung zu" />
 	</ReadRegistrationNote>	
+
 	<RegistrationFailed>
 		<EN-US text="Error: Registration Failed. Please try again." />
-		<RUS
-			text="Ошибка: Неудавшаяся Регистрация. Пожалуйста, попробуйте еще раз." />
-		<GER
-			text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch’s noch einmal." />
+		<RUS text="Ошибка: Неудавшаяся Регистрация. Пожалуйста, попробуйте еще раз." />
+		<GER text="Fehler: Anmeldung ist fehlgeschlagen. Bitte versuch’s noch einmal." />
 	</RegistrationFailed>
 
 	<UpdateMapInfoFailed>
@@ -2039,6 +1881,8 @@ Projekte zu sehen" />
 		<GER text="Konstruktives Dilemma" />
 	</ConsDil>
 
+
+
 	<DisjunctSyl>
 		<EN-US text="disjunctive syllogism" />
 		<RUS text="дизъюнктивный силлогизм" />
@@ -2058,9 +1902,9 @@ Projekte zu sehen" />
 	</EQ>
 
 	<EQaffirmed>
-		<EN-US text="with affirmed reason(s) and claim" />
-		<RUS text="с подтвержденной причиной (ами) и заявлением" />
-		<GER text="mit affirmiertem Grund (Gründen) und Folge" />
+		<EN-US text=" with affirmed reason(s) and claim" />
+		<RUS text=" с подтвержденной причиной (ами) и заявлением" />
+		<GER text=" mit affirmiertem Grund (Gründen) und Folge" />
 	</EQaffirmed>
 
 	<EQnegated>
@@ -2105,11 +1949,14 @@ Projekte zu sehen" />
 		<GER text="bestimme die Art der Verbindung" />
 	</SpecifyConn>
 
+
+
 	<EquivEquiv>
 		<EN-US text="are equivalent" />
 		<RUS text="эквивалентны" />
 		<GER text="sind equivalent" />
 	</EquivEquiv>
+
 
 	<EquivIff>
 		<EN-US text="if and only if " />
@@ -2124,38 +1971,38 @@ Projekte zu sehen" />
 	</Implies>
 
 	<NecessaryCond>
-		<EN-US text="necessary condition" />
+		<EN-US text="necessary condition for" />
 		<RUS text="необходимое условие " />
-		<GER text="notwendige Bedingung " />
+		<GER text="notwendige Bedingung für" />
 	</NecessaryCond>
 
 	<NecSuf>
-		<EN-US text="necessary and sufficient condition" />
-		<RUS text="необходимое и достаточное условие " />
-		<GER text="notwendige und hinreichende Bedingung " />
+		<EN-US text="necessary and sufficient condition for" />
+		<RUS text="необходимое и до�?таточное у�?ловие " />
+		<GER text="notwendige und hinreichende Bedingung für" />
 	</NecSuf>
 
 	<OnlyIf>
 		<EN-US text="only if " />
-		<RUS text="только если " />
+		<RUS text="только е�?ли " />
 		<GER text="allein dann, wenn " />
 	</OnlyIf>
 
 	<ProvidedThat>
 		<EN-US text="provided that " />
-		<RUS text="при условии, что " />
+		<RUS text="при у�?ловии, что " />
 		<GER text="gegeben, dass: " />
 	</ProvidedThat>
 
 	<SufficientCond>
-		<EN-US text="sufficient condition " />
-		<RUS text="достаточное условие " />
-		<GER text="hinreichende Bedingung " />
+		<EN-US text="sufficient condition for" />
+		<RUS text="до�?таточное у�?ловие " />
+		<GER text="hinreichende Bedingung für" />
 	</SufficientCond>
 
 	<Whenever>
 		<EN-US text="whenever " />
-		<RUS text="Всякий раз, когда " />
+		<RUS text="В�?�?кий раз, когда " />
 		<GER text="immer wenn " />
 	</Whenever>
 
@@ -2169,10 +2016,10 @@ Projekte zu sehen" />
 	q --> r
 	Therefore, p --> r" />
 		<RUS
-			text="Условный силлогизм:
+			text="У�?ловный �?иллогизм:
 	p --> q
 	q --> r
-	Поэтому, p --> r" />
+	По�?тому, p --> r" />
 		<GER
 			text="Konditionaler Syllogismus:
 	p --> q
@@ -2188,11 +2035,11 @@ Projekte zu sehen" />
 	q --> s
 	Therefore, r v s" />
 		<RUS
-			text="Конструктивная дилемма:
+			text="Кон�?труктивна�? дилемма:
 	p v q
 	p --> r
 	q --> s
-	Поэтому, r v s" />
+	По�?тому, r v s" />
 		<GER
 			text="Konstruktives Dilemma:
 	p v q
@@ -2207,10 +2054,10 @@ Projekte zu sehen" />
 	p v q
 	not p
 	Therefore, q" />
-		<RUS text="Дизъюнктивный силлогизм:
+		<RUS text="Дизъюнктивный �?иллогизм:
 	p v q
 	not p
-	Поэтому, q" />
+	По�?тому, q" />
 		<GER text="Disjunktiver Syllogism:
 	p v q
 	nicht p
@@ -2229,7 +2076,7 @@ Projekte zu sehen" />
 	p v q
 	p --> r
 	q --> r
-	Поэтому, r" />
+	По�?тому, r" />
 		<GER
 			text="Wie-auch-immer:
 	p v q
@@ -2246,7 +2093,7 @@ Projekte zu sehen" />
 	--not-p from not-q, or
 	--not-q from not-p" />
 		<RUS
-			text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести
+			text="е�?ли Вы говорите, что &quot;два за�?влени�? p и q �?квивалентны,&quot; тогда Вы можете или выве�?ти
 	- p от q
 	- q от p
 	- не-p от не-q, или
@@ -2264,10 +2111,10 @@ Projekte zu sehen" />
 	p --> q
 	p
 	Therefore, q" />
-		<RUS text="Модус поненс:
+		<RUS text="Моду�? понен�?:
 	p --> q
 	p
-	Поэтому, q" />
+	По�?тому, q" />
 		<GER text="Modus ponens:
 	p --> q
 	p
@@ -2279,10 +2126,10 @@ Projekte zu sehen" />
 	p --> q
 	not q
 	Therefore, not p" />
-		<RUS text="Модус толленс:
+		<RUS text="Моду�? толлен�?:
 	p --> q
 	не q
-	Поэтому, не p" />
+	По�?тому, не p" />
 		<GER text="Modus tollens:
 	p --> q
 	nicht q
@@ -2293,7 +2140,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Not-all syllogism: This syllogism has been created to infer a negated statement from one or more affirmative statements. See how it works!" />
 		<RUS
-			text="Не - весь силлогизм: Этот силлогизм был создан, чтобы вывести отрицательное утверждение из одного или более положительных утверждений. " />
+			text="�?е - ве�?ь �?иллогизм: �тот �?иллогизм был �?оздан, чтобы выве�?ти отрицательное утверждение из одного или более положительных утверждений. " />
 		<GER
 			text="Nicht-alle-Syllogismus: Dieser Syllogismus wurde geschaffen um eine negierte Aussage von einer oder mehreren affirmierten Aussagen zu erschließen. Probiere aus wie das geht!" />
 	</NotAllDesc>
@@ -2304,7 +2151,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Add another reason if only the combination of two or more &quot;dependent&quot; reasons can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light, &quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of dependent reasons to get to your conclusion or whether you have several independent arguments for the same conclusion." />
 		<RUS
-			text="Добавляйте другие причины, если только комбинация двух и более &quot;связанных&quot;  причин может обеспечить Ваше заключение. Например, в аргументе  &quot;Помидоры Питера вырастут, потому что он регулярно поливает их, и они получают достаточно  солнечного  света&quot; обе причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно  солнечного  света&quot; должны быть истиной, чтобы вывести заключение. Важно различать, нуждаетесь ли Вы в комбинации связанных  причин чтобы получить Ваше  заключение или у Вас есть  несколько независимых причин для того же самого заключения. " />
+			text="Добавл�?йте другие причины, е�?ли только комбинаци�? двух и более &quot;�?в�?занных&quot;  причин может обе�?печить Ваше заключение. �?апример, в аргументе  &quot;Помидоры Питера выра�?тут, потому что он регул�?рно поливает их, и они получают до�?таточно  �?олнечного  �?вета&quot; обе причины, &quot;он регул�?рно поливает их&quot; и &quot;они получают до�?таточно  �?олнечного  �?вета&quot; должны быть и�?тиной, чтобы выве�?ти заключение. Важно различать, нуждаете�?ь ли Вы в комбинации �?в�?занных  причин чтобы получить Ваше  заключение или у Ва�? е�?ть  не�?колько незави�?имых причин дл�? того же �?амого заключени�?. " />
 		<GER
 			text="Füge einen weiteren Grund an wenn allein die Verbindung von zwei oder mehr &quot;abhängigen&quot; Gründen deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Argumente für dieselbe Schlussfolderung hast. " />
 	</AnotherReasonHelp>
@@ -2313,7 +2160,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Support: This adds another reason to your argument so that only the combination of all your reasons can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light, &quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of dependent reasons to get to your conclusion or whether you have several independent arguments for the same conclusion." />
 		<RUS
-			text="Поддержка:  Это добавляет другую причину к Вашему аргументу так, что  только комбинация всех Ваших причин может поддержать Ваше заключение. Например, в аргументе &quot;Помидоры Петра вырастут, потому что он регулярно поливает их, и они получают достаточно света солнца, &quot; и причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно света солнца&quot; должно быть истиной, чтобы вывести заключение. Важно различить, нуждаетесь ли Вы в комбинации зависимых причин , чтобы получить  Ваше  заключение или есть ли у Вас несколько независимых причин для того же самого заключения." />
+			text="Поддержка:  �то добавл�?ет другую причину к Вашему аргументу так, что  только комбинаци�? в�?ех Ваших причин может поддержать Ваше заключение. �?апример, в аргументе &quot;Помидоры Петра выра�?тут, потому что он регул�?рно поливает их, и они получают до�?таточно �?вета �?олнца, &quot; и причины, &quot;он регул�?рно поливает их&quot; и &quot;они получают до�?таточно �?вета �?олнца&quot; должно быть и�?тиной, чтобы выве�?ти заключение. Важно различить, нуждаете�?ь ли Вы в комбинации зави�?имых причин , чтобы получить  Ваше  заключение или е�?ть ли у Ва�? не�?колько незави�?имых причин дл�? того же �?амого заключени�?." />
 		<GER
 			text="Anmerkung:  Dies fügt einen weiteren Grund zu deinem Argument hinzu so dass allein die Verbindung all deiner Gründe deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Argumente für dieselbe Schlussfolderung hast." />
 	</AnotherReasonHelp2>
@@ -2322,7 +2169,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;" />
 		<RUS
-			text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;" />
+			text="Жаль, дл�? �?той �?хемы аргумента Вы не можете добавить другую причину. Е�?ли �?то - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы измен�?ете�?ь, перед добавлением, �?зыком ин�?трумента реализации в &quot;е�?ли P тогда Q,&quot; &quot;в�?�?кий раз, когда P, Q,&quot; или &quot;Q при у�?ловии, что P.&quot;Е�?ли �?то - modus tollens аргумент, то Вы можете добавить другую причину, когда Вы измен�?ете�?ь, перед добавлением, �?зыком ин�?трумента реализации в &quot;P только е�?ли Q.&quot;" />
 		<GER
 			text="Sorry, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: &quot;Wenn P, dann Q&quot;; &quot;Immer wenn P, Q&quot;; &quot;Q, gegeben dass P&quot;. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form &quot;P allein dann, wenn Q&quot; ersetzt." />
 	</CannotAddReason>
@@ -2331,14 +2178,15 @@ Projekte zu sehen" />
 		<EN-US
 			text="Sorry, the scheme of an argument with more than one reason cannot be changed" />
 		<RUS
-			text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена" />
+			text="Жаль, �?хема аргумента больше чем �? одной причиной не может быть изменена" />
 		<GER
 			text="Sorry, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden." />
 	</CannotChangeMultReasons>
 
 	<CannotChangeScheme>
-		<EN-US text="Sorry, this argument scheme cannot be changed" />
-		<RUS text="Жаль, эта схема аргумента не может быть изменена" />
+		<EN-US text="Sorry, this argument scheme cannot be changed"
+ />
+		<RUS text="Жаль, �?та �?хема аргумента не может быть изменена" />
 		<GER
 			text="Sorry, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden" />
 	</CannotChangeScheme>
@@ -2347,7 +2195,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Do you really want to delete this box and everything that leads to it?" />
 		<RUS
-			text="Вы действительно хотите удалить это поле и все, что приводит к нему?" />
+			text="Вы дей�?твительно хотите удалить �?то поле и в�?е, что приводит к нему?" />
 		<GER
 			text="Willst du wirklich diese Textbox und alles, das zu ihr führt, löschen?" />
 	</ConfirmDelete>
@@ -2356,7 +2204,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones." />
 		<RUS
-			text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных." />
+			text="В дизъюнктивом �?иллогизме значение &quot;или... или&quot; обращает�?�? к �?одержащему &quot;или,&quot; который означает: возможно, что оба утверждени�? p и q - и�?тина. �?апример: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение в�?е еще и�?тинно, когда Вы покупаете оба. Е�?ли бы Вы и�?пользуете и�?ключительное &quot;или,&quot; предложение было бы ложно, е�?ли Вы покупаете оба. �то подразумевает, что Вы можете и�?пользовать дизъюнктивый �?иллогизм только, когда Вы знаете, что или p или q ложны. В �?том �?лучае, Вы можете выве�?ти, что другое и�?тина. Дизъюнктивый �?иллогизм может включать больше чем два �?лемента в &quot;гарант&quot; помимо p и q, но Вы в�?егда выводите положительное утверждение из отрицательных." />
 		<GER
 			text="Im disjunktiven Syllogismus ist die Bedeutung des Wortes &quot;oder&quot; inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst &quot;Ich kaufe Brot oder Milch&quot;, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem &quot;exklusivem oder&quot; wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen." />
 	</DisSylDetails>
@@ -2365,7 +2213,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid." />
 		<RUS
-			text=" Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив." />
+			text=" Утверждение в �?том тек�?товом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпо�?ылка в аргументе, который гарантирует, что обе�?печенна�? причина (или комбинаци�? причин) до�?таточна, чтобы оправдать за�?вление. &quot;Гарант&quot; - в�?егда универ�?альное утверждение. Оно гарантирует, что аргумент логиче�?ки �?праведлив." />
 		<GER
 			text="Der Satz in dieser Textbox wird &quot;Garant&quot; gennant. Der &quot;Garant&quot; ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der &quot;Garant&quot; ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist." />
 	</Enabler>
@@ -2374,21 +2222,21 @@ Projekte zu sehen" />
 		<EN-US
 			text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided." />
 		<RUS
-			text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин." />
+			text="Так как �?то - modus tollens аргумент, Вы должны решить, хотите ли Вы �?оединить в�?е �?вои причины &quot;и&quot; или &quot;или&quot;. Е�?ли Вы комбинируете их &quot;и&quot;, то Ваш аргумент дей�?твителен, только е�?ли в�?е Ваши причины верны. �то означает, что Ваш аргумент может быть побежден, побежда�? только одну из обе�?печенных причин. Е�?ли Вы комбинируете �?вои причины &quot;или&quot;, то Ваш аргумент дей�?твителен, цела�? по крайней мере одна причин верна. �то означает, побежда�? �?тот аргумент требует нане�?ени�? поражени�? в�?ех обе�?печенных причин." />
 		<GER
 			text="Da es sich hier um ein modus tollens Argument handelt, musst Du entscheiden ob Du alle deine Gründe durch &quot;und&quot; oder durch &quot;oder&quot; verknüpfen willst. Wenn Du sie durch &quot;und&quot; verknüpfst, dann ist dein Argument allein dann gültig wenn alle deine Gründe wahr sind. Das bedeutet, dass dein Argument durch die Widerlegung von allein einem deiner Gründe widerlegt werden kann. Wenn Du deine Gründe durch &quot;oder&quot; verknüpfst, dann ist dein Argument logisch gültig so lange zumindest einer deiner Gründe wahr ist. Das bedeutet, dass dein Argument allein durch die Widerlegung aller Gründe widerlegt werden kann." />
 	</MTAndOrHelp>
 
 	<MustRegister>
 		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible. Please note that you can register with the same e-mail address only once. So, if you forgot your access info, please use the &quot;Forgot your password?&quot; function." />
-		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой" /><!--TODO Translate RUS the last two sentences -->
+		<RUS text="Чтобы �?оздать карту, или уча�?твовать в дебатах или проекте, Вы должны зареги�?трировать�?�?. Ваше им�? пользовател�? по�?вит�?�? в каждом входе как &quot;AU&quot; (автор) �?того входа. Е�?ли кто-то нажимает на Ваше им�?, Ваша пользователь�?ка�? информаци�? �?танет видимой" /><!--TODO Translate RUS the last two sentences -->
 		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als &quot;AU&quot; (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar. Du kannst dich nur einmal mit derselben e-mail Adresse registrieren. Falls du deine Zugangs-Info vergißt, benutze bitte die &quot;Passwort vergessen?&quot; Funktion." />
 	</MustRegister>
 
 	<NewPass>
 		<EN-US
 			text="Your password on the AGORA-net server has been changed. Your new password is: " />
-		<RUS text="Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: " />
+		<RUS text="Ваш пароль на �?ервере �?ГОРЫ был изменен. Ваш новый пароль: " />
 		<GER
 			text="Dein Passwort auf dem AGORA-net Server wurde geändert. Das neue Passwort ist: " />
 		<!--Note that these must be followed by the password itself -->
@@ -2398,7 +2246,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="This syllogism has been created to infer a negated statement from one or more affirmative statements. See how it works!" />
 		<RUS
-			text="Этот силлогизм был создан, чтобы вывести отрицательное утверждение из одного или более положительных утверждений. " />
+			text="�тот �?иллогизм был �?оздан, чтобы выве�?ти отрицательное утверждение из одного или более положительных утверждений. " />
 		<GER
 			text="Dieser Syllogismus wurde geschaffen um eine negierte Aussage von einer oder mehreren affirmierten Aussagen zu erschließen. Probiere aus wie das geht!" />
 	</NotAllHelp>
@@ -2407,7 +2255,8 @@ Projekte zu sehen" />
 		<EN-US
 			text="Since this claim is justified by a logically valid argument, you can add objections or distinction between different cases only at the &quot;open ends&quot; of this argumentation which are not justified by further arguments. If you click here, a new map will be created that will be linked to this claim. Nevertheless, you should also argue against the &quot;open ends&quot; of this argument if you do not agree." />
 		<RUS
-			text="Так как это заявление оправдано логически действительным аргументом, Вы можете добавить возражения или различие между различными случаями только в &quot;открытых концах&quot; этой аргументации, которые не оправданы дальнейшими аргументами. Если Вы щелкнете здесь, то новая карта будет создана, который будет связан с этим заявлением. Однако, Вы должны также привести доводы против &quot;открытых концов&quot; этого аргумента, если Вы не соглашаетесь." />
+			text="Так как �?то за�?вление оправдано
+ логиче�?ки дей�?твительным аргументом, Вы можете добавить возражени�? или различие между различными �?луча�?ми только в &quot;открытых концах&quot; �?той аргументации, которые не оправданы дальнейшими аргументами. Е�?ли Вы щелкнете зде�?ь, то нова�? карта будет �?оздана, который будет �?в�?зан �? �?тим за�?влением. Однако, Вы должны также приве�?ти доводы против &quot;открытых концов&quot; �?того аргумента, е�?ли Вы не �?оглашаете�?ь." />
 		<GER
 			text="Da diese Behauptung durch ein logisch gültiges Argument gerechtfertig ist, kannst Du Einwände oder eine Unterscheidung verschiedener Fälle ausschließlich an die &quot;offenen Enden&quot; dieser Argumentation anfügen, die nicht durch weitere Argumente gerechtfertigt sind. Wenn Du diese Option hier auswählst, dann wird eine neue Argumentation begonnen welche mit dieser Behauptung hier verknüpft wird. Du solltest aber auf jeden Fall die &quot;offenen Enden&quot; dieser Argumentation kritisieren, wenn Du der Schlussfolgerung nicht zustimmst." />
 	</ObjectionHelp>
@@ -2481,50 +2330,52 @@ Projekte zu sehen" />
 		5. Revise the formulations of your claim and reasons, and the structure of your argument, as long as it takes to create the best possible argument. You could include exceptions into your claim, or you formulate it more specific." />
 		<RUS
 			text="Поддержка:
-		Действительно ли Ваш аргумент силен и убедителен? Вы должны проверить пять вещей: 
-		1. Ваш аргумент полон, или Вы нуждаетесь в другой причине так, чтобы комбинация двух или больше зависимых причин подтвердила Ваше заявление? Иногда только комбинация нескольких причин может подтвердить заявление. Если Вы нуждаетесь в другой зависимой причине, щелкните кнопку &quot;+&quot; под &quot;поэтому&quot;.
-		2. Действительно ли каждая из Ваших причин является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если какая-либо из Ваших причин или не очевидна или спорна, обеспечьте дальнейшие аргументы, щелкая, кнопку &quot;добавьте...&quot; под той причиной, к которой Вы хотите добавить аргумент поддержки.
-		3. Есть ли дальнейшие независимые аргументы для  Вашего заявления? &quot;Независимые аргументы&quot; обеспечивают дополнительные причины Вашего заявления, которые не зависят от причин, которые Вы уже имеете. Наличие дополнительных независимых аргументов делает Ваше заявление более сильным, чем наличие многих причин, которые взаимно зависимы. Чтобы добавить независимые аргументы, щелкните, &quot;добавьте...&quot; в соответствии с Вашим заявлением.
-		4. Если Вы можете вообразить возможные возражения против одной из Ваших причин, Вы могли бы добавить эти возражения, чтобы опровергнуть их затем дальнейшими аргументами. Это делает  Ваш аргумент более сильным.
-		5. Пересмотрите формулировки своего заявления и причин, и структуры Вашего аргумента, поскольку это требуется, чтобы создать самый лучший возможный аргумент. Вы можете  включать исключения в свое заявление, или Вы сформулируете его более определенно." />
+		Дей�?твительно ли Ваш аргумент �?илен и убедителен? Вы должны проверить п�?ть вещей: 
+		1. Ваш аргумент полон, или Вы нуждаете�?ь в другой причине так, чтобы комбинаци�? двух или больше зави�?имых причин подтвердила Ваше за�?вление? Иногда только комбинаци�? не�?кольких причин может подтвердить за�?вление. Е�?ли Вы нуждаете�?ь в другой зави�?имой причине, щелкните кнопку &quot;+&quot; под &quot;по�?тому&quot;.
+		2. Дей�?твительно ли кажда�? из Ваших причин �?вл�?ет�?�? приемлемой, или одна из них нуждает�?�? в дополнительной поддержке дальнейшими аргументами? Е�?ли кака�?-либо из Ваших причин или не очевидна или �?порна, обе�?печьте дальнейшие аргументы, щелка�?, кнопку &quot;добавьте...&quot; под той причиной, к которой Вы хотите добавить аргумент поддержки.
+		3. Е�?ть ли дальнейшие незави�?имые аргументы дл�?  Вашего за�?влени�?? &quot;�?езави�?имые аргументы&quot; обе�?печивают дополнительные причины Вашего за�?влени�?, которые не зави�?�?т от причин, которые Вы уже имеете. �?аличие дополнительных незави�?имых аргументов делает Ваше за�?вление более �?ильным, чем наличие многих причин, которые взаимно зави�?имы. Чтобы добавить незави�?имые аргументы, щелкните, &quot;добавьте...&quot; в �?оответ�?твии �? Вашим за�?влением.
+		4. Е�?ли Вы можете вообразить возможные возражени�? против одной из Ваших причин, Вы могли бы добавить �?ти возражени�?, чтобы опровергнуть их затем дальнейшими аргументами. �то делает  Ваш аргумент более �?ильным.
+		5. Пере�?мотрите формулировки �?воего за�?влени�? и причин, и �?труктуры Вашего аргумента, по�?кольку �?то требует�?�?, чтобы �?оздать �?амый лучший возможный аргумент. Вы можете  включать и�?ключени�? в �?вое за�?вление, или Вы �?формулируете его более определенно." />
 		<GER
 			text="Ist dein Argument überzeugend und stark genug? Du solltest fünf Dinge bedenken:
 		1. Ist dein Argument vollständig oder brauchst du einen weiteren Grund, so dass die Verbindung von zwei oder mehr abhängigen Gründen deine Behauptung rechtfertigen kann? Manchmal kann allein die Verbindung mehrerer Gründe eine Behauptung rechtfertigen. Falls du einen weiteren abhängigen Grund brauchst, klicke auf das &quot;+&quot; Symbol unter &quot;deshalb&quot;.
 		2. Ist jeder deiner Gründe akzeptabel oder benötigt einer von ihnen Unterstützung durch weitere Argumente? Wenn einer deiner Gründe entweder nicht wirklich evident oder kontrovers ist, entwickle weitere Argumente indem du auf &quot;füge hinzu ...&quot; unter demjenigen Grund klickst zu dem du ein unterstützendes Argument hinzufügen willst.
 		3. Gibt es weitere unabhänge Argumente für deine Behauptung? &quot;Unabhängige Argumente&quot; bieten zusätzliche Gründe für deine Behauptung an welche nicht von den Gründen abhängig sind, die du schon formuliert hast. Mehr unabhängige Gründe zu haben macht deine Argumentation stärker als wenn du nur wechselseitig abhängige Gründe hast. Um weitere unabhängige Argumente hinzuzufügen, klicke auf &quot;füge hinzu ...&quot; unter deiner Schlussfolgerung.
-		4. Falls du dir mögliche Einwände gegen einen deiner Gründe vorstellen kannst, könntest Du diese selbst hinzufügen, um sie dann im nächsten Schritt zu widerlegen. Das macht dein Argument stärker.
-		5. Verbessere die Formulierung deiner Schlussfolgerung und deiner Gründe, wie auch die Struktur deines Arguments, so lange wie nötig um das best mögliche Argument zu konstruieren. Du könntest Ausnahmen in deine Schlussfolgerung einfügen oder du formulierst sie so, dass sie sich genauer auf das bezieht, was du wirklich willst." />
-	</ArgComplete>
+		 4. Falls du dir mögliche Einwände gegen einen deiner Gründe vorstellen kannst, könntest Du diese selbst hinzufügen, um sie dann im nächsten Schritt zu widerlegen. Das macht dein Argument stärker.
+		 5. Verbessere die Formulierung deiner Schlussfolgerung und deiner Gründe, wie auch die Struktur deines Arguments, so lange wie nötig um das best mögliche Argument zu konstruieren. Du könntest Ausnahmen in deine Schlussfolgerung einfügen oder du formulierst sie so, dass sie sich genauer auf das bezieht, was du wirklich willst." />
+ </ArgComplete>
 
-	<Intro>
-		<EN-US
-			text="&lt;p&gt;Your selection will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true (see&lt;u&gt; &lt;a target='_blank'  href='http://agora.gatech.edu/?page_id=257'&gt;this&lt;a&gt;&lt;/u&gt;). The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.&lt;/p&gt;
-	&lt;p&gt;The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated argument in AGORA-net is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.&lt;/p&gt;
+ <Intro>
+ <EN-US
+ text="&lt;p&gt;Your selection will create a logically (deductively) valid argument, meaning that your conclusion is necessarily true if all your premises are true (see&lt;u&gt; &lt;a target='_blank' href='http://agora.gatech.edu/?page_id=257'&gt;this&lt;a&gt;&lt;/u&gt;). The validity of your argument is guaranteed by the fact that you can only select one of those traditional argument forms that are logically valid, and by the fact that the software automatically creates an additional premise that makes your argument valid. This additional premise is called the &quot;enabler&quot; of your argument. If this automatically created enabler does not seem right to you, change the formulation of your reason and/or your claim, or the argument scheme, until the formulation fits and you can accept the truth of the enabler and all your reasons.&lt;/p&gt;
+	&lt;p&gt;The AGORA system provides only logically valid argument schemes in order to motivate reflection and to facilitate the evaluation of the quality of arguments. Since every system-generated
+ argument in AGORA-net is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.&lt;/p&gt;
 	&lt;p&gt;To make your argument as powerful, clear, and convincing as possible, try to get the structure and the formulations right, and select that argument scheme that fits best to what you want to argue.&lt;/p&gt; " />
 		<RUS
-			text="&lt;p&gt;Ваш выбор создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки – истинны (&lt;u&gt; &lt;a target='_blank'  href='http://agora.gatech.edu/?page_id=257'&gt;http://agora.gatech.edu/?page_id=257&lt;a&gt;&lt;/u&gt;). Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает  Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы  не сможете принять истинность «гаранта» и всех Ваших причин. &lt;/p&gt;
-	&lt;p&gt;Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может  быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot; &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения. &lt;/p&gt;
-	&lt;p&gt;Чтобы сделать Ваш аргумент столь же сильным, ясным, сколь и убедительным насколько возможно, попытайтесь разобраться в структуре и формулировках, и выбрать ту схему аргумента, которая подходит лучше всего к тому, что Вы хотите обсудить.&lt;/p&gt;" />
+			text="&lt;p&gt;Ваш выбор �?озда�?т логиче�?ки (дедуктивно) допу�?тимый аргумент, означа�?, что Ваше заключение об�?зательно и�?тинно, е�?ли в�?е Ваши предпо�?ылки – и�?тинны (&lt;u&gt; &lt;a target='_blank'  href='http://agora.gatech.edu/?page_id=257'&gt;http://agora.gatech.edu/?page_id=257&lt;a&gt;&lt;/u&gt;). Законно�?ть Вашего аргумента гарантирует�?�? фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логиче�?ки допу�?тимы, и фактом, что программное обе�?печение автоматиче�?ки �?оздает дополнительную предпо�?ылку, котора�? делает  Ваш аргумент допу�?тимым. �ту дополнительную предпо�?ылку называют &quot;гарантом&quot; Вашего аргумента. Е�?ли �?тот автоматиче�?ки �?оздаваемый &quot;гарант&quot; не кажет�?�? Вам правильным, измените формулировку Вашей причины и/или Вашего за�?влени�?, или �?хемы аргумента, пока формулировка не будет �?оответ�?твовать, и Вы  не �?можете прин�?ть и�?тинно�?ть «гаранта» и в�?ех Ваших причин. &lt;/p&gt;
+	&lt;p&gt;Си�?тема �?ГОР�? обе�?печивает только логиче�?ки допу�?тимые �?хемы аргумента, чтобы мотивировать отражение и облегчить оценку каче�?тва аргументов. Так как каждый произведенный �?и�?темой аргумент в �?ГОРЕ логиче�?ки допу�?тим, Вы можете видеть, каким аргумент должен быть, е�?ли цель �?о�?то�?ла в том, чтобы гарантировать �?праведливо�?ть заключени�?. Вы должны и�?пользовать �?то в каче�?тве возможно�?ти пере�?мотреть компоненты Вашего аргумента, пока он берет, чтобы �?формулировать и �?труктурировать �?амый лучший аргумент. Чтобы до�?тигнуть �?той цели, может  быть необходимо пере�?мотреть формулировку Вашей причины или Вашего за�?влени�?; или могло бы быть необходимо разбить Ваш аргумент и в�?тавить промежуточные причины, �?оздава�? таким образом цепочку или �?еть аргументов вме�?то един�?твенного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение �?, &quot;веро�?тно&quot;, &quot;обычно&quot;, &quot; &quot;при нормальных об�?то�?тель�?твах или &quot;возможно.&quot; Вы можете также в�?тавить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные и�?ключени�? или у�?лови�? в формулировку Вашего заключени�?. &lt;/p&gt;
+	&lt;p&gt;Чтобы �?делать Ваш аргумент �?толь же �?ильным, �?�?ным, �?коль и убедительным на�?колько возможно, попытайте�?ь разобрать�?�? в �?труктуре и формулировках, и выбрать ту �?хему аргумента, котора�? подходит лучше в�?его к тому, что Вы хотите об�?удить.&lt;/p&gt;" />
 		<GER
 			text="&lt;p&gt;Deine Auswahl wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind (siehe &lt;u&gt; &lt;a target='_blank'  href='http://agora.gatech.edu/?page_id=257'&gt;http://agora.gatech.edu/?page_id=257&lt;a&gt;&lt;/u&gt;). Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird &quot;Garant&quot; genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.&lt;/p&gt;
 	&lt;p&gt;Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten  zu unterstützen. Da  jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie &quot;wahrscheinlich&quot;, &quot;gewöhnlich&quot;, &quot;unter normalen Umständen&quot; oder &quot;möglicherweise&quot; abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen. &lt;/p&gt;
 	&lt;p&gt;Um dein Argument so stark, klar und überzeugend wie möglich zu gestalten, versuche die Struktur und die Formulierungen richtig hinzubekommen und wähle das Argumentschema aus, das am besten passt.&lt;p&gt;" />
 	</Intro>
+
 	<NoteIntro> 
 		<EN-US text="Click here for support" />
 		<RUS text="Click here for support " /> <!--TODO Translate RUS-->
 		<GER text="Klicke hier für Erklärungen" />
 	</NoteIntro> 
+
 	<ParticularOrUniversal>
 		<EN-US
 			text="Determine whether this statement is a
 					--particular statement
-					--universal statement
-					" />
+					--universal statement" />
 		<RUS
-			text="Определите, является ли это утверждение
-					- особое утверждение
-					- универсальное утверждение" />
+			text="Определите, �?вл�?ет�?�? ли �?то утверждение
+					- о�?обое утверждение
+					- универ�?альное утверждение" />
 		<GER
 			text="Bestimme ob diese Aussage eine
 					-- Einzelaussage oder
@@ -2535,7 +2386,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement &quot;All birds can fly&quot; can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments." />
 		<RUS
-			text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания." />
+			text="&quot;Универ�?альное утверждение&quot; определено как утверждение, которое может быть �?фаль�?ифицировано одним контрпримером. Таким образом, законы, правила, и в�?е утверждени�?, которые включают, &quot;должны, &quot;�?ледует&quot;, или другие формы, указывающие на нормативно�?ть, �?вл�?ют�?�? универ�?альными утверждени�?ми. В�?е о�?тальное ра�?�?матривают как &quot;о�?обое утверждение,&quot; включа�? за�?влени�? о возможно�?т�?х. Различие важно только отно�?ительно по�?лед�?твий различных форм возражений: Е�?ли предпо�?ылка аргумента &quot;побеждена&quot;, то заключение и в�?�? цепь аргументов, котора�? зави�?ит от �?той предпо�?ылки, побеждены также; но е�?ли предпо�?ылка только &quot;подвергнута �?омнению&quot; или ра�?критикована, то утверждение и в�?е зави�?�?щее только подвергнуты �?омнению, но не побеждены. В то врем�? как универ�?альные за�?влени�? могут легко быть побеждены един�?твенным контрпримером, зави�?ит от �?оглашени�? �?реди уча�?тников ди�?ку�?�?ии, до�?таточен ли контрдовод против о�?обого утверждени�? чтобы победить �?то, даже при том, что в�?егда до�?таточно подвергнуть �?омнению �?то и переме�?тить, таким образом, брем�? доказывани�?." />
 		<GER
 			text="Eine &quot;universelle Aussage&quot; ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie &quot;man sollte&quot;, &quot;man muss&quot; und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als &quot;Einzelaussagen&quot; behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments &quot;widerlegt&quot; ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur &quot;kritisiert&quot; ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern." />
 	</ParticularUniversalClarification>
@@ -2544,19 +2395,19 @@ Projekte zu sehen" />
 		<EN-US
 			text="You need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme any time by clicking on &quot;ArgScheme.&quot;" />
 		<RUS
-			text="Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;." />
+			text="Вы должны определить, �?вл�?ют�?�? ли Ваше за�?вление и причины универ�?альными или о�?обыми за�?влени�?ми. Переме�?тите �?вою мышь через �?ти возможно�?ти дл�? дальнейшего объ�?�?нени�? и щелкните, чтобы переключить�?�? от одного до другого. Вы можете также изменить �?хему аргумента, нажима�? &quot;на ArgScheme&quot;." />
 		<GER
 			text="Du musst bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf &quot;ArgSchema&quot; klickst, kannst Du das Argumentations-Schema jederzeit wechseln." />
 	</PartUnivReq>
 
 	<ProjectExplanation>
 		<EN-US
-			text="Create a password-protected project space. Only the name of your project will be publicly visible. If you provide a URL in your user info, others can contact you to get access to your project. " />
+			text="Only the name of your project and your name will be publicly visible. If you provide a URL in your registration data, others can contact you to become a member in your project. " />
 		<RUS
-			text="Create a password-protected project space. Only the name of your project will be publicly visible. If you provide a URL in your user info, others can contact you to get access to your project." /><!--TODO: 
+			text="Only the name of your project and your name will be publicly visible. If you provide a URL in your registration data, others can contact you to become a member in your project. " /><!--TODO: 
 			Translate RUS-->
 		<GER
-			text="Eröffne einen Passwort-geschützten Projekt-Bereich. Allein der Name deines Projektes wird öffentlich sichtbar sein. Wenn du eine URL in deinen Benutzerdaten angibst, dann können dich andere kontaktieren um Zugang zu deinem Projekt zu erhalten. " />
+			text="Allein der Name deines Projektes und dein Name wird öffentlich sichtbar sein. Wenn du eine URL in deinen Benutzerdaten angibst, dann können dich andere kontaktieren um Mitglied in deinem Projekt zu werden. " />
 	</ProjectExplanation>
 
 	<WhyRegister><!--the following is the same as RegistrationNote -->
@@ -2568,46 +2419,47 @@ Projekte zu sehen" />
 		We recommend that you provide a URL so that other users can find a way to contact you, for example if they want to join a password protected project that you created or if they want to collaborate with you outside of AGORA-net. Provide your Facebook address or any other URL. 
 		The AGORA project is in compliance with &lt;u&gt;&lt;a target='_blank'  href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;." />
 		<RUS
-			text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя-автора, потому что должно быть ясно, кто заявляет что. 
-		Дополнительно, следующая информация станет видимой (только для зарегистрированных участников), нависая над именем пользователя: имя; фамилия; URL (если предоставлен) .  
-		Пожалуйста, не используйте свой Georgia Tech или другие пароли. Вы можете выбрать имя пользователя, которое не раскрывает Вашей личности.  
-		Ваш адрес электронной почты никогда не будет выдаваться публично. Он будет использоваться только для предоставления Вам пароля замены в случае, если  Вы забываете свой текущий.  
-		Мы рекомендуем, чтобы Вы обеспечили URL так, чтобы другие пользователи могли найти способ связаться с Вами, например если они хотят присоединиться к защищённому паролем проекту, который Вы создали или если они хотят сотрудничать с Вами за пределами СЕТИ АГОРЫ. Предоставьте Ваш Facebook-адрес для обращения или любой другой URL.  
-		Проект АГОРА соответствует Техническим Гарантиям Защиты данных Georgia Tech's - &lt;u&gt;&lt;a target='_blank'  href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;" />
-		<GER
-			text="BEACHTE: Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA-net Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. 
-		Außerdem werden die folgenden Informationen sichtbar (nur für registrierte Personen) wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). 
-		Bitte verwende kein Passwort, dass du schon für andere Zwecke verwendest. 
-		Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für den Fall genutzt, dass dir ein Ersatz-Passwort zugeschickt werden muss. 
-		Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. 
-		Das AGORA-Projekt folgt den Richtlinien die in Georgia Techs Data Protection Safeguards niedergelegt sind: &lt;u&gt;&lt;a target='_blank'  href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;." />
-	</WhyRegister>
+			text="З�?МЕЧ�?�?ИЕ: Реги�?траци�? требует�?�?, чтобы дифференцировать�?�? между людьми, которые уча�?твуют в дебатах или �?отрудниче�?тве. Каждое тек�?товое поле в картах аргумента �?ГОРЫ покажет им�? пользовател�?-автора, потому что должно быть �?�?но, кто за�?вл�?ет что. 
+		Дополнительно, �?ледующа�? информаци�? �?танет видимой (только дл�? зареги�?трированных уча�?тников), нави�?а�? над именем пользовател�?: им�?; фамили�?; URL (е�?ли предо�?тавлен) .  
+		Пожалуй�?та, не и�?пользуйте �?вой Georgia Tech или другие пароли. Вы можете выбрать им�? пользовател�?, которое не ра�?крывает Вашей лично�?ти.  
+		Ваш адре�? �?лектронной почты никогда не будет выдавать�?�? публично. Он будет и�?пользовать�?�? только дл�? предо�?тавлени�? Вам парол�? замены в �?лучае, е�?ли  Вы забываете �?вой текущий.  
+		Мы рекомендуем, чтобы Вы обе�?печили URL так, чтобы другие пользователи могли найти �?по�?об �?в�?зать�?�? �? Вами, например е�?ли они хот�?т при�?оединить�?�? к защищённому паролем проекту, который Вы �?оздали или е�?ли они хот�?т �?отрудничать �? Вами за пределами СЕТИ �?ГОРЫ. Предо�?тавьте Ваш Facebook-адре�? дл�? обращени�?
+ или любой другой URL. 
+ Проект �?ГОР�? �?оответ�?твует Техниче�?ким Гаранти�?м Защиты данных Georgia Tech's - &lt;u&gt;&lt;a target='_blank'  href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;" />
+ <GER
+ text="BEACHTE: Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA-net Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. 
+ Außerdem werden die folgenden Informationen sichtbar (nur für registrierte Personen) wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). 
+ Bitte verwende kein Passwort, dass du schon für andere Zwecke verwendest. 
+ Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für den Fall genutzt, dass dir ein Ersatz-Passwort zugeschickt werden muss. 
+ Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. 
+ Das AGORA-Projekt folgt den Richtlinien die in Georgia Techs Data Protection Safeguards niedergelegt sind: &lt;u&gt;&lt;a target='_blank' href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;." />
+ </WhyRegister>
 
 
 
 
 
-	<!--ARGUMENT PIECES -->
+ <!--ARGUMENT PIECES -->
 
-	<!-- These translations can be used in arguments so long as the language 
-		allows similar phrase structure. A more robust system (see translation_schemes 
-		for an idea) would be needed if a language had greatly different argumentation 
-		layout. -->
-	<ArgAnd>
-		<EN-US text=" and " />
-		<RUS text=" и " />
-		<GER text=" und " />
-	</ArgAnd>
+ <!-- These translations can be used in arguments so long as the language 
+ allows similar phrase structure. A more robust system (see translation_schemes 
+ for an idea) would be needed if a language had greatly different argumentation 
+ layout. -->
+ <ArgAnd>
+ <EN-US text=" and " />
+ <RUS text=" и " />
+ <GER text=" und " />
+ </ArgAnd>
 
-	<ArgAndIf>
-		<EN-US text=" and if" />
-		<RUS text=" и если " />
+ <ArgAndIf>
+ <EN-US text=" and if" />
+		<RUS text=" и е�?ли " />
 		<GER text=", und wenn " />
 	</ArgAndIf>
 
 	<ArgCannotBe>
 		<EN-US text="It cannot be the case, at the same time, that " />
-		<RUS text="Это не может иметь место, в то же самое время, что " />
+		<RUS text="�то не может иметь ме�?то, в то же �?амое врем�?, что " />
 		<GER text="Es kann nicht zugleich der Fall sein, dass " />
 	</ArgCannotBe>
 
@@ -2625,26 +2477,26 @@ Projekte zu sehen" />
 
 	<ArgEquiv>
 		<EN-US text=" are equivalent" />
-		<RUS text=" эквивалентны" />
+		<RUS text=" �?квивалентны" />
 		<GER text=" sind equivalent" />
 	</ArgEquiv>
 
 	<ArgIf>
 		<EN-US text="if " />
-		<RUS text="если " />
+		<RUS text="е�?ли " />
 		<GER text="wenn " />
 	</ArgIf>
 
 	<ArgIfCap>
 		<EN-US text="If " />
-		<RUS text="Если " />
+		<RUS text="Е�?ли " />
 		<GER text="Wenn " />
 	</ArgIfCap>
 
 
 	<ArgIff>
 		<EN-US text=" if and only if " />
-		<RUS text=", если и только если " />
+		<RUS text=", е�?ли и только е�?ли " />
 		<GER text=" genau dann, wenn " />
 	</ArgIff>
 
@@ -2655,26 +2507,26 @@ Projekte zu sehen" />
 	</ArgImplies>
 
 	<ArgNecessaryCond>
-		<EN-US text=" is a necessary condition if " />
-		<RUS text=" - необходимое условие для " />
-		<GER text=" ist eine notwendige Bedingung wenn " />
+		<EN-US text=" is a necessary condition for " />
+		<RUS text=" - необходимое у�?ловие дл�? " />
+		<GER text=" ist eine notwendige Bedingung für " />
 	</ArgNecessaryCond>
 
 	<ArgNecSuf>
-		<EN-US text=" is a necessary and sufficient condition if " />
-		<RUS text=" - необходимое и достаточное условие для " />
-		<GER text=" ist eine notwendige und hinreichende Bedingung wenn " />
+		<EN-US text=" is a necessary and sufficient condition for " />
+		<RUS text=" - необходимое и до�?таточное у�?ловие дл�? " />
+		<GER text=" ist eine notwendige und hinreichende Bedingung für " />
 	</ArgNecSuf>
 
 	<ArgNotCase>
 		<EN-US text="It is not the case that " />
-		<RUS text="Не то, что " />
+		<RUS text="�?е то, что " />
 		<GER text="Es ist nicht der Fall, dass " />
 	</ArgNotCase>
 
 	<ArgOnlyIf>
 		<EN-US text=" only if " />
-		<RUS text=", только если " />
+		<RUS text=", только е�?ли " />
 		<GER text=" allein dann, wenn " />
 	</ArgOnlyIf>
 
@@ -2686,14 +2538,14 @@ Projekte zu sehen" />
 
 	<ArgProvidedThat>
 		<EN-US text=" provided that " />
-		<RUS text=" при условии, что " />
+		<RUS text=" при у�?ловии, что " />
 		<GER text=", gegeben dass: " />
 	</ArgProvidedThat>
 
 	<ArgSufficientCond>
-		<EN-US text=" is a sufficient condition if " />
-		<RUS text=" - достаточное условие для " />
-		<GER text=" ist eine hinreichende Bedingung wenn " />
+		<EN-US text=" is a sufficient condition for " />
+		<RUS text=" - до�?таточное у�?ловие дл�? " />
+		<GER text=" ist eine hinreichende Bedingung für " />
 	</ArgSufficientCond>
 
 	<ArgThat>
@@ -2710,17 +2562,18 @@ Projekte zu sehen" />
 
 	<ArgTherefore>
 		<EN-US text="; therefore, " />
-		<RUS text="; поэтому, " />
+		<RUS text="; по�?тому, " />
 		<GER text="; deshalb, " />
 	</ArgTherefore>
 
 	<ArgWhenever>
 		<EN-US text="Whenever " />
-		<RUS text="Всякий раз, когда " />
+		<RUS text="В�?�?кий раз, когда " />
 		<GER text="Immer wenn " />
 	</ArgWhenever>
 
-	<!--ADD CONTINUATIONS -->
+	<!--ADD CONTINUATIONS ? -->
+
 	<!--Additions that are available through add under each node -->
 	<AddAnotherReason>
 		<EN-US text="add another reason" />
@@ -2730,7 +2583,7 @@ Projekte zu sehen" />
 
 	<AddArg>
 		<EN-US text="an argument for this statement" />
-		<RUS text="аргумент для этого утверждения" />
+		<RUS text="аргумент дл�? �?того утверждени�?" />
 		<GER text="ein Argument für diese Aussage" />
 	</AddArg>
 
@@ -2748,27 +2601,27 @@ Projekte zu sehen" />
 
 	<AddDist>
 		<EN-US text="a distinction between different cases for this statement" />
-		<RUS text="различие между различными случаями для этого утверждения" />
+		<RUS text="различие между различными �?луча�?ми дл�? �?того утверждени�?" />
 		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung" />
 	</AddDist>
 
 	<AddFA>
 		<EN-US text="a friendly amendment for a reformulation of this claim" />
-		<RUS text="дружественная поправка для переформулировки этого заявления" />
+		<RUS text="друже�?твенна�? поправка дл�? переформулировки �?того за�?влени�?" />
 		<GER
 			text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung" />
 	</AddFA>
 
 	<AddIntermediate>
 		<EN-US text="an intermediate reason to the reason on the right" />
-		<RUS text="промежуточная причина для причины справа" />
+		<RUS text="промежуточна�? причина дл�? причины �?права" />
 		<GER
 			text="einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite" />
 	</AddIntermediate>
 
 	<AddIntermediateToSecond>
 		<EN-US text="an intermediate reason to the second reason on the right" />
-		<RUS text="промежуточная причина для второй причины справа" />
+		<RUS text="промежуточна�? причина дл�? второй причины �?права" />
 		<GER
 			text="einen dazwischen geschaltenen Grund zu dem zweiten Grund auf der rechten Seite" />
 	</AddIntermediateToSecond>
@@ -2777,20 +2630,20 @@ Projekte zu sehen" />
 		<EN-US
 			text="an intermediate reason to the third/fourth/fifth/sixth/seventh reason on the right" />
 		<RUS
-			text="промежуточная причина для third/fourth/fifth/шестой/седьмой причины справа" />
+			text="промежуточна�? причина дл�? third/fourth/fifth/ше�?той/�?едьмой причины �?права" />
 		<GER
 			text="einen dazwischen geschaltenen Grund zu dem dritten/vierten/fünften/sechsten/siebten Grund auf der rechten Seite" />
 	</AddIntermediateLater>
 
 	<AddLinkToMap>
 		<EN-US text="a link to another argument map" />
-		<RUS text="связь с другой картой аргумента" />
+		<RUS text="�?в�?зь �? другой картой аргумента" />
 		<GER text="eine Verknüpfung zu einer anderen Argumentation" />
 	</AddLinkToMap>
 
 	<AddLinkToResource>
 		<EN-US text="a link to resources" />
-		<RUS text="связь с ресурсами" />
+		<RUS text="�?в�?зь �? ре�?ур�?ами" />
 		<GER text="eine Verknüpfung zu Materialien" />
 	</AddLinkToResource>
 
@@ -2798,7 +2651,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that defeats this statement by a counter argument" />
 		<RUS
-			text="возражение, которое побеждает это утверждение встречным аргументом" />
+			text="возражение, которое побеждает �?то утверждение в�?тречным аргументом" />
 		<GER
 			text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt." />
 	</AddObjArg>
@@ -2807,7 +2660,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that defeats this universal statement by a counter example" />
 		<RUS
-			text="возражение, которое побеждает это универсальное утверждение встречным примером" />
+			text="возражение, которое побеждает �?то универ�?альное утверждение в�?тречным примером" />
 		<GER
 			text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt." />
 	</AddObjEx>
@@ -2816,7 +2669,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that negates this statement without providing reasons (implies a request for justification)" />
 		<RUS
-			text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании)," />
+			text="возражение, которое отрицает �?то утверждение, не обе�?печива�? причины (подразумевает запро�? об оправдании)," />
 		<GER
 			text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)" />
 	</AddObjNeg>
@@ -2825,20 +2678,20 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)" />
 		<RUS
-			text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании)," />
+			text="возражение, что вопро�?ы �?то утверждение, о�?нованное на невеже�?тве, �?омнении, или предположении наоборот (подразумевает запро�? об оправдании)," />
 		<GER
 			text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)" />
 	</AddObjQ>
 
 	<AddPaste>
 		<EN-US text="paste from clipboard" />
-		<RUS text="вставить из клипборда(буфера)" />
+		<RUS text="в�?тавить из клипборда(буфера)" />
 		<GER text="kopiere aus dem Zwischenspeicher" />
 	</AddPaste>
 
 	<AddQ>
 		<EN-US text="a question" />
-		<RUS text="вопрос" />
+		<RUS text="вопро�?" />
 		<GER text="eine Frage" />
 	</AddQ>
 
@@ -2850,7 +2703,7 @@ Projekte zu sehen" />
 
 	<AddUnspecConn>
 		<EN-US text="an unspecified connection to another text box" />
-		<RUS text="неуказанная связь с другим текстовым окном" />
+		<RUS text="неуказанна�? �?в�?зь �? другим тек�?товым окном" />
 		<GER text="eine nicht-vorgegebene Art der Verbindung" />
 	</AddUnspecConn>
 
@@ -2899,7 +2752,7 @@ Projekte zu sehen" />
 	<!--WORDS IN LINES -->
 	<objects>
 		<EN-US text="objects to" />
-		<RUS text="возражения к" />
+		<RUS text="возражени�? к" />
 		<GER text="Einwand gegen" />
 	</objects>
 
@@ -2919,7 +2772,7 @@ Projekte zu sehen" />
 	<AnotherCond>
 		<EN-US
 			text="Do you want to insert another conditional statement that is dependent on" />
-		<RUS text="Вы хотите вставить другое зависимое условное заявление " />
+		<RUS text="Вы хотите в�?тавить другое зави�?имое у�?ловное за�?вление " />
 		<GER
 			text="Willst Du einen weiteren konditionalen Syllogismus einfügen, der abhängig ist von " />
 	</AnotherCond>
@@ -2927,130 +2780,192 @@ Projekte zu sehen" />
 	<FirstAlt>
 		<EN-US
 			text="--the first alternative of the alternative statement on the right" />
-		<RUS text="- первая альтернатива для альтернативного заявления справа" />
+		<RUS text="- перва�? альтернатива дл�? альтернативного за�?влени�? �?права" />
 		<GER
 			text="--der ersten Alternative der alternativen Behauptung auf der rechten Seite" />
 	</FirstAlt>
 
 	<SecondAlt>
 		<EN-US text="-- the second alternative" />
-		<RUS text="- вторая альтернатива" />
+		<RUS text="- втора�? альтернатива" />
 		<GER text="--der zweiten Alternative" />
 	</SecondAlt>
 	
 	
-	<!--  create a new project -->
+	<!--  create a new project ? -->
+
 	<ProjectName>
 		<EN-US text="[Enter a name for your project]" />
 		<RUS text="[Enter a name for your project]" />  <!--TODO Translate RUS-->
-		<GER text="[Enter a name for your project]" />  <!--TODO Translate GER-->
+		<GER text="[Gib einen Namen für dein Projekt ein]" /> 
 	</ProjectName>
 	
 	<ProjectType>
 		<EN-US text="Select" />
 		<RUS text="Select" />  <!--TODO Translate RUS-->
-		<GER text="Select" />  <!--TODO Translate GER-->
+		<GER text="Wähle aus" />  
 	</ProjectType>
 	
 	<ProjectTypeCollaborative>
 		<EN-US text="Collaborative" />
 		<RUS text="Collaborative" />  <!--TODO Translate RUS-->
-		<GER text="Collaborative" />  <!--TODO Translate GER-->
+		<GER text="Kollaborativ" /> 
 	</ProjectTypeCollaborative>
+
+
+	<ProjectTypeHelp>
+		<EN-US text="Whereas in  a &quot;collaborative project&quot; every project member can change or delete any entry on a map, in an &quot;adversarial project&quot; users can change and delete only their own entries, just as on public maps" />
+		<RUS text="Whereas in  a &quot;collaborative project&quot; every project member can change or delete any entry on a map, in an &quot;adversarial project&quot; users can change and delete only their own entries, just as on public maps" />  <!--TODO Translate RUS-->
+		<GER text="Während in einem &quot;kollaborativen Projekt&quot; jedes Projektmitglied jeden Eintrag in einer Argumentation verändern oder löschen kann, können in einem &quot;nicht-kollaborativen Projekt&quot; allein die eigenen Einträge gelöscht oder verändert werden, genau wie in öffentlichen Argumentationen" />  
+	</ProjectTypeHelp>
 	
 	<ProjectTypeCollaborativeHelp>
 		<EN-US text="In a &quot;collaborative project&quot; every project member can change or delete any entry on a map" />
 		<RUS text="In a &quot;collaborative project&quot; every project member can change or delete any entry on a map" />  <!--TODO Translate RUS-->
-		<GER text="In a &quot;collaborative project&quot; every project member can change or delete any entry on a map" />  <!--TODO Translate GER-->
+		<GER text="In einem &quot;kollaborativen Projekt&quot; kann jedes Projektmitglied jeden Eintrag in einer Argumentation verändern oder löschen" />  
 	</ProjectTypeCollaborativeHelp>
 	
 	<ProjectTypeAdversarial>
 		<EN-US text="Adversarial" />
 		<RUS text="Adversarial" />  <!--TODO Translate RUS-->
-		<GER text="Adversarial" />  <!--TODO Translate GER-->
+		<GER text="Nicht-kollaborativ" />  
 	</ProjectTypeAdversarial>
 	
 	<AddProjectMembers>
 		<EN-US text="Add members" />
 		<RUS text="Add members" />  <!--TODO Translate RUS-->
-		<GER text="Add members" />  <!--TODO Translate GER-->
+		<GER text="Füge Mitglieder hinzu" />  
 	</AddProjectMembers>
+	
+	
+	<DeleteProject>
+		<EN-US text="You can only delete projects that do not contain maps created by other users or other projects. Your own maps will be moved into your private project space when you delete a project" />
+		<RUS text="Add members" />  <!--TODO Translate RUS-->
+		<GER text="Füge Mitglieder hinzu" />  
+	</DeleteProject>
 	
 	<AddProjectMembersHelp>
 		<EN-US text="Add members" />
 		<RUS text="Add members" />  <!--TODO Translate RUS-->
-		<GER text="Add members" />  <!--TODO Translate GER-->
+		<GER text="Füge Mitglieder hinzu" />  
 	</AddProjectMembersHelp>
 	
 	<ProjectTypeAdversarialHelp>
 		<EN-US text="In a &quot;adversarial project&quot; same rules and permissions apply as on public maps" />
 		<RUS text="In a &quot;adversarial project&quot; same rules and permissions apply as on public maps" />  <!--TODO Translate RUS-->
-		<GER text="In a &quot;adversarial project&quot; same rules and permissions apply as on public maps" />  <!--TODO Translate GER-->
+		<GER text="In einem &quot;nicht-kollaborativen Projekt&quot; gelten dieselben Regeln und Beschränkungen wie in öffentlichen Argumentationen" />  
 	</ProjectTypeAdversarialHelp>
 	
 	<ProjectNameUnique>
-		<EN-US text="Project name already taken.Could not create a project" />
-		<RUS text="Project name already taken.Could not create a project" />  <!--TODO Translate RUS-->
-		<GER text="Project name already taken.Could not create a project" />  <!--TODO Translate GER-->
+		<EN-US text="Project name already taken. Use another, more specific name" />
+		<RUS text="Project name already taken. Use another, more specific name" />  <!--TODO Translate RUS-->
+		<GER text="Dieser Name ist bereits vergeben. Verwende einen anderen, genauer spezifizierten Namen" />  
 	</ProjectNameUnique>
 	
+	<MapNameUnique>
+		<EN-US text="This name is already taken. Use another, more specific name" />
+		<RUS text="This name is already taken. Use another, more specific name" />  <!--TODO Translate RUS-->
+		<GER text="Dieser Name ist bereits vergeben. Verwende einen anderen, genauer spezifizierten Namen" />  
+	</MapNameUnique>
+	
+
 	<ProjectCreated>
 		<EN-US text="Project has been created." />
 		<RUS text="Project has been created." />  <!--TODO Translate RUS-->
-		<GER text="Project has been created." />  <!--TODO Translate GER-->
+		<GER text="Dein Projekt wurde eingerichtet." />  
 	</ProjectCreated>
+
 <SelectAdmin>
-		<EN-US text="Select As New Administrator" />
-		<RUS text="Select New New Administrator." />  <!--TODO Translate RUS-->
-		<GER text="Select New New Administrator" />  <!--TODO Translate GER-->
+		<EN-US text="Select as new administrator" />
+		<RUS text="Select as new administrator " />  <!--TODO Translate RUS-->
+		<GER text="Wähle als neuen Projekt-Verwalter aus" />  
 </SelectAdmin>
+
+<SelectAdminQuestion>
+		<EN-US text="Are you sure?" />
+		<RUS text="Are you sure? " />  <!--TODO Translate RUS-->
+		<GER text="Bist du sicher?" />  
+</SelectAdminQuestion>
+
+<SelectAdminWarning>
+		<EN-US text="If you select a new administrator, you will loose all the rights and permissions you can see on this screen" />
+		<RUS text="If you select a new administrator, you will loose all the rights and permissions you can see on this screen" />  <!--TODO Translate RUS-->
+		<GER text="Wenn du einen neuen Projekt-Verwalter auswählst, verlierst du alle Rechte und Optionen, die du auf dieser Seite sehen kannst." />  
+</SelectAdminWarning>
+
 <RemoveMembers>
 		<EN-US text="Remove Members" />
 		<RUS text="Remove Members" />  <!--TODO Translate RUS-->
-		<GER text="Remove Members" />  <!--TODO Translate GER-->
+		<GER text="Entferne Mitglieder" />  
 </RemoveMembers>
+
+<RemoveMembersHelp>
+		<EN-US text="If you remove a member from the project, all the maps and projects created by this user will be moved into this user's Private project space (in Projects / Private, for individual users / [user name])." />
+		<RUS text="If you remove a member from the project, all the maps and projects created by this user will be moved into this user's Private project space (in Projects / Private, for individual users / [user name])." />  <!--TODO Translate RUS-->
+		<GER text="Wenn du ein Mitglieder von einem Projekt entfernst, werden alle Argumentation und Projekte dieses Nutzers in dessen oder deren Privaten Projektbereich verschoben (in Projekte / Private, for individual users / [Nutzername])" />  
+</RemoveMembersHelp>
+
+
 <Projects>
 		<EN-US text="Projects" />
 		<RUS text="Projects" />  <!--TODO Translate RUS-->
-		<GER text="Projects" />  <!--TODO Translate GER-->
+		<GER text="Projekte" />  
 </Projects>
+
 <MemberProjects>
-		<EN-US text="Projects in which I am a Member" />
-		<RUS text="Projects in which I am a Member" />  <!--TODO Translate RUS-->
-		<GER text="Projects in which I am a Member" />  <!--TODO Translate GER-->
+		<EN-US text="Projects in which I am a member" />
+		<RUS text="Projects in which I am a member" />  <!--TODO Translate RUS-->
+		<GER text="Projekte in denen ich Mitglied bin" />  
 </MemberProjects>
+
+	 <ClickToRelocateProject>
+		 <EN-US text="Click to select another location for your project. If you want to move it into a private project, you need to be a member of this project." />
+		 <RUS text="Click to select another location for your project.  If you want to move it into a private project, you need to be a member of this project." /><!--TODO Translate RUS-->
+		 <GER text="Klicke um dein Projekt woanders hin zu verschieben. Wenn du es in ein privates Projekt  verschieben willst, musst du Mitglied dieses Projektes sein." />
+	 </ClickToRelocateProject>
+
+
 <ContributionMaps>
 		<EN-US text="Maps to which I contributed" />
 		<RUS text="Maps to which I contributed" />  <!--TODO Translate RUS-->
-		<GER text="Maps to which I contributed" />  <!--TODO Translate GER-->
+		<GER text="Argumente zu denen ich beigetragen habe" />  
 </ContributionMaps>
+
 <Maps>
 		<EN-US text="Maps" />
 		<RUS text="Maps" />  <!--TODO Translate RUS-->
-		<GER text="Maps" />  <!--TODO Translate GER-->
+		<GER text="Argumentationen" />  
 </Maps>
+
 <Members>
 		<EN-US text="Members" />
 		<RUS text="Members" />  <!--TODO Translate RUS-->
-		<GER text="Members" />  <!--TODO Translate GER-->
+		<GER text="Mitglieder" />  
 </Members>
+
 <CreateMapInProject>
 		<EN-US text="Create a map within this project" />
 		<RUS text="Create a map within this project" />  <!--TODO Translate RUS-->
-		<GER text="Create a map within this project" />  <!--TODO Translate GER-->
+		<GER text="Starte eine Argumentation innerhalb dieses Projektes" />  
 </CreateMapInProject>
+
 <FileEmptyError>
-		<EN-US text="Empty file has been specified hence could not import" />
-		<RUS text="Empty file has been specified hence could not import" />  <!--TODO Translate RUS-->
-		<GER text="Empty file has been specified hence could not import" />  <!--TODO Translate GER-->
+		<EN-US text="The specified file is empty" />
+		<RUS text="The specified file is empty" />  <!--TODO Translate RUS-->
+		<GER text="Die ausgewählte Datei ist leer" />  
 </FileEmptyError>
+
 <FileEmptyError>
 		<EN-US text="File could not be imported." />
 		<RUS text="File could not be imported." />  <!--TODO Translate RUS-->
-		<GER text="File could not be imported." />  <!--TODO Translate GER-->
+		<GER text="Datei konnte nicht importiert werden." />  
 </FileEmptyError>
+
+
+
 	<!-- SPECIAL -->
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <ИМЯ> <объекта> GERMAN: 
 		<Name>s <object> -->
 
 </Translations>
+

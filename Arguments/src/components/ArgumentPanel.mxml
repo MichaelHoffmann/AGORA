@@ -397,7 +397,7 @@
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					ArgumentController.getInstance().deleteNodes(this);
 				} else {
-					Alert.show("Guests to AGORA cannot edit maps");
+					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			
@@ -405,7 +405,7 @@
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					ArgumentController.getInstance().changeType(model.ID);
 				} else {
-					Alert.show("Guests to AGORA cannot edit maps");
+					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			
@@ -414,7 +414,7 @@
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					ArgumentController.getInstance().showAddMenu(this);
 				} else {
-					Alert.show("Guests to AGORA cannot edit maps");
+					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			
@@ -423,7 +423,7 @@
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					ViewController.getInstance().changeToEdit(this);	
 				} else {
-					Alert.show("Guests to AGORA cannot edit maps");
+					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			
@@ -431,7 +431,7 @@
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					ArgumentController.getInstance().saveText(model);
 				} else {
-					Alert.show("Guests to AGORA cannot edit maps");
+					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			
@@ -445,7 +445,7 @@
 						}
 					}
 				} else {
-					Alert.show("Guests to AGORA cannot edit maps");
+					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			
@@ -471,7 +471,7 @@
 						Alert.show(error.toString()+"1");
 					}
 				} else {
-					Alert.show("Guests to AGORA cannot edit maps");
+					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			

@@ -133,7 +133,7 @@ package Controller
 		}
 
 		protected function onMapCreatedFault(event:AGORAEvent):void{
-			Alert.show("Map name needs to be unique");
+			Alert.show(Language.lookup("MapNameUnique"));
 			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
 			AGORAController.getInstance().unfreeze();
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
