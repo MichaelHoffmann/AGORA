@@ -421,10 +421,10 @@
 								<s:Button id="createProjBtn" enabled="false" visible="false"
 										  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
 								</s:Button >
-								<s:Button label="refresh" click = "{updateWOA(event)}" />
+								<s:Button label="{Language.lookup('Refresh')}" click = "{updateWOA(event)}" />
 							</s:HGroup>
 							<s:Label id="clickthroughCategories" visible="false" 
-									  text="If you want to create a private project space, click through the categories above to determine its location"/>
+									  text="{Language.lookup('CreateProject')}"/>
 						</s:VGroup>
 			</s:NavigatorContent>
 			
@@ -459,21 +459,21 @@
 					</components:MyProjectsPane> 
 					<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
 						<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth="100" percentHeight="10">
-								<s:Button label="Create a new project in this project" visible = "false" click="
+								<s:Button label="{Language.lookup('NewProject')}" visible = "false" click="
 										  {
 										  this.projectInProjectButton_OnClick(event);
 										  return;
 										  }
 										  
 										  " id="ProjBtn" />
-								<s:Button label="Create a Map in this project" visible = "false" click="
+								<s:Button label="{Language.lookup('NewMap')}" toolTip="{Language.lookup('NewMapToolTip')}" visible = "false" click="
 										  {
 										  this.createMapinProjBtn_clickHandler(event);
 										  return;
 										  }
 										  
 										  " id="createMapinProjectBtn" />
-							<s:Button label="refresh" click = "{updateProject(event)}" />
+							<s:Button label="{Language.lookup('Refresh')}" click = "{updateProject(event)}" />
 
 							</s:HGroup>
 					</s:HGroup>
@@ -497,11 +497,11 @@
 						<s:Button id="createProjBtnContributions" enabled="false" visible="false"
 								  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
 						</s:Button >
-						<s:Button label="refresh" click = "{updateMyContributions(event)}" />
+						<s:Button label="{Language.lookup('Refresh')}" click = "{updateMyContributions(event)}" />
 
 					</s:HGroup>
 					<s:Label id="clickthruCategories" visible="false" 
-							 text="If you want to create a private project space, click through the categories above to determine its location"/>
+							 text="{Language.lookup('CreateProject')}"/>
 				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('Search')}">

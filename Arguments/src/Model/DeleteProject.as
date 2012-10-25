@@ -4,6 +4,7 @@ package Model
     
     import ValueObjects.*;
     
+    import classes.Language;
     import flash.events.*;
     
     import mx.controls.Alert;
@@ -43,7 +44,7 @@ package Model
 
                 if (arg1.result.hasOwnProperty("error")) 
                 {
-					mx.controls.Alert.show(arg1.result.error.@text);
+					mx.controls.Alert.show(Language.lookup(arg1.result.error.@text));
 
                     dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.DELETE_PROJECT_FAILED));
                     return;

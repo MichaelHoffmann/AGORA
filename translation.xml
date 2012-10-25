@@ -34,58 +34,6 @@
 
 <!--newly added texts that need to be referred to in the code; copy to the correct location in this document. -->
 
-<!--TODO Connect top level categories with the translations you find under:--><!--Categories-->
-
-<!--TODO Additionally, we need the following for this screen:-->
-<Rename>
-	 <EN-US text="Rename"/> 
-	 <RUS text="Rename"/> <!--TODO Translate RUS-->
-	 <GER text="Ändere Namen"/> 
-</Rename>
-
-<!--TODO Additionally, we need the following for this screen (instead of the hard-coded “Import users”:-->
-<ImportMembers>
-	 <EN-US text="Import members from file"/> 
-	 <RUS text="Import members from file"/> <!--TODO Translate RUS-->
-	 <GER text="Lade Mitglieder aus Datei"/> 
-</ImportMembers>
-
-<!--TODO “The project has sub project. Hence cannot be deleted” is hard coded. Use instead:-->
-<ErrorDeleteProject>
-		<EN-US text="This project contains sub-projects or maps created by other users. It cannot be deleted." />
-		<RUS text="This project contains sub-projects or maps created by other users. It cannot be deleted" />  <!--TODO Translate RUS-->
-		<GER text="Dieses Projekt enthält andere Projekte oder Argumente, die von anderen Nutzern geschaffen wurden. Es kann nicht gelöscht werden." />  
-</ErrorDeleteProject>
-
-<!--TODO For moving projects to another location, we need a new text (not the one for maps):-->
-<MoveProject>
-		<EN-US text="Click through the categories or projects below to determine the new location of your project" />
-		<RUS text="Click through the categories or projects below to determine the new location of your project" /><!--TODO Translate RUS -->
-		<GER text="Klicke dich durch die Kategorien oder Projekte unten um den Ort zu bestimmen, wo du dein Projekt hinschieben willst." />
-</MoveProject>
-
-<!--TODO We need on all category pages:-->
-<Refresh>
-	 <EN-US text="Refresh"/> 
-	 <RUS text="Refresh"/> <!--TODO Translate RUS-->
-	 <GER text="Erneuere"/> 
- </Refresh>
-
-<!--TODO We need on all category pages:-->
-<CreateProject>
-	 <EN-US text="If you want to create a private project space, click through the categories or projects above to determine its location"/> 
-	 <RUS text="If you want to create a private project space, click through the categories or projects above to determine its location"/> <!--TODO Translate RUS-->
-	 <GER text="Wenn du einen privaten Projektbereich schaffen willst, klicke durch die Kategorien oder Projekte oben um seinen Ort zu bestimmen"/> 
- </CreateProject>
-
-<!--TODO We need within projects (Screen Vib and IX):-->
-<CreateProjectElsewhere>
-	 <EN-US text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> 
-	 <RUS text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> <!--TODO Translate RUS-->
-	 <GER text="Wenn du ein neues Projekt woanders erstellen willst, bestimme seinen Ort in der &quot;Welt der Argumente&quot; "/> 
- </CreateProjectElsewhere>
- 
-<!--TODO Replace the following by “ImportMembers” above:-->
 
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
@@ -461,67 +409,64 @@
 
 	<!--Categories-->
 	
-	<ClassProjects>
+	<Category1>
 		<EN-US text="Class Projects (Restricted)" />
 		<RUS text="Class Projects (Restricted)" /><!--TODO Translate RUS-->
 		<GER text="Seminar / Klassen Projekte (nur für Mitglieder)" />
-	</ClassProjects>
+	</Category1>
 
 
-	<ArgTheory>
+	<Category2>
 		<EN-US text="Argumentation Theory" />
 		<RUS text="Argumentation Theory" /><!--TODO Translate RUS-->
 		<GER text="Argumentationstheorie" />
-	</ArgTheory>
+	</Category2>
 
 
-	<Philosophy>
+	<Category3>
 		<EN-US text="Philosophy" />
 		<RUS text="Philosophy" /><!--TODO Translate RUS-->
 		<GER text="Philosophie" />
-	</Philosophy>
+	</Category3>
 
 
-	<EnvironmentClimate>
+	<Category5>
 		<EN-US text="Environment / Climate" />
 		<RUS text="Environment / Climate" /><!--TODO Translate RUS-->
 		<GER text="Umwelt / Klima" />
-	</EnvironmentClimate>
+	</Category5>
 
-	<Projects>
+	<Category6>
 		<EN-US text="Projects (Restricted)" />
 		<RUS text="Projects (Restricted)" /><!--TODO Translate RUS-->
 		<GER text="Projekte (nur für Mitglieder)" />
-	</Projects>
+	</Category6>
 
-	<TheoryofRepresentation>
+	<Category4>
 		<EN-US text="Semiotics / Theory of Representation" />
 		<RUS text="Theory of Representation" /><!--TODO Translate RUS-->
 		<GER text="Semiotik / Theorie der Repräsentation" />
-	</TheoryofRepresentation>
+	</Category4>
 
 
-	<Law>
+	<Category8>
 		<EN-US text="Society / Law" />
 		<RUS text="Society / Law" /><!--TODO Translate RUS-->
 		<GER text="Gesellschaft / Jura" />
-	</Law>
+	</Category8>
 
 
-	<Sciences>
+	<Category7>
 		<EN-US text="Sciences" />
 		<RUS text="Sciences" /><!--TODO Translate RUS-->
 		<GER text="Wissenschaft" />
-	</Sciences>
+	</Category7>
 
-	<Others>
+	<Category9>
 		<EN-US text="Others ..." />
 		<RUS text="Others ..." /><!--TODO Translate RUS-->
 		<GER text="Andere ..." />
-	</Others>
-
-
-
+	</Category9>
 
 
 
@@ -1400,8 +1345,7 @@
 
 	<NewProject>
 		<EN-US text="Create a project here" />
-		<RUS text="Создайте защищённое паролем
-проектное пространство" /><!--TODO Translate RUS-->
+		<RUS text="Создайте защищённое паролемпроектное пространство" /><!--TODO Translate RUS-->
 		<GER text="Bilde ein Projekt hier" />
 	</NewProject>
 	
@@ -1644,16 +1588,14 @@ als neuer Benutzer" />
 
 	<SignInToViewMaps>
 		<EN-US text="Sign in to view your maps" />
-		<RUS text="Регистрируйтесь, чтобы 
-просмотреть Ваши карты" />
+		<RUS text="Регистрируйтесь, чтобы просмотреть Ваши карты" />
 		<GER text="Melde dich an um deine 
 Argumentationen zu sehen" />
 	</SignInToViewMaps>
 
 	<SignInToViewProj>
 		<EN-US text="Sign in to view your projects" />
-		<RUS text="Регистрируйтесь, чтобы 
-просмотреть Ваши проекты" />
+		<RUS text="Регистрируйтесь, чтобы просмотреть Ваши проекты" />
 		<GER text="Melde dich an um deine 
 Projekte zu sehen" />
 	</SignInToViewProj>
@@ -2486,11 +2428,6 @@ Projekte zu sehen" />
 		<GER text=" ist eine notwendige und hinreichende Bedingung für: " />
 	</ArgNecSuf>
 
-	<ArgNotCase>
-		<EN-US text="It is not the case that " />
-		<RUS text="??? ??, ??? " />
-		<GER text="Es ist nicht der Fall, dass " />
-	</ArgNotCase>
 
 	<ArgOnlyIf>
 		<EN-US text=" only if " />
@@ -2498,6 +2435,11 @@ Projekte zu sehen" />
 		<GER text=" allein dann, wenn " />
 	</ArgOnlyIf>
 
+	<ArgNotCase>
+		<EN-US text="It is not the case that " />
+		<RUS text="??? ??, ??? " />
+		<GER text="Es ist nicht der Fall, dass " />
+	</ArgNotCase>
 	<ArgOr>
 		<EN-US text=" or " />
 		<RUS text=" или " />
@@ -2924,14 +2866,55 @@ Projekte zu sehen" />
 		<GER text="Die ausgewählte Datei ist leer" />  
 </FileEmptyError>
 
-<FileEmptyError>
-		<EN-US text="File could not be imported." />
-		<RUS text="File could not be imported." />  <!--TODO Translate RUS-->
-		<GER text="Datei konnte nicht importiert werden." />  
-</FileEmptyError>
+<!--TODO Additionally, we need the following for this screen:-->
+<Rename>
+	 <EN-US text="Rename"/> 
+	 <RUS text="Rename"/> <!--TODO Translate RUS-->
+	 <GER text="Ändere Namen"/> 
+</Rename>
 
+<!--TODO Additionally, we need the following for this screen (instead of the hard-coded “Import users”:-->
+<ImportMembers>
+	 <EN-US text="Import members from file"/> 
+	 <RUS text="Import members from file"/> <!--TODO Translate RUS-->
+	 <GER text="Lade Mitglieder aus Datei"/> 
+</ImportMembers>
 
+<!--TODO “The project has sub project. Hence cannot be deleted” is hard coded. Use instead:-->
+<ErrorDeleteProject>
+		<EN-US text="This project contains sub-projects or maps created by other users. It cannot be deleted." />
+		<RUS text="This project contains sub-projects or maps created by other users. It cannot be deleted" />  <!--TODO Translate RUS-->
+		<GER text="Dieses Projekt enthält andere Projekte oder Argumente, die von anderen Nutzern geschaffen wurden. Es kann nicht gelöscht werden." />  
+</ErrorDeleteProject>
 
+<!--TODO For moving projects to another location, we need a new text (not the one for maps):-->
+<MoveProject>
+		<EN-US text="Click through the categories or projects below to determine the new location of your project" />
+		<RUS text="Click through the categories or projects below to determine the new location of your project" /><!--TODO Translate RUS -->
+		<GER text="Klicke dich durch die Kategorien oder Projekte unten um den Ort zu bestimmen, wo du dein Projekt hinschieben willst." />
+</MoveProject>
+
+<!--TODO We need on all category pages:-->
+<Refresh>
+	 <EN-US text="Refresh"/> 
+	 <RUS text="Refresh"/> <!--TODO Translate RUS-->
+	 <GER text="Erneuere"/> 
+ </Refresh>
+
+<!--TODO We need on all category pages:-->
+<CreateProject>
+	 <EN-US text="If you want to create a private project space, click through the categories or projects above to determine its location"/> 
+	 <RUS text="If you want to create a private project space, click through the categories or projects above to determine its location"/> <!--TODO Translate RUS-->
+	 <GER text="Wenn du einen privaten Projektbereich schaffen willst, klicke durch die Kategorien oder Projekte oben um seinen Ort zu bestimmen"/> 
+ </CreateProject>
+
+<!--TODO We need within projects (Screen Vib and IX):-->
+<CreateProjectElsewhere>
+	 <EN-US text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> 
+	 <RUS text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> <!--TODO Translate RUS-->
+	 <GER text="Wenn du ein neues Projekt woanders erstellen willst, bestimme seinen Ort in der &quot;Welt der Argumente&quot; "/> 
+ </CreateProjectElsewhere>
+ 
 	<!-- SPECIAL -->
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <ИМЯ> <объекта> GERMAN: 
 		<Name>s <object> -->
