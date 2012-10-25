@@ -26,23 +26,15 @@
 		<GER text=""/> 
 	</>
 
-		Additional languages can be added later. -->
+		<!--Additional languages can be added later. -->
 
 <!--NOTE translators for RUSSIAN: Search for one of the following:--><!--TODO Translate RUS--><!--TODO: Translate RUS --> 
 
-<!--NOTE: This document needs to be OPENED by using the character set Unicode (UTF-8) as ASCI filter. Otherwise things like Cyrillic letters and German Umlaute cannot be READ and EDITED -->
+<!--NOTE: This document needs to be OPENED by using the character set Unicode (UTF-8) as ASCI filter. Otherwise things like Cyrillic letters and German Umlaute cannot be READ and EDITED. If you opened it with the wrong filter, DO NOT SAVE IT, it will corrupt the language. -->
 
 <!--newly added texts that need to be referred to in the code; copy to the correct location in this document. -->
 
 <!--TODO Connect top level categories with the translations you find under:--><!--Categories-->
-
-<!--TODO “Guests to AGORA cannot edit maps” is hard coded. This is the error message when you try to edit a node. Use instead:--><!--GuestEditMapError-->
-
-<!--TODO “Map name needs to be unique” is hard coded. Use instead:--><!-- MapNameUnique-->
-
-<!--TODO on Screen IX (my contributions, last -level categories) it says “Project MembersProjectMembers in all your translations, Lokesh.” One is enough. But it is fine in the released version-->
-
-<!--TODO Almost the entire screen VIb is hard coded, last level my projects. Copy from Screen IX, my contributions, last -level categories, where everything is fine. Additionally, you need the following (from top down):-->
 
 <!--TODO Additionally, we need the following for this screen:-->
 <Rename>
@@ -74,9 +66,9 @@
 
 <!--TODO We need on all category pages:-->
 <Refresh>
- <EN-US text="Refresh"/> 
- <RUS text="Refresh"/> <!--TODO Translate RUS-->
- <GER text="Erneuere"/> 
+	 <EN-US text="Refresh"/> 
+	 <RUS text="Refresh"/> <!--TODO Translate RUS-->
+	 <GER text="Erneuere"/> 
  </Refresh>
 
 <!--TODO We need on all category pages:-->
@@ -88,16 +80,12 @@
 
 <!--TODO We need within projects (Screen Vib and IX):-->
 <CreateProjectElsewhere>
- <EN-US text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> 
- <RUS text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> <!--TODO Translate RUS-->
- <GER text="Wenn du ein neues Projekt woanders erstellen willst, bestimme seinen Ort in der &quot;Welt der Argumente&quot; "/> 
+	 <EN-US text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> 
+	 <RUS text="If you want to create a new project elsewhere, determine its location in the &quot;World of Arguments&quot;"/> <!--TODO Translate RUS-->
+	 <GER text="Wenn du ein neues Projekt woanders erstellen willst, bestimme seinen Ort in der &quot;Welt der Argumente&quot; "/> 
  </CreateProjectElsewhere>
  
-<ImportUsersIntoProject>
- <EN-US text="Import Users"/> 
- <RUS text="Import Users"/> <!--TODO Translate RUS-->
- <GER text="Import Users"/> <!--TODO Translate GER-->
- </ImportUsersIntoProject>
+<!--TODO Replace the following by “ImportMembers” above:-->
 
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
@@ -163,9 +151,8 @@
 			&lt;p&gt;&lt;h5&gt;LIZENZ.&lt;/h5&gt; AGORA-net ist Open-source Software: du kannst das Program anderen zur Verfügung stellen und/oder verändern solange du den Bedingungen folgst, welche die  Free Software Foundation als die  &lt;a target='_blank' HREF='http://www.gnu.org/licenses/agpl.html' &gt;GNU Affero General Public License&lt;/a&gt; veröffentlicht hat (entweder in Version 3 dieser Lizenz oder jeder späteren Version). Wir stellen die Software in der Hoffnung öffentlich zur Verfügung, dass sie nützlich sein wird, aber OHNE JEGLICHE GARANTIE, nicht einmal der eingeschränkten Garantie der ALLGEMEINEN GEBRAUCHSTAUGLICHKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Für mehr Details, siehe die GNU Affero General Public License.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;HAFTUNGS-ABLEHNUNG.&lt;/h5&gt; AGORA-net wird hier &amp;quot;wie es ist&amp;quot; zur Verfügung gestellt, und das Georgia Institute of Technology (das &amp;quot;Institut&amp;quot;), des Instituts School of Public Policy, die Beschäftigten des Instituts, die Software-Entwickler des Systems, oder jegliche andere Person, die mit der Entwicklung, Veröffentlichung, und Instandhaltung des Software-Codes, der Informationsbasis, und der Server verbunden ist (zusammen genommen: die &amp;quot;Entitäten&amp;quot;) ist oder sind nicht haftbar für deinen Gebrauch des Inhaltes oder irgendwelcher Daten des Systems. Die Entitäten gewähren keine Garantie irgendeiner Art in Bezug auf das System, und sie übernehmen keinerlei Verantwortung oder Haftung gegenüber irgendwelchen Ansprüchen, Schäden oder Verlusten, die sich aus deiner Nutzung des Systems ergeben. Keine der Entitäten übernimmt irgendeine Haftung dir gegenüber für Kosten, die sich für dich aus der Nutzung irgendwelcher Geräte oder Technologien ergeben wenn du AGORA-net nutzt oder herunterlädst, einschließlich Kosten für die Nutzung des Internets und von Computern. DIE ENTITÄTEN LEHNEN JEDWEDE GARANTIE ODER HAFTUNG AB IN BEZUG AUF DEN SERVICE, EINSCHLIESSLICH GARANTIEN FÜR GEBRAUCHSTAUGLICHKEIT, VERLETZUNG VON RECHTEN, UND EIGNUNG FÜR BESTIMMTE ZWECKE, ALL DIES ZUM VOLLSTEN AUSMASS, DAS GESETZLICH MÖGLICH IST.&lt;/p&gt;
 			&lt;p&gt;&lt;h5&gt;DATENSCHUTZ.&lt;/h5&gt; Die Entitäten werden niemals irgendeine der von dir bei der Registrierung bereit gestellten Informationen an Dritte preisgeben, verkaufen oder weitergeben, einschließlich deines Vornamens, Nachnamens, E-mail Adresse und URL. Allerdings reservieren sich die Entitäten das Recht, bestimmte oder alle der von dir eingegebenen Informationen dann preiszugeben wenn es gesetzlich erforderlich ist um eine Haftung der Entitäten abzuwehren und die Rechte und das Eigentum der Entitäten zu schützen. Mit deiner Registrierung garantierst du, dass alle von dir bereit gestellten Informationen akurat sind, und du akzeptierst, dass es in der alleinigen Verantwortung der Entitäten liegt, deine Registrierung und Teilnahme am System abzulehnen oder zu beenden. Das System ist gebunden durch die Nutzungsbedingungen und Datenschutzbestimmungen des Instituts, so dass jederzeit in möglichen Konflikten der hier formulierten Nutzungsbedingungen mit den Nutzungsbedingungen und Datenschutzbestimmungen des Instituts letztere das hier Formulierte ersetzen. Bitte konsultiere die Nutzungsbedingungen und Datenschutzbestimmungen des Georgia Institute of Technology und die von Georgia Tech’s School of Public Policy für weitere Informationen.&lt;/p&gt;
-			&lt;p&gt; &lt;/p&gt;&lt;p&gt;&lt;h5&gt; Das AGORA-net Projekt folgt den hier dargelegten Richtlinien:&lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;&lt;/p&gt;
-			"/>
-    </TermsOfService>
+			&lt;p&gt; &lt;/p&gt;&lt;p&gt;&lt;h5&gt; Das AGORA-net Projekt folgt den hier dargelegten Richtlinien:&lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;&lt;/p&gt;"/>
+</TermsOfService>
 
 
 	<BeforeYouStart>
@@ -1226,11 +1213,6 @@
 			text="Klicke hier, wenn Du eine Behauptung oder Forderung in Teil-Behauptungen unterteilen willst, so dass Argumente oder Einwände für jeden Teil getrennt entwickelt werden können(noch nicht verfügbar)" />
 	</DivideToSubclaims>
 
-	<EasiestWay>
-		<EN-US text="The easiest way to construct an argument" />
-		<RUS text="Самый легкий способ создать аргумент" />
-		<GER text="Der einfachste Weg, ein Argument zu konstruieren" />
-	</EasiestWay>
 
 	<EnterClaim>
 		<EN-US text="Enter your claim" />
@@ -1241,7 +1223,7 @@
 	<EnterMapName>
 		<EN-US text="Enter a name for your map" />
 		<RUS text="Введите имя Вашей карты" />
-		<GER text="Gebe einen Namen für deine Argumentation ein" />
+		<GER text="Gib einen Namen für deine Argumentation ein" />
 	</EnterMapName>
 
 	<EnterReason>
@@ -1266,7 +1248,7 @@
 	<EnterURL>
 		<EN-US text="Enter URL" />
 		<RUS text="Введите URL" />
-		<GER text="Gebe URL ein" />
+		<GER text="Gib URL ein" />
 	</EnterURL>
 
 	<EnterValidEmail>
@@ -1444,7 +1426,7 @@
       <Users>
     <EN-US text="Users" />
 		<RUS text="Users" /><!--TODO Translate RUS-->
-		<GER text="Users" /><!--TODO Translate GER-->
+		<GER text="Nutzer" />
     </Users>
     
     <ProjType>
@@ -1629,30 +1611,30 @@ als neuer Benutzer" />
 	</SelectLanguageForm>
 
 
-       <SelectArgScheme>
-                <EN-US text="Select ..." />
-                <RUS text="Выбрать ..." />
-                <GER text="Wähle aus ..." />
-        </SelectArgScheme>
+<SelectArgScheme>
+	<EN-US text="Select ..." />
+	<RUS text="Выбрать ..." />
+	<GER text="Wähle aus ..." />
+</SelectArgScheme>
 
-        <SelectLanguage>
-                <EN-US text="... and select:" />
-                <RUS text="... and select:" /><!--TODO Translate RUS-->
-                <GER text="... und wähle aus:" />
-        </SelectLanguage>
+<SelectLanguage>
+	<EN-US text="... and select:" />
+	<RUS text="... and select:" /><!--TODO Translate RUS-->
+	<GER text="... und wähle aus:" />
+</SelectLanguage>
    
-        <NoteSelectArgScheme>
-                <EN-US text="Select an argument scheme from the list below to complete your argument" />
-                <RUS text="Select an argument scheme from the list below to complete your argument" /><!--TODO Translate RUS-->
-                <GER text="Wähle ein Argumentschema aus der Liste unten aus um dein Argument zu vervollständigen" />
-        </NoteSelectArgScheme>
+<NoteSelectArgScheme>
+	<EN-US text="Select an argument scheme from the list below to complete your argument" />
+	<RUS text="Select an argument scheme from the list below to complete your argument" /><!--TODO Translate RUS-->
+	<GER text="Wähle ein Argumentschema aus der Liste unten aus um dein Argument zu vervollständigen" />
+	</NoteSelectArgScheme>
    
    
-        <NoteSelectLanguage>
-                <EN-US text="Select the form you need to complete your argument" />
-                <RUS text="Выберите форму, в которой Вы нуждаетесь от списка справа, чтобы завершить Ваш аргумент" /><!--TODO Translate RUS--><!--TODO: Please modify according to the English version-->
-                <GER text="Wähle die Form aus, die du brauchst, um dein Argument zu vervollständigen." />
-        </NoteSelectLanguage>
+<NoteSelectLanguage>
+	<EN-US text="Select the form you need to complete your argument" />
+	<RUS text="Выберите форму, в которой Вы нуждаетесь от списка справа, чтобы завершить Ваш аргумент" /><!--TODO Translate RUS--><!--TODO: Please modify according to the English version-->
+	<GER text="Wähle die Form aus, die du brauchst, um dein Argument zu vervollständigen." />
+</NoteSelectLanguage>
 
 	<SelfDefConn>
 		<EN-US text="self-defined connection" />
@@ -1972,37 +1954,38 @@ Projekte zu sehen" />
 
 	<NecessaryCond>
 		<EN-US text="necessary condition for" />
-		<RUS text="необходимое условие " />
+		<RUS text="необходимое условие для" />
 		<GER text="notwendige Bedingung für" />
 	</NecessaryCond>
 
 	<NecSuf>
 		<EN-US text="necessary and sufficient condition for" />
-		<RUS text="необходимое и до�?таточное у�?ловие " />
+		<RUS text="необходимое и достаточное условие для" />
 		<GER text="notwendige und hinreichende Bedingung für" />
 	</NecSuf>
 
 	<OnlyIf>
 		<EN-US text="only if " />
-		<RUS text="только е�?ли " />
+		<RUS text="только если " />
 		<GER text="allein dann, wenn " />
 	</OnlyIf>
 
+
 	<ProvidedThat>
 		<EN-US text="provided that " />
-		<RUS text="при у�?ловии, что " />
+		<RUS text="при условии, что " />
 		<GER text="gegeben, dass: " />
 	</ProvidedThat>
 
 	<SufficientCond>
 		<EN-US text="sufficient condition for" />
-		<RUS text="до�?таточное у�?ловие " />
+		<RUS text="достаточное условие для" />
 		<GER text="hinreichende Bedingung für" />
 	</SufficientCond>
 
 	<Whenever>
 		<EN-US text="whenever " />
-		<RUS text="В�?�?кий раз, когда " />
+		<RUS text="Всякий раз, когда " />
 		<GER text="immer wenn " />
 	</Whenever>
 
@@ -2012,137 +1995,128 @@ Projekte zu sehen" />
 	<CondSylDesc>
 		<EN-US
 			text="Conditional Syllogism:
-	p --> q
-	q --> r
-	Therefore, p --> r" />
+					p --> q
+					q --> r
+					Therefore, p --> r" />
 		<RUS
-			text="У�?ловный �?иллогизм:
-	p --> q
-	q --> r
-	По�?тому, p --> r" />
+			text="Условный силлогизм:
+					p --> q
+					q --> r
+					Поэтому, p --> r" />
 		<GER
 			text="Konditionaler Syllogismus:
-	p --> q
-	q --> r
-	Deshalb, p --> r" />
+					p --> q
+					q --> r
+					Deshalb, p --> r" />
 	</CondSylDesc>
 
 	<ConsDilDesc>
 		<EN-US
 			text="Constructive dilemma:
-	p v q
-	p --> r
-	q --> s
-	Therefore, r v s" />
+					p v q
+					p --> r
+					q --> s
+					Therefore, r v s" />
 		<RUS
-			text="Кон�?труктивна�? дилемма:
-	p v q
-	p --> r
-	q --> s
-	По�?тому, r v s" />
-		<GER
-			text="Konstruktives Dilemma:
-	p v q
-	p --> r
-	q --> s
-	Deshalb, r v s" />
+			text="Конструктивная дилемма:
+					p v q
+					p --> r
+					q --> s
+					Поэтому, r v s" />
+		<GER text="Konstruktives Dilemma:
+					p v q
+					p --> r
+					q --> s
+					Deshalb, r v s" />
 	</ConsDilDesc>
 
+
 	<DisSylDesc>
-		<EN-US
-			text="Disjunctive Syllogism:
-	p v q
-	not p
-	Therefore, q" />
-		<RUS text="Дизъюнктивный �?иллогизм:
-	p v q
-	not p
-	По�?тому, q" />
+		<EN-US text="Disjunctive Syllogism:
+					p v q
+					not p
+					Therefore, q" />
+		<RUS text="Дизъюнктивный силлогизм:
+					p v q
+					not p
+					Поэтому, q" />
 		<GER text="Disjunktiver Syllogism:
-	p v q
-	nicht p
-	Deshalb, q" />
+					p v q
+					nicht p
+					Deshalb, q" />
 	</DisSylDesc>
 
 	<EitherWayDesc>
-		<EN-US
-			text="Either way:
-	p v q
-	p --> r
-	q --> r
-	Therefore, r" />
-		<RUS
-			text="Так или иначе:
-	p v q
-	p --> r
-	q --> r
-	По�?тому, r" />
-		<GER
-			text="Wie-auch-immer:
-	p v q
-	p --> r
-	q --> r
-	Deshalb, r" />
+		<EN-US text="Either way:
+					p v q
+					p --> r
+					q --> r
+					Therefore, r" />
+		<RUS text="Так или иначе:
+					p v q
+					p --> r
+					q --> r
+					Поэтому, r" />
+		<GER text="Wie-auch-immer:
+					p v q
+					p --> r
+					q --> r
+					Deshalb, r" />
 	</EitherWayDesc>
 
 	<EQinferring>
-		<EN-US
-			text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer
-	--p from q
-	--q from p
-	--not-p from not-q, or
-	--not-q from not-p" />
-		<RUS
-			text="е�?ли Вы говорите, что &quot;два за�?влени�? p и q �?квивалентны,&quot; тогда Вы можете или выве�?ти
-	- p от q
-	- q от p
-	- не-p от не-q, или
-	- не-q от не-p" />
-		<GER
-			text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder
-	-- p von q,
-	-- q von p,
-	--nicht-p von nicht-q, oder
-	-- nicht-q von nicht-p erschließen" />
+		<EN-US text="if you say &quot;two statements p and q are equivalent,&quot; then you can either infer
+		--p from q
+		--q from p
+		--not-p from not-q, or
+		--not-q from not-p" />
+		<RUS text="если Вы говорите, что &quot;два заявления p и q эквивалентны,&quot; тогда Вы можете или вывести
+		- p от q
+		- q от p
+		- не-p от не-q, или
+		- не-q от не-p" />
+		<GER text="wenn Du behauptest, dass zwei Aussagen p und q äquivalent sind, dann kannst Du entweder
+		-- p von q,
+		-- q von p,
+		--nicht-p von nicht-q, oder
+		-- nicht-q von nicht-p erschließen" />
 	</EQinferring>
 
 	<MPDesc>
 		<EN-US text="Modus ponens:
-	p --> q
-	p
-	Therefore, q" />
-		<RUS text="Моду�? понен�?:
-	p --> q
-	p
-	По�?тому, q" />
+					p --> q
+					p
+					Therefore, q" />
+		<RUS text="Модус поненс:
+					p --> q
+					p
+					Поэтому, q" />
 		<GER text="Modus ponens:
-	p --> q
-	p
-	Deshalb, q" />
+					p --> q
+					p
+					Deshalb, q" />
 	</MPDesc>
+
 
 	<MTDesc>
 		<EN-US text="Modus tollens:
-	p --> q
-	not q
-	Therefore, not p" />
-		<RUS text="Моду�? толлен�?:
-	p --> q
-	не q
-	По�?тому, не p" />
+					p --> q
+					not q
+					Therefore, not p" />
+		<RUS text="Модус толленс:
+					p --> q
+					не q
+					Поэтому, не p" />
 		<GER text="Modus tollens:
-	p --> q
-	nicht q
-	Deshalb, nicht p" />
+					p --> q
+					nicht q
+					Deshalb, nicht p" />
 	</MTDesc>
 
 	<NotAllDesc>
-		<EN-US
-			text="Not-all syllogism: This syllogism has been created to infer a negated statement from one or more affirmative statements. See how it works!" />
-		<RUS
-			text="�?е - ве�?ь �?иллогизм: �тот �?иллогизм был �?оздан, чтобы выве�?ти отрицательное утверждение из одного или более положительных утверждений. " />
-		<GER
-			text="Nicht-alle-Syllogismus: Dieser Syllogismus wurde geschaffen um eine negierte Aussage von einer oder mehreren affirmierten Aussagen zu erschließen. Probiere aus wie das geht!" />
+		<EN-US text="Not-all syllogism: This syllogism has been created to infer a negated statement from one or more affirmative statements. See how it works!" />
+		<RUS text="Не - весь силлогизм: Этот силлогизм был создан, чтобы вывести отрицательное утверждение из одного или более положительных утверждений. " />
+		<GER text="Nicht-alle-Syllogismus: Dieser Syllogismus wurde geschaffen um eine negierte Aussage von einer oder mehreren affirmierten Aussagen zu erschließen. Probiere aus wie das geht!" />
 	</NotAllDesc>
 
 	<!--HELP TEXT -->
@@ -2151,7 +2125,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Add another reason if only the combination of two or more &quot;dependent&quot; reasons can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light, &quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of dependent reasons to get to your conclusion or whether you have several independent arguments for the same conclusion." />
 		<RUS
-			text="Добавл�?йте другие причины, е�?ли только комбинаци�? двух и более &quot;�?в�?занных&quot;  причин может обе�?печить Ваше заключение. �?апример, в аргументе  &quot;Помидоры Питера выра�?тут, потому что он регул�?рно поливает их, и они получают до�?таточно  �?олнечного  �?вета&quot; обе причины, &quot;он регул�?рно поливает их&quot; и &quot;они получают до�?таточно  �?олнечного  �?вета&quot; должны быть и�?тиной, чтобы выве�?ти заключение. Важно различать, нуждаете�?ь ли Вы в комбинации �?в�?занных  причин чтобы получить Ваше  заключение или у Ва�? е�?ть  не�?колько незави�?имых причин дл�? того же �?амого заключени�?. " />
+			text="Добавляйте другие причины, если только комбинация двух и более &quot;связанных&quot;  причин может обеспечить Ваше заключение. Например, в аргументе  &quot;Помидоры Питера вырастут, потому что он регулярно поливает их, и они получают достаточно  солнечного  света&quot; обе причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно  солнечного  света&quot; должны быть истиной, чтобы вывести заключение. Важно различать, нуждаетесь ли Вы в комбинации связанных  причин чтобы получить Ваше  заключение или у Вас есть  несколько независимых причин для того же самого заключения.  " />
 		<GER
 			text="Füge einen weiteren Grund an wenn allein die Verbindung von zwei oder mehr &quot;abhängigen&quot; Gründen deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Argumente für dieselbe Schlussfolderung hast. " />
 	</AnotherReasonHelp>
@@ -2160,7 +2134,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Support: This adds another reason to your argument so that only the combination of all your reasons can support your conclusion. For example, in the argument &quot;Peter's tomatoes will grow because he waters them regularly and they get enough sun light, &quot; both the reasons &quot;he waters them regularly&quot; and &quot;they get enough sun light&quot; need to be true to infer the conclusion. It is important to distinguish whether you need a combination of dependent reasons to get to your conclusion or whether you have several independent arguments for the same conclusion." />
 		<RUS
-			text="Поддержка:  �то добавл�?ет другую причину к Вашему аргументу так, что  только комбинаци�? в�?ех Ваших причин может поддержать Ваше заключение. �?апример, в аргументе &quot;Помидоры Петра выра�?тут, потому что он регул�?рно поливает их, и они получают до�?таточно �?вета �?олнца, &quot; и причины, &quot;он регул�?рно поливает их&quot; и &quot;они получают до�?таточно �?вета �?олнца&quot; должно быть и�?тиной, чтобы выве�?ти заключение. Важно различить, нуждаете�?ь ли Вы в комбинации зави�?имых причин , чтобы получить  Ваше  заключение или е�?ть ли у Ва�? не�?колько незави�?имых причин дл�? того же �?амого заключени�?." />
+			text="Поддержка:  Это добавляет другую причину к Вашему аргументу так, что  только комбинация всех Ваших причин может поддержать Ваше заключение. Например, в аргументе &quot;Помидоры Петра вырастут, потому что он регулярно поливает их, и они получают достаточно света солнца, &quot; и причины, &quot;он регулярно поливает их&quot; и &quot;они получают достаточно света солнца&quot; должно быть истиной, чтобы вывести заключение. Важно различить, нуждаетесь ли Вы в комбинации зависимых причин , чтобы получить  Ваше  заключение или есть ли у Вас несколько независимых причин для того же самого заключения." />
 		<GER
 			text="Anmerkung:  Dies fügt einen weiteren Grund zu deinem Argument hinzu so dass allein die Verbindung all deiner Gründe deine Schlussfolgerung rechtfertigen kann. In dem Argument, zum Beispiel, &quot;Peters Tomaten werden wachsen weil er sie regelmäßig wässert und weil sie genug Sonnenlicht abbekommen&quot; müssen beide genannten Gründe wahr sein um die Schlussfolgerung ableiten zu können. Es ist wichtig jeweils herauszufinden, ob du eine Verknüpfung von Gründen brauchst oder ob du verschiedene unabhängige Argumente für dieselbe Schlussfolderung hast." />
 	</AnotherReasonHelp2>
@@ -2169,7 +2143,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Sorry, for this argument scheme you cannot add another reason. If this is a modus ponens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;if P then Q,&quot; &quot;whenever P, Q,&quot; or &quot;Q provided that P.&quot; If this is a modus tollens argument, then you can add another reason when you change, before adding, the language of the enabler into &quot;P only if Q.&quot;" />
 		<RUS
-			text="Жаль, дл�? �?той �?хемы аргумента Вы не можете добавить другую причину. Е�?ли �?то - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы измен�?ете�?ь, перед добавлением, �?зыком ин�?трумента реализации в &quot;е�?ли P тогда Q,&quot; &quot;в�?�?кий раз, когда P, Q,&quot; или &quot;Q при у�?ловии, что P.&quot;Е�?ли �?то - modus tollens аргумент, то Вы можете добавить другую причину, когда Вы измен�?ете�?ь, перед добавлением, �?зыком ин�?трумента реализации в &quot;P только е�?ли Q.&quot;" />
+			text="Жаль, для этой схемы аргумента Вы не можете добавить другую причину. Если это - modus ponens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;если P тогда Q,&quot; &quot;всякий раз, когда P, Q,&quot; или &quot;Q при условии, что P.&quot;Если это - modus tollens аргумент, то Вы можете добавить другую причину, когда Вы изменяетесь, перед добавлением, языком инструмента реализации в &quot;P только если Q.&quot;" />
 		<GER
 			text="Sorry, in diesem Argument-Schema können keine weiteren Gründe hinzugefügt werden. Falls es sich hier um ein modus ponens Argument handelt, kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch eine der folgenden ersetzt: &quot;Wenn P, dann Q&quot;; &quot;Immer wenn P, Q&quot;; &quot;Q, gegeben dass P&quot;. Falls es sich hier um ein modus tollens Argument handelt, dann kannst Du weitere Gründe hinzufügen wenn Du vorher die Formulierung des Garanten durch die Form &quot;P allein dann, wenn Q&quot; ersetzt." />
 	</CannotAddReason>
@@ -2178,15 +2152,14 @@ Projekte zu sehen" />
 		<EN-US
 			text="Sorry, the scheme of an argument with more than one reason cannot be changed" />
 		<RUS
-			text="Жаль, �?хема аргумента больше чем �? одной причиной не может быть изменена" />
+			text="Жаль, схема аргумента больше чем с одной причиной не может быть изменена" />
 		<GER
 			text="Sorry, das Schema eines Argumentes mit mehr als einem Grund kann nicht durch ein anderes ersetzt werden." />
 	</CannotChangeMultReasons>
 
 	<CannotChangeScheme>
-		<EN-US text="Sorry, this argument scheme cannot be changed"
- />
-		<RUS text="Жаль, �?та �?хема аргумента не может быть изменена" />
+		<EN-US text="Sorry, this argument scheme cannot be changed" />
+		<RUS text="Жаль, эта схема аргумента не может быть изменена" />
 		<GER
 			text="Sorry, dieses Argument-Schema kann nicht durch ein anderes ersetzt werden" />
 	</CannotChangeScheme>
@@ -2195,7 +2168,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Do you really want to delete this box and everything that leads to it?" />
 		<RUS
-			text="Вы дей�?твительно хотите удалить �?то поле и в�?е, что приводит к нему?" />
+			text="Вы действительно хотите удалить это поле и все, что приводит к нему?" />
 		<GER
 			text="Willst du wirklich diese Textbox und alles, das zu ihr führt, löschen?" />
 	</ConfirmDelete>
@@ -2204,7 +2177,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="In the disjunctive syllogism, the meaning of &quot;either ... or&quot; refers to an inclusive &quot;or,&quot; that means: It is possible that both statements p and the q are true. For example: When you say &quot;I buy bread or milk,&quot; the whole sentence is still true when you buy both. If you use an exclusive &quot;or,&quot; the sentence would be false if you buy both. This implies that you can use the disjunctive syllogism only when you know that either p or q is false. In this case, you can infer that the other is true. A disjunctive syllogism can include more than two elements in the enabler besides p and q, but you infer always a positive statement from negative ones." />
 		<RUS
-			text="В дизъюнктивом �?иллогизме значение &quot;или... или&quot; обращает�?�? к �?одержащему &quot;или,&quot; который означает: возможно, что оба утверждени�? p и q - и�?тина. �?апример: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение в�?е еще и�?тинно, когда Вы покупаете оба. Е�?ли бы Вы и�?пользуете и�?ключительное &quot;или,&quot; предложение было бы ложно, е�?ли Вы покупаете оба. �то подразумевает, что Вы можете и�?пользовать дизъюнктивый �?иллогизм только, когда Вы знаете, что или p или q ложны. В �?том �?лучае, Вы можете выве�?ти, что другое и�?тина. Дизъюнктивый �?иллогизм может включать больше чем два �?лемента в &quot;гарант&quot; помимо p и q, но Вы в�?егда выводите положительное утверждение из отрицательных." />
+			text="В дизъюнктивом силлогизме значение &quot;или... или&quot; обращается к содержащему &quot;или,&quot; который означает: возможно, что оба утверждения p и q - истина. Например: Когда Вы говорите, что &quot;Я покупаю хлеб или молоко,&quot; целое предложение все еще истинно, когда Вы покупаете оба. Если бы Вы используете исключительное &quot;или,&quot; предложение было бы ложно, если Вы покупаете оба. Это подразумевает, что Вы можете использовать дизъюнктивый силлогизм только, когда Вы знаете, что или p или q ложны. В этом случае, Вы можете вывести, что другое истина. Дизъюнктивый силлогизм может включать больше чем два элемента в &quot;гарант&quot; помимо p и q, но Вы всегда выводите положительное утверждение из отрицательных." />
 		<GER
 			text="Im disjunktiven Syllogismus ist die Bedeutung des Wortes &quot;oder&quot; inklusiv, das heißt: Es ist möglich, dass beide Aussagen p und q wahr sind. Zum Beispiel: Wenn Du sagst &quot;Ich kaufe Brot oder Milch&quot;, dann ist der ganze Satz auch dann wahr, wenn Du beides kaufst. Bei einem &quot;exklusivem oder&quot; wäre die Aussage falsch, wenn Du beides kaufst. Das bedeutet, dass Du den disjunktiven Syllogismus nur dann verwenden kannst, wenn Du weißt, dass entweder p oder q falsch ist. In diesem Fall kannst Du schließen, dass die andere Aussage wahr ist. Ein disjunktiver Syllogismus kann mehr als zwei Alternativen p und q im Garanten enthalten, aber Du kannst immer nur eine positive Aussage von negativen erschließen." />
 	</DisSylDetails>
@@ -2213,7 +2186,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid." />
 		<RUS
-			text=" Утверждение в �?том тек�?товом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпо�?ылка в аргументе, который гарантирует, что обе�?печенна�? причина (или комбинаци�? причин) до�?таточна, чтобы оправдать за�?вление. &quot;Гарант&quot; - в�?егда универ�?альное утверждение. Оно гарантирует, что аргумент логиче�?ки �?праведлив." />
+			text="Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив." />
 		<GER
 			text="Der Satz in dieser Textbox wird &quot;Garant&quot; gennant. Der &quot;Garant&quot; ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der &quot;Garant&quot; ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist." />
 	</Enabler>
@@ -2222,23 +2195,23 @@ Projekte zu sehen" />
 		<EN-US
 			text="Since this is a modus tollens argument, you have to decide whether you want to connect all your reasons by &quot;and&quot; or by &quot;or.&quot; If you combine them by &quot;and,&quot; then your argument is valid only if all your reasons are true. That means your argument can be defeated by defeating only one of the reasons provided. If you combine your reasons by &quot;or,&quot; then your argument is valid as long as at least one of the reasons is true. That means, defeating this argument requires defeating all the reasons provided." />
 		<RUS
-			text="Так как �?то - modus tollens аргумент, Вы должны решить, хотите ли Вы �?оединить в�?е �?вои причины &quot;и&quot; или &quot;или&quot;. Е�?ли Вы комбинируете их &quot;и&quot;, то Ваш аргумент дей�?твителен, только е�?ли в�?е Ваши причины верны. �то означает, что Ваш аргумент может быть побежден, побежда�? только одну из обе�?печенных причин. Е�?ли Вы комбинируете �?вои причины &quot;или&quot;, то Ваш аргумент дей�?твителен, цела�? по крайней мере одна причин верна. �то означает, побежда�? �?тот аргумент требует нане�?ени�? поражени�? в�?ех обе�?печенных причин." />
+			text="Так как это - modus tollens аргумент, Вы должны решить, хотите ли Вы соединить все свои причины &quot;и&quot; или &quot;или&quot;. Если Вы комбинируете их &quot;и&quot;, то Ваш аргумент действителен, только если все Ваши причины верны. Это означает, что Ваш аргумент может быть побежден, побеждая только одну из обеспеченных причин. Если Вы комбинируете свои причины &quot;или&quot;, то Ваш аргумент действителен, целая по крайней мере одна причин верна. Это означает, побеждая этот аргумент требует нанесения поражения всех обеспеченных причин." />
 		<GER
 			text="Da es sich hier um ein modus tollens Argument handelt, musst Du entscheiden ob Du alle deine Gründe durch &quot;und&quot; oder durch &quot;oder&quot; verknüpfen willst. Wenn Du sie durch &quot;und&quot; verknüpfst, dann ist dein Argument allein dann gültig wenn alle deine Gründe wahr sind. Das bedeutet, dass dein Argument durch die Widerlegung von allein einem deiner Gründe widerlegt werden kann. Wenn Du deine Gründe durch &quot;oder&quot; verknüpfst, dann ist dein Argument logisch gültig so lange zumindest einer deiner Gründe wahr ist. Das bedeutet, dass dein Argument allein durch die Widerlegung aller Gründe widerlegt werden kann." />
 	</MTAndOrHelp>
 
 	<MustRegister>
 		<EN-US text="To create a map, or to participate in a debate or a project, you need to register. Your username will appear in each entry as &quot;AU&quot; (author) of this entry. If someone clicks on your name, your user info will become visible. Please note that you can register with the same e-mail address only once. So, if you forgot your access info, please use the &quot;Forgot your password?&quot; function." />
-		<RUS text="Чтобы �?оздать карту, или уча�?твовать в дебатах или проекте, Вы должны зареги�?трировать�?�?. Ваше им�? пользовател�? по�?вит�?�? в каждом входе как &quot;AU&quot; (автор) �?того входа. Е�?ли кто-то нажимает на Ваше им�?, Ваша пользователь�?ка�? информаци�? �?танет видимой" /><!--TODO Translate RUS the last two sentences -->
+		<RUS text="Чтобы создать карту, или участвовать в дебатах или проекте, Вы должны зарегистрироваться. Ваше имя пользователя появится в каждом входе как &quot;AU&quot; (автор) этого входа. Если кто-то нажимает на Ваше имя, Ваша пользовательская информация станет видимой" /><!--TODO Translate RUS the last two sentences -->
 		<GER text="Registrierung ist notwendig, um eine Argumentation zu beginnen oder an einer mitzuwirken. Dein Benutzername wird in jedem Eintrag als &quot;AU&quot; (Autor) dieses Eintrags erscheinen. Wenn jemand auf deinen Namen klickt, werden deine persönlichen Daten sichtbar. Du kannst dich nur einmal mit derselben e-mail Adresse registrieren. Falls du deine Zugangs-Info vergißt, benutze bitte die &quot;Passwort vergessen?&quot; Funktion." />
 	</MustRegister>
 
 	<NewPass>
 		<EN-US
-			text="Your password on the AGORA-net server has been changed. Your new password is: " />
-		<RUS text="Ваш пароль на �?ервере �?ГОРЫ был изменен. Ваш новый пароль: " />
+			text="Your password on the AGORA server has been changed. Your new password is: " />
+		<RUS text="Ваш пароль на сервере АГОРЫ был изменен. Ваш новый пароль: " />
 		<GER
-			text="Dein Passwort auf dem AGORA-net Server wurde geändert. Das neue Passwort ist: " />
+			text="Dein Passwort auf dem AGORA Server wurde geändert. Das neue Passwort ist: " />
 		<!--Note that these must be followed by the password itself -->
 	</NewPass>
 
@@ -2246,7 +2219,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="This syllogism has been created to infer a negated statement from one or more affirmative statements. See how it works!" />
 		<RUS
-			text="�тот �?иллогизм был �?оздан, чтобы выве�?ти отрицательное утверждение из одного или более положительных утверждений. " />
+			text="Этот силлогизм был создан, чтобы вывести отрицательное утверждение из одного или более положительных утверждений. " />
 		<GER
 			text="Dieser Syllogismus wurde geschaffen um eine negierte Aussage von einer oder mehreren affirmierten Aussagen zu erschließen. Probiere aus wie das geht!" />
 	</NotAllHelp>
@@ -2255,8 +2228,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="Since this claim is justified by a logically valid argument, you can add objections or distinction between different cases only at the &quot;open ends&quot; of this argumentation which are not justified by further arguments. If you click here, a new map will be created that will be linked to this claim. Nevertheless, you should also argue against the &quot;open ends&quot; of this argument if you do not agree." />
 		<RUS
-			text="Так как �?то за�?вление оправдано
- логиче�?ки дей�?твительным аргументом, Вы можете добавить возражени�? или различие между различными �?луча�?ми только в &quot;открытых концах&quot; �?той аргументации, которые не оправданы дальнейшими аргументами. Е�?ли Вы щелкнете зде�?ь, то нова�? карта будет �?оздана, который будет �?в�?зан �? �?тим за�?влением. Однако, Вы должны также приве�?ти доводы против &quot;открытых концов&quot; �?того аргумента, е�?ли Вы не �?оглашаете�?ь." />
+			text="Так как это заявление оправдано логически действительным аргументом, Вы можете добавить возражения или различие между различными случаями только в &quot;открытых концах&quot; этой аргументации, которые не оправданы дальнейшими аргументами. Если Вы щелкнете здесь, то новая карта будет создана, который будет связан с этим заявлением. Однако, Вы должны также привести доводы против &quot;открытых концов&quot; этого аргумента, если Вы не соглашаетесь." />
 		<GER
 			text="Da diese Behauptung durch ein logisch gültiges Argument gerechtfertig ist, kannst Du Einwände oder eine Unterscheidung verschiedener Fälle ausschließlich an die &quot;offenen Enden&quot; dieser Argumentation anfügen, die nicht durch weitere Argumente gerechtfertigt sind. Wenn Du diese Option hier auswählst, dann wird eine neue Argumentation begonnen welche mit dieser Behauptung hier verknüpft wird. Du solltest aber auf jeden Fall die &quot;offenen Enden&quot; dieser Argumentation kritisieren, wenn Du der Schlussfolgerung nicht zustimmst." />
 	</ObjectionHelp>
@@ -2294,8 +2266,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="You cannot delete a statement that is either supported or objected to." />
 		<RUS
-			text="You cannot delete a statement that is either supported or objected to." /><!--TODO: 
-			Translate RUS -->
+			text="You cannot delete a statement that is either supported or objected to." /><!--TODO:  Translate RUS -->
 		<GER
 			text="Du kannst keine Aussage löschen, für welche entweder ein Argument oder ein Einwand vorliegt." />
 	</DeleteSuppStmt>
@@ -2304,8 +2275,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="One of the reasons of this argument is supported by further arguments. Therefore, you cannot delete this enabler. No supported argument can be deleted." />
 		<RUS
-			text="One of the reasons of this argument is supported by further arguments. Therefore, you cannot delete this enabler. No supported argument can be deleted." /><!--TODO: 
-			Translate RUS -->
+			text="One of the reasons of this argument is supported by further arguments. Therefore, you cannot delete this enabler. No supported argument can be deleted." /><!--TODO: Translate RUS -->
 		<GER
 			text="Einer der Gründe für dieses Argument ist durch weitere Argumente unterstützt. Aus diesem Grund kannst du diesen Garanten nicht löschen. Kein Argument, das durch weitere Argumente unterstützt ist, kann gelöscht werden." />
 	</DeleteSuppStmtExt>
@@ -2330,12 +2300,12 @@ Projekte zu sehen" />
 		5. Revise the formulations of your claim and reasons, and the structure of your argument, as long as it takes to create the best possible argument. You could include exceptions into your claim, or you formulate it more specific." />
 		<RUS
 			text="Поддержка:
-		Дей�?твительно ли Ваш аргумент �?илен и убедителен? Вы должны проверить п�?ть вещей: 
-		1. Ваш аргумент полон, или Вы нуждаете�?ь в другой причине так, чтобы комбинаци�? двух или больше зави�?имых причин подтвердила Ваше за�?вление? Иногда только комбинаци�? не�?кольких причин может подтвердить за�?вление. Е�?ли Вы нуждаете�?ь в другой зави�?имой причине, щелкните кнопку &quot;+&quot; под &quot;по�?тому&quot;.
-		2. Дей�?твительно ли кажда�? из Ваших причин �?вл�?ет�?�? приемлемой, или одна из них нуждает�?�? в дополнительной поддержке дальнейшими аргументами? Е�?ли кака�?-либо из Ваших причин или не очевидна или �?порна, обе�?печьте дальнейшие аргументы, щелка�?, кнопку &quot;добавьте...&quot; под той причиной, к которой Вы хотите добавить аргумент поддержки.
-		3. Е�?ть ли дальнейшие незави�?имые аргументы дл�?  Вашего за�?влени�?? &quot;�?езави�?имые аргументы&quot; обе�?печивают дополнительные причины Вашего за�?влени�?, которые не зави�?�?т от причин, которые Вы уже имеете. �?аличие дополнительных незави�?имых аргументов делает Ваше за�?вление более �?ильным, чем наличие многих причин, которые взаимно зави�?имы. Чтобы добавить незави�?имые аргументы, щелкните, &quot;добавьте...&quot; в �?оответ�?твии �? Вашим за�?влением.
-		4. Е�?ли Вы можете вообразить возможные возражени�? против одной из Ваших причин, Вы могли бы добавить �?ти возражени�?, чтобы опровергнуть их затем дальнейшими аргументами. �то делает  Ваш аргумент более �?ильным.
-		5. Пере�?мотрите формулировки �?воего за�?влени�? и причин, и �?труктуры Вашего аргумента, по�?кольку �?то требует�?�?, чтобы �?оздать �?амый лучший возможный аргумент. Вы можете  включать и�?ключени�? в �?вое за�?вление, или Вы �?формулируете его более определенно." />
+		Действительно ли Ваш аргумент силен и убедителен? Вы должны проверить пять вещей: 
+		1. Ваш аргумент полон, или Вы нуждаетесь в другой причине так, чтобы комбинация двух или больше зависимых причин подтвердила Ваше заявление? Иногда только комбинация нескольких причин может подтвердить заявление. Если Вы нуждаетесь в другой зависимой причине, щелкните кнопку &quot;+&quot; под &quot;поэтому&quot;.
+		2. Действительно ли каждая из Ваших причин является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если какая-либо из Ваших причин или не очевидна или спорна, обеспечьте дальнейшие аргументы, щелкая, кнопку &quot;добавьте...&quot; под той причиной, к которой Вы хотите добавить аргумент поддержки.
+		3. Есть ли дальнейшие независимые аргументы для  Вашего заявления? &quot;Независимые аргументы&quot; обеспечивают дополнительные причины Вашего заявления, которые не зависят от причин, которые Вы уже имеете. Наличие дополнительных независимых аргументов делает Ваше заявление более сильным, чем наличие многих причин, которые взаимно зависимы. Чтобы добавить независимые аргументы, щелкните, &quot;добавьте...&quot; в соответствии с Вашим заявлением.
+		4. Если Вы можете вообразить возможные возражения против одной из Ваших причин, Вы могли бы добавить эти возражения, чтобы опровергнуть их затем дальнейшими аргументами. Это делает  Ваш аргумент более сильным.
+		5. Пересмотрите формулировки своего заявления и причин, и структуры Вашего аргумента, поскольку это требуется, чтобы создать самый лучший возможный аргумент. Вы можете  включать исключения в свое заявление, или Вы сформулируете его более определенно." />
 		<GER
 			text="Ist dein Argument überzeugend und stark genug? Du solltest fünf Dinge bedenken:
 		1. Ist dein Argument vollständig oder brauchst du einen weiteren Grund, so dass die Verbindung von zwei oder mehr abhängigen Gründen deine Behauptung rechtfertigen kann? Manchmal kann allein die Verbindung mehrerer Gründe eine Behauptung rechtfertigen. Falls du einen weiteren abhängigen Grund brauchst, klicke auf das &quot;+&quot; Symbol unter &quot;deshalb&quot;.
@@ -2352,9 +2322,9 @@ Projekte zu sehen" />
  argument in AGORA-net is logically valid, you can see how an argument needs to look like if the goal was to guarantee the truth of the conclusion. You should use this as an opportunity to revise the components of your argument as long as it takes to formulate and structure the best possible argument. To achieve this goal it might be necessary to revise the formulation of your reason or your claim; or it might be necessary to break your argument up and to insert intermediary reasons, creating thus a chain or network of arguments instead of a single argument; or it might be necessary to qualify your conclusion with a &quot;probably,&quot; &quot;usually,&quot; &quot;under normal circumstances or &quot;possibly.&quot; You can also insert additional reasons that are necessary to justify your conclusion, or you include certain exceptions or conditions into the formulation of your conclusion.&lt;/p&gt;
 	&lt;p&gt;To make your argument as powerful, clear, and convincing as possible, try to get the structure and the formulations right, and select that argument scheme that fits best to what you want to argue.&lt;/p&gt; " />
 		<RUS
-			text="&lt;p&gt;Ваш выбор �?озда�?т логиче�?ки (дедуктивно) допу�?тимый аргумент, означа�?, что Ваше заключение об�?зательно и�?тинно, е�?ли в�?е Ваши предпо�?ылки – и�?тинны (&lt;u&gt; &lt;a target='_blank'  href='http://agora.gatech.edu/?page_id=257'&gt;http://agora.gatech.edu/?page_id=257&lt;a&gt;&lt;/u&gt;). Законно�?ть Вашего аргумента гарантирует�?�? фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логиче�?ки допу�?тимы, и фактом, что программное обе�?печение автоматиче�?ки �?оздает дополнительную предпо�?ылку, котора�? делает  Ваш аргумент допу�?тимым. �ту дополнительную предпо�?ылку называют &quot;гарантом&quot; Вашего аргумента. Е�?ли �?тот автоматиче�?ки �?оздаваемый &quot;гарант&quot; не кажет�?�? Вам правильным, измените формулировку Вашей причины и/или Вашего за�?влени�?, или �?хемы аргумента, пока формулировка не будет �?оответ�?твовать, и Вы  не �?можете прин�?ть и�?тинно�?ть «гаранта» и в�?ех Ваших причин. &lt;/p&gt;
-	&lt;p&gt;Си�?тема �?ГОР�? обе�?печивает только логиче�?ки допу�?тимые �?хемы аргумента, чтобы мотивировать отражение и облегчить оценку каче�?тва аргументов. Так как каждый произведенный �?и�?темой аргумент в �?ГОРЕ логиче�?ки допу�?тим, Вы можете видеть, каким аргумент должен быть, е�?ли цель �?о�?то�?ла в том, чтобы гарантировать �?праведливо�?ть заключени�?. Вы должны и�?пользовать �?то в каче�?тве возможно�?ти пере�?мотреть компоненты Вашего аргумента, пока он берет, чтобы �?формулировать и �?труктурировать �?амый лучший аргумент. Чтобы до�?тигнуть �?той цели, может  быть необходимо пере�?мотреть формулировку Вашей причины или Вашего за�?влени�?; или могло бы быть необходимо разбить Ваш аргумент и в�?тавить промежуточные причины, �?оздава�? таким образом цепочку или �?еть аргументов вме�?то един�?твенного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение �?, &quot;веро�?тно&quot;, &quot;обычно&quot;, &quot; &quot;при нормальных об�?то�?тель�?твах или &quot;возможно.&quot; Вы можете также в�?тавить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные и�?ключени�? или у�?лови�? в формулировку Вашего заключени�?. &lt;/p&gt;
-	&lt;p&gt;Чтобы �?делать Ваш аргумент �?толь же �?ильным, �?�?ным, �?коль и убедительным на�?колько возможно, попытайте�?ь разобрать�?�? в �?труктуре и формулировках, и выбрать ту �?хему аргумента, котора�? подходит лучше в�?его к тому, что Вы хотите об�?удить.&lt;/p&gt;" />
+			text="Ваш выбор создаст логически (дедуктивно) допустимый аргумент, означая, что Ваше заключение обязательно истинно, если все Ваши предпосылки – истинны (&lt;u&gt; &lt;a href='http://agora.gatech.edu/?page_id=257'&gt;http://agora.gatech.edu/?page_id=257&lt;a&gt;&lt;/u&gt;). Законность Вашего аргумента гарантируется фактом, что Вы можете только выбрать одну из тех традиционных форм аргумента, которые логически допустимы, и фактом, что программное обеспечение автоматически создает дополнительную предпосылку, которая делает  Ваш аргумент допустимым. Эту дополнительную предпосылку называют &quot;гарантом&quot; Вашего аргумента. Если этот автоматически создаваемый &quot;гарант&quot; не кажется Вам правильным, измените формулировку Вашей причины и/или Вашего заявления, или схемы аргумента, пока формулировка не будет соответствовать, и Вы  не сможете принять истинность «гаранта» и всех Ваших причин.
+	Система АГОРА обеспечивает только логически допустимые схемы аргумента, чтобы мотивировать отражение и облегчить оценку качества аргументов. Так как каждый произведенный системой аргумент в АГОРЕ логически допустим, Вы можете видеть, каким аргумент должен быть, если цель состояла в том, чтобы гарантировать справедливость заключения. Вы должны использовать это в качестве возможности пересмотреть компоненты Вашего аргумента, пока он берет, чтобы сформулировать и структурировать самый лучший аргумент. Чтобы достигнуть этой цели, может  быть необходимо пересмотреть формулировку Вашей причины или Вашего заявления; или могло бы быть необходимо разбить Ваш аргумент и вставить промежуточные причины, создавая таким образом цепочку или сеть аргументов вместо единственного аргумента; или могло бы быть необходимо квалифицировать Ваше заключение с, &quot;вероятно&quot;, &quot;обычно&quot;, &quot; &quot;при нормальных обстоятельствах или &quot;возможно.&quot; Вы можете также вставить дополнительные причины, которые необходимы, чтобы проверить  Ваше заключение, или Вы включаете определенные исключения или условия в формулировку Вашего заключения.
+	Чтобы сделать Ваш аргумент столь же сильным, ясным, сколь и убедительным насколько возможно, попытайтесь разобраться в структуре и формулировках, и выбрать ту схему аргумента, которая подходит лучше всего к тому, что Вы хотите обсудить." />
 		<GER
 			text="&lt;p&gt;Deine Auswahl wird ein logisch (deduktive) gültiges Argument erzeugen. Das bedeuted, dass deine Konklusion notwendigerweise wahr ist, wenn all deine Prämissen wahr sind (siehe &lt;u&gt; &lt;a target='_blank'  href='http://agora.gatech.edu/?page_id=257'&gt;http://agora.gatech.edu/?page_id=257&lt;a&gt;&lt;/u&gt;). Die Gültigkeit deines Arguments ist dadurch garantiert, dass du nur eine der traditionellen Formen logisch gültiger Argumente auswählen kannst, und dadurch, dass die Software automatisch eine zusätzliche Prämisse erzeugt, welche dein Argument in ein logisch gültiges Argument umwandelt. Diese zusätzliche Prämisse wird &quot;Garant&quot; genannt. Falls dieser automatisch erzeugte Garant irgendwie seltsam aussieht, verändere die Formulierung deines Grundes und/oder deiner Konklusion, oder wähle ein anderes Argumentschema aus, bis die Formulierungen alle passen und du die Wahrheit des Garanten und all deiner Gründe akzeptieren kannst.&lt;/p&gt;
 	&lt;p&gt;Das AGORA System bietet deshalb allein logisch gültige Argumentschemata an um Reflektion und die Bewertung der Qualität von Argumenten  zu unterstützen. Da  jedes durch das System erzeugte Argument logisch gültig ist, kannst du genau sehen wie ein Argument aussehen müsste, wenn es darum geht die Wahrheit der Konklusion zu garantieren. Du solltest diese Gelegenheit nutzen, um die Komponenten deines Argumentes so lange zu überarbeiten bis du die bestmöglichen Formulierungen und die bestmögliche Struktur hast. Um dieses Ziel zu erreichen könnte es notwendig sein, die Formulierungen deines Grundes oder Deiner Behauptung zu verändern; oder es könnte notwendig sein, dein Argument zu zerteilen und Zwischenargumente einzufügen, so dass eine Kette oder ein Netzwerk von Argumenten entsteht; oder es könnte notwendig sein, deine Behauptung durch Formulierungen wie &quot;wahrscheinlich&quot;, &quot;gewöhnlich&quot;, &quot;unter normalen Umständen&quot; oder &quot;möglicherweise&quot; abzuschwächen. Es ist auch möglich zusätzliche Gründe einzufügen, welche notwendig sind um deine Behauptung zu rechtfertigen. Du kannst auch Ausnahmen oder bestimmte Bedingungen in die Formulierung deiner Konklusion einfügen. &lt;/p&gt;
@@ -2373,9 +2343,9 @@ Projekte zu sehen" />
 					--particular statement
 					--universal statement" />
 		<RUS
-			text="Определите, �?вл�?ет�?�? ли �?то утверждение
-					- о�?обое утверждение
-					- универ�?альное утверждение" />
+			text="Определите, является ли это утверждение
+					- особое утверждение
+					- универсальное утверждение" />
 		<GER
 			text="Bestimme ob diese Aussage eine
 					-- Einzelaussage oder
@@ -2386,7 +2356,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="&quot;Universal statement&quot; is defined as a statement that can be falsified by one counterexample. Thus, laws, rules, and all statements that include &quot;ought,&quot; &quot;should,&quot; or other forms indicating normativity, are universal statements. Anything else is treated as a &quot;particular statement,&quot; including statements about possibilities. Universal statements can easily be defeated by a single counterexample. For example, the universal statement &quot;All birds can fly&quot; can be defeated by the counterexample &quot;Penguins cannot fly.&quot; Similarly, the universal statement &quot;We should go swimming&quot; can be defeated by &quot;We have to meet a deadline for our project.&quot; Particular statements, by contrast, can only be defeated by counterarguments." />
 		<RUS
-			text="&quot;Универ�?альное утверждение&quot; определено как утверждение, которое может быть �?фаль�?ифицировано одним контрпримером. Таким образом, законы, правила, и в�?е утверждени�?, которые включают, &quot;должны, &quot;�?ледует&quot;, или другие формы, указывающие на нормативно�?ть, �?вл�?ют�?�? универ�?альными утверждени�?ми. В�?е о�?тальное ра�?�?матривают как &quot;о�?обое утверждение,&quot; включа�? за�?влени�? о возможно�?т�?х. Различие важно только отно�?ительно по�?лед�?твий различных форм возражений: Е�?ли предпо�?ылка аргумента &quot;побеждена&quot;, то заключение и в�?�? цепь аргументов, котора�? зави�?ит от �?той предпо�?ылки, побеждены также; но е�?ли предпо�?ылка только &quot;подвергнута �?омнению&quot; или ра�?критикована, то утверждение и в�?е зави�?�?щее только подвергнуты �?омнению, но не побеждены. В то врем�? как универ�?альные за�?влени�? могут легко быть побеждены един�?твенным контрпримером, зави�?ит от �?оглашени�? �?реди уча�?тников ди�?ку�?�?ии, до�?таточен ли контрдовод против о�?обого утверждени�? чтобы победить �?то, даже при том, что в�?егда до�?таточно подвергнуть �?омнению �?то и переме�?тить, таким образом, брем�? доказывани�?." />
+			text="&quot;Универсальное утверждение&quot; определено как утверждение, которое может быть сфальсифицировано одним контрпримером. Таким образом, законы, правила, и все утверждения, которые включают, &quot;должны, &quot;следует&quot;, или другие формы, указывающие на нормативность, являются универсальными утверждениями. Все остальное рассматривают как &quot;особое утверждение,&quot; включая заявления о возможностях. Различие важно только относительно последствий различных форм возражений: Если предпосылка аргумента &quot;побеждена&quot;, то заключение и вся цепь аргументов, которая зависит от этой предпосылки, побеждены также; но если предпосылка только &quot;подвергнута сомнению&quot; или раскритикована, то утверждение и все зависящее только подвергнуты сомнению, но не побеждены. В то время как универсальные заявления могут легко быть побеждены единственным контрпримером, зависит от соглашения среди участников дискуссии, достаточен ли контрдовод против особого утверждения чтобы победить это, даже при том, что всегда достаточно подвергнуть сомнению это и переместить, таким образом, бремя доказывания." />
 		<GER
 			text="Eine &quot;universelle Aussage&quot; ist definiert als eine Aussage, die mit einem einzigen Gegenbeispiel widerlegt werden kann. In diesem Sinne sind Gesetze, Regeln und alle Aussagen, die Ausdrücke wie &quot;man sollte&quot;, &quot;man muss&quot; und andere Formen enthalten , die Normativität andeuten, universelle Aussagen. Alle anderen Aussagen werden als &quot;Einzelaussagen&quot; behandelt, einschließlich solchen über Mögliches. Diese Unterscheidung ist auschließlich im Hinblick auf die Konsequenzen von verschiedenen Formen von Einwänden relevant: Wenn die Prämisse eines Arguments &quot;widerlegt&quot; ist, dann ist die Konklusion und die ganze Kette von Argumenten, die von dieser Prämisse abhängen, ebenfalls widerlegt; aber wenn eine Prämisse nur &quot;kritisiert&quot; ist, dann ist die Konklusion und alles von ihr Abhängige nur kritisiert, aber nicht widerlegt. Während universelle Aussagen leicht mit einem einzigen Gegenbeispiel widerlegt werden können, hängt es von einer Übereinkunft zwischen den Teilnehmern an einer Debatte ab, ob ein Gegenargument gegen eine Behauptung hinreichend ist, um sie zu widerlegen; allerdings ist es immer hinreichend um eine Behauptung zu kritisieren und somit die Beweislast auf den Gegner zu verlagern." />
 	</ParticularUniversalClarification>
@@ -2395,7 +2365,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="You need to determine whether your claim and reasons are universal or particular statements. Move your mouse over these options for further explanation and click to switch from one to the other. You can also change the argument scheme any time by clicking on &quot;ArgScheme.&quot;" />
 		<RUS
-			text="Вы должны определить, �?вл�?ют�?�? ли Ваше за�?вление и причины универ�?альными или о�?обыми за�?влени�?ми. Переме�?тите �?вою мышь через �?ти возможно�?ти дл�? дальнейшего объ�?�?нени�? и щелкните, чтобы переключить�?�? от одного до другого. Вы можете также изменить �?хему аргумента, нажима�? &quot;на ArgScheme&quot;." />
+			text="Вы должны определить, являются ли Ваше заявление и причины универсальными или особыми заявлениями. Переместите свою мышь через эти возможности для дальнейшего объяснения и щелкните, чтобы переключиться от одного до другого. Вы можете также изменить схему аргумента, нажимая &quot;на ArgScheme&quot;." />
 		<GER
 			text="Du musst bestimmen, ob deine Behauptung und Gründe Einzelaussagen oder universelle Aussagen sind. Bewege die Maus über diese Option für weitere Erklärungen und klicke auf diese Begriffe um von einer Option zur anderen zu wechseln. Wenn Du auf &quot;ArgSchema&quot; klickst, kannst Du das Argumentations-Schema jederzeit wechseln." />
 	</PartUnivReq>
@@ -2419,22 +2389,20 @@ Projekte zu sehen" />
 		We recommend that you provide a URL so that other users can find a way to contact you, for example if they want to join a password protected project that you created or if they want to collaborate with you outside of AGORA-net. Provide your Facebook address or any other URL. 
 		The AGORA project is in compliance with &lt;u&gt;&lt;a target='_blank'  href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;." />
 		<RUS
-			text="З�?МЕЧ�?�?ИЕ: Реги�?траци�? требует�?�?, чтобы дифференцировать�?�? между людьми, которые уча�?твуют в дебатах или �?отрудниче�?тве. Каждое тек�?товое поле в картах аргумента �?ГОРЫ покажет им�? пользовател�?-автора, потому что должно быть �?�?но, кто за�?вл�?ет что. 
-		Дополнительно, �?ледующа�? информаци�? �?танет видимой (только дл�? зареги�?трированных уча�?тников), нави�?а�? над именем пользовател�?: им�?; фамили�?; URL (е�?ли предо�?тавлен) .  
-		Пожалуй�?та, не и�?пользуйте �?вой Georgia Tech или другие пароли. Вы можете выбрать им�? пользовател�?, которое не ра�?крывает Вашей лично�?ти.  
-		Ваш адре�? �?лектронной почты никогда не будет выдавать�?�? публично. Он будет и�?пользовать�?�? только дл�? предо�?тавлени�? Вам парол�? замены в �?лучае, е�?ли  Вы забываете �?вой текущий.  
-		Мы рекомендуем, чтобы Вы обе�?печили URL так, чтобы другие пользователи могли найти �?по�?об �?в�?зать�?�? �? Вами, например е�?ли они хот�?т при�?оединить�?�? к защищённому паролем проекту, который Вы �?оздали или е�?ли они хот�?т �?отрудничать �? Вами за пределами СЕТИ �?ГОРЫ. Предо�?тавьте Ваш Facebook-адре�? дл�? обращени�?
- или любой другой URL. 
- Проект �?ГОР�? �?оответ�?твует Техниче�?ким Гаранти�?м Защиты данных Georgia Tech's - &lt;u&gt;&lt;a target='_blank'  href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;" />
- <GER
- text="BEACHTE: Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA-net Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. 
- Außerdem werden die folgenden Informationen sichtbar (nur für registrierte Personen) wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). 
- Bitte verwende kein Passwort, dass du schon für andere Zwecke verwendest. 
- Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für den Fall genutzt, dass dir ein Ersatz-Passwort zugeschickt werden muss. 
- Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. 
- Das AGORA-Projekt folgt den Richtlinien die in Georgia Techs Data Protection Safeguards niedergelegt sind: &lt;u&gt;&lt;a target='_blank' href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;." />
- </WhyRegister>
-
+			text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя-автора, потому что должно быть ясно, кто заявляет что. 
+		Дополнительно, следующая информация станет видимой (только для зарегистрированных участников), нависая над именем пользователя: имя; фамилия; URL (если предоставлен) .  
+		Пожалуйста, не используйте свой Georgia Tech или другие пароли. Вы можете выбрать имя пользователя, которое не раскрывает Вашей личности.  
+		Ваш адрес электронной почты никогда не будет выдаваться публично. Он будет использоваться только для предоставления Вам пароля замены в случае, если  Вы забываете свой текущий.  
+		Мы рекомендуем, чтобы Вы обеспечили URL так, чтобы другие пользователи могли найти способ связаться с Вами, например если они хотят присоединиться к защищённому паролем проекту, который Вы создали или если они хотят сотрудничать с Вами за пределами СЕТИ АГОРЫ. Предоставьте Ваш Facebook-адрес для обращения или любой другой URL.  
+		Проект АГОРА соответствует Техническим Гарантиям Защиты данных Georgia Tech's - &lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;" />
+		<GER
+			text="BEACHTE: Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. 
+		Außerdem werden die folgenden Informationen sichtbar (nur für registrierte Personen) wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). 
+		Bitte verwende kein Passwort, dass du schon für andere Zwecke verwendest. 
+		Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für den Fall genutzt, dass dir ein Ersatz-Passwort zugeschickt werden muss. 
+		Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. 
+		Das AGORA-Projekt folgt den Richtlinien die in Georgia Techs Data Protection Safeguards niedergelegt sind: &lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;." />
+	</WhyRegister>
 
 
 
@@ -2453,13 +2421,13 @@ Projekte zu sehen" />
 
  <ArgAndIf>
  <EN-US text=" and if" />
-		<RUS text=" и е�?ли " />
+		<RUS text=" и если " />
 		<GER text=", und wenn " />
 	</ArgAndIf>
 
 	<ArgCannotBe>
 		<EN-US text="It cannot be the case, at the same time, that " />
-		<RUS text="�то не может иметь ме�?то, в то же �?амое врем�?, что " />
+		<RUS text="Это не может иметь место, в то же самое время, что " />
 		<GER text="Es kann nicht zugleich der Fall sein, dass " />
 	</ArgCannotBe>
 
@@ -2477,26 +2445,26 @@ Projekte zu sehen" />
 
 	<ArgEquiv>
 		<EN-US text=" are equivalent" />
-		<RUS text=" �?квивалентны" />
+		<RUS text=" эквивалентны" />
 		<GER text=" sind equivalent" />
 	</ArgEquiv>
 
 	<ArgIf>
 		<EN-US text="if " />
-		<RUS text="е�?ли " />
+		<RUS text="если " />
 		<GER text="wenn " />
 	</ArgIf>
 
 	<ArgIfCap>
 		<EN-US text="If " />
-		<RUS text="Е�?ли " />
+		<RUS text="Если " />
 		<GER text="Wenn " />
 	</ArgIfCap>
 
 
 	<ArgIff>
 		<EN-US text=" if and only if " />
-		<RUS text=", е�?ли и только е�?ли " />
+		<RUS text=", если и только если " />
 		<GER text=" genau dann, wenn " />
 	</ArgIff>
 
@@ -2508,25 +2476,25 @@ Projekte zu sehen" />
 
 	<ArgNecessaryCond>
 		<EN-US text=" is a necessary condition for " />
-		<RUS text=" - необходимое у�?ловие дл�? " />
-		<GER text=" ist eine notwendige Bedingung für " />
+		<RUS text=" - необходимое условие для " />
+		<GER text=" ist eine notwendige Bedingung für: " />
 	</ArgNecessaryCond>
 
 	<ArgNecSuf>
 		<EN-US text=" is a necessary and sufficient condition for " />
-		<RUS text=" - необходимое и до�?таточное у�?ловие дл�? " />
-		<GER text=" ist eine notwendige und hinreichende Bedingung für " />
+		<RUS text=" - необходимое и достаточное условие для " />
+		<GER text=" ist eine notwendige und hinreichende Bedingung für: " />
 	</ArgNecSuf>
 
 	<ArgNotCase>
 		<EN-US text="It is not the case that " />
-		<RUS text="�?е то, что " />
+		<RUS text="??? ??, ??? " />
 		<GER text="Es ist nicht der Fall, dass " />
 	</ArgNotCase>
 
 	<ArgOnlyIf>
 		<EN-US text=" only if " />
-		<RUS text=", только е�?ли " />
+		<RUS text=", только если " />
 		<GER text=" allein dann, wenn " />
 	</ArgOnlyIf>
 
@@ -2538,14 +2506,14 @@ Projekte zu sehen" />
 
 	<ArgProvidedThat>
 		<EN-US text=" provided that " />
-		<RUS text=" при у�?ловии, что " />
+		<RUS text=" при условии, что " />
 		<GER text=", gegeben dass: " />
 	</ArgProvidedThat>
 
 	<ArgSufficientCond>
 		<EN-US text=" is a sufficient condition for " />
-		<RUS text=" - до�?таточное у�?ловие дл�? " />
-		<GER text=" ist eine hinreichende Bedingung für " />
+		<RUS text=" - достаточное условие для " />
+		<GER text=" ist eine hinreichende Bedingung für: " />
 	</ArgSufficientCond>
 
 	<ArgThat>
@@ -2562,13 +2530,13 @@ Projekte zu sehen" />
 
 	<ArgTherefore>
 		<EN-US text="; therefore, " />
-		<RUS text="; по�?тому, " />
+		<RUS text="; поэтому, " />
 		<GER text="; deshalb, " />
 	</ArgTherefore>
 
 	<ArgWhenever>
 		<EN-US text="Whenever " />
-		<RUS text="В�?�?кий раз, когда " />
+		<RUS text="Всякий раз, когда " />
 		<GER text="Immer wenn " />
 	</ArgWhenever>
 
@@ -2583,7 +2551,7 @@ Projekte zu sehen" />
 
 	<AddArg>
 		<EN-US text="an argument for this statement" />
-		<RUS text="аргумент дл�? �?того утверждени�?" />
+		<RUS text="аргумент для этого утверждения" />
 		<GER text="ein Argument für diese Aussage" />
 	</AddArg>
 
@@ -2601,27 +2569,27 @@ Projekte zu sehen" />
 
 	<AddDist>
 		<EN-US text="a distinction between different cases for this statement" />
-		<RUS text="различие между различными �?луча�?ми дл�? �?того утверждени�?" />
+		<RUS text="различие между различными случаями для этого утверждения" />
 		<GER text="eine Unterscheidung verschiedener Fälle für diese Behauptung" />
 	</AddDist>
 
 	<AddFA>
 		<EN-US text="a friendly amendment for a reformulation of this claim" />
-		<RUS text="друже�?твенна�? поправка дл�? переформулировки �?того за�?влени�?" />
+		<RUS text="дружественная поправка для переформулировки этого заявления" />
 		<GER
 			text="einen gut gemeinten Vorschlag zur Verbesserung dieser Behauptung" />
 	</AddFA>
 
 	<AddIntermediate>
 		<EN-US text="an intermediate reason to the reason on the right" />
-		<RUS text="промежуточна�? причина дл�? причины �?права" />
+		<RUS text="промежуточная причина для причины справа" />
 		<GER
 			text="einen dazwischen geschaltenen Grund zu dem Grund auf der rechten Seite" />
 	</AddIntermediate>
 
 	<AddIntermediateToSecond>
 		<EN-US text="an intermediate reason to the second reason on the right" />
-		<RUS text="промежуточна�? причина дл�? второй причины �?права" />
+		<RUS text="промежуточная причина для второй причины справа" />
 		<GER
 			text="einen dazwischen geschaltenen Grund zu dem zweiten Grund auf der rechten Seite" />
 	</AddIntermediateToSecond>
@@ -2630,20 +2598,20 @@ Projekte zu sehen" />
 		<EN-US
 			text="an intermediate reason to the third/fourth/fifth/sixth/seventh reason on the right" />
 		<RUS
-			text="промежуточна�? причина дл�? third/fourth/fifth/ше�?той/�?едьмой причины �?права" />
+			text="промежуточная причина для third/fourth/fifth/шестой/седьмой причины справа" />
 		<GER
 			text="einen dazwischen geschaltenen Grund zu dem dritten/vierten/fünften/sechsten/siebten Grund auf der rechten Seite" />
 	</AddIntermediateLater>
 
 	<AddLinkToMap>
 		<EN-US text="a link to another argument map" />
-		<RUS text="�?в�?зь �? другой картой аргумента" />
+		<RUS text="связь с другой картой аргумента" />
 		<GER text="eine Verknüpfung zu einer anderen Argumentation" />
 	</AddLinkToMap>
 
 	<AddLinkToResource>
 		<EN-US text="a link to resources" />
-		<RUS text="�?в�?зь �? ре�?ур�?ами" />
+		<RUS text="связь с ресурсами" />
 		<GER text="eine Verknüpfung zu Materialien" />
 	</AddLinkToResource>
 
@@ -2651,7 +2619,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that defeats this statement by a counter argument" />
 		<RUS
-			text="возражение, которое побеждает �?то утверждение в�?тречным аргументом" />
+			text="возражение, которое побеждает это утверждение встречным аргументом" />
 		<GER
 			text="einen Einwand, der diese Aussage durch ein Gegenargument widerlegt." />
 	</AddObjArg>
@@ -2660,7 +2628,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that defeats this universal statement by a counter example" />
 		<RUS
-			text="возражение, которое побеждает �?то универ�?альное утверждение в�?тречным примером" />
+			text="возражение, которое побеждает это универсальное утверждение встречным примером" />
 		<GER
 			text="einen Einwand, der diese universelle Aussage durch ein Gegenbeispiel widerlegt." />
 	</AddObjEx>
@@ -2669,7 +2637,7 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that negates this statement without providing reasons (implies a request for justification)" />
 		<RUS
-			text="возражение, которое отрицает �?то утверждение, не обе�?печива�? причины (подразумевает запро�? об оправдании)," />
+			text="возражение, которое отрицает это утверждение, не обеспечивая причины (подразумевает запрос об оправдании)," />
 		<GER
 			text="einen Einwand, der diese Aussage ohne Gründe negiert (impliziert eine Bitte um Rechtfertigung)" />
 	</AddObjNeg>
@@ -2678,20 +2646,20 @@ Projekte zu sehen" />
 		<EN-US
 			text="an objection that questions this statement based on ignorance, doubt, or a guess to the contrary (implies a request for justification)" />
 		<RUS
-			text="возражение, что вопро�?ы �?то утверждение, о�?нованное на невеже�?тве, �?омнении, или предположении наоборот (подразумевает запро�? об оправдании)," />
+			text="возражение, что вопросы это утверждение, основанное на невежестве, сомнении, или предположении наоборот (подразумевает запрос об оправдании)," />
 		<GER
 			text="einen Einwand, der diese Aussage kritisiert, basierend auf Unwissenheit, Zweifel oder einer gegenteiligen Vermutung (impliziert eine Bitte um Rechtfertigung)" />
 	</AddObjQ>
 
 	<AddPaste>
 		<EN-US text="paste from clipboard" />
-		<RUS text="в�?тавить из клипборда(буфера)" />
+		<RUS text="вставить из клипборда(буфера)" />
 		<GER text="kopiere aus dem Zwischenspeicher" />
 	</AddPaste>
 
 	<AddQ>
 		<EN-US text="a question" />
-		<RUS text="вопро�?" />
+		<RUS text="вопрос" />
 		<GER text="eine Frage" />
 	</AddQ>
 
@@ -2703,7 +2671,7 @@ Projekte zu sehen" />
 
 	<AddUnspecConn>
 		<EN-US text="an unspecified connection to another text box" />
-		<RUS text="неуказанна�? �?в�?зь �? другим тек�?товым окном" />
+		<RUS text="неуказанная связь с другим текстовым окном" />
 		<GER text="eine nicht-vorgegebene Art der Verbindung" />
 	</AddUnspecConn>
 
@@ -2752,7 +2720,7 @@ Projekte zu sehen" />
 	<!--WORDS IN LINES -->
 	<objects>
 		<EN-US text="objects to" />
-		<RUS text="возражени�? к" />
+		<RUS text="возражения к" />
 		<GER text="Einwand gegen" />
 	</objects>
 
@@ -2772,7 +2740,7 @@ Projekte zu sehen" />
 	<AnotherCond>
 		<EN-US
 			text="Do you want to insert another conditional statement that is dependent on" />
-		<RUS text="Вы хотите в�?тавить другое зави�?имое у�?ловное за�?вление " />
+		<RUS text="Вы хотите вставить другое зависимое условное заявление " />
 		<GER
 			text="Willst Du einen weiteren konditionalen Syllogismus einfügen, der abhängig ist von " />
 	</AnotherCond>
@@ -2780,16 +2748,17 @@ Projekte zu sehen" />
 	<FirstAlt>
 		<EN-US
 			text="--the first alternative of the alternative statement on the right" />
-		<RUS text="- перва�? альтернатива дл�? альтернативного за�?влени�? �?права" />
+		<RUS text="- первая альтернатива для альтернативного заявления справа" />
 		<GER
 			text="--der ersten Alternative der alternativen Behauptung auf der rechten Seite" />
 	</FirstAlt>
 
 	<SecondAlt>
 		<EN-US text="-- the second alternative" />
-		<RUS text="- втора�? альтернатива" />
+		<RUS text="- вторая альтернатива" />
 		<GER text="--der zweiten Alternative" />
 	</SecondAlt>
+
 	
 	
 	<!--  create a new project ? -->
