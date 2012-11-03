@@ -25,5 +25,7 @@
 	/** dirName: name of the current directory */
 	$dirName = "testing";
 	/** version: current version number */
-	$version = "11.12.02"
+	$version = "11.12.02";
+	/** server url */
+	$serverurlpath = "http://localhost/";
 ?>

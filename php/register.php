@@ -25,7 +25,7 @@
 	/**
 	* Function allowing user to register a new account.
 	*/
-	function register($username, $pass_hash, $firstname, $lastname, $email, $url)
+	function register($username, $pass_hash, $firstname, $lastname, $email, $url,$secQ,$secA)
 	{
 		global $dbName, $version;
 		header("Content-type: text/xml");
@@ -71,7 +71,7 @@
 		if($row['user_id']=="") // If user doesn't exist...
 		{
 			//insert into the database
-			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login) VALUES (FALSE, '$firstname', '$lastname', '$username', '$pass_hash', '$email', '$url', 1, NOW(), NOW())";
+			$iquery= "INSERT INTO users (is_deleted, firstname, lastname, username, password, email, url, user_level, created_date, last_login,securityQNum,securityQAnswer) VALUES (FALSE, '$firstname', '$lastname', '$username', '$pass_hash', '$email', '$url', 1, NOW(), NOW(),$secQ,'$secA')";
 			$insID = mysql_query($iquery, $linkID); 
 			if(!$insID){
 				insertFailed($output, $iquery);
@@ -92,7 +92,10 @@
 	$lastname = mysql_real_escape_string($_REQUEST['lastname']);
 	$email = mysql_real_escape_string($_REQUEST['email']);
 	$url = mysql_real_escape_string($_REQUEST['url']);
+	$secA = mysql_real_escape_string($_REQUEST['secA']);
+	$secQ = mysql_real_escape_string($_REQUEST['secQ']);
+
 	
-	$output = register($username, $pass_hash, $firstname, $lastname, $email, $url);
+	$output = register($username, $pass_hash, $firstname, $lastname, $email, $url,$secQ,$secA);
 	print($output->asXML());
 ?>

@@ -2915,6 +2915,179 @@ Projekte zu sehen" />
 	 <GER text="Wenn du ein neues Projekt woanders erstellen willst, bestimme seinen Ort in der &quot;Welt der Argumente&quot; "/> 
  </CreateProjectElsewhere>
  
+<!--  Forgot Password / Profile Management -->
+<FPUserNotFound>
+	 <EN-US text="User not found."/> 
+	 <RUS text="User not found."/> <!--TODO Translate RUS-->
+	 <GER text="User not found."/> <!--TODO Translate GER-->
+ </FPUserNotFound>
+<FPPwdSaved>
+	 <EN-US text="Password saved succesfully."/> 
+	 <RUS text="Password saved succesfully."/> <!--TODO Translate RUS-->
+	 <GER text="Password saved succesfully."/> <!--TODO Translate GER-->
+ </FPPwdSaved>
+<FPPwdSaveFailed>
+	 <EN-US text="Failed to save password."/> 
+	 <RUS text="Failed to save password."/> <!--TODO Translate RUS-->
+	 <GER text="Failed to save password."/> <!--TODO Translate GER-->
+ </FPPwdSaveFailed>
+
+<SecurityQuestionNotSet>
+	 <EN-US text="Please contact the Administrator of the system."/> 
+	 <RUS text="Please contact the Administrator of the system."/> <!--TODO Translate RUS-->
+	 <GER text="Please contact the Administrator of the system."/> <!--TODO Translate GER-->
+ </SecurityQuestionNotSet>
+ <SecurityAnswerNotMatch>
+	 <EN-US text="Security answer doesn't match."/> 
+	 <RUS text="Security answer doesn't match."/> <!--TODO Translate RUS-->
+	 <GER text="Security answer doesn't match."/> <!--TODO Translate GER-->
+ </SecurityAnswerNotMatch>
+ <ticketExpired>
+	 <EN-US text="Link has expired."/> 
+	 <RUS text="Link has expired."/> <!--TODO Translate RUS-->
+	 <GER text="Link has expired."/> <!--TODO Translate GER-->
+ </ticketExpired>
+ <UserNamePassWordNotMatching>
+	 <EN-US text="Username and password doesn't match."/> 
+	 <RUS text="Username and password doesn't match."/> <!--TODO Translate RUS-->
+	 <GER text="Username and password doesn't match."/> <!--TODO Translate GER-->
+ </UserNamePassWordNotMatching>
+ 
+ <ForgotPasswordLabel>
+	 <EN-US text="Forgot Password"/> 
+	 <RUS text="Forgot Password"/> <!--TODO Translate RUS-->
+	 <GER text="Forgot Password"/> <!--TODO Translate GER-->
+ </ForgotPasswordLabel>
+ 
+ <ForgotPasswordToolTip>
+	 <EN-US text="Forgot your password?"/> 
+	 <RUS text="Forgot your password?"/> <!--TODO Translate RUS-->
+	 <GER text="Forgot your password?"/> <!--TODO Translate GER-->
+ </ForgotPasswordToolTip>
+ 
+ <ChangeProfile>
+	 <EN-US text="Change Profile"/> 
+	 <RUS text="Change Profile"/> <!--TODO Translate RUS-->
+	 <GER text="Change Profile"/> <!--TODO Translate GER-->
+ </ChangeProfile>
+ 
+ <SecurityAnswerInValid>
+	 <EN-US text="please enter a security answer"/> 
+	 <RUS text="please enter a security answer"/> <!--TODO Translate RUS-->
+	 <GER text="please enter a security answer"/> <!--TODO Translate GER-->
+ </SecurityAnswerInValid>
+ 
+ <FNameInValid>
+	 <EN-US text="please choose a first name."/> 
+	 <RUS text="please choose a first name."/> <!--TODO Translate RUS-->
+	 <GER text="please choose a first name."/> <!--TODO Translate GER-->
+ </FNameInValid>
+ 
+ <LNameInValid>
+	 <EN-US text="please choose a last name."/> 
+	 <RUS text="please choose a last name."/> <!--TODO Translate RUS-->
+	 <GER text="please choose a last name."/> <!--TODO Translate GER-->
+ </LNameInValid>
+ 
+ <EmailInValid>
+	 <EN-US text="please choose a email id."/> 
+	 <RUS text="please choose a email id."/> <!--TODO Translate RUS-->
+	 <GER text="please choose a email id."/> <!--TODO Translate GER-->
+ </EmailInValid>
+ 
+ 
+ <SecurityQuestion5>
+	 <EN-US text="What is the name of the city you are born?"/> 
+	 <RUS text="What is the name of the city you are born?"/> <!--TODO Translate RUS-->
+	 <GER text="What is the name of the city you are born?"/> <!--TODO Translate GER-->
+ </SecurityQuestion5>
+ 
+ <SecurityQuestion1>
+	 <EN-US text="What is your mother's maiden name?"/> 
+	 <RUS text="What is your mother's maiden name?"/> <!--TODO Translate RUS-->
+	 <GER text="What is your mother's maiden name?"/> <!--TODO Translate GER-->
+ </SecurityQuestion1>
+ 
+ <SecurityQuestion2>
+	 <EN-US text="What is the name of your favorite pet?"/> 
+	 <RUS text="What is the name of your favorite pet?"/> <!--TODO Translate RUS-->
+	 <GER text="What is the name of your favorite pet?"/> <!--TODO Translate GER-->
+ </SecurityQuestion2>
+ 
+ <SecurityQuestion3>
+	 <EN-US text="What is the name of your favorite movie?"/> 
+	 <RUS text="What is the name of your favorite movie?"/> <!--TODO Translate RUS-->
+	 <GER text="What is the name of your favorite movie?"/> <!--TODO Translate GER-->
+ </SecurityQuestion3>
+ 
+ <SecurityQuestion4>
+	 <EN-US text="What is the name of your favorite book author?"/> 
+	 <RUS text="What is the name of your favorite book author?"/> <!--TODO Translate RUS-->
+	 <GER text="What is the name of your favorite book author?"/> <!--TODO Translate GER-->
+ </SecurityQuestion4>
+ 
+ <SecurityQuestion>
+	 <EN-US text="Security question"/> 
+	 <RUS text="Security question"/> <!--TODO Translate RUS-->
+	 <GER text="Security question"/> <!--TODO Translate GER-->
+ </SecurityQuestion>
+ 
+ <SecurityAnswer>
+	 <EN-US text="Security answer"/> 
+	 <RUS text="Security answer"/> <!--TODO Translate RUS-->
+	 <GER text="Security answer"/> <!--TODO Translate GER-->
+ </SecurityAnswer>
+ 
+ <ResetPwdNewPwd>
+	 <EN-US text="New password"/> 
+	 <RUS text="New password"/> <!--TODO Translate RUS-->
+	 <GER text="New password"/> <!--TODO Translate GER-->
+ </ResetPwdNewPwd>
+ 
+ <ConfirmPwdNewPwd>
+	 <EN-US text="Confirm password"/> 
+	 <RUS text="Confirm password"/> <!--TODO Translate RUS-->
+	 <GER text="Confirm password"/> <!--TODO Translate GER-->
+ </ConfirmPwdNewPwd>
+ 
+ <ResetPwdEnterPassword>
+	 <EN-US text="Enter a new password"/> 
+	 <RUS text="Enter a new password"/> <!--TODO Translate RUS-->
+	 <GER text="Enter a new password"/> <!--TODO Translate GER-->
+ </ResetPwdEnterPassword>
+ 
+ <ConfirmPwdPassword>
+	 <EN-US text="Confirm your password"/> 
+	 <RUS text="Confirm your password"/> <!--TODO Translate RUS-->
+	 <GER text="Confirm your password"/> <!--TODO Translate GER-->
+ </ConfirmPwdPassword>
+ 
+ <usernameError>
+	 <EN-US text="specify username"/> 
+	 <RUS text="specify username"/> <!--TODO Translate RUS-->
+	 <GER text="specify username"/> <!--TODO Translate GER-->
+ </usernameError>
+  <fgtPwdContinue>
+	 <EN-US text="Continue"/> 
+	 <RUS text="Continue"/> <!--TODO Translate RUS-->
+	 <GER text="Continue"/> <!--TODO Translate GER-->
+ </fgtPwdContinue>
+ <fgtPwdClose>
+	 <EN-US text="Close"/> 
+	 <RUS text="Close"/> <!--TODO Translate RUS-->
+	 <GER text="Close"/> <!--TODO Translate GER-->
+ </fgtPwdClose>
+ 
+ <fgtPwdErrorMsg>
+	 <EN-US text="Kindly provide your username and validate your security question."/> 
+	 <RUS text="Kindly provide your username and validate your security question."/> <!--TODO Translate RUS-->
+	 <GER text="Kindly provide your username and validate your security question."/> <!--TODO Translate GER-->
+ </fgtPwdErrorMsg>
+<fgtPwdInfoMsg>
+	 <EN-US text="Successful validation ! An email has been sent to your registered &#xd;email-id using which you can reset your password."/> 
+	 <RUS text="Successful validation ! An email has been sent to your registered &#xd;email-id using which you can reset your password."/> <!--TODO Translate RUS-->
+	 <GER text="Successful validation ! An email has been sent to your registered &#xd;email-id using which you can reset your password."/> <!--TODO Translate GER-->
+ </fgtPwdInfoMsg>
 	<!-- SPECIAL -->
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <ИМЯ> <объекта> GERMAN: 
 		<Name>s <object> -->

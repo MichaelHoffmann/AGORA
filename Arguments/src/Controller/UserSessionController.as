@@ -8,18 +8,22 @@ package Controller
 	import ValueObjects.UserDataVO;
 	
 	import classes.Language;
-	import flash.net.*;
+	
+	import components.ForgotPasswordPopUpPanel;
 	import components.LoginWindow;
 	import components.Projects;
 	import components.RegisterPanel;
 	
 	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.net.*;
 	import flash.net.URLRequest;
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 	import mx.managers.SystemManager;
+	import mx.rpc.events.ResultEvent;
 	
 	public class UserSessionController
 	{	
@@ -34,6 +38,13 @@ package Controller
 			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.REGISTRATION_SUCCEEDED, onRegistrationRequestSuccess);
 			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.REGISTRATION_FAILED, onRegistrationRequestFailure);
 			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FAULT, onFault);
+			
+			// forgot password
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FORGOT_PASSWORD_SEARCHUSER, onForgotPasswordSearchUser);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FORGOT_PASSWORD_SEARCHUSERERROR, onForgotPasswordSearchUserError);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FORGOT_PASSWORD_SECQUESTION, onForgotPasswordSecQuestion);
+			AGORAModel.getInstance().userSessionModel.addEventListener(AGORAEvent.FORGOT_PASSWORD_SECQERROR, onForgotPasswordSecQuestionError);
+			
 		}
 		
 		//----------------get Instance ----------------------------//
@@ -66,6 +77,17 @@ package Controller
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.registrationWindow);	
 		}
 		
+		//--------------Displaying Registration Box---------------//
+		public function showForgotPassWordBox():void{
+			FlexGlobals.topLevelApplication.forgotpwdWindow = new ForgotPasswordPopUpPanel;
+			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.forgotpwdWindow, DisplayObject(FlexGlobals.topLevelApplication), true);
+			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.forgotpwdWindow);
+		}
+		
+		public function removeForgotPwdBox():void{
+			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.forgotpwdWindow);	
+		}
+		
 		//--------------Login as Guest Function-----------------//
 		public function signInAsGuest():void{
 			FlexGlobals.topLevelApplication.agoraMain.setVisible(false,true);
@@ -93,6 +115,19 @@ package Controller
 			agoraController.fetchDataMyMaps();
 			agoraController.fetchContributions();
 			agoraController.fetchDataMyProjects();
+			
+			// show reg window in case security question is not set ...
+			
+			//RegisterPanel
+			var secPermSetinDB = AGORAModel.getInstance().userSessionModel.securityAnswerSet;
+			
+			if(!secPermSetinDB){
+				FlexGlobals.topLevelApplication.registrationWindow = new RegisterPanel;
+				PopUpManager.addPopUp(FlexGlobals.topLevelApplication.registrationWindow, DisplayObject(FlexGlobals.topLevelApplication), true);
+				PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.registrationWindow);
+			}
+			
+			
 		}
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{
@@ -109,6 +144,11 @@ package Controller
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			userSessionModel.changeInfo(userDataVO,newPass);
 		}	
+		public function changeSecInfo(userDataVO:UserDataVO):void{
+			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			userSessionModel.changeSecInfo(userDataVO);
+		}	
+
 
 		protected function onRegistrationRequestSuccess(event:AGORAEvent):void{
 			removeRegistrationBox();
@@ -171,6 +211,40 @@ package Controller
 				showSignInBox();
 			}
 		}
+		
+		
+		protected function onForgotPasswordSecQuestion(event:Event):void
+		{
+			// TODO Auto-generated method stub
+			var fgtwindow:ForgotPasswordPopUpPanel = FlexGlobals.topLevelApplication.forgotpwdWindow;
+			fgtwindow.OK_btn.enabled=false;
+			fgtwindow.successMsgBox.visible=true;
+			fgtwindow.FP_securityDiv.enabled=false;
+		}
+		
+		protected function onForgotPasswordSecQuestionError(event:Event):void
+		{
+			//Alert.show("Error has occured Try again.");
+		}
+		
+		protected function onForgotPasswordSearchUserError(event:AGORAEvent):void
+		{
+			var fgtwindow:ForgotPasswordPopUpPanel = FlexGlobals.topLevelApplication.forgotpwdWindow;
+			fgtwindow.FP_securityDiv.enabled=false;
+			fgtwindow.OK_btn.enabled=false;
+			fgtwindow.FP_userdetailsDiv.enabled=true;	
+		}
+		
+		protected function onForgotPasswordSearchUser(event:AGORAEvent):void
+		{
+			var fgtwindow:ForgotPasswordPopUpPanel = FlexGlobals.topLevelApplication.forgotpwdWindow;
+			fgtwindow.FP_securityDiv.enabled=true;
+			fgtwindow.OK_btn.enabled=true;
+		}
+		
+		
+		
+		
 	}
 }
 

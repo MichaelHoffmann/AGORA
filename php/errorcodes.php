@@ -200,7 +200,7 @@
 	
 	function deleteParentCatrgory($output){
 		$fail=$output->addChild("error");
-		$fail->addAttribute("text", "This Project has sub projects. Hence cannot be deleted.");
+		$fail->addAttribute("text", "ErrorDeleteProject");
 		$fail->addAttribute("code", 315);
 	}
 	
@@ -244,6 +244,27 @@
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Please choose another username.");
 		$fail->addAttribute("code", 319);
+	}
+	function nonexistentSecQs($output){
+		$fail=$output->addChild("securityQs");
+		$fail->addAttribute("text", "SecurityQuestionNotSet");
+		$fail->addAttribute("code", 305);
+	}
+	function nonmatchSecQs($output){
+		$fail=$output->addChild("securityQans");
+		$fail->addAttribute("text", "SecurityAnswerNotMatch");
+		$fail->addAttribute("code", 305);
+	}
+	function nonmatchTicket($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "ticketExpired");
+		$fail->addAttribute("code", 305);
+	}
+	//Only for "generic" data errors.
+	function dataNotFoundUserNamePwd($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "UserNamePassWordNotMatching");
+		$fail->addAttribute("code", 104);
 	}
 		
 ?>

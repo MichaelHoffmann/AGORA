@@ -8,6 +8,8 @@ package ValueObjects
 		public var password:String;
 		public var email:String;
 		public var URL:String;
+		public var securityQs:int;
+		public var securityAns:String;
 		
 		public function UserDataVO()
 		{

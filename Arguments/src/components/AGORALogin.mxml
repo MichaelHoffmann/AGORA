@@ -83,6 +83,10 @@
 			{
 				UserSessionController.getInstance().showRegistrationBox();	
 			}
+			
+			protected function forgotPwdButton_onClick(event:MouseEvent):void{
+				UserSessionController.getInstance().showForgotPassWordBox();
+			}
 		]]>
 	</fx:Script>
 
@@ -138,6 +142,10 @@
 				<mx:LinkButton id="help" label="{Language.lookup('Help')}"
 							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"
 							   color="#757575" toolTip="{Language.lookup('HelpTT')}"/>
+				
+				<mx:LinkButton id="forgotPassWordButton" label="{Language.lookup('ForgotPasswordLabel')}"
+							   click="forgotPwdButton_onClick(event)"
+							   color="#757575" toolTip="{Language.lookup('ForgotPasswordToolTip')}"/>
 			</mx:HBox>
 
 

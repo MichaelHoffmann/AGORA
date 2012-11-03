@@ -11,6 +11,12 @@ package Events
 		public static const USER_INVALID:String = "UserInvalid";
 		public static const REGISTRATION_SUCCEEDED:String = "RegistrationSucceeded";
 		public static const REGISTRATION_FAILED:String = "RegistrationFailed";
+		public static const FORGOT_PASSWORD_SEARCHUSER:String = "ForgotPasswordSearchUser";
+		public static const FORGOT_PASSWORD_SECQUESTION:String = "ForgotPasswordSecQ";
+		public static const FORGOT_PASSWORD_SEARCHUSERERROR:String = "ForgotPasswordSearchUserError";
+		public static const FORGOT_PASSWORD_SECQERROR:String = "ForgotPasswordSecQError";
+		public static const FORGOT_PASSWORD_TICKETVALID:String = "ResetPasswordTicketValid";
+		public static const FORGOT_PASSWORD_TICKETINVALID:String = "ResetPasswordTicketInValid";
 		public static const MAPS_DELETED:String = "MapsDeleted";
 		public static const MAPS_DELETION_FAILED:String = "MapsDeletionFailed";
 		public static const SINGNED_OUT:String = "SignedOut";

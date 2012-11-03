@@ -26,7 +26,7 @@
 	/**
 	*	Function for allowing a user to change his own information.
 	*/
-	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $newpass)
+	function changeinfo($username, $pass_hash, $firstname, $lastname, $email, $url, $newpass,$secQ,$secA)
 	{
 		global $dbName, $version;
 		header("Content-type: text/xml");
@@ -38,34 +38,32 @@
 			badDBLink($output);
 			return $output;
 		}
-
+		$success = $output->addChild("success");
 		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			databaseNotFound($output);
 			return $output;
 		}
-		$success = $output->addChild("success");
-			$success ->addAttribute("username",$username );
-			$success ->addAttribute("Pass",$pass_hash );
-			$success ->addAttribute("lastname ",$lastname );
-			$success ->addAttribute("firstname ",$firstname );
-			$success ->addAttribute("email ",$email );
-			$success ->addAttribute("url ",$url );
-			$success ->addAttribute("newpass ",$newpass );
-
 		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
 		$resultID = mysql_query($query, $linkID); 
-		if(!$resultID){
-			dataNotFound($output, $query);
+		if(!$resultID || mysql_num_rows($resultID) <= 0){
+			dataNotFoundUserNamePwd($output);
+			error_log("usernot found",0);
 			return $output;
 		}else{
 			$success ->addAttribute("foundIDandPass", true);
-
 		}
 		$row = mysql_fetch_assoc($resultID);
 		$uid = $row['user_id'];
 		$success ->addAttribute("uid ",$uid );
 
+		
+		$success ->addAttribute("username",$username );
+		$success ->addAttribute("lastname ",$lastname );
+		$success ->addAttribute("firstname ",$firstname );
+		$success ->addAttribute("email ",$email );
+		$success ->addAttribute("url ",$url );
+		
 		if(!$uid) // If user doesn't exist...
 		{
 			$login->addAttribute("modified", false);
@@ -74,13 +72,13 @@
 			if($newpass!="")
 			{
 				$iquery= "UPDATE users SET firstname='$firstname', 
-				lastname='$lastname', password='$newpass', email='$email', 
+				lastname='$lastname', password='$newpass', email='$email', securityQNum='$secQ',securityQAnswer='$secA',
 				url='$url', last_login=NOW() WHERE user_id=$uid";
 			}
 			else
 			{
 				$iquery = "UPDATE users SET firstname='$firstname', 
-				lastname='$lastname', email='$email', url='$url', 
+				lastname='$lastname', email='$email', url='$url', securityQNum='$secQ',securityQAnswer='$secA',
 				last_login=NOW() WHERE user_id=$uid";
 			}
 
@@ -90,8 +88,40 @@
 				return $output;
 			}else{
 				$login->addAttribute("modified", true); // Successfully created the username.
+				if($newpass!="")
+				{
+					$success ->addAttribute("pass",$newpass );
+					$pass_hash=$newpass;
+				}else{
+					$success ->addAttribute("pass",$pass_hash );
+				}
 			}
 		}
+		
+		
+		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
+		$resultID = mysql_query($query, $linkID);
+		if($resultID){
+			$row = mysql_fetch_assoc($resultID);
+			$secQNum = $row['securityQNum'];
+			if($secQNum!=null){
+				$success->addAttribute("securityAnswerSet", true); 
+			}else{
+				$success->addAttribute("securityAnswerSet", false);
+			}
+			$secQCode = $row['securityQNum'];
+			$secQCodeSet = false;
+			$secQCodeAns="";
+			if($secQCode!=null){
+				$secQCodeSet=true;
+				$secQCodeAns = $row['securityQAnswer'];
+			}
+			$success->addAttribute("secQCode", $secQCodeSet);
+			$success->addAttribute("secQCodeNum", $secQCode);
+			$success->addAttribute("secQCodeAns", $secQCodeAns);
+		}
+		
+		
 		return $output;
 	}
 	$username = mysql_real_escape_string($_REQUEST['username']);
@@ -100,6 +130,14 @@
 	$lastname = mysql_real_escape_string($_REQUEST['lastname']);
 	$email = mysql_real_escape_string($_REQUEST['email']);
 	$url = mysql_real_escape_string($_REQUEST['url']);
-	$output = changeinfo($username,$pass_hash, $firstname,  $lastname, $email, $url);
+	$secA = mysql_real_escape_string($_REQUEST['secA']);
+	$secQ = mysql_real_escape_string($_REQUEST['secQ']);
+	$newpass = "";
+	if(array_key_exists("newpass", $_REQUEST)){
+		$newpass =mysql_real_escape_string($_REQUEST['newpass']);
+	}
+	
+	
+	$output = changeinfo($username,$pass_hash, $firstname,  $lastname, $email, $url,$newpass,$secQ,$secA);
 print($output->asXML());
 ?>

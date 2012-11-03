@@ -27,6 +27,27 @@
 
 	<fx:Script>
 		<![CDATA[
+
+			public function get secCodes():Array
+			{
+				return _secCodes;
+			}
+
+			public function set secCodes(value:Array):void
+			{
+				_secCodes = value;
+			}
+
+			public function get secQstn():ArrayList
+			{
+				return _secQstn;
+			}
+
+			public function set secQstn(value:ArrayList):void
+			{
+				_secQstn = value;
+			}
+
 			protected function registrationNote_clickHandler(event:MouseEvent):void
 			{
 				var registrationNote:RegistrationNote = new RegistrationNote;
@@ -38,38 +59,32 @@
 	<mx:states>
 		<s:State name="Register"/>
 		<s:State name="ChangeInfo"/>
+		<s:State name="SecurityQSet"/>
 	</mx:states>
 
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-		<mx:EmailValidator id="emailValidator"  invalid="emailValidator_invalidHandler(event)"
-						   source="{email}" property="text">
+		<mx:EmailValidator id="emailValidator" invalid="emailValidator_invalidHandler(event)"
+						   property="text" source="{email}">
 		</mx:EmailValidator>
 		
-		<mx:StringValidator id="firstnameValidator"
-							source="{firstname}"
-							property="text">			
+		<mx:StringValidator id="firstnameValidator" property="text" source="{firstname}">			
 		</mx:StringValidator>
 		
-		<mx:StringValidator id="lastnameValidator"
-							source="{lastname}"
-							property="text">
+		<mx:StringValidator id="lastnameValidator" property="text" source="{lastname}">
 		</mx:StringValidator>
 		
-		<mx:StringValidator id="passwordValidator"
-							source="{pass_hash}"
-							property="text">
+		<mx:StringValidator id="passwordValidator" property="text" source="{pass_hash}">
 		</mx:StringValidator>
 		
-		<mx:StringValidator id="passwordDupValidator"
-							source="{pass_hash_dup}"
-							property="text">
+		<mx:StringValidator id="passwordDupValidator" property="text" source="{pass_hash_dup}">
 		</mx:StringValidator>
 		
-		<mx:StringValidator id="usernameValidator"
-							source="{username}"
-							property="text">
+		<mx:StringValidator id="usernameValidator" property="text" source="{username}">
+		</mx:StringValidator>
+		
+		<mx:StringValidator id="securityAnswerValidator" property="text" source="{secAnswer}">
 		</mx:StringValidator>
 	</fx:Declarations>
 	
@@ -89,6 +104,8 @@
 			
 			import com.adobe.crypto.MD5;
 			
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
 			import mx.controls.Alert;
 			import mx.events.ValidationResultEvent;
 			import mx.managers.FocusManager;
@@ -97,8 +114,10 @@
 			//import org.osmf.layout.AbsoluteLayoutFacet;
 			
 			private static var _salt:String = "AGORA";
+			private var _secCodes:Array = new Array(100,101,102,103,104);
 			[Bindable]
 			private var agoraConstants:AGORAParameters;
+			private var _secQstn:ArrayList = new ArrayList([{label:Language.lookup('SecurityQuestion1'),data:100},{label:Language.lookup('SecurityQuestion2'),data:101},{label:Language.lookup('SecurityQuestion3'),data:102},{label:Language.lookup('SecurityQuestion4'),data:103},{label:Language.lookup('SecurityQuestion5'),data:104}]);
 			
 			public static function get salt():String{
 				return _salt;
@@ -107,7 +126,11 @@
 			{
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				if(AGORAModel.getInstance().userSessionModel.username != "Guest"){
-					currentState="ChangeInfo";
+					if(!AGORAModel.getInstance().userSessionModel.securityAnswerSet){
+						currentState="SecurityQSet";
+					}else{
+						currentState="ChangeInfo";
+					}
 					setRegData();
 	
 				}
@@ -118,7 +141,12 @@
 			
 			public function setProperties():void
 			{
-				title=Language.lookup("Register");
+				
+				if(currentState!="Register"){
+					title=Language.lookup("Register");
+				}else{
+					title=Language.lookup("ChangeProfile");
+				}
 			}
 			public function setRegData():void{
 				var userSessionModel:UserSessionModel=AGORAModel.getInstance().userSessionModel;
@@ -128,6 +156,10 @@
 				firstname.text=userSessionModel.firstName;
 				lastname.text=userSessionModel.lastName;
 				url.text=userSessionModel.URL;
+				var secCode = userSessionModel.securityCodeNum;
+				var index = secCodes.indexOf(secCode)!=-1?secCodes.indexOf(secCode):0;
+				secQuestion.selectedIndex = index;
+				secAnswer.text=userSessionModel.securityAnswer;
 			}
 			private function displayStatus(event:Event):void
 			{
@@ -172,7 +204,15 @@
 				userDataVO.password = pass_hash.text;
 				userDataVO.email = email.text;
 				userDataVO.URL = url.text;
+				userDataVO.securityQs = _secCodes[secQuestion.selectedIndex];
+				userDataVO.securityAns = secAnswer.text;
+				if(secAnswer.text==null || secAnswer.text==""){
+					Alert.show(Language.lookup("SecurityAnswerInValid"));
+					return
+				}
+				if(currentState!="SecurityQSet"){
 				emailValidator.validate();
+				}
 				if(currentState=="Register"){
 					if(policyTermsRead.selected){			
 						if( is13orOlder.selected ){
@@ -189,9 +229,30 @@
 							Alert.show(Language.lookup("MustAgree"));
 								
 					}
-				}else if(currentState=="ChangeInfo"){
+				}else if(currentState=="ChangeInfo"){					
+					/*	if(newpass.text==null || oldPass.text==""){
+						Alert.show("please enter your password");
+						return
+					}*/
+					
+					// validations 
+					if(firstname.text==null || firstname.text==""){
+						Alert.show(Language.lookup("FNameInValid"));
+						return;
+					}
+					if(lastname.text==null || lastname.text==""){
+						Alert.show(Language.lookup("LNameInValid"));
+						return;
+					}
+					if(email.text==null || email.text==""){
+						Alert.show(Language.lookup("EmailInValid"));
+						return;
+					}														
 					userDataVO.password=oldPass.text;
 					userSessionController.changeInfo(userDataVO,newpass.text);
+					this.visible=false;
+				}else if(currentState=="SecurityQSet"){
+					userSessionController.changeSecInfo(userDataVO);
 					this.visible=false;
 				}
 			}
@@ -212,62 +273,77 @@
 		]]>
 		
 	</fx:Script>
-	<s:VGroup  horizontalAlign="center">
-		
-	<mx:Form id="form" >
-		<mx:FormItem tabIndex="1" label="{Language.lookup(&quot;Username&quot;)}"   required.Register="true">
-			<s:TextInput id="username" editable.ChangeInfo="false">
+	<s:VGroup horizontalAlign="center">
+	<mx:Form id="form">
+		<mx:FormItem label="{Language.lookup(&quot;Username&quot;)}" tabIndex="1"
+					 required.Register="true">
+			<s:TextInput id="username"
+						 editable.ChangeInfo="false" editable.SecurityQSet="false">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem includeIn="Register" label="{Language.lookup(&quot;Password&quot;)}" required="true">
-			<s:TextInput id="pass_hash" tabIndex="2" displayAsPassword="true">
+		<mx:FormItem includeIn="Register" label="{Language.lookup(&quot;Password&quot;)}"
+					 required="true">
+			<s:TextInput id="pass_hash" displayAsPassword="true" tabIndex="2">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem includeIn="Register" label="{Language.lookup(&quot;PassRepeat&quot;)}" required="true" >
-			<s:TextInput tabIndex="3" id="pass_hash_dup"  displayAsPassword="true">
+		<mx:FormItem includeIn="Register" label="{Language.lookup(&quot;PassRepeat&quot;)}"
+					 required="true">
+			<s:TextInput id="pass_hash_dup" displayAsPassword="true" tabIndex="3">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}" required.Register="true">
-			<s:TextInput tabIndex="4" id="firstname">
+		<mx:FormItem label="{Language.lookup(&quot;FirstName&quot;)}"
+					 required.Register="true" required.ChangeInfo="true">
+			<s:TextInput id="firstname" tabIndex="4" editable.SecurityQSet="false">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}" required.Register="true">
-			<s:TextInput tabIndex="5" id="lastname">
+		<mx:FormItem label="{Language.lookup(&quot;LastName&quot;)}"
+					 required.Register="true" required.ChangeInfo="true">
+			<s:TextInput id="lastname" tabIndex="5" editable.SecurityQSet="false">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem  label="{Language.lookup(&quot;Email&quot;)}" required.Register="true">
-			<s:TextInput tabIndex="6" id="email">
+		<mx:FormItem label="{Language.lookup(&quot;Email&quot;)}"
+					 required.Register="true" required.ChangeInfo="true" excludeFrom="SecurityQSet">
+			<s:TextInput id="email" tabIndex="6">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}">
-			<s:TextInput tabIndex="6" id="url">
+		<mx:FormItem label="{Language.lookup(&quot;URL&quot;)}" excludeFrom="SecurityQSet">
+			<s:TextInput id="url" tabIndex="6">
+			</s:TextInput>
+		</mx:FormItem>
+		<mx:FormItem label="{Language.lookup(&quot;SecurityQuestion&quot;)}" required="true">
+			<s:ComboBox id="secQuestion" dataProvider="{_secQstn}" selectedIndex="0" tabIndex="7">			
+			</s:ComboBox>
+		</mx:FormItem>
+		<mx:FormItem label="{Language.lookup(&quot;SecurityAnswer&quot;)}" required="true">
+			<s:TextInput id="secAnswer" tabIndex="7">
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem includeIn="ChangeInfo" label="{Language.lookup(&quot;NewPassword&quot;)}">
-			<s:TextInput  id="newpass" tabIndex="7" displayAsPassword="true">
+			<s:TextInput id="newpass" displayAsPassword="true" tabIndex="7">
 			</s:TextInput>
 		</mx:FormItem>
-		<mx:FormItem id="newPass" includeIn="ChangeInfo" label="{Language.lookup(&quot;CurrentPass&quot;)}" required="true">
-			<s:TextInput id="oldPass" tabIndex="8" displayAsPassword="true">
+		<mx:FormItem includeIn="ChangeInfo"
+					 label="{Language.lookup(&quot;CurrentPass&quot;)}" required="true">
+			<s:TextInput id="oldPass" displayAsPassword="true" tabIndex="8">
 			</s:TextInput>
 		</mx:FormItem>
 	</mx:Form>
-		<s:HGroup includeIn="Register" >
-			<s:CheckBox id="policyTermsRead"  tabIndex="9"/>
-			<s:Label id="registrationNote" width="200"
-					 click="registrationNote_clickHandler(event)"
+		<s:HGroup includeIn="Register">
+			<s:CheckBox id="policyTermsRead" tabIndex="9"/>
+			<s:Label id="registrationNote" width="200" click="registrationNote_clickHandler(event)"
 					 text="{Language.lookup('ReadRegistrationNote')}" textDecoration="underline"
 					 toolTip="{agoraConstants.REGISTRATION_NOTE}"/>
 		</s:HGroup>
 		<s:HGroup includeIn="Register">
 			<s:CheckBox id="is13orOlder" tabIndex="10"/>
-			<s:Label id="registrationAge"  width="200"
-					 text="{Language.lookup('RegistrationAge')}"/>
+			<s:Label id="registrationAge" width="200" text="{Language.lookup('RegistrationAge')}"/>
 		</s:HGroup>
 		<s:HGroup paddingBottom="30">
-			<s:Button label="{Language.lookup(&quot;Submit&quot;)}" tabIndex="11" id="submit_btn" click="submit_form();">		
+			<s:Button id="submit_btn" label="{Language.lookup(&quot;Submit&quot;)}"
+					  click="submit_form();" tabIndex="11">		
 			</s:Button>
-			<s:Button label="{Language.lookup(&quot;Back&quot;)}"  tabIndex="12" id="back_btn" click="clear_form();">		
+			<s:Button id="back_btn" label="{Language.lookup(&quot;Back&quot;)}" click="clear_form();"
+					  tabIndex="12" excludeFrom="SecurityQSet">		
 			</s:Button>
 		</s:HGroup >			
 	</s:VGroup>

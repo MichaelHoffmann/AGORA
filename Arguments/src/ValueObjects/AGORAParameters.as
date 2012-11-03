@@ -43,6 +43,8 @@ package ValueObjects
 		public var myContributionsURL:String;
 		public var moveprojectToProjectURL:String;
 		public var delProjURL:String;
+		public var forgotpasswordURL:String;
+		public var resetpasswordURL:String;
 		
 		//Error Codes TODO: Enter these in the Languages.xml
 		public var ERROR_106:String;
@@ -197,6 +199,7 @@ package ValueObjects
 			mapToPrivateProjURL = "http://agora.gatech.edu/release/map_to_private_project.php";
 			pullRegistrationURL = "http://agora.gatech.edu/release/pull_registration_info.php";
 			changeInfoURL="http://agora.gatech.edu/release/changeinfo.php";
+			forgotpasswordURL="http://localhost/pmtesting/forgot_pass.php";
 			projectDetailsURL = "http://agora.gatech.edu/release/projectdetails.php";
 			listProjMaps = "http://agora.gatech.edu/release/listProjectMaps.php";
 			moveMapToProjectURL = "http://agora.gatech.edu/release/moveMapToProject.php";

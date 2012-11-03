@@ -35,7 +35,7 @@
 			
 			import Model.AGORAModel;
 			
-
+			import components.ForgotPasswordPopUpPanel;
 			import components.LoginWindow;
 			import components.Map;
 			import components.MapName;
@@ -73,6 +73,7 @@
 			public var loginWindow:LoginWindow;
 			//This is a universal RegistrationPanel that can be accessed by FlexGlobals.topLevelApplication.registrationWindow
 			public var registrationWindow:RegisterPanel;
+			public var forgotpwdWindow:ForgotPasswordPopUpPanel;
 			
 			/*
 			* The 4 universal components below are misplaced at best. Violate the MVC. So do the above 3, really
