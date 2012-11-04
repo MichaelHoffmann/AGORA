@@ -415,7 +415,7 @@ package Controller
 			if(!AGORAModel.getInstance().requested){
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
 				if(model.statementFunction == StatementModel.STATEMENT){
-					if(model.supportingArguments.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
+					if(model.supportingArguments.length == 0 && model.objections.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
 						if(checkArgUnderConstruction()){
 							return;
 						}

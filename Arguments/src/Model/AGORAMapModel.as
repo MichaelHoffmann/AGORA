@@ -420,7 +420,11 @@ package Model
 				//update timestamp
 				timestamp = map.timestamp;
 				name = map.title;
-				
+				if(map.is_hostile == 1)
+				AGORAModel.getInstance().projType = "adversarial";
+				else if (map.is_hostile == 0)
+					AGORAModel.getInstance().projType = "collaborative";
+					
 				//Form a map of nodes
 				var obj:Object;
 				var nodeHash:Dictionary = new Dictionary;

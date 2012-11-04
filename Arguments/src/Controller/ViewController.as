@@ -42,12 +42,9 @@ package Controller
 		
 		//---------------------------- Editing Text -------------------------------------//
 		public function changeToEdit(argumentPanel:ArgumentPanel):void{
-			if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === argumentPanel.author.toLocaleLowerCase()){
+			//if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === argumentPanel.author.toLocaleLowerCase()){
 				argumentPanel.toEditState();
-			}
-			else{
-				Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
-			}
+			//}
 		}
 			
 	}

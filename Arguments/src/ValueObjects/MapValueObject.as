@@ -5,6 +5,7 @@ package ValueObjects
 	public class MapValueObject
 	{
 		public var ID:int;
+		public var is_hostile:int;
 		public var deleted:Boolean;
 		public var title:String;
 		public var username:String;
@@ -35,6 +36,14 @@ package ValueObjects
 					title = mapObject.title;
 				}else{
 					throw new PropNotFoundError("Map does not have property 'title'");
+				}
+				if(mapObject.hasOwnProperty("is_hostile")){
+					if(mapObject.is_hostile == "")
+						is_hostile = 1;
+					else
+					is_hostile = mapObject.is_hostile;
+				}else{
+					throw new PropNotFoundError("Map does not have property 'is_hostile'");
 				}
 				if(mapObject.hasOwnProperty("username")){
 					username = mapObject.username;	

@@ -394,16 +394,35 @@
 			}
 			
 			protected function onDeleteBtnClicked(event:MouseEvent):void{
+				var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
-					ArgumentController.getInstance().deleteNodes(this);
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ArgumentController.getInstance().deleteNodes(this);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().deleteNodes(this);
+					
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
 			
 			protected function onStmtTypeClicked(event:MouseEvent):void{
+				var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
-					ArgumentController.getInstance().changeType(model.ID);
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ArgumentController.getInstance().changeType(model.ID);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().changeType(model.ID);
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
@@ -411,8 +430,17 @@
 			
 			
 			protected function onAddBtnClicked(event:MouseEvent):void{
+				var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if (type == "adversarial")
+					{
+					if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
 					ArgumentController.getInstance().showAddMenu(this);
+					}
+					else
+						Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().showAddMenu(this);
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
@@ -420,8 +448,18 @@
 			
 			protected function lblClicked(event:MouseEvent):void
 			{
+				var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
-					ViewController.getInstance().changeToEdit(this);	
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ViewController.getInstance().changeToEdit(this);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ViewController.getInstance().changeToEdit(this);
+						
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
