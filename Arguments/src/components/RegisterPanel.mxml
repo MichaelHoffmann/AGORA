@@ -142,7 +142,7 @@
 			public function setProperties():void
 			{
 				
-				if(currentState!="Register"){
+				if(currentState=="Register"){
 					title=Language.lookup("Register");
 				}else{
 					title=Language.lookup("ChangeProfile");
@@ -273,7 +273,7 @@
 		]]>
 		
 	</fx:Script>
-	<s:VGroup horizontalAlign="center">
+	<s:VGroup horizontalAlign="center" width="400">
 	<mx:Form id="form">
 		<mx:FormItem label="{Language.lookup(&quot;Username&quot;)}" tabIndex="1"
 					 required.Register="true">
@@ -311,7 +311,7 @@
 			</s:TextInput>
 		</mx:FormItem>
 		<mx:FormItem label="{Language.lookup(&quot;SecurityQuestion&quot;)}" required="true">
-			<s:ComboBox id="secQuestion" dataProvider="{_secQstn}" selectedIndex="0" tabIndex="7">			
+			<s:ComboBox id="secQuestion" dataProvider="{_secQstn}" selectedIndex="0" tabIndex="7" width="220">			
 			</s:ComboBox>
 		</mx:FormItem>
 		<mx:FormItem label="{Language.lookup(&quot;SecurityAnswer&quot;)}" required="true">

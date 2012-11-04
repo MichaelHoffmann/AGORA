@@ -113,6 +113,7 @@ function reset_passwordLink($username, $secanswer) {
 	$uid = $row['user_id'];
 	$secQstn = $row['securityQNum'];
 	$secAnswer = $row['securityQAnswer'];
+	$email = $row['email'];
 
 	if (!$uid) {
 		nonexistent($output, $query);
@@ -142,14 +143,14 @@ function reset_passwordLink($username, $secanswer) {
 
 	$message = wordwrap("Your password reset link for the AGORA system is: $serverurlpath" . "resetPassword.html?resetticket=" . urlencode($encryptedtext), 70);
 	error_log("->encrypt = $message<br />");
-	/*$headers = 'From: webmaster@agora.gatech.edu' . "\r\n" .
+	$headers = 'From: webmaster@agora.gatech.edu' . "\r\n" .
 	'Reply-To: webmaster@agora.gatech.edu' . "\r\n" .
 	'X-Mailer: PHP/' . phpversion();
 	try {
 		mail($email, 'AGORA password reset link', $message, $headers);
 	} catch (Exception $e) {
 		mailSendFailed($output);
-	}*/
+	}
 	$status = $output->addChild("success");
 	return $output;
 
@@ -263,7 +264,7 @@ function savePassword($ticket,$newpwd) {
 		updateFailed($output, $uquery);
 		return $output;
 	}
-	/*$message = wordwrap("Your new password for the AGORA .", 70);
+	$message = wordwrap("Your password was changed for AGORA System.", 70);
 	$headers = 'From: webmaster@agora.gatech.edu' . "\r\n" .
 	'Reply-To: webmaster@agora.gatech.edu' . "\r\n" .
 	'X-Mailer: PHP/' . phpversion();
@@ -271,7 +272,7 @@ function savePassword($ticket,$newpwd) {
 		mail($email, 'AGORA forgotten password update', $message, $headers);
 	} catch (Exception $e) {
 		mailSendFailed($output);
-	}*/
+	}
 return $output;
 }
 
