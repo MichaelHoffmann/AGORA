@@ -43,6 +43,9 @@ package Model
 		public var addUsers:AddUsers;
 		public var removeUsers:RemoveUsers;
 		public var moveMap:MoveMap;
+		public var projAdmin:XMLList;
+		public var projMembers:XMLList;
+		public var projType: String;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
