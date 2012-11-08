@@ -74,7 +74,7 @@
 				return $output;
 			}
 		}
-		//If map isn't in a project, continue as normal..
+		//If map isn't in a project, continue as normal.
 		
 		$output->addAttribute("ID", $row['map_id']);
 		$output->addAttribute("title", $row['title']);
