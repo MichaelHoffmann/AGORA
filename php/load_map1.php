@@ -111,7 +111,7 @@
 		/*$query = "SELECT * FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
 			WHERE map_id = $mapID AND modified_date>\"$timestamp\" ORDER BY node_id";
 		*/
-		$query = "SELECT nodes.node_id, nodes.nodetype_id, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type
+		$query = "SELECT nodes.node_id, nodes.nodetype_id,users.firstname,users.lastname,users.url, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type
 			FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
 			WHERE map_id = $mapID AND modified_date>\"$timestamp\" ORDER BY node_id";
 		$resultID = mysql_query($query, $linkID); 
@@ -124,7 +124,7 @@
 				$node->addAttribute("Type", $row['type']);
 				$node->addAttribute("Author", $row['username']);
 				$node->addAttribute("FirstName", $row['firstname']);
-				$node->addAttribute("LastNameName", $row['lastname']);
+				$node->addAttribute("LastName", $row['lastname']);
 				$node->addAttribute("URL", $row['url']);
 				$node->addAttribute("x", $row['x_coord']);
 				$node->addAttribute("y", $row['y_coord']);
