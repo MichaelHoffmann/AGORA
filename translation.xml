@@ -10,7 +10,7 @@
 		-ARGUMENT DESCRIPTIONS 
 		-HELP TEXT 
 		-PROMPTS 
-		-WALLS OF TEXT 
+		-WALLS OF TEXT 	
 		-ARGUMENT PIECES 
 		-ADD CONTINUATIONS 
 		-PROMPTS IN NODES 
@@ -33,7 +33,6 @@
 <!--NOTE: This document needs to be OPENED by using the character set Unicode (UTF-8) as ASCI filter. Otherwise things like Cyrillic letters and German Umlaute cannot be READ and EDITED. If you opened it with the wrong filter, DO NOT SAVE IT, it will corrupt the language. -->
 
 <!--newly added texts that need to be referred to in the code; copy to the correct location in this document. -->
-
 
 
 	<!--CATEGORIES FOR ORGANIZING MAPS -->
@@ -2128,7 +2127,8 @@ Projekte zu sehen" />
 		<EN-US
 			text="The statement in this text box is called the &quot;enabler.&quot; An &quot;enabler&quot; is the premise in an argument that guarantees that the reason provided (or a combination of reasons) is sufficient to justify the claim. The enabler is always a universal statement. It guarantees that an argument is logically valid." />
 		<RUS
-			text="Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно гарантирует, что аргумент логически справедлив." />
+			text="Утверждение в этом текстовом поле называют &quot;Гарант&quot;.&quot;Гарант&quot;.&quot;- предпосылка в аргументе, который гарантирует, что обеспеченная причина (или комбинация причин) достаточна, чтобы оправдать заявление. &quot;Гарант&quot; - всегда универсальное утверждение. Оно
+ гарантирует, что аргумент логически справедлив." />
 		<GER
 			text="Der Satz in dieser Textbox wird &quot;Garant&quot; gennant. Der &quot;Garant&quot; ist diejenige Prämisse in einem Argument, die garantiert, dass der angegebene Grund (oder eine Kombination von Gründen) hinreichend ist um die Konklusion zu rechtfertigen. Der &quot;Garant&quot; ist immer eine universelle Behauptung. Er garantiert, dass ein Argument logisch gültig ist." />
 	</Enabler>
@@ -2239,7 +2239,8 @@ Projekte zu sehen" />
 		2. Is each of your reasons acceptable, or does one of them need additional support by further arguments? If any of your reasons is either not evident or controversial, provide further arguments by clicking on the &quot;add ...&quot; button under that reason to which you want to add a supporting argument.
 		3. Are there further independent arguments for your claim? &quot;Independent arguments&quot; provide additional reasons for your claim that do not depend on the reasons you already have. Having more independent arguments makes your claim stronger than having many reasons that are mutually dependent. To add independent arguments, click on the &quot;add ...&quot; under your claim.
 		4. If you can imagine possible objections against one of your reasons, you might add these objections in order to refute them then by further arguments. That makes your argument stronger.
-		5. Revise the formulations of your claim and reasons, and the structure of your argument, as long as it takes to create the best possible argument. You could include exceptions into your claim, or you formulate it more specific." />
+		5. Revise the formulations of your claim and reasons, and
+ the structure of your argument, as long as it takes to create the best possible argument. You could include exceptions into your claim, or you formulate it more specific." />
 		<RUS
 			text="Поддержка:
 		Действительно ли Ваш аргумент силен и убедителен? Вы должны проверить пять вещей: 
@@ -2369,7 +2370,8 @@ Projekte zu sehen" />
 
 	<ArgCannotBe>
 		<EN-US text="It cannot be the case, at the same time, that " />
-		<RUS text="Это не может иметь место, в то же самое время, что " />
+		<RUS text="Это
+ не может иметь место, в то же самое время, что " />
 		<GER text="Es kann nicht zugleich der Fall sein, dass " />
 	</ArgCannotBe>
 
@@ -2434,12 +2436,13 @@ Projekte zu sehen" />
 		<RUS text=", только если " />
 		<GER text=" allein dann, wenn " />
 	</ArgOnlyIf>
-
+	
 	<ArgNotCase>
 		<EN-US text="It is not the case that " />
 		<RUS text="??? ??, ??? " />
 		<GER text="Es ist nicht der Fall, dass " />
 	</ArgNotCase>
+	
 	<ArgOr>
 		<EN-US text=" or " />
 		<RUS text=" или " />
@@ -2917,179 +2920,176 @@ Projekte zu sehen" />
  
 <!--  Forgot Password / Profile Management -->
 <FPUserNotFound>
-	 <EN-US text="User not found."/> 
-	 <RUS text="User not found."/> <!--TODO Translate RUS-->
-	 <GER text="User not found."/> <!--TODO Translate GER-->
+	 <EN-US text="User name not found. Please try again."/> 
+	 <RUS text="User name not found. Please try again."/> <!--TODO Translate RUS-->
+	 <GER text="Benutzername nicht gefunden. Bitte versuch’s noch einmal."/> 
  </FPUserNotFound>
 <FPPwdSaved>
-	 <EN-US text="Password saved succesfully."/> 
-	 <RUS text="Password saved succesfully."/> <!--TODO Translate RUS-->
-	 <GER text="Password saved succesfully."/> <!--TODO Translate GER-->
+	 <EN-US text="Password successfully saved."/> 
+	 <RUS text="Password successfully saved ."/> <!--TODO Translate RUS-->
+	 <GER text="Passwort wurde gespeichert."/> 
  </FPPwdSaved>
 <FPPwdSaveFailed>
-	 <EN-US text="Failed to save password."/> 
-	 <RUS text="Failed to save password."/> <!--TODO Translate RUS-->
-	 <GER text="Failed to save password."/> <!--TODO Translate GER-->
+	 <EN-US text="Failed to save password. Please try again."/> 
+	 <RUS text="Failed to save password. Please try again."/> <!--TODO Translate RUS-->
+	 <GER text="Passwort konnte nicht gespeichert werden. Bitte versuch’s noch einmal."/> 
  </FPPwdSaveFailed>
 
 <SecurityQuestionNotSet>
-	 <EN-US text="Please contact the Administrator of the system."/> 
-	 <RUS text="Please contact the Administrator of the system."/> <!--TODO Translate RUS-->
-	 <GER text="Please contact the Administrator of the system."/> <!--TODO Translate GER-->
+	 <EN-US text="Please contact the Administrator of the AGORA system."/> 
+	 <RUS text="Please contact the Administrator of the AGORA system."/> <!--TODO Translate RUS-->
+	 <GER text="Bitte kontaktiere den Administrator des AGORA Systems."/> 
  </SecurityQuestionNotSet>
  <SecurityAnswerNotMatch>
-	 <EN-US text="Security answer doesn't match."/> 
-	 <RUS text="Security answer doesn't match."/> <!--TODO Translate RUS-->
-	 <GER text="Security answer doesn't match."/> <!--TODO Translate GER-->
+	 <EN-US text="Security answer doesn't match to our records."/> 
+	 <RUS text="Security answer doesn't match to our records."/> <!--TODO Translate RUS-->
+	 <GER text="Die Antwort auf die Sicherheits-Frage passt nicht zu dem, was wir gespeichert haben."/> 
  </SecurityAnswerNotMatch>
  <ticketExpired>
-	 <EN-US text="Link has expired."/> 
-	 <RUS text="Link has expired."/> <!--TODO Translate RUS-->
-	 <GER text="Link has expired."/> <!--TODO Translate GER-->
+	 <EN-US text="Link has expired. Please use the Forgot-Password function again."/> 
+	 <RUS text="Link has expired. Please use the Forgot-Password function again."/> <!--TODO Translate RUS-->
+	 <GER text="Dieser Link ist nicht mehr gültig. Bitte aktiviere die &quot;Passwort vergessen?&quot; Funktion noch einmal."/> 
  </ticketExpired>
  <UserNamePassWordNotMatching>
-	 <EN-US text="Username and password doesn't match."/> 
-	 <RUS text="Username and password doesn't match."/> <!--TODO Translate RUS-->
-	 <GER text="Username and password doesn't match."/> <!--TODO Translate GER-->
+	 <EN-US text="Username and password don't match."/> 
+	 <RUS text="Username and password don't match."/> <!--TODO Translate RUS-->
+	 <GER text="Benutzername und Passwort passen nicht zusammen."/> 
  </UserNamePassWordNotMatching>
  
  <ForgotPasswordLabel>
 	 <EN-US text="Forgot Password"/> 
 	 <RUS text="Forgot Password"/> <!--TODO Translate RUS-->
-	 <GER text="Forgot Password"/> <!--TODO Translate GER-->
+	 <GER text="Passwort vergessen"/> 
  </ForgotPasswordLabel>
  
  <ForgotPasswordToolTip>
 	 <EN-US text="Forgot your password?"/> 
 	 <RUS text="Forgot your password?"/> <!--TODO Translate RUS-->
-	 <GER text="Forgot your password?"/> <!--TODO Translate GER-->
+	 <GER text="Hast du dein Passwort vergessen?"/> <!--TODO Translate GER-->
  </ForgotPasswordToolTip>
- 
- <ChangeProfile>
-	 <EN-US text="Change Profile"/> 
-	 <RUS text="Change Profile"/> <!--TODO Translate RUS-->
-	 <GER text="Change Profile"/> <!--TODO Translate GER-->
- </ChangeProfile>
- 
+  
  <SecurityAnswerInValid>
-	 <EN-US text="please enter a security answer"/> 
-	 <RUS text="please enter a security answer"/> <!--TODO Translate RUS-->
-	 <GER text="please enter a security answer"/> <!--TODO Translate GER-->
+	 <EN-US text="Please enter an answer to one of the security questions"/> 
+	 <RUS text="Please enter an answer to one of the security questions"/> <!--TODO Translate RUS-->
+	 <GER text="Bitte gib eine Antwort auf eine der Sicherheitsfragen ein."/> 
  </SecurityAnswerInValid>
  
  <FNameInValid>
-	 <EN-US text="please choose a first name."/> 
-	 <RUS text="please choose a first name."/> <!--TODO Translate RUS-->
-	 <GER text="please choose a first name."/> <!--TODO Translate GER-->
+	 <EN-US text="Please enter a first name!"/> 
+	 <RUS text="Please enter a first name!"/> <!--TODO Translate RUS-->
+	 <GER text="Bitte gib einen Vornamen ein!"/> 
  </FNameInValid>
  
  <LNameInValid>
-	 <EN-US text="please choose a last name."/> 
-	 <RUS text="please choose a last name."/> <!--TODO Translate RUS-->
-	 <GER text="please choose a last name."/> <!--TODO Translate GER-->
+	 <EN-US text="Please enter a last name!"/> 
+	 <RUS text="Please enter a last name!"/> <!--TODO Translate RUS-->
+	 <GER text="Bitte gib einen Nachnamen ein!"/> 
  </LNameInValid>
  
  <EmailInValid>
-	 <EN-US text="please choose a email id."/> 
-	 <RUS text="please choose a email id."/> <!--TODO Translate RUS-->
-	 <GER text="please choose a email id."/> <!--TODO Translate GER-->
+	 <EN-US text="Please enter a valid e-mail address! Without one we cannot contact you in case you forgot your password."/> 
+	 <RUS text="Please enter a valid e-mail address! Without one we cannot contact you in case you forgot your password."/> <!--TODO Translate RUS-->
+	 <GER text="Bitte gib eine gültige E-mail Adresse ein! Wir brauchen sie um dich zu kontaktieren, falls du dein Passwort vergisst."/>
  </EmailInValid>
  
  
  <SecurityQuestion5>
 	 <EN-US text="What is the name of the city you are born?"/> 
 	 <RUS text="What is the name of the city you are born?"/> <!--TODO Translate RUS-->
-	 <GER text="What is the name of the city you are born?"/> <!--TODO Translate GER-->
+	 <GER text="Was ist dein Geburtsort?"/> 
  </SecurityQuestion5>
  
  <SecurityQuestion1>
 	 <EN-US text="What is your mother's maiden name?"/> 
 	 <RUS text="What is your mother's maiden name?"/> <!--TODO Translate RUS-->
-	 <GER text="What is your mother's maiden name?"/> <!--TODO Translate GER-->
+	 <GER text="Was ist der Geburtsname deiner Mutter?"/> 
  </SecurityQuestion1>
  
  <SecurityQuestion2>
 	 <EN-US text="What is the name of your favorite pet?"/> 
 	 <RUS text="What is the name of your favorite pet?"/> <!--TODO Translate RUS-->
-	 <GER text="What is the name of your favorite pet?"/> <!--TODO Translate GER-->
+	 <GER text="Was ist der Name deines Lieblings-Haustieres?"/> 
  </SecurityQuestion2>
  
  <SecurityQuestion3>
 	 <EN-US text="What is the name of your favorite movie?"/> 
 	 <RUS text="What is the name of your favorite movie?"/> <!--TODO Translate RUS-->
-	 <GER text="What is the name of your favorite movie?"/> <!--TODO Translate GER-->
+	 <GER text="Was ist der Name deines Lieblingsfilms?"/> <!--TODO Translate GER-->
  </SecurityQuestion3>
  
  <SecurityQuestion4>
 	 <EN-US text="What is the name of your favorite book author?"/> 
 	 <RUS text="What is the name of your favorite book author?"/> <!--TODO Translate RUS-->
-	 <GER text="What is the name of your favorite book author?"/> <!--TODO Translate GER-->
+	 <GER text="Was ist der Name deines Lieblingsautors?"/> 
  </SecurityQuestion4>
  
  <SecurityQuestion>
 	 <EN-US text="Security question"/> 
 	 <RUS text="Security question"/> <!--TODO Translate RUS-->
-	 <GER text="Security question"/> <!--TODO Translate GER-->
+	 <GER text="Sicherheitsfrage"/> 
  </SecurityQuestion>
  
  <SecurityAnswer>
 	 <EN-US text="Security answer"/> 
 	 <RUS text="Security answer"/> <!--TODO Translate RUS-->
-	 <GER text="Security answer"/> <!--TODO Translate GER-->
+	 <GER text="Sicherheitsantwort"/> 
  </SecurityAnswer>
  
  <ResetPwdNewPwd>
 	 <EN-US text="New password"/> 
 	 <RUS text="New password"/> <!--TODO Translate RUS-->
-	 <GER text="New password"/> <!--TODO Translate GER-->
+	 <GER text="Neues Passwort"/> 
  </ResetPwdNewPwd>
  
  <ConfirmPwdNewPwd>
 	 <EN-US text="Confirm password"/> 
 	 <RUS text="Confirm password"/> <!--TODO Translate RUS-->
-	 <GER text="Confirm password"/> <!--TODO Translate GER-->
+	 <GER text="Bestätige Passwort"/> 
  </ConfirmPwdNewPwd>
  
  <ResetPwdEnterPassword>
 	 <EN-US text="Enter a new password"/> 
 	 <RUS text="Enter a new password"/> <!--TODO Translate RUS-->
-	 <GER text="Enter a new password"/> <!--TODO Translate GER-->
+	 <GER text="Gib ein neues Passwort ein"/> 
  </ResetPwdEnterPassword>
  
  <ConfirmPwdPassword>
 	 <EN-US text="Confirm your password"/> 
 	 <RUS text="Confirm your password"/> <!--TODO Translate RUS-->
-	 <GER text="Confirm your password"/> <!--TODO Translate GER-->
+	 <GER text="Bestätige dein Passwort"/> 
  </ConfirmPwdPassword>
  
  <usernameError>
-	 <EN-US text="specify username"/> 
-	 <RUS text="specify username"/> <!--TODO Translate RUS-->
-	 <GER text="specify username"/> <!--TODO Translate GER-->
+	 <EN-US text="Please enter your user name!"/> 
+	 <RUS text="Please enter your user name!"/> <!--TODO Translate RUS-->
+	 <GER text="Bitte gib deinen Benutzernamen ein!"/> 
  </usernameError>
   <fgtPwdContinue>
 	 <EN-US text="Continue"/> 
 	 <RUS text="Continue"/> <!--TODO Translate RUS-->
-	 <GER text="Continue"/> <!--TODO Translate GER-->
+	 <GER text="Mach weiter"/> 
  </fgtPwdContinue>
  <fgtPwdClose>
 	 <EN-US text="Close"/> 
 	 <RUS text="Close"/> <!--TODO Translate RUS-->
-	 <GER text="Close"/> <!--TODO Translate GER-->
+	 <GER text="Schließen"/> 
  </fgtPwdClose>
  
  <fgtPwdErrorMsg>
-	 <EN-US text="Kindly provide your username and validate your security question."/> 
-	 <RUS text="Kindly provide your username and validate your security question."/> <!--TODO Translate RUS-->
-	 <GER text="Kindly provide your username and validate your security question."/> <!--TODO Translate GER-->
+	 <EN-US text="Please enter your user name and the answer to your security question. This allows us to contact you in case you forget your password."/> 
+	 <RUS text="Please enter your user name and the answer to your security question. This allows us to contact you in case you forget your password."/> <!--TODO Translate RUS-->
+	 <GER text="Bitte gib deinen Benutzernamen und die Antwort auf deine Sicherheitsfrage ein. Dies erlaubt uns dich zu kontaktieren falls du dein Passwort vergisst."/> 
  </fgtPwdErrorMsg>
 <fgtPwdInfoMsg>
-	 <EN-US text="Successful validation ! An email has been sent to your registered &#xd;email-id using which you can reset your password."/> 
-	 <RUS text="Successful validation ! An email has been sent to your registered &#xd;email-id using which you can reset your password."/> <!--TODO Translate RUS-->
-	 <GER text="Successful validation ! An email has been sent to your registered &#xd;email-id using which you can reset your password."/> <!--TODO Translate GER-->
+	 <EN-US text="Validation succeeded! An e-mail has been sent to your registered e-mail address. Use the link that will be provided in the e-mail to reset your password. Please do so within 3 days."/> 
+	 <RUS text="Validation succeeded! An e-mail has been sent to your registered e-mail address. Use the link that will be provided in the e-mail to reset your password. Please do so within 3 days."/> <!--TODO Translate RUS-->
+	 <GER text="Überprüfung erfolgreich. Es wurde eine E-mail an deine registrierte E-mail Adresse gesandt. Benutze den Link in der E-mail um dein Passwort neu zu bestimmen. Bitte mach das innerhalb von 3 Tagen."/> 
  </fgtPwdInfoMsg>
+ 
+ <!--  End of Forgot Password related entries -->
+ 
 	<!-- SPECIAL -->
-	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <ИМЯ> <объекта> GERMAN: 
+	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->
 
 </Translations>
