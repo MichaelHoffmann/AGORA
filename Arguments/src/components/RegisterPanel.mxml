@@ -145,7 +145,7 @@
 				if(currentState=="Register"){
 					title=Language.lookup("Register");
 				}else{
-					title=Language.lookup("ChangeProfile");
+					title=Language.lookup("ChangeRegData");
 				}
 			}
 			public function setRegData():void{
