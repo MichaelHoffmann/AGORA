@@ -2976,7 +2976,7 @@ Projekte zu sehen" />
  
  <FNameInValid>
 	 <EN-US text="Please enter a first name!"/> 
-	 <RUS text="Please enter a first name!""/> <!--TODO Translate RUS-->
+	 <RUS text="Please enter a first name!"/> <!--TODO Translate RUS-->
 	 <GER text="Bitte gib einen Vornamen ein!"/> 
  </FNameInValid>
  
