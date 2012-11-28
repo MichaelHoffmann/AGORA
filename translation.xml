@@ -490,6 +490,18 @@
 		<RUS text="Добро пожаловать в СЕТЬ АГОРЫ!" />
 		<GER text="Willkommen im AGORA-net!" />
 	</WelcomeHere>
+	
+	<ParticipateDebates>
+		<EN-US text="Participate in debates" />
+		<RUS text="Participate in debates" /><!--TODO Translate RUS-->
+		<GER text="Beteilige dich an Debatten" />
+	</ParticipateDebates>
+	
+	<ConstructArguments>
+		<EN-US text="Construct logically valid arguments" />
+		<RUS text="Construct logically valid arguments" /><!--TODO Translate RUS-->
+		<GER text="Konstruiere logisch gültige Argumente" />
+	</ConstructArguments>
 
 	<AboutUs>
 		<EN-US text="About us" />
@@ -3076,7 +3088,7 @@ Projekte zu sehen" />
  </fgtPwdClose>
  
  <fgtPwdErrorMsg>
-	 <EN-US text="Please enter your user name and the answer to your security question. This allows us to contact you in case you forget your password."/> 
+	 <EN-US text="Please enter your user name and the answer to your security question.This allows us to contact you in case you forget your password."/> 
 	 <RUS text="Please enter your user name and the answer to your security question. This allows us to contact you in case you forget your password."/> <!--TODO Translate RUS-->
 	 <GER text="Bitte gib deinen Benutzernamen und die Antwort auf deine Sicherheitsfrage ein. Dies erlaubt uns dich zu kontaktieren falls du dein Passwort vergisst."/> 
  </fgtPwdErrorMsg>
