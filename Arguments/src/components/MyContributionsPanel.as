@@ -62,11 +62,13 @@ package components
 		private var subprojectPanelLbl:Label;
 		private var projectTitlePanel: HGroup;
 		private var projectPanel :VGroup;
-		
+		public var pView:ProjectView;
 		private var rsp:RightSidePanel;
 		public function MyContributionsPanel()
 		{
 			super();
+			pView=new ProjectView;
+			pView.visible=false;
 			/*Instantiations in order of depth in UI field*/
 			scroller = new Scroller;
 			categoryTiles = new Group;
@@ -109,12 +111,21 @@ package components
 			/*Setting up loading display*/
 			loadingDisplay.text = Language.lookup("Loading");
 			addElement(loadingDisplay);
-			
+			this.addElement(pView);
 			rsp = FlexGlobals.topLevelApplication.rightSidePanel;
 		}
-		
+		public function showpView(){
+			subprojectPanel.removeAllElements();
+			projectTitlePanel.removeAllElements();
+			projectPanel.removeAllElements();
+			projectMemberPanel.removeAllElements();
+			projectTypePanel.removeAllElements();			
+			mapPanel.removeAllElements();
+			pView.visible=true;
+		}
 		
 		override protected function commitProperties():void{
+			pView.visible=false;
 			super.commitProperties();
 			categoryTiles.removeAllElements();
 			subprojectPanel.removeAllElements();
@@ -144,7 +155,7 @@ package components
 						mapPanelLbl.text = Language.lookup('MapsinProject');
 						subprojectPanelLbl.text = Language.lookup('SubProj');
 						var currProjLbl:mx.controls.Label = new mx.controls.Label();
-						currProjLbl.text= AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).current;
+						//currProjLbl.text= AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).current;
 						currProjLbl.setStyle("fontSize",14);
 						currProjLbl.width = 360;
 					//	var currProjButton:Button = new Button();
@@ -252,7 +263,6 @@ package components
 								AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 								AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
 								AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
-								AGORAController.getInstance().fetchChildCategorycontributions(e.target.label,e.target.name, true);
 							}, false, 1,false);
 						}
 			}
@@ -295,7 +305,7 @@ package components
 						//Checks to see if the current category is a project
 						AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 						AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
-						AGORAController.getInstance().fetchChildCategorycontributions(e.target.label,e.target.name, true);
+						AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
 					}, false, 1,false);
 				}
 				this.categoryTiles.layout = new HorizontalLayout;

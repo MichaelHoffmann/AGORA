@@ -28,6 +28,7 @@ package Model
 		}
 		
 		public function requestProjectList():void{
+
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
 				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash};

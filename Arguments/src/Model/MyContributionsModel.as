@@ -81,7 +81,7 @@ package Model
 			dispatchEvent(new AGORAEvent(AGORAEvent.FAULT));
 		}
 		
-		public function requestChildCategories(categoryName:String,categoryID:String):void{
+		public function requestChildCategories(categoryName:String,categoryID:int):void{
 			requestChildren.send({usecatid:1,parentCategoryID:categoryID,parentCategory: "'"+categoryName+"'" });
 			
 			requestChildMap.send({parentCategory: categoryID });

@@ -45,6 +45,7 @@ package Controller
 	
 	import spark.components.Group;
 	import spark.components.HGroup;
+	import spark.components.NavigatorContent;
 	
 	public class AGORAController
 	{
@@ -55,10 +56,8 @@ package Controller
 		private var mapModel:AGORAMapModel;
 		private var model:AGORAModel;
 		private var project:Boolean;
-		private var _categoryChain:ArrayList;
-		private var _contributionsCategoryChain:ArrayList;
 		private var tempParentCategory:String;
-		private var tempParentCategoryID:String;
+		private var tempParentCategoryID:int;
 		//-------------------------Constructor-----------------------------//
 		public function AGORAController(singletonEnforcer:SingletonEnforcer)
 		{
@@ -73,10 +72,10 @@ package Controller
 			AGORAModel.getInstance().agoraMapModel.addEventListener(AGORAEvent.ILLEGAL_MAP, handleIllegalMap);
 			model.projectListModel.addEventListener(AGORAEvent.PROJECT_LIST_FETCHED, onProjectListFetched);
 			model.projectListModel.addEventListener(AGORAEvent.FAULT, onFault);
-			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_LIST_FETCHED, onMyProjectsListFetched);
-			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_SUB_DETAILS, updateProjectSub);
-			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_MAP_DETAILS, updateProjectMap);
-			model.myProjectsModel.addEventListener(AGORAEvent.MY_PROJECTS_USER_DETAILS, updateProjectUser);
+			model.myProjectsModel.addEventListener(AGORAEvent.PROJECTS_LIST_FETCHED, onProjectsListFetched);
+			model.myProjectsModel.addEventListener(AGORAEvent.PROJECTS_SUB_DETAILS, updateProjectSub);
+			model.myProjectsModel.addEventListener(AGORAEvent.PROJECTS_MAP_DETAILS, updateProjectMap);
+			model.myProjectsModel.addEventListener(AGORAEvent.PROJECTS_USER_DETAILS, updateProjectUser);
 			model.selectAsAdmin.addEventListener(Events.AGORAEvent.ADMIN_CHANGED,onAdminChanged);
 			model.editProject.addEventListener(Events.AGORAEvent.ADMIN_CHANGED,updateProject);
 			model.myProjectsModel.addEventListener(AGORAEvent.FAULT, onFault);
@@ -102,26 +101,17 @@ package Controller
 			model.addUsers.addEventListener(AGORAEvent.ADDED_USERS,onUsersChanged);
 			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onUsersChanged);
 			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapAdded);
-			
+			model.chainModel.addEventListener(AGORAEvent.CHAIN_LOADED,onChainLoaded);
+
 
 
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
 			map = FlexGlobals.topLevelApplication.map;
 			userSession = AGORAModel.getInstance().userSessionModel;
 			mapModel = AGORAModel.getInstance().agoraMapModel;
-			categoryChain = new ArrayList();
-			contributionsCategoryChain = new ArrayList();
 		}
 		
 		//----------------------Get Instance------------------------------//
-		public function get contributionsCategoryChain():ArrayList
-		{
-			return _contributionsCategoryChain;
-		}
-		public function set contributionsCategoryChain(value:ArrayList):void
-		{
-			_contributionsCategoryChain = value;
-		}
 		public static function getInstance():AGORAController{
 			if(!instance){
 				instance = new AGORAController(new SingletonEnforcer);
@@ -167,39 +157,37 @@ package Controller
 			menu.categories.invalidateProperties();
 			menu.categories.invalidateDisplayList();
 		}
-		
-		public function fetchDataChildCategory(parentCategory:String,parentID, addOne:Boolean):void{
+		public function getChain(theID:int):void{
+			this.model.chainModel.getChain(theID);
+		}
+		public function getMapChain(theID:int):void{
+			this.model.chainModel.getChainMap(theID);
+		}
+		public function onChainLoaded(event:AGORAEvent):void{
+			var usm =AGORAModel.getInstance().userSessionModel;
+			var chain = FlexGlobals.topLevelApplication.rightSidePanel.categoryChain;
+			chain.update();
+			chain.visible=true;
+		}
+		public function fetchDataChildCategory(parentCategory:String,parentID:int):void{
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
 			//model.userSessionModel.selectedWoAProjectID=parentCategory;
-				/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
 			trace("Adding to the cc with category: " + parentCategory);
-			if(addOne){
-				if(categoryChain.length == 0){
-					categoryChain.addItem(new CategoryDataV0(parentCategory,parentID,null, null));
-				}else{	
-					trace("Adding pair" + (CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).current + "-->" + parentCategory);
-					categoryChain.addItem(new CategoryDataV0(parentCategory,parentID,(CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).current, (CategoryDataV0)(categoryChain.getItemAt(categoryChain.length-1)).currentID));	
-				}
-				FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.addCategory(parentCategory);
-			}
+			getChain(parentID);
 			var categoryM:CategoryModel = model.categoryModel;
 			categoryM.requestChildCategories(parentCategory,parentID);
 		}
-		public function fetchChildCategorycontributions(parentCategory:String,parentID:String, addOne:Boolean):void{
+		public function fetchChildCategorycontributions(parentCategory:String,parentID:int):void{
 			menu.contributions.loadingDisplay.text = Language.lookup("Loading");
 			menu.contributions.loadingDisplay.visible = true;
 			/*Adjust the category chain. Find the instantiation in AGORAController. cg is a legacy name*/
 			trace("Adding to the cc with category: " + parentCategory);
-			if(addOne){
-				if(contributionsCategoryChain.length == 0){
-					contributionsCategoryChain.addItem(new CategoryDataV0(parentCategory,parentID,null, null));
-				}else{	
-					trace("Adding pair" + (CategoryDataV0)(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)).current + "-->" + parentCategory);
-					contributionsCategoryChain.addItem(new CategoryDataV0(parentCategory,parentID, (CategoryDataV0)(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)).current, (CategoryDataV0)(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)).currentID));	
-				}
-				FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.addCategory(parentCategory);
+			
+			if (parentID!=-1){
+				getChain(parentID );
 			}
+
 			var contributionsM:MyContributionsModel = model.mycontributionsModel;
 			contributionsM.requestChildCategories(parentCategory,parentID);
 		}
@@ -276,24 +264,26 @@ package Controller
 			fetchDataMyProjects();
 		}
 		public function updateMyContributions(event:MouseEvent):void{
-			if(this.contributionsCategoryChain.length - 1>-1&&this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1))!=this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID){
-			fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
-			}else{
-				fetchContributions();
-			}
+			fetchContributions();
 		}
 		public function updateWOA(event:MouseEvent):void{
 			updateMapProj();
+			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			if(usm.selectedWoAProjID){
+				getChain(usm.selectedWoAProjID);
+			}else{
+			}
+			
 		}
 		public function updateProject(e:Event):void{
 			if(FlexGlobals.topLevelApplication.projectNameBox){
 				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			}
 			if(menu.myProjects.currentState=="projectsInfo"){
-				menu.myProjects.updateProject();
-			}
-			fetchDataProjectList();
+				fetchDataProjectList();
+			}else{
 			fetchDataMyProjects();
+			}
 			
 			
 		}
@@ -302,13 +292,88 @@ package Controller
 			menu.myProjects.currentState="listOfProjects";
 		}
 		public function updateProjectSub(e:Event):void{
-			menu.myProjects.populateSubProjects();
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if(usm.loggedIn()){
+				if(current == Language.lookup("MyContributions"))
+				{
+					menu.contributions.pView.loadingDisplay.text = Language.lookup("Loading");
+					menu.contributions.pView.populateSubProjects();
+
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+					menu.myProjects.populateSubProjects();
+			
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
+					menu.categories.pView.loadingDisplay.visible=true;
+					menu.categories.pView.populateSubProjects();
+
+				}else if(current==Language.lookup("MyMaps"))
+				{
+					//do nothing.
+					
+				}
+			}
 		}
 		public function updateProjectMap(e:Event):void{
-			menu.myProjects.populateMap();
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if(usm.loggedIn()){
+				if(current == Language.lookup("MyContributions"))
+				{
+					menu.contributions.loadingDisplay.text = Language.lookup("Loading");
+					menu.contributions.pView.populateMap();
+					
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+					menu.myProjects.populateMap();
+					
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
+					menu.categories.pView.loadingDisplay.visible=true;
+					menu.categories.pView.populateMap();
+					
+				}else if(current==Language.lookup("MyMaps"))
+				{
+					//do nothing.
+					
+				}
+			}
 		}
 		public function updateProjectUser(e:Event):void{
-			menu.myProjects.populateUser();
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if(usm.loggedIn()){
+				if(current == Language.lookup("MyContributions"))
+				{
+					menu.contributions.loadingDisplay.text = Language.lookup("Loading");
+					menu.contributions.pView.populateUser();
+					
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+					menu.myProjects.populateUser();
+					
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
+					menu.categories.pView.loadingDisplay.visible=true;
+					menu.categories.pView.populateUser();
+					
+				}else if(current==Language.lookup("MyMaps"))
+				{
+					//do nothing.
+					
+				}
+			}
 		}
 		public function moveProject(catID:int, parentCatID:int):void{
 			model.moveProjectModel.moveProject(catID, parentCatID);
@@ -359,7 +424,7 @@ package Controller
 			myContributionsM.requestMyContributions();
 		}
 		protected function onProjectListFetched(event:AGORAEvent):void{
-			menu.myProjects.loadingDisplay.visible = false;
+			//menu.myProjects.theProject.loadingDisplay.visible = false;
 			menu.projects.invalidateProperties();
 			menu.projects.invalidateDisplayList();
 			menu.myProjects.populateProjects();
@@ -386,17 +451,38 @@ package Controller
 			this.model.pushprojects.inProjectsList();
 			return;
 		}
-		public function verifyProjectMember(parentCategory:String,parentID:String):void{
+		public function verifyProjectMember(parentCategory:String,parentID:int):void{
 			this.tempParentCategory = parentCategory;
 			this.tempParentCategoryID = parentID;
 			model.verifyProjModel.send();
 		}
 		
 		protected function onProjectUserVerified(event:AGORAEvent):void{
-			if(AGORAModel.getInstance().userSessionModel.selectedTab!=Language.lookup("MyContributions"))
-			fetchDataChildCategory(tempParentCategory,tempParentCategoryID, true);
-			else
-				AGORAController.getInstance().fetchChildCategorycontributions(tempParentCategory,tempParentCategoryID, true);
+			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			var current:String=usm.selectedTab;
+			if(usm.loggedIn()){
+				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+				menu.myProjects.loadingDisplay.visible = true;
+				model.myProjectsModel.sendRequest();
+				if(current == Language.lookup("MyContributions"))
+				{
+					menu.contributions.showpView();
+					usm.selectedMyContProjID=""+tempParentCategoryID;
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					usm.selectedMyProjProjID=""+tempParentCategoryID			
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					menu.categories.showpView();
+
+					usm.selectedWoAProjID=tempParentCategoryID;
+				}else if(current==Language.lookup("MyMaps"))
+				{
+					//do nothing.
+					
+				}
+			}fetchDataMyProjects();
 		}
 		
 		/**
@@ -437,16 +523,48 @@ package Controller
 		//------------------Fetch my Projects ------------------------------//
 		public function fetchDataMyProjects():void{
 			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
 			if(usm.loggedIn()){
-				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
-				menu.myProjects.loadingDisplay.visible = true;
-				model.myProjectsModel.sendRequest();
-				if(usm.selectedMyProjProjID){
-					model.myProjectsModel.requestProjDetails(usm.selectedMyProjProjID);
-					model.myProjectsModel.requestChildCategories(usm.selectedMyProjProjID);
-					model.myProjectsModel.listProjMaps(usm.selectedMyProjProjID);
+				if(current == Language.lookup("MyContributions"))
+				{
+					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+
+					if(usm.selectedMyContProjID){
+						model.myProjectsModel.requestProjDetails(usm.selectedMyContProjID);
+						model.myProjectsModel.requestChildCategories(usm.selectedMyContProjID);
+						model.myProjectsModel.listProjMaps(usm.selectedMyContProjID);
+						getChain(parseInt(usm.selectedMyContProjID));
+					}
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+
+					if(usm.selectedMyProjProjID){
+						model.myProjectsModel.requestProjDetails(usm.selectedMyProjProjID);
+						model.myProjectsModel.requestChildCategories(usm.selectedMyProjProjID);
+						model.myProjectsModel.listProjMaps(usm.selectedMyProjProjID);
+						getChain(parseInt(usm.selectedMyProjProjID));
+					}					
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
+					menu.categories.pView.loadingDisplay.visible=true;
+
+					if(parseInt(""+usm.selectedWoAProjID)){
+						model.myProjectsModel.requestProjDetails(""+usm.selectedWoAProjID);
+						model.myProjectsModel.requestChildCategories(""+usm.selectedWoAProjID);
+						model.myProjectsModel.listProjMaps(""+usm.selectedWoAProjID);
+						getChain(usm.selectedWoAProjID);
+					}
+				}else if(current==Language.lookup("MyMaps"))
+				{
+					//do nothing.
+					
 				}
 			}
+			model.myProjectsModel.sendRequest();
+
 		}
 		
 		protected function onProjectPushFail(event:AGORAEvent):void{
@@ -460,14 +578,6 @@ package Controller
 			}
 			fetchDataProjectList();
 			fetchDataMyProjects();
-			if(AGORAModel.getInstance().userSessionModel.selectedTab==Language.lookup("MyContributions"))
-			{
-				fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
-			}
-			else
-			if(this.categoryChain.length - 1>0){
-				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
-			}
 		}
 		protected function updateMapProj(){
 			if( FlexGlobals.topLevelApplication.projectNameBox){
@@ -477,28 +587,27 @@ package Controller
 			fetchDataMyProjects();
 			if(AGORAModel.getInstance().userSessionModel.selectedTab==Language.lookup("MyContributions"))
 			{
-				if(this.contributionsCategoryChain.length - 1>0){
-					fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID,true);
+	//			if(this.contributionsCategoryChain.length - 1>0){
+//					fetchChildCategorycontributions(this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).current,this.contributionsCategoryChain.getItemAt((this.contributionsCategoryChain.length - 1)).currentID);
 
-				}
+//				}
 			}
-			else
-				if(this.categoryChain.length - 1>0){
+			/*else if(this.categoryChain.length - 1>0){
 					fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
-				}
+				}*/
 		}
 		protected function onProjectMoved(event:AGORAEvent):void{
 			fetchDataProjectList();
 			fetchDataMyProjects();
-			if(this.categoryChain.length - 1>0){
+			/*if(this.categoryChain.length - 1>0){
 				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
-			}
+			}*/
 		}
 		
-		protected function onMyProjectsListFetched(event:AGORAEvent):void{
+		protected function onProjectsListFetched(event:AGORAEvent):void{
 			menu.myProjects.populateProjects();
 			menu.myProjects.populateProjects();
-			menu.myProjects.loadingDisplay.visible = false;
+			//menu.myProjects.theProject.loadingDisplay.visible = false;
 		}
 		
 		protected function onProjectVerified(event:AGORAEvent):void{
@@ -566,8 +675,8 @@ package Controller
 		protected function onFault(event:AGORAEvent):void{
 			//If loading had been displayed, remove it
 			//For the Map List box
-			menu.mapList.loadingDisplay.text = Language.lookup("NetworkError");
-			menu.myProjects.loadingDisplay.text = Language.lookup("NetworkError");
+			//menu.mapList.loadingDisplay.text = Language.lookup("NetworkError");
+			///menu.myProjects.theProject.loadingDisplay.text = Language.lookup("NetworkError");
 			if(userSession.uid){
 //				menu.myMaps.loadingDisplay.text = Language.lookup("NetworkError");
 			}
@@ -581,11 +690,11 @@ package Controller
 			//When we return to the category screen by clicking save and home or loading an illegal map,
 			//find the current category and refresh it. Solved a problem with a created map not appearing
 			//in the category panel upon returning home.
-			if(categoryChain.length <= 0){
+			/*if(categoryChain.length <= 0){
 				fetchDataCategory();
 			} else {
 				fetchDataChildCategory((CategoryDataV0) (categoryChain.getItemAt(categoryChain.length-1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID, false);
-			}
+			}*/
 			//reinitializes the map model
 			mapModel.reinitializeModel();
 			//initlizes the children hash map, and 
@@ -620,7 +729,10 @@ package Controller
 			map.agoraMap.timer.start();
 			menu.timer.reset();
 		}
-		
+		public function setSelectedTab(index:int):void{
+			menu.tabNav.selectedIndex=index;
+			//menu.setTab(((menu.tabNav.getChildAt(index)) as NavigatorContent).label);
+		}
 		//------------------------Creating a Map---------------//
 		public function displayMapInfoBox():void{
 
@@ -650,15 +762,9 @@ package Controller
 			}
 		}
 
-		public function get categoryChain():ArrayList
-		{
-			return _categoryChain;
-		}
 
-		public function set categoryChain(value:ArrayList):void
-		{
-			_categoryChain = value;
-		}
+
+
 
 	}
 }

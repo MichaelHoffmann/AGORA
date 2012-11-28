@@ -57,7 +57,6 @@ package components
 		public var okayButton:Button;
 		private var bottomButtonGroup:HGroup;
 		private var groupContainer:VGroup;
-		private var cc:CategoryChain;
 		private var categoryData:CategoryDataV0;
 		private var currCatID:int;
 		private var howToUseThisFeatureLabel:Label;
@@ -76,7 +75,6 @@ package components
 			categoryTiles = new Group;
 			tl = new TileLayout();
 			model = AGORAModel.getInstance().moveProjectModel;
-			cc = new CategoryChain;			
 			
 			/*Setting the UI components to the proper places and sizes*/
 			this.height = 300;

@@ -18,172 +18,100 @@
 		<![CDATA[
 			import Controller.AGORAController;
 			
-			import ValueObjects.CategoryDataV0;
+			import Model.*;
 			
 			import classes.Language;
 			
 			import mx.collections.ArrayList;
 			import mx.controls.Alert;
-			import mx.controls.Button;
 			import mx.controls.Label;
 			import mx.core.FlexGlobals;
 			import mx.core.IVisualElement;
 			import mx.core.UIComponent;
+			import mx.messaging.AbstractConsumer;
 			
+			import spark.components.Button;
 			import spark.components.HGroup;
+			private var model:ChainModel;
+			private var categoryChain:ArrayList =new ArrayList();
 			
-			/**
-			 * @param - numCats - Keeps up with the number of categories currently in the chain. 
-			 * 
-			 * It is used to verify when we need to tell the user that he or she is on the top level or to remove the top level string
-			 * when the user navigates away from it.
-			 */
-			private var numCats:int; 
-			
-			/**
-			 * The delimeter used to seperate the categories. Originally was an arrow "-->" then changed to a slash "\"
-			 */
-			private var delimeter:String;
-			
-			/**
-			 * Keeps a running label of the information. This is legacy from before we used buttons but it is still here for future
-			 * implementation of a copy/past mechanism
-			 */
-			private var textVersion:Label;
-			
-			/**
-			 * Solved a very strange problem that involved the scope of the button listener. Apparently, the child button could not see functions within the
-			 * parent container even though it was flagged as public. This is instantiated in the constructor to be "this"
-			 */
-			private var thisParent:CategoryChain;
-			
-			private var controller:AGORAController;
-			
-			private var categoryChain:ArrayList;
-			
-			
-			[Bindable] private var boundedMap:Map = FlexGlobals.topLevelApplication.map;
-			
-			/**
-			 * Essentially a constructor. 
-			 * 
-			 * 
-			 * Sets the label to have the default text of Top Level indicating that the user is currently at the top level of the category hierarchy
-			 * 
-			 * Initializes the number of categories to be zero. Integer values are initialized to 0 even without a constructor but this is done here
-			 * for the sake of readability.
-			 * Initializes the delimeter that makes readability better. Initially, this is "\". May change in the future
-			 */
-			private function preInit():void{
-				this.numCats = 0;
-				this.delimeter = "\n\\ "; //Make the delimeter. Remember to escape the delimeter if it is a character like "\"
-				controller = AGORAController.getInstance();
-				categoryChain = controller.categoryChain;
-				textVersion = new Label;
-				textVersion.text = Language.lookup('CategoryTopLevel');
-				thisParent = this;
-				var button:Button = new Button;
-				button.label = Language.lookup('CategoryTopLevel');
-				button.addEventListener('click',function(e:Event):void{
-					if(boundedMap.visible){
-						AGORAController.getInstance().hideMap();
-						
-					}
-					FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
-					while(numCats>0) thisParent.removeCategory((Button) (thisParent.getElementAt(numCats)).label);
-					thisParent.controller.categoryChain = thisParent.categoryChain;
-					AGORAController.getInstance().fetchDataCategory();
-				},false,1,false);
-				this.addElement(button);
-				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
-			}
-			
-			/**
-			 * Removes the tail category from the label. Because of the nature of categories, we cannot just remove the end category and
-			 * therefore need to know what category needs to be removed. Also removes the delimeter.
-			 * 
-			 * @param oldCat - The category to be removed.
-			 */
-			public function removeCategory(oldCat:String):void{
-				if(numCats > 1){
-					textVersion.text = textVersion.text.substr(0, textVersion.text.length - oldCat.length - delimeter.length);
-					if(oldCat.length > 20) textVersion.text.substr(0, textVersion.text.length - 1); //Remove the new line
-				} else textVersion.text = Language.lookup('CategoryTopLevel');;
-				removeElementAt(numCats);
-				numCats--;
-				this.invalidateDisplayList();
-				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();	
-			}
-			
-			/**
-			 * Adds a category to the label. Simoltaneously adds the appropriate delimeter.
-			 * 
-			 * @param newCat - The category to be added to the label
-			 */
-			public function addCategory(newCat:String):void{
-				/*
-				*	If the connection is not right then categories do not load and it really screws with the text in the chain.
-				*	This solves that problem and lets the user know that there was a problem loading the category.
-				*/
-				if(textVersion.text == newCat || textVersion.text == "Error loading categories"){
-					textVersion.text = Language.lookup('CategoryLoadError');
-					return;
-				}
-				
-				
-				/*
-				*  Checks to see if we are at the top level of the category hierarchy. If we are and a category is clicked, remove the text "Top Level"
-				*  and add the first category. If we are not, concatinate the old text, the delimeter, and the new category string.
-				*/
-				if(numCats == 0)
-					textVersion.text=newCat;
-				else {
-					if(newCat.length % 20) textVersion.text = textVersion.text; //Add a new line IF the length of the new text is more than 20
-					textVersion.text = textVersion.text + delimeter + newCat;
-				}
-				var button:Button = new Button;
-				button.setStyle("skinClass",TextWrapSkin);
-				button.label = newCat;
-				button.addEventListener('click',function(e:Event):void{
-					if(boundedMap.visible){
-						AGORAController.getInstance().hideMap();
-						
-					}
-					FlexGlobals.topLevelApplication.agoraMenu.tabNav.selectedIndex = 0;
-					while(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current) != ((Button) (e.target).label)){
-						thisParent.removeCategory((CategoryDataV0)(thisParent.categoryChain.removeItemAt(thisParent.categoryChain.length-1)).current);	
-					}
-					controller.categoryChain = thisParent.categoryChain;
-					controller.fetchDataChildCategory(((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).current),((CategoryDataV0)(thisParent.categoryChain.getItemAt(thisParent.categoryChain.length-1)).currentID), false);
-					
-				},false,1,false);
-				this.addElement(button);
-				numCats++;
-				this.invalidateDisplayList();
-				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();	
-			}
-			
-			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
-				super.updateDisplayList(unscaledWidth, unscaledHeight);
-				var moveX:int = 0;
-				var moveY:int = 0;
-				for(var i:int = 0; i < this.numElements; i++){
-					var currChild:Button = (Button) (this.getElementAt(i));
-					trace(this.width + "  " + this.getExplicitOrMeasuredWidth());
-					if(moveX + currChild.getExplicitOrMeasuredWidth() > this.getExplicitOrMeasuredWidth()){
-						moveX = 0;
-						moveY += currChild.getExplicitOrMeasuredHeight();
-						currChild.move(moveX, moveY);
-						moveX += currChild.getExplicitOrMeasuredWidth();
-					} else {
-						currChild.move(moveX, moveY);
-						moveX += currChild.getExplicitOrMeasuredWidth();
-					}
-				}
-			}
-			
+			public function update():void{
+				actualHistory.removeAllElements();
+				var subprojects:XMLList =model.historyXML.path;
 
-			
+				var button:Button = new Button;
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				
+				button.width = 100;
+				button.name = "-1"; //The ID (unique DB identifier) of the category
+				button.label = "Top Level" ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+				button.setStyle("chromeColor", 0xA0CADB);
+				actualHistory.addElement(button);
+				button.addEventListener("click",navigateToWOA);
+				var button:Button = new Button;				
+				button.width = 100;
+				button.name = subprojects.@pid; //The ID (unique DB identifier) of the category
+				button.label = subprojects.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+				button.setStyle("chromeColor", 0xA0CADB);
+				actualHistory.addElement(button);
+				button.addEventListener("click",navigateToWOA);
+				for each(var project:XML in subprojects.child){
+					trace("Adding buttons");
+					var button:Button = new Button;
+					button.width = 100;
+					button.name = project.@pid; //The ID (unique DB identifier) of the category
+					button.label = project.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+					button.setStyle("chromeColor", 0xA0CADB);
+					actualHistory.addElement(button);
+					button.addEventListener("click",navigateToWOA);
+					categoryChain.addItem(project.@pid);
+				}
+					
+					
+					
+			}
+			private function preInit():void{
+				model=AGORAModel.getInstance().chainModel;
+				actualHistory.removeAllElements();
+				topButton();
+
+			}
+			public function topButton():void{
+				actualHistory.removeAllElements();
+				var topButton:Button= new Button();
+				topButton.width = 100;
+				topButton.setStyle("chromeColor", 0xA0CADB);
+				topButton.label="Top Level";
+				topButton.name ="-1";
+				actualHistory.addElement(topButton);		
+			}
+
+			private function navigateToWOA(e:Event):void{
+				AGORAController.getInstance().setSelectedTab(0);
+				AGORAController.getInstance().hideMap();
+				AGORAModel.getInstance().userSessionModel.selectedWoAProjID=parseInt(e.target.name);
+				if(e.target.label!=Language.lookup("CategoryTopLevel")){
+					AGORAController.getInstance().fetchDataChildCategory(e.target.label,e.target.name);
+					AGORAController.getInstance().fetchDataMyProjects();
+				}else{
+					topButton();
+					AGORAController.getInstance().fetchDataCategory();
+				}
+			}
+			public function back():Array{
+				var temp=new Array();
+				temp.push(-1,-1);
+				if(actualHistory.numElements>1){
+					temp=new Array();
+
+					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).label);
+					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).name);
+				}
+				return temp;
+			}
 		]]>
 	</fx:Script>
+		<s:TileGroup id="actualHistory" width = "100%" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0">
+		</s:TileGroup>
+
 </s:Group>

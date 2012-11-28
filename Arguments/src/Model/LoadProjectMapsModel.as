@@ -46,7 +46,7 @@ package Model
 			FlexGlobals.topLevelApplication.agoraMenu.projects.invalidateProperties();
 			FlexGlobals.topLevelApplication.agoraMenu.myProjects.invalidateDisplayList();
 			FlexGlobals.topLevelApplication.agoraMenu.myProjects.invalidateProperties();
-			dispatchEvent(new AGORAEvent(AGORAEvent.MY_PROJECTS_LIST_FETCHED));
+			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECTS_LIST_FETCHED));
 		}
 		
 		/**

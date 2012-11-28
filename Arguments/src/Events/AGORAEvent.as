@@ -49,7 +49,7 @@ package Events
 		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
 		public static const PROJECT_PUSHED:String = "ProjectPushed";
 		public static const PROJECT_PUSH_FAILED:String = "ProjectPushedFailed";
-		public static const MY_PROJECTS_LIST_FETCHED:String = "MyProjectsListFetched";
+		public static const PROJECTS_LIST_FETCHED:String = "ProjectsListFetched";
 		public static const CATEGORY_FETCHED:String = "CategoryFetched";
 		public static const CHAT_FETCHED:String = "ChatFetched";
 		public static const CHAT_PUSHED:String = "ChatPushed";
@@ -76,10 +76,13 @@ package Events
 		public static const ADMIN_CHANGED:String = "AdminChanged";
 		public static const DELETE_PROJECT_FAILED:String = "DeleteProjectFailed";
 		public static const DELETED_PROJECT:String = "DeletedProject";
-		public static const MY_PROJECTS_DETAILS ="MyProjectDetails";
-		public static const MY_PROJECTS_SUB_DETAILS="UpdateSubs";
-		public static const MY_PROJECTS_MAP_DETAILS="UpdateMaps "
-		public static const MY_PROJECTS_USER_DETAILS="UpdateUsers "
+		public static const PROJECTS_DETAILS ="ProjDetails";
+		public static const PROJECTS_SUB_DETAILS="UpdateSubs";
+		public static const PROJECTS_MAP_DETAILS="UpdateMaps "
+		public static const PROJECTS_USER_DETAILS="UpdateUsers "
+		public static const GET_CHAIN_FAILED="ChainFailed";
+		public static const CHAIN_LOADED="ChainLoaded";
+
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";
 		

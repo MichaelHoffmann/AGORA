@@ -192,20 +192,31 @@
 				}
 				return;
 			}
-			protected function setTab(current:String){
+			public  function setTab(current:String){
+				var cg:CategoryChain = FlexGlobals.topLevelApplication.rightSidePanel.categoryChain;
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				usm.selectedTab = current;
+				var tempEvent:MouseEvent=new MouseEvent("click");
 				if(current == Language.lookup("MyContributions"))
 				{
-				FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.visible = true;
-				FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.visible = false;	
+					cg.topButton();
+					usm.selectedMyContProjID=null;
+					updateMyContributions(tempEvent);
 				}
-				else
+				else if(current==Language.lookup("MyPPProjects"))
 				{
-					FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.visible = false;	
-					FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.visible = true;	
+					cg.topButton();
+					myProjects.currentState="listOfProjects";
+					usm.selectedMyProjProjID=null;
+					updateProject(tempEvent);
+
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					updateWOA(tempEvent);
+				}else if(current==Language.lookup("MyMaps"))
+				{
+					cg.topButton();
 				}
-				var cat:ArrayList = AGORAController.getInstance().categoryChain;
 
 			}
 			protected function createMapinProjBtn_clickHandler(arg1:flash.events.MouseEvent):void
@@ -220,11 +231,7 @@
 				}
 				return;
 			}
-			protected function backInProj_clickHandler(e:Event):void{
-				myProjects.currentState="listOfProjects";
-				ProjBtn.visible=false;
-				createMapinProjectBtn.visible=false;
-			}
+
 			/**
 			 * Handles what happens when the back button is click within AGORAMenu
 			 * 
@@ -240,60 +247,34 @@
 			 * list and populates the category pane with it.
 			 */
 			protected function backButton_OnClick(event:MouseEvent):void{
-				var cg:ArrayList = AGORAController.getInstance().categoryChain;
-				var contricg:ArrayList = AGORAController.getInstance().contributionsCategoryChain;
-				var temp:CategoryDataV0 = null;
+				var cg:CategoryChain = FlexGlobals.topLevelApplication.rightSidePanel.categoryChain;
+
+				//var contricg:ArrayList = AGORAController.getInstance().contributionsCategoryChain;
+				
 				var temp1:Number= AGORAModel.getInstance().agoraMapModel.projectID;
-				var selectT:String = AGORAModel.getInstance().userSessionModel.selectedTab;				
-						if (selectT == "WoA" || selectT == Language.lookup("MainTab"))
-						{
-				if(cg.length>0){
-					//AGORAModel.getInstance().agoraMapModel.projectID = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).currentID;
-					temp = (CategoryDataV0)(cg.removeItemAt(cg.length-1));
-					trace("Fetching category: " + temp);
-					if(!temp.parent){
-						this.tabNav.setVisible(true,true);
-						this.mainPanel.visible=false;
-						AGORAController.getInstance().categoryChain = cg;
+				var selectT:String = AGORAModel.getInstance().userSessionModel.selectedTab;
+				if (selectT == Language.lookup("MainTab")){
+					var backup:Array=cg.back();
+					if (backup[1]>-1){
+						Controller.AGORAController.getInstance().fetchDataChildCategory(backup[0],backup[1]);
+					}else{
 						AGORAController.getInstance().fetchDataCategory();
-							}
-							else {
-						
-						AGORAController.getInstance().categoryChain = cg;
-						AGORAController.getInstance().fetchDataChildCategory(temp.parent,temp.parentID, false);
-							}
-							FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.removeCategory(temp.current);
-							if(cg.length!=0)
-							AGORAModel.getInstance().agoraMapModel.projectID = AGORAController.getInstance().categoryChain.getItemAt(AGORAController.getInstance().categoryChain.length-1).currentID;
-							
-							}
-						}
-						else if (selectT== "My Projects"){
-							backInProj_clickHandler(event);
-						}
-						else if (selectT == Language.lookup("MyContributions"))
-						{
-							if(contricg.length>0){
-								temp = (CategoryDataV0)(contricg.removeItemAt(contricg.length-1));
-								//AGORAModel.getInstance().agoraMapModel.projectID=AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).currentID;
-								trace("Fetching category: " + temp);
-								if(!temp.parent){
-									this.tabNav.setVisible(true,true);
-									this.mainPanel.visible=false;
-									AGORAController.getInstance().contributionsCategoryChain = contricg;
-									AGORAController.getInstance().fetchContributions();
-								}
-								else {
-						
-									AGORAController.getInstance().contributionsCategoryChain = contricg;
-									AGORAController.getInstance().fetchChildCategorycontributions(temp.parent,temp.parentID, false);
+						cg.topButton();
 					}
-								FlexGlobals.topLevelApplication.rightSidePanel.contributionscategoryChain.removeCategory(temp.current); 
-								if(contricg.length!=0)
-									AGORAModel.getInstance().agoraMapModel.projectID=AGORAController.getInstance().contributionsCategoryChain.getItemAt(AGORAController.getInstance().contributionsCategoryChain.length-1).currentID;
-								
-							}
-				} 
+				}else if (selectT== Language.lookup("MyPPProjects")){
+					myProjects.currentState=("listOfProjects");
+					//cg.visible=false;
+				}
+				else if (selectT == Language.lookup("MyContributions")){
+					//myContributions.currentState=("listOfContributions");
+					cg.visible=false;
+					updateMyContributions(event);
+
+				}
+				else if (selectT == Language.lookup("MyMaps")){
+					//relead my maps=not necessary?
+					
+				}
 				
 			}
 			
@@ -479,7 +460,7 @@
 					</s:HGroup>
 				</s:VGroup>
 			</s:NavigatorContent>
-			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}" click ="{selectedTab='MyProjects'}">
+			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}" >
 				<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0" horizontalAlign="center">
 					<components:MyContributionsPanel id="contributions" percentWidth="100" percentHeight="100"
 											  horizontalCenter="0"

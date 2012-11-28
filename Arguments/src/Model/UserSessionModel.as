@@ -49,8 +49,9 @@ package Model
 		public var URL:String;
 		private var _valueObject:UserDataVO;
 		public var selectedMyProjProjID:String;
-		public var selectedWoAProjID:String;
-		public var selectedTab:String="WoA";
+		public var selectedWoAProjID:int;
+		public var selectedMyContProjID:String;
+		public var selectedTab:String=Language.lookup("MainTab");
 		private var _securityAnswerSet:Boolean=false;
 		private var _securityCodeNum:int=100;
 		private var _securityAnswer:String="";

@@ -46,6 +46,7 @@ package Model
 		public var projAdmin:XMLList;
 		public var projMembers:XMLList;
 		public var projType: String;
+		public var chainModel:ChainModel;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -56,7 +57,6 @@ package Model
 		public function AGORAModel(singletonEnforcement:SingletonEnforcementClass, target:IEventDispatcher=null)
 		{
 			super(target);
-			
 			mapListModel = new MapListModel;
 			myMapsModel = new MyMapsModel;
 			userSessionModel = new UserSessionModel;
@@ -84,6 +84,7 @@ package Model
 			editProject= new EditProject();
 			deleteProject= new DeleteProject();
 			selectAsAdmin= new SelectAsAdmin();
+			chainModel=new ChainModel();
 
 		}
 		

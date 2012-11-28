@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  currentState="normal" initialize="{init()}" percentWidth="100" horizontalAlign="center">
+	<fx:Declarations>
+		<fx:XML id="projXML">
+		</fx:XML>
+		<fx:XMLList id="usersXML">
+		</fx:XMLList>
+		<fx:XMLList id="mapXML">
+		</fx:XMLList>
+		<s:RadioButtonGroup id="usersList"/>
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name ="admin"/>
+		<s:State name="normal"/>
+		<s:State name="personal"/>
+	</s:states>
+	
+	<s:VGroup percentWidth="100" horizontalAlign="center" height="10">
+		<mx:Text id="loadingDisplay" /> 
+	</s:VGroup>
+	
+
+	<s:HGroup percentWidth="100"  minHeight="350" horizontalAlign="center"  accentColor="20" horizontalCenter="0">
+		<s:VGroup percentWidth="100" gap ="10" horizontalAlign="left">
+			<s:HGroup percentWidth="100" horizontalAlign="left">
+				<s:Label text="" id="projectName"  fontSize="14" paddingLeft="32" width="69%"  left = "0" textAlign="left"/>
+				<s:ToggleButton label="{classes.Language.lookup('ProjectTypeAdversarial')}" enabled="false" percentWidth="15"/>
+				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" click="deleteHandler()" percentWidth="8"/>
+				<s:Button excludeFrom="normal" id="renameProj" label="{classes.Language.lookup('Rename')}" click="AGORAController.getInstance().displayProjectInfoBox('rename')" percentWidth="8"/>
+			</s:HGroup>
+			<s:HGroup  paddingLeft="32" percentWidth="90" gap ="20" height = "20" horizontalAlign="center">
+				<s:VGroup percentWidth="35">
+					<s:Label text= "{classes.Language.lookup('SubProj')}" />
+					<s:Scroller percentWidth="100" height="300" >
+						<s:VGroup  gap="5" visible="true" id="subprojectList" percentWidth="100"/>
+					</s:Scroller>
+				</s:VGroup>
+				<s:VGroup percentWidth="35">
+					<s:Label text= "{classes.Language.lookup('MapsinProject')}" />
+					<s:Scroller percentWidth="100">
+						<s:VGroup  height="260" id="mapPanel" percentWidth="100">
+							
+						</s:VGroup>
+					</s:Scroller>
+				</s:VGroup>
+				<s:VGroup percentWidth="30" id="memberGroup" excludeFrom="personal">
+					<s:Label text= "{classes.Language.lookup('Users')}" />
+					<s:Label id="admin"/>
+					<s:Scroller percentWidth="100">
+						<s:VGroup id="memberList" percentWidth="100">
+							<s:Scroller percentWidth="100">
+								<s:VGroup height="150" percentWidth="100"  id="projectMemberPanel">
+								</s:VGroup>
+							</s:Scroller>
+							<s:VGroup id = "membersAdmin" excludeFrom="personal, normal">
+								<s:Button percentWidth="100" click="
+										  {
+										  this.addMembers();
+										  }
+										  
+										  " id="_MyProjectsPane_Button3" label='{classes.Language.lookup("AddProjectMembers")}' />
+								<s:Button percentWidth="100" click="
+										  {
+										  this.removeMembers();
+										  return;
+										  }
+										  
+										  " id="_MyProjectsPane_Button4" label='{classes.Language.lookup("RemoveMembers")}' />
+								<s:Button enabled ="true" percentWidth="100" click=' selectAdminHandler()' id="SelectAdmin" label='{classes.Language.lookup("SelectAdmin")}' />
+								<s:Button enabled ="true" percentWidth="100" click=' importUsers()' id="importUsersBtn" label='{classes.Language.lookup("ImportMembers")}' />
+								
+							</s:VGroup>
+							
+						</s:VGroup>
+					</s:Scroller>
+				</s:VGroup>
+			</s:HGroup>
+		</s:VGroup>
+	</s:HGroup>
+	<s:HGroup horizontalAlign="center" percentWidth="100">
+		<s:Label text="{Language.lookup('CreateProjectElsewhere')}" />
+	</s:HGroup>
+	<fx:Script>
+		<![CDATA[
+			import Controller.*;
+			
+			import Events.*;
+			
+			import Model.*;
+			
+			import Skins.LeftAlignTextButtonSkin;
+			
+			import ValueObjects.*;
+			
+			import __AS3__.vec.*;
+			
+			import classes.*;
+			
+			import com.as3xls.xls.Cell;
+			import com.as3xls.xls.ExcelFile;
+			import com.as3xls.xls.Sheet;
+			
+			import flash.accessibility.*;
+			import flash.debugger.*;
+			import flash.display.*;
+			import flash.errors.*;
+			import flash.events.*;
+			import flash.external.*;
+			import flash.geom.*;
+			import flash.media.*;
+			import flash.net.*;
+			import flash.printing.*;
+			import flash.profiler.*;
+			import flash.system.*;
+			import flash.text.*;
+			import flash.ui.*;
+			import flash.utils.*;
+			import flash.xml.*;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.core.*;
+			import mx.events.*;
+			import mx.filters.*;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.*;
+			import mx.rpc.http.*;
+			import mx.styles.*;
+			private var fileReference:FileReference;
+			private var xls:Class;
+			private var sheet:Sheet;
+			
+			import spark.components.RadioButton;
+			[Bindable]
+			public var inited:Boolean;
+			
+			public var model:Model.ProjectsModel;
+			
+			public var projMapModel:Model.LoadProjectMapsModel;
+			
+			public var mapListXML:XML;
+			
+			public var mapMetaDataVector:__AS3__.vec.Vector.<Model.MapMetaData>;
+			private var fileImportElm:FileReference;
+			
+			internal var back:spark.components.Button;
+			
+			public function init():void
+			{
+				this.projMapModel = Model.AGORAModel.getInstance().loadProjMaps;
+				this.model = Model.AGORAModel.getInstance().myProjectsModel;
+				this.loadingDisplay.text = classes.Language.lookup("Loading");
+				return;
+			}
+			
+			public function removeMembers():void
+			{
+				var usersDetail:Array=new Array();
+				usersDetail.push(usersList.selectedValue);
+				Model.AGORAModel.getInstance().agoraMapModel.projectUsers = usersDetail;
+				Controller.AGORAController.getInstance().removeMembers();
+			}
+			
+			public function addMembers():void
+			{
+				Controller.AGORAController.getInstance().displayProjectInfoBox("addUsers");
+			}
+			public function setCurrentProject(projID:String):void
+			{	
+				this.loadingDisplay.visible=true;
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				model.requestProjDetails(projID);
+				model.requestChildCategories(projID);
+				model.listProjMaps(projID);
+				usm.selectedMyProjProjID = projID;
+			}
+			public function updateProject(){
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				setCurrentProject(usm.selectedMyProjProjID);
+				populateUser();
+			}
+			public function populateSubProjects(){
+				loadingDisplay.visible=false;
+				
+				subprojectList.removeAllElements();
+				var subprojects:XMLList=this.model.subProjectList.child;
+				for each(var categoryXML:XML in subprojects){
+					trace("Adding buttons");
+					var button:Button = new Button;
+					var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+					
+					button.setStyle("skinClass",TextWrapSkin);
+					button.width = 150
+					button.name = categoryXML.@projID; //The ID (unique DB identifier) of the category
+					button.label = categoryXML.@name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+					button.setStyle("chromeColor", 0xA0CADB);
+					subprojectList.addElement(button);
+					if(categoryXML.@creator==usm.username){
+						button.addEventListener("click",showAdmin);
+						
+					}else{
+						button.addEventListener("click", showOther);
+						//admin.text = Language.lookup('ProjectAdmin')+": "+xml.@creator;
+					}
+					
+					
+					
+				}
+			}
+			protected function deleteHandler():void{
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				AGORAController.getInstance().deleteProject(usm.selectedMyProjProjID);
+				
+				
+			}
+			
+			private function alertListener(eventObj:CloseEvent):void {
+				// Check to see if the OK button was pressed.
+				if (eventObj.detail==Alert.OK) {
+					AGORAController.getInstance().selectAsAdmin(usersList.selectedValue.toString());
+				}
+			}
+			protected function selectAdminHandler():void{
+				if(usersList.selectedValue){
+					Alert.show("If you select a new admin, you will no longer be the admin for this project" ,"Are you sure?", Alert.OK | Alert.CANCEL, null, alertListener, null, Alert.CANCEL);
+					
+				}else{
+					mx.controls.Alert.show("You must select a user to make the  administrator of this project");
+				}
+			}
+			
+			private function importUsers():void{
+				fileImportElm = new FileReference(); 
+				fileImportElm.addEventListener(Event.SELECT, importFileSelect); 
+				fileImportElm.addEventListener(Event.CANCEL,importFileCancel);
+				var fileFilter:FileFilter = new FileFilter("Excel (.xls)", "*.xls;"); 
+				fileImportElm.browse([fileFilter]);
+			}
+			private function importFileSelect(event:Event):void{
+				fileImportElm.removeEventListener(Event.SELECT, importFileSelect); 
+				fileImportElm.addEventListener(Event.COMPLETE, importFileComplete); 
+				fileImportElm.addEventListener(IOErrorEvent.IO_ERROR,fileImportError);
+				this.loadingDisplay.visible=true;
+				fileImportElm.load();
+			}
+			private function fileImportError(event:Event):void{
+				Alert.show(Language.lookup("FileError"));
+			}
+			private function importFileCancel(event:Event):void{
+				fileImportElm=null;
+			}
+			private function importFileComplete(event:Event):void{
+				this.loadingDisplay.visible=false;
+				var unames:Array = new Array();
+				var bdata:ByteArray = new ByteArray();
+				bdata = fileImportElm.data;
+				var ef:ExcelFile = new ExcelFile;
+				ef.loadFromByteArray(bdata);
+				var sheet:Sheet = ef.sheets[0];
+				var tCols:int = sheet.cols;
+				var tRows:int = sheet.rows;
+				for(var i:int=0; i<=tRows; i++){
+					var unamestr:String;
+					unamestr = sheet.getCell(i,0).value;
+					if(unamestr != ""){
+						unames.push(unamestr);
+					}
+				}	
+				if(unames.length<=0){
+					Alert.show(Language.lookup("FileEmptyError"));
+				}else{
+					Model.AGORAModel.getInstance().agoraMapModel.numberUsers = unames.length;
+					Model.AGORAModel.getInstance().agoraMapModel.projectUsers = unames;
+					Controller.AGORAController.getInstance().addUsers();
+					Controller.AGORAController.getInstance().fetchDataMyProjects();
+					return;
+				}
+			}
+			protected function onFault(fault:FaultEvent):void
+			{
+				removeEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+				dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.FAULT));
+			}
+			public function showAdmin(e:Event){
+				currentState="admin";
+				setCurrentProject(e.target.name);
+				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+				usm.selectedMyProjProjID=e.target.name;
+				projectName.text=e.target.label;
+				Model.AGORAModel.getInstance().userSessionModel.selectedMyProjProjID=e.target.name;
+				AGORAController.getInstance().fetchDataMyProjects();
+
+			}
+			public function showOwn(e:Event){
+				Model.AGORAModel.getInstance().userSessionModel.selectedMyProjProjID=e.target.name;
+				AGORAController.getInstance().fetchDataMyProjects();
+				currentState="personal";
+				setCurrentProject(e.target.name);
+				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+				usm.selectedMyProjProjID=e.target.name;
+				projectName.text=e.target.label;
+				
+			}
+			public function showOther(e:Event){
+				Model.AGORAModel.getInstance().userSessionModel.selectedMyProjProjID=e.target.name;
+				AGORAController.getInstance().fetchDataMyProjects();
+				currentState="normal";
+				setCurrentProject(e.target.name);
+				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+				usm.selectedMyProjProjID=e.target.name;
+				projectName.text=e.target.label;
+				renameProj.visible=false;
+			}
+			
+			
+			public function populateMap():void{
+				if(model.mapList.map){
+				loadingDisplay.visible=false;
+				mapPanel.removeAllElements();
+				loadingDisplay.visible=false;
+				mapMetaDataVector = new Vector.<MapMetaData>(0,false);
+				trace("loading maps for the project");
+				for each (var map:XML in model.mapList.map)
+				{
+					
+					
+					//var mapObject:Object = new Object;
+					mapMetaData = new MapMetaData;
+					trace("map " +  map.@Name + " being loaded");
+					mapMetaData.mapID = map.@MapID;
+					mapMetaData.mapName = map.@MapTitle;
+					mapMetaData.mapCreator = map.@creator;
+					mapMetaData.firstname = map.@firstname;
+					mapMetaData.lastname = map.@lastname;
+					mapMetaData.url = map.@url;
+					mapMetaDataVector.push(mapMetaData);						
+				}
+				
+				mapMetaDataVector.sort(MapMetaData.isGreater);
+				var i:int = 0;
+				for each(var mapMetaData:MapMetaData in mapMetaDataVector){
+					var mapButton:Button = new Button;
+					mapButton.setStyle("chromeColor", 0xF99653);
+					mapButton.percentWidth = 100;
+					mapButton.name = mapMetaData.mapID.toString();
+					mapButton.label = mapMetaData.mapName;
+					mapButton.id = i.toString();
+					mapButton.addEventListener(MouseEvent.CLICK, onMapObjectClicked);
+					trace("map " + mapMetaData.mapName + " officially added as a button");
+					mapButton.toolTip = mapMetaData.mapName;
+					mapPanel.addElement(mapButton);
+					i++;
+				}			
+				}
+			}
+			public  function populateUser():void{
+				if(model.userList){
+				var usm:UserSessionModel= AGORAModel.getInstance().userSessionModel;
+				loadingDisplay.visible=false;
+				projectName.text=model.userList.proj.@title;
+				if(model.userList.proj.admin.@name==usm.username){
+					currentState="admin";
+				}else if(model.userList.proj.@title==usm.username){
+					currentState="personal";
+				}else {
+					currentState="normal";
+				}
+				projectMemberPanel.removeAllElements();
+				for each (var projectXML:XML in model.userList.proj.users.userDetail)
+				{
+					if(!(projectXML.@userid==usm._uid)){
+						var btnProjMembers:RadioButton = new RadioButton();
+						btnProjMembers.group=usersList;
+						
+						btnProjMembers.value=projectXML.@userid;
+						btnProjMembers.label = projectXML.@name ;
+						btnProjMembers.setStyle("chromeColor", 0xF99653);
+						projectMemberPanel.addElement (btnProjMembers);
+					}
+				}
+				}
+			}
+			
+			internal function getProjectPanel(arg1:flash.events.MouseEvent):void
+			{
+				var loc1:*=arg1.target as spark.components.Button;
+				return;
+			}
+			public function setUserXML():void{};
+			public function setSubProjXML():void{};
+			public function setMapXML():void{};
+			protected function onMapObjectClicked(event:flash.events.MouseEvent):void
+			{
+				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+				var thisMapInfo:MapMetaData = mapMetaDataVector[parseInt((Button) (event.target).id)];
+				rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
+				rsp.mapTitle.text=thisMapInfo.mapName;
+				rsp.clickableMapOwnerInformation.toolTip = 
+					thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+					navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+				},false, 0, false);
+				rsp.invalidateDisplayList();
+				Controller.ArgumentController.getInstance().loadMap(event.target.name);
+				return;
+			}
+			
+			internal function showSignInBox(arg1:flash.events.MouseEvent):void
+			{
+				Controller.UserSessionController.getInstance().showSignInBox();
+				return;
+			}
+			
+			internal function _MyProjectsPane_Boolean1_i():Boolean
+			{
+				var loc1:*=false;
+				this.inited = loc1;
+				mx.binding.BindingManager.executeBindings(this, "inited", this.inited);
+				return loc1;
+			}
+			
+			
+		]]>
+	</fx:Script>
+</s:VGroup>

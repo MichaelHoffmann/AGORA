@@ -75,7 +75,8 @@ package Model
         {
 			
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
-            if (loc1.loggedIn()) 
+            if (loc1.loggedIn()) 			
+
             {
                 this.request.send({"uid":loc1.uid, "pass_hash":loc1.passHash});
             }
@@ -85,25 +86,25 @@ package Model
         protected function onResult(arg1:mx.rpc.events.ResultEvent):void
         {
             this.projectList = arg1.result as XML;
-            dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.MY_PROJECTS_LIST_FETCHED));
+            dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.PROJECTS_LIST_FETCHED));
             return;
         }
 		protected function updateMyProjSub(arg1:mx.rpc.events.ResultEvent):void
 		{
 			this.subProjectList = arg1.result as XML;
-			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.MY_PROJECTS_SUB_DETAILS));
+			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.PROJECTS_SUB_DETAILS));
 			return;
 		}
 		protected function updateMyProjMaps(arg1:mx.rpc.events.ResultEvent):void
 		{
 			this.mapList = arg1.result as XML;
-			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.MY_PROJECTS_MAP_DETAILS));
+			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.PROJECTS_MAP_DETAILS));
 			return;
 		}
 		protected function updateMyProjUsers(arg1:mx.rpc.events.ResultEvent):void
 		{
 			this.userList = arg1.result as XML;
-			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.MY_PROJECTS_USER_DETAILS));
+			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.PROJECTS_USER_DETAILS));
 			return;
 		}
         protected function onFault(arg1:mx.rpc.events.FaultEvent):void
