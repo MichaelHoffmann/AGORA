@@ -113,7 +113,9 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>		
-	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0" height="100"/>
+	<s:VGroup>
+	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
+	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
 	<s:Button id="clickableMapOwnerInformation" visible="false" toolTip="{Language.lookup('MapOwnerURLWarning')}"/>
 	<s:TextArea id="mapTitle" visible="false" heightInLines="4" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
@@ -124,10 +126,10 @@
 			  		FlexGlobals.topLevelApplication.map.agora.height = stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - 25;
 			  		FlexGlobals.topLevelApplication.map.topPanel._unhideRSP.visible = true;
 			  }"/>
-	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
-	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
+	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0" height="100"/>
 	<components:SponsorPanel id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
-	
+	</s:VGroup>
+
 	
 </s:SkinnableContainer>

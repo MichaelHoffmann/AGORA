@@ -200,7 +200,7 @@ package ValueObjects
 			mapToPrivateProjURL = "http://agora.gatech.edu/Paul_testing/map_to_private_project.php";
 			pullRegistrationURL = "http://agora.gatech.edu/Paul_testing/pull_registration_info.php";
 			changeInfoURL="http://agora.gatech.edu/Paul_testing/changeinfo.php";
-			forgotpasswordURL="http://localhost/pmtesting/forgot_pass.php";
+			forgotpasswordURL="http://agora.gatech.edu/Paul_testing/forgot_pass.php";
 			projectDetailsURL = "http://agora.gatech.edu/Paul_testing/projectdetails.php";
 			listProjMaps = "http://agora.gatech.edu/Paul_testing/listProjectMaps.php";
 			moveMapToProjectURL = "http://agora.gatech.edu/Paul_testing/moveMapToProject.php";
