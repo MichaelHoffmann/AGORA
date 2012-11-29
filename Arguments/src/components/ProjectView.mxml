@@ -28,7 +28,7 @@
 		<s:VGroup percentWidth="100" gap ="10" horizontalAlign="left">
 			<s:HGroup percentWidth="100" horizontalAlign="left">
 				<s:Label text="" id="projectName"  fontSize="14" paddingLeft="32" width="69%"  left = "0" textAlign="left"/>
-				<s:ToggleButton label="{classes.Language.lookup('ProjectTypeAdversarial')}" enabled="false" percentWidth="15"/>
+				<s:Button id = "isHostile" toolTip="{classes.Language.lookup('ProjectTypeAdversarialHelp')}+{classes.Language.lookup('ProjectTypeHelp')}" label="{classes.Language.lookup('ProjectTypeAdversarial')}" click="onProjectTypeClicked()" enabled="true" percentWidth="15"/>
 				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" click="deleteHandler()" percentWidth="8"/>
 				<s:Button excludeFrom="normal" id="renameProj" label="{classes.Language.lookup('Rename')}" click="AGORAController.getInstance().displayProjectInfoBox('rename')" percentWidth="8"/>
 			</s:HGroup>
@@ -361,6 +361,18 @@
 				if(model.userList){
 				var usm:UserSessionModel= AGORAModel.getInstance().userSessionModel;
 				loadingDisplay.visible=false;
+				if (model.userList.proj.@isHostile == 0) 
+				{
+					//isHostile.selected = false;
+					isHostile.label = classes.Language.lookup('ProjectTypeCollaborative');
+					AGORAModel.getInstance().projType = "collaborative";
+				}
+				else if(model.userList.proj.@isHostile == 1)
+				{
+					//isHostile.selected = true;
+					isHostile.label = classes.Language.lookup('ProjectTypeAdversarial');
+					AGORAModel.getInstance().projType = "adversarial";
+				}
 				projectName.text=model.userList.proj.@title;
 				if(model.userList.proj.admin.@name==usm.username){
 					currentState="admin";
@@ -408,7 +420,14 @@
 				Controller.ArgumentController.getInstance().loadMap(event.target.name);
 				return;
 			}
-			
+			protected function onProjectTypeClicked():void
+			{
+				if (isHostile.label == classes.Language.lookup('ProjectTypeCollaborative'))
+					Model.AGORAModel.getInstance().agoraMapModel.projectType = 1;
+				else if(isHostile.label == classes.Language.lookup('ProjectTypeAdversarial'))
+					Model.AGORAModel.getInstance().agoraMapModel.projectType = 0;
+				AGORAController.getInstance().renameProject(projectName.text);
+			}
 			internal function showSignInBox(arg1:flash.events.MouseEvent):void
 			{
 				Controller.UserSessionController.getInstance().showSignInBox();

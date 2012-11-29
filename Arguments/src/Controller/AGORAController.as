@@ -276,13 +276,37 @@ package Controller
 			
 		}
 		public function updateProject(e:Event):void{
-			if(FlexGlobals.topLevelApplication.projectNameBox){
-				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
-			}
-			if(menu.myProjects.currentState=="projectsInfo"){
-				fetchDataProjectList();
-			}else{
-			fetchDataMyProjects();
+			mx.controls.Alert.show("triggered");
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if(usm.loggedIn()){
+				if(current == Language.lookup("MyContributions"))
+				{
+					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+					
+					if(usm.selectedMyContProjID){
+						model.myProjectsModel.requestProjDetails(usm.selectedMyContProjID);
+					}
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
+					
+					if(usm.selectedMyProjProjID){
+						model.myProjectsModel.requestProjDetails(usm.selectedMyProjProjID);
+						getChain(parseInt(usm.selectedMyProjProjID));
+					}                                        
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					
+					if(parseInt(""+usm.selectedWoAProjID)){
+						model.myProjectsModel.requestProjDetails(""+usm.selectedWoAProjID);
+						getChain(usm.selectedWoAProjID);
+					}
+				}else if(current==Language.lookup("MyMaps"))
+				{
+					//do nothing.
+				}
 			}
 			
 			
