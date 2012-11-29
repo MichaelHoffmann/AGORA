@@ -257,7 +257,11 @@ package Model
 			try{
 				// check error
 				if(event.result.agora.hasOwnProperty("error")){
+					if(event.result.agora.error.text == "UserNamePassWordNotMatching"){
+						mx.controls.Alert.show(Language.lookup(event.result.agora.error.text));
+					}else{
 					mx.controls.Alert.show(event.result.agora.error.text);
+					}
 					return;
 				}				
 				// else change the data 
@@ -285,7 +289,11 @@ package Model
 				
 				// check error
 				if(event.result.agora.hasOwnProperty("error")){
-					Alert.show(event.result.error.text);
+					if(event.result.agora.error.text == "UserNamePassWordNotMatching"){
+						Alert.show(Language.lookup(event.result.agora.error.text));
+					}else{
+					Alert.show(event.result.agora.error.text);
+					}
 				}
 				
 				// change status if not				
@@ -335,7 +343,7 @@ package Model
 				Alert.show(Language.lookup('FPUserNotFound'));
 				dispatchEvent(new AGORAEvent(AGORAEvent.FORGOT_PASSWORD_SEARCHUSERERROR, <error text={event.result.AGORA.error.text} />, null));
 			}else if(event.result.AGORA.hasOwnProperty("securityQs")){
-				Alert.show(event.result.AGORA.securityQs.text);
+				Alert.show(Language.lookup(event.result.AGORA.securityQs.text));
 				dispatchEvent(new AGORAEvent(AGORAEvent.FORGOT_PASSWORD_SEARCHUSERERROR, <securityQs text={event.result.AGORA.securityQs.text} />, null));
 			}
 			else{
@@ -369,7 +377,7 @@ package Model
 				Alert.show(Language.lookup('FPUserNotFound'));
 				dispatchEvent(new AGORAEvent(AGORAEvent.FORGOT_PASSWORD_SECQERROR, <error text={event.result.AGORA.error.text} />, null));
 			}else if(event.result.AGORA.hasOwnProperty("securityQans")){
-				Alert.show(event.result.AGORA.securityQans.text);
+				Alert.show(Language.lookup(event.result.AGORA.securityQans.text));
 				dispatchEvent(new AGORAEvent(AGORAEvent.FORGOT_PASSWORD_SECQERROR, <securityQans text={event.result.AGORA.securityQans.text} />, null));
 				var fgtwindow:ForgotPasswordPopUpPanel = FlexGlobals.topLevelApplication.forgotpwdWindow;
 				fgtwindow.FP_securityDiv.enabled=true;
