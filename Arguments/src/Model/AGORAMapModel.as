@@ -17,13 +17,17 @@ package Model
 	import ValueObjects.SourcenodeValueObject;
 	import ValueObjects.TextboxValueObject;
 	
+	
 	import com.adobe.protocols.dict.Dict;
 	
 	import components.CategoryChain;
 	import components.Map;
+	import components.RightSidePanel;
 	
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
@@ -35,6 +39,9 @@ package Model
 	import mx.rpc.http.HTTPService;
 	import mx.states.State;
 	
+	import classes.Language;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
 	public class AGORAMapModel extends EventDispatcher
 	{	
 		private var _panelListHash:Dictionary;
@@ -417,9 +424,19 @@ package Model
 				dispatchEvent(new AGORAEvent(AGORAEvent.ILLEGAL_MAP, null, null)); 
 			}
 			try{
+				
 				//update timestamp
 				timestamp = map.timestamp;
 				name = map.title;
+				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+			
+				rsp.clickableMapOwnerInformation.label = mapXMLRawObject.@username;
+				rsp.clickableMapOwnerInformation.toolTip = 
+					mapXMLRawObject.@username + "\n" + mapXMLRawObject.@url + '\n' + Language.lookup('MapOwnerURLWarning');
+				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+					navigateToURL(new URLRequest(mapXMLRawObject.@url), 'quote');
+				},false, 0, false);
+				mapXMLRawObject.@url;
 				if(map.is_hostile == 1)
 				AGORAModel.getInstance().projType = "adversarial";
 				else if (map.is_hostile == 0)

@@ -11,7 +11,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 	</fx:Declarations>
 	<s:TextArea id="chatField" x="10" y="0" width="229" height="179" editable="false" enabled="true"
 				name="chatField"/>
-	<s:TextArea id="chatTextEntry" x="10" y="217" width="230" height="133" enabled="true"/>
+	<s:TextArea id="chatTextEntry" x="10" y="217" width="230" height="50" enabled="true"/>
 	<s:Button id="send" x="90" y="358" label="{Language.lookup('Send')}" click="sendButton_onClick(event)"/> 
 	<s:Button id="clear" x="168" y="358" label="{Language.lookup('Clear')}"  click="clearButton_onClick(event)"/>
 	<s:Label id="mainLabel" x="10" y="-20" text="{Language.lookup('ChatLabel')}"/>

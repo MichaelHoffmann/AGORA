@@ -38,7 +38,7 @@
 				
 				categoryChain.setActualSize(categoryChain.getExplicitOrMeasuredWidth(), categoryChain.getExplicitOrMeasuredHeight());
 				categoryChain.move(2, xB);
-				xB = xB;
+				xB = xB+200;
 				
 				if(visibility.visible){
 					mapOwner.visible = true;
