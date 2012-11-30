@@ -276,7 +276,6 @@ package Controller
 			
 		}
 		public function updateProject(e:Event):void{
-			mx.controls.Alert.show("triggered");
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
 			if(usm.loggedIn()){
