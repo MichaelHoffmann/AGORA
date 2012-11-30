@@ -491,7 +491,7 @@ package Model
 					requestXML.appendChild(<textbox ID={simpStatement.ID} text={simpStatement.text} />)
 				}
 			}
-			saveTextService.send({uid: AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash, xml:requestXML});
+			saveTextService.send({uid: AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash,proj_type:AGORAModel.getInstance().agoraMapModel.projectType,xml:requestXML});
 		}
 		protected function onSaveTextServiceResult(event:ResultEvent):void{
 			dispatchEvent(new AGORAEvent(AGORAEvent.TEXT_SAVED, null, this));

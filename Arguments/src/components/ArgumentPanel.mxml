@@ -432,15 +432,8 @@
 			protected function onAddBtnClicked(event:MouseEvent):void{
 				var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
-					if (type == "adversarial")
-					{
-					if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+
 					ArgumentController.getInstance().showAddMenu(this);
-					}
-					else
-						Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
-					}
-					else ArgumentController.getInstance().showAddMenu(this);
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
