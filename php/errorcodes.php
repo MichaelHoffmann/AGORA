@@ -266,5 +266,15 @@
 		$fail->addAttribute("text", "UserNamePassWordNotMatching");
 		$fail->addAttribute("code", 104);
 	}
+      function notProjectMember($output){
+		$fail=$output->addChild("NotMember");
+		$fail->addAttribute("text", "NotProjectMember");
+		$fail->addAttribute("code", 104);
+	}
 		
+	function saveAsMapFailed($output,$query){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "Map could not be saved $query");
+		$fail->addAttribute("code", 309);
+	}
 ?>

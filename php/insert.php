@@ -99,18 +99,46 @@ List of variables for insertion:
 		$attr = $tb->attributes();
 		$text = mysql_real_escape_string($attr["text"]);
 		$id = $attr["ID"];
+		$nodeID = $attr["nodeID"];
+		$query = "SELECT category.category_id,is_project FROM `category` join `category_map` on `category_map`.category_id = `category`.category_id where `category_map`.map_id =$mapID";
+		$proj_id = $query['category_id'];
+		$is_project = $query['is_project'];
 		if($id){
 			$query = "SELECT * FROM textboxes WHERE textbox_id=$id";
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
+			/*if ($is_project == 0)
+			{
 			if($userID == $dbUID){
 				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
 				$status = mysql_query($uquery, $linkID);
-			}else{
+				}
+				else{
 				modifyOther($output);
 				return false;
 			}
+			}*/
+			//if($is_project == 1){
+				if($proj_type == 1)
+				{	
+					if($userID == $dbUID){
+						$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
+						$status = mysql_query($uquery, $linkID);
+					}
+				}
+				else if($proj_type == 0)
+				{
+						$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
+						$status = mysql_query($uquery, $linkID);
+						$uquery = "UPDATE nodes SET user_id = $userID WHERE node_id=$nodeID";
+						$success=mysql_query($uquery, $linkID);
+				}
+				else 
+				{
+					notProjectMember($output);
+				}
+			//}
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES
@@ -541,6 +569,7 @@ List of variables for insertion:
 	$xmlparam = to_utf8($_GET['xml']); //TODO: Change this back to a GET when all testing is done.
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
+	$proj_type = mysql_real_escape_string($_REQUEST['proj_type']);
 	$output = insert($xmlparam, $userID, $pass_hash); 
 	print($output->asXML());
 ?>

@@ -430,17 +430,21 @@ package Model
 				name = map.title;
 				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
 			
-				rsp.clickableMapOwnerInformation.label = mapXMLRawObject.@username;
+				rsp.clickableMapOwnerInformation.label = mapXMLRawObject.username;
 				rsp.clickableMapOwnerInformation.toolTip = 
-					mapXMLRawObject.@username + "\n" + mapXMLRawObject.@url + '\n' + Language.lookup('MapOwnerURLWarning');
+					mapXMLRawObject.username + "\n" + mapXMLRawObject.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-					navigateToURL(new URLRequest(mapXMLRawObject.@url), 'quote');
+					navigateToURL(new URLRequest(mapXMLRawObject.url), 'quote');
 				},false, 0, false);
-				mapXMLRawObject.@url;
+				mapXMLRawObject.url;
+				if(map.hasOwnProperty("is_hostile")){
 				if(map.is_hostile == 1)
 				AGORAModel.getInstance().projType = "adversarial";
 				else if (map.is_hostile == 0)
 					AGORAModel.getInstance().projType = "collaborative";
+				}else{
+					AGORAModel.getInstance().projType = "adversarial";
+				}
 					
 				//Form a map of nodes
 				var obj:Object;
