@@ -2240,6 +2240,16 @@ Projekte zu sehen" />
 		<RUS text="Please wait. The server is busy." /><!--TODO: Translate RUS-->
 		<GER text="Bitte warte. Der Server ist beschäftigt." />
 	</ServerBusy>
+	<ServerResponding>
+		<EN-US text="Please wait .. .. .." />
+		<RUS text="Please wait .. .. .." /><!--TODO: Translate RUS-->
+		<GER text="Bitte warte .. .. .." />
+	</ServerResponding>
+	<AgoraVersion>
+	<EN-US text="V 3.2" />
+		<RUS text="V 3.1" /><!--TODO: Translate RUS-->
+		<GER text="V 3.1" /><!--TODO: Translate GER-->
+	</AgoraVersion>
 
 
 	<!--WALLS OF TEXT -->

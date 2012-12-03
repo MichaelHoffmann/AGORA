@@ -486,9 +486,11 @@ package Model
 		//---------------- save statement Texts --------------------------//
 		public function saveTexts():void{
 			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
+			//var statementXML:XML = <node ID={ID} />;
+			//requestXML.appendChild(statementXML);
 			for each(var simpStatement:SimpleStatementModel in statements){
 				if(simpStatement.hasOwn){
-					requestXML.appendChild(<textbox ID={simpStatement.ID} text={simpStatement.text} />)
+					requestXML.appendChild(<textbox ID={simpStatement.ID} text={simpStatement.text} nodeID={ID}/>)
 				}
 			}
 			saveTextService.send({uid: AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash,proj_type:AGORAModel.getInstance().agoraMapModel.projectType,xml:requestXML});

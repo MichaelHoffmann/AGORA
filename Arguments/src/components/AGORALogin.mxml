@@ -121,7 +121,7 @@
 					  text="{Language.lookup('ParticipateDebates')}" textAlign="center" verticalCenter="6"/>
 			<!--This is the login button-->
 			<s:Label  id="versionNum" width="30" height="30" fontSize="12" right = "117" bottom="-35"
-					  text="V 3.1" textAlign="center" />
+					  text="{Language.lookup('AgoraVersion')}" textAlign="center" />
 			<!--This is the login button-->
 
 			<s:Button id="loginButton" width="120" height="40" label="{Language.lookup('Login')}" horizontalCenter="-71"

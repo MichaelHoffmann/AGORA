@@ -99,6 +99,7 @@ List of variables for insertion:
 		$attr = $tb->attributes();
 		$text = mysql_real_escape_string($attr["text"]);
 		$id = $attr["ID"];
+		$nodeID = $attr["nodeID"];
 		$query = "SELECT category.category_id,is_project FROM `category` join `category_map` on `category_map`.category_id = `category`.category_id where `category_map`.map_id =$mapID";
 		$proj_id = $query['category_id'];
 		$is_project = $query['is_project'];
@@ -108,33 +109,39 @@ List of variables for insertion:
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
-			if (is_project == 0)
+			/*if ($is_project == 0)
 			{
-			if($userID == $dbUID){
-				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
-				$status = mysql_query($uquery, $linkID);
-			}else{
-				modifyOther($output);
-				return false;
-			}
-			}
-			else if(is_project == 1){
-			if($userID == $dbUID){
-				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
-				$status = mysql_query($uquery, $linkID);
-			}
-			else if(proj_type == 0 && isUserInProjectSpace($userID,$proj_id,$linkID))
-			{
-				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
-				$status = mysql_query($uquery, $linkID);
-			}
-			else 
-			{
-				notProjectMember($output);
-			}
+				if($userID == $dbUID){
+					$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
+					$status = mysql_query($uquery, $linkID);
+				}
+				else{
+					modifyOther($output);
+					return false;
+				}
+			}*/
+			//if($is_project == 1){
+				if($proj_type == 1)
+				{	
+					if($userID == $dbUID){
+						$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
+						$status = mysql_query($uquery, $linkID);
+					}
+				}
+				else if($proj_type == 0)
+				{
+						$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
+						$status = mysql_query($uquery, $linkID);
+						$uquery = "UPDATE nodes SET user_id = $userID WHERE node_id=$nodeID";
+						$success=mysql_query($uquery, $linkID);
+
+				}
+				else 
+				{
+					notProjectMember($output);
+				}
 			
-			}
-			}
+			//}
 		}else{	
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES

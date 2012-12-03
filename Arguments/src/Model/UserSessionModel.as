@@ -341,6 +341,8 @@ package Model
 			event.target.removeEventListener(FaultEvent.FAULT, onFPReqFailed);
 			if(event.result.AGORA.hasOwnProperty("error")){
 				Alert.show(Language.lookup('FPUserNotFound'));
+				var fgtwindow:ForgotPasswordPopUpPanel = FlexGlobals.topLevelApplication.forgotpwdWindow;
+				fgtwindow.FP_userName.setFocus();
 				dispatchEvent(new AGORAEvent(AGORAEvent.FORGOT_PASSWORD_SEARCHUSERERROR, <error text={event.result.AGORA.error.text} />, null));
 			}else if(event.result.AGORA.hasOwnProperty("securityQs")){
 				Alert.show(Language.lookup(event.result.AGORA.securityQs.text));
@@ -350,6 +352,7 @@ package Model
 				var fgtwindow:ForgotPasswordPopUpPanel = FlexGlobals.topLevelApplication.forgotpwdWindow;
 				var secQStrIndex = fgtwindow.secCodes.indexOf(event.result.AGORA.success.securityQNum);
 				fgtwindow.FP_secQuestion.text = fgtwindow.secQstn[secQStrIndex];
+				fgtwindow.FP_secAnswer.setFocus();
 				dispatchEvent(new AGORAEvent(AGORAEvent.FORGOT_PASSWORD_SEARCHUSER,<success uid={event.result.AGORA.success.userId} secQs={event.result.AGORA.success.securityQNum} />, null));
 			}
 		}
@@ -382,6 +385,7 @@ package Model
 				var fgtwindow:ForgotPasswordPopUpPanel = FlexGlobals.topLevelApplication.forgotpwdWindow;
 				fgtwindow.FP_securityDiv.enabled=true;
 				fgtwindow.OK_btn.enabled=true;
+				fgtwindow.FP_secAnswer.setFocus();
 			}else if(event.result.AGORA.hasOwnProperty("success")){
 				dispatchEvent(new AGORAEvent(AGORAEvent.FORGOT_PASSWORD_SECQUESTION));
 			}
