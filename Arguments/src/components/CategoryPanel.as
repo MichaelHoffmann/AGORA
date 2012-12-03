@@ -301,7 +301,7 @@ package components
 				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
 			},false, 0, false);
 			rsp.invalidateDisplayList();
-			mapMetaDataVector = null;
+		//	mapMetaDataVector = null;
 			ArgumentController.getInstance().loadMap(event.target.name);
 		}
 		
