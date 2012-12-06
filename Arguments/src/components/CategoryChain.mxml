@@ -111,7 +111,8 @@
 			}
 		]]>
 	</fx:Script>
+	<s:Scroller percentWidth="100" height ="100" >
 		<s:TileGroup id="actualHistory" width = "100%" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0">
 		</s:TileGroup>
-
+	</s:Scroller>
 </s:Group>

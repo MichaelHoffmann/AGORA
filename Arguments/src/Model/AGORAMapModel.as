@@ -11,6 +11,7 @@ package Model
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.CategoryDataV0;
 	import ValueObjects.ConnectionValueObject;
+	import ValueObjects.MapHistoryValueObject;
 	import ValueObjects.MapValueObject;
 	import ValueObjects.NodeValueObject;
 	import ValueObjects.NodetextValueObject;
@@ -34,6 +35,7 @@ package Model
 	import mx.collections.ArrayList;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
+	import mx.managers.HistoryManager;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
@@ -49,8 +51,10 @@ package Model
 		private var _textboxListHash:Dictionary;
 		private var _newPanels:ArrayCollection;
 		private var _newConnections:ArrayCollection;
+		private var _historylist:Vector.<MapHistoryValueObject>;
 		
 		private var createMapService: HTTPService;
+		private var saveMapAsService: HTTPService;
 		private var mapToPrivateProjService:HTTPService;
 		private var createNodeService: HTTPService;
 		private var createFirstClaim: HTTPService;
@@ -121,12 +125,25 @@ package Model
 			updateMapInfoService.addEventListener(ResultEvent.RESULT, onMapInfoUpdated);
 			updateMapInfoService.addEventListener(FaultEvent.FAULT, onFault);
 			
+			//save map as service
+			saveMapAsService = new HTTPService;
+			saveMapAsService.url = AGORAParameters.getInstance().saveMapAsUrl;
+			saveMapAsService.addEventListener(ResultEvent.RESULT,  onMapSaveAsCreated);
+			saveMapAsService.addEventListener(FaultEvent.FAULT, onFault);
 			reinitializeModel();
 			statementWidth = 8;
 		}
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get historylist():Vector.<MapHistoryValueObject>
+		{
+			return _historylist;
+		}
+		public function set historylist(value:Vector.<MapHistoryValueObject>):void
+		{
+			_historylist = value;
+		}
 		public function get tempprojID():int
 		{
 			return _tempprojID;
@@ -303,6 +320,9 @@ package Model
 		protected function onMapInfoUpdated(event:ResultEvent):void{
 			if(event.result.mapinfo.hasOwnProperty("error")){
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_INFO_UPDATE_FAILED, null, null));
+			}else if(event.result.mapinfo.hasOwnProperty("errorMapName")){
+				Alert.show(Language.lookup('MapNameNotUnique'));
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_INFO_UPDATE_FAILED, null, null));
 			}else{
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_INFO_UPDATED, null, null));
 			}
@@ -315,6 +335,21 @@ package Model
 			var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			this._name = mapName;
 			createMapService.send({uid:usModel.uid, pass_hash:usModel.passHash, xml:xmlForMap.toXMLString()});
+		}
+		//----------------------- Save As a New Map --------------------------------------------//
+		public function saveAsMap(mapName:String,mapId:String):void{
+			var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;			
+			saveMapAsService.send({uid:usModel.uid, pass_hash:usModel.passHash, map_id:mapId,newName:mapName});
+		}
+		protected function onMapSaveAsCreated(resultEvent:ResultEvent):void{
+			if(!resultEvent.result.map.hasOwnProperty('error')){
+				var xmlForMap:XML = <map ID={resultEvent.result.map.ID}></map>;
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_SAVEDAS, xmlForMap, resultEvent.result.map));
+			}else{
+				if(resultEvent.result.map.error.code=="319" || resultEvent.result.map.error.code==319){
+					dispatchEvent(new AGORAEvent(AGORAEvent.MAP_SAVEDASFAULT, null, null));
+				}
+			}
 		}
 		
 		protected function onMapCreated(resultEvent:ResultEvent):void{
@@ -428,14 +463,23 @@ package Model
 				//update timestamp
 				timestamp = map.timestamp;
 				name = map.title;
+				// Reload panel only when required
+				var reloadpanel = event.result.map.reloadRPANEL;
+				if( event.result.map.hasOwnProperty("reloadpanel") && event.result.map.reloadpanel){
 				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
-			
+				rsp.mapTitle.text=mapXMLRawObject.title;
 				rsp.clickableMapOwnerInformation.label = mapXMLRawObject.username;
 				rsp.clickableMapOwnerInformation.toolTip = 
 					mapXMLRawObject.username + "\n" + mapXMLRawObject.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 					navigateToURL(new URLRequest(mapXMLRawObject.url), 'quote');
 				},false, 0, false);
+				try{
+				rsp.invalidateDisplayList();
+				}catch(e:Error){
+					Alert.show("error");
+				}
+				}
 				mapXMLRawObject.url;
 				if(map.hasOwnProperty("is_hostile")){
 				if(map.is_hostile == 1)
@@ -502,6 +546,8 @@ package Model
 					
 				}
 			}
+			// update the map history details .. ..
+			historylist = map.historylist;
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
 		}
 		
@@ -532,6 +578,8 @@ package Model
 					statementModel.firstName = nodeVO.firstName;
 					statementModel.lastName = nodeVO.lastName;
 					statementModel.URL = nodeVO.URL;
+					statementModel.prevauthor = nodeVO.prevauthor;
+					statementModel.prevauthorurl = nodeVO.prevauthorurl;
 					if(statementModel.statementFunction == StatementModel.STATEMENT){
 						statementModel.statementType = nodeVO.type;
 					}

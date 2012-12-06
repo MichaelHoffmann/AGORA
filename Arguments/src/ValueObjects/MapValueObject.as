@@ -1,5 +1,6 @@
 package ValueObjects
 {
+	import components.MapHistory;
 	import mx.collections.ArrayCollection;
 	
 	public class MapValueObject
@@ -13,12 +14,14 @@ package ValueObjects
 		public var textboxes:Vector.<TextboxValueObject>;
 		public var nodeObjects:Vector.<NodeValueObject>;
 		public var connections:Vector.<ConnectionValueObject>;
+		public var historylist:Vector.<MapHistoryValueObject>
 		
 		public function MapValueObject(mapObject:Object, inserted:Boolean = false)
 		{
 			textboxes = new Vector.<TextboxValueObject>;
 			nodeObjects = new Vector.<NodeValueObject>;
 			connections = new Vector.<ConnectionValueObject>;
+			historylist = new Vector.<MapHistoryValueObject>;
 			if(!inserted){
 				if(mapObject.hasOwnProperty("ID")){
 					ID = mapObject.ID;
@@ -85,6 +88,17 @@ package ValueObjects
 						}
 					}else{
 						connections.push(new ConnectionValueObject(mapObject.connection, inserted));
+					}
+				}
+				if(mapObject.hasOwnProperty("mapHistory")){
+					if(mapObject.mapHistory.hasOwnProperty("history")){
+					if(mapObject.mapHistory.history is ArrayCollection){
+						for each(obj in mapObject.mapHistory.history){
+							historylist.push(new MapHistoryValueObject(obj));
+						}
+					}else{
+						historylist.push(new MapHistoryValueObject(mapObject.mapHistory.history));
+					}
 					}
 				}
 			}catch(error: PropNotFoundError){

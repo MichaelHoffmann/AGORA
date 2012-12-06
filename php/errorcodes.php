@@ -240,6 +240,11 @@
 		$fail->addAttribute("text", "This map name has already been taken.Kindly choose a different map name.");
 		$fail->addAttribute("code", 319);
 	}
+	function mapNameTakedonEdit($output){
+		$fail=$output->addChild("errorMapName");
+		$fail->addAttribute("text", "This map name has already been taken.Kindly choose a different map name.");
+		$fail->addAttribute("code", 319);
+	}
 	function userNameAlreadyTaken($output){
 		$fail=$output->addChild("error");
 		$fail->addAttribute("text", "Please choose another username.");
@@ -272,4 +277,9 @@
 		$fail->addAttribute("code", 104);
 	}
 		
+	function saveAsMapFailed($output,$query){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "Map could not be saved $query");
+		$fail->addAttribute("code", 309);
+	}
 ?>

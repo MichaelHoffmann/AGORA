@@ -392,5 +392,31 @@ function getUserNameFromUserId($userid,$linkID){
 			$tree[$pid]=$pid;
 			return $tree;
 	}	
+	function fetchHistoryTreeForMap($mapId,$index,$detailTree,$linkID){
+		error_log($detailTree,0);
+		// lets not show more than 8 levels ..
+		if($index>8){
+			return;
+		}
+		// check for the history of the map and get the same ..
+			$query = "SELECT * FROM SavedComponents inner join maps on OrgCompId=map_id inner join users on OrgUserId=users.user_id where type=1 and CompId = $mapId";
+			$resultID = mysql_query($query, $linkID);
+			if($resultID && mysql_num_rows($resultID)>0){
+				$row = mysql_fetch_assoc($resultID);
+				if($row['SCID']!=null){
+					$mapOwner = $row['username'];
+					$mapOwnerUrl = $row['url'];
+					$newMapId = $row['OrgCompId'];
+					$newmapname = $row['title'];
+					error_log($mapOwner."kl",0);
+					$versions = $detailTree->addChild("history");
+					$versions->addAttribute("mapOwner",$mapOwner);
+					$versions->addAttribute("mapName",$newmapname);
+					$versions->addAttribute("mapOwnerUrl",$mapOwnerUrl);
+					$versions->addAttribute("mapId",$newMapId);
+					fetchHistoryTreeForMap($newMapId,++$index,$detailTree,$linkID);
+				}
+			}
+	}
 
 ?>

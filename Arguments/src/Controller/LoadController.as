@@ -72,6 +72,7 @@ package Controller
 			//set the title
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateProperties();
 			FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
+			FlexGlobals.topLevelApplication.rightSidePanel.history.invalidateProperties();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.reset();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.start();
 			model.requested = false;

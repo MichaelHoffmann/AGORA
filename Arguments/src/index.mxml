@@ -44,6 +44,7 @@
 			import components.ProjectName;
 			import components.PublishMapPopUpPanel;
 			import components.RegisterPanel;
+			import components.saveMapAsPanel;
 			
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
@@ -82,6 +83,7 @@
 			
 			//Universally accessible mapName box
 			public var mapNameBox:MapName;
+			public var saveAsMapBox:saveMapAsPanel;
 			//Universally accessible projectName box
 			public var projectNameBox:ProjectName;
 			//Universal Join_Project box

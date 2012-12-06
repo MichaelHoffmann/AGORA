@@ -60,15 +60,17 @@ package components
 			if(!gotoMenuBtn){
 				gotoMenuBtn = new Button;
 				BindingUtils.bindProperty(gotoMenuBtn, 'label', agoraConstants,'SAVE_AND_HOME');
+				BindingUtils.bindProperty(gotoMenuBtn,  'toolTip', agoraConstants, 'SUPPORT_SAVEANDHOME');
 				gotoMenuBtn.addEventListener(MouseEvent.CLICK, discardChanges);
 				addChild(gotoMenuBtn);
 			}
 			
 			if(!saveAsBtn){
 				saveAsBtn = new Button;
-				saveAsBtn.visible=false;
+				saveAsBtn.visible=true;
 				BindingUtils.bindProperty(saveAsBtn, 'label', agoraConstants, 'SAVE_AS');
 				BindingUtils.bindProperty(saveAsBtn,  'toolTip', agoraConstants, 'SUPPORT_SAVEAS');
+				saveAsBtn.addEventListener(MouseEvent.CLICK, saveMapAs);
 				addChild(saveAsBtn);
 			}
 			
@@ -202,6 +204,11 @@ package components
 			AGORAController.getInstance().printMap();
 		}
 		
+		protected function saveMapAs(event:MouseEvent):void{
+			FlexGlobals.topLevelApplication.saveAsMapBox = new saveMapAsPanel;
+			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.saveAsMapBox, DisplayObject(FlexGlobals.topLevelApplication),true);
+			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
+		}
 		protected function onAddToProject(event:MouseEvent):void{
 			FlexGlobals.topLevelApplication.move_map = new MapToProject;
 			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.move_map, DisplayObject(FlexGlobals.topLevelApplication),true);

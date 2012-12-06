@@ -3110,6 +3110,71 @@ Projekte zu sehen" />
  
  <!--  End of Forgot Password related entries -->
  
+ <!--  Map Save As Feature -->
+ <!--  getting a map name in the pop up which comes on clicking save map as -->
+	<EnterSaveAsMapName>
+		<EN-US text="Provide a name for your new map" />
+		<RUS text="Provide a name for your new map" /><!--TODO Translate RUS-->
+		<GER text="Gib einen Namen für deine Kopie dieses Arguments ein" />
+	</EnterSaveAsMapName>
+	
+<!--  Window Title in the pop up which comes on clicking save map as -->
+	<TitleSaveAsMapName>
+		<EN-US text="Save Map As" />
+		<RUS text="Save Map As" /><!--TODO Translate RUS-->
+		<GER text="Speichere Argument als" />
+	</TitleSaveAsMapName>
+	
+	<SaveAsMapSuccessMsg>
+		<EN-US text="The map has been saved with the given name under your private project space.Do you want to move to this newly created map" />
+		<RUS text="The map has been saved with the given name under your private project space.Do you want to move to this newly created map." /><!--TODO Translate RUS-->
+		<GER text="Das Argument wurde unter dem Namen gespeichert, den du ihm gegeben hast. Willst du an dem neu geschaffenen Argument weiter arbeiten?." />
+	</SaveAsMapSuccessMsg>
+	
+	<MapHistoryPreviousOwner>
+		<EN-US text="Previous Owner :" />
+		<RUS text="Previous Owner :" /><!--TODO Translate RUS-->
+		<GER text="Vorhergehender Besitzer :" />
+	</MapHistoryPreviousOwner>
+	<NodeHistoryPreviousAuthorToolTip>
+		<EN-US text="Previous Author :" />
+		<RUS text="Previous Author :" /><!--TODO Translate RUS-->
+		<GER text="Vorhergehender Autor :" />	
+	</NodeHistoryPreviousAuthorToolTip>
+	<MapHistoryCurrentOwner>
+		<EN-US text="Current Owner :" />
+		<RUS text="Current Owner :" /><!--TODO Translate RUS-->
+		<GER text="Gegenwärtiger Besitzer :" />
+	</MapHistoryCurrentOwner>
+	
+	<!-- The side heading in the map history column -->	
+	<MapHistoryLabel>
+		<EN-US text="Map History" />
+		<RUS text="Map History" /><!--TODO Translate RUS-->
+		<GER text="Argument Geschichte" />
+	</MapHistoryLabel>This map name has already been taken.Kindly choose a different map name.
+	
+	<!-- Tool tip on the Save Map as button -->
+		<SaveMapAsHelp>
+		<EN-US text="Save Map As Help" />
+		<RUS text="Save Map As Help" /><!--TODO Translate RUS-->
+		<GER text="Speichere-Argumentation-als Hilfe" />
+	</SaveMapAsHelp>
+	
+	<MapNameNotUnique>
+		<EN-US text="This map name has already been taken.Kindly choose a different map name." />
+		<RUS text="This map name has already been taken.Kindly choose a different map name." /><!--TODO Translate RUS-->
+		<GER text="This map name has already been taken.Kindly choose a different map name." /><!--TODO Translate GER-->
+	</MapNameNotUnique>
+	
+	<!-- Tool tip on the Save Map as button -->
+	<MapHistoryBackButtonToolTip>
+		<EN-US text="Go back to the previous map I saw" />
+		<RUS text="Go back to the previous map I saw" /><!--TODO Translate RUS-->
+		<GER text="Geh zurück zum zuletzt gesehenen Argument" />
+	</MapHistoryBackButtonToolTip>
+	
+	<!-- End of entries for Map Save As -->
 	<!-- SPECIAL -->
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->
