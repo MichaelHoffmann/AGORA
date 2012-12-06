@@ -367,26 +367,32 @@ package Model
 			}
 		}
 		protected function onMapMovedToPrivProj(resultEvent:ResultEvent):void{
-
-			if(AGORAModel.getInstance().moveToProject){
-
-				Model.AGORAModel.getInstance().moveToProject = false;
-				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+			var current=usm.selectedTab;
+			if(current == Language.lookup("MyContributions"))
+			{
+				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyContProjID as String);
+				
+			}else if(current==Language.lookup("MyPPProjects"))
+			{
 				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyProjProjID as String);
-			}else if (AGORAModel.getInstance().moveToWOA){
-				Model.AGORAModel.getInstance().moveToWOA = false;
-				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				if(AGORAModel.getInstance().userSessionModel.selectedTab == "My Contributions")
-				{
-					//var contributionsCategoryChain:ArrayList = AGORAController.getInstance().contributionsCategoryChain;
-					//Controller.AGORAController.getInstance().moveMap(this.ID,(contributionsCategoryChain.getItemAt(contributionsCategoryChain.length-1)as CategoryDataV0).currentID);
-				}
-				else
-				{
-				/*var categoryChain:ArrayList=AGORAController.getInstance().categoryChain;
-				Controller.AGORAController.getInstance().moveMap(this.ID,(categoryChain.getItemAt(categoryChain.length-1)as CategoryDataV0).currentID);
-					*/}
+				
+			}else if (current ==Language.lookup("MainTab"))
+			{
+				var model:CategoryModel = AGORAModel.getInstance().categoryModel;
+
+			if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
+				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID as String);
 			}
+
+				//FlexGlobals.topLevelApplication.agoraMenu.categories.
+				var model:CategoryModel = AGORAModel.getInstance().categoryModel;
+				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
+					Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID as String);
+				}
+				
+			}
+
 
 		}
 		protected function moveMapToPrivProj():void{

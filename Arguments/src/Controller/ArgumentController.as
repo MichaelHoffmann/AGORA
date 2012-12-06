@@ -160,7 +160,7 @@ package Controller
 			rsp.titleOfMap.text = this.model.agoraMapModel.name;
 			rsp.clickableMapOwnerInformation.label = thisMapInfo.username;
 			rsp.clickableMapOwnerInformation.toolTip = 
-				thisMapInfo.firstName + " " + thisMapInfo.lastName + "\n" + thisMapInfo.URL + '\n' + Language.lookup('MapOwnerURLWarning');
+				 thisMapInfo.URL + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 				navigateToURL(new URLRequest(thisMapInfo.URL), 'quote');
 			},false, 0, false);
@@ -194,7 +194,7 @@ package Controller
 					rsp.clickableMapOwnerInformation.label = mapObj.username;
 					rsp.mapTitle.text=mapObj.title;
 					rsp.clickableMapOwnerInformation.toolTip = 
-					mapObj.firstname + " " + mapObj.lastname + "\n" + mapObj.url + '\n' + Language.lookup('MapOwnerURLWarning');
+					 mapObj.url + '\n' + Language.lookup('MapOwnerURLWarning');
 					rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 						navigateToURL(new URLRequest(mapObj.url), 'quote');
 					},false, 0, false);

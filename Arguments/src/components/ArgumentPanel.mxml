@@ -732,7 +732,7 @@
 				}
 				userIdLbl.text = "AU: " + author;
 				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				var userInfoStr:String = "Name:"+firstName+" "+lastName+" URL:"+URL;
+				var userInfoStr:String = " URL:"+URL;
 				userIdLbl.toolTip =userInfoStr;
 				if(prevauthor!=null && prevauthor!=""){					
 				userIdLblPA.text = Language.lookup('MapHistoryPA');

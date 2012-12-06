@@ -140,10 +140,6 @@ package components
 					this.categoryTiles.layout = new HorizontalLayout;
 					mapPanel.percentWidth=33;
 					projectPanel.percentWidth=33;
-					FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.visible = true;
-					FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.label = Language.lookup('NewMaphere');
-					FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.enabled = true;
-					FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.visible = true;
 					FlexGlobals.topLevelApplication.agoraMenu.clickthruCategories.visible = true;
 						mapPanel.paddingTop = 65;
 						projectMemberPanel.paddingTop = 65;
@@ -268,10 +264,6 @@ package components
 			}
 					else
 					{
-						FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.enabled = false;
-						FlexGlobals.topLevelApplication.agoraMenu.createProjBtnContributions.visible = false;
-						FlexGlobals.topLevelApplication.agoraMenu.createMapBtnContributions.visible = false;
-						FlexGlobals.topLevelApplication.agoraMenu.clickthruCategories.visible = true;
 						mapPanel.percentWidth=50;
 						projectPanel.percentWidth=50;
 						mapPanel.paddingTop = 0;
@@ -373,7 +365,7 @@ package components
 			rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 			rsp.mapTitle.text=thisMapInfo.mapName;
 			rsp.clickableMapOwnerInformation.toolTip = 
-				thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+				 thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
 			},false, 0, false);

@@ -2822,6 +2822,16 @@ Projekte zu sehen" />
 		<RUS text="Are you sure? " />  <!--TODO Translate RUS-->
 		<GER text="Bist du sicher?" />  
 </SelectAdminQuestion>
+<ContactProjectAdm>
+		<EN-US text="Is the project Adminsitrator.  Contact them by clicking:" />
+		<RUS text="Is the project Adminsitrator.  Contact them by clicking:"/>  <!--TODO Translate RUS-->
+		<GER text="Is the project Adminsitrator.  Contact them by clicking:" />  <!--TODO Translate GER-->
+</ContactProjectAdm>
+<Cancel>
+		<EN-US text="Cancel" />
+		<RUS text="Cancel " />  <!--TODO Translate RUS-->
+		<GER text="Cancel" />  <!--TODO Translate GER-->
+</Cancel>
 
 <SelectAdminWarning>
 		<EN-US text="If you select a new administrator, you will loose all the rights and permissions you can see on this screen" />

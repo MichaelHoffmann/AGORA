@@ -43,6 +43,7 @@ package Controller
 	import mx.printing.FlexPrintJobScaleType;
 	import mx.states.State;
 	
+	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.HGroup;
 	import spark.components.NavigatorContent;
@@ -254,8 +255,6 @@ package Controller
 			model.deleteProject.sendRequest(projID);
 		}
 		public function onProjectDeleted(e:Event):void{
-			menu.createMapinProjectBtn.visible=false;
-			menu.ProjBtn.visible=false;
 			menu.myProjects.currentState="listOfProjects";
 			fetchDataMyProjects();
 			fetchDataProjectList();
@@ -275,40 +274,26 @@ package Controller
 			}
 			
 		}
-		public function updateProject(e:Event):void{
+		public function createProj(e:Event){
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
 			if(usm.loggedIn()){
-				if(current == Language.lookup("MyContributions"))
-				{
-					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
-					
-					if(usm.selectedMyContProjID){
-						model.myProjectsModel.requestProjDetails(usm.selectedMyContProjID);
-					}
-				}
-				else if(current==Language.lookup("MyPPProjects"))
-				{
-					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
-					
-					if(usm.selectedMyProjProjID){
-						model.myProjectsModel.requestProjDetails(usm.selectedMyProjProjID);
-						getChain(parseInt(usm.selectedMyProjProjID));
-					}                                        
-				}else if (current ==Language.lookup("MainTab"))
-				{
-					
-					if(parseInt(""+usm.selectedWoAProjID)){
-						model.myProjectsModel.requestProjDetails(""+usm.selectedWoAProjID);
-						getChain(usm.selectedWoAProjID);
-					}
-				}else if(current==Language.lookup("MyMaps"))
-				{
-					//do nothing.
-				}
+				Controller.AGORAController.getInstance().displayProjectInfoBox("newInMyProjects");
 			}
-			
-			
+		}
+		public function createMap(event:Event){
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if(usm.loggedIn()){
+				Controller.AGORAController.getInstance().displayMapInfoBox();
+			}
+		}
+		public function updateProject(e:Event):void{
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if( FlexGlobals.topLevelApplication.projectNameBox){
+				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			}
 		}
 		public function onAdminChanged(e:Event):void{
 			fetchDataMyProjects();
@@ -464,16 +449,6 @@ package Controller
 			return;
 		}
 
-		public function addProjectToWoM():void
-		{
-			this.model.pushprojects.inWoA();
-			return;
-		}
-		public function addProjectToMyProjects():*
-		{
-			this.model.pushprojects.inProjectsList();
-			return;
-		}
 		public function verifyProjectMember(parentCategory:String,parentID:int):void{
 			this.tempParentCategory = parentCategory;
 			this.tempParentCategoryID = parentID;

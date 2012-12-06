@@ -167,12 +167,15 @@ package components
 			background.graphics.endFill();
 			gotoMenuBtn.setActualSize(gotoMenuBtn.getExplicitOrMeasuredWidth(), 30);
 			gotoMenuBtn.move(xB,5);
+			gotoMenuBtn.toolTip=Language.lookup('SaveAndHomeHelp');
 			xB = xB + gotoMenuBtn.getExplicitOrMeasuredWidth() + 15;
 			saveAsBtn.setActualSize(saveAsBtn.getExplicitOrMeasuredWidth(), 30);
 			saveAsBtn.move(xB, 5);
 			xB = xB + saveAsBtn.getExplicitOrMeasuredWidth() + 15;
 			print.setActualSize(print.getExplicitOrMeasuredWidth(), 30);
 			print.move(xB, 5);
+			print.toolTip=Language.lookup('PrintMapHelp');
+
 			xB = xB + print.getExplicitOrMeasuredWidth() + 15;
 			_whatYouShouldKnowBeforeYouStartBtn.setActualSize(_whatYouShouldKnowBeforeYouStartBtn.getExplicitOrMeasuredWidth(), 30);
 			_whatYouShouldKnowBeforeYouStartBtn.move(xB, 5);
