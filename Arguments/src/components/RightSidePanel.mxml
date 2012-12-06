@@ -29,9 +29,23 @@
 			import mx.events.FlexEvent;
 			[Bindable] private var visibility:Map = FlexGlobals.topLevelApplication.map;
 			[Bindable] private var onMyMapsTab:TabNavigator = FlexGlobals.topLevelApplication.agoraMenu.tabNav;
+			private var _showHistoryBoxes = false;
 			
+			public function get showHistoryBoxes()
+			{
+				return _showHistoryBoxes;
+			}
+			public function set showHistoryBoxes(value):void
+			{
+				_showHistoryBoxes = value;
+			}
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				// 
+				if(showHistoryBoxes){
+					showHistoryBoxes=false;
+					return;
+				}
 				var xB:int = 0;
 				hidePanelButton.move(2, xB);
 				xB = xB + hidePanelButton.getExplicitOrMeasuredHeight() + 3;
@@ -94,7 +108,6 @@
 				// test if the history is empty
 				var mapList:Vector.<MapHistoryValueObject> = AGORAModel.getInstance().agoraMapModel.historylist;
 				var sessionMappings:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
-				sessionMappings.historyMapsVisited.length;
 				if((mapList==null || mapList.length<=0) && sessionMappings.historyMapsVisited.length<=0){
 					historyBox.visible=false;
 					historyBackBox.visible=false;
@@ -182,7 +195,7 @@
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
 	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Button id="chatBox" visible="false" toolTip="" label="Chat" width="75" click="onChatSelect()"/>
-	<s:Button id="historyBox" visible="false" toolTip="" label="History" width="75" click="onHistorySelect()"/>
+	<s:Button id="historyBox" visible="false" toolTip="" label="{Language.lookup('MapHistoryHeader')}" width="75" click="onHistorySelect()"/>
 	<s:Button id="historyBackBox" visible="false" label="&lt; -" toolTip="{Language.lookup('MapHistoryBackButtonToolTip')}" width="35" click="onHistoryBackSelect()"/>
 	<components:SponsorPanel id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
 	

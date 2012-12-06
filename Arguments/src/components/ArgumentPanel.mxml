@@ -735,7 +735,7 @@
 				var userInfoStr:String = "Name:"+firstName+" "+lastName+" URL:"+URL;
 				userIdLbl.toolTip =userInfoStr;
 				if(prevauthor!=null && prevauthor!=""){					
-				userIdLblPA.text = "PA";
+				userIdLblPA.text = Language.lookup('MapHistoryPA');
 				userIdLblPA.toolTip = Language.lookup('NodeHistoryPreviousAuthorToolTip')+ prevauthor;
 				userIdLblPA.visible = true;
 				}

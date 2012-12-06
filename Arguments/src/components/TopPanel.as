@@ -78,6 +78,7 @@ package components
 			if(!print){
 				print = new Button;
 				print.label = Language.lookup("PrintMap");
+				print.toolTip = Language.lookup("PrintMapHelp");
 				print.addEventListener(MouseEvent.CLICK, onPrint);
 				addChild(print);
 			}

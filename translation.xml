@@ -3156,9 +3156,9 @@ Projekte zu sehen" />
 	
 	<!-- Tool tip on the Save Map as button -->
 		<SaveMapAsHelp>
-		<EN-US text="Save Map As Help" />
+		<EN-US text="When you save this map under a new name, a copy of the map will be produced in which every statement is assigned to you as the author of this statement. This way you acquire all the permissions necessary to change whatever you want. To give credit to the previous authors of statements, every copied text box indicates through 'PA' the 'previous author' whose user name will pop up when someone moves the mouse over 'PA.' Additionally, it is possible to switch to the original map--or to a list of all predecessors--by clicking on 'History' in the right panel." />
 		<RUS text="Save Map As Help" /><!--TODO Translate RUS-->
-		<GER text="Speichere-Argumentation-als Hilfe" />
+		<GER text="Wenn du dieses Argument unter einem neuen Namen abspeicherst wird eine Kopie erstellt, in der jede Aussage dir als dem neuen Autor zugeeignet wird. Auf diese Weise erhältst du alle Befugnisse, die notwendig sind um alles zu ändern, was du ändern willst. Um dem ursprünglichen Autor/Autorin die ihm oder ihr gebührende Anerkennung zu zollen, zeigt jede Textbox durch 'VA' den 'vorangehenden Autor' an, dessen oder deren Nutzername sichtbar wird, wenn man die Maus über 'VA' bewegt. Außerdem ist es möglich zu dem ursprünglichen Argument zu wechseln -- oder zu einer Liste vorangehender Argumente -- wenn man auf 'Geschichte' im blauen Feld auf der rechten Seite klickt" />
 	</SaveMapAsHelp>
 	
 	<MapNameNotUnique>
@@ -3173,6 +3173,16 @@ Projekte zu sehen" />
 		<RUS text="Go back to the previous map I saw" /><!--TODO Translate RUS-->
 		<GER text="Geh zurück zum zuletzt gesehenen Argument" />
 	</MapHistoryBackButtonToolTip>
+	<MapHistoryHeader>
+		<EN-US text="History" />
+		<RUS text="History" /><!--TODO Translate RUS-->
+		<GER text="Geschichte" />
+	</MapHistoryHeader>
+	<MapHistoryPA>
+		<EN-US text="PA" />
+		<RUS text="PA" /><!--TODO Translate RUS-->
+		<GER text="GA" />
+	</MapHistoryPA>
 	
 	<!-- End of entries for Map Save As -->
 	<!-- SPECIAL -->

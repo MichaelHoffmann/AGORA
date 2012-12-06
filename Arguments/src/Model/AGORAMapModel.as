@@ -463,10 +463,12 @@ package Model
 				//update timestamp
 				timestamp = map.timestamp;
 				name = map.title;
+				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
 				// Reload panel only when required
 				var reloadpanel = event.result.map.reloadRPANEL;
-				if( event.result.map.hasOwnProperty("reloadpanel") && event.result.map.reloadpanel){
-				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+				if( event.result.map.hasOwnProperty("reloadRPANEL") && event.result.map.reloadRPANEL=="0"){
+				rsp.showHistoryBoxes=true;
+				}
 				rsp.mapTitle.text=mapXMLRawObject.title;
 				rsp.clickableMapOwnerInformation.label = mapXMLRawObject.username;
 				rsp.clickableMapOwnerInformation.toolTip = 
@@ -478,7 +480,6 @@ package Model
 				rsp.invalidateDisplayList();
 				}catch(e:Error){
 					Alert.show("error");
-				}
 				}
 				mapXMLRawObject.url;
 				if(map.hasOwnProperty("is_hostile")){
