@@ -70,6 +70,7 @@ package components
 		private var bottomStuff:VGroup;
 		private var vGroupContainer:VGroup;
 		private var clickthroughCategories:Label;
+		private var createProjBtn:Button;
 		public function CategoryPanel()
 		{
 			super();
@@ -118,7 +119,7 @@ package components
 			vGroupContainer.addElement(scroller);
 			var refreshBtn:Button=new Button();
 			var createMapBtn:Button=new Button();
-			var createProjBtn:Button=new Button();
+			 createProjBtn=new Button();
 			createMapBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
 			Controller.AGORAController.getInstance().createMap(e)});	
 			createProjBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
@@ -174,9 +175,9 @@ package components
 
 			if(model.category){
 				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
-					bottomStuff.visible=true;
-
-
+					bottomButtons.visible=true;
+					createProjBtn.visible=true;
+					
 					is_project_level = true;
 					this.categoryTiles.layout = new HorizontalLayout;
 					if(model.project && model.project.proj[0])
@@ -265,6 +266,9 @@ package components
 				}
 				else 
 				{
+					bottomStuff.visible=true;
+					createProjBtn.visible=false;
+					clickthroughCategories.visible=true;
 
 				}
 				
@@ -320,7 +324,7 @@ package components
 			projectMemberPanel.removeAllElements();
 			projectTypePanel.removeAllElements();
 			pView.visible=true;
-			bottomButtons.visible=false;
+			bottomStuff.visible=false;
 
 		}
 		protected function onMapObjectClicked(event:MouseEvent):void{

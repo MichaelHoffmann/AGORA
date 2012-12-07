@@ -422,7 +422,7 @@
 						var userButton:Button=new Button();
 						var theGroup:HGroup=new HGroup();
 						rdioBtn.group=usersList;
-						userButton.toolTip=projectXML.@name+Language.lookup('MapOwnerURLWarning')+projectXML.@url;
+						userButton.toolTip="url:"+projectXML.@url;
 						rdioBtn.value=projectXML.@userid;
 						userButton.label = projectXML.@name ;
 						userButton.name=projectXML.@url;
