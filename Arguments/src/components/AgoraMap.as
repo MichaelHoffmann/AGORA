@@ -163,7 +163,15 @@ package components
 			}catch(e:Error){
 			}
 			addChild(firstClaimHelpText);
-			
+			for each(var info:UIComponent in getChildren())
+			{
+				if(info is InfoBox)
+				{
+				var info1:InfoBox = info as InfoBox;			
+				if(info1.helptext == Language.lookup('ArgComplete'))
+					removeChild(info);
+				}
+			}
 			var newPanels:ArrayCollection = AGORAModel.getInstance().agoraMapModel.newPanels; 
 			for(var i:int=0; i< newPanels.length; i++){
 				if(StatementModel(newPanels[i]).statementFunction == StatementModel.INFERENCE){
