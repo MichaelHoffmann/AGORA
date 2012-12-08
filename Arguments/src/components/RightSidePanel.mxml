@@ -11,13 +11,17 @@
 
 		<![CDATA[
 			import Controller.AGORAController;
+			import Controller.ArgumentController;
 			import Controller.UpdateController;
 			import Controller.UserSessionController;
 			
 			import Model.AGORAModel;
+			import Model.UserSessionModel;
 			
+			import ValueObjects.MapHistoryValueObject;
 			import classes.Language;
 			
+			import mx.collections.ArrayList;
 			import mx.containers.TabNavigator;
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
@@ -25,9 +29,23 @@
 			import mx.events.FlexEvent;
 			[Bindable] private var visibility:Map = FlexGlobals.topLevelApplication.map;
 			[Bindable] private var onMyMapsTab:TabNavigator = FlexGlobals.topLevelApplication.agoraMenu.tabNav;
+			private var _showHistoryBoxes = false;
 			
+			public function get showHistoryBoxes()
+			{
+				return _showHistoryBoxes;
+			}
+			public function set showHistoryBoxes(value):void
+			{
+				_showHistoryBoxes = value;
+			}
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				// 
+				if(showHistoryBoxes){
+					showHistoryBoxes=false;
+					return;
+				}
 				var xB:int = 0;
 				hidePanelButton.move(2, xB);
 				xB = xB + hidePanelButton.getExplicitOrMeasuredHeight() + 3;
@@ -38,19 +56,29 @@
 				
 				categoryChain.setActualSize(categoryChain.getExplicitOrMeasuredWidth(), categoryChain.getExplicitOrMeasuredHeight());
 				categoryChain.move(2, xB);
-				xB = xB+200;
+				xB = xB+categoryChain.getExplicitOrMeasuredHeight()+5;
 				
 				if(visibility.visible){
 					mapOwner.visible = true;
 					mapTitle.visible = true;
 					titleOfMap.visible = true;
 					clickableMapOwnerInformation.visible = true;
+					chatBox.visible=true;
+					historyBox.visible=true;
+					historyBackBox.visible=true;
+					chat.visible=true;
+					history.visible=false;
 									
 				} else {
 					mapOwner.visible = false;
 					mapTitle.visible = false;
 					titleOfMap.visible = false;
 					clickableMapOwnerInformation.visible = false;
+					chatBox.visible=false;
+					historyBox.visible=false;
+					historyBackBox.visible=false;
+					chat.visible=true;
+					history.visible=false;
 				}
 				mapOwner.setActualSize(mapOwner.getExplicitOrMeasuredWidth(), mapOwner.getExplicitOrMeasuredHeight());
 				mapOwner.move(2, xB);
@@ -64,9 +92,27 @@
 				mapTitle.setActualSize(mapTitle.getExplicitOrMeasuredWidth(), mapTitle.getExplicitOrMeasuredHeight());
 				mapTitle.move(2, xB);
 				xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 25;
+			//	if(visibility.visible){
+				chatBox.setActualSize(chatBox.getExplicitOrMeasuredWidth(), chatBox.getExplicitOrMeasuredHeight());
+				chatBox.move(2, xB); 
+				historyBox.setActualSize(historyBox.getExplicitOrMeasuredWidth(), historyBox.getExplicitOrMeasuredHeight());
+				historyBox.move(chatBox.getExplicitOrMeasuredWidth()+10, xB);
+				historyBackBox.setActualSize(historyBackBox.getExplicitOrMeasuredWidth(), historyBackBox.getExplicitOrMeasuredHeight());
+				historyBackBox.move(chatBox.getExplicitOrMeasuredWidth()+20+historyBox.getExplicitOrMeasuredWidth(), xB); 	
+				xB = xB + historyBox.getExplicitOrMeasuredHeight() + 10;		
+			//	}
 				chat.setActualSize(chat.getExplicitOrMeasuredWidth(), chat.getExplicitOrMeasuredHeight());
 				chat.move(2, xB); 
-				xB = xB + chat.getExplicitOrMeasuredHeight();
+							history.setActualSize(history.getExplicitOrMeasuredWidth(), history.getExplicitOrMeasuredHeight());
+				history.move(2, xB); 
+				// test if the history is empty
+				var mapList:Vector.<MapHistoryValueObject> = AGORAModel.getInstance().agoraMapModel.historylist;
+				var sessionMappings:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
+				if((mapList==null || mapList.length<=0) && sessionMappings.historyMapsVisited.length<=0){
+					historyBox.visible=false;
+					historyBackBox.visible=false;
+				}
+			//	xB = xB + chat.getExplicitOrMeasuredHeight();
 				
 			}
 			public function differentData():void{
@@ -105,18 +151,39 @@
 				}
 			}
 			
+			protected function onChatSelect():void{
+				chat.visible=true;
+				history.visible=false;
+			}
 			
+			protected function onHistorySelect():void{
+				history.visible=true;
+				chat.visible=false;
+			}
+			protected function onHistoryBackSelect():void{
+			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+			var thisMapInfo:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
 			
+			// check for the length
+			if(thisMapInfo.historyMapsVisited.length<=0){
+				return;
+			}
+			// pop the latest push and invoke the call
+			var mapInfo =thisMapInfo.historyMapsVisited.pop();
+			ArgumentController.getInstance().loadMapMain(mapInfo,false);
+			}
 		]]>
 		
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>		
-	<components:ChatWindow id="chat" left="5" right="5" horizontalCenter="0" height="100"/>
+	<components:ChatWindow id="chat" visible="true" left="5" right="5" horizontalCenter="0" height="100"/>
+	<components:MapHistory id="history" visible="false"  left="5" right="5" horizontalCenter="0" height="100"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
 	<s:Button id="clickableMapOwnerInformation" visible="false" toolTip="{Language.lookup('MapOwnerURLWarning')}"/>
-	<s:TextArea id="mapTitle" visible="false" heightInLines="4" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
+	<s:TextArea id="mapTitle" visible="false" heightInLines="2" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
+	<!-- toggle for chat / history -->
 	<s:Button id="hidePanelButton" left="5" top="0" right="5" label="{Language.lookup('HidePanel')}" percentWidth="100"
 			  click="{
 			  		this.visible = false; 
@@ -127,6 +194,9 @@
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
 	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
+	<s:Button id="chatBox" visible="false" toolTip="" label="Chat" width="75" click="onChatSelect()"/>
+	<s:Button id="historyBox" visible="false" toolTip="" label="{Language.lookup('MapHistoryHeader')}" width="75" click="onHistorySelect()"/>
+	<s:Button id="historyBackBox" visible="false" label="&lt; -" toolTip="{Language.lookup('MapHistoryBackButtonToolTip')}" width="35" click="onHistoryBackSelect()"/>
 	<components:SponsorPanel id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
 	
 	

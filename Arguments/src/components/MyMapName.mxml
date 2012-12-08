@@ -77,7 +77,7 @@
 				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
 				rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 				rsp.clickableMapOwnerInformation.toolTip = 
-					thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+					 thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 					navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
 				},false, 0, false);

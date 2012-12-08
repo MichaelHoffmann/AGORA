@@ -77,6 +77,12 @@
 				modifyOther($output);
 				return $output;
 			}
+		// map names are unique ..
+		$queryname = "SELECT * FROM maps m where m.title = '$title' and m.is_deleted=0 and m.map_id!=$mapID";
+		$resultIDmap = mysql_query($queryname, $linkID);
+		if($resultIDmap && mysql_num_rows($resultIDmap)>0){
+			mapNameTakedonEdit($output);
+			return $output;
 		}
 		//User has permission to modify this map.
 		//$title, $desc, $lang - any of these being false/0/null means "no change"

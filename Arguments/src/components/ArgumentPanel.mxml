@@ -30,6 +30,7 @@
 				</s:Button>
 				<!--Displays the user id-->
 				<s:Label id = "userIdLbl" click="{navigateToURL(new URLRequest(URL))}"    maxDisplayedLines="1" width="{100}"  right = "0" alpha=".50"/>
+				<s:Label id = "userIdLblPA" textDecoration="underline" visible="false" click="{navigateToURL(new URLRequest(prevauthorurl))}"    maxDisplayedLines="2" width="{20}" color="#F87217" right = "-30" alpha=".50"/>
 			</s:HGroup>
 			<s:Line width ="95%" height ="0" id = "theLine" >
 				<s:stroke>
@@ -176,6 +177,8 @@
 			private var _firstName:String;
 			private var _lastName:String;
 			private var _URL:String;
+			private var _prevauthor:String;
+			private var _prevauthorurl:String
 			
 			//dirty flags
 			private var _statementNegatedDF:Boolean;		
@@ -209,6 +212,22 @@
 			
 			//other instance variables
 			public var connectingStr:String;
+			public function get prevauthorurl():String
+			{
+				return _prevauthorurl;
+			}
+			public function set prevauthorurl(value:String):void
+			{
+				_prevauthorurl = value;
+			}
+			public function get prevauthor():String
+			{
+				return _prevauthor;
+			}
+			public function set prevauthor(value:String):void
+			{
+				_prevauthor = value;
+			}
 			public function preInit():void
 			{
 				agoraLabels = AGORAParameters.getInstance();
@@ -321,6 +340,8 @@
 					lastName=model.lastName;
 					URL=model.URL;
 					statementsAddedDF = true;
+					prevauthor = model.prevauthor;
+					prevauthorurl = model.prevauthorurl;
 					invalidateProperties();
 					invalidateSize();
 					invalidateDisplayList();
@@ -711,9 +732,13 @@
 				}
 				userIdLbl.text = "AU: " + author;
 				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				var userInfoStr:String = "Name:"+firstName+" "+lastName+" URL:"+URL;
+				var userInfoStr:String = " URL:"+URL;
 				userIdLbl.toolTip =userInfoStr;
-
+				if(prevauthor!=null && prevauthor!=""){					
+				userIdLblPA.text = Language.lookup('MapHistoryPA');
+				userIdLblPA.toolTip = Language.lookup('NodeHistoryPreviousAuthorToolTip')+ prevauthor;
+				userIdLblPA.visible = true;
+				}
 				
 				
 				negatedLbl.text = Language.lookup("ArgNotCase");

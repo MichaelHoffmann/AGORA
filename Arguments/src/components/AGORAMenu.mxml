@@ -163,7 +163,7 @@
 				var usm:*=Model.AGORAModel.getInstance().userSessionModel;
 				if (usm.username != "Guest") 
 				{
-					Controller.AGORAController.getInstance().displayProjectInfoBox("newInWoA");
+				//	Controller.AGORAController.getInstance().displayProjectInfoBox("newInWoA");
 				}
 				else 
 				{
@@ -179,19 +179,7 @@
 			 * repopulates the lists with the top level projects.
 			 */ 
 
-			protected function projectInProjectButton_OnClick(arg1:flash.events.MouseEvent):void
-			{
-				var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
-				if (loc1.username != "Guest") 
-				{
-					Controller.AGORAController.getInstance().displayProjectInfoBox("newInMyProjects");
-				}
-				else 
-				{
-					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
-				}
-				return;
-			}
+
 			public  function setTab(current:String){
 				var cg:CategoryChain = FlexGlobals.topLevelApplication.rightSidePanel.categoryChain;
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
@@ -220,18 +208,7 @@
 				}
 
 			}
-			protected function createMapinProjBtn_clickHandler(arg1:flash.events.MouseEvent):void
-			{
-				var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
-				if (loc1.username == "Guest") 
-				{
-					mx.controls.Alert.show(classes.Language.lookup("GuestCreateMapError"));
-				} else {
-					Model.AGORAModel.getInstance().moveToProject = true;
-					Controller.AGORAController.getInstance().displayMapInfoBox();
-				}
-				return;
-			}
+
 
 			/**
 			 * Handles what happens when the back button is click within AGORAMenu
@@ -394,17 +371,6 @@
 													  title="category" verticalCenter="0">	
 							</components:CategoryPanel>
 							<!--Button to create a new map-->
-							<s:HGroup  percentHeight="10" horizontalAlign="center"
-									  percentWidth="100" verticalAlign="middle">
-								<s:Button id="createMapBtn" 
-										  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
-										  toolTip="{Language.lookup('NewMapToolTip')}">
-								</s:Button >
-								<s:Button id="createProjBtn" enabled="false" visible="false"
-										  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
-								</s:Button >
-								<s:Button label="{Language.lookup('Refresh')}" click = "{updateWOA(event)}" />
-							</s:HGroup>
 							<s:Label id="clickthroughCategories" visible="false" 
 									  text="{Language.lookup('CreateProject')}"/>
 						</s:VGroup>
@@ -439,26 +405,6 @@
 				<s:VGroup percentWidth="100" percentHeight="100">
 					<components:MyProjectsPane id="myProjects">
 					</components:MyProjectsPane> 
-					<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth='100' percentHeight='10'>
-						<s:HGroup horizontalAlign="center" verticalAlign="middle" percentWidth="100" percentHeight="10">
-								<s:Button label="{Language.lookup('NewProject')}" visible = "false" click="
-										  {
-										  this.projectInProjectButton_OnClick(event);
-										  return;
-										  }
-										  
-										  " id="ProjBtn" />
-								<s:Button label="{Language.lookup('NewMap')}" toolTip="{Language.lookup('NewMapToolTip')}" visible = "false" click="
-										  {
-										  this.createMapinProjBtn_clickHandler(event);
-										  return;
-										  }
-										  
-										  " id="createMapinProjectBtn" />
-							<s:Button label="{Language.lookup('Refresh')}" click = "{updateProject(event)}" />
-
-							</s:HGroup>
-					</s:HGroup>
 				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}" >
@@ -470,20 +416,7 @@
 					</components:MyContributionsPanel>
 					
 					<!--Button to create a new map-->
-					<s:HGroup  percentHeight="10" horizontalAlign="center"
-							   percentWidth="100" verticalAlign="middle">
-						<s:Button id="createMapBtnContributions" 
-								  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
-								  toolTip="{Language.lookup('NewMapToolTip')}">
-						</s:Button >
-						<s:Button id="createProjBtnContributions" enabled="false" visible="false"
-								  label="{Language.lookup('NewProject')}" click="projectsButton_OnClick(event)">
-						</s:Button >
-						<s:Button label="{Language.lookup('Refresh')}" click = "{updateMyContributions(event)}" />
 
-					</s:HGroup>
-					<s:Label id="clickthruCategories" visible="false" 
-							 text="{Language.lookup('CreateProject')}"/>
 				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('Search')}">

@@ -83,16 +83,23 @@
 		$output->addAttribute("project", $row['category_id']);
 		$output->addAttribute("map_type", $row['map_type']);
 		$output->addAttribute("is_hostile", $row['is_hostile']);
+		if($timestamp == 0){
+			$output->addAttribute("reloadRPANEL", "1");
+		}else{
+			$output->addAttribute("reloadRPANEL", "0");
+		}
 		
 		
-	/*	// check for the history of the map and get the same ..
+		$mapHistory = false;
+		// check for the history of the map and get the same ..
 		$query = "SELECT * FROM maps inner join savedcomponents on map_id=CompId inner join users on OrgUserId=users.user_id where type=1 and map_id = $mapID";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID && mysql_num_rows($resultID)>0){
 				$detailTree = $output->addChild("mapHistory");
 				fetchHistoryTreeForMap($mapID,0,$detailTree,$linkID);
+				$mapHistory=true;
 			}
-		*/
+		
 		
 		$timeID = mysql_query("SELECT NOW()", $linkID);
 		if(!$timeID){
@@ -124,10 +131,15 @@
 		$query = "SELECT nodes.node_id, nodes.nodetype_id,users.firstname,users.lastname,users.url, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type
 			FROM nodes INNER JOIN users ON nodes.user_id=users.user_id NATURAL JOIN node_types 
 			WHERE map_id = $mapID AND modified_date>\"$timestamp\" ORDER BY node_id";
+		if($mapHistory){
+			$query = "SELECT nodes.node_id,nodes.nodetype_id, users.firstname,users.lastname,users.url, users.username, nodes.x_coord, nodes.y_coord, nodes.typed, nodes.is_positive, nodes.connected_by, nodes.is_deleted, node_types.type,usersparent.user_id AS prevauthoruid,usersparent.username AS prevauthor,usersparent.url AS prevauthorurl FROM nodes INNER JOIN users ON nodes.user_id=users.user_id left join SavedComponents ON nodes.node_id = CompId left join nodes as nodesparent on OrgCompId = nodesparent.node_id left join users as usersparent on nodesparent.user_id = usersparent.user_id left JOIN node_types on nodes.nodetype_id = node_types.nodetype_id
+			WHERE nodes.map_id = $mapID AND nodes.modified_date>\"$timestamp\" ORDER BY nodes.node_id";			
+		}
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID){
 			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
 				$row = mysql_fetch_assoc($resultID);
+				error_log($query,0);
 				$node_id = $row['node_id'];
 				$node = $output->addChild("node");
 				$node->addAttribute("ID", $node_id);
@@ -142,6 +154,10 @@
 				$node->addAttribute("positive", $row['is_positive']);
 				$node->addAttribute("connected_by", $row['connected_by']);
 				$node->addAttribute("deleted", $row['is_deleted']);
+				if($mapHistory){
+					$node->addAttribute("PA", $row['prevauthor']);
+					$node->addAttribute("PAUrl", $row['prevauthorurl']);
+				}
 				//Have to do this instead of a proper join for the simple reason that we don't want to have multiple instances of the same <node>
 				$innerQuery="SELECT * FROM nodetext WHERE node_id=$node_id ORDER BY position ASC";
 				$resultID2 = mysql_query($innerQuery, $linkID);

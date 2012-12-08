@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="250" height="430" creationComplete="init()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Label id="historyLabel" x="10" y="0" height="26" fontWeight="bold" text="{Language.lookup('MapHistoryLabel')}"/>
+	<s:Scroller percentWidth="100" height ="300">
+	<s:Group id="historyGroup">		
+	</s:Group>
+	</s:Scroller>
+
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			
+			import Model.AGORAMapModel;
+			import Model.AGORAModel;
+			import Model.MapMetaData;
+			import Model.UserSessionModel;
+			
+			import ValueObjects.MapHistoryValueObject;
+			import ValueObjects.MapValueObject;
+			
+			import classes.AgoraMap;
+			import classes.Language;
+			
+			import mx.core.FlexGlobals;
+			
+			import spark.components.Button;
+			
+			var mapList:Vector.<MapHistoryValueObject>;
+			/**
+			 * Initializer that is called when the window is created. It loads up a model and stamps the milli time into time 
+			 */
+			
+		
+			public function init():void{
+			//	mapList = AGORAModel.getInstance().agoraMapModel.historylist;
+			}
+			
+			private function onMapHistoryClicked(e:Event):void{
+				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+				var thisMapInfo:MapHistoryValueObject = mapList[parseInt((Label) (e.target).id)];
+				rsp.clickableMapOwnerInformation.label = thisMapInfo.owner;
+				rsp.mapTitle.text=thisMapInfo.mapName;
+				rsp.clickableMapOwnerInformation.toolTip = 
+					thisMapInfo.owner + "\n" + thisMapInfo.ownerUrl + '\n' + Language.lookup('MapOwnerURLWarning');
+				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+					navigateToURL(new URLRequest(thisMapInfo.ownerUrl), 'quote');
+				},false, 0, false);
+				rsp.invalidateDisplayList();
+				// add an entry into visited 
+				var sessionMappings:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
+				sessionMappings.historyMapsVisited.push(AGORAModel.getInstance().agoraMapModel.ID);
+				ArgumentController.getInstance().loadMapMain(thisMapInfo.mapId.toString(),false);
+			}
+			
+			private function onOwnerClicked(e:Event):void{
+				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+				var thisMapInfo:MapHistoryValueObject = mapList[parseInt((Label) (e.target).id)];
+				navigateToURL(new URLRequest(thisMapInfo.ownerUrl), 'quote');
+			}
+			
+			/**
+			 * This is activated whenever we return from the PHP call. It populates the chat window with all of the
+			 * chat provided in the XML from the PHP return in the form Username: Text. 
+			 */
+			override protected function commitProperties():void{
+				super.commitProperties();				
+				mapList = AGORAModel.getInstance().agoraMapModel.historylist;
+				if(mapList==null || mapList.length<=0){
+					var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+					rsp.historyBox.visible=false;
+					rsp.historyBackBox.visible=false;
+					//rsp.invalidateProperties();
+					//rsp.history.visible=false;
+				}
+				if(mapList != null){
+					if(historyGroup.numElements > 0){
+						historyGroup.removeAllElements();
+					}	
+					var xval:int = 10;
+					var yval:int = 0;
+					for each (var hist:MapHistoryValueObject in mapList)
+					{
+						var maplabel:Label = new Label;
+						maplabel.text = Language.lookup("MapHistoryPreviousOwner");
+						maplabel.toolTip = Language.lookup("MapHistoryPreviousOwner");
+						maplabel.width = 100;
+						maplabel.setStyle("color","#E8E3E3");
+						maplabel.setStyle("fontWeight","bold");
+						
+												
+						var mapButton:Label = new Label;
+						mapButton.width = 120;
+						mapButton.text = hist.owner.substr(0,30);
+						mapButton.toolTip = hist.owner + "\n" + hist.ownerUrl + '\n' + Language.lookup('MapOwnerURLWarning');
+						mapButton.setStyle("textDecoration","underline");
+						mapButton.useHandCursor=true;
+						mapButton.mouseChildren=false;
+						mapButton.buttonMode=true;
+						mapButton.id=mapList.indexOf(hist).toString();
+						
+						var mapButton1:Label = new Label;
+						mapButton1.width = 200;
+						mapButton1.text = hist.mapName.substr(0,50);
+						mapButton1.toolTip = hist.mapName;
+						mapButton1.setStyle("textDecoration","underline");
+						mapButton1.useHandCursor=true;
+						mapButton1.mouseChildren=false;
+						mapButton1.buttonMode=true;
+						mapButton1.id=mapList.indexOf(hist).toString();
+						
+
+						xval = 10;
+						yval+= 20;
+						maplabel.move(xval,yval);
+						xval+=maplabel.getExplicitOrMeasuredWidth()+10;
+						mapButton.move(xval,yval);
+						xval = 10;
+						yval+=mapButton.getExplicitOrMeasuredHeight()+20;
+						mapButton1.move(xval,yval);
+						yval+=mapButton1.getExplicitOrMeasuredHeight()+10;
+						
+						mapButton.addEventListener(MouseEvent.CLICK, onOwnerClicked,false, 0, false);
+						
+						mapButton1.addEventListener(MouseEvent.CLICK,onMapHistoryClicked ,false, 0, false);
+
+						historyGroup.addElement(maplabel);
+						historyGroup.addElement(mapButton);
+						historyGroup.addElement(mapButton1);
+					}
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+</s:Group>

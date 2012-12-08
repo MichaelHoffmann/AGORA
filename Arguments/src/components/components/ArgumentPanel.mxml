@@ -627,7 +627,6 @@
 				}
 				userIdLbl.text = "AU: " + author;
 				var userInfoStr:String = Language.lookup("Username")+ ": " +
-					AGORAModel.getInstance().userSessionModel.firstName + "\n" +
 					"User ID: " + AGORAModel.getInstance().userSessionModel.uid
 				userIdLbl.toolTip = author;
 				

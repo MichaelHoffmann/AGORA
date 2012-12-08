@@ -66,6 +66,11 @@ package components
 		private var projectPanel :VGroup;
 		public var  pView:ProjectView;
 		private var rsp:RightSidePanel;
+		private var bottomButtons:HGroup;
+		private var bottomStuff:VGroup;
+		private var vGroupContainer:VGroup;
+		private var clickthroughCategories:Label;
+		private var createProjBtn:Button;
 		public function CategoryPanel()
 		{
 			super();
@@ -83,6 +88,9 @@ package components
 			projectTypePanel = new VGroup;
 			loadingDisplay = new Label;
 			mapPanelLbl = new Label();
+			bottomButtons = new HGroup();
+			bottomStuff = new VGroup();
+			
 			model = AGORAModel.getInstance().categoryModel;
 			/*Setting the UI components to the proper places and sizes*/
 			this.percentHeight = this.percentWidth = 100;
@@ -106,7 +114,41 @@ package components
 			/*Adding the category tiles elemet as viewport of scroller*/
 			scroller.viewport = categoryTiles;
 			/*Making scroller part of this UI component*/
-			this.addElement(scroller);
+			vGroupContainer=new VGroup();
+			this.addElement(vGroupContainer);
+			vGroupContainer.addElement(scroller);
+			var refreshBtn:Button=new Button();
+			var createMapBtn:Button=new Button();
+			 createProjBtn=new Button();
+			createMapBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+			Controller.AGORAController.getInstance().createMap(e)});	
+			createProjBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+			Controller.AGORAController.getInstance().createProj(e)});	
+			bottomButtons.addElement(refreshBtn);
+			bottomStuff.addElement(bottomButtons);
+			refreshBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+			Controller.AGORAController.getInstance().updateProject(e)});
+			createProjBtn.label=Language.lookup('NewProject');
+			createMapBtn.label=Language.lookup('NewMap');
+			refreshBtn.label=Language.lookup('Refresh');
+			bottomButtons.addElement(createProjBtn);
+			bottomButtons.addElement(createMapBtn);
+			bottomButtons.addElement(refreshBtn);
+			bottomStuff.left=0;
+			bottomStuff.right=0;
+			bottomButtons.left=0;
+			bottomButtons.right=0;
+			vGroupContainer.left=0;
+			vGroupContainer.top=0;
+			vGroupContainer.bottom=0;
+			vGroupContainer.right=0;
+			vGroupContainer.addElement(bottomStuff);
+			bottomButtons.horizontalAlign="center";
+			bottomStuff.horizontalAlign="center";
+			vGroupContainer.horizontalAlign="center";
+			clickthroughCategories = new Label();
+			clickthroughCategories.text=Language.lookup('CreateProject')
+			bottomStuff.addElement(clickthroughCategories);
 			/*Setting up loading display*/
 			loadingDisplay.text = Language.lookup("Loading");
 			addElement(loadingDisplay);
@@ -133,7 +175,9 @@ package components
 
 			if(model.category){
 				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
-
+					bottomButtons.visible=true;
+					createProjBtn.visible=true;
+					
 					is_project_level = true;
 					this.categoryTiles.layout = new HorizontalLayout;
 					if(model.project && model.project.proj[0])
@@ -207,34 +251,25 @@ package components
 						button.setStyle("skinClass",LeftAlignTextButtonSkin);
 					   	subprojectPanel.paddingLeft = 25;
 						subprojectPanel.addElement(button);
-
-						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = true;
-						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = true;
 					
 					}
 					else 
 					{  
 
-						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = false;
-						FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = false;
 						categoryTiles.addElement(button);
 					}
 				}
 
 				if(is_project_level){
-					FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.label=Language.lookup("NewMap");	
-					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.visible=false;
-					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = true;
-					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = true;
-					
+					clickthroughCategories.visible=false;
+					bottomStuff.visible=true;
 				}
 				else 
 				{
-					FlexGlobals.topLevelApplication.agoraMenu.createMapBtn.label=Language.lookup("NewMap");	
-					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.visible=true;	
-					FlexGlobals.topLevelApplication.agoraMenu.clickthroughCategories.setStyle("chromeColor", 0xF99653);
-					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.enabled = false;
-					FlexGlobals.topLevelApplication.agoraMenu.createProjBtn.visible = false;
+					bottomStuff.visible=true;
+					createProjBtn.visible=false;
+					clickthroughCategories.visible=true;
+
 				}
 				
 				trace("The category count is: " + (model.category.@category_count));
@@ -288,7 +323,8 @@ package components
 			projectPanel.removeAllElements();
 			projectMemberPanel.removeAllElements();
 			projectTypePanel.removeAllElements();
-			pView.visible=true
+			pView.visible=true;
+			bottomStuff.visible=false;
 
 		}
 		protected function onMapObjectClicked(event:MouseEvent):void{
@@ -296,7 +332,7 @@ package components
 			rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 			rsp.mapTitle.text=thisMapInfo.mapName;
 			rsp.clickableMapOwnerInformation.toolTip = 
-				thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+				thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
 			},false, 0, false);

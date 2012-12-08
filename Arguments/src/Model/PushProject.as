@@ -47,13 +47,7 @@ package Model
 		 * Function that officially sends the HTTP request. This gets called when a new project has been created
 		 * 
 		 */
-		public function sendRequest():void{
-			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-			if(userSessionModel.loggedIn()){				
-				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash, projID: 0, title: AGORAModel.getInstance().agoraMapModel.projectName, is_hostile: AGORAModel.getInstance().agoraMapModel.projectType,'user_count':AGORAModel.getInstance().agoraMapModel.numberUsers,'proj_users[]':AGORAModel.getInstance().agoraMapModel.projectUsers};		
-				request.send(params);
-			}
-		}
+
 		
 		/**
 		 * If the sendRequest method comes back normally, we enter here and broadcast PROJECT_PUSHED event
@@ -73,26 +67,30 @@ package Model
 			
 			dispatchEvent(new AGORAEvent(AGORAEvent.PROJECT_PUSHED));
 		}
-		public function inProjectsList():void
+		public function sendRequest():void
 		{
 
-			var usm:*=Model.AGORAModel.getInstance().userSessionModel;
-			if (usm.loggedIn()) 
+			var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+			var current=usm.selectedTab;
+			if(current == Language.lookup("MyContributions"))
+			{
+				var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":usm.selectedMyContProjID};
+			
+			}else if(current==Language.lookup("MyPPProjects"))
 			{
 				var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":usm.selectedMyProjProjID};
-				this.request.send(params);
-			}
-			return;
-		}
-		public function inWoA():void
-		{
-			var usm:*=Model.AGORAModel.getInstance().userSessionModel;
-			if (usm.loggedIn()) 
+
+			}else if (current ==Language.lookup("MainTab"))
 			{
-				var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":AGORAModel.getInstance().agoraMapModel.projectID};
-				this.request.send(params);
+				//FlexGlobals.topLevelApplication.agoraMenu.categories.
+				var model:CategoryModel = AGORAModel.getInstance().categoryModel;
+				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
+					var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":usm.selectedWoAProjID};
+				}
+				
 			}
-			return;
+			this.request.send(params);
+
 		}
 		/**
 		 * If the sendRequest method comes back poorly, we enter here and broadcast the FAULT event

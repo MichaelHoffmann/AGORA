@@ -60,15 +60,17 @@ package components
 			if(!gotoMenuBtn){
 				gotoMenuBtn = new Button;
 				BindingUtils.bindProperty(gotoMenuBtn, 'label', agoraConstants,'SAVE_AND_HOME');
+				BindingUtils.bindProperty(gotoMenuBtn,  'toolTip', agoraConstants, 'SUPPORT_SAVEANDHOME');
 				gotoMenuBtn.addEventListener(MouseEvent.CLICK, discardChanges);
 				addChild(gotoMenuBtn);
 			}
 			
 			if(!saveAsBtn){
 				saveAsBtn = new Button;
-				saveAsBtn.visible=false;
+				saveAsBtn.visible=true;
 				BindingUtils.bindProperty(saveAsBtn, 'label', agoraConstants, 'SAVE_AS');
 				BindingUtils.bindProperty(saveAsBtn,  'toolTip', agoraConstants, 'SUPPORT_SAVEAS');
+				saveAsBtn.addEventListener(MouseEvent.CLICK, saveMapAs);
 				addChild(saveAsBtn);
 			}
 			
@@ -76,6 +78,7 @@ package components
 			if(!print){
 				print = new Button;
 				print.label = Language.lookup("PrintMap");
+				print.toolTip = Language.lookup("PrintMapHelp");
 				print.addEventListener(MouseEvent.CLICK, onPrint);
 				addChild(print);
 			}
@@ -164,12 +167,15 @@ package components
 			background.graphics.endFill();
 			gotoMenuBtn.setActualSize(gotoMenuBtn.getExplicitOrMeasuredWidth(), 30);
 			gotoMenuBtn.move(xB,5);
+			gotoMenuBtn.toolTip=Language.lookup('SaveAndHomeHelp');
 			xB = xB + gotoMenuBtn.getExplicitOrMeasuredWidth() + 15;
 			saveAsBtn.setActualSize(saveAsBtn.getExplicitOrMeasuredWidth(), 30);
 			saveAsBtn.move(xB, 5);
 			xB = xB + saveAsBtn.getExplicitOrMeasuredWidth() + 15;
 			print.setActualSize(print.getExplicitOrMeasuredWidth(), 30);
 			print.move(xB, 5);
+			print.toolTip=Language.lookup('PrintMapHelp');
+
 			xB = xB + print.getExplicitOrMeasuredWidth() + 15;
 			_whatYouShouldKnowBeforeYouStartBtn.setActualSize(_whatYouShouldKnowBeforeYouStartBtn.getExplicitOrMeasuredWidth(), 30);
 			_whatYouShouldKnowBeforeYouStartBtn.move(xB, 5);
@@ -202,6 +208,11 @@ package components
 			AGORAController.getInstance().printMap();
 		}
 		
+		protected function saveMapAs(event:MouseEvent):void{
+			FlexGlobals.topLevelApplication.saveAsMapBox = new saveMapAsPanel;
+			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.saveAsMapBox, DisplayObject(FlexGlobals.topLevelApplication),true);
+			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
+		}
 		protected function onAddToProject(event:MouseEvent):void{
 			FlexGlobals.topLevelApplication.move_map = new MapToProject;
 			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.move_map, DisplayObject(FlexGlobals.topLevelApplication),true);

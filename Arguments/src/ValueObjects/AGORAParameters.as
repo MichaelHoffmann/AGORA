@@ -45,6 +45,7 @@ package ValueObjects
 		public var delProjURL:String;
 		public var forgotpasswordURL:String;
 		public var resetpasswordURL:String;
+		public var saveMapAsUrl:String;
 		public var catChainURL:String;
 
 		//Error Codes TODO: Enter these in the Languages.xml
@@ -134,6 +135,7 @@ package ValueObjects
 		public var PROMPT_DELETE_SUPPORTED_STATEMENT:String;
 		public var PROMPT_MT_ONLY_IF:String;
 		public var SUPPORT_SAVEAS:String;
+		public var SUPPORT_SAVEANDHOME:String;
 		public var SUPPORT_CREATE_ARGUMENT:String;
 		public var SUPPORT_CREATE_PROJECT_PASSWORD:String; // yet to be implemented
 		public var SUPPORT_CREATE_PROJECT:String;
@@ -173,42 +175,43 @@ package ValueObjects
 		public function AGORAParameters()
 		{
 			
-			listMapsURL = "http://agora.gatech.edu/Madhura_testing/php_test/list_maps.php";
-			myMapsURL = "http://agora.gatech.edu/Madhura_testing/php_test/my_maps.php";
-			loginURL = "http://agora.gatech.edu/Madhura_testing/php_test/login.php";
-			registrationURL = "http://agora.gatech.edu/Madhura_testing/php_test/register.php";
-			mapRemoveURL = "http://agora.gatech.edu/Madhura_testing/php_test/remove_map.php";
-			deleteURL = "http://agora.gatech.edu/Madhura_testing/php_test/remove.php";
-			insertURL = "http://agora.gatech.edu/Madhura_testing/php_test/insert.php";
-			loadMapURL = "http://agora.gatech.edu/Madhura_testing/php_test/load_map1.php";
-			nameUpdateURL = "http://agora.gatech.edu/Madhura_testing/php_test/mapinfo.php";
-			projectListURL = "http://agora.gatech.edu/Madhura_testing/php_test/list_projects.php";
-			myProjectsURL = "http://agora.gatech.edu/Madhura_testing/php_test/my_projects.php";
-			pushProjectsURL = "http://agora.gatech.edu/Madhura_testing/php_test/projects.php";
-			joinProjectURL = "http://agora.gatech.edu/Madhura_testing/php_test/verifyProject.php";
-			loadProjectMapsURL = "http://agora.gatech.edu/Madhura_testing/php_test/load_project_maps.php";
-			getMapFromProjURL = "http://agora.gatech.edu/Madhura_testing/php_test/getMapFromProjID.php";
-			publishMapURL = "http://agora.gatech.edu/Madhura_testing/php_test/publishMap.php";
-			categoryURL= "http://agora.gatech.edu/Madhura_testing/php_test/category.php"; //category
-			chatPushURL= "http://agora.gatech.edu/Madhura_testing/php_test/push_chat.php"; //chat
-			chatPullURL= "http://agora.gatech.edu/Madhura_testing/php_test/pull_chat.php"; //chat
-			childCategoryURL = "http://agora.gatech.edu/Madhura_testing/php_test/child_category.php";
-			childProjectsURL = "http://agora.gatech.edu/Madhura_testing/php_test/child_projects.php";
-			childMapURL="http://agora.gatech.edu/Madhura_testing/php_test/map_category.php";
-			childProjectURL="http://agora.gatech.edu/Madhura_testing/php_test/project_category.php";
-			createMapHereURL = "http://agora.gatech.edu/Madhura_testing/php_test/create_map_in_current_category.php";
-			mapToPrivateProjURL = "http://agora.gatech.edu/Madhura_testing/php_test/map_to_private_project.php";
-			pullRegistrationURL = "http://agora.gatech.edu/Madhura_testing/php_test/pull_registration_info.php";
-			changeInfoURL="http://agora.gatech.edu/Madhura_testing/php_test/changeinfo.php";
-			forgotpasswordURL="http://agora.gatech.edu/Madhura_testing/php_test/forgot_pass.php";
-			projectDetailsURL = "http://agora.gatech.edu/Madhura_testing/php_test/projectdetails.php";
-			listProjMaps = "http://agora.gatech.edu/Madhura_testing/php_test/listProjectMaps.php";
-			moveMapToProjectURL = "http://agora.gatech.edu/Madhura_testing/php_test/moveMapToProject.php";
-			projUsersURL = "http://agora.gatech.edu/Madhura_testing/php_test/projusers.php";
-			myContributionsURL = "http://agora.gatech.edu/Madhura_testing/php_test/my_contributions.php";
-			delProjURL = "http://agora.gatech.edu/Madhura_testing/php_test/delProject.php";
-			moveprojectToProjectURL = "http://agora.gatech.edu/Madhura_testing/php_test/moveProject.php";
-			catChainURL = "http://agora.gatech.edu/Madhura_testing/php_test/projectHierarchy.php";
+			listMapsURL = "http://agora.gatech.edu/lokesh_test/list_maps.php";
+			myMapsURL = "http://agora.gatech.edu/lokesh_test/my_maps.php";
+			loginURL = "http://agora.gatech.edu/lokesh_test/login.php";
+			registrationURL = "http://agora.gatech.edu/lokesh_test/register.php";
+			mapRemoveURL = "http://agora.gatech.edu/lokesh_test/remove_map.php";
+			deleteURL = "http://agora.gatech.edu/lokesh_test/remove.php";
+			insertURL = "http://agora.gatech.edu/lokesh_test/insert.php";
+			loadMapURL = "http://agora.gatech.edu/lokesh_test/load_map1.php";
+			nameUpdateURL = "http://agora.gatech.edu/lokesh_test/mapinfo.php";
+			projectListURL = "http://agora.gatech.edu/lokesh_test/list_projects.php";
+			myProjectsURL = "http://agora.gatech.edu/lokesh_test/my_projects.php";
+			pushProjectsURL = "http://agora.gatech.edu/lokesh_test/projects.php";
+			joinProjectURL = "http://agora.gatech.edu/lokesh_test/verifyProject.php";
+			loadProjectMapsURL = "http://agora.gatech.edu/lokesh_test/load_project_maps.php";
+			getMapFromProjURL = "http://agora.gatech.edu/lokesh_test/getMapFromProjID.php";
+			publishMapURL = "http://agora.gatech.edu/lokesh_test/publishMap.php";
+			categoryURL= "http://agora.gatech.edu/lokesh_test/category.php"; //category
+			chatPushURL= "http://agora.gatech.edu/lokesh_test/push_chat.php"; //chat
+			chatPullURL= "http://agora.gatech.edu/lokesh_test/pull_chat.php"; //chat
+			childCategoryURL = "http://agora.gatech.edu/lokesh_test/child_category.php";
+			childProjectsURL = "http://agora.gatech.edu/lokesh_test/child_projects.php";
+			childMapURL="http://agora.gatech.edu/lokesh_test/map_category.php";
+			childProjectURL="http://agora.gatech.edu/lokesh_test/project_category.php";
+			createMapHereURL = "http://agora.gatech.edu/lokesh_test/create_map_in_current_category.php";
+			mapToPrivateProjURL = "http://agora.gatech.edu/lokesh_test/map_to_private_project.php";
+			pullRegistrationURL = "http://agora.gatech.edu/lokesh_test/pull_registration_info.php";
+			changeInfoURL="http://agora.gatech.edu/lokesh_test/changeinfo.php";
+			forgotpasswordURL="http://agora.gatech.edu/lokesh_test/forgot_pass.php";
+			projectDetailsURL = "http://agora.gatech.edu/lokesh_test/projectdetails.php";
+			listProjMaps = "http://agora.gatech.edu/lokesh_test/listProjectMaps.php";
+			moveMapToProjectURL = "http://agora.gatech.edu/lokesh_test/moveMapToProject.php";
+			projUsersURL = "http://agora.gatech.edu/lokesh_test/projusers.php";
+			myContributionsURL = "http://agora.gatech.edu/lokesh_test/my_contributions.php";
+			delProjURL = "http://agora.gatech.edu/lokesh_test/delProject.php";
+			moveprojectToProjectURL = "http://agora.gatech.edu/lokesh_test/moveProject.php";
+			saveMapAsUrl = "http://agora.gatech.edu/lokesh_test/saveMapAs.php";
+			catChainURL = "http://agora.gatech.edu/lokesh_test/projectHierarchy.php";
 
 			initialize();		
 		}
@@ -235,6 +238,8 @@ package ValueObjects
 			OK = Language.lookup('OK');
 			SAVE_AND_HOME = Language.lookup('SaveAndHome');
 			SAVE_AS = Language.lookup('SaveMapAs');
+			SUPPORT_SAVEANDHOME = Language.lookup('SaveAndHomeHelp');
+			SUPPORT_SAVEAS = Language.lookup('SaveMapAsHelp');
 			ADD_SUPPORTING_STATEMENT = Language.lookup('AddArgument');
 			ADD_OBJECTION = Language.lookup('AddObjection');
 		}

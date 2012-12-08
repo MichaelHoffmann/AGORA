@@ -28,11 +28,13 @@ package Model
 	import flash.utils.getQualifiedClassName;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.mxml.HTTPService;
+	import mx.utils.ArrayUtil;
 	
 	import org.osmf.utils.URL;
 	
@@ -55,6 +57,7 @@ package Model
 		private var _securityAnswerSet:Boolean=false;
 		private var _securityCodeNum:int=100;
 		private var _securityAnswer:String="";
+		private var _historyMapsVisited:Vector.<Object>;
 
 		private static var _salt:String = "AGORA";
 		
@@ -63,10 +66,19 @@ package Model
 		{
 
 			_valueObject = new UserDataVO;
+			historyMapsVisited = new Vector.<Object>;
 			super(target);
 		}
 		
 		//Getters and setters
+		public function get historyMapsVisited():Vector.<Object>
+		{
+			return _historyMapsVisited;
+		}
+		public function set historyMapsVisited(value:Vector.<Object>):void
+		{
+			_historyMapsVisited = value;
+		}
 
 		public function get securityAnswer():String
 		{

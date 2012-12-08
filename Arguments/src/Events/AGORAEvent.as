@@ -22,6 +22,8 @@ package Events
 		public static const SINGNED_OUT:String = "SignedOut";
 		public static const LOGIN_STATUS_SET:String = "LogInStatus";
 		public static const MAP_CREATED:String = "MapCreated";
+		public static const MAP_SAVEDAS:String = "MapSavedAS";
+		public static const MAP_SAVEDASFAULT:String = "MapSavedASFault";
 		public static const ARGUMENT_CREATION_FAILED:String = "ArgumentCreationFailed";
 		public static const MAP_CREATION_FAILED:String = "MapCreationFailed";
 		public static const FIRST_CLAIM_ADDED:String = "FirstClaimAdded";

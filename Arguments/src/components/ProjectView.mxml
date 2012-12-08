@@ -2,7 +2,7 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  currentState="normal" initialize="{init()}" percentWidth="100" horizontalAlign="center">
+		  currentState="normal" initialize="{init()}" percentWidth="100" percentHeight="95" horizontalAlign="center">
 	<fx:Declarations>
 		<fx:XML id="projXML">
 		</fx:XML>
@@ -30,7 +30,7 @@
 			<s:HGroup percentWidth="100" horizontalAlign="left">
 				<s:Label text="" id="projectName"  fontSize="14" paddingLeft="32" width="69%"  left = "0" textAlign="left"/>
 				<s:Button enabled.normal="false" id = "isHostile" toolTip="{classes.Language.lookup('ProjectTypeAdversarialHelp')}+{classes.Language.lookup('ProjectTypeHelp')}" label="{classes.Language.lookup('ProjectTypeAdversarial')}" click="onProjectTypeClicked()" enabled="true" percentWidth="15"/>
-				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" click="deleteHandler()" percentWidth="8"/>
+				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" toolTip="{Language.lookup('')}" click="deleteHandler()" percentWidth="8"/>
 				<s:Button excludeFrom="normal" id="renameProj" label="{classes.Language.lookup('Rename')}" click="AGORAController.getInstance().displayProjectInfoBox('rename')" percentWidth="8"/>
 			</s:HGroup>
 			<s:HGroup  paddingLeft="32" percentWidth="90" gap ="20" height = "20" horizontalAlign="center">
@@ -51,9 +51,9 @@
 				<s:VGroup percentWidth="30" id="memberGroup" excludeFrom="personal" horizontalAlign="left">
 					<s:HGroup id="admin2" includeIn="normal" horizontalAlign="left">
 						<s:Label text="Admin:" id="adminlbl"  fontSize="12"   left = "0" textAlign="left"/>
-						<s:Button label="Name" id="adminName" click="navigateToURL( new URLRequest(adminURL),'_self')"  fontSize="12" chromeColor="0xA0CADB"/>
+						<s:Button label="Name" id="adminName" click="navigateToURL( new URLRequest(adminURL),'_blank')"  fontSize="12" chromeColor="0xA0CADB"/>
 					</s:HGroup>
-					<s:Label text= "{classes.Language.lookup('Users')}" />
+					<s:Label text= "{classes.Language.lookup('ProjectMembers')}" />
 					<s:Scroller percentWidth="100">
 						<s:VGroup id="memberList" percentWidth="100">
 							
@@ -70,7 +70,7 @@
 										  }
 										  
 										  " id="_MyProjectsPane_Button3" label='{classes.Language.lookup("AddProjectMembers")}' />
-								<s:Button percentWidth="100" click="
+								<s:Button percentWidth="100"  click="
 										  {
 										  this.removeMembers();
 										  return;
@@ -86,10 +86,25 @@
 					</s:Scroller>
 				</s:VGroup>
 			</s:HGroup>
+
 		</s:VGroup>
 	</s:HGroup>
-	<s:HGroup horizontalAlign="center" percentWidth="100">
-		<s:Label text="{Language.lookup('CreateProjectElsewhere')}" />
+	<s:HGroup bottom="0" >
+		<s:Button label="{Language.lookup('NewProject')}"  click="
+				  {
+				  Controller.AGORAController.getInstance().createProj(event);
+				  return;
+				  }
+				  
+				  " id="ProjBtn" />
+		<s:Button label="{Language.lookup('NewMap')}" toolTip="{Language.lookup('NewMapToolTip')}"  click="
+				  {
+				  Controller.AGORAController.getInstance().createMap(event);
+				  return;
+				  }
+				  
+				  " id="createMapinProjectBtn" />
+		<s:Button label="{Language.lookup('Refresh')}" click = "{updateProject()}" />
 	</s:HGroup>
 	<fx:Script>
 		<![CDATA[
@@ -202,6 +217,7 @@
 					
 					button.setStyle("skinClass",TextWrapSkin);
 					button.width = 150
+					button.height=24;
 					button.name = categoryXML.@projID; //The ID (unique DB identifier) of the category
 					button.label = categoryXML.@name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 					button.setStyle("chromeColor", 0xA0CADB);
@@ -233,7 +249,9 @@
 			}
 			protected function selectAdminHandler():void{
 				if(usersList.selectedValue){
-					Alert.show("If you select a new admin, you will no longer be the admin for this project" ,"Are you sure?", Alert.OK | Alert.CANCEL, null, alertListener, null, Alert.CANCEL);
+					Alert.okLabel=Language.lookup("Ok");
+					Alert.cancelLabel=Language.lookup("Cancel");
+					Alert.show(Language.lookup('SelectAdminQuestion'),Language.lookup('SelectAdminWarning'), Alert.OK | Alert.CANCEL, null, alertListener, null, Alert.CANCEL);
 					
 				}else{
 					mx.controls.Alert.show("You must select a user to make the  administrator of this project");
@@ -353,6 +371,7 @@
 					var mapButton:Button = new Button;
 					mapButton.setStyle("chromeColor", 0xF99653);
 					mapButton.percentWidth = 100;
+					mapButton.height = 24;
 					mapButton.name = mapMetaData.mapID.toString();
 					mapButton.label = mapMetaData.mapName;
 					mapButton.id = i.toString();
@@ -391,7 +410,7 @@
 					currentState="normal";
 					adminName.label=model.userList.proj.admin.@name;
 					adminURL=model.userList.proj.admin.@url;
-
+					adminName.toolTip=Language.lookup('ContactProjectAdm')+"\n"+adminURL;
 				    //adminName.addEventListener(MouseEvent.CLICK,navigateToAdminURL);
 
 				}
@@ -399,13 +418,21 @@
 				for each (var projectXML:XML in model.userList.proj.users.userDetail)
 				{
 					if(!(projectXML.@userid==usm._uid)){
-						var btnProjMembers:RadioButton = new RadioButton();
-						btnProjMembers.group=usersList;
-						
-						btnProjMembers.value=projectXML.@userid;
-						btnProjMembers.label = projectXML.@name ;
-						btnProjMembers.setStyle("chromeColor", 0xF99653);
-						projectMemberPanel.addElement (btnProjMembers);
+						var rdioBtn:RadioButton = new RadioButton();
+						var userButton:Button=new Button();
+						var theGroup:HGroup=new HGroup();
+						rdioBtn.group=usersList;
+						userButton.toolTip="url:"+projectXML.@url;
+						rdioBtn.value=projectXML.@userid;
+						userButton.label = projectXML.@name ;
+						userButton.name=projectXML.@url;
+						userButton.addEventListener(MouseEvent.CLICK,function event(e:Event):void{
+						navigateToURL(new URLRequest(e.target.name), '_blank')});
+
+						rdioBtn.setStyle("chromeColor", 0xF99653);
+						theGroup.addElement(rdioBtn);
+						theGroup.addElement(userButton);
+						projectMemberPanel.addElement (theGroup);
 					}
 				}
 				}
@@ -427,9 +454,9 @@
 				rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 				rsp.mapTitle.text=thisMapInfo.mapName;
 				rsp.clickableMapOwnerInformation.toolTip = 
-					thisMapInfo.firstname + " " + thisMapInfo.lastname + "\n" + thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+					 thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-					navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+					navigateToURL(new URLRequest(thisMapInfo.url), '_blank');
 				},false, 0, false);
 				rsp.invalidateDisplayList();
 				Controller.ArgumentController.getInstance().loadMap(event.target.name);

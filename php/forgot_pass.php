@@ -147,7 +147,7 @@ function reset_passwordLink($username, $secanswer) {
 	'Reply-To: webmaster@agora.gatech.edu' . "\r\n" .
 	'X-Mailer: PHP/' . phpversion();
 	try {
-		mail($email, 'AGORA password reset link', $message, $headers);
+		mail($email, 'AGORA password reset link', $message, $headers,"-flokresh88@gmail.com");
 	} catch (Exception $e) {
 		mailSendFailed($output);
 	}
@@ -269,7 +269,7 @@ function savePassword($ticket,$newpwd) {
 	'Reply-To: webmaster@agora.gatech.edu' . "\r\n" .
 	'X-Mailer: PHP/' . phpversion();
 	try {
-		mail($email, 'AGORA forgotten password update', $message, $headers);
+		mail($email, 'AGORA forgotten password update', $message, $headers,"-flokresh88@gmail.com");
 	} catch (Exception $e) {
 		mailSendFailed($output);
 	}

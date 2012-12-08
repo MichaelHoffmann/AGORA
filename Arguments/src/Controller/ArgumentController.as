@@ -40,6 +40,7 @@ package Controller
 	import mx.controls.Alert;
 	import mx.controls.Menu;
 	import mx.core.FlexGlobals;
+	import mx.events.CloseEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
@@ -70,6 +71,8 @@ package Controller
 			//Event handlers
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATION_FAILED, onMapCreatedFault);
+			model.agoraMapModel.addEventListener(AGORAEvent.MAP_SAVEDAS, onMapSaveAsPass);
+			model.agoraMapModel.addEventListener(AGORAEvent.MAP_SAVEDASFAULT, onMapSaveAsFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
 			model.agoraMapModel.addEventListener(AGORAEvent.STATEMENT_ADDED, setEventListeners);
@@ -106,8 +109,12 @@ package Controller
 		}
 		
 		//-------------------- Load a saved Map --------------------------------//
-		public function loadMap(id:String):void{
+		public function loadMapMain(id:String,historyClear:Boolean):void{
 			if(model.userSessionModel.loggedIn()){
+				if(historyClear){
+					var thisMapInfo:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
+					((Vector.<Object>)(thisMapInfo.historyMapsVisited)).splice(0,((Vector.<Object>)(thisMapInfo.historyMapsVisited)).length);;
+				}
 				//initialize the model
 				model.agoraMapModel.reinitializeModel();
 				model.agoraMapModel.ID = int(id);
@@ -123,6 +130,10 @@ package Controller
 			}else{
 				Alert.show(Language.lookup("MustRegister"));
 			}
+		}
+		//-------------------- Load a saved Map With History --------------------------------//
+		public function loadMap(id:String):void{
+			return loadMapMain(id,true);
 		}
 		
 		//---------------------Creating a New Map-----------------------//
@@ -149,7 +160,7 @@ package Controller
 			rsp.titleOfMap.text = this.model.agoraMapModel.name;
 			rsp.clickableMapOwnerInformation.label = thisMapInfo.username;
 			rsp.clickableMapOwnerInformation.toolTip = 
-				thisMapInfo.firstName + " " + thisMapInfo.lastName + "\n" + thisMapInfo.URL + '\n' + Language.lookup('MapOwnerURLWarning');
+				 thisMapInfo.URL + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 				navigateToURL(new URLRequest(thisMapInfo.URL), 'quote');
 			},false, 0, false);
@@ -160,6 +171,38 @@ package Controller
 		}
 		
 		
+		//---------------------Save Map as-----------------------//
+		public function saveMapAs(mapName:String):void{
+//			model.agoraMapModel.reinitializeModel();
+			var mapID= AGORAModel.getInstance().agoraMapModel.ID;
+			model.agoraMapModel.saveAsMap(mapName,mapID);	
+//			map.agoraMap.initializeMapStructures();
+		}
+		protected function onMapSaveAsFault(event:AGORAEvent):void{
+			Alert.show(Language.lookup("MapNameUnique"));
+			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
+			AGORAController.getInstance().unfreeze();
+			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
+		}
+		protected function onMapSaveAsPass(event:AGORAEvent):void{
+			var mapObj = event.eventData;
+			AGORAController.getInstance().unfreeze();
+			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
+			Alert.show(Language.lookup("SaveAsMapSuccessMsg"),"Map saved",Alert.YES|Alert.NO, null, function(event:CloseEvent){
+				if(event.detail == Alert.YES) {
+					var rsp:RightSidePanel= FlexGlobals.topLevelApplication.rightSidePanel;
+					rsp.clickableMapOwnerInformation.label = mapObj.username;
+					rsp.mapTitle.text=mapObj.title;
+					rsp.clickableMapOwnerInformation.toolTip = 
+					 mapObj.url + '\n' + Language.lookup('MapOwnerURLWarning');
+					rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+						navigateToURL(new URLRequest(mapObj.url), 'quote');
+					},false, 0, false);
+					rsp.invalidateDisplayList();
+					ArgumentController.getInstance().loadMap(mapObj.ID);
+				}
+			});	
+			}
 		
 		//-------------------Start with Claim----------------------------//
 		public function startWithClaim():void{

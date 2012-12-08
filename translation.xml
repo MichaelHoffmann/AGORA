@@ -2822,6 +2822,16 @@ Projekte zu sehen" />
 		<RUS text="Are you sure? " />  <!--TODO Translate RUS-->
 		<GER text="Bist du sicher?" />  
 </SelectAdminQuestion>
+<ContactProjectAdm>
+		<EN-US text="Is the project Adminsitrator.  Contact them by clicking:" />
+		<RUS text="Is the project Adminsitrator.  Contact them by clicking:"/>  <!--TODO Translate RUS-->
+		<GER text="Is the project Adminsitrator.  Contact them by clicking:" />  <!--TODO Translate GER-->
+</ContactProjectAdm>
+<Cancel>
+		<EN-US text="Cancel" />
+		<RUS text="Cancel " />  <!--TODO Translate RUS-->
+		<GER text="Cancel" />  <!--TODO Translate GER-->
+</Cancel>
 
 <SelectAdminWarning>
 		<EN-US text="If you select a new administrator, you will loose all the rights and permissions you can see on this screen" />
@@ -3110,6 +3120,81 @@ Projekte zu sehen" />
  
  <!--  End of Forgot Password related entries -->
  
+ <!--  Map Save As Feature -->
+ <!--  getting a map name in the pop up which comes on clicking save map as -->
+	<EnterSaveAsMapName>
+		<EN-US text="Provide a name for your new map" />
+		<RUS text="Provide a name for your new map" /><!--TODO Translate RUS-->
+		<GER text="Gib einen Namen für deine Kopie dieses Arguments ein" />
+	</EnterSaveAsMapName>
+	
+<!--  Window Title in the pop up which comes on clicking save map as -->
+	<TitleSaveAsMapName>
+		<EN-US text="Save Map As" />
+		<RUS text="Save Map As" /><!--TODO Translate RUS-->
+		<GER text="Speichere Argument als" />
+	</TitleSaveAsMapName>
+	
+	<SaveAsMapSuccessMsg>
+		<EN-US text="The map has been saved with the given name under your private project space.Do you want to move to this newly created map" />
+		<RUS text="The map has been saved with the given name under your private project space.Do you want to move to this newly created map." /><!--TODO Translate RUS-->
+		<GER text="Das Argument wurde unter dem Namen gespeichert, den du ihm gegeben hast. Willst du an dem neu geschaffenen Argument weiter arbeiten?." />
+	</SaveAsMapSuccessMsg>
+	
+	<MapHistoryPreviousOwner>
+		<EN-US text="Previous Owner :" />
+		<RUS text="Previous Owner :" /><!--TODO Translate RUS-->
+		<GER text="Vorhergehender Besitzer :" />
+	</MapHistoryPreviousOwner>
+	<NodeHistoryPreviousAuthorToolTip>
+		<EN-US text="Previous Author :" />
+		<RUS text="Previous Author :" /><!--TODO Translate RUS-->
+		<GER text="Vorhergehender Autor :" />	
+	</NodeHistoryPreviousAuthorToolTip>
+	<MapHistoryCurrentOwner>
+		<EN-US text="Current Owner :" />
+		<RUS text="Current Owner :" /><!--TODO Translate RUS-->
+		<GER text="Gegenwärtiger Besitzer :" />
+	</MapHistoryCurrentOwner>
+	
+	<!-- The side heading in the map history column -->	
+	<MapHistoryLabel>
+		<EN-US text="Map History" />
+		<RUS text="Map History" /><!--TODO Translate RUS-->
+		<GER text="Argument Geschichte" />
+	</MapHistoryLabel>This map name has already been taken.Kindly choose a different map name.
+	
+	<!-- Tool tip on the Save Map as button -->
+		<SaveMapAsHelp>
+		<EN-US text="When you save this map under a new name, a copy of the map will be produced in which every statement is assigned to you as the author of this statement. This way you acquire all the permissions necessary to change whatever you want. To give credit to the previous authors of statements, every copied text box indicates through 'PA' the 'previous author' whose user name will pop up when someone moves the mouse over 'PA.' Additionally, it is possible to switch to the original map--or to a list of all predecessors--by clicking on 'History' in the right panel." />
+		<RUS text="Save Map As Help" /><!--TODO Translate RUS-->
+		<GER text="Wenn du dieses Argument unter einem neuen Namen abspeicherst wird eine Kopie erstellt, in der jede Aussage dir als dem neuen Autor zugeeignet wird. Auf diese Weise erhältst du alle Befugnisse, die notwendig sind um alles zu ändern, was du ändern willst. Um dem ursprünglichen Autor/Autorin die ihm oder ihr gebührende Anerkennung zu zollen, zeigt jede Textbox durch 'VA' den 'vorangehenden Autor' an, dessen oder deren Nutzername sichtbar wird, wenn man die Maus über 'VA' bewegt. Außerdem ist es möglich zu dem ursprünglichen Argument zu wechseln -- oder zu einer Liste vorangehender Argumente -- wenn man auf 'Geschichte' im blauen Feld auf der rechten Seite klickt" />
+	</SaveMapAsHelp>
+	
+	<MapNameNotUnique>
+		<EN-US text="This map name has already been taken.Kindly choose a different map name." />
+		<RUS text="This map name has already been taken.Kindly choose a different map name." /><!--TODO Translate RUS-->
+		<GER text="This map name has already been taken.Kindly choose a different map name." /><!--TODO Translate GER-->
+	</MapNameNotUnique>
+	
+	<!-- Tool tip on the Save Map as button -->
+	<MapHistoryBackButtonToolTip>
+		<EN-US text="Go back to the previous map I saw" />
+		<RUS text="Go back to the previous map I saw" /><!--TODO Translate RUS-->
+		<GER text="Geh zurück zum zuletzt gesehenen Argument" />
+	</MapHistoryBackButtonToolTip>
+	<MapHistoryHeader>
+		<EN-US text="History" />
+		<RUS text="History" /><!--TODO Translate RUS-->
+		<GER text="Geschichte" />
+	</MapHistoryHeader>
+	<MapHistoryPA>
+		<EN-US text="PA" />
+		<RUS text="PA" /><!--TODO Translate RUS-->
+		<GER text="GA" />
+	</MapHistoryPA>
+	
+	<!-- End of entries for Map Save As -->
 	<!-- SPECIAL -->
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->

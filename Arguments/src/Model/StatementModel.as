@@ -34,6 +34,8 @@ package Model
 		private var _firstName:String;
 		private var _lastName:String;
 		private var _URL:String;
+		private var _prevauthor:String;
+		private var _prevauthorurl:String;
 		//Enabler, Objection or a generic statement - Statement is the default option
 		private var _statementFunction:String;
 		private var _statement:SimpleStatementModel;
@@ -115,6 +117,22 @@ package Model
 		
 		//--------------------Getters and Setters------------------//
 
+		public function get prevauthorurl():String
+		{
+			return _prevauthorurl;
+		}
+		public function set prevauthorurl(value:String):void
+		{
+			_prevauthorurl = value;
+		}
+		public function get prevauthor():String
+		{
+			return _prevauthor;
+		}
+		public function set prevauthor(value:String):void
+		{
+			_prevauthor = value;
+		}
 		public function get parentStatement():StatementModel
 		{
 			return _parentStatement;

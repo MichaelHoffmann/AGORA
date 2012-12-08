@@ -7,6 +7,8 @@ package ValueObjects
 		public var ID:int;
 		public var type:String;
 		public var author:String;
+		public var prevauthor:String;
+		public var prevauthorurl:String;
 		public var firstName:String;
 		public var lastName:String;
 		public var URL:String;
@@ -70,6 +72,14 @@ package ValueObjects
 						deleted = nodeObject.deleted == 1? true: false;
 					else
 						throw new PropNotFoundError("node object does not have property 'deleted'");
+					if(nodeObject.hasOwnProperty("PA"))
+						prevauthor = nodeObject.PA;
+					else
+						prevauthor = "";
+					if(nodeObject.hasOwnProperty("PAUrl"))
+						prevauthorurl = nodeObject.PAUrl;
+					else
+						prevauthorurl = "";
 				}
 				if(nodeObject.hasOwnProperty("nodetext")){
 					nodetexts = new Vector.<NodetextValueObject>;
