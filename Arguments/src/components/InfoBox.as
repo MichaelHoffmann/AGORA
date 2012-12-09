@@ -26,6 +26,12 @@ package components
 		{
 			super();
 		}
+
+		public function get helptext():String
+		{
+			return _helptext;
+		}
+
 		public function get boxWidth():int
 		{
 			return _boxWidth;
