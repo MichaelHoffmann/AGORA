@@ -116,6 +116,7 @@ package Controller
 			agoraController.fetchContributions();
 			agoraController.fetchDataMyProjects();
 			
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 			// show reg window in case security question is not set ...
 			
 			//RegisterPanel
@@ -126,7 +127,7 @@ package Controller
 				PopUpManager.addPopUp(FlexGlobals.topLevelApplication.registrationWindow, DisplayObject(FlexGlobals.topLevelApplication), true);
 				PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.registrationWindow);
 			}
-			
+			}
 			
 		}
 		
