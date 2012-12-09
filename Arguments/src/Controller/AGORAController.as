@@ -294,6 +294,8 @@ package Controller
 			if( FlexGlobals.topLevelApplication.projectNameBox){
 				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			}
+			fetchDataProjectList();
+			fetchDataMyProjects();
 		}
 		public function onAdminChanged(e:Event):void{
 			fetchDataMyProjects();

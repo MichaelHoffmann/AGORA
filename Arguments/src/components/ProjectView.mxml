@@ -403,6 +403,7 @@
 
 				if(model.userList.proj.admin.@name==usm.username){
 					currentState="admin";
+					isHostile.enabled = true;
 				}else if(model.userList.proj.@title==usm.username){
 					currentState="personal";
 					mx.controls.Alert.show("personal");
