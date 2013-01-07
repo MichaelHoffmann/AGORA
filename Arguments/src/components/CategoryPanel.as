@@ -52,6 +52,7 @@ package components
 		public var scroller:Scroller;
 		public var categoryTiles:Group;
 		
+		private var createMapBtn:Button;
 		private var mapPanel:VGroup;
 		private var subprojectPanel:VGroup;
 		private var createProjectPanel : HGroup;
@@ -118,7 +119,7 @@ package components
 			this.addElement(vGroupContainer);
 			vGroupContainer.addElement(scroller);
 			var refreshBtn:Button=new Button();
-			var createMapBtn:Button=new Button();
+			 createMapBtn=new Button();
 			 createProjBtn=new Button();
 			createMapBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
 			Controller.AGORAController.getInstance().createMap(e)});	
@@ -177,7 +178,7 @@ package components
 				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
 					bottomButtons.visible=true;
 					createProjBtn.visible=true;
-					
+					createMapBtn.label=Language.lookup("NewMapHere");
 					is_project_level = true;
 					this.categoryTiles.layout = new HorizontalLayout;
 					if(model.project && model.project.proj[0])
@@ -268,6 +269,7 @@ package components
 				{
 					bottomStuff.visible=true;
 					createProjBtn.visible=false;
+					createMapBtn.label=Language.lookup("NewMap");
 					clickthroughCategories.visible=true;
 
 				}

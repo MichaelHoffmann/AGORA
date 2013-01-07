@@ -730,10 +730,10 @@
 					this.toolTip = Language.lookup("Enabler");
 					deleteBtn.toolTip=Language.lookup("WarnDelEnabl");
 				}
-				userIdLbl.text = "AU: " + author;
+				userIdLbl.text = Language.lookup("AU")+ ": "+ author;
 				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				var userInfoStr:String = " URL:"+URL;
-				userIdLbl.toolTip =userInfoStr;
+				var userInfoStr:String = " URL: "+URL;
+				userIdLbl.toolTip =author+" "+ Language.lookup("MapOwnerWarning")+" "+ userInfoStr;
 				if(prevauthor!=null && prevauthor!=""){					
 				userIdLblPA.text = Language.lookup('MapHistoryPA');
 				userIdLblPA.toolTip = Language.lookup('NodeHistoryPreviousAuthorToolTip')+ prevauthor;

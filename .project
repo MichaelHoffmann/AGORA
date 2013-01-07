@@ -27,6 +27,16 @@
 			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop</location>
 		</link>
 		<link>
+			<name>bin-release10</name>
+			<type>2</type>
+			<location>/Users/agora/Desktop/Paul_testing/german</location>
+		</link>
+		<link>
+			<name>bin-release11</name>
+			<type>2</type>
+			<location>/Users/agora/Desktop/Paul_testing/russian</location>
+		</link>
+		<link>
 			<name>bin-release2</name>
 			<type>2</type>
 			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release</location>
@@ -60,6 +70,11 @@
 			<name>bin-release8</name>
 			<type>2</type>
 			<location>/Users/agora/Desktop/agora</location>
+		</link>
+		<link>
+			<name>bin-release9</name>
+			<type>2</type>
+			<location>/Users/agora/Desktop/Paul_testing/english</location>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -125,6 +125,20 @@ package Controller
 			this.model.addUsers.sendRequest();
 			return;
 		}
+		public function loadProjectInCurrentWindow(e:Event):void{
+			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+			var selectedTab:String=usm.selectedTab;
+			if (selectedTab == Language.lookup("MainTab")){
+				usm.selectedWoAProjID=parseInt((e.target as Button).name);
+				updateWOA(e as MouseEvent);
+			}else if (selectedTab== Language.lookup("MyPPProjects")){
+				usm.selectedMyProjProjID=(e.target as Button).name;
+				fetchDataMyProjects();
+			}else if (selectedTab == Language.lookup("MyContributions")){
+				usm.selectedMyContProjID=(e.target as Button).name;
+				updateMyContributions(e as MouseEvent);
+			}
+		}
 		//--------------------Fetch Map List------------------------------//
 		public function fetchDataMapList():void{
 
@@ -264,6 +278,9 @@ package Controller
 		}
 		public function updateMyContributions(event:MouseEvent):void{
 			fetchContributions();
+		}
+		public function updateMyMaps(event:MouseEvent):void{
+			fetchDataMyMaps();
 		}
 		public function updateWOA(event:MouseEvent):void{
 			updateMapProj();
@@ -460,6 +477,10 @@ package Controller
 		protected function onProjectUserVerified(event:AGORAEvent):void{
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 			var current:String=usm.selectedTab;
+			var cg=FlexGlobals.topLevelApplication.rightSidePanel.categoryChain;
+			if (cg.waitingForVerification){
+				cg.verified();
+			}else
 			if(usm.loggedIn()){
 				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
 				menu.myProjects.loadingDisplay.visible = true;

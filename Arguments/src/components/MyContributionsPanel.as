@@ -46,6 +46,7 @@ package components
 	
 	public class MyContributionsPanel extends Panel
 	{
+		private var refresh:Button;
 		private var model:MyContributionsModel;
 		public var loadingDisplay:Label;
 		public var scroller:Scroller;
@@ -64,10 +65,22 @@ package components
 		private var projectPanel :VGroup;
 		public var pView:ProjectView;
 		private var rsp:RightSidePanel;
+		
 		public function MyContributionsPanel()
 		{
 			super();
 			pView=new ProjectView;
+			var theView:VGroup=new VGroup();
+			theView.top=20;
+			this.addElement(theView);
+
+			theView.percentHeight=100;
+			theView.percentWidth=100;
+			theView.horizontalAlign="center";
+			refresh=new Button();
+			refresh.label=Language.lookup("Refresh");
+			refresh.horizontalCenter=0;
+			refresh.visible=true;
 			pView.visible=false;
 			/*Instantiations in order of depth in UI field*/
 			scroller = new Scroller;
@@ -86,10 +99,11 @@ package components
 			model = AGORAModel.getInstance().mycontributionsModel
 			/*Setting the UI components to the proper places and sizes*/
 			this.percentHeight = this.percentWidth = 100;
-			scroller.percentHeight = scroller.percentWidth = 100;
+			scroller.percentHeight = 95;
+			scroller.percentWidth = 100;
 			scroller.x = scroller.y = 25;
-			categoryTiles.percentHeight = 100;
-			categoryTiles.percentWidth = 100;
+			categoryTiles.percentHeight = 90;
+			categoryTiles.percentWidth = 90;
 			mapPanel.percentWidth = 50;
 			projectPanel.percentWidth= 50;
 			subprojectPanel.percentWidth = 33;
@@ -107,14 +121,18 @@ package components
 			/*Adding the category tiles elemet as viewport of scroller*/
 			scroller.viewport = categoryTiles;
 			/*Making scroller part of this UI component*/
-			this.addElement(scroller);
+			theView.addElement(scroller);
 			/*Setting up loading display*/
 			loadingDisplay.text = Language.lookup("Loading");
-			addElement(loadingDisplay);
-			this.addElement(pView);
+			theView.addElement(loadingDisplay);
+			addElement(pView);
+			refresh.bottom=0;
+			refresh.addEventListener(MouseEvent.CLICK,AGORAController.getInstance().updateMyContributions);
+			theView.addElement(refresh);
 			rsp = FlexGlobals.topLevelApplication.rightSidePanel;
 		}
-		public function showpView(){
+		public function showpView():void{
+			refresh.visible=false;
 			subprojectPanel.removeAllElements();
 			projectTitlePanel.removeAllElements();
 			projectPanel.removeAllElements();
@@ -125,6 +143,7 @@ package components
 		}
 		
 		override protected function commitProperties():void{
+			refresh.visible=true;
 			pView.visible=false;
 			super.commitProperties();
 			categoryTiles.removeAllElements();

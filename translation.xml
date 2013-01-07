@@ -1342,11 +1342,11 @@
 		<GER text="Beginne eine neue Argumentation" />
 	</NewMap>
 
-	<NewMaphere>
+	<NewMapHere>
 		<EN-US text="Create a new argument map here" />
 		<RUS text="Create a new argument map here" /><!--TODO Translate RUS-->
 		<GER text="Beginne eine neue Argumentation hier" />
-	</NewMaphere>
+	</NewMapHere>
 
 	<NewMapInProj>
 		<EN-US text="Create a new argument map within this project space" />
@@ -1706,21 +1706,21 @@ Projekte zu sehen" />
  <RegistrationNote>
  <EN-US
  text="Registration is required in order to differentiate between people who participate in debates or collaborations. Every textbox in the AGORA argument maps will show the username of the author because it must be clear who claims what. 
- Additionally, the following information will become visible  by hovering over the username: first name; last name; URL (if provided). 
+If you provide a URL in your registration, this URL shows up when people hover over your user name, and they can click on it to get to this address.
  Please do not use your Georgia Tech or other passwords. You might choose a username that does not reveal your identity. 
  Your e-mail address will never be given out publicly. It will be used only for providing you with a replacement password in the event you forget your current one. 
 		We recommend that you provide a URL so that other users can find a way to contact you, for example if they want to join a password protected project that you created or if they want to collaborate with you outside of AGORA-net. Provide your Facebook address or any other URL. 
 		The AGORA-net project is in compliance with Georgia Tech's Data Protection Safeguards" />
 		<RUS
 			text="ЗАМЕЧАНИЕ: Регистрация требуется, чтобы дифференцироваться между людьми, которые участвуют в дебатах или сотрудничестве. Каждое текстовое поле в картах аргумента АГОРЫ покажет имя пользователя-автора, потому что должно быть ясно, кто заявляет что. 
-		Дополнительно, следующая информация станет видимой (только для зарегистрированных участников), нависая над именем пользователя: имя; фамилия; URL (если предоставлен) .  
+		Additionally, the following information will become visible by hovering over the username: first name; last name; URL (if provided) .  
 		Пожалуйста, не используйте свой Georgia Tech или другие пароли. Вы можете выбрать имя пользователя, которое не раскрывает Вашей личности.  
 		Ваш адрес электронной почты никогда не будет выдаваться публично. Он будет использоваться только для предоставления Вам пароля замены в случае, если  Вы забываете свой текущий.  
 		Мы рекомендуем, чтобы Вы обеспечили URL так, чтобы другие пользователи могли найти способ связаться с Вами, например если они хотят присоединиться к защищённому паролем проекту, который Вы создали или если они хотят сотрудничать с Вами за пределами СЕТИ АГОРЫ. Предоставьте Ваш Facebook-адрес для обращения или любой другой URL.  
 		Проект АГОРА соответствует Техническим Гарантиям Защиты данных Georgia Tech's - &lt;u&gt;&lt;a href='http://www.oit.gatech.edu/sites/default/files/GIT_Data_Protection_Safeguards.pdf'&gt;Georgia Tech's Data Protection Safeguards&lt;/a&gt;&lt;/u&gt;" />
 		<GER
 			text="BEACHTE: Registrierung ist notwendig, um zwischen Personen unterscheiden zu können, die an Debaten oder Argumentationen teilnehmen. Jede Textbox in den AGORA-net Argumentationen zeigt den Benutzernamen des Autors weil klar sein muss, wer was behauptet. 
-		Außerdem werden die folgenden Informationen sichtbar wenn die Maus über einen Benutzernamen bewegt wird: Vorname; Nachname; URL (falls angegeben). 
+		Wenn du eine URL bei der Registrierung eingibst, wird diese sichtbar wenn Leute die Maus über deinen Benutzernamen bewegen. Man kann dann auf diese URL klicken und gelangt zu der von dir eingegebenen Adresse
 		Bitte verwende kein Passwort, dass du schon für andere Zwecke verwendest. 
 		Deine e-mail Adresse wird niemals öffentlich gemacht. Sie wird allein für den Fall genutzt, dass dir ein Ersatz-Passwort zugeschickt werden muss. 
 		Wir empfehlen, dass du eine URL angibst so dass andere Leute herausfinden können, wie sie dich kontaktieren können (z.B. wenn sie an einem von dir eröffneten Projekt mitwirken wollen, oder wenn sie mit dir außerhalb von AGORA-net zusammenarbeiten wollen). Du könntest z.B. deine Facebook-Addresse oder ähnliches angeben. 
@@ -2810,7 +2810,10 @@ Projekte zu sehen" />
 		<RUS text="Project has been created." />  <!--TODO Translate RUS-->
 		<GER text="Dein Projekt wurde eingerichtet." />  
 	</ProjectCreated>
-
+MustSelectAdmin 
+<EN-US text="You must select a user to make the  administrator of this project"/>
+<RUS text="You must select a user to make the  administrator of this project"/><!-- TODO Translate RUS -->
+<GER text="You must select a user to make the  administrator of this project"/><!-- TODO Translate GER -->
 <SelectAdmin>
 		<EN-US text="Select as new administrator" />
 		<RUS text="Select as new administrator " />  <!--TODO Translate RUS-->

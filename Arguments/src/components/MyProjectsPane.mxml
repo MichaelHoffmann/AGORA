@@ -19,8 +19,8 @@
 	</s:states>
 
 		<s:VGroup percentWidth="100" horizontalAlign="center" height="10">
-                <mx:Text id="loadingDisplay" /> 
-                <mx:Text id="signIn" />
+                <s:Label id="loadingDisplay" /> 
+                <s:Label id="signIn" horizontalCenter="0" textDecoration="underline" toolTip="blah"  />
         </s:VGroup>
 	 
         <s:HGroup percentWidth="95" horizontalCenter="0" verticalAlign="middle" horizontalAlign="center" top="0"  minHeight="350" includeIn="listOfProjects">
@@ -29,6 +29,11 @@
 			</s:Scroller>
 		</s:HGroup>
 		<components:ProjectView id ="theProject" includeIn="projectsInfo"/>
+	<s:HGroup width="100%" height = "20" bottom = "0" horizontalAlign="center" includeIn="listOfProjects">
+		<s:Button label="{Language.lookup('NewProject')}" toolTip="{Language.lookup('ProjectExplanation')}" id="createProject" click="{Controller.AGORAController.getInstance().createProj(event)}"/>
+		<s:Button label="{Language.lookup('Refresh')}"  id="refresh" click ="{Controller.AGORAController.getInstance().fetchDataMyProjects()}"/>
+		
+	</s:HGroup>
 			
     <fx:Script>
         <![CDATA[
@@ -100,14 +105,10 @@
 		
         public function init():void
         {
-			loadingDisplay.visible=false;
             this.projMapModel = Model.AGORAModel.getInstance().loadProjMaps;
             this.model = Model.AGORAModel.getInstance().myProjectsModel;
             this.loadingDisplay.text = classes.Language.lookup("Loading");
-            this.signIn.horizontalCenter = 0;
-            this.signIn.setStyle("textDecoration", "underline");
-            this.signIn.text = classes.Language.lookup("SignInToViewProj");
-            this.signIn.addEventListener(flash.events.MouseEvent.CLICK, this.showSignInBox);
+			this.signIn.text = classes.Language.lookup("SignInToViewProj");
             this.populateProjects();
             return;
         }
@@ -167,7 +168,7 @@
 			button = null;
 			isHostile = null;
 			usm = Model.AGORAModel.getInstance().userSessionModel;
-			if (usm.loggedIn()) 
+			if (usm.loggedIn()&&usm.username!="Guest") 
 			{
 				this.signIn.visible = false;
 				this.projectList.visible = true;

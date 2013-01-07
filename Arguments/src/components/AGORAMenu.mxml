@@ -122,6 +122,10 @@
 			{
 				Controller.AGORAController.getInstance().updateProject(event);
 				
+			}	
+			protected function updateMyMaps(event:MouseEvent):void
+			{
+				Controller.AGORAController.getInstance().updateMyMaps(event);
 			}			
 			protected function updateMyContributions(event:MouseEvent):void
 			{
@@ -241,6 +245,8 @@
 					}
 				}else if (selectT== Language.lookup("MyPPProjects")){
 					myProjects.currentState=("listOfProjects");
+					Controller.AGORAController.getInstance().fetchDataMyProjects();
+
 					//cg.visible=false;
 				}
 				else if (selectT == Language.lookup("MyContributions")){
@@ -250,8 +256,9 @@
 
 				}
 				else if (selectT == Language.lookup("MyMaps")){
-					//relead my maps=not necessary?
-					
+					//cg.visible=false;
+					updateMyMaps(event);
+
 				}
 				
 			}
@@ -372,30 +379,31 @@
 							</components:CategoryPanel>
 							<!--Button to create a new map-->
 							<s:Label id="clickthroughCategories" visible="false" 
-									  text="{Language.lookup('CreateProject')}"/>
+									  text="{Language.lookup('CreateProjectElsewhere')}"/>
 						</s:VGroup>
 			</s:NavigatorContent>
 			
 			<!--The my maps page. Loads the user's maps from the DB and populates the canvas-->
 			
 			<s:NavigatorContent id="myMapsTab" percentWidth="100" percentHeight="100" label="{Language.lookup(&quot;MyMaps&quot;)}" >
-				<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0">
+				<s:VGroup percentWidth="100" percentHeight="95" horizontalCenter="0">
 					<s:HGroup id="myMapsHorizGroup" percentWidth="100" percentHeight="100">
 						<components:MyMapPanel id="myMaps" percentWidth="100" percentHeight="100">
 						</components:MyMapPanel>
 					</s:HGroup>
 					
-					<s:HGroup percentWidth='100' percentHeight='10' bottom="5" horizontalAlign="left">
+					<s:HGroup  percentHeight='5' bottom="5" horizontalCenter="0" horizontalAlign="center" percentWidth="100">
 						<s:Button label="{Language.lookup('Delete')}" id="deleteButton" click="this.myMaps.deleteMaps(event)"
 								  toolTip="{Language.lookup('HowToDeleteMaps')}"/>
-						<s:Spacer width="20%"/>
-						<s:Button id="createMapBtnMyMaps" horizontalCenter="-5" bottom="10"
+						<s:Button id="createMapBtnMyMaps"  bottom="10"
 								  label="{Language.lookup('NewMap')}" click="createMapBtn_clickHandler(event)"
 								  toolTip="{Language.lookup('NewMapToolTip')}">
 						</s:Button >
-
-	
+						<s:Button id="refreshMaps" bottom="10"
+								  label="{Language.lookup('Refresh')}" click="updateMyMaps(event)">
+						</s:Button >
 					</s:HGroup>
+
 				</s:VGroup>
 			</s:NavigatorContent>
 			
@@ -403,8 +411,10 @@
 			
 			<s:NavigatorContent id="projectsTab" percentWidth="100" percentHeight="100" label="{Language.lookup('MyPPProjects')}">
 				<s:VGroup percentWidth="100" percentHeight="100">
-					<components:MyProjectsPane id="myProjects">
+					<components:MyProjectsPane id="myProjects" percentWidth="100" percentHeight="95">
 					</components:MyProjectsPane> 
+					<s:Label text="{Language.lookup('CreateProjectElsewhere')}" horizontalCenter="0" bottom="40" percentWidth="100" />
+
 				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('MyContributions')}" >
@@ -416,6 +426,8 @@
 					</components:MyContributionsPanel>
 					
 					<!--Button to create a new map-->
+					
+					<s:Label text="{Language.lookup('CreateProjectElsewhere')}" horizontalCenter="0" bottom="20"/>
 
 				</s:VGroup>
 			</s:NavigatorContent>

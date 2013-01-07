@@ -2,7 +2,7 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  currentState="normal" initialize="{init()}" percentWidth="100" percentHeight="95" horizontalAlign="center">
+		  currentState="normal" initialize="{init()}" percentWidth="100" percentHeight="100" horizontalAlign="center">
 	<fx:Declarations>
 		<fx:XML id="projXML">
 		</fx:XML>
@@ -25,12 +25,12 @@
 	</s:VGroup>
 	
 
-	<s:HGroup percentWidth="100"  minHeight="350" horizontalAlign="center"  accentColor="20" horizontalCenter="0">
+	<s:HGroup  percentHeight = "95" percentWidth="100"  minHeight="350" horizontalAlign="center"  accentColor="20" horizontalCenter="0">
 		<s:VGroup percentWidth="100" gap ="10" horizontalAlign="left">
 			<s:HGroup percentWidth="100" horizontalAlign="left">
 				<s:Label text="" id="projectName"  fontSize="14" paddingLeft="32" width="69%"  left = "0" textAlign="left"/>
 				<s:Button enabled.normal="false" id = "isHostile" toolTip="{classes.Language.lookup('ProjectTypeAdversarialHelp')}+{classes.Language.lookup('ProjectTypeHelp')}" label="{classes.Language.lookup('ProjectTypeAdversarial')}" click="onProjectTypeClicked()" enabled="true" percentWidth="15"/>
-				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" toolTip="{Language.lookup('')}" click="deleteHandler()" percentWidth="8"/>
+				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" toolTip="{Language.lookup('DeleteProject')}" click="deleteHandler()" percentWidth="8"/>
 				<s:Button excludeFrom="normal" id="renameProj" label="{classes.Language.lookup('Rename')}" click="AGORAController.getInstance().displayProjectInfoBox('rename')" percentWidth="8"/>
 			</s:HGroup>
 			<s:HGroup  paddingLeft="32" percentWidth="90" gap ="20" height = "20" horizontalAlign="center">
@@ -90,14 +90,14 @@
 		</s:VGroup>
 	</s:HGroup>
 	<s:HGroup bottom="0" >
-		<s:Button label="{Language.lookup('NewProject')}"  click="
+		<s:Button label="{Language.lookup('NewProject')}" toolTip="{Language.lookup('ProjectExplanation')}"  click="
 				  {
 				  Controller.AGORAController.getInstance().createProj(event);
 				  return;
 				  }
 				  
 				  " id="ProjBtn" />
-		<s:Button label="{Language.lookup('NewMap')}" toolTip="{Language.lookup('NewMapToolTip')}"  click="
+		<s:Button label="{Language.lookup('NewMapHere')}" click="
 				  {
 				  Controller.AGORAController.getInstance().createMap(event);
 				  return;
@@ -214,7 +214,6 @@
 					trace("Adding buttons");
 					var button:Button = new Button;
 					var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-					
 					button.setStyle("skinClass",TextWrapSkin);
 					button.width = 150
 					button.height=24;
@@ -224,7 +223,6 @@
 					subprojectList.addElement(button);
 					if(categoryXML.@creator==usm.username){
 						button.addEventListener("click",showAdmin);
-						
 					}else{
 						button.addEventListener("click", showOther);
 						//admin.text = Language.lookup('ProjectAdmin')+": "+xml.@creator;
@@ -249,12 +247,12 @@
 			}
 			protected function selectAdminHandler():void{
 				if(usersList.selectedValue){
-					Alert.okLabel=Language.lookup("Ok");
+					Alert.okLabel=Language.lookup("OK");
 					Alert.cancelLabel=Language.lookup("Cancel");
 					Alert.show(Language.lookup('SelectAdminQuestion'),Language.lookup('SelectAdminWarning'), Alert.OK | Alert.CANCEL, null, alertListener, null, Alert.CANCEL);
 					
 				}else{
-					mx.controls.Alert.show("You must select a user to make the  administrator of this project");
+					mx.controls.Alert.show(Language.lookup("MustSelectAdmin"));
 				}
 			}
 			
@@ -313,32 +311,22 @@
 			public function showAdmin(e:Event){
 				currentState="admin";
 				setCurrentProject(e.target.name);
-				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
-				usm.selectedMyProjProjID=e.target.name;
 				projectName.text=e.target.label;
-				Model.AGORAModel.getInstance().userSessionModel.selectedMyProjProjID=e.target.name;
-				AGORAController.getInstance().fetchDataMyProjects();
+				AGORAController.getInstance().loadProjectInCurrentWindow(e);
 
 			}
 			public function showOwn(e:Event){
-				Model.AGORAModel.getInstance().userSessionModel.selectedMyProjProjID=e.target.name;
-				AGORAController.getInstance().fetchDataMyProjects();
 				currentState="personal";
 				setCurrentProject(e.target.name);
-				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
-				usm.selectedMyProjProjID=e.target.name;
 				projectName.text=e.target.label;
+				AGORAController.getInstance().loadProjectInCurrentWindow(e);
 				
 			}
 			public function showOther(e:Event){
-				Model.AGORAModel.getInstance().userSessionModel.selectedMyProjProjID=e.target.name;
-				AGORAController.getInstance().fetchDataMyProjects();
 				currentState="normal";
 				setCurrentProject(e.target.name);
-				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
-				usm.selectedMyProjProjID=e.target.name;
 				projectName.text=e.target.label;
-				renameProj.visible=false;
+				AGORAController.getInstance().loadProjectInCurrentWindow(e);
 			}
 			
 			
@@ -455,7 +443,7 @@
 				rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 				rsp.mapTitle.text=thisMapInfo.mapName;
 				rsp.clickableMapOwnerInformation.toolTip = 
-					 thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+				thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 					navigateToURL(new URLRequest(thisMapInfo.url), '_blank');
 				},false, 0, false);

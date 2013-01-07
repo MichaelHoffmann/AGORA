@@ -60,7 +60,7 @@ package Model
 			var result:XML = event.result as XML;
 			if(result.hasOwnProperty("error") && result.error.@Verified != 1){
 				Alert.show(Language.lookup('NotProjMember') + 
-					result.error.@project_admin_firstname + " " + result.error.@project_admin_lastname + '\n' + "URL: " + result.error.@admin_url);
+					result.error.@project_admin_username + '\n' + "URL: " + result.error.@admin_url);
 				return;
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.CATEGORY_FETCHED_FOR_PUBLISH));
