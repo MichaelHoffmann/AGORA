@@ -82,6 +82,8 @@
 		$UID = $row['user_id'];
 		$title  = $row['title'];
 		$ishostile = $row['is_hostile'];
+		$usernameval = $row['username'];
+		$urlval = $row['url'];
 
 		/*if($UID!=$userID){
 			modifyOther($output);
@@ -98,6 +100,8 @@
 		$proj->addAttribute("ID", $projID);
 		$proj->addAttribute("isHostile", $ishostile);
 		$proj->addAttribute("title", $title);
+		$proj->addAttribute("username", $usernameval);
+		$proj->addAttribute("url", $urlval);
 		if(mysql_num_rows($resultID)==0){
 			$proj->addAttribute("user_count", "0");
 			return $output;

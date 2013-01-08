@@ -37,11 +37,12 @@
 				$row = mysql_fetch_assoc($result2);	
 				if($row["user_level"] == 9){
 					$admin_id = $row["user_id"];
-					$queryUsernameAndURL = "SELECT firstname, lastname, url FROM users WHERE user_id = '$admin_id'";
+					$queryUsernameAndURL = "SELECT firstname, lastname,username, url FROM users WHERE user_id = '$admin_id'";
 					$resultUNURL = mysql_query($queryUsernameAndURL, $linkID);
 					$row2 = mysql_fetch_assoc($resultUNURL);
 					$output->addAttribute("project_admin_firstname", $row2["firstname"]);
 					$output->addAttribute("project_admin_lastname", $row2["lastname"]);
+					$output->addAttribute("project_admin_username", $row2["username"]);
 					$output->addAttribute("admin_url", $row2["url"]);
 					return $output;
 				}
