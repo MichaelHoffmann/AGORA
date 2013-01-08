@@ -2810,10 +2810,11 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<RUS text="Project has been created." />  <!--TODO Translate RUS-->
 		<GER text="Dein Projekt wurde eingerichtet." />  
 	</ProjectCreated>
-MustSelectAdmin 
+<MustSelectAdmin>
 <EN-US text="You must select a user to make the  administrator of this project"/>
 <RUS text="You must select a user to make the  administrator of this project"/><!-- TODO Translate RUS -->
 <GER text="You must select a user to make the  administrator of this project"/><!-- TODO Translate GER -->
+</MustSelectAdmin>
 <SelectAdmin>
 		<EN-US text="Select as new administrator" />
 		<RUS text="Select as new administrator " />  <!--TODO Translate RUS-->
