@@ -262,7 +262,13 @@ package components
 							button.width = 300;
 							button.toolTip = categoryXML.@Name;
 							button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
+						//	button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+							if(categoryXML.@name!=null && ((String)(categoryXML.@name)).length > 22){
+								button.label = ((String)(categoryXML.@name)).slice(0,20)+" .." ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+							}else{
 							button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+							}
+							button.toolTip=categoryXML.@name;
 							
 							button.setStyle("chromeColor", 0xA0CADB);	
 							button.setStyle("skinClass",LeftAlignTextButtonSkin);

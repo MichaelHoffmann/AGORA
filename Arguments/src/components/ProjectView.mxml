@@ -218,7 +218,13 @@
 					button.width = 150
 					button.height=24;
 					button.name = categoryXML.@projID; //The ID (unique DB identifier) of the category
+					button.setStyle("maxDisplayedLines",1);
+					if(categoryXML.@name!=null && ((String)(categoryXML.@name)).length > 22){
+						button.label = ((String)(categoryXML.@name)).slice(0,20)+" .." ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+					}else{
 					button.label = categoryXML.@name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+					}
+					button.toolTip=categoryXML.@name;
 					button.setStyle("chromeColor", 0xA0CADB);
 					subprojectList.addElement(button);
 					if(categoryXML.@creator==usm.username){
