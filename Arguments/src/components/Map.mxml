@@ -38,10 +38,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:Group>
+			<s:Group id="alerts">
 				<mx:Canvas x="0">
 					<components:AgoraMap id="agoraMap" backgroundColor="0xffffff">	
-					</components:AgoraMap>	
+					</components:AgoraMap>
 				</mx:Canvas>
 			</s:Group>
 		</s:Scroller>

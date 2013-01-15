@@ -89,16 +89,18 @@
 				actualHistory.addElement(topButton);		
 			}
 			private function navigateToWOA(e:Event):void{
-				waitingForVerification=true;
-				AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
 				vName=e.target.name;
 				vLabel=e.target.label;
+				AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+				AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
+				AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
+
 			}
 			public function verified():void{
-				waitingForVerification=false;
 				AGORAController.getInstance().setSelectedTab(0);
 				AGORAController.getInstance().hideMap();
 				AGORAModel.getInstance().userSessionModel.selectedWoAProjID=parseInt(vName);
+				
 				if(vLabel!=Language.lookup("CategoryTopLevel")){
 					AGORAController.getInstance().fetchDataChildCategory(vLabel,parseInt(vName));
 					AGORAController.getInstance().fetchDataMyProjects();
@@ -112,6 +114,10 @@
 				temp.push(-1,-1);
 				if(actualHistory.numElements>1){
 					temp=new Array();
+					var e:Button=actualHistory.getElementAt(actualHistory.numElements-2)as Button;
+					AGORAModel.getInstance().agoraMapModel.projectID = parseInt(e.name);
+					AGORAModel.getInstance().agoraMapModel.projID = parseInt(e.name);
+					AGORAController.getInstance().verifyProjectMember((e.label),parseInt(e.name));
 
 					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).label);
 					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).name);

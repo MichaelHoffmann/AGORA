@@ -719,10 +719,11 @@ package Controller
 			var addArgumentsInfo:InfoBox=new InfoBox();
 			addArgumentsInfo.boxWidth=500;
 			addArgumentsInfo.text = Language.lookup('ArgComplete');
-			agoraMap.addElement(addArgumentsInfo);
+			
+			FlexGlobals.topLevelApplication.map.alerts.addElement(addArgumentsInfo);
 			addArgumentsInfo.y =  inference.y + inference.height + 20;
 			addArgumentsInfo.x = inference.x;
-			addArgumentsInfo.visible=false;
+			addArgumentsInfo.visible=true;
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
 			if(claim.panelType != StatementModel.INFERENCE){

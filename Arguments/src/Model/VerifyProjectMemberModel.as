@@ -54,7 +54,7 @@ package Model
 			if(result.@verified != 1){
 				verified = false;
 				Alert.show(Language.lookup('NotMember') + 
-					result.@project_admin_username + '\n' + "URL: " + result.@admin_url);
+				result.@project_admin_username + '\n' + "URL: " + result.@admin_url);
 				AGORAModel.getInstance().agoraMapModel.projectID = AGORAModel.getInstance().agoraMapModel.tempprojectID;				
 				AGORAModel.getInstance().agoraMapModel.projID = AGORAModel.getInstance().agoraMapModel.tempprojID;	
 				return;

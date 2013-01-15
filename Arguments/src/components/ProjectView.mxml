@@ -347,13 +347,20 @@
 				setCurrentProject(e.target.name);
 				projectName.text=e.target.label;
 				AGORAController.getInstance().loadProjectInCurrentWindow(e);
-				
+				AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+				AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
+				AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
+
 			}
 			public function showOther(e:Event){
 				currentState="normal";
 				setCurrentProject(e.target.name);
 				projectName.text=e.target.label;
 				AGORAController.getInstance().loadProjectInCurrentWindow(e);
+				AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
+				AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
+				AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
+
 			}
 			
 			
@@ -449,6 +456,7 @@
 						theGroup.addElement(rdioBtn);
 						theGroup.addElement(userButton);
 						projectMemberPanel.addElement (theGroup);
+						
 					}
 				}
 				}
