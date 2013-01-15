@@ -184,6 +184,8 @@ package components
 					if(model.project && model.project.proj[0])
 					{
 						pView.visible=true
+						bottomButtons.visible=false;
+
 						
 					}
 					else

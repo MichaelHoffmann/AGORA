@@ -1359,6 +1359,11 @@
 		<RUS text="Создайте защищённое паролемпроектное пространство" /><!--TODO Translate RUS-->
 		<GER text="Bilde ein Projekt hier" />
 	</NewProject>
+	<NewMember>
+		<EN-US text="Add members" />
+		<RUS text="Add members" /><!--TODO Translate RUS-->
+		<GER text="Add members" /><!--TODO Translate GER-->
+	</NewMember>
 	
     <MapsinProject>
     <EN-US text="Maps in this Project" />

@@ -733,7 +733,7 @@
 				userIdLbl.text = Language.lookup("AU")+ ": "+ author;
 				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				var userInfoStr:String = " URL: "+URL;
-				userIdLbl.toolTip =author+" "+ Language.lookup("MapOwnerWarning")+" "+ userInfoStr;
+				userIdLbl.toolTip =author+" "+ Language.lookup("MapOwnerURLWarning")+" "+ userInfoStr;
 				if(prevauthor!=null && prevauthor!=""){					
 				userIdLblPA.text = Language.lookup('MapHistoryPA');
 				userIdLblPA.toolTip = Language.lookup('NodeHistoryPreviousAuthorToolTip')+ prevauthor;

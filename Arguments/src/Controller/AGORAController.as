@@ -262,6 +262,9 @@ package Controller
 		public function renameProject(newName:String):void{
 			model.editProject.rename(newName);
 		}
+		public function changeProjectType():void{
+			model.editProject.changeType();
+		}
 		public function selectAsAdmin(userID:String):void{
 			model.selectAsAdmin.sendRequest(userID);
 		}
@@ -274,7 +277,7 @@ package Controller
 			fetchDataProjectList();
 		}
 		public function onUsersChanged(e:Event):void{
-			fetchDataMyProjects();
+			updateProjectUser(e)
 		}
 		public function updateMyContributions(event:MouseEvent):void{
 			fetchContributions();

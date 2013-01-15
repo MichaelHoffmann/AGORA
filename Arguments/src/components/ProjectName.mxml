@@ -68,12 +68,17 @@
 					projectName.setFocus();
 					projectName.text = "";
 				}
+				title=Language.lookup("NewMember");
 			}
 			
 			protected function panel_keyDownHandler(event:KeyboardEvent):void
 			{
 				if(event.keyCode == Keyboard.ENTER){
-					project_add();
+					if(currentState="addUsers"){
+						addUsers();
+					}else{
+						project_add();
+					}
 				}
 			}
 			

@@ -23,7 +23,17 @@ package Model
             request.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             return;
         }
-
+		public function changeType():void
+		{
+			var loc2:*=null;
+			var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
+			if (loc1.loggedIn()) 
+			{
+				loc2 = { "projID":loc1.selectedMyProjProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};
+				this.request.send(loc2);
+			}
+			return;
+		}
         public function rename(newName:String):void
         {
             var loc2:*=null;

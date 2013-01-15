@@ -722,7 +722,7 @@ package Controller
 			agoraMap.addElement(addArgumentsInfo);
 			addArgumentsInfo.y =  inference.y + inference.height + 20;
 			addArgumentsInfo.x = inference.x;
-			addArgumentsInfo.visible=true;
+			addArgumentsInfo.visible=false;
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
 			if(claim.panelType != StatementModel.INFERENCE){

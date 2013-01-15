@@ -199,10 +199,25 @@
 				model.requestChildCategories(projID);
 				model.listProjMaps(projID);
 				usm.selectedMyProjProjID = projID;
+				var selectedTab:String=usm.selectedTab;
+				if (selectedTab == Language.lookup("MainTab")){
+					usm.selectedWoAProjID=parseInt(projID);
+				}else if (selectedTab== Language.lookup("MyPPProjects")){
+					usm.selectedMyProjProjID=projID;
+				}else if (selectedTab == Language.lookup("MyContributions")){
+					usm.selectedMyContProjID=projID;
+				}
 			}
 			public function updateProject(){
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				setCurrentProject(usm.selectedMyProjProjID);
+				var selectedTab:String=usm.selectedTab;
+				if (selectedTab == Language.lookup("MainTab")){
+					setCurrentProject(usm.selectedWoAProjID+"")
+				}else if (selectedTab== Language.lookup("MyPPProjects")){
+					setCurrentProject(usm.selectedMyProjProjID);
+				}else if (selectedTab == Language.lookup("MyContributions")){
+					setCurrentProject(usm.selectedMyContProjID);
+				}
 				populateUser();
 			}
 			public function populateSubProjects(){
@@ -240,8 +255,14 @@
 			}
 			protected function deleteHandler():void{
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				AGORAController.getInstance().deleteProject(usm.selectedMyProjProjID);
-				
+				var selectedTab:String=usm.selectedTab;
+				if (selectedTab == Language.lookup("MainTab")){
+					AGORAController.getInstance().deleteProject(usm.selectedWoAProjID+"")
+				}else if (selectedTab== Language.lookup("MyPPProjects")){
+					AGORAController.getInstance().deleteProject(usm.selectedMyProjProjID);
+				}else if (selectedTab == Language.lookup("MyContributions")){
+					AGORAController.getInstance().deleteProject(usm.selectedMyContProjID);
+				}				
 				
 			}
 			
