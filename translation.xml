@@ -2252,8 +2252,8 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</ServerResponding>
 	<AgoraVersion>
 	<EN-US text="V 3.2" />
-		<RUS text="V 3.1" /><!--TODO: Translate RUS-->
-		<GER text="V 3.1" /><!--TODO: Translate GER-->
+		<RUS text="V 3.2" /><!--TODO: Translate RUS-->
+		<GER text="V 3.2" />
 	</AgoraVersion>
 
 
@@ -2815,9 +2815,9 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<GER text="Dein Projekt wurde eingerichtet." />  
 	</ProjectCreated>
 <MustSelectAdmin>
-<EN-US text="You must select a user to make the  administrator of this project"/>
-<RUS text="You must select a user to make the  administrator of this project"/><!-- TODO Translate RUS -->
-<GER text="You must select a user to make the  administrator of this project"/><!-- TODO Translate GER -->
+<EN-US text="You must select a project member that you want to make the  administrator of this project"/>
+<RUS text="You must select a project member that you want to make the  administrator of this project"/><!-- TODO Translate RUS -->
+<GER text="Du musst ein Projekt-Mitglied auswählen, das du zum Verwalter dieses Projektes machen willst"/><!-- TODO Translate GER -->
 </MustSelectAdmin>
 <SelectAdmin>
 		<EN-US text="Select as new administrator" />
@@ -2838,7 +2838,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 <Cancel>
 		<EN-US text="Cancel" />
 		<RUS text="Cancel " />  <!--TODO Translate RUS-->
-		<GER text="Cancel" />  <!--TODO Translate GER-->
+		<GER text="Abbrechen" />  
 </Cancel>
 
 <SelectAdminWarning>
@@ -3170,7 +3170,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<EN-US text="Map History" />
 		<RUS text="Map History" /><!--TODO Translate RUS-->
 		<GER text="Argument Geschichte" />
-	</MapHistoryLabel>This map name has already been taken.Kindly choose a different map name.
+	</MapHistoryLabel>
 	
 	<!-- Tool tip on the Save Map as button -->
 		<SaveMapAsHelp>
@@ -3180,9 +3180,9 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</SaveMapAsHelp>
 	
 	<MapNameNotUnique>
-		<EN-US text="This map name has already been taken.Kindly choose a different map name." />
-		<RUS text="This map name has already been taken.Kindly choose a different map name." /><!--TODO Translate RUS-->
-		<GER text="This map name has already been taken.Kindly choose a different map name." /><!--TODO Translate GER-->
+		<EN-US text="This map name has already been taken. Please choose a different map name." />
+		<RUS text="This map name has already been taken. Please choose a different map name." /><!--TODO Translate RUS-->
+		<GER text="Dieser Name wird bereits verwendet. Bitte wähle einen anderen Namen" />
 	</MapNameNotUnique>
 	
 	<!-- Tool tip on the Save Map as button -->
