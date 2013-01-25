@@ -14,13 +14,13 @@ function findSubCategory()
 			badDBLink($output);
 			return $output;
 		}
-		$status=mysql_select_db("agora", $linkID);
+		$status=mysql_select_db($dbName, $linkID);
 		if(!$status){
 			databaseNotFound($output);
 			return $output;
 		}
 		$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = 
-		category.category_id WHERE parent_categories.parent_category_name='lobby' ORDER BY category.category_id";
+		category.category_id WHERE parent_categories.parent_category_name='lobby' ORDER BY category.category_name";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);

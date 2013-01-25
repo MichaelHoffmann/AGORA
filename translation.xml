@@ -409,8 +409,8 @@
 	<!--Categories-->
 	
 	<Category1>
-		<EN-US text="Class Projects (Restricted)" />
-		<RUS text="Class Projects (Restricted)" /><!--TODO Translate RUS-->
+		<EN-US text="Class Projects" />
+		<RUS text="Class Projects" /><!--TODO Translate RUS-->
 		<GER text="Seminar / Klassen Projekte (nur für Mitglieder)" />
 	</Category1>
 
@@ -436,8 +436,8 @@
 	</Category5>
 
 	<Category6>
-		<EN-US text="Projects (Restricted)" />
-		<RUS text="Projects (Restricted)" /><!--TODO Translate RUS-->
+		<EN-US text="Projects" />
+		<RUS text="Projects" /><!--TODO Translate RUS-->
 		<GER text="Projekte (nur für Mitglieder)" />
 	</Category6>
 
@@ -466,6 +466,11 @@
 		<RUS text="Others ..." /><!--TODO Translate RUS-->
 		<GER text="Andere ..." />
 	</Category9>
+	<Category42>
+			<EN-US text="Education" />
+			<RUS text="Education" /><!--TODO Translate RUS-->
+			<GER text="Education" /><!--TODO Translate GER-->
+	</Category42>
 
 
 
