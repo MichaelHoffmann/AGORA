@@ -182,7 +182,7 @@
 	<components:MapHistory id="history" visible="false"  left="5" right="5" horizontalCenter="0" height="100"/>
 	<s:Label id="mapOwner" text="{Language.lookup('OwnerOfMap')}" visible="false"/>
 	<s:Button id="clickableMapOwnerInformation" visible="false" toolTip="{Language.lookup('MapOwnerURLWarning')}"/>
-	<s:TextArea id="mapTitle" visible="false" heightInLines="2" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
+	<s:TextArea id="mapTitle" visible="false" enabled="false" heightInLines="2" focusIn="mapTitle_focusInHandler(event)" focusOut="mapTitle_focusOutHandler(event)"/>
 	<!-- toggle for chat / history -->
 	<s:Button id="hidePanelButton" left="5" top="0" right="5" label="{Language.lookup('HidePanel')}" percentWidth="100"
 			  click="{

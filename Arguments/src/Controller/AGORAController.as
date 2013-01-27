@@ -227,10 +227,7 @@ package Controller
 		}
 		
 		protected function onChildMapFetchedContributions(event:AGORAEvent):void{
-			menu.contributions.loadingDisplay.visible = false;
-			menu.contributions.invalidateProperties();
-			menu.contributions.invalidateDisplayList();
-			menu.myProjects.populateProjects();
+			updateProject(event);
 		}
 		
 		protected function onProjectFetchedContributions(event:AGORAEvent):void{
@@ -277,7 +274,7 @@ package Controller
 			fetchDataProjectList();
 		}
 		public function onUsersChanged(e:Event):void{
-			updateProjectUser(e)
+			updateProject(e)
 		}
 		public function updateMyContributions(event:MouseEvent):void{
 			fetchContributions();
@@ -287,6 +284,8 @@ package Controller
 		}
 		public function updateWOA(event:MouseEvent):void{
 			updateMapProj();
+			//AGORAController.getInstance().fetchDataChildCategory(usm.selectedWoAProjID.toString(),);
+
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 			if(usm.selectedWoAProjID){
 				getChain(usm.selectedWoAProjID);
@@ -298,7 +297,7 @@ package Controller
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
 			if(usm.loggedIn()){
-				Controller.AGORAController.getInstance().displayProjectInfoBox("newInMyProjects");
+				Controller.AGORAController.getInstance().displayProjectInfoBox("newInProject");
 			}
 		}
 		public function createMap(event:Event){
@@ -314,6 +313,7 @@ package Controller
 			if( FlexGlobals.topLevelApplication.projectNameBox){
 				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			}
+			updateWOA(e as MouseEvent);
 			fetchDataProjectList();
 			fetchDataMyProjects();
 		}
@@ -516,6 +516,7 @@ package Controller
 		public function moveMap(mapID:int, projName:String):void{
 			var mapToProject:MoveMap = new MoveMap;
 			mapToProject.send(mapID, projName);
+			
 		}
 		
 		//-------------------Fetch My Maps Data---------------------------//

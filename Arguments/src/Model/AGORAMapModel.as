@@ -18,6 +18,7 @@ package Model
 	import ValueObjects.SourcenodeValueObject;
 	import ValueObjects.TextboxValueObject;
 	
+	import classes.Language;
 	
 	import com.adobe.protocols.dict.Dict;
 	
@@ -29,6 +30,8 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
@@ -40,10 +43,6 @@ package Model
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	import mx.states.State;
-	
-	import classes.Language;
-	import flash.net.navigateToURL;
-	import flash.net.URLRequest;
 	public class AGORAMapModel extends EventDispatcher
 	{	
 		private var _panelListHash:Dictionary;
@@ -62,6 +61,7 @@ package Model
 		private var updatePositionsService:HTTPService;
 		private var updateMapInfoService:HTTPService;
 		
+		public var moveToProject:Boolean;
 		private var _name:String;
 		private var _description:String;
 		private var _timestamp:String;
@@ -358,7 +358,9 @@ package Model
 			mapMetaData.mapID = resultEvent.result.map.ID;
 			mapMetaData.mapName = resultEvent.result.map.title;
 			ID = resultEvent.result.map.ID;
-			moveMapToPrivProj();
+				moveMapToPrivProj();
+				var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				mapToPrivateProjService.send({user_id:usModel.uid, pass_hash:usModel.passHash, map_id:ID});
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
 			}else{
 				if(resultEvent.result.map.error.code=="319" || resultEvent.result.map.error.code==319){
@@ -369,30 +371,25 @@ package Model
 		protected function onMapMovedToPrivProj(resultEvent:ResultEvent):void{
 			var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
 			var current=usm.selectedTab;
-			if(current == Language.lookup("MyContributions"))
-			{
-				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyContProjID as String);
-				
-			}else if(current==Language.lookup("MyPPProjects"))
-			{
-				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyProjProjID as String);
-				
-			}else if (current ==Language.lookup("MainTab"))
-			{
-				var model:CategoryModel = AGORAModel.getInstance().categoryModel;
-
-			if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
-				Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID as String);
-			}
-
 				//FlexGlobals.topLevelApplication.agoraMenu.categories.
 				var model:CategoryModel = AGORAModel.getInstance().categoryModel;
-				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
-					Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID as String);
-				}
-				
-			}
+				mx.controls.Alert.show(moveToProject.toString());
 
+				if (moveToProject){
+					if(current == Language.lookup("MyContributions"))
+					{
+						Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyContProjID as String);
+						
+					}else if(current==Language.lookup("MyPPProjects"))
+					{
+						Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedMyProjProjID as String);
+						
+					}else if (current ==Language.lookup("MainTab"))
+					{						
+							Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID as String);
+					}
+				}
+				moveToProject=false;
 
 		}
 		protected function moveMapToPrivProj():void{
@@ -476,7 +473,15 @@ package Model
 				rsp.showHistoryBoxes=true;
 				}
 				rsp.mapTitle.text=mapXMLRawObject.title;
+				var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 				rsp.clickableMapOwnerInformation.label = mapXMLRawObject.username;
+				if(mapXMLRawObject.username== usm.username){
+					rsp.mapTitle.enabled=true;
+				}else{
+					rsp.mapTitle.enabled=false;
+				}
+				AGORAController.getInstance().getMapChain(map.ID);
+
 				rsp.clickableMapOwnerInformation.toolTip = 
 					mapXMLRawObject.username + "\n" + mapXMLRawObject.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{

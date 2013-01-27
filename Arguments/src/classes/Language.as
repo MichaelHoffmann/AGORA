@@ -38,7 +38,7 @@ package classes
 		public static const GERMAN:String = "GER";
 		public static const ENGLISH:String = "EN-US";
 		public static const RUSSIAN:String = "RUS";
-		public static var language:String = GERMAN;
+		public static var language:String = ENGLISH;
 		
 		public static var xml:XML;
 		private static var ready:Boolean=false;

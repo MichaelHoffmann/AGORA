@@ -150,23 +150,31 @@ package Controller
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
 			}
 		protected function onMapCreated(event:AGORAEvent):void{
+			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
 			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
 			AGORAController.getInstance().unfreeze();
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.mapNameBox);
 			AGORAModel.getInstance().agoraMapModel.ID = mapMetaData.mapID;
 			map.visible = true;
 			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
-			var thisMapInfo:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
 			rsp.titleOfMap.text = this.model.agoraMapModel.name;
-			rsp.clickableMapOwnerInformation.label = thisMapInfo.username;
+			rsp.clickableMapOwnerInformation.label = mapMetaData.mapCreator;
 			rsp.clickableMapOwnerInformation.toolTip = 
-				 thisMapInfo.URL + '\n' + Language.lookup('MapOwnerURLWarning');
+				mapMetaData.url + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-				navigateToURL(new URLRequest(thisMapInfo.URL), 'quote');
+				navigateToURL(new URLRequest(mapMetaData.url), 'quote');
 			},false, 0, false);
 			rsp.mapTitle.text = this.model.agoraMapModel.name;
 			rsp.invalidateDisplayList();
 			startWithClaim();
+			if(mapMetaData.mapCreator== usm.username){
+				rsp.mapTitle.enabled=true;
+				
+			}else{
+				rsp.mapTitle.enabled=false;
+			}
+			AGORAController.getInstance().getMapChain(mapMetaData.mapID);
 
 		}
 		
@@ -719,7 +727,10 @@ package Controller
 			var addArgumentsInfo:InfoBox=new InfoBox();
 			addArgumentsInfo.boxWidth=500;
 			addArgumentsInfo.text = Language.lookup('ArgComplete');
-			
+			agoraMap.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+				addArgumentsInfo.visible=false;
+				agoraMap.removeEventListener(MouseEvent.CLICK, arguments.callee);
+			});
 			FlexGlobals.topLevelApplication.map.alerts.addElement(addArgumentsInfo);
 			addArgumentsInfo.y =  inference.y + inference.height + 20;
 			addArgumentsInfo.x = inference.x;

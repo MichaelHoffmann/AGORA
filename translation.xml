@@ -2775,7 +2775,11 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<RUS text="Adversarial" />  <!--TODO Translate RUS-->
 		<GER text="Nicht-kollaborativ" />  
 	</ProjectTypeAdversarial>
-	
+	<Mode>
+		<EN-US text="Mode:" />
+		<RUS text="Mode:" /><!--TODO: Translate RUS -->
+		<GER text="Mode:" />
+	</Mode>
 	<AddProjectMembers>
 		<EN-US text="Add members" />
 		<RUS text="Add members" />  <!--TODO Translate RUS-->
@@ -2930,7 +2934,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 
 <!--TODO “The project has sub project. Hence cannot be deleted” is hard coded. Use instead:-->
 <ErrorDeleteProject>
-		<EN-US text="This project contains sub-projects or maps created by other users. It cannot be deleted." />
+		<EN-US text="This project contains sub-projects or maps created by other users. It cannot be deleted" />
 		<RUS text="This project contains sub-projects or maps created by other users. It cannot be deleted" />  <!--TODO Translate RUS-->
 		<GER text="Dieses Projekt enthält andere Projekte oder Argumente, die von anderen Nutzern geschaffen wurden. Es kann nicht gelöscht werden." />  
 </ErrorDeleteProject>

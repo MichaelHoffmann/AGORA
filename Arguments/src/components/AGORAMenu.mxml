@@ -95,9 +95,6 @@
 					Alert.show(Language.lookup('GuestCreateMapError'));
 				} else {
 					AGORAController.getInstance().displayMapInfoBox();
-					if((event.target as Button).label==Language.lookup("NewMaphere")){
-						AGORAModel.getInstance().moveToWOA=true;
-					}
 
 				}
 			}
@@ -256,7 +253,7 @@
 
 				}
 				else if (selectT == Language.lookup("MyMaps")){
-					//cg.visible=false;
+					cg.visible=true;
 					updateMyMaps(event);
 
 				}

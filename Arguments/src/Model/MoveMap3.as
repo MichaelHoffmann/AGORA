@@ -54,7 +54,6 @@ package Model
 		 * When we do not return with an error enters here
 		 */
 		protected function onSuccessfulJoin(event:ResultEvent):void{
-			mx.controls.Alert.show("sending event");
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_ADDED));
 
 		}

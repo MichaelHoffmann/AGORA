@@ -178,15 +178,13 @@ package components
 				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
 					bottomButtons.visible=true;
 					createProjBtn.visible=true;
-					createMapBtn.label=Language.lookup("NewMapHere");
+					createMapBtn.label=Language.lookup("NewMap");
 					is_project_level = true;
 					this.categoryTiles.layout = new HorizontalLayout;
 					if(model.project && model.project.proj[0])
 					{
 						pView.visible=true
-						bottomButtons.visible=false;
-
-						
+						bottomButtons.visible=false;						
 					}
 					else
 					{ 				

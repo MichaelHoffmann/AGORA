@@ -28,10 +28,10 @@
 	<s:HGroup  percentHeight = "95" percentWidth="100"  minHeight="350" horizontalAlign="center"  accentColor="20" horizontalCenter="0">
 		<s:VGroup percentWidth="100" gap ="10" horizontalAlign="left">
 			<s:HGroup percentWidth="100" horizontalAlign="left">
-				<s:Label text="" id="projectName"  fontSize="14" paddingLeft="32" width="69%"  left = "0" textAlign="left"/>
+				<s:Label text="" id="projectName"  fontSize="14" paddingLeft="32" width="50%"  left = "0" textAlign="left"/>
 				<s:Button enabled.normal="false" id = "isHostile" toolTip="{classes.Language.lookup('ProjectTypeAdversarialHelp')}+{classes.Language.lookup('ProjectTypeHelp')}" label="{classes.Language.lookup('ProjectTypeAdversarial')}" click="onProjectTypeClicked()" enabled="true" percentWidth="15"/>
-				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" toolTip="{Language.lookup('DeleteProject')}" click="deleteHandler()" percentWidth="8"/>
-				<s:Button excludeFrom="normal" id="renameProj" label="{classes.Language.lookup('Rename')}" click="AGORAController.getInstance().displayProjectInfoBox('rename')" percentWidth="8"/>
+				<s:Button excludeFrom="normal" id = "delProj" label="{classes.Language.lookup('Delete')}" toolTip="{Language.lookup('DeleteProject')}" click="deleteHandler()" />
+				<s:Button excludeFrom="normal" id="renameProj" label="{classes.Language.lookup('Rename')}" click="AGORAController.getInstance().displayProjectInfoBox('rename')" />
 			</s:HGroup>
 			<s:HGroup  paddingLeft="32" percentWidth="90" gap ="20" height = "20" horizontalAlign="center">
 				<s:VGroup percentWidth="35">
@@ -50,7 +50,7 @@
 				</s:VGroup>
 				<s:VGroup percentWidth="30" id="memberGroup" excludeFrom="personal" horizontalAlign="left">
 					<s:HGroup id="admin2" includeIn="normal" horizontalAlign="left">
-						<s:Label text="Admin:" id="adminlbl"  fontSize="12"   left = "0" textAlign="left"/>
+						<s:Label text="{Language.lookup('ProjectAdmin')}" id="adminlbl"  fontSize="12"   left = "0" textAlign="left"/>
 						<s:Button label="Name" id="adminName" click="navigateToURL( new URLRequest(adminURL),'_blank')"  fontSize="12" chromeColor="0xA0CADB"/>
 					</s:HGroup>
 					<s:Label text= "{classes.Language.lookup('ProjectMembers')}" />
@@ -93,12 +93,14 @@
 		<s:Button label="{Language.lookup('NewProject')}" toolTip="{Language.lookup('ProjectExplanation')}"  click="
 				  {
 				  Controller.AGORAController.getInstance().createProj(event);
+				
 				  return;
 				  }
 				  
 				  " id="ProjBtn" />
 		<s:Button label="{Language.lookup('NewMapHere')}" click="
 				  {
+				  AGORAModel.getInstance().agoraMapModel.moveToProject=true;
 				  Controller.AGORAController.getInstance().createMap(event);
 				  return;
 				  }
@@ -418,7 +420,7 @@
 				else if(model.userList.proj.@isHostile == 1)
 				{
 					//isHostile.selected = true;
-					isHostile.label = classes.Language.lookup('ProjectTypeAdversarial');
+					isHostile.label =classes.Language.lookup('Mode')+ classes.Language.lookup('ProjectTypeAdversarial');
 					AGORAModel.getInstance().projType = "adversarial";
 				}
 				projectName.text=model.userList.proj.@title;
@@ -428,7 +430,6 @@
 					isHostile.enabled = true;
 				}else if(model.userList.proj.@title==usm.username){
 					currentState="personal";
-					mx.controls.Alert.show("personal");
 				}else {
 					currentState="normal";
 					adminName.label=model.userList.proj.admin.@name;
@@ -488,9 +489,9 @@
 			}
 			protected function onProjectTypeClicked():void
 			{
-				if (isHostile.label == classes.Language.lookup('ProjectTypeCollaborative'))
+				if (isHostile.label == classes.Language.lookup('Mode')+ classes.Language.lookup('ProjectTypeCollaborative'))
 					Model.AGORAModel.getInstance().agoraMapModel.projectType = 1;
-				else if(isHostile.label == classes.Language.lookup('ProjectTypeAdversarial'))
+				else if(isHostile.label == classes.Language.lookup('Mode')+ classes.Language.lookup('ProjectTypeAdversarial'))
 					Model.AGORAModel.getInstance().agoraMapModel.projectType = 0;
 				AGORAController.getInstance().renameProject(projectName.text);
 			}

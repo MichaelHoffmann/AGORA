@@ -74,6 +74,7 @@
 	</fx:Script>
 	<s:states>
 		<s:State name="WOA"/>
+		<s:State name="MyCont"/>
 		<s:State name="MyProj"/>
 	</s:states>
 	<!--Creates a form-->

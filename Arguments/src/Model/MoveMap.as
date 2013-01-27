@@ -28,15 +28,18 @@ package Model
 		}
 		
 		public function send(mapID:int, projName:String):void
-		{
+		{			
+
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(usm.loggedIn()){
+
 				request.send({uid:usm.uid,pass_hash:usm.passHash, map_id:mapID, category_id:projName});	
 			}
 		}
 		
 		protected function onResult(arg1:mx.rpc.events.ResultEvent):void
-		{
+		{			
+
 			AGORAController.getInstance().onMapAdded();
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_ADDED));//not sending, using direct calling to workaround
 
