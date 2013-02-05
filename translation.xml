@@ -115,9 +115,9 @@
 	</EditOther>
 
 	<FundedByText>
-		<EN-US text="AGORA-Net is funded by " />
-		<RUS text="AGORA-Net is funded by " /><!--TODO: Translate RUS -->
-		<GER text="AGORA-Net ist gefördert durch " />
+		<EN-US text="AGORA-Net is supported by " />
+		<RUS text="AGORA-Net is supported by " /><!--TODO: Translate RUS -->
+		<GER text="AGORA-Net ist unterstützt durch " />
 	</FundedByText>
 
 	<USDepartmentOfEdu>

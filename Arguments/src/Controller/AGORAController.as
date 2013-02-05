@@ -193,6 +193,7 @@ package Controller
 			var categoryM:CategoryModel = model.categoryModel;
 			categoryM.requestChildCategories(parentCategory,parentID);
 		}
+		
 		public function fetchChildCategorycontributions(parentCategory:String,parentID:int):void{
 			menu.contributions.loadingDisplay.text = Language.lookup("Loading");
 			menu.contributions.loadingDisplay.visible = true;
@@ -575,7 +576,11 @@ package Controller
 				{
 					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
 					menu.categories.pView.loadingDisplay.visible=true;
-
+					
+					var cg:Button=FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.getCategory();
+					if(cg.label!=Language.lookup("CategoryTopLevel")){
+						model.categoryModel.requestChildCategories(cg.label,parseInt(cg.name));
+					}
 					if(parseInt(""+usm.selectedWoAProjID)){
 						model.myProjectsModel.requestProjDetails(""+usm.selectedWoAProjID);
 						model.myProjectsModel.requestChildCategories(""+usm.selectedWoAProjID);

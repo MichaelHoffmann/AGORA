@@ -128,6 +128,10 @@
 					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).name);
 				}
 				return temp;
+
+			}
+			public function getCategory():Button{
+				return actualHistory.getElementAt(actualHistory.numElements-1) as Button;
 			}
 		]]>
 	</fx:Script>

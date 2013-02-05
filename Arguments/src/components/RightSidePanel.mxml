@@ -197,7 +197,7 @@
 	<s:Button id="chatBox" visible="false" toolTip="" label="Chat" width="75" click="onChatSelect()"/>
 	<s:Button id="historyBox" visible="false" toolTip="" label="{Language.lookup('MapHistoryHeader')}" width="75" click="onHistorySelect()"/>
 	<s:Button id="historyBackBox" visible="false" label="&lt; -" toolTip="{Language.lookup('MapHistoryBackButtonToolTip')}" width="35" click="onHistoryBackSelect()"/>
-	<components:SponsorPanel id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
+	<components:SponsorPanel visible="false" id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
 	
 	
 </s:SkinnableContainer>

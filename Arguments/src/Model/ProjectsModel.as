@@ -70,7 +70,7 @@ package Model
 				requestChildProject.send(params);
 			}
 		}
-
+	
         public function sendRequest():void
         {
 			
@@ -94,6 +94,9 @@ package Model
 			this.subProjectList = arg1.result as XML;
 			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.PROJECTS_SUB_DETAILS));
 			return;
+		}
+		protected function onProjectFetched(arg1:mx.rpc.events.ResultEvent):void{
+			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.PROJECT_FETCHED));
 		}
 		protected function updateMyProjMaps(arg1:mx.rpc.events.ResultEvent):void
 		{
