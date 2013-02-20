@@ -1,14 +1,15 @@
 <?php
-	require 'configure.php';
-	require 'errorcodes.php';
-	require 'establish_link.php';
+require 'configure.php';
+require 'errorcodes.php';
+require 'establish_link.php';
 require 'utilfuncs.php';
+
 function findChildCategory($parentCategory, $verify, $userID, $parent_catid) {
-		global $dbName, $version;
-		header("Content-type: text/xml");
-		$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
-		$output = new SimpleXMLElement($xmlstr);
-		
+	global $dbName, $version;
+	header("Content-type: text/xml");
+	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
+	$output = new SimpleXMLElement($xmlstr);
+
 	$linkID = establishLink();
 	if (!$linkID) {
 		badDBLink($output);
@@ -19,12 +20,14 @@ function findChildCategory($parentCategory, $verify, $userID, $parent_catid) {
 		databaseNotFound($output);
 		return $output;
 	}
+
 	// check before getting in ....
 	if ($verify) {
-		$checkIfProj = "SELECT * FROM category WHERE category_name=$parentCategory AND is_project=1";
+		$checkIfProj = "SELECT * FROM category WHERE category_name=$parentCategory AND is_project=1";		
 		if($parent_catid!=-1){
 					$checkIfProj = "SELECT * FROM category WHERE category_id=$parent_catid AND is_project=1";			
 		}
+		
 		$result_IsProj = mysql_query($checkIfProj, $linkID);
 		if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
 			if($parent_catid==-1){ 
@@ -32,8 +35,9 @@ function findChildCategory($parentCategory, $verify, $userID, $parent_catid) {
 			}else{
 			$category_id = $parent_catid;
 			}
+			
 			$verifyProjMember = "SELECT proj_id FROM projusers 
-									                    		WHERE proj_id=$category_id AND user_id = $userID";
+												                    		WHERE proj_id=$category_id AND user_id = $userID";
 			$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
 			if (!$result_VerifyMem || mysql_num_rows($result_VerifyMem) <= 0) {
 				$errorchild = $output->addChild("error");
@@ -49,6 +53,8 @@ function findChildCategory($parentCategory, $verify, $userID, $parent_catid) {
 			}
 		}
 	}
+
+	
 	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = $parentCategory ORDER BY category.category_name";
 	if($parent_catid!=-1){
 	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_categoryid = $parent_catid ORDER BY category.category_name";	
@@ -60,6 +66,7 @@ function findChildCategory($parentCategory, $verify, $userID, $parent_catid) {
 		$output->addAttribute("project_count", "0");
 		return $output;
 	}
+
 	if (mysql_num_rows($resultID) == 0) {
 		$output->addAttribute("category_count", "0");
 		$output->addAttribute("project_count", "0");
@@ -87,26 +94,30 @@ function findChildCategory($parentCategory, $verify, $userID, $parent_catid) {
 	mysql_close($linkID); //closing the connection
 	return $output;
 }
+
 function findChildCategoryMoveProjects($parentCategory, $userID,$parentcatid) {
 	global $dbName, $version;
 	header("Content-type: text/xml");
 	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 	$output = new SimpleXMLElement($xmlstr);
-		$linkID= establishLink();
-		if(!$linkID){
-			badDBLink($output);
-			return $output;
-		}
-		$status=mysql_select_db($dbName, $linkID);
-		if(!$status){
-			databaseNotFound($output);
-			return $output;
-		}
+
+	$linkID = establishLink();
+	if (!$linkID) {
+		badDBLink($output);
+		return $output;
+	}
+	$status = mysql_select_db($dbName, $linkID);
+	if (!$status) {
+		databaseNotFound($output);
+		return $output;
+	}
 	// check before getting in ....
+	
 	$checkIfProj = "SELECT * FROM category WHERE category_name=$parentCategory AND is_project=1";
 	if($parentcatid!=-1){
 	$checkIfProj = "SELECT * FROM category WHERE category_id=$parentcatid AND is_project=1";		
 	}
+	
 	$result_IsProj = mysql_query($checkIfProj, $linkID);
 	if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
 		if($parentcatid==-1){ 
@@ -114,8 +125,9 @@ function findChildCategoryMoveProjects($parentCategory, $userID,$parentcatid) {
 		}else{
 			$category_id = $parentcatid;
 		}
+		
 		$verifyProjMember = "SELECT proj_id FROM projusers 
-				                    		WHERE proj_id=$category_id AND user_id = $userID";
+										                    		WHERE proj_id=$category_id AND user_id = $userID";
 		$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
 		if (!$result_VerifyMem || mysql_num_rows($result_VerifyMem) <= 0) {
 			$errorchild = $output->addChild("error");
@@ -131,9 +143,7 @@ function findChildCategoryMoveProjects($parentCategory, $userID,$parentcatid) {
 		}
 	}
 
-		
-		
-		
+
 	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_category_name = $parentCategory ORDER BY category.category_name";
 	if($parentcatid!=-1){
 	$query = "SELECT * FROM category JOIN parent_categories ON parent_categories.category_id = category.category_id WHERE parent_categories.parent_categoryid = $parentcatid ORDER BY category.category_name";	
@@ -143,23 +153,24 @@ function findChildCategoryMoveProjects($parentCategory, $userID,$parentcatid) {
 		dataNotFound($output, $query);
 		return $output;
 	}
+
 	if (mysql_num_rows($resultID) == 0) {
 		$output->addAttribute("category_count", "0");
-			$output->addAttribute("project_count", "0");
+		$output->addAttribute("project_count", "0");
 		//This is a better alternative than reporting an error.
 		return $output;
 	} else {
 		$count = 0;
-		$projCount =0;
+		$projCount = 0;
 		for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
 			$row = mysql_fetch_assoc($resultID);
 			$map = $output->addChild("category");
 			$map->addAttribute("ID", $row['category_id']);
 			$map->addAttribute("Name", $row['category_name']);
 			$isprpject = $row['is_project'];
-			if($isprpject==1){
+			if ($isprpject == 1) {
 				$projCount++;
-			}else{
+			} else {
 				$count++;
 			}
 			$map->addAttribute("is_project", $row['is_project']);
@@ -170,6 +181,7 @@ function findChildCategoryMoveProjects($parentCategory, $userID,$parentcatid) {
 	mysql_close($linkID); //closing the connection
 	return $output;
 }
+
 $parentCategory = mysql_real_escape_string($_REQUEST['parentCategory']);
 $parentCategoryIDD = -1;
 if (array_key_exists("usecatid", $_REQUEST)) {
@@ -178,18 +190,19 @@ if (array_key_exists("usecatid", $_REQUEST)) {
 		$parentCategoryIDD = mysql_real_escape_string($_REQUEST['parentCategoryID']);
 	}
 }
+
 $action = "map";
 
 if (array_key_exists("action", $_REQUEST)) {
 	$action = $_REQUEST['action'];
 	$uid = $_REQUEST['uid'];
-if ($action == "projects") {
+	if ($action == "projects") {
 		$output = findChildCategoryMoveProjects($parentCategory, $uid,$parentCategoryIDD);
-} else {
+	} else {
 		$output = findChildCategory($parentCategory, true, $uid,$parentCategoryIDD);
 	}
 } else {
-	$output = findChildCategory($parentCategory, false, -1);
+	$output = findChildCategory($parentCategory, false, -1,$parentCategoryIDD);
 }
-print($output->asXML());
+print ($output->asXML());
 ?>

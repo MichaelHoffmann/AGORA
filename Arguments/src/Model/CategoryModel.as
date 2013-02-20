@@ -91,5 +91,15 @@ package Model
 		}
 		}
 		
+		// optimized call !!!!
+		public function requestCatProjsMaps(categoryName:String,categoryID:int):void{
+			requestChildren.send({usecatid:1,parentCategoryID:categoryID,parentCategory: "'" + categoryName + "'"});
+			requestChildMap.send({parentCategory:  categoryID+"" });
+			/*var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			if(userSessionModel.loggedIn()){
+				var params:Object = {uid: userSessionModel.uid, pass_hash: userSessionModel.passHash ,projID:-1, projName:categoryName};
+				requestChildProject.send(params);
+			}*/
+		}
 	}
 }// ActionScript file

@@ -174,6 +174,26 @@ package Controller
 			}else{
 				rsp.mapTitle.enabled=false;
 			}
+			// update current view 
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+				if(current == Language.lookup("MyContributions"))
+				{
+					if(usm.selectedMyContProjID){												
+						model.myProjectsModel.listProjMaps(usm.selectedMyContProjID);
+					}
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					if(usm.selectedMyProjProjID){
+						model.myProjectsModel.listProjMaps(usm.selectedMyProjProjID);
+					}					
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					if(parseInt(""+usm.selectedWoAProjID)){
+						model.myProjectsModel.listProjMaps(""+usm.selectedWoAProjID);
+					}
+				}
 			AGORAController.getInstance().getMapChain(mapMetaData.mapID);
 
 		}

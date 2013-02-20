@@ -1,8 +1,8 @@
 <?php
 	/**
-	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			reflection, critique, deliberation, and creativity in individual argument construction 
-			and in collaborative or adversarial settings. 
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning,
+			reflection, critique, deliberation, and creativity in individual argument construction
+			and in collaborative or adversarial settings.
     Copyright (C) 2011 Georgia Institute of Technology
 
     This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	
+
 	*/
 	require 'configure.php';
 	require 'errorcodes.php';
@@ -44,7 +44,7 @@
 		}
 		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
 
-		$resultID = mysql_query($query, $linkID); 
+		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;

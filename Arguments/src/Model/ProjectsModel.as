@@ -31,7 +31,7 @@ package Model
             this.request.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             return;
 			requestChildProject = new HTTPService;
-			requestChildProject.url = AGORAParameters.getInstance().projectDetailsURL;x
+			requestChildProject.url = AGORAParameters.getInstance().projectDetailsURL;
 			requestChildProject.resultFormat="e4x";
 			requestChildProject.addEventListener(ResultEvent.RESULT, onProjectFetched);
 			requestChildProject.addEventListener(FaultEvent.FAULT, onFault);
@@ -73,7 +73,17 @@ package Model
 	
         public function sendRequest():void
         {
+			return; // testign heavy call commeting out..
+            var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
+            if (loc1.loggedIn()) 			
+            {
+                this.request.send({"uid":loc1.uid, "pass_hash":loc1.passHash});
+            }
+            return;
+        }
 			
+		public function sendRequestOnce():void
+		{
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 			
 

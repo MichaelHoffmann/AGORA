@@ -111,6 +111,7 @@ package Model
 			//	loadMapService.resultFormat="e4x";
 			loadMapService.addEventListener(ResultEvent.RESULT, onLoadMapModelResult);
 			loadMapService.addEventListener(FaultEvent.FAULT, onFault);
+			//loadMapService.method = "POST";
 			
 			//create update positions service
 			updatePositionsService = new HTTPService();
@@ -118,6 +119,7 @@ package Model
 			updatePositionsService.resultFormat = "e4x";
 			updatePositionsService.addEventListener(ResultEvent.RESULT, updatePositionServiceResult);
 			updatePositionsService.addEventListener(FaultEvent.FAULT, onFault);
+			//updatePositionsService.method = "POST";
 			
 			//create update map info service
 			updateMapInfoService = new HTTPService;
@@ -373,7 +375,6 @@ package Model
 			var current=usm.selectedTab;
 				//FlexGlobals.topLevelApplication.agoraMenu.categories.
 				var model:CategoryModel = AGORAModel.getInstance().categoryModel;
-				mx.controls.Alert.show(moveToProject.toString());
 
 				if (moveToProject){
 					if(current == Language.lookup("MyContributions"))
@@ -386,7 +387,7 @@ package Model
 						
 					}else if (current ==Language.lookup("MainTab"))
 					{						
-							Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID as String);
+							Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID.toString());
 					}
 				}
 				moveToProject=false;

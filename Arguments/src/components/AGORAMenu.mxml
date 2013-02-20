@@ -117,7 +117,7 @@
 			 */
 			protected function updateProject(event:MouseEvent):void
 			{
-				Controller.AGORAController.getInstance().updateProject(event);
+				Controller.AGORAController.getInstance().updateProjectOnce(event);
 				
 			}	
 			protected function updateMyMaps(event:MouseEvent):void
@@ -197,7 +197,9 @@
 					cg.topButton();
 					myProjects.currentState="listOfProjects";
 					usm.selectedMyProjProjID=null;
-					updateProject(tempEvent);
+					 updateProject(tempEvent); 
+					 
+					//	AGORAModel.getInstance().projectListModel.requestProjectList();										
 
 				}else if (current ==Language.lookup("MainTab"))
 				{	cg.topButton();
@@ -234,28 +236,30 @@
 				var selectT:String = AGORAModel.getInstance().userSessionModel.selectedTab;
 				if (selectT == Language.lookup("MainTab")){
 					var backup:Array=cg.back();
-					if (backup[1]>-1){
-						Controller.AGORAController.getInstance().fetchDataChildCategory(backup[0],backup[1]);
+					//if (backup[1]>-1){
+					if(backup[2]==null || backup[2]=="0"){
+					if(backup[1]>-1){
+						var usm:UserSessionModel= AGORAModel.getInstance().userSessionModel;						
+						usm.selectedWoAProjID=backup[1];
+						Controller.AGORAController.getInstance().fetchDataChildCategory(backup[0],backup[1],1);
 					}else{
 						AGORAController.getInstance().fetchDataCategory();
 						cg.topButton();
 					}
+					}
 				}else if (selectT== Language.lookup("MyPPProjects")){
 					myProjects.currentState=("listOfProjects");
 					Controller.AGORAController.getInstance().fetchDataMyProjects();
-
 					//cg.visible=false;
 				}
 				else if (selectT == Language.lookup("MyContributions")){
 					//myContributions.currentState=("listOfContributions");
 					cg.visible=false;
 					updateMyContributions(event);
-
 				}
 				else if (selectT == Language.lookup("MyMaps")){
 					cg.visible=true;
 					updateMyMaps(event);
-
 				}
 				
 			}

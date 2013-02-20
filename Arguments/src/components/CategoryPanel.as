@@ -72,6 +72,7 @@ package components
 		private var vGroupContainer:VGroup;
 		private var clickthroughCategories:Label;
 		private var createProjBtn:Button;
+		private var _layerView:Boolean = false;
 		public function CategoryPanel()
 		{
 			super();
@@ -122,7 +123,9 @@ package components
 			 createMapBtn=new Button();
 			 createProjBtn=new Button();
 			createMapBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
-			Controller.AGORAController.getInstance().createMap(e)});	
+				AGORAModel.getInstance().agoraMapModel.moveToProject=true;
+				Controller.AGORAController.getInstance().createMap(e);
+			});	
 			createProjBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
 			Controller.AGORAController.getInstance().createProj(e)});	
 			bottomButtons.addElement(refreshBtn);
@@ -160,6 +163,16 @@ package components
 		}
 		
 		
+		public function get layerView():Boolean
+		{
+			return _layerView;
+		}
+
+		public function set layerView(value:Boolean):void
+		{
+			_layerView = value;
+		}
+
 		override protected function commitProperties():void{
 			super.commitProperties();
 			pView.visible=false;
@@ -172,6 +185,8 @@ package components
 			projectTypePanel.removeAllElements();
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			mapPanel.removeAllElements();
+			layerView=false;
+			
 			//add elements
 
 			if(model.category){
@@ -197,6 +212,7 @@ package components
 						mapPanel.percentWidth=50;
 						categoryTiles.addElement(mapPanel);
 						categoryTiles.addElement(subprojectPanel);
+						layerView=true;
 					}
 					
 					if(model.map != null){
@@ -212,14 +228,14 @@ package components
 				//Loop over the categories that were pulled from the DB
 
 				for each(var categoryXML:XML in model.category.category){
-					trace("Adding buttons");
+					trace("Adding buttons 1890"+categoryXML.@Name);
 					/*Create and setup buttons corresponding to categories*/
 					var button:Button = new Button;
 					button.setStyle("skinClass",TextWrapSkin);
 					button.height = 100;
 					button.width = 200;
 					button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
-					if(categoryXML.@ID>9){
+					if(categoryXML.@ID>9 || categoryXML.@ID == 42){
 					button.label = categoryXML.@Name; //The title of the category except level1 (e.g. Philosophy, Biology, or Projects)
 					}else{
 						button.label = Language.lookup("Category"+categoryXML.@ID); //The title of the category Level1 (e.g. Philosophy, Biology, or Projects)	
@@ -240,7 +256,6 @@ package components
 							AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
 						} 
 						else {
-
 							AGORAController.getInstance().fetchDataChildCategory(e.target.label,e.target.name);
 						}
 						trace("From for loop, count is: " + categoryXML.@category_count);
@@ -263,7 +278,7 @@ package components
 
 				if(is_project_level){
 					clickthroughCategories.visible=false;
-					bottomStuff.visible=true;
+					bottomStuff.visible=true;					
 				}
 				else 
 				{
@@ -327,6 +342,7 @@ package components
 			projectTypePanel.removeAllElements();
 			pView.visible=true;
 			bottomStuff.visible=false;
+			pView.flushall();
 
 		}
 		protected function onMapObjectClicked(event:MouseEvent):void{

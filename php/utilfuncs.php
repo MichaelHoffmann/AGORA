@@ -160,6 +160,7 @@
 			return true;
 			//The name already taken
 		}
+
 	// Check in category as well ... ...
 		$puquery = "SELECT * FROM category WHERE category_name ='$projName' and category_id!=$projID";
 		$resultID = mysql_query($puquery, $linkID);
@@ -167,8 +168,10 @@
 					return true;
 					//The name already taken
 		}
+
 		return false;
 	}
+	
 		function isCategoryIdValid($catId, $linkID){
 		$puquery = "SELECT * FROM category WHERE category_id =$catId";
 		$resultID = mysql_query($puquery, $linkID);
@@ -176,6 +179,23 @@
 					return false;
 		}
 		return true;
+	}
+	
+	function isCategoryIdValidForAddMap($catId, $linkID){
+		$puquery = "SELECT * FROM category WHERE category_id =$catId";
+		$resultID = mysql_query($puquery, $linkID);
+		if($resultID && mysql_num_rows($resultID)>0){
+		$row = mysql_fetch_assoc($resultID);
+		if($row['is_project']){
+			return 1;
+		}			
+		$puquery = "SELECT * FROM parent_categories c inner join category p on c.category_id = p.category_id and c.parent_categoryid = $catId and p.is_project=1";
+		if($resultID && mysql_num_rows($resultID)>0){
+			return 2;
+		}
+		}
+		
+		return -1;
 	}
 
 
@@ -256,6 +276,7 @@ function getUserNameFromUserId($userid,$linkID){
 			$cat_id = $row['category_id'];
 			return $cat_id;
 	}
+	
 	function getCategoryIDfromNameStr($cat_name,$linkID){
 			$query = "SELECT * FROM category WHERE category_name=$cat_name";
 			$resultID = mysql_query($query, $linkID);
@@ -263,6 +284,7 @@ function getUserNameFromUserId($userid,$linkID){
 				error_log("not matching categories found",0);
 				return null;
 			}
+
 			if((mysql_num_rows($resultID)==0)){
 				error_log("not matching categories found",0);
 				return null;
@@ -377,11 +399,13 @@ function getUserNameFromUserId($userid,$linkID){
 			return $root;
 		
 	}
+	
 		function fetchTreeNodesForProj($pid,$catmap,$tree) {
 		// to prevent cyclic tree structures ...
 		if(array_key_exists($pid,$tree)){
 			return $tree;	
 		}
+		
 		if(array_key_exists($pid,$catmap)){
 			$parent = $catmap[$pid];
 			if($parent!=0){
@@ -392,6 +416,7 @@ function getUserNameFromUserId($userid,$linkID){
 			$tree[$pid]=$pid;
 			return $tree;
 	}	
+	
 	function fetchHistoryTreeForMap($mapId,$index,$detailTree,$linkID){
 		error_log($detailTree,0);
 		// lets not show more than 8 levels ..

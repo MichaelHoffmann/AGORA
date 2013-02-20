@@ -53,6 +53,8 @@
 			repeatEmail($output);
 			return $output;
 		}
+		
+		
 		$query = "SELECT * FROM category WHERE category_name='$username'";
 		$resultID = mysql_query($query, $linkID); 
 		if($resultID && mysql_num_rows($resultID) > 0){
@@ -60,12 +62,14 @@
 			$login->addAttribute("text", "That username already exists!"); // Username exists. Do NOT add to the db!
 			return $output;
 		}
+		
 		$query = "SELECT * FROM users WHERE username='$username'";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;
 		}
+				
 		$row = mysql_fetch_assoc($resultID);
 		
 		if($row['user_id']=="") // If user doesn't exist...

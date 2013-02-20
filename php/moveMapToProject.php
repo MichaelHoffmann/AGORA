@@ -48,7 +48,9 @@
 			return $output;
 		}
 		
-		if(isCategoryIdValid($category_id,$linkID)){
+		$pstats=isCategoryIdValidForAddMap($category_id,$linkID);
+		$output->addAttribute("temp",$pstats);
+		if($pstats==-1){
 			projectNotFoundID($output);
 			return $output;
 		}
@@ -63,6 +65,14 @@
 			modifyOther($output);
 			return $output;
 		}
+		if($pstats==1){
+		$puQuery = "SELECT * FROM projects WHERE proj_id=$category_id";
+		$resultID = mysql_query($puQuery, $linkID);
+		if(!$resultID || mysql_num_rows($resultID)==0){
+		//User is attempting to move map into a project he is not a member of
+			notInProject($output, $puQuery);
+			return $output;
+		}
 		//...and then only if he is a user of the project.
 		$puQuery = "SELECT user_id FROM projusers WHERE proj_id=$category_id AND user_id=$userID";
 		$resultID = mysql_query($puQuery, $linkID);
@@ -70,6 +80,7 @@
 			//User is attempting to move map into a project he is not a member of
 			notInProject($output, $puQuery);
 			return $output;
+		}
 		}
 		
 		$query = "UPDATE category_map SET category_id='$category_id' WHERE map_id='$map_id'";

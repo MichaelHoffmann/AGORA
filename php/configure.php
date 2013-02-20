@@ -21,11 +21,11 @@
 	*/
 	
 	/** dbName: name of the database to use */
-	$dbName = "agoraDev";
+	$dbName = "agora";
 	/** dirName: name of the current directory */
-	$dirName = "testing";
+	$dirName = "release";
 	/** version: current version number */
-	$version = "11.12.02";
+	$version = "11.11.14";
 	/** server url */
-	$serverurlpath = "http://agora.gatech.edu/";
+	$serverurlpath = "http://agora.gatech.edu/release/English/";
 ?>

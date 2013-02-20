@@ -114,7 +114,7 @@ package Controller
 			var agoraController:AGORAController = AGORAController.getInstance();
 			agoraController.fetchDataMyMaps();
 			agoraController.fetchContributions();
-			agoraController.fetchDataMyProjects();
+			agoraController.fetchDataMyProjects(1);			
 			
 			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 			// show reg window in case security question is not set ...

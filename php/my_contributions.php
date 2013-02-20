@@ -73,7 +73,6 @@ function list_projects($userID, $pass_hash) {
 				$map->addAttribute("title", $row['title']);
 				$map->addAttribute("creator", $row['username']);
 				$map->addAttribute("creatorid", $row['user_id']);
-			
 				$count++;
 			}
 			$output->addAttribute("map_count", $count);

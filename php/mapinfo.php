@@ -73,10 +73,12 @@
 			if(isUserInMapProject($userID, $mapID, $linkID)){
 				//Okay, user's in a project, he can edit the map's info
 			}else{
-				//You can't modify someone else's map information!
-				modifyOther($output);
-				return $output;
+			//You can't modify someone else's map information!
+			modifyOther($output);
+			return $output;
 			}
+		}
+		
 		// map names are unique ..
 		$queryname = "SELECT * FROM maps m where m.title = '$title' and m.is_deleted=0 and m.map_id!=$mapID";
 		$resultIDmap = mysql_query($queryname, $linkID);
@@ -84,6 +86,7 @@
 			mapNameTakedonEdit($output);
 			return $output;
 		}
+		
 		//User has permission to modify this map.
 		//$title, $desc, $lang - any of these being false/0/null means "no change"
 		if(!$title){

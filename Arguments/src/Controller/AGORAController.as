@@ -136,7 +136,8 @@ package Controller
 				fetchDataMyProjects();
 			}else if (selectedTab == Language.lookup("MyContributions")){
 				usm.selectedMyContProjID=(e.target as Button).name;
-				updateMyContributions(e as MouseEvent);
+				fetchDataMyProjects();
+				//updateMyContributions(e as MouseEvent);
 			}
 		}
 		//--------------------Fetch Map List------------------------------//
@@ -184,16 +185,19 @@ package Controller
 			chain.update();
 			chain.visible=true;
 		}
-		public function fetchDataChildCategory(parentCategory:String,parentID:int):void{
+		public function fetchDataChildCategory(parentCategory:String,parentID:int,opt:int=0):void{
 			menu.categories.loadingDisplay.text = Language.lookup("Loading");
 			menu.categories.loadingDisplay.visible = true;
 			//model.userSessionModel.selectedWoAProjectID=parentCategory;
 			trace("Adding to the cc with category: " + parentCategory);
 			getChain(parentID);
 			var categoryM:CategoryModel = model.categoryModel;
-			categoryM.requestChildCategories(parentCategory,parentID);
+			if(opt==0){
+				categoryM.requestChildCategories(parentCategory,parentID);
+			}else{
+				categoryM.requestCatProjsMaps(parentCategory,parentID);
+			}
 		}
-		
 		public function fetchChildCategorycontributions(parentCategory:String,parentID:int):void{
 			menu.contributions.loadingDisplay.text = Language.lookup("Loading");
 			menu.contributions.loadingDisplay.visible = true;
@@ -250,9 +254,29 @@ package Controller
 			model.moveProjectModel.sendForChildren(parentCategory,parentCategoryID);
 		}
 		public function onMapAdded():void{
-			if(model.userSessionModel.selectedMyProjProjID){
+/*			if(model.userSessionModel.selectedMyProjProjID){
 				menu.myProjects.setCurrentProject(model.userSessionModel.selectedMyProjProjID);
 			}
+	*/
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;			
+			if(current == Language.lookup("MyContributions"))
+			{
+				model.myProjectsModel.listProjMaps(usm.selectedMyContProjID);
+			}
+			else if(current==Language.lookup("MyPPProjects"))
+			{
+				model.myProjectsModel.listProjMaps(usm.selectedMyProjProjID);
+
+			}else if (current ==Language.lookup("MainTab"))
+			{
+				if(menu.categories.layerView)
+					model.categoryModel.requestCatProjsMaps("",usm.selectedWoAProjID);
+				else
+				    model.myProjectsModel.listProjMaps(usm.selectedWoAProjID+"");
+			}
+
+			
 		}
 		public function publishMap(mapID:int, currCatID:int):void{
 			model.publishMapModel.publishMap(mapID, currCatID);
@@ -272,7 +296,7 @@ package Controller
 		public function onProjectDeleted(e:Event):void{
 			menu.myProjects.currentState="listOfProjects";
 			fetchDataMyProjects();
-			fetchDataProjectList();
+			//fetchDataProjectList(); // changed 
 		}
 		public function onUsersChanged(e:Event):void{
 			updateProject(e)
@@ -315,9 +339,22 @@ package Controller
 				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			}
 			updateWOA(e as MouseEvent);
-			fetchDataProjectList();
+			//fetchDataProjectList();
+			//model.myProjectsModel.sendRequest();
 			fetchDataMyProjects();
 		}
+		
+		public function updateProjectOnce(e:Event):void{
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if( FlexGlobals.topLevelApplication.projectNameBox){
+				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			}
+			updateWOA(e as MouseEvent);
+			model.myProjectsModel.sendRequestOnce();
+			fetchDataMyProjects();
+		}
+		
 		public function onAdminChanged(e:Event):void{
 			fetchDataMyProjects();
 			menu.myProjects.currentState="listOfProjects";
@@ -342,7 +379,6 @@ package Controller
 					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
 					menu.categories.pView.loadingDisplay.visible=true;
 					menu.categories.pView.populateSubProjects();
-
 				}else if(current==Language.lookup("MyMaps"))
 				{
 					//do nothing.
@@ -448,7 +484,7 @@ package Controller
 			menu.projects.loadingDisplay.text = Language.lookup("Loading");
 			menu.projects.loadingDisplay.visible = true;
 			var projectListM:ProjectListModel = model.projectListModel;
-			projectListM.requestProjectList();	
+			projectListM.requestProjectList();
 		}
 		public function fetchContributions():void{
 			var myContributionsM:MyContributionsModel = model.mycontributionsModel;
@@ -486,6 +522,11 @@ package Controller
 				cg.verified();
 			}else
 			if(usm.loggedIn()){
+				if(usm.hidemaptemp){
+					AGORAController.getInstance().hideMap(1);
+					usm.hidemaptemp=false;
+				}
+				
 				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
 				menu.myProjects.loadingDisplay.visible = true;
 				model.myProjectsModel.sendRequest();
@@ -496,7 +537,7 @@ package Controller
 				}
 				else if(current==Language.lookup("MyPPProjects"))
 				{
-					usm.selectedMyProjProjID=""+tempParentCategoryID			
+					usm.selectedMyProjProjID=""+tempParentCategoryID;	
 				}else if (current ==Language.lookup("MainTab"))
 				{
 					menu.categories.showpView();
@@ -504,10 +545,10 @@ package Controller
 					usm.selectedWoAProjID=tempParentCategoryID;
 				}else if(current==Language.lookup("MyMaps"))
 				{
-					//do nothing.
-					
+					//do nothing.					
 				}
 			}fetchDataMyProjects();
+			
 		}
 		
 		/**
@@ -547,7 +588,7 @@ package Controller
 		}
 		
 		//------------------Fetch my Projects ------------------------------//
-		public function fetchDataMyProjects():void{
+		public function fetchDataMyProjects(opt:int=0):void{
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
 			if(usm.loggedIn()){
@@ -565,7 +606,9 @@ package Controller
 				else if(current==Language.lookup("MyPPProjects"))
 				{
 					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
-
+					if(menu.myProjects.theProject!=null){
+					menu.myProjects.theProject.flushall();
+					}
 					if(usm.selectedMyProjProjID){
 						model.myProjectsModel.requestProjDetails(usm.selectedMyProjProjID);
 						model.myProjectsModel.requestChildCategories(usm.selectedMyProjProjID);
@@ -576,10 +619,9 @@ package Controller
 				{
 					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
 					menu.categories.pView.loadingDisplay.visible=true;
-					
 					var cg:Button=FlexGlobals.topLevelApplication.rightSidePanel.categoryChain.getCategory();
 					if(cg.label!=Language.lookup("CategoryTopLevel")){
-						model.categoryModel.requestChildCategories(cg.label,parseInt(cg.name));
+//						model.categoryModel.requestChildCategories(cg.label,parseInt(cg.name));
 					}
 					if(parseInt(""+usm.selectedWoAProjID)){
 						model.myProjectsModel.requestProjDetails(""+usm.selectedWoAProjID);
@@ -593,7 +635,11 @@ package Controller
 					
 				}
 			}
-			model.myProjectsModel.sendRequest();
+			
+		//	model.myProjectsModel.sendRequest();
+			if(opt==1){
+			model.myProjectsModel.sendRequestOnce();
+			}
 
 		}
 		
@@ -606,14 +652,20 @@ package Controller
 			if( FlexGlobals.topLevelApplication.projectNameBox){
 				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			}
-			fetchDataProjectList();
+			//fetchDataProjectList();
 			fetchDataMyProjects();
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if (current ==Language.lookup("MainTab") && parseInt(""+usm.selectedWoAProjID) && menu.categories.layerView)
+			{
+				model.categoryModel.requestChildCategories("",usm.selectedWoAProjID);
+			}			
 		}
 		protected function updateMapProj(){
 			if( FlexGlobals.topLevelApplication.projectNameBox){
 				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			}
-			fetchDataProjectList();
+			//fetchDataProjectList();
 			fetchDataMyProjects();
 			if(AGORAModel.getInstance().userSessionModel.selectedTab==Language.lookup("MyContributions"))
 			{
@@ -715,7 +767,7 @@ package Controller
 		
 		
 		//----------- other public functions --------------------//
-		public function hideMap():void{
+		public function hideMap(opt:int=0):void{
 			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			//When we return to the category screen by clicking save and home or loading an illegal map,
 			//find the current category and refresh it. Solved a problem with a created map not appearing
@@ -735,11 +787,12 @@ package Controller
 			FlexGlobals.topLevelApplication.map.agoraMap.firstClaimHelpText.visible = false;
 			map.agoraMap.helpText.visible = false;
 			mapModel.ID = 0;
+			if(opt==0){
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
-			AGORAController.getInstance().mapModel.name = "null";
 			AGORAController.getInstance().fetchDataChat();
-			
+			}
+			AGORAController.getInstance().mapModel.name = "null";
 			//timers
 			map.agoraMap.timer.reset();
 			menu.timer.start();

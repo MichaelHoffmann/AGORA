@@ -26,6 +26,12 @@
 			return $output;
 		}
 
+		$checkIfProj = "SELECT * FROM category WHERE category_id=$projID AND is_project=0";
+		$result_IsProj = mysql_query($checkIfProj, $linkID);
+		if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
+			$output->addAttribute("verified", true);
+			return $output;
+		}
 		$query = "SELECT * FROM projusers WHERE proj_id=$projID AND user_id=$userID";
 		$query2 = "SELECT * FROM projusers WHERE proj_id=$projID";
 		

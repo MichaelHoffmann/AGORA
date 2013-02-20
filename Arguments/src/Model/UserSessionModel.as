@@ -54,6 +54,7 @@ package Model
 		public var selectedWoAProjID:int;
 		public var selectedMyContProjID:String;
 		public var selectedTab:String=Language.lookup("MainTab");
+		private var _hidemaptemp:Boolean=false;
 		private var _securityAnswerSet:Boolean=false;
 		private var _securityCodeNum:int=100;
 		private var _securityAnswer:String="";
@@ -71,6 +72,14 @@ package Model
 		}
 		
 		//Getters and setters
+		public function get hidemaptemp():Boolean
+		{
+			return _hidemaptemp;
+		}
+		public function set hidemaptemp(value:Boolean):void
+		{
+			_hidemaptemp = value;
+		}
 		public function get historyMapsVisited():Vector.<Object>
 		{
 			return _historyMapsVisited;

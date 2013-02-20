@@ -74,7 +74,7 @@
 			protected function panel_keyDownHandler(event:KeyboardEvent):void
 			{
 				if(event.keyCode == Keyboard.ENTER){
-					if(currentState="addUsers"){
+					if(currentState=="addUsers"){
 						addUsers();
 					}else{
 						project_add();
@@ -107,7 +107,7 @@
 					Model.AGORAModel.getInstance().agoraMapModel.numberUsers = loc1.length;
 					Model.AGORAModel.getInstance().agoraMapModel.projectUsers = loc1;
 					Controller.AGORAController.getInstance().addUsers();
-					Controller.AGORAController.getInstance().fetchDataMyProjects();
+				//	Controller.AGORAController.getInstance().fetchDataMyProjects();
 					return;
 			}
 				

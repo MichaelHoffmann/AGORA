@@ -4,6 +4,7 @@ package Model
     
     import ValueObjects.*;
     
+    import classes.Language;
     import flash.events.*;
     
     import mx.controls.Alert;
@@ -29,7 +30,18 @@ package Model
 			var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
 			if (loc1.loggedIn()) 
 			{
-				loc2 = { "projID":loc1.selectedMyProjProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};
+				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+				var current=usm.selectedTab;
+				if(current == Language.lookup("MyContributions"))
+				{
+					loc2 = { "projID":loc1.selectedMyContProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType,"changeType":true};
+				}else if(current==Language.lookup("MyPPProjects"))
+				{
+					loc2 = { "projID":loc1.selectedMyProjProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType,"changeType":true};
+				}else if (current ==Language.lookup("MainTab"))
+				{						
+					loc2 = { "projID":loc1.selectedWoAProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType,"changeType":true};
+				}
 				this.request.send(loc2);
 			}
 			return;
@@ -40,7 +52,18 @@ package Model
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
+				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
+				var current=usm.selectedTab;
+				if(current == Language.lookup("MyContributions"))
+				{
+					loc2 = { "projID":loc1.selectedMyContProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};					
+				}else if(current==Language.lookup("MyPPProjects"))
+				{
                 loc2 = { "projID":loc1.selectedMyProjProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};
+				}else if (current ==Language.lookup("MainTab"))
+				{						
+					loc2 = { "projID":loc1.selectedWoAProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};
+				}
                 this.request.send(loc2);
             }
             return;

@@ -82,7 +82,7 @@
 		$output->addAttribute("url", $row['url']);
 		$output->addAttribute("project", $row['category_id']);
 		$output->addAttribute("map_type", $row['map_type']);
-		$output->addAttribute("is_hostile", $row['is_hostile']);
+		$output->addAttribute("is_hostile", $row['is_hostile']);		
 		if($timestamp == 0){
 			$output->addAttribute("reloadRPANEL", "1");
 		}else{
@@ -92,7 +92,7 @@
 		
 		$mapHistory = false;
 		// check for the history of the map and get the same ..
-		$query = "SELECT * FROM maps inner join savedcomponents on map_id=CompId inner join users on OrgUserId=users.user_id where type=1 and map_id = $mapID";
+		$query = "SELECT * FROM maps inner join SavedComponents on map_id=CompId inner join users on OrgUserId=users.user_id where type=1 and map_id = $mapID";
 		$resultID = mysql_query($query, $linkID);
 		if($resultID && mysql_num_rows($resultID)>0){
 				$detailTree = $output->addChild("mapHistory");

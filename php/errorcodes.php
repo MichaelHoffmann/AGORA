@@ -271,7 +271,8 @@
 		$fail->addAttribute("text", "UserNamePassWordNotMatching");
 		$fail->addAttribute("code", 104);
 	}
-	function notProjectMember($output){
+	
+      function notProjectMember($output){
 		$fail=$output->addChild("NotMember");
 		$fail->addAttribute("text", "NotProjectMember");
 		$fail->addAttribute("code", 104);

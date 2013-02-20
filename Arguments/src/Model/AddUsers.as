@@ -2,6 +2,7 @@ package Model
 {
     import Events.*;
     import ValueObjects.*;
+    import classes.Language;
     import flash.events.*;
     
     import mx.controls.Alert;
@@ -28,7 +29,14 @@ package Model
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				var sendProjID:int;
+				var selectedTab:String=usm.selectedTab;
+				if (selectedTab == Language.lookup("MainTab")){
+					loc2 = {"action":"add", "projID":loc1.selectedWoAProjID, "uid":loc1.uid, "pass_hash":loc1.passHash, "usersList[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
+				}else{
                 loc2 = {"action":"add", "projID":loc1.selectedMyProjProjID, "uid":loc1.uid, "pass_hash":loc1.passHash, "usersList[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
+				}
                 this.request.send(loc2);
             }
             return;

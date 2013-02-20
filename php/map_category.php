@@ -21,6 +21,8 @@ function findMapCategory($parentCategory)
 			databaseNotFound($output);
 			return $output;
 		}
+		
+		
 		$query = "(SELECT * FROM maps JOIN category_map ON maps.map_id = category_map.map_id JOIN users ON users.user_id = maps.user_id 
 				JOIN category ON category_map.category_id = category.category_id WHERE maps.is_deleted = 0 
 				AND category_map.category_id = ( SELECT category_id FROM category WHERE category.category_id = $parentCategory ))";

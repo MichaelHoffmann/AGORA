@@ -1,9 +1,9 @@
 <?php
 	/**
 	Adding as a test
-	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning, 
-			reflection, critique, deliberation, and creativity in individual argument construction 
-			and in collaborative or adversarial settings. 
+	AGORA - an interactive and web-based argument mapping tool that stimulates reasoning,
+			reflection, critique, deliberation, and creativity in individual argument construction
+			and in collaborative or adversarial settings.
     Copyright (C) 2011 Georgia Institute of Technology
 
     This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	
+
 	*/
 
 /**
@@ -27,14 +27,14 @@ List of variables for insertion:
 	xml: The XML of map data to insert
 	uid: User ID of the user inserting the data
 	pass_hash: the hashed password of the user inserting the data
-	
+
 	* XML data:
 		MAP level:
 			id or ID: the ID of the map to be modified. 0 or nonexistent creates a new map and ignores everything else.
 			title: Title of the map (for new maps only)
 			desc: Description of the map (for new maps only)
 			lang: Language of the map (for new maps only)
-		
+
 		IN-MAP level:
 			textbox: insert or modify a textbox
 				text: The text the user typed into the box (or default text)
@@ -48,10 +48,10 @@ List of variables for insertion:
 				y: y-coordinate of a node on the map
 				typed: Whether the node has been typed or still contains default text
 				is_positive: Whether the argument is positive or not (logically speaking).
-				
+
 				* nodetext: link between a node and textbox. Due to hierarchy, it only needs one variable.
 					textboxID: ID of the textbox.
-					(NOTE: Position comes from ordering of the nodetexts. As a result, if ANY nodetext relationship is updated, 
+					(NOTE: Position comes from ordering of the nodetexts. As a result, if ANY nodetext relationship is updated,
 							ALL nodetexts must be included- even without change.)
 			connection: insert or modify a connection (arguments, objections, etc.)
 				ID: ID of an existing connection
@@ -72,8 +72,8 @@ List of variables for insertion:
 	require 'errorcodes.php';
 	require 'establish_link.php';
 	require 'utilfuncs.php';
-	
-	
+
+
 	$tbTIDarray;
 	$nodeTIDarray;
 	/**
@@ -103,7 +103,6 @@ List of variables for insertion:
 		$query = "SELECT category.category_id,is_project FROM `category` join `category_map` on `category_map`.category_id = `category`.category_id where `category_map`.map_id =$mapID";
 		$proj_id = $query['category_id'];
 		$is_project = $query['is_project'];
-			   
 		if($id){
 			$query = "SELECT * FROM textboxes WHERE textbox_id=$id";
 			$resultID = mysql_query($query, $linkID);
@@ -112,12 +111,12 @@ List of variables for insertion:
 			/*if ($is_project == 0)
 			{
 				if($userID == $dbUID){
-					$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
-					$status = mysql_query($uquery, $linkID);
+				$uquery = "UPDATE textboxes SET text='$text', modified_date=NOW() WHERE textbox_id=$id";
+				$status = mysql_query($uquery, $linkID);
 				}
 				else{
-					modifyOther($output);
-					return false;
+				modifyOther($output);
+				return false;
 				}
 			}*/
 			//if($is_project == 1){
@@ -134,15 +133,13 @@ List of variables for insertion:
 						$status = mysql_query($uquery, $linkID);
 						$uquery = "UPDATE nodes SET user_id = $userID WHERE node_id=$nodeID";
 						$success=mysql_query($uquery, $linkID);
-
 				}
 				else 
 				{
 					notProjectMember($output);
 				}
-			
 			//}
-		}else{	
+		}else{
 			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO textboxes (user_id, map_id, text, created_date, modified_date) VALUES
 										($userID, $mapID, '$text', NOW(), NOW())";
@@ -155,7 +152,7 @@ List of variables for insertion:
 			$textbox=$output->addChild("textbox");
 			$textbox->addAttribute("TID", $tid);
 			$textbox->addAttribute("ID", $newID);
-			
+
 			$tbTIDarray[$tid]=$newID; // Add the TID->ID mapping to the global lookup array
 		}
 		return true;
@@ -170,7 +167,7 @@ List of variables for insertion:
 		$attr = $nt->attributes();
 		$textboxID = mysql_real_escape_string($attr["textboxID"]);
 		$tgtNodeID = mysql_real_escape_string($attr["targetNodeID"]);
-		
+
 		$query = "SELECT * FROM nodetext WHERE node_id=$nodeID AND position=$position";
 		$resultID = mysql_query($query, $linkID);
 		$row = mysql_fetch_assoc($resultID);
@@ -212,14 +209,14 @@ List of variables for insertion:
 				}
 			}else if($tgtNodeID){
 				//We have a target node TID, rather than an ID. Stubbing out space in case this is needed.
-				
+
 			}else{ //insert with textbox TID
 				$tTID = mysql_real_escape_string($attr["textboxTID"]);
 				$textID=$tbTIDarray[$tTID];
-				
-				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES 
+
+				$iquery = "INSERT INTO nodetext (node_id, textbox_id, position, created_date, modified_date) VALUES
 							($nodeID, $textID, $position, NOW(), NOW())";
-				
+
 				$success = mysql_query($iquery, $linkID);
 				if(!$success){
 					insertFailed($output, $iquery);
@@ -234,8 +231,8 @@ List of variables for insertion:
 		}
 		return true;
 	}
-	
-	
+
+
 
 	/**
 	*	Takes a node from XML and puts it in the database.
@@ -291,7 +288,7 @@ List of variables for insertion:
 			}
 		}else{
 			//insert
-			$tid = mysql_real_escape_string($attr["TID"]);		
+			$tid = mysql_real_escape_string($attr["TID"]);
 			$iquery = "INSERT INTO nodes (user_id, map_id, nodetype_id, created_date, modified_date, x_coord, y_coord, typed, connected_by, is_positive) VALUES
 										($userID, $mapID, $typeID, NOW(), NOW(), $x, $y, $typed, '$cBy', $positivity)";
 			$success=mysql_query($iquery, $linkID);
@@ -313,7 +310,7 @@ List of variables for insertion:
 			$pos++;
 			//$nodeOut is still in scope here because PHP's scoping rules are relaxed.
 			nodeTextToDB($child, $nodeID, $linkID, $userID, $pos, $nodeOut);
-			
+
 			//Note that this won't be done if the owner check failed on an UPDATE
 			//because the update will return false.
 			//This behavior is correct:
@@ -322,12 +319,12 @@ List of variables for insertion:
 		}
 		return true;
 	}
-	
+
 	/**
 	*	Links between nodes and connections in the DB.
 	*/
 	function sourceNodeToDB($source, $connID, $linkID, $output)
-	{	
+	{
 		global $nodeTIDarray;
 		//Source Nodes don't have to worry about being updated.
 		//They can only be DELETED or INSERTED.
@@ -339,7 +336,7 @@ List of variables for insertion:
 			$nodeTID = mysql_real_escape_string($attr["nodeTID"]);
 			$nodeID = $nodeTIDarray[$nodeTID];
 		}
-		
+
 		$iquery = "INSERT INTO sourcenodes (connection_id, node_id, created_date, modified_date) VALUES
 											($connID, $nodeID, NOW(), NOW())";
 		$success = mysql_query($iquery, $linkID);
@@ -354,7 +351,7 @@ List of variables for insertion:
 		}
 		return true;
 	}
-	
+
 	/**
 	*	Defines the "argument" part of a connection in the DB.
 	*/
@@ -368,19 +365,19 @@ List of variables for insertion:
 		$nodeID = mysql_real_escape_string($attr["targetnodeID"]);
 		$x = mysql_real_escape_string($attr["x"]);
 		$y = mysql_real_escape_string($attr["y"]);
-		
+
 		//get Type ID since that's what we need
 		$type = mysql_real_escape_string($attr["type"]);
 		$query1 = "SELECT * FROM connection_types WHERE conn_name = '$type'";
 		$resultID = mysql_query($query1, $linkID);
 		$row = mysql_fetch_assoc($resultID);
 		$typeID = $row["type_id"];
-		
+
 		if(!$nodeID){
 			$tnodeTID = mysql_real_escape_string($attr["targetnodeTID"]);
 			$nodeID=$nodeTIDarray[$tnodeTID];
 		}
-		
+
 		if(!$id){
 			//Insert the connection into the DB (target node and info)
 			$iquery = "INSERT INTO connections (user_id, map_id, node_id, type_id, x_coord, y_coord, created_date, modified_date) VALUES
@@ -397,15 +394,14 @@ List of variables for insertion:
 		}else{
 			//Update TYPE of the connection
 			//It's not legal to change what node the connection is targeting.
-				$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
-				$success=mysql_query($uquery, $linkID);
-				if(!$success){
-					updateFailed($output, $uquery);
-					return false;
-				}
-				$connection->addAttribute("ID", $id);
-				$connection->addAttribute("new_type", $typeID);
-
+			$uquery = "UPDATE connections SET type_id = $typeID, modified_date=NOW(), x_coord=$x, y_coord=$y WHERE connection_id=$id";
+			$success=mysql_query($uquery, $linkID);
+			if(!$success){
+				updateFailed($output, $uquery);
+				return false;
+			}
+			$connection->addAttribute("ID", $id);
+			$connection->addAttribute("new_type", $typeID);
 		}
 		//Get the source nodes
 		$children = $conn->children();
@@ -415,7 +411,7 @@ List of variables for insertion:
 		}
 		return true;
 	}
-	
+
 	/**
 	*	Convenience function that iterates through the XML to find all the pieces.
 	*	Separated out for clarity.
@@ -447,10 +443,10 @@ List of variables for insertion:
 					}
 					break;
 			}
-		}		
+		}
 		return true;
 	}
-	
+
 	/**
 	*	Highest-level function, that does the top level logic.
 	*/
@@ -475,7 +471,7 @@ List of variables for insertion:
 			incorrectLogin($output);
 			return $output;
 		}
-	
+
 		//Dig the Map ID out of the XML
 		try{
 			$xml = new SimpleXMLElement($xmlin);
@@ -483,7 +479,7 @@ List of variables for insertion:
 			poorXML($output);
 			return $output;
 		}
-		$mapID = $xml['ID']; 
+		$mapID = $xml['ID'];
 		$mapClause = mysql_real_escape_string("$mapID");
 		//A backwards-compatible fix to allow lowercase-id to continue working to avoid breaking client code:
 		$mapID = $xml['id'];
@@ -502,28 +498,34 @@ List of variables for insertion:
 			if(!$desc){
 				$desc = "No description";
 			}
-			
+
 			$lang = mysql_real_escape_string($xml['lang']);
 			if(!$lang){
 				$lang="EN-US";
 			}
+
+	
 					$queryname = "SELECT * FROM maps m where m.title = '$title' and m.is_deleted=0";
 					$resultIDmap = mysql_query($queryname, $linkID);
 					if($resultIDmap && mysql_num_rows($resultIDmap)>0){
 								mapNameTaked($output);
 								return $output;
 					}
+
 			$iquery = "INSERT INTO maps (user_id, title, description, lang, created_date, modified_date) VALUES
 										($userID, '$title', '$desc', '$lang', NOW(), NOW())";
-			mysql_query($iquery, $linkID);						
+
+
+			mysql_query($iquery, $linkID);
 			$mapClause = getLastInsert($linkID);
 			if(!$mapClause){
 				insertFailed($output, $iquery);
 				return $output;
 			}
 		
-		$output->addAttribute("ID", $mapClause);
+			$output->addAttribute("ID", $mapClause);
 		}
+
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
@@ -531,10 +533,10 @@ List of variables for insertion:
 			return $output;
 		}
 		$row = mysql_fetch_assoc($resultID);
-		
+
 		//Check to see if this is the map author
 		//If so, $ownMap is set to true.
-		
+
 		$author = $row['user_id'];
 		$ownMap = false;
 		if($author == $userID){
@@ -543,15 +545,16 @@ List of variables for insertion:
 			//We need to establish a clear policy on what insertions *are* legal, though.
 			//That will be done on the Node and Connection levels.
 			//It hinges on the TYPES of nodes and connections, which haven't been fully established yet.
+
 			//(Note that UPDATES are checked against ownership of that individual thing)
 		}
-		
+
 		//This part neatly handles all possibilities of failure. All we have to do is chain back "false" returns.
 		mysql_query("START TRANSACTION");
-		
+
 		$success = xmlToDB($xml, $mapClause, $linkID, $userID, $output);
 		//Update map last modified time
-		
+
 		if($success===true){
 			$uquery = "UPDATE maps SET modified_date=NOW() WHERE map_id=$mapClause";
 			$status = mysql_query($uquery);
@@ -565,14 +568,15 @@ List of variables for insertion:
 			mysql_query("ROLLBACK");
 			rolledBack($output);
 		}
+
 		return $output;
-		
+
 	}
-	
+
 	$xmlparam = to_utf8($_GET['xml']); //TODO: Change this back to a GET when all testing is done.
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$proj_type = mysql_real_escape_string($_REQUEST['proj_type']);
-	$output = insert($xmlparam, $userID, $pass_hash); 
+	$output = insert($xmlparam, $userID, $pass_hash);
 	print($output->asXML());
 ?>

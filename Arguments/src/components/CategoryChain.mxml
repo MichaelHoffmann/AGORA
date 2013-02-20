@@ -48,6 +48,7 @@
 				topButton();
 				var button:Button = new Button;				
 				button.width = 100;
+				button.id = "0";
 				button.name = subprojects.@pid; //The ID (unique DB identifier) of the category
 				button.label = subprojects.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 				button.setStyle("chromeColor", 0xA0CADB);
@@ -61,12 +62,15 @@
 					button.name = project.@pid; //The ID (unique DB identifier) of the category
 					button.label = project.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 					button.setStyle("chromeColor", 0xA0CADB);
-					actualHistory.addElement(button);
-					if(project.@isproject){
+				
+					if(project.@isproject==1){
 					button.addEventListener("click",navigateToWOAProject);
+					button.id = "1";
 					}else{
 						button.addEventListener("click",navigateToWOA);
+						button.id = "0";
 					}
+					actualHistory.addElement(button);
 					categoryChain.addItem(project.@pid);
 					}
 				}
@@ -92,11 +96,11 @@
 			}
 			private function navigateToWOA(e:Event):void{
 				AGORAController.getInstance().setSelectedTab(0);
-				AGORAController.getInstance().hideMap();
+				AGORAController.getInstance().hideMap(1);
 				AGORAModel.getInstance().userSessionModel.selectedWoAProjID=parseInt(e.target.name);
 				if(e.target.label!=Language.lookup("CategoryTopLevel")){
-					AGORAController.getInstance().fetchDataChildCategory(e.target.label,e.target.name);
-					AGORAController.getInstance().fetchDataMyProjects();
+					AGORAController.getInstance().fetchDataChildCategory(e.target.label,e.target.name,1);
+				//	AGORAController.getInstance().fetchDataMyProjects();
 				}else{
 					topButton();
 					AGORAController.getInstance().fetchDataCategory();
@@ -106,6 +110,12 @@
 			private function navigateToWOAProject(e:Event):void{
 				vName=e.target.name;
 				vLabel=e.target.label;
+				// opt
+				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				usm.hidemaptemp=true;
+
+				AGORAModel.getInstance().agoraMapModel.tempprojectID = AGORAModel.getInstance().agoraMapModel.projectID;
+				AGORAModel.getInstance().agoraMapModel.tempprojID = AGORAModel.getInstance().agoraMapModel.projID;
 				AGORAModel.getInstance().agoraMapModel.projectID = e.target.name;
 				AGORAModel.getInstance().agoraMapModel.projID = e.target.name;
 				AGORAController.getInstance().verifyProjectMember(e.target.label,e.target.name);
@@ -114,21 +124,22 @@
 
 			public function back():Array{
 				var temp=new Array();
-				temp.push(-1,-1);
+				temp.push(-1,-1,-1);
 				if(actualHistory.numElements>1){
 					temp=new Array();
 					var e:Button=actualHistory.getElementAt(actualHistory.numElements-2)as Button;
+					AGORAModel.getInstance().agoraMapModel.tempprojectID = AGORAModel.getInstance().agoraMapModel.projectID;
+					AGORAModel.getInstance().agoraMapModel.tempprojID = AGORAModel.getInstance().agoraMapModel.projID;
 					AGORAModel.getInstance().agoraMapModel.projectID = parseInt(e.name);
 					AGORAModel.getInstance().agoraMapModel.projID = parseInt(e.name);
-					if(actualHistory.numElements>2){
-					AGORAController.getInstance().verifyProjectMember((e.label),parseInt(e.name));
-					
+					if(actualHistory.numElements>2 && e.id == "1"){
+					AGORAController.getInstance().verifyProjectMember((e.label),parseInt(e.name));					
 					}
 					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).label);
 					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).name);
+					temp.push((actualHistory.getElementAt(actualHistory.numElements-2) as Button).id);
 				}
 				return temp;
-
 			}
 			public function getCategory():Button{
 				return actualHistory.getElementAt(actualHistory.numElements-1) as Button;
