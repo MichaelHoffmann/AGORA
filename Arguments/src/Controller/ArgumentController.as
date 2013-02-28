@@ -266,7 +266,95 @@ package Controller
 			Alert.show(Language.lookup('FirstClaimFailed'));
 			LoadController.getInstance().fetchMapData();
 		}
+		public function addComment(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomObjection(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.comment(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3);	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.comment(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
+		public function addAmendment(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.amendment(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.amendment(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
+		public function addQuestion(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.question(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.question(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
+		public function addSupport(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.support(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.support(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
 		
+		public function addReformulation(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.reformulation(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.reformulation(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
+		public function addLinkToMap(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.linktomap(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.linktomap(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
+		public function addLinkToResource(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.linktoresource(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.linktoresource(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
+		public function addDefinition(model:StatementModel):void{
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.definition(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.definition(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
 		//----------------- Adding an Argument -------------------------------//
 		public function addSupportingArgument(statementModel:StatementModel):void{
 			if(checkArgUnderConstruction()){
@@ -517,8 +605,20 @@ package Controller
 					map.sBar.displayLoading();
 					model.deleteMe();
 				}
-				else if(model.statementFunction == StatementModel.OBJECTION){
+				else if(model.statementFunction == StatementModel.OBJECTION || model.statementFunction == StatementModel.COUNTER_EXAMPLE){
 					if(model.supportingArguments.length > 0 || model.objections.length > 0){
+						Alert.show(Language.lookup("DeleteSuppStmt"));
+						return;
+					}
+					if(checkArgUnderConstruction()){
+						return;
+					}
+					AGORAModel.getInstance().requested = true;
+					map.sBar.displayLoading();
+					model.deleteMe();
+				}
+				else if	(model.statementFunction == StatementModel.COMMENT || model.statementFunction == StatementModel.AMENDMENT || model.statementFunction == StatementModel.QUESTION || model.statementFunction == StatementModel.DEFINITION || model.statementFunction == StatementModel.REFORMULATION || model.statementFunction == StatementModel.LINKTOMAP || model.statementFunction == StatementModel.LINKTORESOURCES || model.statementFunction == StatementModel.SUPPORT){
+					if(model.supportingArguments.length > 0 || model.comments.length > 0){
 						Alert.show(Language.lookup("DeleteSuppStmt"));
 						return;
 					}
@@ -587,6 +687,12 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.STATEMENTS_DELETED, onStatementDeleted);
 			statementModel.addEventListener(AGORAEvent.OBJECTION_CREATED, onObjectionCreated);
 			statementModel.addEventListener(AGORAEvent.CREATING_OBJECTION_FAILED, onObjectionCreationFailed);
+			statementModel.addEventListener(AGORAEvent.DEFEAT_CREATED, onDefeatCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_DEFEAT_FAILED, onDefeatCreationFailed);
+			statementModel.addEventListener(AGORAEvent.COMMENT_CREATED, onCommentCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_COMMENT_FAILED, onCommentCreationFailed);
+			statementModel.addEventListener(AGORAEvent.AMENDMENT_CREATED, onAmendmentCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_AMENDMENT_FAILED, onAmendmentCreationFailed);
 			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLE_FAILED, onStatementTogglingFailed);
 		}
 		
@@ -611,11 +717,42 @@ package Controller
 				model.object(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
 			}
 		}
+		public function addDefeatStatement(model:StatementModel):void{
+			
+			var obj:StatementModel = LayoutController.getInstance().getBottomObjection(model);
+			if(obj != null){
+				var bottomObjection: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.defeat(obj.xgrid + bottomObjection.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.defeat(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
 		protected function onObjectionCreated(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
+		}
+		protected function onDefeatCreated(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
+		}
+		protected function onCommentCreated(event:AGORAEvent):void{
+			LoadController.getInstance().fetchMapData();
+		}
+		protected function onAmendmentCreated(event:AGORAEvent):void{
 			LoadController.getInstance().fetchMapData();
 		}
 		
 		protected function onObjectionCreationFailed(event:AGORAEvent):void{
+			Alert.show(Language.lookup('ObjectionFailed'));
+		}
+		protected function onDefeatCreationFailed(event:AGORAEvent):void{
+			Alert.show(Language.lookup('ObjectionFailed'));
+		}
+		protected function onCommentCreationFailed(event:AGORAEvent):void{
+			Alert.show(Language.lookup('ObjectionFailed'));
+		}
+		
+		protected function onAmendmentCreationFailed(event:AGORAEvent):void{
 			Alert.show(Language.lookup('ObjectionFailed'));
 		}
 		
@@ -811,6 +948,48 @@ package Controller
 			point = argumentPanel.localToGlobal(point);
 			addMenu.show(point.x, point.y);
 			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addMenuClicked);
+		}
+		
+		public function showAddHoverMenu(argumentPanel:ArgumentPanel):void{
+			var addMenuData:XML;
+			if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE || argumentPanel.panelType == StatementModel.STATEMENT)
+			{
+			addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
+			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
+			
+			}
+			else
+			{
+				addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" /></root>;
+				addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
+			}
+			var addMenu:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
+			addMenu.labelField = "@label";
+			var point:Point = new Point;
+			point.x = 0;
+			point.y = argumentPanel.height;
+			point = argumentPanel.localToGlobal(point);
+			addMenu.show(point.x, point.y);
+			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addHoverMenuClicked);
 		}
 		
 		//-------------------Generic Fault Handler---------------------//

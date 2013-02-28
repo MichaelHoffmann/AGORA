@@ -48,6 +48,16 @@ package Events
 		public static const MAP_INFO_UPDATE_FAILED:String = "MapInfoUpdateFailed";
 		public static const CREATING_OBJECTION_FAILED:String = "CreatingObjectionsFailed";
 		public static const OBJECTION_CREATED:String = "ObjectionCreated";
+		public static const CREATING_DEFEAT_FAILED:String = "CreatingDefeatFailed";
+		public static const DEFEAT_CREATED:String = "DefeatCreated";
+		public static const CREATING_COMMENT_FAILED:String = "CreatingCommentsFailed";
+		public static const COMMENT_CREATED:String = "CommentCreated";
+		public static const CREATING_AMENDMENT_FAILED:String = "CreatingAmendmentsFailed";
+		public static const AMENDMENT_CREATED:String = "AmendmentCreated";
+		public static const CREATING_QUESTION_FAILED:String = "CreatingQuestionFailed";
+		public static const QUESTION_CREATED:String = "QuestionCreated";
+		public static const CREATING_DEFINITION_FAILED:String = "CreatingDefinitionFailed";
+		public static const DEFINITION_CREATED:String = "DefinitionCreated";
 		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
 		public static const PROJECT_PUSHED:String = "ProjectPushed";
 		public static const PROJECT_PUSH_FAILED:String = "ProjectPushedFailed";

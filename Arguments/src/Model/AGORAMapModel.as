@@ -22,6 +22,7 @@ package Model
 	
 	import com.adobe.protocols.dict.Dict;
 	
+	import components.AgoraMap;
 	import components.CategoryChain;
 	import components.Map;
 	import components.RightSidePanel;
@@ -43,6 +44,7 @@ package Model
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	import mx.states.State;
+
 	public class AGORAMapModel extends EventDispatcher
 	{	
 		private var _panelListHash:Dictionary;
@@ -80,11 +82,16 @@ package Model
 		private var _projectType:int;
 		private var _projectUsers:Array;
 		private var _numberUsers:int;
+		private var _showChildren:Dictionary;
+		private var _hide:Dictionary;
+		private var _panelListHashTemp:Dictionary;
+		private var _addClicked:Boolean;
+		private var _check:Boolean;
 		
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
-			
+			deletedList = new Vector.<Object>;
 			//create map service
 			createMapService = new HTTPService;
 			createMapService.url = AGORAParameters.getInstance().insertURL;
@@ -138,6 +145,25 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+public function get check():Boolean
+		{
+			return _check;
+		}
+
+		public function set check(value:Boolean):void
+		{
+			_check = value;
+		}
+
+		public function get addClicked():Boolean
+		{
+			return _addClicked;
+		}
+
+		public function set addClicked(value:Boolean):void
+		{
+			_addClicked = value;
+		}
 		public function get historylist():Vector.<MapHistoryValueObject>
 		{
 			return _historylist;
@@ -453,7 +479,7 @@ package Model
 		}
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{
-			deletedList = new Vector.<Object>;
+		//	deletedList = new Vector.<Object>;
 			var mapXMLRawObject:Object = event.result.map;
 			try{
 				var map:MapValueObject = new MapValueObject(mapXMLRawObject);
@@ -525,11 +551,29 @@ package Model
 				trace("Error in reading update to Map");
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
 			}
+			for each(var obj1:StatementModel in showChildren)
+			{
+				newPanels.addItem(obj1);
+				panelListHash[obj1.ID] = obj1;
+				delete showChildren[obj1.ID];
+				check = true;
+			}
+			
 			//add new elements to Model
 			for each(var node:StatementModel in nodeHash){
 				if(!panelListHash.hasOwnProperty(node.ID)){
+					if(node.statementFunction != "Comment" && node.statementFunction!= "Amendment" && node.statementFunction!= "Question" && node.statementFunction!= "Definition" && node.statementFunction!= "Reformulation" && node.statementFunction!= "Support" && node.statementFunction!= "LinkToMap" && node.statementFunction!= "LinkToResource" ){
 					newPanels.addItem(node);
+					check = true;
 					panelListHash[node.ID] = node;				
+				}
+					else if (addClicked == 1)
+					{
+						newPanels.addItem(node);
+						check = true;
+						panelListHash[node.ID] = node;
+						addClicked =0;
+					}
 				}
 			}
 			
@@ -547,6 +591,8 @@ package Model
 			//update enablers after deletsion
 			for each(var deletedObject:Object in deletedList){
 				if(deletedObject is StatementModel){
+					FlexGlobals.topLevelApplication.map.agoraMap.textLabel[deletedObject.ID].visible = false;
+					delete FlexGlobals.topLevelApplication.map.agoraMap.textLabel[deletedObject.ID];
 					var stmtM:StatementModel = deletedObject as StatementModel;
 					if(stmtM.statementFunction == StatementModel.STATEMENT){
 						var aTM:ArgumentTypeModel = stmtM.argumentTypeModel;
@@ -582,6 +628,33 @@ package Model
 					else if(nodeVO.type == StatementModel.OBJECTION){
 						statementModel.statementFunction = StatementModel.OBJECTION;
 					}
+					else if(nodeVO.type == StatementModel.COUNTER_EXAMPLE){
+						statementModel.statementFunction = StatementModel.COUNTER_EXAMPLE;
+					}
+					else if(nodeVO.type == StatementModel.COMMENT){
+						statementModel.statementFunction = StatementModel.COMMENT;
+					}
+					else if(nodeVO.type == StatementModel.AMENDMENT){
+						statementModel.statementFunction = StatementModel.AMENDMENT;
+					}
+					else if(nodeVO.type == StatementModel.DEFINITION){
+						statementModel.statementFunction = StatementModel.DEFINITION;
+					}
+					else if(nodeVO.type == StatementModel.QUESTION){
+						statementModel.statementFunction = StatementModel.QUESTION;
+					}
+					else if(nodeVO.type == StatementModel.LINKTOMAP){
+						statementModel.statementFunction = StatementModel.LINKTOMAP;
+					}
+					else if(nodeVO.type == StatementModel.LINKTORESOURCES){
+						statementModel.statementFunction = StatementModel.LINKTORESOURCES;
+					}
+					else if(nodeVO.type == StatementModel.SUPPORT){
+						statementModel.statementFunction = StatementModel.SUPPORT;
+					}
+					else if(nodeVO.type == StatementModel.REFORMULATION){
+						statementModel.statementFunction = StatementModel.REFORMULATION;
+					}
 					else
 					{
 						statementModel.statementFunction = StatementModel.STATEMENT;	
@@ -610,9 +683,13 @@ package Model
 								statementM.argumentTypeModel.reasonModels.splice(index, 1);
 							}
 						}
-						else if(statementM.statementFunction == StatementModel.OBJECTION){
+						else if(statementM.statementFunction == StatementModel.OBJECTION || statementM.statementFunction == StatementModel.COUNTER_EXAMPLE){
 							var i:int = statementM.parentStatement.objections.indexOf(statementM);
 							statementM.parentStatement.objections.splice(i, 1);
+						}
+						else if(statementM.statementFunction == StatementModel.COMMENT || statementM.statementFunction == StatementModel.AMENDMENT || statementM.statementFunction == StatementModel.QUESTION || statementM.statementFunction == StatementModel.DEFINITION || statementM.statementFunction == StatementModel.REFORMULATION || statementM.statementFunction == StatementModel.LINKTOMAP || statementM.statementFunction == StatementModel.LINKTORESOURCES || statementM.statementFunction == StatementModel.SUPPORT){
+							var i:int = statementM.parentStatement.comments.indexOf(statementM);
+							statementM.parentStatement.comments.splice(i, 1);
 						}
 						deletedList.push(statementM);
 						delete panelListHash[nodeVO.ID];
@@ -652,7 +729,7 @@ package Model
 			
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
-					if(obj.type != StatementModel.OBJECTION){
+					if(obj.type != StatementModel.OBJECTION && obj.type != StatementModel.COUNTER_EXAMPLE  && obj.type != StatementModel.COMMENT && obj.type != StatementModel.AMENDMENT && obj.type != StatementModel.DEFINITION && obj.type != StatementModel.QUESTION && obj.type != StatementModel.SUPPORT && obj.type != StatementModel.LINKTOMAP && obj.type != StatementModel.LINKTORESOURCES && obj.type != StatementModel.REFORMULATION){
 						if(!connectionListHash.hasOwnProperty(obj.connID)){
 							argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 						}else{
@@ -679,7 +756,7 @@ package Model
 						connectionsHash[obj.connID] = argumentTypeModel;
 						processSourceNode(obj, connectionsHash, nodeHash);
 						dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel)); //takes care of linking	
-					}else if(obj.type == StatementModel.OBJECTION){
+					}else if(obj.type == StatementModel.OBJECTION || obj.type == StatementModel.COUNTER_EXAMPLE || obj.type == StatementModel.COMMENT || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION || obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
 						processSourceNode(obj, connectionsHash, nodeHash);
 						//linking could be done directly
 					}	
@@ -703,7 +780,7 @@ package Model
 		}
 		
 		protected function processSourceNode(obj:ConnectionValueObject, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
-			if(obj.type != StatementModel.OBJECTION){
+			if(obj.type != StatementModel.OBJECTION && obj.type != StatementModel.COUNTER_EXAMPLE && obj.type != StatementModel.COMMENT && obj.type != StatementModel.AMENDMENT && obj.type != StatementModel.QUESTION && obj.type != StatementModel.DEFINITION && obj.type != StatementModel.SUPPORT && obj.type != StatementModel.LINKTOMAP && obj.type != StatementModel.LINKTORESOURCES && obj.type != StatementModel.REFORMULATION){
 				var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.connID];
 				for each(var argElements:SourcenodeValueObject in obj.sourcenodes){
 					if(!argElements.deleted){
@@ -735,7 +812,7 @@ package Model
 					}
 				}
 			}
-			else if(obj.type == StatementModel.OBJECTION){
+			else if(obj.type == StatementModel.OBJECTION || obj.type == StatementModel.COUNTER_EXAMPLE){
 				if(obj.sourcenodes.length != 1){
 					trace("objection has more than one sourcenode");
 				}
@@ -758,6 +835,31 @@ package Model
 					parentStatement = panelListHash[ obj.targetnode];
 				}
 				parentStatement.addObjectionStatement(objection);
+				objection.parentStatement = parentStatement;
+			}
+			else if(obj.type == StatementModel.COMMENT || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION ||  obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
+				if(obj.sourcenodes.length != 1){
+					trace("objection has more than one sourcenode");
+				}
+				var objection:StatementModel;
+				for each(var sourcenode:SourcenodeValueObject in obj.sourcenodes){
+					if(!sourcenode.deleted){
+						if(nodeHash.hasOwnProperty(sourcenode.nodeID)){
+							objection = nodeHash[sourcenode.nodeID];
+						}
+						else{ //read earlier
+							objection = panelListHash[sourcenode.nodeID];	
+						}
+					}
+				}
+				var parentStatement:StatementModel;
+				if(nodeHash.hasOwnProperty(obj.targetnode)){
+					parentStatement = nodeHash[obj.targetnode];
+				}
+				else{
+					parentStatement = panelListHash[ obj.targetnode];
+				}
+				parentStatement.addCommentStatement(objection);
 				objection.parentStatement = parentStatement;
 			}
 			return true;
@@ -843,7 +945,7 @@ package Model
 				else if(sm.statementFunction == StatementModel.INFERENCE){
 					requestXML = moveSupportingStatements(sm, diffx, 0, requestXML);
 				}
-				else if(sm.statementFunction==StatementModel.OBJECTION){
+				else if(sm.statementFunction==StatementModel.OBJECTION || sm.statementFunction == StatementModel.COUNTER_EXAMPLE){
 					//check if this is the first objection
 					var parentStatement:StatementModel = sm.parentStatement;
 					if(parentStatement != null){
@@ -857,16 +959,29 @@ package Model
 								}
 							}
 						}
-						else{
-							dispatchEvent(new AGORAEvent(AGORAEvent.ILLEGAL_MAP));
-							return;
+					}
+				}
+					else if(sm.statementFunction==StatementModel.COMMENT || sm.statementFunction == StatementModel.AMENDMENT || sm.statementFunction == StatementModel.QUESTION || sm.statementFunction == StatementModel.SUPPORT || sm.statementFunction == StatementModel.LINKTOMAP || sm.statementFunction == StatementModel.LINKTORESOURCES || sm.statementFunction == StatementModel.REFORMULATION || sm.statementFunction == StatementModel.DEFINITION){
+					//check if this is the first objection
+					var parentStatement:StatementModel = sm.parentStatement;
+					if(parentStatement != null){
+						if(parentStatement.comments.length > 0){
+							var desty:int = sm.ygrid + diffy;
+							for each(var siblingObjection:StatementModel in parentStatement.comments){
+								if(siblingObjection == sm){
+									requestXML = moveSupportingStatements(siblingObjection, diffx, desty - siblingObjection.ygrid, requestXML);	
+								}else{
+									requestXML = moveSupportingStatements(siblingObjection, 0 , desty - siblingObjection.ygrid, requestXML);
+								}
+							}
 						}
 					}
+				}
 					else{
 						dispatchEvent(new AGORAEvent(AGORAEvent.ILLEGAL_MAP));
 						return;
 					}
-				}
+				
 			}
 			
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
@@ -936,6 +1051,11 @@ package Model
 		//----------------------- Reinitializing the model ----------------------------------//
 		public function reinitializeModel():void{
 			panelListHash = new Dictionary;
+			panelListHashTemp = new Dictionary;
+			showChildren =  new Dictionary;
+			addClicked = 0;
+			check = false;
+			hide = new Dictionary;
 			connectionListHash = new Dictionary;
 			textboxListHash = new Dictionary;
 			newPanels = new ArrayCollection;
@@ -1009,7 +1129,36 @@ package Model
 			_projectType = value;
 		}
 
+		public function get showChildren():Dictionary
+		{
+			return _showChildren;
+		}
 
+		public function set showChildren(value:Dictionary):void
+		{
+			_showChildren = value;
+		}
+		
+		public function get hide():Dictionary
+		{
+			return _hide;
+		}
+		
+		public function set hide(value:Dictionary):void
+		{
+			_hide = value;
+		}
+
+		public function get panelListHashTemp():Dictionary
+		{
+			return _panelListHashTemp;
+		}
+
+		public function set panelListHashTemp(value:Dictionary):void
+		{
+			_panelListHashTemp = value;
+		}
+		
 		
 	}
 }

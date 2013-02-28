@@ -13,6 +13,7 @@ package components
 	
 	import Events.AGORAEvent;
 	
+	import Model.AGORAMapModel;
 	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
 	import Model.InferenceModel;
@@ -48,6 +49,9 @@ package components
 	import mx.events.ScrollEvent;
 	import mx.managers.DragManager;
 	import mx.states.State;
+	import mx.utils.DisplayUtil;
+	
+	import spark.components.Label;
 	
 	public class AgoraMap extends Canvas
 	{
@@ -58,6 +62,7 @@ package components
 		public var drawUtility:UIComponent = null;
 		public var ID:int;
 		public var helpText:HelpText;
+		public var textLabel:Dictionary;
 		public var firstClaimHelpText:FirstClaimHelpText;
 		private static var _tempID:int;
 		public var timer:Timer;
@@ -100,6 +105,7 @@ package components
 			panelsHash = new Dictionary;
 			menuPanelsHash = new Dictionary;
 			removePreviousElements = true;
+			textLabel = new Dictionary;
 		}
 		
 		override protected function createChildren():void
@@ -190,7 +196,7 @@ package components
 				else if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel;
 					var model:StatementModel = newPanels[i];
-					if(model.statementType != StatementModel.OBJECTION){
+					if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION || model.statementType == StatementModel.SUPPORT || model.statementType == StatementModel.LINKTOMAP || model.statementType == StatementModel.LINKTORESOURCES || model.statementType == StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
@@ -236,6 +242,9 @@ package components
 				addChild(menuPanel.schemeSelector);
 			}
 			LoadController.getInstance().mapUpdateCleanUp();
+			AGORAModel.getInstance().agoraMapModel.check = false;
+			
+			var a:Array = getChildren();
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -256,10 +265,10 @@ package components
 			//code for the connecting arrows
 			
 			for each(var model:StatementModel in AGORAModel.getInstance().agoraMapModel.panelListHash){
-				if(model.supportingArguments.length > 0 || model.objections.length > 0){
+				if(model.supportingArguments.length > 0 || model.objections.length > 0 || model.comments.length > 0){
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
-				
+					
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
 					var fvlspy:int = argumentPanel.y + 72;
 					if(model.supportingArguments.length > 0){
@@ -335,8 +344,83 @@ package components
 								//horizontal line from the vertical line to the objection
 								if(panelsHash.hasOwnProperty(obj.ID)){
 									var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
+									if(!textLabel[obj.ID])
+										textLabel[obj.ID] = new spark.components.Label();
 									drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
 									drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y + 72);
+									if(objectionPanel.statementType == StatementModel.OBJECTION)
+										textLabel[obj.ID].text = Language.lookup("objects");
+									else if(objectionPanel.statementType == StatementModel.COUNTER_EXAMPLE)
+										textLabel[obj.ID].text = Language.lookup("defeats");
+									textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2;
+									textLabel[obj.ID].y = objectionPanel.y + 72;
+									textLabel[obj.ID].visible = true;
+									textLabel[obj.ID].width=100;
+									textLabel[obj.ID].height=100;
+									drawUtility.addChild(textLabel[obj.ID]);
+									drawUtility.invalidateDisplayList();
+								}
+							}
+						}	
+					}
+					if(model.comments.length > 0){
+						if (AGORAModel.getInstance().agoraMapModel.hide[model.ID] != 1)
+						{
+						
+							drawUtility.graphics.lineStyle(10, 0xFFFF99, 10);
+							argumentPanel = panelsHash[model.ID];
+							var lastObjection:StatementModel = layoutController.getBottomComment(model);
+							if(lastObjection != null){
+								
+								var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
+								if(bottomObjection !=null)
+									{
+									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 30;
+									fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
+									
+									fvlfpy = bottomObjection.y + 72;
+									
+									//draw a line from the first objection to the last objection
+									//and an arrow
+									drawUtility.graphics.moveTo(fvlspx, fvlfpy);
+									drawUtility.graphics.lineTo(fvlspx, fvlspy);
+									drawUtility.graphics.lineTo(fvlspx-15, fvlspy +15);
+									drawUtility.graphics.moveTo(fvlspx, fvlspy);
+									drawUtility.graphics.lineTo(fvlspx+15, fvlspy+15);
+									
+								}
+								for each(var obj:StatementModel in model.comments){
+									//horizontal line from the vertical line to the objection
+									if(panelsHash.hasOwnProperty(obj.ID)){
+										var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
+										if(!textLabel[obj.ID])
+											textLabel[obj.ID] = new spark.components.Label();
+										drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
+										drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y + 72);
+										if(objectionPanel.statementType == StatementModel.COMMENT)
+											textLabel[obj.ID].text = Language.lookup("Comments");
+										else if(objectionPanel.statementType == StatementModel.REFORMULATION)
+											textLabel[obj.ID].text = Language.lookup("EquivEquiv");
+										else if(objectionPanel.statementType == StatementModel.AMENDMENT)
+											textLabel[obj.ID].text = Language.lookup("FriendlyAmendTo");
+										else if(objectionPanel.statementType == StatementModel.LINKTOMAP)
+											textLabel[obj.ID].text = Language.lookup("defeats");
+										else if(objectionPanel.statementType == StatementModel.LINKTORESOURCES)
+											textLabel[obj.ID].text = Language.lookup("SeeAlso");
+										else if(objectionPanel.statementType == StatementModel.DEFINITION)
+											textLabel[obj.ID].text = Language.lookup("Defines");
+										else if(objectionPanel.statementType == StatementModel.QUESTION)
+											textLabel[obj.ID].text = Language.lookup("LeadsToQ");
+										textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2;
+										textLabel[obj.ID].y = objectionPanel.y + 67;
+										textLabel[obj.ID].visible = true;
+										textLabel[obj.ID].width=100;
+										textLabel[obj.ID].height=100;
+										drawUtility.addChild(textLabel[obj.ID]);
+										drawUtility.invalidateDisplayList();
+										
+										
+									}
 								}
 							}
 						}	

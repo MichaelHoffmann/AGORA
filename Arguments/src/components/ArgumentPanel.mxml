@@ -55,39 +55,44 @@
 
 		<!-- contains the doneHG and bottomHG-->
 			<!--contains the add and the delete button-->
-	<s:Group id = "bottomSlideout" visible = "false"  right = "60" bottom ="0">	
-		<s:Graphic>
-			<s:Rect bottom = "-50" height="30" width="175" radiusX="10" radiusY="10" left = "-15">
-				<s:stroke>
-					<s:SolidColorStroke color="{this.getStyle('borderColor')}" weight="0" />
-				</s:stroke>
-				<s:fill>
-					<s:SolidColor color="{this.getStyle('borderColor')}" />
-				</s:fill>
-			</s:Rect>
-		</s:Graphic>
-
-				<s:HGroup id = "bottomHG" verticalAlign="middle" color="0" bottom = "-50" height = "30">
+		<s:Group id = "bottomSlideout" visible = "false"  right = "90" bottom ="0">	
+			<s:Graphic>
+				<s:Rect bottom = "-95" height="70" width="115" radiusX="10" radiusY="10" left = "-15">
+					<s:stroke>
+						<s:SolidColorStroke color="{this.getStyle('borderColor')}" weight="0" />
+					</s:stroke>
+					<s:fill>
+						<s:SolidColor color="{this.getStyle('borderColor')}" />
+					</s:fill>
+				</s:Rect>
+			</s:Graphic>
+			
+			<s:HGroup id = "bottomHG" verticalAlign="middle" color="0" bottom = "-75" height = "30">
+				<s:VGroup>
 					<s:Button id = "addBtn" scaleX=".8" scaleY=".8"/>
+					<s:Button id = "showMoreBtn" label="Show More" scaleX=".8" scaleY=".8"/>
 					<!--delete button-->
 					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8"/>
-					<s:Image id="hideButton"   width="10" height="10"
-							 click="{showButton.visible = true; bottomSlideout.visible=false; }" buttonMode="true"
-							 source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY="-1" bottom ="0"/>
-					<!-- add button-->
-
-				</s:HGroup>
-				</s:Group>
-		<s:Image right="72.5" bottom="-35" id="showButton"  width="10" height="10" 
+				</s:VGroup>
+				
+				<s:Image id="hideButton" horizontalAlign="right"  width="10" height="10"
+						 click="{showButton.visible = true; bottomSlideout.visible=false; }" buttonMode="true"
+						 source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY="-1" bottom ="0"/>
+				<!-- add button-->
+				
+			</s:HGroup>
+		</s:Group>
+		<s:Image right="50.5" bottom="-35" id="showButton"  width="10" height="10" 
 				 mouseOver="{showButton.visible = false; bottomSlideout.visible=true; }"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
-
+		
 	</s:Group>
 
 
 	<fx:Script>
 		<![CDATA[
 			import Controller.ArgumentController;
+			import Controller.LoadController;
 			import Controller.UpdateController;
 			import Controller.ViewController;
 			import Controller.logic.ConditionalSyllogism;
@@ -328,6 +333,30 @@
 					else if(value.statementFunction == StatementModel.OBJECTION){
 						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
 					}
+					else if(value.statementFunction == StatementModel.COUNTER_EXAMPLE){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.COMMENT){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.AMENDMENT){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.REFORMULATION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.LINKTOMAP){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.LINKTORESOURCES){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.DEFINITION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.QUESTION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
 					BindingUtils.bindProperty(this, "statementNegated", model, ["negated"]);
 					BindingUtils.bindProperty(this, "gridX", model, ["xgrid"]);
 					BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
@@ -448,13 +477,86 @@
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
-			
+			protected function onshowButtonClicked(event:MouseEvent):void{
+				if(event.currentTarget.label == "Show More")
+				{
+				AGORAModel.getInstance().agoraMapModel.showChildren =  new Dictionary;
+				var model1:StatementModel = model;
+				var stack:Array = new Array();
+				stack.push(model);
+				while (stack.length != 0)
+				{
+					model1 = stack.pop();
+				for each(var obj:StatementModel in model1.comments)
+				{
+					stack.push(obj);
+					if(obj.parentStatement!=null) 
+						AGORAModel.getInstance().agoraMapModel.showChildren[obj.ID] = obj; 
+				}
+				
+				}
+				event.currentTarget.label = "Hide";
+				AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+				}
+				else if(event.currentTarget.label == "Hide")
+				{
+					event.currentTarget.label = "Show More";
+					AGORAModel.getInstance().agoraMapModel.addClicked = 0;
+					AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 1;
+					var model1:StatementModel = model;
+					var stack:Array = new Array();
+					stack.push(model);
+					while (stack.length != 0)
+					{
+						
+						model1 = stack.pop();
+						for each(var obj:StatementModel in model1.comments)
+						{
+							stack.push(obj);
+							if(obj.statementFunction != StatementModel.OBJECTION || obj.statementFunction != StatementModel.COUNTER_EXAMPLE)
+							{
+							
+								AGORAModel.getInstance().agoraMapModel.deletedList.push(obj);
+								
+							delete AGORAModel.getInstance().agoraMapModel.panelListHash[obj.ID];
+							
+							delete AGORAModel.getInstance().agoraMapModel.showChildren[obj.ID];
+							}
+						}
+					
+				}
+				}
+				LoadController.getInstance().fetchMapData();
+			}
+			protected function onAddBtnMouseOver(event:MouseEvent):void{
+				var type:String = AGORAModel.getInstance().projType;
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ArgumentController.getInstance().showAddHoverMenu(this);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().showAddHoverMenu(this);
+				} else {
+					Alert.show("Guests to AGORA cannot edit maps");
+				}
+			}
 			
 			protected function onAddBtnClicked(event:MouseEvent):void{
 				var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
-
+					if (type == "adversarial")
+					{
+					if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
 					ArgumentController.getInstance().showAddMenu(this);
+					}
+					else
+						Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().showAddMenu(this);
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
@@ -580,6 +682,42 @@
 					}
 					else if(model.statementFunction == StatementModel.OBJECTION){
 						displayTxt.text = "[" + Language.lookup("EnterObjection") + "]";
+						this.title = "Objection";
+					}
+					else if(model.statementFunction == StatementModel.COUNTER_EXAMPLE){
+						displayTxt.text = "[" + Language.lookup("CounterEx") + "]";
+					}
+					else if(model.statementFunction == StatementModel.COMMENT)
+					{
+						displayTxt.text = "[" + Language.lookup("EnterComment") + "]";
+					}
+					else if(model.statementFunction == StatementModel.AMENDMENT)
+					{
+						displayTxt.text = "[" + Language.lookup("FriendlyAmend") + "]";
+					}
+					else if(model.statementFunction == StatementModel.LINKTOMAP){
+						displayTxt.text = "["+Language.lookup("AddLinkToMap") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.DEFINITION){
+						displayTxt.text = "["+Language.lookup("EnterDef") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.LINKTORESOURCES){
+						displayTxt.text = "["+Language.lookup("AddLinkToResource") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.SUPPORT){
+						displayTxt.text = "["+Language.lookup("AddSupport") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.REFORMULATION){
+						displayTxt.text = "["+Language.lookup("AddEquiv") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.QUESTION){
+						displayTxt.text = "["+Language.lookup("Question") +"]";
+						
 					}
 					else if(model.statementFunction == StatementModel.INFERENCE){
 						displayTxt.text = AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
@@ -594,6 +732,43 @@
 						}
 					}else if(model.statementFunction == StatementModel.OBJECTION){
 						displayTxt.text = "["+Language.lookup("EnterObjection") +"]";
+						this.title = "Objection";
+						
+					}
+					else if(model.statementFunction == StatementModel.COUNTER_EXAMPLE){
+						displayTxt.text = "[" + Language.lookup("CounterEx") + "]";
+					}
+					else if(model.statementFunction == StatementModel.COMMENT){
+						displayTxt.text = "["+Language.lookup("EnterComment") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.AMENDMENT)
+					{
+						displayTxt.text = "[" + Language.lookup("FriendlyAmend") + "]";
+					}
+					else if(model.statementFunction == StatementModel.LINKTOMAP){
+						displayTxt.text = "["+Language.lookup("AddLinkToMap") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.LINKTORESOURCES){
+						displayTxt.text = "["+Language.lookup("AddLinkToResource") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.DEFINITION){
+						displayTxt.text = "["+Language.lookup("EnterDef") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.SUPPORT){
+						displayTxt.text = "["+Language.lookup("AddSupport") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.REFORMULATION){
+						displayTxt.text = "["+Language.lookup("AddEquiv") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.QUESTION){
+						displayTxt.text = "["+Language.lookup("Question") +"]";
+						
 					}
 					else if(model.statementFunction == StatementModel.INFERENCE){
 						displayTxt.text =  AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
@@ -685,6 +860,77 @@
 					Alert.show("Guests to AGORA cannot edit maps.");
 				}
 			}
+			public function addHoverMenuClicked(event:MenuEvent):void{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
+						ArgumentController.getInstance().addSupportingArgument(model);
+					}else if(event.label == agoraLabels.ADD_OBJECTION){
+						ArgumentController.getInstance().addAnObjection(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;
+					}
+					else if(event.label == agoraLabels.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE){
+						if(this.statementType != "Particular")
+						{
+						ArgumentController.getInstance().addDefeatStatement(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;
+						}
+						else
+						{
+							Alert.show("Defeat statement can only be added on Universal statement");
+						}
+					}
+					else if(event.label == agoraLabels.COMMENT)
+					{
+						ArgumentController.getInstance().addComment(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if(event.label == agoraLabels.SUPPORTING_STATEMENT)
+					{
+						ArgumentController.getInstance().addSupport(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if(event.label == agoraLabels.EQUIVALENT_REFORMULATION)
+					{
+						ArgumentController.getInstance().addReformulation(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.FRIENDLY_AMENDMENT)
+					{
+						ArgumentController.getInstance().addAmendment(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.QUESTION)
+					{
+						ArgumentController.getInstance().addQuestion(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.DEFINITION)
+					{
+						ArgumentController.getInstance().addDefinition(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.LINK_TO_ANOTHER_MAP)
+					{
+						ArgumentController.getInstance().addDefinition(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.LINK_TO_RESOURCES)
+					{
+						ArgumentController.getInstance().addDefinition(model);
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+				} else { 
+					Alert.show("Guests to AGORA cannot edit maps.");
+				}
+			}
 			
 			//----------------------- Life Cycle Methods -------------------------------------------//
 			//create children must be overriden to create dynamically allocated children
@@ -747,6 +993,11 @@
 				deleteBtn.label = Language.lookup("Delete") + "...";
 				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
 				addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
+				addBtn.addEventListener(MouseEvent.MOUSE_OVER,onAddBtnMouseOver);
+				showMoreBtn.addEventListener(MouseEvent.CLICK,onshowButtonClicked);
+				
+				
+				
 			}
 			
 			override protected function commitProperties():void
@@ -831,16 +1082,33 @@
 							//add button
 						}
 					}
-					if(panelType == StatementModel.OBJECTION){
+					if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
 						this.setStyle("borderColor" ,0xF99653);
 						stmtButton.visible = false;
+						stmtTypeLbl.text = "";
+					}
+					if(panelType == StatementModel.COMMENT || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
+
+						showMoreBtn.visible = false;
+						this.setStyle("borderColor" ,0xFFFF99);
+						stmtButton.visible = false;
+						stmtTypeLbl.text = "";
+						
+					
 					}}
-				else if(panelType == StatementModel.OBJECTION){
+				else if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
 					skin.setStyle("borderColor" ,252525);
 					group.removeAllElements();
 					state = DISPLAY;
 					group.addElement(displayTxt);
 				}
+				else if(panelType == StatementModel.COMMENT || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
+					skin.setStyle("borderColor" ,252525);
+					group.removeAllElements();
+					state = DISPLAY;
+				    group.addElement(displayTxt);
+				}
+				
 					//If the statement is an enabler.
 				else{
 					//remove all textboxes

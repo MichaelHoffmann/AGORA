@@ -167,6 +167,19 @@ package ValueObjects
 		public var SAVE_AS: String;
 		public var ADD_SUPPORTING_STATEMENT:String;
 		public var ADD_OBJECTION:String;
+		public var ARGUMENT_FOR_CLAIM:String;
+		public var SUPPORTING_STATEMENT:String;
+		public var OBJECTION:String;
+		public var DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE:String;
+		public var EQUIVALENT_REFORMULATION:String;
+		public var FRIENDLY_AMENDMENT:String;
+		public var DISTINCTION:String;
+		public var DEFINITION:String;
+		public var COMMENT:String;
+		public var QUESTION:String;
+		public var LINK_TO_ANOTHER_MAP:String;
+		public var LINK_TO_RESOURCES:String;
+		public var REPLACEMENT:String;
 		
 		//agreements
 		public var REGISTRATION_NOTE:String;
@@ -181,7 +194,7 @@ package ValueObjects
 			registrationURL = "http://agora.gatech.edu/lokesh_test/register.php";
 			mapRemoveURL = "http://agora.gatech.edu/lokesh_test/remove_map.php";
 			deleteURL = "http://agora.gatech.edu/lokesh_test/remove.php";
-			insertURL = "http://agora.gatech.edu/lokesh_test/insert.php";
+			insertURL = "http://agora.gatech.edu/Madhura_testing/php/insert.php";
 			loadMapURL = "http://agora.gatech.edu/lokesh_test/load_map1.php";
 			nameUpdateURL = "http://agora.gatech.edu/lokesh_test/mapinfo.php";
 			projectListURL = "http://agora.gatech.edu/lokesh_test/list_projects.php";
@@ -203,7 +216,7 @@ package ValueObjects
 			pullRegistrationURL = "http://agora.gatech.edu/lokesh_test/pull_registration_info.php";
 			changeInfoURL="http://agora.gatech.edu/lokesh_test/changeinfo.php";
 			forgotpasswordURL="http://agora.gatech.edu/lokesh_test/forgot_pass.php";
-			projectDetailsURL = "http://agora.gatech.edu/lokesh_test/projectdetails.php";
+			projectDetailsURL = "http://agora.gatech.edu/Madhura_testing/php/projectdetails.php";
 			listProjMaps = "http://agora.gatech.edu/lokesh_test/listProjectMaps.php";
 			moveMapToProjectURL = "http://agora.gatech.edu/lokesh_test/moveMapToProject.php";
 			projUsersURL = "http://agora.gatech.edu/lokesh_test/projusers.php";
@@ -242,6 +255,19 @@ package ValueObjects
 			SUPPORT_SAVEAS = Language.lookup('SaveMapAsHelp');
 			ADD_SUPPORTING_STATEMENT = Language.lookup('AddArgument');
 			ADD_OBJECTION = Language.lookup('AddObjection');
+			ARGUMENT_FOR_CLAIM = Language.lookup('AddArgument');
+			SUPPORTING_STATEMENT = Language.lookup('AddSupport');
+			OBJECTION = Language.lookup('AddObjection');
+			DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE = Language.lookup('AddDefeatStatement');
+			EQUIVALENT_REFORMULATION = Language.lookup('AddEqForm');
+			FRIENDLY_AMENDMENT = Language.lookup('AddFA');
+			DISTINCTION = Language.lookup('AddDistinction');
+			DEFINITION = Language.lookup('AddDef');
+			COMMENT = Language.lookup('AddComment');
+			QUESTION = Language.lookup('AddQ');
+			LINK_TO_ANOTHER_MAP = Language.lookup('AddLinkToMap');
+			LINK_TO_RESOURCES = Language.lookup('AddLinkToResource');
+			REPLACEMENT = Language.lookup('AddReplacement');
 		}
 		
 		public static function getInstance():AGORAParameters{

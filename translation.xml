@@ -168,8 +168,28 @@
 		<RUS text="Click deletes the entire argument. If you want to change the argument scheme, please click on the name of the currently selected argument scheme that is named under &quot;therefore&quot;" /><!--TODO: Translate RUS -->
 		<GER text="Klick löscht das ganze Argument. Wenn du nur das Argumentschema wechseln willst, klicke auf das gegenwärtig ausgewählte Argumentschema unter &quot;deshalb&quot;" />
 	</WarnDelEnabl>
+	<AddDefeatStatement>
+		<EN-US
+			text="a defeat of this statement by a counter example (only against universal statements)" />
+		<RUS
+			text="a defeat of this statement by a counter example (only against universal statements)" /> <!--TODO: Translate RUS -->
+		<GER
+			text="a defeat of this statement by a counter example (only against universal statements)" />
+	</AddDefeatStatement>
 
-	
+	<AddReplacement>
+		<EN-US
+			text="a replacement of this claim from the clipboard (only if it is the last one in a chain)" />
+		<RUS
+			text="a replacement of this claim from the clipboard (only if it is the last one in a chain)" /> <!--TODO: Translate RUS -->
+		<GER
+			text="a replacement of this claim from the clipboard (only if it is the last one in a chain)" />
+	</AddReplacement>
+	<AddDistinction>
+		<EN-US text="a distinction between different cases for this statement" />
+		<RUS text="a distinction between different cases for this statement" /> <!--TODO: Translate RUS -->
+		<GER text="a distinction between different cases for this statement" />
+	</AddDistinction>
 	<AddEqForm>
 		<EN-US text="an equivalent reformulation of this statement" />
 		<RUS text="an equivalent reformulation of this statement" /> <!--TODO: Translate RUS -->
@@ -665,11 +685,11 @@
 		<GER text="Vorname" />
 	</FirstName>
 
-	<FriendlyAmend>
+<!--  	<FriendlyAmend>
 		<EN-US text="friendly amendment" />
 		<RUS text="дружественная поправка" />
 		<GER text="Verbesserungsvorschlag" />
-	</FriendlyAmend>
+	</FriendlyAmend>-->
 
 	<IfThen>
 		<EN-US text="if-then" />
@@ -2700,6 +2720,18 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<GER text="Einwand gegen" />
 	</objects>
 
+	<defeats>
+		<EN-US text="defeats by counter-example" />
+		<RUS text="defeats by counter-example" /> <!--TODO: Translate RUS -->
+		<GER text="defeats by counter-example" /> <!--TODO: Translate GER -->
+	</defeats>
+	
+	 <FriendlyAmendTo>
+		<EN-US text="a friendly amendment to" />
+		<RUS text="дружественная поправка" />
+		<GER text="Verbesserungsvorschlag" />
+	</FriendlyAmendTo> 
+	
 	<seeMap>
 		<EN-US text="see" />
 		<RUS text="see" /> <!--TODO: Translate RUS-->

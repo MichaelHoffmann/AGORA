@@ -147,6 +147,21 @@ package Controller
 			return lastATM;
 		}	
 		
+		public function getBottomComment(sm:StatementModel):StatementModel{
+			if(sm == null){
+				return null;
+			}
+			if(sm.comments.length == 0){
+				return null;
+			}
+			var lastObj:StatementModel = sm.comments[0];
+			for each(var comm:StatementModel in sm.comments){
+				if(comm.xgrid > lastObj.xgrid){
+					lastObj = comm;
+				}
+			}
+			return lastObj;
+		}
 		public function getBottomObjection(sm:StatementModel):StatementModel{
 			if(sm == null){
 				return null;
