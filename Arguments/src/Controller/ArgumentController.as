@@ -267,8 +267,8 @@ package Controller
 			LoadController.getInstance().fetchMapData();
 		}
 		public function addComment(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomObjection(model);
-			if(obj != null){
+			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.comment(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3);	
 			}
@@ -279,7 +279,7 @@ package Controller
 		}
 		public function addAmendment(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
-			if(obj != null){
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.amendment(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
 			}
@@ -290,7 +290,7 @@ package Controller
 		}
 		public function addQuestion(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
-			if(obj != null){
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.question(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
 			}
@@ -301,7 +301,7 @@ package Controller
 		}
 		public function addSupport(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
-			if(obj != null){
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.support(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
 			}
@@ -313,7 +313,7 @@ package Controller
 		
 		public function addReformulation(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
-			if(obj != null){
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.reformulation(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
 			}
@@ -324,7 +324,7 @@ package Controller
 		}
 		public function addLinkToMap(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
-			if(obj != null){
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.linktomap(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
 			}
@@ -335,7 +335,7 @@ package Controller
 		}
 		public function addLinkToResource(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
-			if(obj != null){
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.linktoresource(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
 			}
@@ -346,7 +346,7 @@ package Controller
 		}
 		public function addDefinition(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
-			if(obj != null){
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.definition(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
 			}
@@ -952,7 +952,7 @@ package Controller
 		
 		public function showAddHoverMenu(argumentPanel:ArgumentPanel):void{
 			var addMenuData:XML;
-			if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE || argumentPanel.panelType == StatementModel.STATEMENT)
+			if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE || argumentPanel.panelType == StatementModel.STATEMENT || argumentPanel.panelType == StatementModel.INFERENCE)
 			{
 			addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
 			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);

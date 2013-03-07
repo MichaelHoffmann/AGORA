@@ -400,7 +400,12 @@
 		<GER text="Du musst dich einloggen, wenn du mitmachen willst" />
 	</GuestEditMapError>
 
-
+   <AddObjectionByCounterExample>
+   <EN-US text="Sorry, an objection by counter-example can only be added to a universal statement, because only a statement that claims that something is universally true can be defeated by one counter-example. If the statement you want to object to is actually a universal statement, go back to the map and change the type from 'particular' to 'universal', and then add again your objection." />
+   <RUS text="Sorry, an objection by counter-example can only be added to a universal statement, because only a statement that claims that something is universally true can be defeated by one counter-example. If the statement you want to object to is actually a universal statement, go back to the map and change the type from 'particular' to 'universal', and then add again your objection." /><!--TODO Translate RUS-->
+   <GER text="Sorry, ausschließlich universelle Aussagen können durch ein Gegenbeispiel widerlegt werden. Wenn die Aussage, gegen welche du einen Einwand formulieren willst, in der Tat eine universelle Aussage ist, geh zurück zum Argument und wechsle den Typ der Aussage von 'Einzel' zu 'Universell.'" />
+   </AddObjectionByCounterExample> 
+   
 	<ChatError>
 		<EN-US text="Network Error While Loading Chat Information" />
 		<RUS text="Network Error While Loading Chat Information" /><!--TODO Translate RUS-->

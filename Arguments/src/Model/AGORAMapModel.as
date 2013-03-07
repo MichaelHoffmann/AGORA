@@ -572,7 +572,7 @@ public function get check():Boolean
 						newPanels.addItem(node);
 						check = true;
 						panelListHash[node.ID] = node;
-						addClicked =0;
+						
 					}
 				}
 			}
@@ -591,8 +591,12 @@ public function get check():Boolean
 			//update enablers after deletsion
 			for each(var deletedObject:Object in deletedList){
 				if(deletedObject is StatementModel){
+					var textLabel1:Dictionary = FlexGlobals.topLevelApplication.map.agoraMap.textLabel;
+					if(FlexGlobals.topLevelApplication.map.agoraMap.textLabel[deletedObject.ID])
+					{
 					FlexGlobals.topLevelApplication.map.agoraMap.textLabel[deletedObject.ID].visible = false;
 					delete FlexGlobals.topLevelApplication.map.agoraMap.textLabel[deletedObject.ID];
+					}
 					var stmtM:StatementModel = deletedObject as StatementModel;
 					if(stmtM.statementFunction == StatementModel.STATEMENT){
 						var aTM:ArgumentTypeModel = stmtM.argumentTypeModel;

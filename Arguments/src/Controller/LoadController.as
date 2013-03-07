@@ -63,6 +63,7 @@ package Controller
 					var sm:StatementModel = object as StatementModel;
 					gridPanel = agoraMap.panelsHash[sm.ID];
 				}
+				if(gridPanel != null && agoraMap.contains(gridPanel))
 				agoraMap.removeChild(gridPanel);
 			}
 			

@@ -578,11 +578,11 @@ package Model
 		}
 		public function comment(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Comment" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Comment" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -590,11 +590,11 @@ package Model
 		}
 		public function definition(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Definition" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Definition" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -602,11 +602,11 @@ package Model
 		}
 		public function amendment(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Amendment" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Amendment" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -614,11 +614,11 @@ package Model
 		}
 		public function question(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Question" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Question" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -627,11 +627,11 @@ package Model
 		
 		public function linktomap(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="LinkToMap" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="LinkToMap" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -640,11 +640,11 @@ package Model
 		
 		public function linktoresource(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="LinkToResource" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="LinkToResource" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -653,11 +653,11 @@ package Model
 		
 		public function reformulation(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Reformulation" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Reformulation" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -666,11 +666,11 @@ package Model
 		
 		public function support(x:int):void{
 			var y:int;
-			if(objections.length == 0){
+			if(comments.length == 0){
 				y = ygrid + 11;
 			}
 			else{
-				y = objections[objections.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Support" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Support" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 

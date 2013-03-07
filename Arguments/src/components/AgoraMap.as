@@ -196,7 +196,7 @@ package components
 				else if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel;
 					var model:StatementModel = newPanels[i];
-					if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION || model.statementType == StatementModel.SUPPORT || model.statementType == StatementModel.LINKTOMAP || model.statementType == StatementModel.LINKTORESOURCES || model.statementType == StatementModel.REFORMULATION){
+					if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION && model.statementType == StatementModel.SUPPORT && model.statementType == StatementModel.LINKTOMAP && model.statementType == StatementModel.LINKTORESOURCES && model.statementType == StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
@@ -220,7 +220,7 @@ package components
 						argumentPanel.changeTypeInfo.boxWidth = argumentPanel.getExplicitOrMeasuredWidth();
 						addChild(argumentPanel.changeTypeInfo);
 					}
-					else{
+					else {
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
@@ -364,9 +364,12 @@ package components
 						}	
 					}
 					if(model.comments.length > 0){
+						var test:int  = AGORAModel.getInstance().agoraMapModel.hide[model.ID];
+						var test1:Boolean = AGORAModel.getInstance().agoraMapModel.addClicked;
 						if (AGORAModel.getInstance().agoraMapModel.hide[model.ID] != 1)
 						{
-						
+							AGORAModel.getInstance().agoraMapModel.addClicked = 0;
+							//AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 1;
 							drawUtility.graphics.lineStyle(10, 0xFFFF99, 10);
 							argumentPanel = panelsHash[model.ID];
 							var lastObjection:StatementModel = layoutController.getBottomComment(model);
@@ -391,7 +394,7 @@ package components
 								}
 								for each(var obj:StatementModel in model.comments){
 									//horizontal line from the vertical line to the objection
-									if(panelsHash.hasOwnProperty(obj.ID)){
+									if(AGORAModel.getInstance().agoraMapModel.panelListHash.hasOwnProperty(obj.ID)){
 										var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
 										if(!textLabel[obj.ID])
 											textLabel[obj.ID] = new spark.components.Label();

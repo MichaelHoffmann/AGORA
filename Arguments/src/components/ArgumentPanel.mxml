@@ -545,7 +545,7 @@
 				}
 			}
 			
-			protected function onAddBtnClicked(event:MouseEvent):void{
+			/*protected function onAddBtnClicked(event:MouseEvent):void{
 				var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if (type == "adversarial")
@@ -560,7 +560,7 @@
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
-			}
+			}*/
 			
 			protected function lblClicked(event:MouseEvent):void
 			{
@@ -866,22 +866,23 @@
 						ArgumentController.getInstance().addSupportingArgument(model);
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
-						AGORAModel.getInstance().agoraMapModel.addClicked = 1;
+						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
 					}
 					else if(event.label == agoraLabels.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE){
 						if(this.statementType != "Particular")
 						{
 						ArgumentController.getInstance().addDefeatStatement(model);
-						AGORAModel.getInstance().agoraMapModel.addClicked = 1;
+						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
 						}
 						else
 						{
-							Alert.show("Defeat statement can only be added on Universal statement");
+							Alert.show(Language.lookup("AddObjectionByCounterExample"));
 						}
 					}
 					else if(event.label == agoraLabels.COMMENT)
 					{
 						ArgumentController.getInstance().addComment(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
@@ -894,36 +895,42 @@
 					else if(event.label == agoraLabels.EQUIVALENT_REFORMULATION)
 					{
 						ArgumentController.getInstance().addReformulation(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
 					else if (event.label == agoraLabels.FRIENDLY_AMENDMENT)
 					{
 						ArgumentController.getInstance().addAmendment(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
 					else if (event.label == agoraLabels.QUESTION)
 					{
 						ArgumentController.getInstance().addQuestion(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
 					else if (event.label == agoraLabels.DEFINITION)
 					{
 						ArgumentController.getInstance().addDefinition(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
 					else if (event.label == agoraLabels.LINK_TO_ANOTHER_MAP)
 					{
 						ArgumentController.getInstance().addDefinition(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
 					else if (event.label == agoraLabels.LINK_TO_RESOURCES)
 					{
 						ArgumentController.getInstance().addDefinition(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
@@ -992,7 +999,7 @@
 				addBtn.label = Language.lookup("Add") + "...";
 				deleteBtn.label = Language.lookup("Delete") + "...";
 				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
-				addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
+			//	addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
 				addBtn.addEventListener(MouseEvent.MOUSE_OVER,onAddBtnMouseOver);
 				showMoreBtn.addEventListener(MouseEvent.CLICK,onshowButtonClicked);
 				
