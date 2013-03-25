@@ -152,12 +152,14 @@ package components
 				removeAllElements();
 				_removePreviousElements = false;
 			}
-			
+		
 			try{
+				drawUtility.removeChildAt(0);
 				removeChild(drawUtility);
 			}catch(e:Error){
 			}
-			
+			//if(drawUtility.numChildren > 0)
+			//drawUtility.removeChildren(0,drawUtility.numChildren-1);
 			addChildAt(drawUtility, 0);
 			try{
 				removeChild(helpText);
@@ -196,7 +198,7 @@ package components
 				else if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel;
 					var model:StatementModel = newPanels[i];
-					if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION && model.statementType == StatementModel.SUPPORT && model.statementType == StatementModel.LINKTOMAP && model.statementType == StatementModel.LINKTORESOURCES && model.statementType == StatementModel.REFORMULATION){
+					if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION && model.statementType != StatementModel.SUPPORT && model.statementType != StatementModel.LINKTOMAP && model.statementType != StatementModel.LINKTORESOURCES && model.statementType != StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
@@ -352,8 +354,8 @@ package components
 										textLabel[obj.ID].text = Language.lookup("objects");
 									else if(objectionPanel.statementType == StatementModel.COUNTER_EXAMPLE)
 										textLabel[obj.ID].text = Language.lookup("defeats");
-									textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2;
-									textLabel[obj.ID].y = objectionPanel.y + 72;
+									textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 20;
+									textLabel[obj.ID].y = objectionPanel.y + 55;
 									textLabel[obj.ID].visible = true;
 									textLabel[obj.ID].width=100;
 									textLabel[obj.ID].height=100;
@@ -370,15 +372,17 @@ package components
 						{
 							AGORAModel.getInstance().agoraMapModel.addClicked = 0;
 							//AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 1;
-							drawUtility.graphics.lineStyle(10, 0xFFFF99, 10);
+							drawUtility.graphics.lineStyle(10, 0xFFFF66, 10);
 							argumentPanel = panelsHash[model.ID];
 							var lastObjection:StatementModel = layoutController.getBottomComment(model);
+							//if(layoutController.getBottomObjection(model)!=null)
+								//lastObjection = layoutController.getBottomObjection(model);
 							if(lastObjection != null){
 								
 								var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
 								if(bottomObjection !=null)
 									{
-									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 30;
+									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 45;
 									fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 									
 									fvlfpy = bottomObjection.y + 72;
@@ -407,15 +411,15 @@ package components
 										else if(objectionPanel.statementType == StatementModel.AMENDMENT)
 											textLabel[obj.ID].text = Language.lookup("FriendlyAmendTo");
 										else if(objectionPanel.statementType == StatementModel.LINKTOMAP)
-											textLabel[obj.ID].text = Language.lookup("defeats");
+											textLabel[obj.ID].text = Language.lookup("SeeAlsoArgumentMap");
 										else if(objectionPanel.statementType == StatementModel.LINKTORESOURCES)
-											textLabel[obj.ID].text = Language.lookup("SeeAlso");
+											textLabel[obj.ID].text = Language.lookup("seeMap");
 										else if(objectionPanel.statementType == StatementModel.DEFINITION)
 											textLabel[obj.ID].text = Language.lookup("Defines");
 										else if(objectionPanel.statementType == StatementModel.QUESTION)
 											textLabel[obj.ID].text = Language.lookup("LeadsToQ");
-										textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2;
-										textLabel[obj.ID].y = objectionPanel.y + 67;
+										textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 20;
+										textLabel[obj.ID].y = objectionPanel.y + 50;
 										textLabel[obj.ID].visible = true;
 										textLabel[obj.ID].width=100;
 										textLabel[obj.ID].height=100;

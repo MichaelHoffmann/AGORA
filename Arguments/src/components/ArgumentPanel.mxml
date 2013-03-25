@@ -82,8 +82,8 @@
 				
 			</s:HGroup>
 		</s:Group>
-		<s:Image right="50.5" bottom="-35" id="showButton"  width="10" height="10" 
-				 mouseOver="{showButton.visible = false; bottomSlideout.visible=true; }"
+		<s:Image right="50.5" bottom="-35" id="showButton"  width="10" height="10"
+				 mouseOver="showMouseOver(event)"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
 		
 	</s:Group>
@@ -125,7 +125,9 @@
 			import mx.containers.Canvas;
 			import mx.controls.Alert;
 			import mx.controls.Menu;
+			import mx.controls.TextInput;
 			import mx.core.DragSource;
+			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
 			import mx.events.DragEvent;
 			import mx.events.EventListenerRequest;
@@ -583,12 +585,21 @@
 			
 			protected function doneBtnClicked(event:MouseEvent):void{
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					
+						
 					ArgumentController.getInstance().saveText(model);
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
-			
+			protected function onLink(event:MouseEvent):void {
+				if(panelType == StatementModel.LINKTORESOURCES)
+				{
+	
+					var u:URLRequest=new URLRequest(displayTxt.text); 
+					navigateToURL(u,"_blank");
+				}
+			}
 			protected function keyEntered(event: KeyboardEvent):void
 			{
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
@@ -657,7 +668,13 @@
 				PopUpManager.removePopUp(argPopUp);
 
 			}
-			
+			protected function showMouseOver(event:MouseEvent):void
+			{
+				showButton.visible = false; bottomSlideout.visible=true
+				var parent:DisplayObjectContainer = FlexGlobals.topLevelApplication.map.agoraMap;
+				parent.setChildIndex(this, parent.numChildren-1);
+				
+			}
 			protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(menuEvent.label == Language.lookup("AddReason")){
@@ -704,7 +721,7 @@
 						
 					}
 					else if(model.statementFunction == StatementModel.LINKTORESOURCES){
-						displayTxt.text = "["+Language.lookup("AddLinkToResource") +"]";
+						displayTxt.text = "["+Language.lookup("EnterURL") +"]";
 						
 					}
 					else if(model.statementFunction == StatementModel.SUPPORT){
@@ -751,8 +768,7 @@
 						
 					}
 					else if(model.statementFunction == StatementModel.LINKTORESOURCES){
-						displayTxt.text = "["+Language.lookup("AddLinkToResource") +"]";
-						
+						displayTxt.text = "["+Language.lookup("EnterURL") +"]";
 					}
 					else if(model.statementFunction == StatementModel.DEFINITION){
 						displayTxt.text = "["+Language.lookup("EnterDef") +"]";
@@ -776,6 +792,12 @@
 				}
 				else{
 					displayTxt.text = value;
+					if(panelType == StatementModel.LINKTORESOURCES)
+					{
+						displayTxt.addEventListener(MouseEvent.CLICK,onLink);
+						displayTxt.setStyle("textDecoration", "underline");
+						displayTxt.setStyle("color",0x0033FF);
+					}
 				}
 			}
 			
@@ -816,6 +838,8 @@
 				completeArgument.label= Language.lookup("Construct");
 				completeArgument.addEventListener(MouseEvent.CLICK,completeArgumentClicked );
 				addReason.addEventListener(MouseEvent.CLICK,addReasonClicked);
+				showButton.addEventListener(MouseEvent.MOUSE_OVER,showMouseOver);
+				
 				var orLabel:Label = new Label;
 				var bigGroup:VGroup = new VGroup;
 				var selectLabel:Label = new Label;
@@ -843,6 +867,7 @@
 				PopUpManager.addPopUp(argPopUp, this.parent, true);
 				PopUpManager.centerPopUp(argPopUp);
 			}
+
 			
 			public function toEditState():void{
 				state = EDIT;
@@ -922,14 +947,14 @@
 					}
 					else if (event.label == agoraLabels.LINK_TO_ANOTHER_MAP)
 					{
-						ArgumentController.getInstance().addDefinition(model);
+						ArgumentController.getInstance().addLinkToMap(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
 					else if (event.label == agoraLabels.LINK_TO_RESOURCES)
 					{
-						ArgumentController.getInstance().addDefinition(model);
+						ArgumentController.getInstance().addLinkToResource(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
@@ -952,7 +977,13 @@
 				uLayout.paddingRight = 10;
 				uLayout.paddingTop = 10;
 				this.layout = uLayout;
-				
+				if(model.comments.length !=0 )
+				{
+				 showButton.source = "images/yellow_Triangle.png";
+				 showButton.width = 20;
+				 showButton.height = 20;
+				 
+				}
 				
 				
 				// default setting    	
@@ -1097,11 +1128,9 @@
 					if(panelType == StatementModel.COMMENT || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
 
 						showMoreBtn.visible = false;
-						this.setStyle("borderColor" ,0xFFFF99);
+						this.setStyle("borderColor" ,0xFFFF66);
 						stmtButton.visible = false;
 						stmtTypeLbl.text = "";
-						
-					
 					}}
 				else if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
 					skin.setStyle("borderColor" ,252525);

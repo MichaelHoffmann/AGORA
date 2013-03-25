@@ -267,7 +267,11 @@ package Controller
 			LoadController.getInstance().fetchMapData();
 		}
 		public function addComment(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			var obj:StatementModel;
+			if(model.comments.length == 0)
+				obj= LayoutController.getInstance().getBottomObjection(model);
+			else
+				obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.comment(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3);	
@@ -278,7 +282,11 @@ package Controller
 			}
 		}
 		public function addAmendment(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			var obj:StatementModel;
+			if(model.comments.length == 0)
+				obj= LayoutController.getInstance().getBottomObjection(model);
+			else
+				obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.amendment(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
@@ -289,7 +297,11 @@ package Controller
 			}
 		}
 		public function addQuestion(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			var obj:StatementModel;
+			if(model.comments.length == 0)
+				obj= LayoutController.getInstance().getBottomObjection(model);
+			else
+				obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.question(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
@@ -312,7 +324,11 @@ package Controller
 		}
 		
 		public function addReformulation(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			var obj:StatementModel;
+			if(model.comments.length == 0)
+				obj= LayoutController.getInstance().getBottomObjection(model);
+			else
+				obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.reformulation(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
@@ -323,7 +339,11 @@ package Controller
 			}
 		}
 		public function addLinkToMap(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			var obj:StatementModel;
+			if(model.comments.length == 0)
+				obj= LayoutController.getInstance().getBottomObjection(model);
+			else
+				obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.linktomap(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
@@ -334,7 +354,17 @@ package Controller
 			}
 		}
 		public function addLinkToResource(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			var obj:StatementModel;
+			obj= LayoutController.getInstance().getBottomObjection(model);
+			 for(var i:int = 0;i<model.comments.length;i++)
+			 {
+				 if(model.comments[i].statementFunction == StatementModel.LINKTORESOURCES)
+					 obj= model.comments[i];
+			 }
+			//if(model.comments.length == 0)
+				
+		//	else
+			//	obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.linktoresource(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
@@ -345,7 +375,11 @@ package Controller
 			}
 		}
 		public function addDefinition(model:StatementModel):void{
-			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			var obj:StatementModel;
+			if(model.comments.length == 0)
+				obj= LayoutController.getInstance().getBottomObjection(model);
+			else
+				obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.definition(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
@@ -952,7 +986,40 @@ package Controller
 		
 		public function showAddHoverMenu(argumentPanel:ArgumentPanel):void{
 			var addMenuData:XML;
-			if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE || argumentPanel.panelType == StatementModel.STATEMENT || argumentPanel.panelType == StatementModel.INFERENCE)
+			if(argumentPanel.panelType == StatementModel.STATEMENT || argumentPanel.panelType == StatementModel.INFERENCE)
+			{
+				if(argumentPanel.model.supportingArguments.length == 0)
+				{
+					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
+					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
+				}
+				else
+				{
+					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
+					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
+				}
+			}
+			else if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE)
 			{
 			addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
 			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);

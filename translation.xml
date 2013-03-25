@@ -842,6 +842,16 @@
 		<RUS text="См. также... " />
 		<GER text="Siehe auch ..." />
 	</SeeAlso>
+	<SeeAlsoArgumentMap>
+		<EN-US text="See also the argument map " />
+		<RUS text="См. также... " />
+		<GER text="Siehe auch ..." />
+	</SeeAlsoArgumentMap>
+	<See>
+		<EN-US text="See" />
+		<RUS text="See " /><!--TODO Translate RUS-->
+		<GER text="See" /><!--TODO Translate GER-->
+	</See>
 
 	<SelectAll>
 		<EN-US text="Select All" />
@@ -2716,7 +2726,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<RUS text="Enter a name for this resource" /> <!--TODO: Translate RUS-->
 		<GER text="Gib einen Namen für diese Quelle ein" />
 	</EnterResource>
-
+	
 
 	<!--WORDS IN LINES -->
 	<objects>

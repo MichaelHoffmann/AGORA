@@ -12,9 +12,13 @@ package Controller
 	import components.GridPanel;
 	import components.StatusBar;
 	
+	import flash.utils.Dictionary;
+	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
+	
+	import spark.components.Label;
 	
 	public class LoadController
 	{
@@ -54,17 +58,23 @@ package Controller
 			//get the vector of elements to be removed, and then remove
 			//them from map
 			var gridPanel:GridPanel;
+			var labelDictionary:Dictionary;
 			for each(var object:Object in model.agoraMapModel.deletedList){
 				if(object is ArgumentTypeModel){
 					var atm:ArgumentTypeModel = object as ArgumentTypeModel;
 					gridPanel = agoraMap.menuPanelsHash[atm.ID];
+					if(agoraMap.contains(agoraMap.menuPanelsHash[atm.ID]))
+						agoraMap.removeChild(agoraMap.menuPanelsHash[atm.ID]);
 				}
 				else if(object is StatementModel){
 					var sm:StatementModel = object as StatementModel;
 					gridPanel = agoraMap.panelsHash[sm.ID];
+					if(agoraMap.contains(agoraMap.panelsHash[sm.ID]))
+						agoraMap.removeChild(agoraMap.panelsHash[sm.ID]);
 				}
 				if(gridPanel != null && agoraMap.contains(gridPanel))
 				agoraMap.removeChild(gridPanel);
+				
 			}
 			
 			//empty the list

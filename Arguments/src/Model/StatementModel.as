@@ -578,11 +578,18 @@ package Model
 		}
 		public function comment(x:int):void{
 			var y:int;
-			if(comments.length == 0){
-				y = ygrid + 11;
+			if(comments.length == 0)
+			{
+				if(objections.length == 0)
+					y = ygrid + 11;
+				else 
+					y = objections[objections.length-1].ygrid;
 			}
 			else{
-				y = comments[comments.length-1].ygrid;
+				//if(objections.length == 0)
+					y = comments[comments.length-1].ygrid;
+				//else 
+					//y = objections[objections.length-1].ygrid;
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Comment" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Comment" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -591,7 +598,10 @@ package Model
 		public function definition(x:int):void{
 			var y:int;
 			if(comments.length == 0){
-				y = ygrid + 11;
+				if(objections.length == 0)
+					y = ygrid + 11;
+				else 
+					y = objections[objections.length-1].ygrid;
 			}
 			else{
 				y = comments[comments.length-1].ygrid;
@@ -603,7 +613,10 @@ package Model
 		public function amendment(x:int):void{
 			var y:int;
 			if(comments.length == 0){
-				y = ygrid + 11;
+				if(objections.length == 0)
+					y = ygrid + 11;
+				else 
+					y = objections[objections.length-1].ygrid;
 			}
 			else{
 				y = comments[comments.length-1].ygrid;
@@ -628,7 +641,10 @@ package Model
 		public function linktomap(x:int):void{
 			var y:int;
 			if(comments.length == 0){
-				y = ygrid + 11;
+				if(objections.length == 0)
+					y = ygrid + 11;
+				else 
+					y = objections[objections.length-1].ygrid;
 			}
 			else{
 				y = comments[comments.length-1].ygrid;
@@ -640,11 +656,19 @@ package Model
 		
 		public function linktoresource(x:int):void{
 			var y:int;
-			if(comments.length == 0){
-				y = ygrid + 11;
-			}
-			else{
-				y = comments[comments.length-1].ygrid;
+
+				if(objections.length == 0)
+					y = ygrid + 11;
+				else 
+					y = objections[objections.length-1].ygrid;
+			if(comments.length!=0){
+				
+					for (var i:int = 0; i<comments.length ;i++)
+					{
+						if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
+						AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[i],6,0);
+					}
+				
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="LinkToResource" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="LinkToResource" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -654,7 +678,10 @@ package Model
 		public function reformulation(x:int):void{
 			var y:int;
 			if(comments.length == 0){
-				y = ygrid + 11;
+				if(objections.length == 0)
+					y = ygrid + 11;
+				else 
+					y = objections[objections.length-1].ygrid;
 			}
 			else{
 				y = comments[comments.length-1].ygrid;
@@ -679,6 +706,11 @@ package Model
 		//------------------- Objections -----------------------------//
 		public function object(x:int):void{
 				var y:int;
+				if(comments.length != 0)
+					for (var i:int = 0; i<comments.length ;i++)
+					{
+						AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[i],6,0);
+					}
 				if(objections.length == 0){
 					y = ygrid + 11;
 				}
@@ -691,6 +723,11 @@ package Model
 		}
 		public function defeat(x:int):void{
 			var y:int;
+			if(comments.length != 0)
+				for (var i:int = 0; i<comments.length ;i++)
+				{
+					AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[i],6,0);
+				}
 			if(objections.length == 0){
 				y = ygrid + 11;
 			}
@@ -799,6 +836,12 @@ package Model
 					break;
 				case STATEMENT:
 				xml.@Type = statementType;
+					break;
+				case LINKTORESOURCES:
+					xml.@Type = LINKTORESOURCES;
+					break;
+				case LINKTOMAP:
+					xml.@Type = LINKTOMAP;
 					break;
 			};
 			xml.@typed = 0;
