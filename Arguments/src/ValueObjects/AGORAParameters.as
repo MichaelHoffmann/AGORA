@@ -216,7 +216,7 @@ package ValueObjects
 			pullRegistrationURL = "http://agora.gatech.edu/lokesh_test/pull_registration_info.php";
 			changeInfoURL="http://agora.gatech.edu/lokesh_test/changeinfo.php";
 			forgotpasswordURL="http://agora.gatech.edu/lokesh_test/forgot_pass.php";
-			projectDetailsURL = "http://agora.gatech.edu/Madhura_testing/php/projectdetails.php";
+			projectDetailsURL = "http://agora.gatech.edu/lokesh_test/projectdetails.php";
 			listProjMaps = "http://agora.gatech.edu/lokesh_test/listProjectMaps.php";
 			moveMapToProjectURL = "http://agora.gatech.edu/lokesh_test/moveMapToProject.php";
 			projUsersURL = "http://agora.gatech.edu/lokesh_test/projusers.php";

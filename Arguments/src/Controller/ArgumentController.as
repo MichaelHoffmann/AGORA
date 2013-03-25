@@ -21,6 +21,7 @@ package Controller
 	import components.AgoraMap;
 	import components.ArgSelector;
 	import components.ArgumentPanel;
+	import components.ChatWindow;
 	import components.GridPanel;
 	import components.HelpText;
 	import components.InfoBox;
@@ -121,12 +122,22 @@ package Controller
 				//hide and show view components
 				menu.visible = false;
 				map.visible = true;
+				// map specific chat
+				var  chatbox:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
+				chatbox.mapId = id;
+				chatbox.initMapChat();
 				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 				map.agora.visible = true;
 				//reinitialize map view
 				map.agoraMap.initializeMapStructures();
 				//fetch data
 				LoadController.getInstance().fetchMapData();
+				// re on save and load
+				if(model.rechain!=null && model.rechain){
+					model.rechain=true;
+				}else{
+					model.rechain=false;
+				}
 			}else{
 				Alert.show(Language.lookup("MustRegister"));
 			}
@@ -227,6 +238,7 @@ package Controller
 						navigateToURL(new URLRequest(mapObj.url), 'quote');
 					},false, 0, false);
 					rsp.invalidateDisplayList();
+					model.rechain=true;
 					ArgumentController.getInstance().loadMap(mapObj.ID);
 				}
 			});	

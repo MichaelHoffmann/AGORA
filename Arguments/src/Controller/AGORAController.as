@@ -23,6 +23,7 @@ package Controller
 	import classes.Language;
 	
 	import components.AGORAMenu;
+	import components.ChatWindow;
 	import components.Map;
 	import components.MapName;
 	import components.MyMapName;
@@ -472,8 +473,9 @@ package Controller
 		
 		//------------------Fetch Chat--------------------------------//
 		public function fetchDataChat():void{
-			var chatM:ChatModel = model.chatModel;
-			chatM.requestChat();	
+		// chat new commenting ..
+			//	var chatM:ChatModel = model.chatModel;
+		//	chatM.requestChat();	
 		}
 		protected function onChatFetched(event:AGORAEvent):void{
 			FlexGlobals.topLevelApplication.rightSidePanel.chat.invalidateProperties();
@@ -587,6 +589,32 @@ package Controller
 			FlexGlobals.topLevelApplication.invalidateDisplayList();
 		}
 		
+		// --------------------------- On Save and Move chain update -------------- //
+		public function UpdateChainonMapSaveAs():void{
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if(usm.loggedIn()){
+				if(current == Language.lookup("MyContributions"))
+				{
+					if(usm.selectedMyContProjID){
+						getChain(parseInt(usm.selectedMyContProjID));
+					}
+				}
+				else if(current==Language.lookup("MyPPProjects"))
+				{
+					if(usm.selectedMyProjProjID){
+						getChain(parseInt(usm.selectedMyProjProjID));
+					}					
+				}else if (current ==Language.lookup("MainTab"))
+				{
+					if(parseInt(""+usm.selectedWoAProjID)){
+						getChain(usm.selectedWoAProjID);
+					}
+				}else if(current==Language.lookup("MyMaps"))
+				{
+				}
+			}
+		}
 		//------------------Fetch my Projects ------------------------------//
 		public function fetchDataMyProjects(opt:int=0):void{
 			var usm:UserSessionModel=model.userSessionModel;
@@ -768,6 +796,9 @@ package Controller
 		
 		//----------- other public functions --------------------//
 		public function hideMap(opt:int=0):void{
+			//get the global chat on
+			var chatbx:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
+			chatbx.init();
 			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			//When we return to the category screen by clicking save and home or loading an illegal map,
 			//find the current category and refresh it. Solved a problem with a created map not appearing
@@ -791,6 +822,10 @@ package Controller
 			AGORAController.getInstance().fetchDataMapList();
 			AGORAController.getInstance().fetchDataMyMaps();
 			AGORAController.getInstance().fetchDataChat();
+			}
+			if(model.rechain!=null && model.rechain){
+				UpdateChainonMapSaveAs();
+				model.rechain=false;
 			}
 			AGORAController.getInstance().mapModel.name = "null";
 			//timers
@@ -839,6 +874,7 @@ package Controller
 				projectNameDialog.currentState=state;
 				PopUpManager.addPopUp(projectNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
 				PopUpManager.centerPopUp(projectNameDialog);
+				projectNameDialog.firstUserNameTextBox.setFocus();
 			}
 			else{
 				Alert.show(Language.lookup("MustRegister"));

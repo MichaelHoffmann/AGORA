@@ -9,13 +9,15 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:TextArea id="chatField" x="10" y="15" width="229" height="179" editable="false" enabled="true"
+	<s:TextArea id="chatField" x="10" y="20" width="229" height="189" editable="false" enabled="true"
 				name="chatField"/>
-	<s:TextArea id="chatTextEntry" x="10" y="217" width="230" height="50" enabled="true"/>
-	<s:Button id="send" x="90" y="278" label="{Language.lookup('Send')}" click="sendButton_onClick(event)"/> 
-	<s:Button id="clear" x="168" y="278" label="{Language.lookup('Clear')}"  click="clearButton_onClick(event)"/>
-	<s:Label id="mainLabel" x="10" y="0" text="{Language.lookup('ChatLabel')}"/>
-	<s:Label id="chatLabel" x="11" y="204" height="26" text="{Language.lookup('TypeMessage')}"/>
+	<s:TextArea id="chatMapField" x="10" visible="false" y="20" width="229" height="189" editable="false" enabled="true"
+				name="chatMapField"/>	
+	<s:TextArea styleName="h" id="chatTextEntry" x="10" y="237" width="230" height="43" enabled="true"/>
+	<s:Button id="send" x="90" y="290" label="{Language.lookup('Send')}" click="onSendMessage(event)"/> 
+	<s:Button id="clear" x="168" y="290" label="{Language.lookup('Clear')}"  click="clearButton_onClick(event)"/>
+	<s:Label id="mainLabel" x="10" y="5" text="{Language.lookup('ChatLabel')}"/>
+	<s:Label id="chatLabel" x="11" y="220" height="26" text="{Language.lookup('TypeMessage')}"/>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -29,20 +31,60 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			import classes.Language;
 			
 			import mx.controls.Alert;
+			import mx.core.Application;
 			import mx.core.FlexGlobals;
 			
 			import spark.formatters.DateTimeFormatter;
 			private var model:ChatModel;
 			public var time:Number;
 			public var pmodel:PushChatModel;
+			public var host:String = 'agora.gatech.edu'; // change 
+			public var port:int    = 1762;
+			public var mapport:int    = 1763;
+			public var times:int =0;			
+			protected var socket:Socket;
+			protected var mapsocket:Socket;
+			private var _mapId:String;
+
+			public function get mapId():String
+			{
+				return _mapId;
+			}
+
+			public function set mapId(value:String):void
+			{
+				_mapId = value;
+			}
+
 			/**
 			 * Initializer that is called when the window is created. It loads up a model and stamps the milli time into time 
 			 */
 			public function init():void{
-				model = AGORAModel.getInstance().chatModel;
-				pmodel = AGORAModel.getInstance().pushChatModel;
+				mapId = null;
+				chatField.visible =true;
+				chatMapField.visible=false;
+				if(mapsocket!=null && mapsocket.connected) mapsocket.close();
+				if(socket!=null && socket.connected) return;
+				
+				// Create new socket connection
+				socket = new Socket();
+				Security.allowInsecureDomain(true);
+				Security.allowDomain("*");
+				
+				// Event Listeners
+				socket.addEventListener(Event.CONNECT, onSocketConnect);
+				socket.addEventListener(IOErrorEvent.IO_ERROR, onSocketIOError);
+				socket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+				socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError);
+				// When we click on the Send button we want to send a message
+			//	send.addEventListener(MouseEvent.CLICK, onSendMessage);
+				socket.timeout=5000;
+				chatField.text = Language.lookup("Loading");
+				times=1;
+				// Connect to socket
+				socket.connect(host, port);
 			}
-			
+
 			/**
 			 * This is activated whenever we return from the PHP call. It populates the chat window with all of the
 			 * chat provided in the XML from the PHP return in the form Username: Text. 
@@ -51,6 +93,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				super.commitProperties();
 				
 				chatField.text = "";
+				chatMapField.text = "";
 				//add elements
 				if(model && model.chat){
 					for each(var chatXML:XML in model.chat.chat){
@@ -64,7 +107,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 						if(line.charAt(0) != ":")	chatField.appendText(line); //For some reason, the DB's return XML kept picking up a blank line. This stops it from printing...
 					}
 				} else {
-					chatField.text = Language.lookup("Loading");
+					//chatField.text = Language.lookup("Loading");
 				}
 			}
 			
@@ -81,7 +124,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 					AGORAController.getInstance().fetchDataChat();
 				}
 				chatTextEntry.text = "";
-
+				
 			}
 			
 			/**
@@ -90,7 +133,110 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			private function clearButton_onClick(event:Event):void{
 				chatTextEntry.text = "";
 			}
+			
+			protected function onSendMessage(e:MouseEvent):void {
+				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();
+				// Are we connected to a server and is there any text to send?
+				if (chatTextEntry.text != "" && mapId==null && (socket != null && socket.connected)) {
+					
+					// Write to the socket
+					socket.writeUTFBytes(AGORAModel.getInstance().userSessionModel.username + ": " +chatTextEntry.text);
+					chatTextEntry.text ="";
+					socket.flush(); // Windows needs this
+				}
+				
+				if (chatTextEntry.text != "" && mapId!=null && (mapsocket != null && mapsocket.connected)) {
+					
+					// Write to the socket
+					mapsocket.writeUTFBytes(AGORAModel.getInstance().userSessionModel.username + ":"+mapId + ":" +chatTextEntry.text);
+					chatTextEntry.text ="";
+					mapsocket.flush(); // Windows needs this
+				}
+				
+				
+			}
+			
+			protected function onSocketConnect(e:Event):void {
+				chatField.text = "";
+				socket.writeUTFBytes("init:0");
+				socket.flush(); // Windows needs this
+			}
+			protected function onMapSocketConnect(e:Event):void {
+				chatMapField.text="";
+				mapsocket.writeUTFBytes("init:"+mapId);
+				mapsocket.flush(); // Windows needs this
+			}
+			
+			protected function onSocketIOError(e:IOErrorEvent):void {
+				chatField.appendText(e.text);
+			}
+			
+			protected function onSocketData(e:ProgressEvent):void {
+				// A new message has arrived!
+				var message:String = socket.readUTFBytes(socket.bytesAvailable);
+				// Append the message to the chat history
+				chatField.appendText(message +"\n");
+			}
+			
+			protected function onSocketMapIOError(e:IOErrorEvent):void {
+				chatField.appendText(e.text);
+			}
+						
+			protected function onMapSocketData(e:ProgressEvent):void {
+				// A new message has arrived!
+				var message:String = mapsocket.readUTFBytes(mapsocket.bytesAvailable);
+				// Append the message to the chat history
+				chatMapField.appendText(message +"\n");
+			}
+			
+			
+			protected function onSocketSecurityError(e:SecurityErrorEvent):void {
+				if(times==5){
+					chatField.appendText("Security Error:"+e.text+" "+e.type);
+					return;
+				}				
+				chatField.appendText("retry");
+				socket.connect(host, port);
+				times++;
+			}
 
+			protected function onMapSocketSecurityError(e:SecurityErrorEvent):void {
+				if(times==5){
+					chatMapField.appendText("Security Error:"+e.text+" "+e.type);
+					return;
+				}				
+				chatMapField.appendText("retrying ..");
+				mapsocket.connect(host, mapport);
+				times++;
+			}
+			
+			public function initMapChat():void{			
+				
+				//if(socket.connected) socket.close();
+				chatMapField.text="";
+				chatMapField.visible=true;
+				chatField.visible=false;
+				if(mapsocket!=null && mapsocket.connected) return;
+				
+				// Create new socket connection
+				mapsocket = new Socket();
+				Security.allowInsecureDomain(true);
+				Security.allowDomain("*");
+				
+				// Event Listeners
+				mapsocket.addEventListener(Event.CONNECT, onMapSocketConnect);
+				mapsocket.addEventListener(IOErrorEvent.IO_ERROR, onSocketMapIOError);
+				mapsocket.addEventListener(ProgressEvent.SOCKET_DATA, onMapSocketData);
+				mapsocket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onMapSocketSecurityError);
+				// When we click on the Send button we want to send a message
+				//	send.addEventListener(MouseEvent.CLICK, onSendMessage);
+				mapsocket.timeout=5000;
+				chatMapField.text = Language.lookup("Loading");
+				times=1;
+				// Connect to socket
+				mapsocket.connect(host, mapport);				
+			}
+			
 		]]>
 	</fx:Script>
 </s:Group>

@@ -226,7 +226,7 @@ package components
 					trace("Changing back to normal layout");
 				}
 				//Loop over the categories that were pulled from the DB
-
+				var otherPos:int = -1;
 				for each(var categoryXML:XML in model.category.category){
 					trace("Adding buttons 1890"+categoryXML.@Name);
 					/*Create and setup buttons corresponding to categories*/
@@ -240,6 +240,8 @@ package components
 					}else{
 						button.label = Language.lookup("Category"+categoryXML.@ID); //The title of the category Level1 (e.g. Philosophy, Biology, or Projects)	
 					}
+					if(categoryXML.@ID==9)
+						otherPos = categoryTiles.numElements;
 					button.setStyle("chromeColor", 0xA0CADB);					
 					button.addEventListener('click',function(e:Event):void{
 						//Begin private inner click event function for button
@@ -287,6 +289,11 @@ package components
 					createMapBtn.label=Language.lookup("NewMap");
 					clickthroughCategories.visible=true;
 
+					if(otherPos!=-1){
+						var btn:Button = (Button)(categoryTiles.getElementAt(otherPos));
+						categoryTiles.removeElementAt(otherPos);
+						categoryTiles.addElement(btn);
+					}
 				}
 				
 				trace("The category count is: " + (model.category.@category_count));
