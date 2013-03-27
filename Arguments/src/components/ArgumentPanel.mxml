@@ -269,6 +269,8 @@
 			}
 			public function get URL():String
 			{
+				if(_URL.indexOf("http://") ==-1)
+					_URL = "http://"+_URL;
 				return _URL;
 			}		
 			public function set firstName(value:String):void

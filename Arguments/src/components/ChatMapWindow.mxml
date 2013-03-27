@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This mxml file is the GUI for the chat window. It includes a label that displays: "Chat with other users:"
+a text area that houses the ongoing chat, a text input box that allows the user to input their chat, and three
+buttons that hide the chat, send the message currently in the chat box, and clear the currently input message-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="250" height="430"
+		 creationComplete="init()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:TextArea id="chatField" x="10" y="20" width="229" height="189" editable="false" enabled="true"
+				name="chatField"/>
+	<s:TextArea styleName="h" id="chatTextEntry" x="10" y="237" width="230" height="43" enabled="true"/>
+	<s:Button id="send" x="90" y="290" label="{Language.lookup('Send')}" click="onSendMessage(event)"/> 
+	<s:Button id="clear" x="168" y="290" label="{Language.lookup('Clear')}"  click="clearButton_onClick(event)"/>
+	<s:Label id="mainLabel" x="10" y="5" text="{Language.lookup('ChatLabel')}"/>
+	<s:Label id="chatLabel" x="11" y="220" height="26" text="{Language.lookup('TypeMessage')}"/>
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.UserSessionController;
+			
+			import Model.AGORAModel;
+			import Model.ChatModel;
+			import Model.PushChatModel;
+			import Model.UserSessionModel;
+			
+			import classes.Language;
+			
+			import mx.controls.Alert;
+			import mx.core.Application;
+			import mx.core.FlexGlobals;
+			
+			import spark.formatters.DateTimeFormatter;
+			private var model:ChatModel;
+			public var time:Number;
+			public var pmodel:PushChatModel;
+			public var host:String = 'localhost'; // change 
+			public var mapport:int    = 1763;
+			public var times:int =0;
+			
+			protected var socket:Socket;
+			/**
+			 * Initializer that is called when the window is created. It loads up a model and stamps the milli time into time 
+			 */
+			public function init():void{
+				model = AGORAModel.getInstance().chatModel;
+				pmodel = AGORAModel.getInstance().pushChatModel;
+				// Create new socket connection
+				socket = new Socket();
+				
+				//	Security.loadPolicyFile("xmlsocket://agora.gatech.edu:80");
+				//	Security.loadPolicyFile("xmlsocket://"+host+":"+port);
+				Security.allowInsecureDomain(true);
+				Security.allowDomain("*");
+				
+				// Event Listeners
+				socket.addEventListener(Event.CONNECT, onSocketConnect);
+				socket.addEventListener(IOErrorEvent.IO_ERROR, onSocketIOError);
+				socket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+				socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError);
+				// When we click on the Send button we want to send a message
+				//	send.addEventListener(MouseEvent.CLICK, onSendMessage);
+				socket.timeout=5000;
+				chatField.text = Language.lookup("Loading");
+				times++;
+				// Connect to socket
+				socket.connect(host, mapport);
+			}
+			
+			/**
+			 * This is activated whenever we return from the PHP call. It populates the chat window with all of the
+			 * chat provided in the XML from the PHP return in the form Username: Text. 
+			 */
+			override protected function commitProperties():void{
+				super.commitProperties();
+				
+				chatField.text = "";
+				//add elements
+				if(model && model.chat){
+					for each(var chatXML:XML in model.chat.chat){
+						var line:String = new String;
+						if(chatXML.@username == null) chatXML.@username = "Guest";
+						line = chatXML.@username + ": " + chatXML.@text + '\n';
+						//Changes the color of the text based on the username. Thinking red for you and blue for all else
+						if(chatXML.@username == AGORAModel.getInstance().userSessionModel.username){						
+							//some form of TextFormatter object to change color of user's text... 
+						}
+						if(line.charAt(0) != ":")	chatField.appendText(line); //For some reason, the DB's return XML kept picking up a blank line. This stops it from printing...
+					}
+				} else {
+					//chatField.text = Language.lookup("Loading");
+				}
+			}
+			
+			/**
+			 * When I am done this is going to submit a user's input text to the db and refresh his/her text window.
+			 * Could just add text to the window on the fly and then repopulate the window in the 5 sec db call.
+			 * Just some ideas. 
+			 */
+			private function sendButton_onClick(event:Event):void{
+				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();	
+				if(chatTextEntry.text != ""){
+					chatField.text += AGORAModel.getInstance().userSessionModel.username + ": " + chatTextEntry.text;
+					pmodel.pushChat(chatTextEntry.text);
+					AGORAController.getInstance().fetchDataChat();
+				}
+				chatTextEntry.text = "";
+				
+			}
+			
+			/**
+			 * Clears the text that the user has input into the text box. More efficient for the user than highlighting and removing
+			 */
+			private function clearButton_onClick(event:Event):void{
+				chatTextEntry.text = "";
+			}
+			
+			protected function onSendMessage(e:MouseEvent):void {
+				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();
+				// Are we connected to a server and is there any text to send?
+				if (chatTextEntry.text != "" && (socket != null && socket.connected)) {
+					// Append our message to the chat history
+					//	txtChatHistory.appendText(txtChatMessage.text);
+					
+					// Write to the socket
+					socket.writeUTFBytes(AGORAModel.getInstance().userSessionModel.username + ": " +chatTextEntry.text);
+					chatTextEntry.text ="";
+					socket.flush(); // Windows needs this
+				}
+			}
+			
+			protected function onSocketConnect(e:Event):void {
+				// We are connected!
+				//chatField.appendText("Connected\n");
+				chatField.text = "";
+				socket.writeUTFBytes("init:init");
+				socket.flush(); // Windows needs this
+			}
+			
+			protected function onSocketIOError(e:IOErrorEvent):void {
+				chatField.appendText(e.text);
+			}
+			
+			protected function onSocketData(e:ProgressEvent):void {
+				// A new message has arrived!
+				var message:String = socket.readUTFBytes(socket.bytesAvailable);
+				// Append the message to the chat history
+				chatField.appendText(message +"\n");
+			}
+			
+			protected function onSocketSecurityError(e:SecurityErrorEvent):void {
+				if(times==5){
+					chatField.appendText("Security Error:"+e.text+" "+e.type);
+					return;
+				}				
+				chatField.appendText("retry");
+				socket.connect(host, port);
+				times++;
+			}
+		]]>
+	</fx:Script>
+</s:Group>

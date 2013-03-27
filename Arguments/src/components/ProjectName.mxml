@@ -167,7 +167,7 @@
 			<s:Scroller height="225" width="325">
 			<s:VGroup id="projectUserNames" paddingTop="10" paddingBottom="10" paddingLeft="10">
 			<s:HGroup id="firstUserName">
-			<s:TextInput width="160">
+			<s:TextInput width="160" id="firstUserNameTextBox">
 			</s:TextInput>
 			<s:Button label="+" width="30" click="addNewUserOpt(event);">				
 			</s:Button>			

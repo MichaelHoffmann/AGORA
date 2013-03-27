@@ -52,6 +52,7 @@ package Model
 		private var _requested:Boolean;
 		
 		private var _leafDelete:Boolean;
+		private var _rechain:Boolean;
 		
 		//-------------------------------------Constructor------------------------------------------------------//
 		public function AGORAModel(singletonEnforcement:SingletonEnforcementClass, target:IEventDispatcher=null)
@@ -90,6 +91,14 @@ package Model
 		
 
 		//-----------------------------Getters and Setters--------------------------------------------------------//
+		public function get rechain():Boolean
+		{
+			return _rechain;
+		}
+		public function set rechain(value:Boolean):void
+		{
+			_rechain = value;
+		}
 
 		public function get language():String
 		{
