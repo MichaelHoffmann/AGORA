@@ -581,7 +581,7 @@ package Model
 			if(comments.length == 0)
 			{
 				if(objections.length == 0)
-					y = ygrid + 11;
+					y = ygrid + 14;
 				else 
 					y = objections[objections.length-1].ygrid;
 			}
@@ -599,7 +599,7 @@ package Model
 			var y:int;
 			if(comments.length == 0){
 				if(objections.length == 0)
-					y = ygrid + 11;
+					y = ygrid + 14;
 				else 
 					y = objections[objections.length-1].ygrid;
 			}
@@ -614,7 +614,7 @@ package Model
 			var y:int;
 			if(comments.length == 0){
 				if(objections.length == 0)
-					y = ygrid + 11;
+					y = ygrid + 14;
 				else 
 					y = objections[objections.length-1].ygrid;
 			}
@@ -628,7 +628,7 @@ package Model
 		public function question(x:int):void{
 			var y:int;
 			if(comments.length == 0){
-				y = ygrid + 11;
+				y = ygrid + 14;
 			}
 			else{
 				y = comments[comments.length-1].ygrid;
@@ -642,7 +642,7 @@ package Model
 			var y:int;
 			if(comments.length == 0){
 				if(objections.length == 0)
-					y = ygrid + 11;
+					y = ygrid + 14;
 				else 
 					y = objections[objections.length-1].ygrid;
 			}
@@ -658,16 +658,16 @@ package Model
 			var y:int;
 
 				if(objections.length == 0)
-					y = ygrid + 11;
+					y = ygrid + 14;
 				else 
 					y = objections[objections.length-1].ygrid;
-			if(comments.length!=0){
+			    if(comments.length!=0){
 				
-					for (var i:int = 0; i<comments.length ;i++)
-					{
-						if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
-						AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[i],6,0);
-					}
+					//for (var i:int = 0; i<comments.length ;i++)
+					//{
+						if(comments[0].statementFunction != StatementModel.LINKTORESOURCES)
+							AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],11,0);
+					//}
 				
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="LinkToResource" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="LinkToResource" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
@@ -679,7 +679,7 @@ package Model
 			var y:int;
 			if(comments.length == 0){
 				if(objections.length == 0)
-					y = ygrid + 11;
+					y = ygrid + 14;
 				else 
 					y = objections[objections.length-1].ygrid;
 			}
@@ -707,12 +707,12 @@ package Model
 		public function object(x:int):void{
 				var y:int;
 				if(comments.length != 0)
-					for (var i:int = 0; i<comments.length ;i++)
-					{
-						AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[i],6,0);
-					}
+				//	for (var i:int = 0; i<comments.length ;i++)
+					//{
+						AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],5,0);
+				//	}
 				if(objections.length == 0){
-					y = ygrid + 11;
+					y = ygrid + 14;
 				}
 				else{
 					y = objections[objections.length-1].ygrid;
@@ -724,12 +724,12 @@ package Model
 		public function defeat(x:int):void{
 			var y:int;
 			if(comments.length != 0)
-				for (var i:int = 0; i<comments.length ;i++)
-				{
-					AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[i],6,0);
-				}
+				//for (var i:int = 0; i<comments.length ;i++)
+				//{
+					AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],6,0);
+				//}
 			if(objections.length == 0){
-				y = ygrid + 11;
+				y = ygrid + 14;
 			}
 			else{
 				y = objections[objections.length-1].ygrid;

@@ -60,6 +60,7 @@ package components
 		
 		public var beganBy:String;
 		public var drawUtility:UIComponent = null;
+		public var drawUtility1:UIComponent = null;
 		public var ID:int;
 		public var helpText:HelpText;
 		public var textLabel:Dictionary;
@@ -112,14 +113,15 @@ package components
 		{
 			super.createChildren();
 			drawUtility = new UIComponent();
-			this.addChild(drawUtility);
-			drawUtility.depth = 0;
+			
 			helpText = new HelpText;
 			addChild(helpText);
 			helpText.visible = false;
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
 			firstClaimHelpText.visible = false;
+			this.addChild(drawUtility);
+			drawUtility.depth = 100;
 
 		}
 		public function acceptDrop(d:DragEvent):void
@@ -160,7 +162,7 @@ package components
 			}
 			//if(drawUtility.numChildren > 0)
 			//drawUtility.removeChildren(0,drawUtility.numChildren-1);
-			addChildAt(drawUtility, 0);
+			
 			try{
 				removeChild(helpText);
 			}catch(e:Error){
@@ -171,6 +173,7 @@ package components
 			}catch(e:Error){
 			}
 			addChild(firstClaimHelpText);
+			
 			for each(var info:UIComponent in getChildren())
 			{
 				if(info is InfoBox)
@@ -247,6 +250,7 @@ package components
 			AGORAModel.getInstance().agoraMapModel.check = false;
 			
 			var a:Array = getChildren();
+			addChild(drawUtility);
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -349,13 +353,15 @@ package components
 									if(!textLabel[obj.ID])
 										textLabel[obj.ID] = new spark.components.Label();
 									drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
-									drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y + 72);
+									drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-40 , objectionPanel.y + 72);
+									drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
+									drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 									if(objectionPanel.statementType == StatementModel.OBJECTION)
 										textLabel[obj.ID].text = Language.lookup("objects");
 									else if(objectionPanel.statementType == StatementModel.COUNTER_EXAMPLE)
 										textLabel[obj.ID].text = Language.lookup("defeats");
-									textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 20;
-									textLabel[obj.ID].y = objectionPanel.y + 55;
+									textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 17;
+									textLabel[obj.ID].y = objectionPanel.y + 68;
 									textLabel[obj.ID].visible = true;
 									textLabel[obj.ID].width=100;
 									textLabel[obj.ID].height=100;
@@ -382,7 +388,7 @@ package components
 								var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
 								if(bottomObjection !=null)
 									{
-									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 45;
+									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 50;
 									fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 									
 									fvlfpy = bottomObjection.y + 72;
@@ -402,24 +408,84 @@ package components
 										var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
 										if(!textLabel[obj.ID])
 											textLabel[obj.ID] = new spark.components.Label();
-										drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
-										drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y + 72);
+										
+									//	drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
+									//	drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-45 , objectionPanel.y + 72);
+										
 										if(objectionPanel.statementType == StatementModel.COMMENT)
+										{
+											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+48, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("Comments");
+										}
 										else if(objectionPanel.statementType == StatementModel.REFORMULATION)
+										{
+											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-45 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("EquivEquiv");
+										}
 										else if(objectionPanel.statementType == StatementModel.AMENDMENT)
+										{
+											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("FriendlyAmendTo");
+										}
 										else if(objectionPanel.statementType == StatementModel.LINKTOMAP)
+										{
+											drawUtility.graphics.moveTo(fvlspx+25,fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
+											drawUtility.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72+15);
 											textLabel[obj.ID].text = Language.lookup("SeeAlsoArgumentMap");
+										}
 										else if(objectionPanel.statementType == StatementModel.LINKTORESOURCES)
+										{
+											drawUtility.graphics.moveTo(fvlspx+25,fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+5, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
+											drawUtility.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72+15);
 											textLabel[obj.ID].text = Language.lookup("seeMap");
+										}
 										else if(objectionPanel.statementType == StatementModel.DEFINITION)
+										{
+											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+30, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("Defines");
+											
+										}
 										else if(objectionPanel.statementType == StatementModel.QUESTION)
+										{
+											drawUtility.graphics.moveTo(fvlspx+25,fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+40, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
+											drawUtility.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72+15);
 											textLabel[obj.ID].text = Language.lookup("LeadsToQ");
-										textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 20;
-										textLabel[obj.ID].y = objectionPanel.y + 50;
+										}
+										textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 28;
+										textLabel[obj.ID].y = objectionPanel.y+68;
 										textLabel[obj.ID].visible = true;
 										textLabel[obj.ID].width=100;
 										textLabel[obj.ID].height=100;
