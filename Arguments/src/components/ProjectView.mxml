@@ -269,6 +269,8 @@
 				}
 			}
 			protected function deleteHandler():void{
+				Alert.show(Language.lookup("DeleteProjectConfirmMsg"),"Delete Project",Alert.YES|Alert.NO, null, function(event:CloseEvent){
+					if(event.detail == Alert.YES) {
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				var selectedTab:String=usm.selectedTab;
 				if (selectedTab == Language.lookup("MainTab")){
@@ -278,7 +280,8 @@
 				}else if (selectedTab == Language.lookup("MyContributions")){
 					AGORAController.getInstance().deleteProject(usm.selectedMyContProjID);
 				}				
-				
+				}
+			});
 			}
 			
 			private function alertListener(eventObj:CloseEvent):void {

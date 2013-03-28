@@ -2991,6 +2991,16 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<GER text="Dieses Projekt enthält andere Projekte oder Argumente, die von anderen Nutzern geschaffen wurden. Es kann nicht gelöscht werden." />  
 </ErrorDeleteProject>
 
+<DelProjectWithOtherUserMaps>
+		<EN-US text="This Project has maps belonging to other members. Hence cannot be deleted." />
+		<RUS text="This Project has maps belonging to other members. Hence cannot be deleted." />  <!--TODO Translate RUS-->
+		<GER text="This Project has maps belonging to other members. Hence cannot be deleted." />  <!--TODO Translate GER-->
+</DelProjectWithOtherUserMaps>
+<DeleteProjectConfirmMsg>
+		<EN-US text="Do you want to delete this project?" />
+		<RUS text="Do you want to delete this project?" />  <!--TODO Translate RUS-->
+		<GER text="Do you want to delete this project?" />  <!--TODO Translate GER-->
+</DeleteProjectConfirmMsg>
 <!--TODO For moving projects to another location, we need a new text (not the one for maps):-->
 <MoveProject>
 		<EN-US text="Click through the categories or projects below to determine the new location of your project" />
