@@ -7,15 +7,15 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<!--dragbutton formerly toparea-->
-	<s:Group id="dragBtnGroup" >
+	<s:Group id="dragBtnGroup" mouseDown ="beginDrag(event)" buttonMode="true" >
 		
-		<s:Ellipse width="30" height="30" left = "-35" top ="-26">
+			<s:Ellipse width="30" height="30" left = "-35" top ="-26">
 			<s:fill>
 				<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
 			</s:fill>
 		</s:Ellipse>
-	<s:Image id="dragButton" mouseDown ="beginDrag(event)" buttonMode="true"
-			 source="@Embed('images/agoraMove.png')" left= "-35"  top = "-26" height = "30" width = "30" />
+	<s:SWFLoader id="dragButton" mouseDown ="beginDrag(event)" buttonMode="true"
+			 source="@Embed('images/agoraMasterImages_Move.swf')" left= "-35"  top = "-26" height = "30" width = "30" />
 	</s:Group>
 
 	<s:Group >
@@ -75,16 +75,14 @@
 					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8"/>
 				</s:VGroup>
 				
-				<s:Image id="hideButton" horizontalAlign="right"  width="10" height="10"
-						 click="{showButton.visible = true; bottomSlideout.visible=false; }" buttonMode="true"
-						 source="@Embed('images/agoraMasterImages_Triangle.png')" scaleY="-1" bottom ="0"/>
-				<!-- add button-->
-				
 			</s:HGroup>
 		</s:Group>
-		<s:Image right="50.5" bottom="-35" id="showButton"  width="10" height="10"
-				 mouseOver="showMouseOver(event)"
-				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
+		<s:SWFLoader right="54" bottom="-32" id="showButton"  
+					 mouseOver="{showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true; }"
+					 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
+		<s:SWFLoader id="hideButton" 
+					 click="{showButton.visible = true;hideButton.visible=false; bottomSlideout.visible=false; }" buttonMode="true"
+					 source="@Embed('images/agoraMasterImages_Triangle.swf')" visible="false"  right="100" bottom="-45" rotationX="180" />
 		
 	</s:Group>
 

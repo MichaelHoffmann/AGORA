@@ -514,6 +514,11 @@
 		<RUS text="Enter As Guest" /><!-- TODO Translate RUS-->
 		<GER text="Tritt ein als Gast" />
 	</EnterGuest>
+	<Tutorial>
+		<EN-US text="Click here to see how to get started" />
+		<RUS text="Click here to see how to get started" /><!-- TODO Translate RUS-->
+		<GER text="Click here to see how to get started" /><!-- TODO Translate RUS-->
+	</Tutorial>
 
 	<WelcomeHere>
 		<EN-US text="Welcome to AGORA-net!" />

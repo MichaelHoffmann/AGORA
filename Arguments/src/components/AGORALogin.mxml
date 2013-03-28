@@ -13,7 +13,7 @@
 		 xmlns:components="components.*"
 		 preinitialize="preInitializeHandler()"
 		 addedToStage="resizeScreen(event)"
-		 resize="resizeScreen(event)">
+		 resize="resizeScreen(event)" height="100%">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -91,22 +91,28 @@
 	</fx:Script>
 
 		<!--The left side of the page that houses the guest login button-->
-		<s:SkinnableContainer id="guestWelcome" left="0" top="0" bottom="0" width="250"
-							  backgroundColor="#29ABE2">
-			<s:layout><s:BasicLayout/></s:layout>
-
-			<!--This is the new user label on the side panel-->
-			<s:Label id="VisitorGreeting" x="7" width="230"  fontFamily="Arial"
-					 fontSize="20" text="{Language.lookup('NewHere')}"
-					 textAlign="center" verticalAlign="middle" verticalCenter="-60"/>
-			<!--The Guest Login button-->
-
-			<s:Button x="49" width="154" height="40" label="{Language.lookup('EnterGuest')}"
-					  click="guestButton_onClick(event)" verticalCenter="9"/>
-			<components:SponsorPanel x="0" y="466" width="250" height="114" bottom="0">
+	
+		<s:SkinnableContainer  id="guestWelcome" left="0" top="0" bottom="0" width="250"
+							  backgroundColor="#29ABE2" height = "100%">
+ <s:layout>
+	 <s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+ </s:layout>
+			<s:VGroup top ="10%" height="95%" width="98%" verticalAlign="middle" horizontalAlign="center">
+				<!--This is the new user label on the side panel-->
+				<s:Label  id="VisitorGreeting"  width="100%"  fontFamily="Arial"
+						  fontSize="20" text="{Language.lookup('NewHere')}"
+						  textAlign="center" />
+				<!--The Guest Login button-->
+				
+				<s:Button width="100%" height="5%" label="{Language.lookup('EnterGuest')}"
+						   click="guestButton_onClick(event)"/>
+				<s:SWFLoader click="navigateToURL(new URLRequest('http://youtu.be/HJROsQGQOMY'), 'quote')" autoLoad="true"   source="https://i1.ytimg.com/vi/HJROsQGQOMY/3.jpg?time=1364444610918"/>
+				<s:Label width="100%" text = "{Language.lookup('Tutorial')}"/> 
+			</s:VGroup>
+			<components:SponsorPanel width="100%" height="114" bottom="0" verticalAlign="bottom">
 			</components:SponsorPanel>
 
-		</s:SkinnableContainer>
+			</s:SkinnableContainer>
 		<!--The right side of the page that houses the login and register buttons and the links-->
 		<s:SkinnableContainer id="mainWelcome" width="564" height="300" backgroundColor="#FFFFFF"  horizontalCenter="124" verticalCenter="0">
 			<s:layout><s:BasicLayout/></s:layout>
@@ -129,6 +135,7 @@
 			<!--This is the New User Registration button-->
 			<s:Button id="registerButton" width="124" height="40" label="{Language.lookup('Register')}" toolTip="{Language.lookup('RegistrationNote')}" click = "registerButton_onClick(event)" horizontalCenter="59" verticalCenter="39"/>
 			<!--This is the box group that forms the smaller links below Login/Register"-->
+
 			<mx:HBox id="bottomLinks"  height="29" horizontalCenter="8" textAlign="center" verticalCenter="119">
 				<!--The "About Us" link-->
 				<mx:LinkButton id="about" label="{Language.lookup('AboutUs')}"
