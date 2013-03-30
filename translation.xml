@@ -2316,9 +2316,9 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<GER text="Bitte warte .. .. .." />
 	</ServerResponding>
 	<AgoraVersion>
-	<EN-US text="V 3.2" />
-		<RUS text="V 3.2" /><!--TODO: Translate RUS-->
-		<GER text="V 3.2" />
+	<EN-US text="V 3.3" />
+		<RUS text="V 3.3" /><!--TODO: Translate RUS-->
+		<GER text="V 3.3" />
 	</AgoraVersion>
 
 
