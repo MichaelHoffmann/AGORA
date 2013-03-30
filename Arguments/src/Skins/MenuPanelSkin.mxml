@@ -196,7 +196,7 @@ in accordance with the terms of the license agreement accompanying it.
                 <!-- layer 3: text -->
                 <!--- @copy spark.components.Panel#titleDisplay -->
 				<s:Group id ="moveButton">
-					<s:Image height = "30" source="@Embed('images/agoraMoveLR.png')" buttonMode="true" mouseDown="{hostComponent.beginDrag(event)}"  left="-17" top = "42"   />
+					<s:SWFLoader height = "30" source="@Embed('images/agoraMoveLR.swf')" buttonMode="true" mouseDown="{hostComponent.beginDrag(event)}"  left ="20"  top = "42"   />
 					<s:Label id="titleDisplay"  top="60" bottom="0" minHeight="30" width = "80"
 							 fontWeight="bold" maxDisplayedLines="1" textAlign="start"
 							 verticalAlign="middle"

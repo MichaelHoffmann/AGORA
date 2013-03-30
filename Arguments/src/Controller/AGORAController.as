@@ -296,7 +296,7 @@ package Controller
 		}
 		public function onProjectDeleted(e:Event):void{
 			menu.myProjects.currentState="listOfProjects";
-			fetchDataMyProjects();
+			fetchDataMyProjects(1);
 			//fetchDataProjectList(); // changed 
 		}
 		public function onUsersChanged(e:Event):void{
@@ -681,9 +681,12 @@ package Controller
 				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
 			}
 			//fetchDataProjectList();
-			fetchDataMyProjects();
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
+			if(current ==Language.lookup("MyPPProjects"))
+				fetchDataMyProjects(1);	
+				else
+					fetchDataMyProjects();
 			if (current ==Language.lookup("MainTab") && parseInt(""+usm.selectedWoAProjID) && menu.categories.layerView)
 			{
 				model.categoryModel.requestChildCategories("",usm.selectedWoAProjID);
@@ -754,10 +757,12 @@ package Controller
 
 		public function printMap():void{
 			var flexPrintJob:FlexPrintJob = new FlexPrintJob;
-			flexPrintJob.start();
-			flexPrintJob.printAsBitmap = false;
-			flexPrintJob.addObject(map.agoraMap, FlexPrintJobScaleType.SHOW_ALL);
-			flexPrintJob.send();
+			if(flexPrintJob.start()){
+				
+				flexPrintJob.printAsBitmap = false;
+				flexPrintJob.addObject(map.agoraMap, FlexPrintJobScaleType.SHOW_ALL);
+				flexPrintJob.send();
+			}
 		}
 		
 		
@@ -874,7 +879,10 @@ package Controller
 				projectNameDialog.currentState=state;
 				PopUpManager.addPopUp(projectNameDialog,DisplayObject(FlexGlobals.topLevelApplication),true);
 				PopUpManager.centerPopUp(projectNameDialog);
+				if(state == "addUsers")
 				projectNameDialog.firstUserNameTextBox.setFocus();
+				/*else
+					projectNameDialog.firstUserNameTextBox.setFocus();*/	
 			}
 			else{
 				Alert.show(Language.lookup("MustRegister"));

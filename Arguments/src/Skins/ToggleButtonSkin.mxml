@@ -150,8 +150,8 @@
 									<s:SolidColor color="#29ABE2" alpha = "1"/>
 									</s:fill>
 					</s:Ellipse>	
-		<s:Image horizontalCenter = "0" top ="2"   scaleX=".1" scaleY="-.1"  source="@Embed('/images/agoraMasterImages_Triangle.png')" />
-		<s:Image horizontalCenter = "0" bottom = "2"       scaleX=".1" scaleY=".1" source="@Embed('/images/agoraMasterImages_Triangle.png')"  />
+		<s:SWFLoader left = "11" bottom = "8" scaleY="-.7" rotationY="180"  scaleX=".66"    source="@Embed('/images/agoraMasterImages_Triangle.swf')" />
+		<s:SWFLoader left ="5.5"  top = "9" scaleY=".7"  scaleX=".7"   source="@Embed('/images/agoraMasterImages_Triangle.swf')"  />
 	</s:Group>
 
 </s:SparkButtonSkin>
