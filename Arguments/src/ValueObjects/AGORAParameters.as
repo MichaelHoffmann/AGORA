@@ -173,6 +173,7 @@ package ValueObjects
 		public var DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE:String;
 		public var EQUIVALENT_REFORMULATION:String;
 		public var FRIENDLY_AMENDMENT:String;
+		public var REFERENCE:String;
 		public var DISTINCTION:String;
 		public var DEFINITION:String;
 		public var COMMENT:String;
@@ -261,6 +262,7 @@ package ValueObjects
 			DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE = Language.lookup('AddDefeatStatement');
 			EQUIVALENT_REFORMULATION = Language.lookup('AddEqForm');
 			FRIENDLY_AMENDMENT = Language.lookup('AddFA');
+			REFERENCE = Language.lookup('AddReference');
 			DISTINCTION = Language.lookup('AddDistinction');
 			DEFINITION = Language.lookup('AddDef');
 			COMMENT = Language.lookup('AddComment');

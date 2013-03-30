@@ -1,5 +1,7 @@
 package Model
 {
+	import Controller.LoadController;
+	
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
@@ -12,6 +14,7 @@ package Model
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
+	import flash.utils.setTimeout;
 	
 	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
@@ -32,12 +35,14 @@ package Model
 		public static const COMMENT:String = "Comment";
 		public static const REFORMULATION:String = "Reformulation";
 		public static const AMENDMENT:String = "Amendment";
+		public static const REFERENCE:String = "Reference";
 		public static const QUESTION:String = "Question";
 		public static const COUNTER_EXAMPLE:String = "CounterExample";
 		public static const DEFINITION:String = "Definition";
 		public static const SUPPORT:String = "Support";
 		public static const LINKTOMAP:String = "LinkToMap";
 		public static const LINKTORESOURCES:String = "LinkToResource";
+		public static var add:int = 0;
 		
 		private var _author:String;
 		private var _firstName:String;
@@ -75,6 +80,7 @@ package Model
 		private var addDefinition:HTTPService;
 		private var addQuestion:HTTPService;
 		private var addDefeat:HTTPService;
+		private var addReference:HTTPService;
 		
 		
 		private var mapModel:AGORAMapModel;
@@ -138,6 +144,11 @@ package Model
 			addAmendment.url = AGORAParameters.getInstance().insertURL;
 			addAmendment.addEventListener(ResultEvent.RESULT, onAmendmentAdded);
 			addAmendment.addEventListener(FaultEvent.FAULT, onFault);
+			
+			addReference = new HTTPService;
+			addReference.url = AGORAParameters.getInstance().insertURL;
+			addReference.addEventListener(ResultEvent.RESULT, onReferenceAdded);
+			addReference.addEventListener(FaultEvent.FAULT, onFault);
 			
 			addDefinition = new HTTPService;
 			addDefinition.url = AGORAParameters.getInstance().insertURL;
@@ -625,6 +636,34 @@ package Model
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 			addComment.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
+		public function reference(x:int):void{
+			var y:int;
+			var count:int=0;
+			for (var i:int = 0; i<comments.length ;i++)
+			{
+				if(comments[i].statementFunction == StatementModel.LINKTORESOURCES)
+				{
+					count++;
+				}
+			}
+			if(count == 0)
+				y = ygrid + 14;
+			else 
+				y = comments[count].ygrid;
+			if(comments.length!=0){
+				
+				for (var i:int = 0; i<comments.length ;i++)
+				{
+					if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
+					{
+						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+					}
+				}
+			}
+			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Reference" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Reference" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
+			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
+			addComment.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
+		}
 		public function question(x:int):void{
 			var y:int;
 			if(comments.length == 0){
@@ -656,18 +695,20 @@ package Model
 		
 		public function linktoresource(x:int):void{
 			var y:int;
-
-				if(objections.length == 0)
-					y = ygrid + 14;
-				else 
-					y = objections[objections.length-1].ygrid;
-			    if(comments.length!=0){
+			var count:int;
+			if(objections.length == 0)
+				y = ygrid + 14;
+			else 
+				y = objections[objections.length-1].ygrid;
+			if(comments.length!=0){
 				
-					//for (var i:int = 0; i<comments.length ;i++)
+				for (var i:int = 0; i<comments.length ;i++)
+				{
+					//if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
 					//{
-						if(comments[0].statementFunction != StatementModel.LINKTORESOURCES)
-							AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],11,0);
+						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
 					//}
+				}
 				
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="LinkToResource" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="LinkToResource" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
@@ -694,7 +735,10 @@ package Model
 		public function support(x:int):void{
 			var y:int;
 			if(comments.length == 0){
-				y = ygrid + 11;
+				if(objections.length == 0)
+					y = ygrid + 14;
+				else 
+					y = objections[objections.length-1].ygrid;
 			}
 			else{
 				y = comments[comments.length-1].ygrid;
@@ -706,33 +750,44 @@ package Model
 		//------------------- Objections -----------------------------//
 		public function object(x:int):void{
 				var y:int;
-				if(comments.length != 0)
-				//	for (var i:int = 0; i<comments.length ;i++)
-					//{
-						AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],5,0);
-				//	}
+				
 				if(objections.length == 0){
 					y = ygrid + 14;
 				}
 				else{
 					y = objections[objections.length-1].ygrid;
 				}
+				if(comments.length != 0)
+				{
+					add = 1;
+				for (var i:int = 0; i<comments.length ;i++)
+					{
+					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+				    //AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
+					}
+				}
 				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 				addObjection.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
+
+		
 		public function defeat(x:int):void{
 			var y:int;
-			if(comments.length != 0)
-				//for (var i:int = 0; i<comments.length ;i++)
-				//{
-					AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],6,0);
-				//}
 			if(objections.length == 0){
 				y = ygrid + 14;
 			}
 			else{
 				y = objections[objections.length-1].ygrid;
+			}
+			if(comments.length != 0)
+			{
+				add = 1;
+				for (var i:int = 0; i<comments.length ;i++)
+				{
+					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+					//AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
+				}
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="CounterExample" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="CounterExample" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
@@ -782,6 +837,15 @@ package Model
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.QUESTION_CREATED, null, this));
 		}
+		
+		protected function onReferenceAdded(event:ResultEvent):void{
+			var map:MapValueObject = new MapValueObject(event.result, true);
+			if(map.hasOwnProperty('error')){
+				dispatchEvent(new AGORAEvent(AGORAEvent.CREATING_REFERENCE_FAILED, null, this));
+				return;
+			}
+			dispatchEvent(new AGORAEvent(AGORAEvent.REFERENCE_CREATED, null, this));
+		}
 		protected function onDefinitionAdded(event:ResultEvent):void{
 			var map:MapValueObject = new MapValueObject(event.result, true);
 			if(map.hasOwnProperty('error')){
@@ -804,7 +868,8 @@ package Model
 					return;
 				}
 			}
-			comments.push(comment);
+			
+				comments.push(comment);
 		}
 		public function getXML():XML{
 			var xml:XML = <node></node>;
@@ -825,6 +890,9 @@ package Model
 				case AMENDMENT:
 					xml.@Type = AMENDMENT;
 					break;
+				case REFERENCE:
+					xml.@Type = REFERENCE;
+					break;
 				case QUESTION:
 					xml.@Type = QUESTION;
 					break;
@@ -842,6 +910,9 @@ package Model
 					break;
 				case LINKTOMAP:
 					xml.@Type = LINKTOMAP;
+					break;
+				case SUPPORT:
+					xml.@Type = SUPPORT;
 					break;
 			};
 			xml.@typed = 0;

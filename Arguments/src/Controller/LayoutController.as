@@ -111,6 +111,7 @@ package Controller
 		}
 		
 		protected function onPositionsUpdated(event:AGORAEvent):void{
+			var m:StatementModel = new StatementModel(); 
 			model.requested = false;
 			map.sBar.hideStatus();
 			LoadController.getInstance().fetchMapData();

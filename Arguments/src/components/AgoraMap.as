@@ -201,7 +201,7 @@ package components
 				else if(newPanels[i] is StatementModel){
 					var argumentPanel:ArgumentPanel;
 					var model:StatementModel = newPanels[i];
-					if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION && model.statementType != StatementModel.SUPPORT && model.statementType != StatementModel.LINKTOMAP && model.statementType != StatementModel.LINKTORESOURCES && model.statementType != StatementModel.REFORMULATION){
+					if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.REFERENCE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION && model.statementType != StatementModel.SUPPORT && model.statementType != StatementModel.LINKTOMAP && model.statementType != StatementModel.LINKTORESOURCES && model.statementType != StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
@@ -353,7 +353,7 @@ package components
 									if(!textLabel[obj.ID])
 										textLabel[obj.ID] = new spark.components.Label();
 									drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
-									drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-40 , objectionPanel.y + 72);
+									drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
 									drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
 									drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 									if(objectionPanel.statementType == StatementModel.OBJECTION)
@@ -378,7 +378,7 @@ package components
 						{
 							AGORAModel.getInstance().agoraMapModel.addClicked = 0;
 							//AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 1;
-							drawUtility.graphics.lineStyle(10, 0xFFFF66, 10);
+							drawUtility.graphics.lineStyle(10, 0xFFFF00, 10);
 							argumentPanel = panelsHash[model.ID];
 							var lastObjection:StatementModel = layoutController.getBottomComment(model);
 							//if(layoutController.getBottomObjection(model)!=null)
@@ -388,18 +388,14 @@ package components
 								var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
 								if(bottomObjection !=null)
 									{
-									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 50;
+									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 70;
 									fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 									
 									fvlfpy = bottomObjection.y + 72;
 									
 									//draw a line from the first objection to the last objection
 									//and an arrow
-									drawUtility.graphics.moveTo(fvlspx, fvlfpy);
-									drawUtility.graphics.lineTo(fvlspx, fvlspy);
-									drawUtility.graphics.lineTo(fvlspx-15, fvlspy +15);
-									drawUtility.graphics.moveTo(fvlspx, fvlspy);
-									drawUtility.graphics.lineTo(fvlspx+15, fvlspy+15);
+									
 									
 								}
 								for each(var obj:StatementModel in model.comments){
@@ -414,6 +410,11 @@ package components
 										
 										if(objectionPanel.statementType == StatementModel.COMMENT)
 										{
+											drawUtility.graphics.moveTo(fvlspx, fvlfpy);
+											drawUtility.graphics.lineTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-15, fvlspy +15);
+											drawUtility.graphics.moveTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
 											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+48, objectionPanel.y +72);
@@ -422,6 +423,11 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.REFORMULATION)
 										{
+											drawUtility.graphics.moveTo(fvlspx, fvlfpy);
+											drawUtility.graphics.lineTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-15, fvlspy +15);
+											drawUtility.graphics.moveTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-45 , objectionPanel.y + 72);
 											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
@@ -430,17 +436,35 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.AMENDMENT)
 										{
+											drawUtility.graphics.moveTo(fvlspx, fvlfpy);
+											drawUtility.graphics.lineTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-15, fvlspy +15);
+											drawUtility.graphics.moveTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
 											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("FriendlyAmendTo");
 										}
+										else if(objectionPanel.statementType == StatementModel.SUPPORT)
+										{
+											drawUtility.graphics.moveTo(fvlspx, fvlfpy);
+											drawUtility.graphics.lineTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-15, fvlspy +15);
+											drawUtility.graphics.moveTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+15, fvlspy+15);
+											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
+											textLabel[obj.ID].text = Language.lookup("Supports");
+										}
 										else if(objectionPanel.statementType == StatementModel.LINKTOMAP)
 										{
-											drawUtility.graphics.moveTo(fvlspx+25,fvlspy);
-											drawUtility.graphics.lineTo(fvlspx+25, objectionPanel.y +72);
-											drawUtility.graphics.moveTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx-30,fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
 											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
@@ -451,9 +475,22 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.LINKTORESOURCES)
 										{
-											drawUtility.graphics.moveTo(fvlspx+25,fvlspy);
-											drawUtility.graphics.lineTo(fvlspx+25, objectionPanel.y +72);
-											drawUtility.graphics.moveTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx-30,fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
+											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+5, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
+											drawUtility.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
+											drawUtility.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72+15);
+											textLabel[obj.ID].text = Language.lookup("seeMap");
+										}
+										else if(objectionPanel.statementType == StatementModel.REFERENCE)
+										{
+											drawUtility.graphics.moveTo(fvlspx-30,fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
 											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+5, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
@@ -464,6 +501,11 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.DEFINITION)
 										{
+											drawUtility.graphics.moveTo(fvlspx, fvlfpy);
+											drawUtility.graphics.lineTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-15, fvlspy +15);
+											drawUtility.graphics.moveTo(fvlspx, fvlspy);
+											drawUtility.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility.graphics.moveTo(fvlspx, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
 											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+30, objectionPanel.y +72);
@@ -473,9 +515,9 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.QUESTION)
 										{
-											drawUtility.graphics.moveTo(fvlspx+25,fvlspy);
-											drawUtility.graphics.lineTo(fvlspx+25, objectionPanel.y +72);
-											drawUtility.graphics.moveTo(fvlspx+25, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx-30,fvlspy);
+											drawUtility.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
 											drawUtility.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+40, objectionPanel.y +72);
 											drawUtility.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
@@ -490,9 +532,7 @@ package components
 										textLabel[obj.ID].width=100;
 										textLabel[obj.ID].height=100;
 										drawUtility.addChild(textLabel[obj.ID]);
-										drawUtility.invalidateDisplayList();
-										
-										
+										drawUtility.invalidateDisplayList();	
 									}
 								}
 							}

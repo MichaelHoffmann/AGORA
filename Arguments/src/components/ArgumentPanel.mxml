@@ -24,7 +24,7 @@
 		<s:VGroup id = "topHG" width = "100%">
 			<!--Within the topHG. It holds the author information and the type of statement-->
 			<s:HGroup id = "stmtInfoVG" width = "100%" fontSize="12"  >
-				<s:Label id = "stmtTypeLbl" alpha=".50"/>
+				<mx:Text id = "stmtTypeLbl" alpha=".50" width="120" />
 				<s:Button  click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkin"   >
 
 				</s:Button>
@@ -32,7 +32,7 @@
 				<s:Label id = "userIdLbl" click="{navigateToURL(new URLRequest(URL))}"    maxDisplayedLines="1" width="{100}"  right = "0" alpha=".50"/>
 				<s:Label id = "userIdLblPA" textDecoration="underline" visible="false" click="{navigateToURL(new URLRequest(prevauthorurl))}"    maxDisplayedLines="2" width="{20}" color="#F87217" right = "-30" alpha=".50"/>
 			</s:HGroup>
-			<s:Line width ="95%" height ="0" id = "theLine" >
+			<s:Line width ="75%" height ="0" id = "theLine" >
 				<s:stroke>
 					<s:SolidColorStroke color="black" alpha=".50"/>
 				</s:stroke>
@@ -82,7 +82,7 @@
 				
 			</s:HGroup>
 		</s:Group>
-		<s:Image right="50.5" bottom="-35" id="showButton"  width="10" height="10"
+		<s:Image right="131.5" bottom="-35" id="showButton"  width="10" height="10"
 				 mouseOver="showMouseOver(event)"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>
 		
@@ -346,6 +346,9 @@
 					else if(value.statementFunction == StatementModel.AMENDMENT){
 						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
 					}
+					else if(value.statementFunction == StatementModel.REFERENCE){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
 					else if(value.statementFunction == StatementModel.REFORMULATION){
 						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
 					}
@@ -359,6 +362,9 @@
 						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
 					}
 					else if(value.statementFunction == StatementModel.QUESTION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.SUPPORT){
 						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
 					}
 					BindingUtils.bindProperty(this, "statementNegated", model, ["negated"]);
@@ -710,9 +716,17 @@
 					{
 						displayTxt.text = "[" + Language.lookup("EnterComment") + "]";
 					}
+					else if(model.statementFunction == StatementModel.SUPPORT){
+						displayTxt.text = "["+Language.lookup("AddSupport") +"]";
+						
+					}
 					else if(model.statementFunction == StatementModel.AMENDMENT)
 					{
 						displayTxt.text = "[" + Language.lookup("FriendlyAmend") + "]";
+					}
+					else if(model.statementFunction == StatementModel.REFERENCE)
+					{
+						displayTxt.text = "[" + Language.lookup("ReferenceTo") + "]";
 					}
 					else if(model.statementFunction == StatementModel.LINKTOMAP){
 						displayTxt.text = "["+Language.lookup("AddLinkToMap") +"]";
@@ -764,6 +778,10 @@
 					else if(model.statementFunction == StatementModel.AMENDMENT)
 					{
 						displayTxt.text = "[" + Language.lookup("FriendlyAmend") + "]";
+					}
+					else if(model.statementFunction == StatementModel.REFERENCE)
+					{
+						displayTxt.text = "[" + Language.lookup("ReferenceTo") + "]";
 					}
 					else if(model.statementFunction == StatementModel.LINKTOMAP){
 						displayTxt.text = "["+Language.lookup("AddLinkToMap") +"]";
@@ -916,6 +934,7 @@
 					else if(event.label == agoraLabels.SUPPORTING_STATEMENT)
 					{
 						ArgumentController.getInstance().addSupport(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
 					}
@@ -929,6 +948,13 @@
 					else if (event.label == agoraLabels.FRIENDLY_AMENDMENT)
 					{
 						ArgumentController.getInstance().addAmendment(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.REFERENCE)
+					{
+						ArgumentController.getInstance().addReference(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
 						showMoreBtn.label = "Hide"
@@ -984,7 +1010,14 @@
 				 showButton.source = "images/yellow_Triangle.png";
 				 showButton.width = 20;
 				 showButton.height = 20;
+				 showButton.right = 218;
+				 bottomSlideout.right = 190;
 				 
+				}
+				else if(panelType!= StatementModel.INFERENCE && panelType == StatementModel.STATEMENT){
+					showButton.right = 218;
+					bottomSlideout.right = 190;
+					
 				}
 				
 				
@@ -1125,14 +1158,37 @@
 					if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
 						this.setStyle("borderColor" ,0xF99653);
 						stmtButton.visible = false;
-						stmtTypeLbl.text = "";
+						showButton.right = 205;
+						if(panelType == StatementModel.OBJECTION)
+							stmtTypeLbl.text = Language.lookup("ObjectionName");
+						else if(panelType == StatementModel.COUNTER_EXAMPLE)
+							stmtTypeLbl.text = Language.lookup("DefeatsByCounterEx");
 					}
-					if(panelType == StatementModel.COMMENT || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
+					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
 
+						showButton.right = 205;
 						showMoreBtn.visible = false;
-						this.setStyle("borderColor" ,0xFFFF66);
+						this.setStyle("borderColor" ,0xFFFF00);
 						stmtButton.visible = false;
-						stmtTypeLbl.text = "";
+						if(panelType == StatementModel.COMMENT)
+							stmtTypeLbl.text = Language.lookup("AddComment");
+						else if(panelType == StatementModel.QUESTION)
+							stmtTypeLbl.text = Language.lookup("AddQuestion");
+						else if(panelType == StatementModel.REFORMULATION)
+							stmtTypeLbl.text = Language.lookup("AddEquiv");
+						else if(panelType == StatementModel.AMENDMENT)
+							stmtTypeLbl.text = Language.lookup("AddFriendlyAmend");
+						else if(panelType == StatementModel.REFERENCE)
+							stmtTypeLbl.text = Language.lookup("AddReference");
+						else if(panelType == StatementModel.DEFINITION)
+							stmtTypeLbl.text = Language.lookup("AddDef");
+						else if(panelType == StatementModel.LINKTOMAP)
+							stmtTypeLbl.text = Language.lookup("AddLinkToMap");
+						else if(panelType == StatementModel.LINKTORESOURCES)
+							stmtTypeLbl.text = Language.lookup("ResourceLink");
+						else if(panelType == StatementModel.SUPPORT)
+							stmtTypeLbl.text = Language.lookup("AddSupport");
+
 					}}
 				else if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
 					skin.setStyle("borderColor" ,252525);
@@ -1140,7 +1196,7 @@
 					state = DISPLAY;
 					group.addElement(displayTxt);
 				}
-				else if(panelType == StatementModel.COMMENT || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
+				else if(panelType == StatementModel.COMMENT || panelType == StatementModel.QUESTION || panelType == StatementModel.REFERENCE || panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
 					skin.setStyle("borderColor" ,252525);
 					group.removeAllElements();
 					state = DISPLAY;

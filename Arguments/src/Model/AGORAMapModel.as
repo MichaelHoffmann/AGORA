@@ -562,7 +562,7 @@ public function get check():Boolean
 			//add new elements to Model
 			for each(var node:StatementModel in nodeHash){
 				if(!panelListHash.hasOwnProperty(node.ID)){
-					if(node.statementFunction != "Comment" && node.statementFunction!= "Amendment" && node.statementFunction!= "Question" && node.statementFunction!= "Definition" && node.statementFunction!= "Reformulation" && node.statementFunction!= "Support" && node.statementFunction!= "LinkToMap" && node.statementFunction!= "LinkToResource" ){
+					if(node.statementFunction != "Comment" && node.statementFunction!= "Amendment" && node.statementFunction!="Reference" && node.statementFunction!= "Question" && node.statementFunction!= "Definition" && node.statementFunction!= "Reformulation" && node.statementFunction!= "Support" && node.statementFunction!= "LinkToMap" && node.statementFunction!= "LinkToResource" ){
 					newPanels.addItem(node);
 					check = true;
 					panelListHash[node.ID] = node;				
@@ -641,6 +641,9 @@ public function get check():Boolean
 					else if(nodeVO.type == StatementModel.AMENDMENT){
 						statementModel.statementFunction = StatementModel.AMENDMENT;
 					}
+					else if(nodeVO.type == StatementModel.REFERENCE){
+						statementModel.statementFunction = StatementModel.REFERENCE;
+					}
 					else if(nodeVO.type == StatementModel.DEFINITION){
 						statementModel.statementFunction = StatementModel.DEFINITION;
 					}
@@ -652,6 +655,9 @@ public function get check():Boolean
 					}
 					else if(nodeVO.type == StatementModel.LINKTORESOURCES){
 						statementModel.statementFunction = StatementModel.LINKTORESOURCES;
+					}
+					else if(nodeVO.type == StatementModel.REFERENCE){
+						statementModel.statementFunction = StatementModel.REFERENCE;
 					}
 					else if(nodeVO.type == StatementModel.SUPPORT){
 						statementModel.statementFunction = StatementModel.SUPPORT;
@@ -691,7 +697,7 @@ public function get check():Boolean
 							var i:int = statementM.parentStatement.objections.indexOf(statementM);
 							statementM.parentStatement.objections.splice(i, 1);
 						}
-						else if(statementM.statementFunction == StatementModel.COMMENT || statementM.statementFunction == StatementModel.AMENDMENT || statementM.statementFunction == StatementModel.QUESTION || statementM.statementFunction == StatementModel.DEFINITION || statementM.statementFunction == StatementModel.REFORMULATION || statementM.statementFunction == StatementModel.LINKTOMAP || statementM.statementFunction == StatementModel.LINKTORESOURCES || statementM.statementFunction == StatementModel.SUPPORT){
+						else if(statementM.statementFunction == StatementModel.COMMENT || statementM.statementFunction == StatementModel.AMENDMENT || statementM.statementFunction == StatementModel.QUESTION || statementM.statementFunction == StatementModel.REFERENCE || statementM.statementFunction == StatementModel.DEFINITION || statementM.statementFunction == StatementModel.REFORMULATION || statementM.statementFunction == StatementModel.LINKTOMAP || statementM.statementFunction == StatementModel.LINKTORESOURCES || statementM.statementFunction == StatementModel.SUPPORT){
 							var i:int = statementM.parentStatement.comments.indexOf(statementM);
 							statementM.parentStatement.comments.splice(i, 1);
 						}
@@ -733,7 +739,7 @@ public function get check():Boolean
 			
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
-					if(obj.type != StatementModel.OBJECTION && obj.type != StatementModel.COUNTER_EXAMPLE  && obj.type != StatementModel.COMMENT && obj.type != StatementModel.AMENDMENT && obj.type != StatementModel.DEFINITION && obj.type != StatementModel.QUESTION && obj.type != StatementModel.SUPPORT && obj.type != StatementModel.LINKTOMAP && obj.type != StatementModel.LINKTORESOURCES && obj.type != StatementModel.REFORMULATION){
+					if(obj.type != StatementModel.OBJECTION && obj.type != StatementModel.COUNTER_EXAMPLE  && obj.type != StatementModel.COMMENT && obj.type != StatementModel.REFERENCE && obj.type != StatementModel.AMENDMENT && obj.type != StatementModel.DEFINITION && obj.type != StatementModel.QUESTION && obj.type != StatementModel.SUPPORT && obj.type != StatementModel.LINKTOMAP && obj.type != StatementModel.LINKTORESOURCES && obj.type != StatementModel.REFORMULATION){
 						if(!connectionListHash.hasOwnProperty(obj.connID)){
 							argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 						}else{
@@ -760,7 +766,7 @@ public function get check():Boolean
 						connectionsHash[obj.connID] = argumentTypeModel;
 						processSourceNode(obj, connectionsHash, nodeHash);
 						dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel)); //takes care of linking	
-					}else if(obj.type == StatementModel.OBJECTION || obj.type == StatementModel.COUNTER_EXAMPLE || obj.type == StatementModel.COMMENT || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION || obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
+					}else if(obj.type == StatementModel.OBJECTION || obj.type == StatementModel.COUNTER_EXAMPLE || obj.type == StatementModel.COMMENT || obj.type == StatementModel.REFERENCE || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION || obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
 						processSourceNode(obj, connectionsHash, nodeHash);
 						//linking could be done directly
 					}	
@@ -784,7 +790,7 @@ public function get check():Boolean
 		}
 		
 		protected function processSourceNode(obj:ConnectionValueObject, connectionsHash:Dictionary, nodeHash:Dictionary):Boolean{
-			if(obj.type != StatementModel.OBJECTION && obj.type != StatementModel.COUNTER_EXAMPLE && obj.type != StatementModel.COMMENT && obj.type != StatementModel.AMENDMENT && obj.type != StatementModel.QUESTION && obj.type != StatementModel.DEFINITION && obj.type != StatementModel.SUPPORT && obj.type != StatementModel.LINKTOMAP && obj.type != StatementModel.LINKTORESOURCES && obj.type != StatementModel.REFORMULATION){
+			if(obj.type != StatementModel.OBJECTION && obj.type != StatementModel.COUNTER_EXAMPLE && obj.type != StatementModel.COMMENT && obj.type != StatementModel.REFERENCE && obj.type != StatementModel.AMENDMENT && obj.type != StatementModel.QUESTION && obj.type != StatementModel.DEFINITION && obj.type != StatementModel.SUPPORT && obj.type != StatementModel.LINKTOMAP && obj.type != StatementModel.LINKTORESOURCES && obj.type != StatementModel.REFORMULATION){
 				var argumentTypeModel:ArgumentTypeModel = connectionsHash[obj.connID];
 				for each(var argElements:SourcenodeValueObject in obj.sourcenodes){
 					if(!argElements.deleted){
@@ -841,7 +847,7 @@ public function get check():Boolean
 				parentStatement.addObjectionStatement(objection);
 				objection.parentStatement = parentStatement;
 			}
-			else if(obj.type == StatementModel.COMMENT || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION ||  obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
+			else if(obj.type == StatementModel.COMMENT || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.REFERENCE || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION ||  obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
 				if(obj.sourcenodes.length != 1){
 					trace("objection has more than one sourcenode");
 				}
@@ -902,6 +908,35 @@ public function get check():Boolean
 				}
 			}
 			return true;
+		}
+		public function moveYellowStatement(model:Object, diffx:int, diffy:int):void{
+			var requestXML:XML = <map ID={ID} />;
+			if(model is StatementModel){
+				var sm:StatementModel = StatementModel(model);
+				var argumentTypeModel:ArgumentTypeModel = sm.argumentTypeModel;
+				if(sm.statementFunction==StatementModel.COMMENT || sm.statementFunction == StatementModel.AMENDMENT || sm.statementFunction == StatementModel.REFERENCE || sm.statementFunction == StatementModel.QUESTION || sm.statementFunction == StatementModel.SUPPORT || sm.statementFunction == StatementModel.LINKTOMAP || sm.statementFunction == StatementModel.LINKTORESOURCES || sm.statementFunction == StatementModel.REFORMULATION || sm.statementFunction == StatementModel.DEFINITION){
+					//check if this is the first objection
+					var parentStatement:StatementModel = sm.parentStatement;
+					if(parentStatement != null){
+						if(parentStatement.comments.length > 0){
+							var desty:int = sm.ygrid + diffy;
+							for each(var siblingObjection:StatementModel in parentStatement.comments){
+								if(siblingObjection == sm){
+									requestXML = moveSupportingStatements(siblingObjection, diffx, desty - siblingObjection.ygrid, requestXML);	
+								}
+							}
+						}
+					}
+				}
+				else{
+					dispatchEvent(new AGORAEvent(AGORAEvent.ILLEGAL_MAP));
+					return;
+				}
+				
+			}
+			
+			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			updatePositionsService.send({uid: usm.uid, pass_hash: usm.passHash, xml:requestXML});
 		}
 		
 		//----------------------- Updating position -----------------------------------------// 
@@ -965,7 +1000,7 @@ public function get check():Boolean
 						}
 					}
 				}
-					else if(sm.statementFunction==StatementModel.COMMENT || sm.statementFunction == StatementModel.AMENDMENT || sm.statementFunction == StatementModel.QUESTION || sm.statementFunction == StatementModel.SUPPORT || sm.statementFunction == StatementModel.LINKTOMAP || sm.statementFunction == StatementModel.LINKTORESOURCES || sm.statementFunction == StatementModel.REFORMULATION || sm.statementFunction == StatementModel.DEFINITION){
+					else if(sm.statementFunction==StatementModel.COMMENT || sm.statementFunction == StatementModel.AMENDMENT || sm.statementFunction == StatementModel.REFERENCE || sm.statementFunction == StatementModel.QUESTION || sm.statementFunction == StatementModel.SUPPORT || sm.statementFunction == StatementModel.LINKTOMAP || sm.statementFunction == StatementModel.LINKTORESOURCES || sm.statementFunction == StatementModel.REFORMULATION || sm.statementFunction == StatementModel.DEFINITION){
 					//check if this is the first objection
 					var parentStatement:StatementModel = sm.parentStatement;
 					if(parentStatement != null){

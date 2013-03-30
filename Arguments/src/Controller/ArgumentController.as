@@ -308,6 +308,23 @@ package Controller
 				model.amendment(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
 			}
 		}
+		public function addReference(model:StatementModel):void{
+			var obj:StatementModel;
+			obj= LayoutController.getInstance().getBottomObjection(model);
+			for(var i:int = 0;i<model.comments.length;i++)
+			{
+				if(model.comments[i].statementFunction == StatementModel.LINKTORESOURCES)
+					obj= model.comments[i];
+			}
+			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
+				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
+				model.reference(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
+			}
+			else{
+				var aPanel:ArgumentPanel = map.agoraMap.panelsHash[model.ID];
+				model.reference(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
+			}
+		}
 		public function addQuestion(model:StatementModel):void{
 			var obj:StatementModel;
 			if(model.comments.length == 0)
@@ -325,6 +342,10 @@ package Controller
 		}
 		public function addSupport(model:StatementModel):void{
 			var obj:StatementModel = LayoutController.getInstance().getBottomComment(model);
+			if(model.comments.length == 0)
+				obj= LayoutController.getInstance().getBottomObjection(model);
+			else
+				obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
 				var bottomComment: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
 				model.support(obj.xgrid + bottomComment.height/agoraParameters.gridWidth + 3 );	
@@ -368,11 +389,11 @@ package Controller
 		public function addLinkToResource(model:StatementModel):void{
 			var obj:StatementModel;
 			obj= LayoutController.getInstance().getBottomObjection(model);
-			 for(var i:int = 0;i<model.comments.length;i++)
-			 {
-				 if(model.comments[i].statementFunction == StatementModel.LINKTORESOURCES)
-					 obj= model.comments[i];
-			 }
+		//	 for(var i:int = 0;i<model.comments.length;i++)
+			// {
+				// if(model.comments[i].statementFunction == StatementModel.LINKTORESOURCES)
+					// obj= model.comments[i];
+			 //}
 			//if(model.comments.length == 0)
 				
 		//	else
@@ -663,7 +684,7 @@ package Controller
 					map.sBar.displayLoading();
 					model.deleteMe();
 				}
-				else if	(model.statementFunction == StatementModel.COMMENT || model.statementFunction == StatementModel.AMENDMENT || model.statementFunction == StatementModel.QUESTION || model.statementFunction == StatementModel.DEFINITION || model.statementFunction == StatementModel.REFORMULATION || model.statementFunction == StatementModel.LINKTOMAP || model.statementFunction == StatementModel.LINKTORESOURCES || model.statementFunction == StatementModel.SUPPORT){
+				else if	(model.statementFunction == StatementModel.COMMENT ||model.statementFunction == StatementModel.REFERENCE || model.statementFunction == StatementModel.AMENDMENT || model.statementFunction == StatementModel.QUESTION || model.statementFunction == StatementModel.DEFINITION || model.statementFunction == StatementModel.REFORMULATION || model.statementFunction == StatementModel.LINKTOMAP || model.statementFunction == StatementModel.LINKTORESOURCES || model.statementFunction == StatementModel.SUPPORT){
 					if(model.supportingArguments.length > 0 || model.comments.length > 0){
 						Alert.show(Language.lookup("DeleteSuppStmt"));
 						return;
@@ -739,6 +760,8 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.CREATING_COMMENT_FAILED, onCommentCreationFailed);
 			statementModel.addEventListener(AGORAEvent.AMENDMENT_CREATED, onAmendmentCreated);
 			statementModel.addEventListener(AGORAEvent.CREATING_AMENDMENT_FAILED, onAmendmentCreationFailed);
+			statementModel.addEventListener(AGORAEvent.REFERENCE_CREATED, onAmendmentCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_REFERENCE_FAILED, onAmendmentCreationFailed);
 			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLE_FAILED, onStatementTogglingFailed);
 		}
 		
@@ -1008,6 +1031,7 @@ package Controller
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
@@ -1022,6 +1046,7 @@ package Controller
 					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
@@ -1039,6 +1064,7 @@ package Controller
 			addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
@@ -1053,6 +1079,7 @@ package Controller
 				addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" /></root>;
 				addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
@@ -1067,6 +1094,7 @@ package Controller
 			point.x = 0;
 			point.y = argumentPanel.height;
 			point = argumentPanel.localToGlobal(point);
+			point.y = point.y - 250;
 			addMenu.show(point.x, point.y);
 			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addHoverMenuClicked);
 		}

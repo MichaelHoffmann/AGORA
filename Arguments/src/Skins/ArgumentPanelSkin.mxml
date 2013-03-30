@@ -187,7 +187,7 @@ in accordance with the terms of the license agreement accompanying it.
 				<s:SolidColorStroke id="borderStroke" weight="15" />
 			</s:stroke>
 		</s:Rect>
-		<s:Ellipse width = "25" height = "25" bottom="10" right = "75"  >
+		<s:Ellipse width = "25" height = "25" bottom="10" right = "155"  >
 			<s:fill>
 				<s:SolidColor color = "{this.getStyle('borderColor')}" />
 			</s:fill >

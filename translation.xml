@@ -690,11 +690,23 @@
 		<GER text="Vorname" />
 	</FirstName>
 
-<!--  	<FriendlyAmend>
-		<EN-US text="friendly amendment" />
+ 	<AddFriendlyAmend>
+		<EN-US text="Friendly amendment" />
 		<RUS text="дружественная поправка" />
 		<GER text="Verbesserungsvorschlag" />
-	</FriendlyAmend>-->
+	</AddFriendlyAmend>
+	
+	<AddQuestion>
+		<EN-US text="Question" />
+		<RUS text="Question" />
+		<GER text="Question" />
+	</AddQuestion>
+	
+	<AddReference>
+		<EN-US text="Reference" />
+		<RUS text="Reference" />
+		<GER text="Reference" />
+	</AddReference>
 
 	<IfThen>
 		<EN-US text="if-then" />
@@ -1267,6 +1279,14 @@
 			text="Введите предложение, чтобы улучшить формулировку этого заявления" />
 		<GER text="Gib einen Vorschlag zur Verbesserung dieser Behauptung ein" />
 	</FriendlyAmend>
+	
+	<ReferenceTo>
+		<EN-US
+			text="Enter a reference" />
+		<RUS
+			text="Enter a reference" />
+		<GER text="Enter a reference" />
+	</ReferenceTo>
 
 	<FurtherReason>
 		<EN-US text="Enter a further reason" />
@@ -2567,16 +2587,22 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</AddArg>
 
 	<AddDef>
-		<EN-US text="a definition of a term" />
+		<EN-US text="Definition" />
 		<RUS text="определение термина" />
 		<GER text="eine Definition eines Begriffes" />
 	</AddDef>
 
 	<AddComment>
-		<EN-US text="a comment" />
-		<RUS text="a comment" />
+		<EN-US text="Comment" />
+		<RUS text="Comment" />
 		<GER text="einen Kommentar" />
 	</AddComment>
+	
+	<ResourceLink>
+	<EN-US text="URL" />
+		<RUS text="URL" />
+		<GER text="URL" />
+	</ResourceLink>
 
 	<AddDist>
 		<EN-US text="a distinction between different cases for this statement" />
@@ -2615,7 +2641,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</AddIntermediateLater>
 
 	<AddLinkToMap>
-		<EN-US text="a link to another argument map" />
+		<EN-US text="A link to another argument map" />
 		<RUS text="связь с другой картой аргумента" />
 		<GER text="eine Verknüpfung zu einer anderen Argumentation" />
 	</AddLinkToMap>
@@ -2675,7 +2701,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</AddQ>
 
 	<AddSupport>
-		<EN-US text="a supporting statement" />
+		<EN-US text="A supporting statement" />
 		<RUS text="утверждение поддержки" />
 		<GER text="eine unterstützende Bemerkung" />
 	</AddSupport>
@@ -2736,9 +2762,9 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</objects>
 
 	<defeats>
-		<EN-US text="defeats by counter-example" />
-		<RUS text="defeats by counter-example" /> <!--TODO: Translate RUS -->
-		<GER text="defeats by counter-example" /> <!--TODO: Translate GER -->
+		<EN-US text="defeats" />
+		<RUS text="defeats" /> <!--TODO: Translate RUS -->
+		<GER text="defeats" /> <!--TODO: Translate GER -->
 	</defeats>
 	
 	 <FriendlyAmendTo>
