@@ -113,15 +113,14 @@ package components
 		{
 			super.createChildren();
 			drawUtility = new UIComponent();
-			
+			this.addChild(drawUtility);
+
 			helpText = new HelpText;
 			addChild(helpText);
 			helpText.visible = false;
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
 			firstClaimHelpText.visible = false;
-			this.addChild(drawUtility);
-			drawUtility.depth = 100;
 
 		}
 		public function acceptDrop(d:DragEvent):void
@@ -172,6 +171,8 @@ package components
 				removeChild(firstClaimHelpText);
 			}catch(e:Error){
 			}
+			addChild(drawUtility);
+
 			addChild(firstClaimHelpText);
 			
 			for each(var info:UIComponent in getChildren())
@@ -250,17 +251,18 @@ package components
 			AGORAModel.getInstance().agoraMapModel.check = false;
 			
 			var a:Array = getChildren();
-			addChild(drawUtility);
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			connectRelatedPanels();
+			setChildIndex(drawUtility,0);
 		}
 		
 		protected function connectRelatedPanels():void
 		{
+			
 			var panelList:Dictionary = panelsHash;			
 			drawUtility.graphics.clear();
 			drawUtility.graphics.lineStyle(2,0,1);
@@ -279,7 +281,7 @@ package components
 					var fvlspy:int = argumentPanel.y + 72;
 					if(model.supportingArguments.length > 0){
 						//draw arrow
-						drawUtility.graphics.lineStyle(10, 0x29ABE2, 10);
+						drawUtility.graphics.lineStyle(10, 0x29ABE2, 1);
 						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 87);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 72);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 57);
@@ -330,7 +332,7 @@ package components
 						}
 					}
 					if(model.objections.length > 0){
-						drawUtility.graphics.lineStyle(10, 0xF99653, 10);
+						drawUtility.graphics.lineStyle(10, 0xF99653, 1);
 						argumentPanel = panelsHash[model.ID];
 						var lastObjection:StatementModel = layoutController.getBottomObjection(model);
 						if(lastObjection != null){
@@ -378,7 +380,7 @@ package components
 						{
 							AGORAModel.getInstance().agoraMapModel.addClicked = 0;
 							//AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 1;
-							drawUtility.graphics.lineStyle(10, 0xFFFF00, 10);
+							drawUtility.graphics.lineStyle(10, 0xFFFF00, 1);
 							argumentPanel = panelsHash[model.ID];
 							var lastObjection:StatementModel = layoutController.getBottomComment(model);
 							//if(layoutController.getBottomObjection(model)!=null)

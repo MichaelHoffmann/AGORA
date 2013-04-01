@@ -24,13 +24,13 @@
 			<s:VGroup id = "topHG" width = "100%">
 				<!--Within the topHG. It holds the author information and the type of statement-->
 				<s:HGroup id = "stmtInfoVG" width = "100%" fontSize="12"  >
-					<mx:Text id = "stmtTypeLbl" alpha=".50" width="120" />
-					<s:Button  click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkin"   >
+					<s:Label id = "stmtTypeLbl" alpha=".50" />
+					<s:Button  left = "0" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkin"   >
 						
 					</s:Button>
 					<!--Displays the user id-->
-					<s:Label id = "userIdLbl" click="{navigateToURL(new URLRequest(URL))}"    maxDisplayedLines="1" width="{100}"  right = "0" alpha=".50"/>
-					<s:Label id = "userIdLblPA" textDecoration="underline" visible="false" click="{navigateToURL(new URLRequest(prevauthorurl))}"    maxDisplayedLines="2" width="{20}" color="#F87217" right = "-30" alpha=".50"/>
+					<s:Label id = "userIdLbl" click="{navigateToURL(new URLRequest(URL))}"    maxDisplayedLines="1" width="{100}"  left = "0" alpha=".50"/>
+					<s:Label id = "userIdLblPA" textDecoration="underline" visible="false" click="{navigateToURL(new URLRequest(prevauthorurl))}"    maxDisplayedLines="2" width="{20}" color="#F87217" left = "-30" alpha=".50"/>
 				</s:HGroup>
 				<s:Line width ="75%" height ="0" id = "theLine" >
 					<s:stroke>
@@ -69,25 +69,25 @@
 			
 			<s:HGroup id = "bottomHG" verticalAlign="middle" color="0" bottom = "-75" height = "30">
 				<s:VGroup>
-					<s:Button id = "addBtn" scaleX=".8" scaleY=".8"/>
-					<s:Button id = "showMoreBtn" label="Show More" scaleX=".8" scaleY=".8"/>
+					<s:Button id = "addBtn" scaleX=".8" scaleY=".8" width="100%"/>
+					<s:Button id = "showMoreBtn" label="Show More" scaleX=".8" scaleY=".8" width= "100%"/>
 					<!--delete button-->
-					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8"/>
+					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8" width="100%"/>
 				</s:VGroup>
-				<s:SWFLoader id="hideButton" horizontalAlign="right"  width="10" height="10"
+				<s:SWFLoader id="hideButton" horizontalAlign="right"  width="10" height="10" verticalAlign="top"
 							 click="{showButton.visible = true;hideButton.visible=false; bottomSlideout.visible=false; }" buttonMode="true"
-							 source="@Embed('images/agoraMasterImages_Triangle.swf')" visible="false"  scaleY="-1" bottom ="0" />
+							 source="@Embed('images/agoraMasterImages_Triangle.swf')" visible="false"  scaleY="-1"/>
 			</s:HGroup>
 		</s:Group>
 		
 		<!--<s:Image right="131.5" bottom="-35" id="showButton"  width="10" height="10"
 				 mouseOver="showMouseOver(event)"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>-->
-		
-		<s:SWFLoader right="131.5" bottom="-35" id="showButton"  
-					 mouseOver="{showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true; }"
-					 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
-		
+		<s:VGroup  left="56.5" bottom="-32" horizontalAlign="center" width="13">
+			<s:SWFLoader id="showButton" horizontalCenter="0" maxWidth="13" maxHeight="13"
+						 mouseOver="{showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true; }"
+						 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
+		</s:VGroup>
 		
 	</s:Group>
 	
@@ -1010,8 +1010,8 @@
 				this.layout = uLayout;
 				if(model.comments.length !=0 )
 				{
-					showButton.source = "images/yellow_Triangle.png";
-					showButton.width = 20;
+					showButton.source = "images/yellowTriangle.swf";
+					/*showButton.width = 20;
 					showButton.height = 20;
 					showButton.right = 218;
 					bottomSlideout.right = 190;
@@ -1020,7 +1020,7 @@
 				else if(panelType!= StatementModel.INFERENCE && panelType == StatementModel.STATEMENT){
 					showButton.right = 218;
 					bottomSlideout.right = 190;
-					
+					*/
 				}
 				
 				
@@ -1161,7 +1161,6 @@
 					if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
 						this.setStyle("borderColor" ,0xF99653);
 						stmtButton.visible = false;
-						showButton.right = 205;
 						if(panelType == StatementModel.OBJECTION)
 							stmtTypeLbl.text = Language.lookup("ObjectionName");
 						else if(panelType == StatementModel.COUNTER_EXAMPLE)
@@ -1169,7 +1168,7 @@
 					}
 					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
 						
-						showButton.right = 205;
+					//	showButton.right = 205;
 						showMoreBtn.visible = false;
 						this.setStyle("borderColor" ,0xFFFF00);
 						stmtButton.visible = false;
