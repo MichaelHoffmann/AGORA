@@ -494,7 +494,7 @@
 	<Category42>
 			<EN-US text="Education" />
 			<RUS text="Education" /><!--TODO Translate RUS-->
-			<GER text="Education" /><!--TODO Translate GER-->
+			<GER text="Bildung" />
 	</Category42>
 
 
@@ -515,9 +515,9 @@
 		<GER text="Tritt ein als Gast" />
 	</EnterGuest>
 	<Tutorial>
-		<EN-US text="Click here to see how to get started" />
+		<EN-US text="Click here to watch a video tutorial" />
 		<RUS text="Click here to see how to get started" /><!-- TODO Translate RUS-->
-		<GER text="Click here to see how to get started" /><!-- TODO Translate RUS-->
+		<GER text="Klicke hier um ein Einführungs-video zu sehen" />
 	</Tutorial>
 
 	<WelcomeHere>
@@ -867,7 +867,7 @@
 	<See>
 		<EN-US text="See" />
 		<RUS text="See " /><!--TODO Translate RUS-->
-		<GER text="See" /><!--TODO Translate GER-->
+		<GER text="Siehe" />
 	</See>
 
 	<SelectAll>
@@ -1427,7 +1427,7 @@
 	<NewMember>
 		<EN-US text="Add members" />
 		<RUS text="Add members" /><!--TODO Translate RUS-->
-		<GER text="Add members" /><!--TODO Translate GER-->
+		<GER text="Füge Mitglieder hinzu" />
 	</NewMember>
 	
     <MapsinProject>
@@ -2769,7 +2769,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<defeats>
 		<EN-US text="defeats" />
 		<RUS text="defeats" /> <!--TODO: Translate RUS -->
-		<GER text="defeats" /> <!--TODO: Translate GER -->
+		<GER text="widerlegt" /> 
 	</defeats>
 	
 	 <FriendlyAmendTo>
@@ -3018,14 +3018,14 @@ If you provide a URL in your registration, this URL shows up when people hover o
 </ErrorDeleteProject>
 
 <DelProjectWithOtherUserMaps>
-		<EN-US text="This Project has maps belonging to other members. Hence cannot be deleted." />
-		<RUS text="This Project has maps belonging to other members. Hence cannot be deleted." />  <!--TODO Translate RUS-->
-		<GER text="This Project has maps belonging to other members. Hence cannot be deleted." />  <!--TODO Translate GER-->
+		<EN-US text="This Project has maps belonging to other members. Hence it cannot be deleted." />
+		<RUS text="This Project has maps belonging to other members. Hence it cannot be deleted." />  <!--TODO Translate RUS-->
+		<GER text="Dieses Projekt enthält Argumente, die anderen Projektmitgliedern gehören. Es kann deshalb nicht gelöscht werden." />  
 </DelProjectWithOtherUserMaps>
 <DeleteProjectConfirmMsg>
 		<EN-US text="Do you want to delete this project?" />
 		<RUS text="Do you want to delete this project?" />  <!--TODO Translate RUS-->
-		<GER text="Do you want to delete this project?" />  <!--TODO Translate GER-->
+		<GER text="Willst du dieses Projekt löschen?" />  
 </DeleteProjectConfirmMsg>
 <!--TODO For moving projects to another location, we need a new text (not the one for maps):-->
 <MoveProject>

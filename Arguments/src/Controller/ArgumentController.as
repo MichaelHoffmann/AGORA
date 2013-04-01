@@ -642,10 +642,21 @@ package Controller
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && model.objections.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
-						if(checkArgUnderConstruction()){
+						if(/*model.statement.text!="" &&*/ checkArgUnderConstruction()){
 							return;
 						}
 						AGORAModel.getInstance().requested = true;
+						/* for empty nodes
+						var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[model.ID];
+						if(argumentPanel.branchControl != null){
+							try{
+								map.agoraMap.removeChild(argumentPanel.branchControl);
+								argumentPanel.branchControl = null;
+							}catch(error:Error){
+								trace("Option component must have already been removed");
+							}
+						}
+						*/
 						map.sBar.displayLoading();
 						model.deleteMe();
 					}

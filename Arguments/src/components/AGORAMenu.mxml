@@ -352,7 +352,7 @@
 
 	<s:VGroup id="Agora" top="17" width="800" horizontalAlign="center" horizontalCenter="0">
 		<s:Label id="Greeting" width="211" height="54"
-				 text="{Language.lookup('WelcomeShort')} 3.1" verticalAlign="bottom">
+				 text="{Language.lookup('WelcomeShort')} {Language.lookup('AgoraVersion')}" verticalAlign="bottom">
 		</s:Label>
 		<s:HGroup id="mainPanel" visible="false" height="436" paddingBottom="25" paddingLeft="25"
 				  paddingRight="25" paddingTop="25">
