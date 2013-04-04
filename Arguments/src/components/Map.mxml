@@ -41,9 +41,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</s:Scroller>
 		</s:Group>
 	<s:VGroup top = "50" left = "20" width = "30" horizontalAlign="center" >
-		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum}" id = "zoomFit" label = "=" />
+		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
 		<s:Button  width = "100%" click = "zoomer.value+=zoomer.stepSize" id= "zoomIn" label = "+"/>
-		<s:VSlider  width = "100%" creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" maximum="2"  height = "200"/>
+		<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" maximum="2"  height = "200"/>
 		<s:Button  width = "100%" click="zoomer.value-=zoomer.stepSize" id = "zoomOut" label = "-"/>
 
 	</s:VGroup>
@@ -119,7 +119,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				if(inited){
 					
 				var xRatio = agora.width/agoraMap.width;
-				var yRatio = agora.height/(agoraMap.height+50);
+				var yRatio = agora.height/(agoraMap.height);
 				//mx.controls.Alert.show("1:"+agoraMap.width/agora.width);
 				//mx.controls.Alert.show("2:"+agora.width/agoraMap.width);
 				if(yRatio<xRatio){
@@ -128,14 +128,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					zoomer.minimum=agora.width/agoraMap.width;
 
 				}
-				zoomer.stepSize=(zoomer.maximum-zoomer.minimum)/10;
-				if(zoomer.stepSize>.1){
-					zoomer.stepSize=.1;
-
-				}
-			//	mx.controls.Alert.show("yrate:"+yRatio+" xRate:"+xRatio);
-				zoomer.maximum=2;
-
+					zoomer.maximum=2;
+					zoomer.stepSize=(zoomer.maximum-zoomer.minimum)/10;
+					if (zoomer.minimum==0){
+					zoomer.minimum=1;
+					}
 				}
 
 			}

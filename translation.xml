@@ -149,7 +149,12 @@
  <RUS text="is in" /><!--TODO: Translate RUS -->
  <GER text="ist in" />
  </IsIn>
+ <ZoomFit>
+	 <EN-US text="Fit to screen" />
+	 <RUS text="Fit to screen" /><!--TODO: Translate RUS -->
+	 <GER text="Fit to screen" />
  
+ </ZoomFit>
  <MapOwnerURLWarning>
  <EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
  <RUS text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." /><!--TODO: Translate RUS -->

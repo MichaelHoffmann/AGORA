@@ -81,6 +81,8 @@ package components
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			beganBy = BY_CLAIM;
 			removePreviousElements = false;
+			this.minHeight=600;
+			this.minWidth=800
 		}
 		
 		//--------------------- getters and setters -------------------//
