@@ -75,7 +75,7 @@
 					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8" width="100%"/>
 				</s:VGroup>
 				<s:SWFLoader id="hideButton" horizontalAlign="right"  width="10" height="10" verticalAlign="top"
-							 click="{showButton.visible = true;hideButton.visible=false; bottomSlideout.visible=false; }" buttonMode="true"
+							 click="{event.stopImmediatePropagation(); ;showButton.visible = true;hideButton.visible=false; bottomSlideout.visible=false; }" buttonMode="true"
 							 source="@Embed('images/agoraMasterImages_Triangle.swf')" visible="false"  scaleY="-1"/>
 			</s:HGroup>
 		</s:Group>
@@ -85,7 +85,7 @@
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>-->
 		<s:VGroup  left="53.5" bottom="-32" horizontalAlign="center" width="13">
 			<s:SWFLoader id="showButton" horizontalCenter="0" maxWidth="13" maxHeight="13"
-						 mouseOver="{showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true; }"
+						 mouseOver="{event.stopImmediatePropagation();showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true; }"
 						 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
 		</s:VGroup>
 		
