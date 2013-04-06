@@ -495,7 +495,18 @@ package Controller
 				}{
 					flag = 1;
 				}
-				
+				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().MOD_PON)
+				{
+					if(argumentTypeModel.language == (Language.lookup("Implies")) || argumentTypeModel.language == (Language.lookup("OnlyIf")) || argumentTypeModel.language == (Language.lookup("SufficientCond")) || argumentTypeModel.language == (Language.lookup("NecessaryCond")))
+						flag = 0;
+				}
+				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().MOD_TOL)
+				{
+					if(argumentTypeModel.language == (Language.lookup("OnlyIf")))
+						flag = 1;
+					else
+						flag = 0;
+				}
 				if(argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL || argumentTypeModel.logicClass == AGORAParameters.getInstance().DIS_SYLL){
 					flag = 1;
 				}
@@ -762,6 +773,12 @@ package Controller
 			statementModel.addEventListener(AGORAEvent.CREATING_AMENDMENT_FAILED, onAmendmentCreationFailed);
 			statementModel.addEventListener(AGORAEvent.REFERENCE_CREATED, onAmendmentCreated);
 			statementModel.addEventListener(AGORAEvent.CREATING_REFERENCE_FAILED, onAmendmentCreationFailed);
+			statementModel.addEventListener(AGORAEvent.DEFINITION_CREATED, onAmendmentCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_DEFINITION_FAILED, onAmendmentCreationFailed);
+			statementModel.addEventListener(AGORAEvent.QUESTION_CREATED, onAmendmentCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_QUESTION_FAILED, onAmendmentCreationFailed);
+			statementModel.addEventListener(AGORAEvent.SUPPORT_CREATED, onAmendmentCreated);
+			statementModel.addEventListener(AGORAEvent.CREATING_SUPPORT_FAILED, onAmendmentCreationFailed);
 			statementModel.addEventListener(AGORAEvent.STATEMENT_TYPE_TOGGLE_FAILED, onStatementTogglingFailed);
 		}
 		
@@ -1029,31 +1046,25 @@ package Controller
 					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
 				}
 				else
 				{
 					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
 					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
 				}
 			}
 			else if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE)
@@ -1062,31 +1073,25 @@ package Controller
 			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+			//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
 			
 			}
 			else
 			{
 				addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" /></root>;
-				addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
+				//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.DISTINCTION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.REPLACEMENT} type="TopLevel"/>);
 			}
 			var addMenu:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
 			addMenu.labelField = "@label";

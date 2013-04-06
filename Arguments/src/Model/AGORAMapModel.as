@@ -24,6 +24,7 @@ package Model
 	
 	import components.AgoraMap;
 	import components.CategoryChain;
+	import components.InfoBox;
 	import components.Map;
 	import components.RightSidePanel;
 	
@@ -83,6 +84,7 @@ package Model
 		private var _projectUsers:Array;
 		private var _numberUsers:int;
 		private var _showChildren:Dictionary;
+		private var _globalComments:Dictionary;
 		private var _hide:Dictionary;
 		private var _panelListHashTemp:Dictionary;
 		private var _addClicked:Boolean;
@@ -145,7 +147,17 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
-public function get check():Boolean
+		public function get globalComments():Dictionary
+		{
+			return _globalComments;
+		}
+
+		public function set globalComments(value:Dictionary):void
+		{
+			_globalComments = value;
+		}
+
+		public function get check():Boolean
 		{
 			return _check;
 		}
@@ -555,6 +567,7 @@ public function get check():Boolean
 			{
 				newPanels.addItem(obj1);
 				panelListHash[obj1.ID] = obj1;
+				globalComments[obj1.ID] = obj1;
 				delete showChildren[obj1.ID];
 				check = true;
 			}
@@ -1065,6 +1078,7 @@ public function get check():Boolean
 					xml = statementModel.getXML();
 					for(var i:int=0; i<statementModel.nodeTextIDs.length; i++){
 						xml.appendChild(<nodetext ID={statementModel.nodeTextIDs[i]} textboxID={statementModel.statements[i].ID} />);
+						trace(xml);
 					}
 					
 					if(statementModel.statementFunction == StatementModel.INFERENCE){
@@ -1073,6 +1087,7 @@ public function get check():Boolean
 					}
 					else{
 						xml.@y = int(xml.@y) + diffy;
+						trace("hello");
 					}
 					xml.@x = int(xml.@x) + diffx;
 					requestXML.appendChild(xml);
@@ -1081,6 +1096,9 @@ public function get check():Boolean
 					}
 					for each(var obj:StatementModel in statementModel.objections){
 						list.push(obj);
+					}
+					for each(var comm:StatementModel in statementModel.comments){
+						list.push(comm);
 					}
 				}
 			}
@@ -1092,6 +1110,7 @@ public function get check():Boolean
 			panelListHash = new Dictionary;
 			panelListHashTemp = new Dictionary;
 			showChildren =  new Dictionary;
+			globalComments =  new Dictionary;
 			addClicked = 0;
 			check = false;
 			hide = new Dictionary;

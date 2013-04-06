@@ -59,6 +59,8 @@ package Events
 		public static const CREATING_DEFINITION_FAILED:String = "CreatingDefinitionFailed";
 		public static const REFERENCE_CREATED:String = "ReferenceCreated";
 		public static const CREATING_REFERENCE_FAILED:String = "CreatingReferenceFailed";
+		public static const SUPPORT_CREATED:String = "SupportCreated";
+		public static const CREATING_SUPPORT_FAILED:String = "CreatingSupportFailed";
 		public static const DEFINITION_CREATED:String = "DefinitionCreated";
 		public static const PROJECT_LIST_FETCHED:String = "ProjectListFetched";
 		public static const PROJECT_PUSHED:String = "ProjectPushed";

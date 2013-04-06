@@ -84,8 +84,8 @@
 				 mouseOver="showMouseOver(event)"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>-->
 		
-		<s:SWFLoader right="131.5" bottom="-35" id="showButton"  
-					 mouseOver="{showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true; }"
+		<s:SWFLoader right="131.5" bottom="-35" id="showButton" 
+					 mouseOver="{showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true; showMouseOver(event) }"
 					 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
 		
 		
@@ -490,8 +490,8 @@
 					Alert.show(Language.lookup("GuestEditMapError"));
 				}
 			}
-			protected function onshowButtonClicked(event:MouseEvent):void{
-				if(event.currentTarget.label == "Show More")
+			public function onshowButtonClicked(event:MouseEvent):void{
+				if(showMoreBtn.label == "Show More")
 				{
 					AGORAModel.getInstance().agoraMapModel.showChildren =  new Dictionary;
 					var model1:StatementModel = model;
@@ -532,7 +532,7 @@
 								AGORAModel.getInstance().agoraMapModel.deletedList.push(obj);
 								
 								delete AGORAModel.getInstance().agoraMapModel.panelListHash[obj.ID];
-								
+								delete AGORAModel.getInstance().agoraMapModel.globalComments[obj.ID];							
 								delete AGORAModel.getInstance().agoraMapModel.showChildren[obj.ID];
 							}
 						}
@@ -542,7 +542,7 @@
 				LoadController.getInstance().fetchMapData();
 			}
 			protected function onAddBtnMouseOver(event:MouseEvent):void{
-				var type:String = AGORAModel.getInstance().projType;
+				/*	var type:String = AGORAModel.getInstance().projType;
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if (type == "adversarial")
 					{
@@ -555,25 +555,18 @@
 					else ArgumentController.getInstance().showAddHoverMenu(this);
 				} else {
 					Alert.show("Guests to AGORA cannot edit maps");
-				}
+				}*/
 			}
 			
-			/*protected function onAddBtnClicked(event:MouseEvent):void{
+			protected function onAddBtnClicked(event:MouseEvent):void{
 			var type:String = AGORAModel.getInstance().projType;
 			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
-			if (type == "adversarial")
-			{
-			if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
-			ArgumentController.getInstance().showAddMenu(this);
+			ArgumentController.getInstance().showAddHoverMenu(this);
 			}
-			else
-			Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+			else {
+			Alert.show("Guests to AGORA cannot edit maps");
 			}
-			else ArgumentController.getInstance().showAddMenu(this);
-			} else {
-			Alert.show(Language.lookup("GuestEditMapError"));
 			}
-			}*/
 			
 			protected function lblClicked(event:MouseEvent):void
 			{
@@ -681,7 +674,7 @@
 			}
 			protected function showMouseOver(event:MouseEvent):void
 			{
-				showButton.visible = false; bottomSlideout.visible=true
+				showButton.visible = false; bottomSlideout.visible=true;
 				var parent:DisplayObjectContainer = FlexGlobals.topLevelApplication.map.agoraMap;
 				parent.setChildIndex(this, parent.numChildren-1);
 				
@@ -862,6 +855,7 @@
 				completeArgument.addEventListener(MouseEvent.CLICK,completeArgumentClicked );
 				addReason.addEventListener(MouseEvent.CLICK,addReasonClicked);
 				showButton.addEventListener(MouseEvent.MOUSE_OVER,showMouseOver);
+
 				
 				var orLabel:Label = new Label;
 				var bigGroup:VGroup = new VGroup;
@@ -1068,7 +1062,7 @@
 				addBtn.label = Language.lookup("Add") + "...";
 				deleteBtn.label = Language.lookup("Delete") + "...";
 				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
-				//	addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
+				addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
 				addBtn.addEventListener(MouseEvent.MOUSE_OVER,onAddBtnMouseOver);
 				showMoreBtn.addEventListener(MouseEvent.CLICK,onshowButtonClicked);
 				

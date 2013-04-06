@@ -696,7 +696,7 @@
 	</FirstName>
 
  	<AddFriendlyAmend>
-		<EN-US text="Friendly amendment" />
+		<EN-US text="Amendment" />
 		<RUS text="дружественная поправка" />
 		<GER text="Verbesserungsvorschlag" />
 	</AddFriendlyAmend>
@@ -1211,7 +1211,7 @@
 	</DefeatsByCounterArg>
 
 	<DefeatsByCounterEx>
-		<EN-US text="defeats by counter example" />
+		<EN-US text="Defeat" />
 		<RUS text="опровергает встречным примером" />
 		<GER text="widerlegt durch Gegenbeispiel" />
 	</DefeatsByCounterEx>
@@ -2706,7 +2706,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</AddQ>
 
 	<AddSupport>
-		<EN-US text="A supporting statement" />
+		<EN-US text="Support" />
 		<RUS text="утверждение поддержки" />
 		<GER text="eine unterstützende Bemerkung" />
 	</AddSupport>
