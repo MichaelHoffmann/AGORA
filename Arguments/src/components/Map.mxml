@@ -143,7 +143,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			public function mouseZoom(e:MouseEvent):void{
 				e.stopImmediatePropagation();
 				//mx.controls.Alert.show(e.delta+"");
-				zoomer.value+=zoomer.stepSize;
+				//zoomer.value+=zoomer.stepSize;
 			}
 			public function setScrollers(hBar:int, vBar:int):void {
 				if(agoraMap.width<hBar){

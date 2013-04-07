@@ -150,7 +150,7 @@ in accordance with the terms of the license agreement accompanying it.
 							 angle="90" color="#000000" left="0" top="0" right="0" bottom="0"/>
 	
 	<!-- drop shadow can't be hittable so all other graphics go in this group -->
-	<s:VGroup paddingBottom="100">
+	<s:VGroup paddingBottom="0">
 		
 <s:Group left="0" right="0" top="0" bottom="0">
 
