@@ -26,7 +26,6 @@ package components
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
-	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
@@ -48,7 +47,6 @@ package components
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
-	import mx.events.ResizeEvent;
 	import mx.events.ScrollEvent;
 	import mx.managers.DragManager;
 	import mx.states.State;
@@ -67,10 +65,8 @@ package components
 		public var drawUtility2:UIComponent = null;
 		public var ID:int;
 		public var helpText:HelpText;
-		public var flag:int;
 		public var textLabel:Dictionary;
 		public var firstClaimHelpText:FirstClaimHelpText;
-		public var rectangle:Shape;
 		private static var _tempID:int;
 		public var timer:Timer;
 		private var _removePreviousElements:Boolean;
@@ -89,7 +85,8 @@ package components
 			bottom = 100;
 			beganBy = BY_CLAIM;
 			removePreviousElements = false;
-			addEventListener(ResizeEvent.RESIZE,scrollAutomatically);
+			this.minHeight=600;
+			this.minWidth=800
 		}
 		
 		//--------------------- getters and setters -------------------//
@@ -123,7 +120,6 @@ package components
 			super.createChildren();
 			drawUtility = new UIComponent();
 			drawUtility1 = new UIComponent();
-			drawUtility2 = new UIComponent();
 			helpText = new HelpText;
 			addChild(helpText);
 			helpText.visible = false;
@@ -133,43 +129,36 @@ package components
 			this.addChild(drawUtility);
 			this.addChild(drawUtility1);
 			drawUtility.depth = 100;
-			rectangle = new Shape;
-			flag = 0;
-
+			
 		}
 		public function acceptDrop(d:DragEvent):void
 		{
 			DragManager.acceptDragDrop(Canvas(d.currentTarget));
 		}
-		
-		public function scrollAutomatically(d:ResizeEvent):void
-		{
-			
 
-		}
 		public function mouseclicked(d:MouseEvent):void
 		{
 			if(d.target == this)
 			{
-			for each(var sm in AGORAModel.getInstance().agoraMapModel.globalComments)
-			{
-				if(sm is StatementModel)
+				for each(var sm in AGORAModel.getInstance().agoraMapModel.globalComments)
 				{
-					if(sm.statementFunction == StatementModel.COMMENT || sm.statementFunction == StatementModel.REFERENCE || sm.statementFunction == StatementModel.AMENDMENT || sm.statementFunction == StatementModel.QUESTION || sm.statementFunction == StatementModel.DEFINITION || sm.statementFunction == StatementModel.SUPPORT || sm.statementFunction == StatementModel.LINKTOMAP || sm.statementFunction == StatementModel.LINKTORESOURCES || sm.statementFunction == StatementModel.REFORMULATION)
+					if(sm is StatementModel)
 					{
-						AGORAModel.getInstance().agoraMapModel.deletedList.push(sm);
-					
-						delete AGORAModel.getInstance().agoraMapModel.panelListHash[sm.ID];
-						delete AGORAModel.getInstance().agoraMapModel.globalComments[sm.ID];					
-						delete AGORAModel.getInstance().agoraMapModel.showChildren[sm.ID];
-					}
+						if(sm.statementFunction == StatementModel.COMMENT || sm.statementFunction == StatementModel.REFERENCE || sm.statementFunction == StatementModel.AMENDMENT || sm.statementFunction == StatementModel.QUESTION || sm.statementFunction == StatementModel.DEFINITION || sm.statementFunction == StatementModel.SUPPORT || sm.statementFunction == StatementModel.LINKTOMAP || sm.statementFunction == StatementModel.LINKTORESOURCES || sm.statementFunction == StatementModel.REFORMULATION)
+						{
+							AGORAModel.getInstance().agoraMapModel.deletedList.push(sm);
+							
+							delete AGORAModel.getInstance().agoraMapModel.panelListHash[sm.ID];
+							delete AGORAModel.getInstance().agoraMapModel.globalComments[sm.ID];					
+							delete AGORAModel.getInstance().agoraMapModel.showChildren[sm.ID];
+						}
 						
+					}
 				}
-			}
 			}
 			
 		}
-
+		
 		
 		public function handleDrop(dragEvent:DragEvent):void
 		{	
@@ -196,7 +185,7 @@ package components
 				removeAllElements();
 				_removePreviousElements = false;
 			}
-		
+			
 			try{
 				drawUtility.removeChildAt(0);
 				removeChild(drawUtility);
@@ -226,9 +215,9 @@ package components
 			{
 				if(info is InfoBox)
 				{
-				var info1:InfoBox = info as InfoBox;			
-				if(info1.helptext == Language.lookup('ArgComplete'))
-					removeChild(info);
+					var info1:InfoBox = info as InfoBox;			
+					if(info1.helptext == Language.lookup('ArgComplete'))
+						removeChild(info);
 				}
 			}
 			
@@ -252,7 +241,7 @@ package components
 					var argumentPanel:ArgumentPanel;
 					var model:StatementModel = newPanels[i];
 					if(model.statementType != null){
-					//if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.REFERENCE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION && model.statementType != StatementModel.SUPPORT && model.statementType != StatementModel.LINKTOMAP && model.statementType != StatementModel.LINKTORESOURCES && model.statementType != StatementModel.REFORMULATION){
+						//if(model.statementType != StatementModel.OBJECTION && model.statementType != StatementModel.COUNTER_EXAMPLE && model.statementType != StatementModel.REFERENCE && model.statementType != StatementModel.AMENDMENT && model.statementType != StatementModel.COMMENT &&  model.statementType != StatementModel.DEFINITION &&  model.statementType != StatementModel.QUESTION && model.statementType != StatementModel.SUPPORT && model.statementType != StatementModel.LINKTOMAP && model.statementType != StatementModel.LINKTORESOURCES && model.statementType != StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
@@ -286,14 +275,8 @@ package components
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
+						addChild(argumentPanel);
 						
-						if(flag == 0)
-						{
-							addChild(drawUtility2);
-						}
-							addChild(argumentPanel);
-
-						flag = 1;
 						
 					}
 				}
@@ -315,12 +298,6 @@ package components
 			AGORAModel.getInstance().agoraMapModel.check = false;
 			
 			var a:Array = getChildren();
-			//if(flag == 0)
-			if(contains(drawUtility2) == true && contains(drawUtility) == true)
-			{
-				if(getChildIndex(drawUtility) > getChildIndex(drawUtility2))
-				swapChildren(drawUtility,drawUtility2);
-			}
 			addChild(drawUtility1);
 			
 			
@@ -353,7 +330,7 @@ package components
 					var fvlspy:int = argumentPanel.y + 72;
 					if(model.supportingArguments.length > 0){
 						//draw arrow
-						drawUtility.graphics.lineStyle(10, 0x29ABE2, 10);
+						drawUtility.graphics.lineStyle(10, 0x29ABE2, 1);
 						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 87);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 72);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 57);
@@ -404,7 +381,7 @@ package components
 						}
 					}
 					if(model.objections.length > 0){
-						drawUtility.graphics.lineStyle(10, 0xF99653, 10);
+						drawUtility.graphics.lineStyle(10, 0xF99653, 1);
 						argumentPanel = panelsHash[model.ID];
 						var lastObjection:StatementModel = layoutController.getBottomObjection(model);
 						if(lastObjection != null){
@@ -447,7 +424,7 @@ package components
 						}	
 					}
 					if(model.comments.length > 0){
-							
+						
 						var test:int  = AGORAModel.getInstance().agoraMapModel.hide[model.ID];
 						var test1:Boolean = AGORAModel.getInstance().agoraMapModel.addClicked;
 						if (AGORAModel.getInstance().agoraMapModel.hide.hasOwnProperty(model.ID) && AGORAModel.getInstance().agoraMapModel.hide[model.ID] != 1)
@@ -460,12 +437,12 @@ package components
 							argumentPanel = panelsHash[model.ID];
 							var lastObjection:StatementModel = layoutController.getBottomComment(model);
 							//if(layoutController.getBottomObjection(model)!=null)
-								//lastObjection = layoutController.getBottomObjection(model);
+							//lastObjection = layoutController.getBottomObjection(model);
 							if(lastObjection != null){
-
+								
 								var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
 								if(bottomObjection !=null)
-									{
+								{
 									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 70;
 									fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 									
@@ -474,15 +451,7 @@ package components
 									//draw a line from the first objection to the last objection
 									//and an arrow						
 								}
-								/*var rectHeight:int = bottomObjection.y+100 - model.comments.length * 135;
-								var firstComment:ArgumentPanel = panelsHash[model.comments[0].ID];
-								 // initializing the variable named rectangle
-								rectangle.graphics.beginFill(0xFFFF00); // choosing the colour for the fill, here it is red
-								rectangle.graphics.drawRect(fvlspx,rectHeight,400,bottomObjection.y-rectHeight+100); // (x spacing, y spacing, width, height)
-								rectangle.graphics.endFill(); // not always needed but I like to put it in to end the fill
-								drawUtility2.addChild(rectangle);
-								//drawUtility.opaqueBackground = 0xFFFFFF;*/
-								drawUtility1.graphics.lineStyle(10, 0xFFFF00, 10);
+								drawUtility1.graphics.lineStyle(10, 0xFFFF00, 1);
 								for each(var obj:StatementModel in model.comments){
 									//horizontal line from the vertical line to the objection
 									if(AGORAModel.getInstance().agoraMapModel.panelListHash.hasOwnProperty(obj.ID)){
@@ -501,8 +470,6 @@ package components
 											drawUtility1.graphics.moveTo(fvlspx, fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility1.graphics.moveTo(fvlspx, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+48, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("Comments");
 											textLabel[obj.ID].width=85;
@@ -516,8 +483,6 @@ package components
 											drawUtility1.graphics.moveTo(fvlspx, fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility1.graphics.moveTo(fvlspx, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-45 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("EquivEquiv");
 											textLabel[obj.ID].width=50;
@@ -530,9 +495,7 @@ package components
 											drawUtility1.graphics.lineTo(fvlspx-15, fvlspy +15);
 											drawUtility1.graphics.moveTo(fvlspx, fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx+15, fvlspy+15);
-											drawUtility1.graphics.moveTo(fvlspx, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
+											drawUtility1.graphics.moveTo(fvlspx, objectionPanel.y +72);;
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("FriendlyAmendTo");
 											textLabel[obj.ID].width=80;
@@ -546,8 +509,6 @@ package components
 											drawUtility1.graphics.moveTo(fvlspx, fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility1.graphics.moveTo(fvlspx, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+45, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("Supports");
 											textLabel[obj.ID].width=65;
@@ -573,8 +534,6 @@ package components
 											drawUtility1.graphics.moveTo(fvlspx-30,fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
 											drawUtility1.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+5, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
@@ -588,8 +547,6 @@ package components
 											drawUtility1.graphics.moveTo(fvlspx-30,fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
 											drawUtility1.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+5, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
@@ -606,8 +563,6 @@ package components
 											drawUtility1.graphics.moveTo(fvlspx, fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx+15, fvlspy+15);
 											drawUtility1.graphics.moveTo(fvlspx, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+30, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											textLabel[obj.ID].text = Language.lookup("Defines");
 											textLabel[obj.ID].width=65;
@@ -619,8 +574,6 @@ package components
 											drawUtility1.graphics.moveTo(fvlspx-30,fvlspy);
 											drawUtility1.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
 											drawUtility1.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
-											//drawUtility1.graphics.lineTo(fvlspx+(objectionPanel.x-fvlspx)/2-35 , objectionPanel.y + 72);
-											//drawUtility1.graphics.moveTo(fvlspx+(objectionPanel.x-fvlspx)/2+40, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);

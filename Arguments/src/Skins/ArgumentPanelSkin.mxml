@@ -150,7 +150,9 @@ in accordance with the terms of the license agreement accompanying it.
 							 angle="90" color="#000000" left="0" top="0" right="0" bottom="0"/>
 	
 	<!-- drop shadow can't be hittable so all other graphics go in this group -->
-	<s:Group left="0" right="0" top="0" bottom="0">
+	<s:VGroup paddingBottom="100">
+		
+<s:Group left="0" right="0" top="0" bottom="0">
 
 
 		<!-- top group mask -->
@@ -279,12 +281,8 @@ in accordance with the terms of the license agreement accompanying it.
 				</s:Group>
 				<!-- layer 3: control bar -->
 				<!--- @copy spark.components.Panel#controlBarGroup -->
-				<s:Group id="controlBarGroup" left="0" right="0" top="1" bottom="1" minWidth="0" minHeight="0">
-					<s:layout>
-						<s:HorizontalLayout paddingLeft="10" paddingRight="10" paddingTop="7" paddingBottom="7" gap="10" />
-					</s:layout>
-				</s:Group>
 			</s:Group>
 		</s:Group>
 	</s:Group>
+	</s:VGroup>
 </s:SparkSkin>

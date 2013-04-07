@@ -107,7 +107,14 @@ package Model
 				if(simpleStatement.parent.statements.length >= 2 && simpleStatement.parent.statement == simpleStatement && simpleStatement.parent.statementFunction != StatementModel.INFERENCE)
 				{
 					if(simpleStatement.parent.connectingString == StatementModel.IMPLICATION){
+					// bug fix
+						if(simpleStatement.parent.argumentTypeModel.claimModel.argumentTypeModel.logicClass == AGORAParameters.getInstance().MOD_TOL){
+						var positiveTextStr:String = simpleStatement.parent.statements[0].text;
+						positiveTextStr = (positiveTextStr!=null && positiveTextStr.indexOf(Language.lookup("ArgNotCase"))==0)?positiveTextStr.substr(Language.lookup("ArgNotCase").length):positiveTextStr;
+							simpleStatement.text = AGORAParameters.getInstance().IF + positiveTextStr + AGORAParameters.getInstance().THEN  + simpleStatement.parent.statements[1].text;
+						}else{					
 						simpleStatement.text = AGORAParameters.getInstance().IF + simpleStatement.parent.statements[0].text + AGORAParameters.getInstance().THEN  + simpleStatement.parent.statements[1].text; 
+						}
 					}
 					if(parent.connectingString == StatementModel.DISJUNCTION){
 						var vtext:String = parent.statements[0].text;

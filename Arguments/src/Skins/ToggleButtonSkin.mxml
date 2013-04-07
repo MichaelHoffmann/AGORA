@@ -145,13 +145,17 @@
     <!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay  -->
 		<s:Label id="labelDisplay" height = "0"  >
 			</s:Label>
+			
 		<s:Ellipse  height = "15" width = "15" id = "stmtellipse"  >
 					<s:fill>
 									<s:SolidColor color="#29ABE2" alpha = "1"/>
 									</s:fill>
 					</s:Ellipse>	
-		<s:SWFLoader left = "11" bottom = "8" scaleY="-.7" rotationY="180"  scaleX=".66"    source="@Embed('/images/agoraMasterImages_Triangle.swf')" />
-		<s:SWFLoader left ="5.5"  top = "9" scaleY=".7"  scaleX=".7"   source="@Embed('/images/agoraMasterImages_Triangle.swf')"  />
-	</s:Group>
+		<s:VGroup width="15" height ="15" horizontalAlign="center" verticalAlign="middle"  top = "0" left = "0"  gap="1">
+		<s:SWFLoader  scaleX=".66" scaleY="-.66"  source="@Embed('/images/agoraMasterImages_Triangle.swf')" />
+		<s:SWFLoader scaleX=".66" scaleY=".66"  source="@Embed('/images/agoraMasterImages_Triangle.swf')"  />
+		</s:VGroup>
+
+		</s:Group>
 
 </s:SparkButtonSkin>

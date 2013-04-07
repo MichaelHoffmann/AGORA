@@ -26,11 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		   xmlns:value_objects="ValueObjects.*"
 		   horizontalScrollPolicy="off"
 		   verticalScrollPolicy="off"
+		   mouseWheel="mouseZoom(event)"
 		   >
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-	
 	<components:TopPanel id="topPanel" width="100%" height="40">
 	</components:TopPanel>
 	<components:StatusBar id="sBar" visible="false">
@@ -39,15 +36,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
 			<s:Group id="alerts">
-				<mx:Canvas x="0">
-					<components:AgoraMap id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xffffff">	
-					</components:AgoraMap>
-				</mx:Canvas>
+				<components:AgoraMap updateComplete="{zoomerResize()}" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xffffff"/>	
 			</s:Group>
-		</s:Scroller>
-			</s:Group>
-	
-	
+	</s:Scroller>
+		</s:Group>
+	<s:VGroup top = "50" left = "20" width = "30" horizontalAlign="center" >
+		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
+		<s:Button  width = "100%" click = "zoomer.value+=zoomer.stepSize" id= "zoomIn" label = "+"/>
+		<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" maximum="2"  height = "200"/>
+		<s:Button  width = "100%" click="zoomer.value-=zoomer.stepSize" id = "zoomOut" label = "-"/>
+
+	</s:VGroup>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -70,14 +69,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import spark.components.Group;
 			import spark.primitives.Graphic;
 			
-			
+			private var lastY:int;
+			private var lastX:int;
+			public var dragging:Boolean=false;
 			public var numComponentsX:int;
 			public var numComponentsY:int;
 			public var layoutManager:LayoutController;
 			
 			import classes.Language;
-			
-			
+			var inited:Boolean = false;
+			public function mouseDownEvent(e:MouseEvent):void{
+				if(e.target.id=="agoraMap"){
+					
+					addEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
+					addEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
+					lastX=mouseX;
+					lastY=mouseY;
+					
+				}
+				
+			}
+			public function moveTheMap(e:Event):void{
+				var xDiff:int = lastX-mouseX;
+				var yDiff:int=lastY-mouseY;
+				lastY=mouseY;
+				lastX=mouseX;		
+				this.setScrollers(agora.horizontalScrollBar.value+xDiff ,agora.verticalScrollBar.value+yDiff);
+
+			}
+			public function mapMouseUp(e:Event):void{
+					removeEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
+					removeEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
+
+
+
+			}
 			public function discardChanges(event:Event):void
 			{
 				AGORAController.getInstance().hideMap();
@@ -89,6 +115,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //				agora.width = stage.stageWidth - agora.x;
 				topPanel.width = stage.stageWidth;
 			}
+			public function zoomerResize():void{
+				if(inited){
+					
+				var xRatio = agora.width/agoraMap.width;
+				var yRatio = agora.height/(agoraMap.height);
+				//mx.controls.Alert.show("1:"+agoraMap.width/agora.width);
+				//mx.controls.Alert.show("2:"+agora.width/agoraMap.width);
+				if(yRatio<xRatio){
+					zoomer.minimum=agora.height/agoraMap.height;
+				}else{
+					zoomer.minimum=agora.width/agoraMap.width;
+
+				}
+					zoomer.maximum=2;
+					zoomer.stepSize=(zoomer.maximum-zoomer.minimum)/10;
+					if (zoomer.minimum==0){
+					zoomer.minimum=1;
+					}
+				}
+
+			}
+			public function zoom():void{
+				agoraMap.scaleX=zoomer.value;
+				agoraMap.scaleY=zoomer.value;
+			}
+			public function mouseZoom(e:MouseEvent):void{
+				e.stopImmediatePropagation();
+				//mx.controls.Alert.show(e.delta+"");
+				zoomer.value+=zoomer.stepSize;
+			}
 			public function setScrollers(hBar:int, vBar:int):void {
 				if(agoraMap.width<hBar){
 					agoraMap.width=hBar+screen.height;
@@ -98,17 +154,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				}
 				agora.horizontalScrollBar.value=hBar;
 				agora.verticalScrollBar.value=vBar;
+				trace("moving to"+hBar+","+vBar);
 			}
 			override protected function measure():void{
 				super.measure();
 			}
 			
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
+
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 				topPanel.move(0,0);
 				sBar.move(this.getExplicitOrMeasuredWidth()/2-sBar.getExplicitOrMeasuredWidth()/2, topPanel.getExplicitOrMeasuredHeight());
 				sBar.setActualSize(sBar.getExplicitOrMeasuredWidth(),sBar.getExplicitOrMeasuredHeight());
 				theMap.move(0, topPanel.getExplicitOrMeasuredHeight() + sBar.getExplicitOrMeasuredHeight());
+				zoomerResize();
 			}
 			
 

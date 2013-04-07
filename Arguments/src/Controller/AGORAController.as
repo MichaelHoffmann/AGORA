@@ -33,6 +33,7 @@ package Controller
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.printing.*;
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
@@ -757,9 +758,11 @@ package Controller
 
 		public function printMap():void{
 			var flexPrintJob:FlexPrintJob = new FlexPrintJob;
+			flexPrintJob.printAsBitmap = false;
+
 			if(flexPrintJob.start()){
-				
 				flexPrintJob.printAsBitmap = false;
+				//map.agoraMap.cacheAsBitmap=false;
 				flexPrintJob.addObject(map.agoraMap, FlexPrintJobScaleType.SHOW_ALL);
 				flexPrintJob.send();
 			}
