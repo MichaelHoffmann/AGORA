@@ -79,13 +79,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import classes.Language;
 			var inited:Boolean = false;
 			public function mouseDownEvent(e:MouseEvent):void{
-				if(e.target.id=="agoraMap"){
-					
-					addEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
-					addEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
-					lastX=mouseX;
-					lastY=mouseY;
-					
+				if(e.target.hasOwnProperty("id")){
+					if(e.target.id=="agoraMap"){
+						
+						addEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
+						addEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
+						lastX=mouseX;
+						lastY=mouseY;
+						
+					}
 				}
 				
 			}
