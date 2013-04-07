@@ -585,6 +585,7 @@ package Model
 						newPanels.addItem(node);
 						check = true;
 						panelListHash[node.ID] = node;
+						globalComments[node.ID] = node;
 						
 					}
 				}

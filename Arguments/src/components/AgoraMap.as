@@ -82,7 +82,6 @@ package components
 			initializeMapStructures();
 			timer = new Timer(10000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
-			bottom = 100;
 			beganBy = BY_CLAIM;
 			removePreviousElements = false;
 			this.minHeight=600;
@@ -122,13 +121,12 @@ package components
 			drawUtility1 = new UIComponent();
 			helpText = new HelpText;
 			addChild(helpText);
+			this.addChild(drawUtility);
 			helpText.visible = false;
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
-			firstClaimHelpText.visible = false;
-			this.addChild(drawUtility);
+			firstClaimHelpText.visible = false;		
 			this.addChild(drawUtility1);
-			drawUtility.depth = 100;
 			
 		}
 		public function acceptDrop(d:DragEvent):void
@@ -300,13 +298,13 @@ package components
 			var a:Array = getChildren();
 			addChild(drawUtility1);
 			
-			
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			connectRelatedPanels();
+			setChildIndex(drawUtility,0);
 		}
 		
 		protected function connectRelatedPanels():void
