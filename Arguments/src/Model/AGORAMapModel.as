@@ -524,7 +524,10 @@ package Model
 				rsp.clickableMapOwnerInformation.toolTip = 
 					mapXMLRawObject.username + "\n" + mapXMLRawObject.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-					navigateToURL(new URLRequest(mapXMLRawObject.url), 'quote');
+					var urllink:String = mapXMLRawObject.url;
+					if(urllink!=null && urllink.indexOf("http://") ==-1)
+						urllink = "http://"+urllink;			
+					navigateToURL(new URLRequest(urllink), 'quote');
 				},false, 0, false);
 				try{
 				rsp.invalidateDisplayList();

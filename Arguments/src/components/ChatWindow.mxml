@@ -13,7 +13,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				name="chatField"/>
 	<s:TextArea id="chatMapField" x="10" visible="false" y="20" width="229" height="189" editable="false" enabled="true"
 				name="chatMapField"/>	
-	<s:TextArea styleName="h" id="chatTextEntry" x="10" y="237" width="230" height="43" enabled="true"/>
+	<s:TextArea styleName="h" id="chatTextEntry" x="10" y="237" width="230" height="43" enabled="true" keyDown="onSendMessage(event)"/>
 	<s:Button id="send" x="90" y="290" label="{Language.lookup('Send')}" click="onSendMessage(event)"/> 
 	<s:Button id="clear" x="168" y="290" label="{Language.lookup('Clear')}"  click="clearButton_onClick(event)"/>
 	<s:Label id="mainLabel" x="10" y="5" text="{Language.lookup('ChatLabel')}"/>
@@ -29,6 +29,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			import Model.UserSessionModel;
 			
 			import classes.Language;
+			import com.adobe.utils.StringUtil;
 			
 			import mx.controls.Alert;
 			import mx.core.Application;
@@ -134,13 +135,18 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				chatTextEntry.text = "";
 			}
 			
-			protected function onSendMessage(e:MouseEvent):void {
+			protected function onSendMessage(e:Event):void {
+				if(e.type == KeyboardEvent.KEY_DOWN){
+					var ke:KeyboardEvent = KeyboardEvent(e);
+					if(ke.keyCode!= Keyboard.ENTER)
+						return;					
+				}
 				var chatWindowInformation:UserSessionController = UserSessionController.getInstance();
 				// Are we connected to a server and is there any text to send?
 				if (chatTextEntry.text != "" && mapId==null && (socket != null && socket.connected)) {
 					
 					// Write to the socket
-					socket.writeUTFBytes(AGORAModel.getInstance().userSessionModel.username + ": " +chatTextEntry.text);
+					socket.writeUTFBytes(AGORAModel.getInstance().userSessionModel.username + ": " +StringUtil.trim(chatTextEntry.text));
 					chatTextEntry.text ="";
 					socket.flush(); // Windows needs this
 				}
@@ -148,7 +154,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				if (chatTextEntry.text != "" && mapId!=null && (mapsocket != null && mapsocket.connected)) {
 					
 					// Write to the socket
-					mapsocket.writeUTFBytes(AGORAModel.getInstance().userSessionModel.username + ":"+mapId + ":" +chatTextEntry.text);
+					mapsocket.writeUTFBytes(AGORAModel.getInstance().userSessionModel.username + ":"+mapId + ":" +StringUtil.trim(chatTextEntry.text));
 					chatTextEntry.text ="";
 					mapsocket.flush(); // Windows needs this
 				}
@@ -210,13 +216,13 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				times++;
 			}
 			
-			public function initMapChat():void{			
+			public function initMapChat(reload:Boolean = false):void{			
 				
 				//if(socket.connected) socket.close();
 				chatMapField.text="";
 				chatMapField.visible=true;
 				chatField.visible=false;
-				if(mapsocket!=null && mapsocket.connected) return;
+				if(mapsocket!=null && mapsocket.connected && !reload) return;
 				
 				// Create new socket connection
 				mapsocket = new Socket();

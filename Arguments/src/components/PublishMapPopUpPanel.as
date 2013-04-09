@@ -13,6 +13,7 @@ package components
 	
 	import ValueObjects.CategoryDataV0;
 	
+	import classes.AgoraMap;
 	import classes.Language;
 	
 	import components.AGORAMenu;
@@ -54,7 +55,9 @@ package components
 		private var tl:TileLayout;
 		public var cancelButton:Button;
 		public var okayButton:Button;
+		public var mySpace:Button;
 		private var bottomButtonGroup:HGroup;
+		private var bottomButtonGroupNew:HGroup;
 		private var groupContainer:VGroup;
 		private var categoryData:CategoryDataV0;
 		private var currCatID:int;
@@ -105,13 +108,20 @@ package components
 			okayButton.visible = false;
 			okayButton.addEventListener(MouseEvent.CLICK,submitPublish);
 			
+			mySpace = new Button();
+			mySpace.id = "moveMySpace";
+			mySpace.label = Language.lookup('MoveIntoMySpace');
+			mySpace.visible = true;
+			mySpace.addEventListener(MouseEvent.CLICK,submitMovePublish);
 			/*Making the groups*/
 			bottomButtonGroup = new HGroup();
+			bottomButtonGroupNew = new HGroup();
 			groupContainer = new VGroup();
 			
 			/*Sets up the horizontal group of bottom buttons*/
 			bottomButtonGroup.addElement(okayButton);
 			bottomButtonGroup.addElement(cancelButton);
+			bottomButtonGroupNew.addElement(mySpace);
 			bottomButtonGroup.horizontalAlign = "center";
 			bottomButtonGroup.verticalAlign = "bottom";
 			
@@ -124,12 +134,15 @@ package components
 			bottomButtonGroup.horizontalCenter=0;
 			groupContainer.horizontalAlign = HorizontalAlign.CENTER;
 			groupContainer.horizontalCenter = 0;
+			bottomButtonGroupNew.bottom = 10;
+			bottomButtonGroupNew.horizontalAlign="right";
 			howToUseThisFeatureLabel.text = Language.lookup("ClickThroughCategory");
 			groupContainer.addElement(howToUseThisFeatureLabel);
 			groupContainer.addElement(informationLabel);
 			this.addElement(groupContainer);
 			this.addElement(scroller);
 			this.addElement(bottomButtonGroup);
+			this.addElement(bottomButtonGroupNew);
 		}
 		
 		
@@ -174,6 +187,10 @@ package components
 			PopUpManager.removePopUp(this);
 		}
 		
+		protected function submitMovePublish(event:MouseEvent):void{
+			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
+			AGORAController.getInstance().publishMap(mapID,-2); // for private use switch
+		}
 		protected function submitPublish(event:MouseEvent):void{
 			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
 			AGORAController.getInstance().publishMap(mapID,currCatID);

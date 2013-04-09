@@ -460,11 +460,25 @@
 					currentState="normal";
 					adminName.label=model.userList.proj.@username;
 					adminURL=model.userList.proj.@url;
+					if(adminURL!=null && adminURL.indexOf("http://") ==-1)
+						adminURL = "http://"+adminURL;
 					adminName.toolTip=Language.lookup('ContactProjectAdm')+"\n"+adminURL;
 				    //adminName.addEventListener(MouseEvent.CLICK,navigateToAdminURL);
 
 				}
 				projectMemberPanel.removeAllElements();
+				var theGroup:HGroup=new HGroup();
+				if(currentState == "admin"){
+				// add the admin
+				var rdioBtnA:RadioButton = new RadioButton();
+				var userButtonA:Button=new Button();
+				rdioBtnA.enabled=false;
+				rdioBtnA.setStyle("chromeColor", 0xA0CADB);				
+				userButtonA.enabled=false;
+				userButtonA.label = usm.username+" ("+Language.lookup("ProjectAdminShort")+")";
+				theGroup.addElement(rdioBtnA);
+				theGroup.addElement(userButtonA);
+				}
 				for each (var projectXML:XML in model.userList.proj.users.userDetail)
 				{
 					if(!(projectXML.@userid==usm._uid)){
@@ -477,7 +491,10 @@
 						userButton.label = projectXML.@name ;
 						userButton.name=projectXML.@url;
 						userButton.addEventListener(MouseEvent.CLICK,function event(e:Event):void{
-						navigateToURL(new URLRequest(e.target.name), '_blank')});
+							var urllink:String = e.target.name;
+							if(urllink!=null && urllink.indexOf("http://") ==-1)
+								urllink = "http://"+urllink;										
+						navigateToURL(new URLRequest(urllink), '_blank')});
 
 						rdioBtn.setStyle("chromeColor", 0xF99653);
 						theGroup.addElement(rdioBtn);
@@ -507,7 +524,10 @@
 				rsp.clickableMapOwnerInformation.toolTip = 
 				thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-					navigateToURL(new URLRequest(thisMapInfo.url), '_blank');
+					var urllink:String = thisMapInfo.url;
+					if(urllink!=null && urllink.indexOf("http://") ==-1)
+						urllink = "http://"+urllink;			
+					navigateToURL(new URLRequest(urllink), '_blank');
 				},false, 0, false);
 				rsp.invalidateDisplayList();
 				Controller.ArgumentController.getInstance().loadMap(event.target.name);

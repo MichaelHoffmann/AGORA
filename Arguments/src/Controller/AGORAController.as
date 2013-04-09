@@ -712,7 +712,7 @@ package Controller
 		}
 		protected function onProjectMoved(event:AGORAEvent):void{
 			fetchDataProjectList();
-			fetchDataMyProjects();
+			fetchDataMyProjects(1);
 			/*if(this.categoryChain.length - 1>0){
 				fetchDataChildCategory(this.categoryChain.getItemAt((this.categoryChain.length - 1)).current,this.categoryChain.getItemAt((this.categoryChain.length - 1)).currentID,true);
 			}*/

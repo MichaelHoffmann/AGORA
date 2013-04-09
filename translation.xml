@@ -356,6 +356,16 @@
 	 <GER text="Verschiebe dieses Argument in ein Projekt" />
  </MapToProject>
 
+<MoveIntoMySpace>
+	 <EN-US text="Move map into my private folder" />
+	 <RUS text="Move map into my private folder" /><!--TODO Translate RUS-->
+	 <GER text="Move map into my private folder" />
+ </MoveIntoMySpace>
+<AddAdminhimselfError>
+	 <EN-US text="You are the administrator of this project. You cannot be a member at the same time." />
+	 <RUS text="You are the administrator of this project. You cannot be a member at the same time." /><!--TODO Translate RUS-->
+	 <GER text="Du bist der Verwalter dieses Projektes. Du kannst nicht zur gleichen Zeit Mitglied sein." />
+ </AddAdminhimselfError>
  <PublishMap>
  <EN-US text="Publish your map in the World of Arguments" />
  <RUS text="Publish your map in the World of Arguments" /><!--TODO Translate RUS-->
@@ -1476,7 +1486,11 @@
 		<RUS text="Project Administrator" /><!--TODO Translate RUS-->
 		<GER text="Projekt Verwalter" />
     </ProjectAdmin>
-
+<ProjectAdminShort>
+    <EN-US text="Admin" />
+		<RUS text="Admin" /><!--TODO Translate RUS-->
+		<GER text="Verwalter" /><!--TODO Translate GER-->
+    </ProjectAdminShort>
 	<NewReason>
 		<EN-US text="Enter your new reason" />
 		<RUS text="Введите свою новую причину" />

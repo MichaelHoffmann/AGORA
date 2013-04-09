@@ -125,7 +125,7 @@ package Controller
 				// map specific chat
 				var  chatbox:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
 				chatbox.mapId = id;
-				chatbox.initMapChat();
+				chatbox.initMapChat(true);
 				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 				map.agora.visible = true;
 				//reinitialize map view
@@ -174,7 +174,10 @@ package Controller
 			rsp.clickableMapOwnerInformation.toolTip = 
 				mapMetaData.url + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-				navigateToURL(new URLRequest(mapMetaData.url), 'quote');
+				var urllink:String = mapMetaData.url;
+				if(urllink!=null && urllink.indexOf("http://") ==-1)
+					urllink = "http://"+urllink;							
+				navigateToURL(new URLRequest(urllink), 'quote');
 			},false, 0, false);
 			rsp.mapTitle.text = this.model.agoraMapModel.name;
 			rsp.invalidateDisplayList();
@@ -235,7 +238,10 @@ package Controller
 					rsp.clickableMapOwnerInformation.toolTip = 
 					 mapObj.url + '\n' + Language.lookup('MapOwnerURLWarning');
 					rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-						navigateToURL(new URLRequest(mapObj.url), 'quote');
+						var urllink:String = mapObj.url;
+						if(urllink!=null && urllink.indexOf("http://") ==-1)
+							urllink = "http://"+urllink;			
+						navigateToURL(new URLRequest(urllink), 'quote');
 					},false, 0, false);
 					rsp.invalidateDisplayList();
 					model.rechain=true;
@@ -653,10 +659,21 @@ package Controller
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && model.objections.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
-						if(checkArgUnderConstruction()){
+						if(/*model.statement.text!="" &&*/ checkArgUnderConstruction()){
 							return;
 						}
 						AGORAModel.getInstance().requested = true;
+						/* for empty nodes
+						var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[model.ID];
+						if(argumentPanel.branchControl != null){
+							try{
+								map.agoraMap.removeChild(argumentPanel.branchControl);
+								argumentPanel.branchControl = null;
+							}catch(error:Error){
+								trace("Option component must have already been removed");
+							}
+						}
+						*/
 						map.sBar.displayLoading();
 						model.deleteMe();
 					}

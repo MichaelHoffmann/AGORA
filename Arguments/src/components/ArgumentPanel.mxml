@@ -224,6 +224,8 @@
 			public var connectingStr:String;
 			public function get prevauthorurl():String
 			{
+				if(_prevauthorurl!=null && _prevauthorurl.indexOf("http://") ==-1)
+					_prevauthorurl = "http://"+_prevauthorurl;				
 				return _prevauthorurl;
 			}
 			public function set prevauthorurl(value:String):void
@@ -272,7 +274,7 @@
 			}
 			public function get URL():String
 			{
-				if(_URL.indexOf("http://") ==-1)
+				if(_URL!=null && _URL.indexOf("http://") ==-1)
 					_URL = "http://"+_URL;
 				return _URL;
 			}		
@@ -601,6 +603,8 @@
 				{
 					
 					var u:URLRequest=new URLRequest(displayTxt.text); 
+					if(displayTxt.text!=null && displayTxt.text.indexOf("http://") ==-1)
+						u = new URLRequest("http://"+displayTxt.text);
 					navigateToURL(u,"_blank");
 				}
 			}
