@@ -55,14 +55,8 @@
 					</s:HGroup>
 					<s:Label text= "{classes.Language.lookup('ProjectMembers')}" />
 					<s:Scroller percentWidth="100">
-						<s:VGroup id="memberList" percentWidth="100">
-							
-							<s:Scroller percentWidth="100">
-								
-
-								<s:VGroup height="150" percentWidth="100"  id="projectMemberPanel">
-								</s:VGroup>
-							</s:Scroller>
+						<s:VGroup id="memberList" percentWidth="100">							
+							<s:List labelField="@userName" height = "150" id= "projectMemberPanel" itemRenderer="Skins.ListMapsProjectsSkin" percentWidth="{100}" dataProvider="{new XMLListCollection(usersXML)}"/>
 							<s:VGroup id = "membersAdmin" excludeFrom="personal, normal">
 								<s:Button percentWidth="100" click="
 										  {
@@ -139,6 +133,7 @@
 			import flash.xml.*;
 			
 			import mx.collections.ArrayCollection;
+			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
 			import mx.core.*;
 			import mx.events.*;
@@ -186,7 +181,7 @@
 			public function flushall():void
 			{
 				var change = subprojectList!=null?subprojectList.removeAllElements():true;
-				change = projectMemberPanel!=null?projectMemberPanel.removeAllElements():true;
+				//change = projectMemberPanel!=null?projectMemberPanel.removeAllElements():true;
 				change = mapPanel!=null?mapPanel.removeAllElements():true;
 			}
 			
@@ -466,7 +461,7 @@
 				    //adminName.addEventListener(MouseEvent.CLICK,navigateToAdminURL);
 
 				}
-				projectMemberPanel.removeAllElements();
+				//projectMemberPanel.removeAllElements();
 				var theGroup:HGroup=new HGroup();
 				if(currentState == "admin"){
 				// add the admin
@@ -499,7 +494,8 @@
 						rdioBtn.setStyle("chromeColor", 0xF99653);
 						theGroup.addElement(rdioBtn);
 						theGroup.addElement(userButton);
-						projectMemberPanel.addElement (theGroup);
+						//projectMemberPanel.add (theGroup);
+						projectMemberPanel.dataProvider=XMLListCollection(usersXML);
 						
 					}
 				}
