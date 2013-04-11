@@ -35,9 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:VGroup id="alerts" paddingBottom="100" paddingRight="100">
+			<s:Group id="alerts">
 				<components:AgoraMap updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xffffff"/>	
-			</s:VGroup>
+			</s:Group>
 	</s:Scroller>
 		</s:Group>
 	<s:VGroup top = "50" left = "20" width = "30" horizontalAlign="center" >
