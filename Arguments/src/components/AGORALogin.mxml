@@ -106,13 +106,23 @@
 				
 				<s:Button width="100%" height="5%" label="{Language.lookup('EnterGuest')}"
 						   click="guestButton_onClick(event)"/>
-				<s:SWFLoader click="navigateToURL(new URLRequest('http://youtu.be/HJROsQGQOMY'), 'quote')" autoLoad="true"   source="https://i1.ytimg.com/vi/HJROsQGQOMY/3.jpg?time=1364444610918" useHandCursor="true" buttonMode="true"/>
+				<s:SWFLoader id = "tutLink" click="navigateToURL(new URLRequest('http://youtu.be/HJROsQGQOMY'), 'quote')" autoLoad="true"   source="https://i1.ytimg.com/vi/HJROsQGQOMY/3.jpg?time=1364444610918" useHandCursor="true" buttonMode="true"/>
 				<s:Label color="#575254" textAlign="center" width="100%" text = "{Language.lookup('Tutorial')}"/> 
 			</s:VGroup>
+			
 			<components:SponsorPanel width="100%" height="114" bottom="0" verticalAlign="bottom">
 			</components:SponsorPanel>
 
 			</s:SkinnableContainer>
+	<s:Group click="navigateToURL(new URLRequest('http://youtu.be/HJROsQGQOMY'), 'quote')" width = "{tutLink.width}" height = "{tutLink.height}" y="{tutLink.y}" x="{tutLink.x}" alpha=".5" id="playButton" mouseOver="{playButton.alpha=.99}" buttonMode="true"  mouseOut="{playButton.alpha=.5}">
+		<s:Ellipse width="50" height="50" verticalCenter="0" horizontalCenter="0">
+			<s:fill>
+				<s:SolidColor color="{0}" />
+			</s:fill>
+		</s:Ellipse>
+
+		<s:SWFLoader rotationZ="270" verticalCenter="0" horizontalCenter="10" width = "40" height = "40" id="showButton" source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
+	</s:Group>
 		<!--The right side of the page that houses the login and register buttons and the links-->
 		<s:SkinnableContainer id="mainWelcome" width="564" height="300" backgroundColor="#FFFFFF"  horizontalCenter="124" verticalCenter="0">
 			<s:layout><s:BasicLayout/></s:layout>
