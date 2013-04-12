@@ -26,6 +26,7 @@
 			import ValueObjects.MapHistoryValueObject;
 			import ValueObjects.MapValueObject;
 			
+			import classes.AgoraMap;
 			import classes.Language;
 			
 			import mx.core.FlexGlobals;
@@ -78,13 +79,19 @@
 			override protected function commitProperties():void{
 				super.commitProperties();				
 				mapList = AGORAModel.getInstance().agoraMapModel.historylist;
-				if(mapList==null || mapList.length<=0){
 					var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+				var sessionMappings:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
+				if(sessionMappings.historyMapsVisited.length<=0)
+					rsp.historyBackBox.visible=false;
+				if(((mapList==null || mapList.length<=0) && sessionMappings.historyMapsVisited.length<=0)){
+					rsp.historyBox.visible=false;					
+				}
+/*				if(mapList==null || mapList.length<=0){
 					rsp.historyBox.visible=false;
 					rsp.historyBackBox.visible=false;
 					//rsp.invalidateProperties();
 					//rsp.history.visible=false;
-				}
+				}*/
 				if(mapList != null){
 					if(historyGroup.numElements > 0){
 						historyGroup.removeAllElements();

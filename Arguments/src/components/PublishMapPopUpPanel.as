@@ -13,6 +13,7 @@ package components
 	
 	import ValueObjects.CategoryDataV0;
 	
+	import classes.AgoraMap;
 	import classes.Language;
 	
 	import components.AGORAMenu;
@@ -112,6 +113,8 @@ package components
 			mySpace.label = Language.lookup('MoveIntoMySpace');
 			mySpace.visible = true;
 			mySpace.addEventListener(MouseEvent.CLICK,submitMovePublish);
+			mySpace.setStyle("chromeColor", 0xF5E887);					
+		//	mySpace.
 			/*Making the groups*/
 			bottomButtonGroup = new HGroup();
 			bottomButtonGroupNew = new HGroup();
@@ -130,18 +133,19 @@ package components
 			scroller.horizontalCenter = 0;
 			categoryTiles.horizontalCenter = 0;
 			bottomButtonGroup.bottom = 0;
+			bottomButtonGroupNew.bottom = 0;
+			bottomButtonGroupNew.horizontalCenter=0;
 			bottomButtonGroup.horizontalCenter=0;
 			groupContainer.horizontalAlign = HorizontalAlign.CENTER;
 			groupContainer.horizontalCenter = 0;
-			bottomButtonGroupNew.bottom = 10;
-			bottomButtonGroupNew.horizontalAlign="right";
+			bottomButtonGroupNew.bottom = 25;
 			howToUseThisFeatureLabel.text = Language.lookup("ClickThroughCategory");
 			groupContainer.addElement(howToUseThisFeatureLabel);
 			groupContainer.addElement(informationLabel);
 			this.addElement(groupContainer);
 			this.addElement(scroller);
-			this.addElement(bottomButtonGroup);
 			this.addElement(bottomButtonGroupNew);
+			this.addElement(bottomButtonGroup);			
 		}
 		
 		
@@ -161,6 +165,12 @@ package components
 						var button:Button = new Button;
 						button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 						button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						button.toolTip = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						if(categoryXML.@Name!=null && ((String)(categoryXML.@Name)).length > 32){
+							button.label = ((String)(categoryXML.@Name)).slice(0,30)+" .." ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						}else{
+							button.label = categoryXML.@Name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						}
 						button.setStyle("chromeColor", 0xA0CADB);					
 						button.addEventListener('click',function(e:Event):void{
 							//Begin private inner click event function for button

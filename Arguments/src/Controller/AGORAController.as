@@ -87,6 +87,7 @@ package Controller
 			model.categoryModel.addEventListener(AGORAEvent.MAP_FETCHED,onChildMapFetched);
 			model.categoryModel.addEventListener(AGORAEvent.PROJECT_FETCHED,onProjectFetched);
 			model.editProject.addEventListener(AGORAEvent.EDITED_PROJECT,updateProject);
+			model.editProject.addEventListener(AGORAEvent.EDITED_PROJECTRELOAD,updateProjectReload);
 			model.categoryModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.mycontributionsModel.addEventListener(AGORAEvent.CONTRIBUTIONS_FETCHED,onContributionsFetched);
 			model.mycontributionsModel.addEventListener(AGORAEvent.CHILD_PROJECT_FETCHED,onProjectFetchedContributions);
@@ -297,8 +298,28 @@ package Controller
 		}
 		public function onProjectDeleted(e:Event):void{
 			menu.myProjects.currentState="listOfProjects";
-			fetchDataMyProjects(1);
+			//fetchDataMyProjects(1);			
 			//fetchDataProjectList(); // changed 
+			var cg = FlexGlobals.topLevelApplication.rightSidePanel.categoryChain;			
+			var temp1:Number= AGORAModel.getInstance().agoraMapModel.projectID;
+			var selectT:String = AGORAModel.getInstance().userSessionModel.selectedTab;
+			if (selectT == Language.lookup("MainTab")){
+				var backup:Array=cg.back();
+				//if (backup[1]>-1){
+				if(backup[2]==null || backup[2]=="0"){
+					if(backup[1]>-1){
+						var usm:UserSessionModel= AGORAModel.getInstance().userSessionModel;						
+						usm.selectedWoAProjID=backup[1];
+						Controller.AGORAController.getInstance().fetchDataChildCategory(backup[0],backup[1],1);
+					}else{
+						AGORAController.getInstance().fetchDataCategory();
+						cg.topButton();
+					}
+				}
+			}else if (selectT== Language.lookup("MyPPProjects")){
+				menu.myProjects.currentState=("listOfProjects");
+				Controller.AGORAController.getInstance().fetchDataMyProjects(1);
+			}
 		}
 		public function onUsersChanged(e:Event):void{
 			updateProject(e)
@@ -344,6 +365,15 @@ package Controller
 			//fetchDataProjectList();
 			//model.myProjectsModel.sendRequest();
 			fetchDataMyProjects();
+		}
+		public function updateProjectReload(e:Event):void{
+			var usm:UserSessionModel=model.userSessionModel;
+			var current=usm.selectedTab;
+			if( FlexGlobals.topLevelApplication.projectNameBox){
+				FlexGlobals.topLevelApplication.projectNameBox.visible=false;
+			}
+			updateWOA(e as MouseEvent);
+			fetchDataMyProjects(1);
 		}
 		
 		public function updateProjectOnce(e:Event):void{

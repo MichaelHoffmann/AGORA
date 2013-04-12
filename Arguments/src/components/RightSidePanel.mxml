@@ -108,9 +108,10 @@
 				// test if the history is empty
 				var mapList:Vector.<MapHistoryValueObject> = AGORAModel.getInstance().agoraMapModel.historylist;
 				var sessionMappings:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
-				if((mapList==null || mapList.length<=0) && sessionMappings.historyMapsVisited.length<=0){
-					historyBox.visible=false;
+				if(sessionMappings.historyMapsVisited.length<=0)
 					historyBackBox.visible=false;
+				if(((mapList==null || mapList.length<=0) && sessionMappings.historyMapsVisited.length<=0)){
+					historyBox.visible=false;
 				}
 			//	xB = xB + chat.getExplicitOrMeasuredHeight();
 				

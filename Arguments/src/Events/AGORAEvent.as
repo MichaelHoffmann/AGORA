@@ -88,6 +88,7 @@ package Events
 		public static const PROJECT_FETCHED:String = "ProjectFetched";
 		public static const EDIT_PROJECT_FAILED:String = "EditProjectFailed";
 		public static const EDITED_PROJECT:String = "EditedProject";
+		public static const EDITED_PROJECTRELOAD:String = "EditedProjectReload";
 		public static const ADMIN_CHANGE_FAILED:String = "AdminChangeFailed";
 		public static const ADMIN_CHANGED:String = "AdminChanged";
 		public static const DELETE_PROJECT_FAILED:String = "DeleteProjectFailed";

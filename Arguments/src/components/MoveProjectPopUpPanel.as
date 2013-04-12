@@ -13,7 +13,7 @@ package components
 	
 	import ValueObjects.CategoryDataV0;
 	
-
+	import classes.AgoraMap;
 	import classes.Language;
 	
 	import components.AGORAMenu;

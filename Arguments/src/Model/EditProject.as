@@ -22,6 +22,12 @@ package Model
             request.requestTimeout = 3;
             request.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onResult);
             request.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+			requestRename = new mx.rpc.http.HTTPService();
+			requestRename.url = ValueObjects.AGORAParameters.getInstance().pushProjectsURL;
+			requestRename.resultFormat = "e4x";
+			requestRename.requestTimeout = 3;
+			requestRename.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onResultRename);
+			requestRename.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
             return;
         }
 		public function changeType():void
@@ -64,7 +70,7 @@ package Model
 				{						
 					loc2 = { "projID":loc1.selectedWoAProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};
 				}
-                this.request.send(loc2);
+                this.requestRename.send(loc2);
             }
             return;
         }
@@ -86,6 +92,20 @@ package Model
             return;
         }
 
+		protected function onResultRename(arg1:mx.rpc.events.ResultEvent):void
+		{
+			if (arg1.result.hasOwnProperty("proj")) 
+			{
+				if (arg1.result.proj.hasOwnProperty("error")) 
+				{
+					Alert.show(arg1.result.proj.error.@text);
+					dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.EDIT_PROJECT_FAILED));
+					return;
+				}
+			}
+			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.EDITED_PROJECTRELOAD));
+			return;
+		}
         protected function onFault(arg1:mx.rpc.events.FaultEvent):void
         {
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.EDIT_PROJECT_FAILED));
@@ -93,5 +113,6 @@ package Model
         }
 
         internal var request:mx.rpc.http.HTTPService;
+		internal var requestRename:mx.rpc.http.HTTPService;
     }
 }

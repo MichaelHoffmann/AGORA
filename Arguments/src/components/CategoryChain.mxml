@@ -52,10 +52,12 @@
 				button.name = subprojects.@pid; //The ID (unique DB identifier) of the category
 				button.label = subprojects.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 				button.setStyle("chromeColor", 0xA0CADB);
+				if(subprojects.@pname!=""){
 				actualHistory.addElement(button);
 				button.addEventListener("click",navigateToWOA);
+					}
 				for each(var project:XML in subprojects.child){
-					if(project.@pid){
+					if(project.@pid && project.@pname && project.@pname!=""){
 					trace("Adding buttons");
 					var button:Button = new Button;
 					button.width = 100;

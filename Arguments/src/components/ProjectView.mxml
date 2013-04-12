@@ -467,17 +467,19 @@
 
 				}
 				projectMemberPanel.removeAllElements();
-				var theGroup:HGroup=new HGroup();
+				
 				if(currentState == "admin"){
 				// add the admin
+					var theGroup1:HGroup=new HGroup();
 				var rdioBtnA:RadioButton = new RadioButton();
 				var userButtonA:Button=new Button();
 				rdioBtnA.enabled=false;
 				rdioBtnA.setStyle("chromeColor", 0xA0CADB);				
 				userButtonA.enabled=false;
 				userButtonA.label = usm.username+" ("+Language.lookup("ProjectAdminShort")+")";
-				theGroup.addElement(rdioBtnA);
-				theGroup.addElement(userButtonA);
+				theGroup1.addElement(rdioBtnA);
+				theGroup1.addElement(userButtonA);
+				projectMemberPanel.addElement (theGroup1);
 				}
 				for each (var projectXML:XML in model.userList.proj.users.userDetail)
 				{
