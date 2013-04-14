@@ -240,7 +240,7 @@ package components
 					}else{
 						button.label = Language.lookup("Category"+categoryXML.@ID); //The title of the category Level1 (e.g. Philosophy, Biology, or Projects)	
 					}
-					if(categoryXML.@ID==9)
+					if(categoryXML.@ID==9 || categoryXML.@ID==20)
 						otherPos = categoryTiles.numElements;
 					button.setStyle("chromeColor", 0xA0CADB);					
 					button.addEventListener('click',function(e:Event):void{
@@ -358,8 +358,11 @@ package components
 			rsp.mapTitle.text=thisMapInfo.mapName;
 			rsp.clickableMapOwnerInformation.toolTip = 
 				thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+			var urllink:String = thisMapInfo.url;
+			if(thisMapInfo.url!=null && thisMapInfo.url.indexOf("http://") ==-1)
+				urllink = "http://"+thisMapInfo.url;
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+				navigateToURL(new URLRequest(urllink), 'quote');
 			},false, 0, false);
 			rsp.invalidateDisplayList();
 			//mapMetaDataVector = null;

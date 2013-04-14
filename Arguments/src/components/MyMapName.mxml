@@ -78,8 +78,11 @@
 				rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 				rsp.clickableMapOwnerInformation.toolTip = 
 					 thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+				var urllink:String = thisMapInfo.url;
+				if(urllink!=null && urllink.indexOf("http://") ==-1)
+					urllink = "http://"+urllink;			
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-					navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+					navigateToURL(new URLRequest(urllink), 'quote');
 				},false, 0, false);
 				rsp.mapTitle.text = mapName;
 				rsp.invalidateDisplayList();

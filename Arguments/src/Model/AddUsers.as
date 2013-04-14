@@ -57,6 +57,10 @@ package Model
 			{
 						Alert.show("Users not found:"+arg1.result.userError.@message);
 			}
+			if (arg1.result.hasOwnProperty("addAdminError")) 
+			{
+				Alert.show(Language.lookup(arg1.result.addAdminError.@message));
+			}
 			
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.ADDED_USERS));
             return;

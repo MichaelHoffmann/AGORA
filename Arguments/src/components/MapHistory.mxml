@@ -50,8 +50,11 @@
 				rsp.mapTitle.text=thisMapInfo.mapName;
 				rsp.clickableMapOwnerInformation.toolTip = 
 					thisMapInfo.owner + "\n" + thisMapInfo.ownerUrl + '\n' + Language.lookup('MapOwnerURLWarning');
+				var urllink:String = thisMapInfo.ownerUrl;
+				if(thisMapInfo.ownerUrl!=null && thisMapInfo.ownerUrl.indexOf("http://") ==-1)
+					urllink = "http://"+thisMapInfo.ownerUrl;
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-					navigateToURL(new URLRequest(thisMapInfo.ownerUrl), 'quote');
+					navigateToURL(new URLRequest(urllink), 'quote');
 				},false, 0, false);
 				rsp.invalidateDisplayList();
 				// add an entry into visited 
@@ -63,7 +66,10 @@
 			private function onOwnerClicked(e:Event):void{
 				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
 				var thisMapInfo:MapHistoryValueObject = mapList[parseInt((Label) (e.target).id)];
-				navigateToURL(new URLRequest(thisMapInfo.ownerUrl), 'quote');
+				var urllink:String = thisMapInfo.ownerUrl;
+				if(thisMapInfo.ownerUrl!=null && thisMapInfo.ownerUrl.indexOf("http://") ==-1)
+					urllink = "http://"+thisMapInfo.ownerUrl;
+				navigateToURL(new URLRequest(urllink), 'quote');
 			}
 			
 			/**
@@ -73,13 +79,19 @@
 			override protected function commitProperties():void{
 				super.commitProperties();				
 				mapList = AGORAModel.getInstance().agoraMapModel.historylist;
-				if(mapList==null || mapList.length<=0){
 					var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
+				var sessionMappings:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
+				if(sessionMappings.historyMapsVisited.length<=0)
+					rsp.historyBackBox.visible=false;
+				if(((mapList==null || mapList.length<=0) && sessionMappings.historyMapsVisited.length<=0)){
+					rsp.historyBox.visible=false;					
+				}
+/*				if(mapList==null || mapList.length<=0){
 					rsp.historyBox.visible=false;
 					rsp.historyBackBox.visible=false;
 					//rsp.invalidateProperties();
 					//rsp.history.visible=false;
-				}
+				}*/
 				if(mapList != null){
 					if(historyGroup.numElements > 0){
 						historyGroup.removeAllElements();

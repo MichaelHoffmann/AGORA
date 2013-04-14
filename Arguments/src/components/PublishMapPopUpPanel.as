@@ -54,7 +54,9 @@ package components
 		private var tl:TileLayout;
 		public var cancelButton:Button;
 		public var okayButton:Button;
+		public var mySpace:Button;
 		private var bottomButtonGroup:HGroup;
+		private var bottomButtonGroupNew:HGroup;
 		private var groupContainer:VGroup;
 		private var categoryData:CategoryDataV0;
 		private var currCatID:int;
@@ -105,13 +107,22 @@ package components
 			okayButton.visible = false;
 			okayButton.addEventListener(MouseEvent.CLICK,submitPublish);
 			
+			mySpace = new Button();
+			mySpace.id = "moveMySpace";
+			mySpace.label = Language.lookup('MoveIntoMySpace');
+			mySpace.visible = true;
+			mySpace.addEventListener(MouseEvent.CLICK,submitMovePublish);
+			mySpace.setStyle("chromeColor", 0xF5E887);					
+		//	mySpace.
 			/*Making the groups*/
 			bottomButtonGroup = new HGroup();
+			bottomButtonGroupNew = new HGroup();
 			groupContainer = new VGroup();
 			
 			/*Sets up the horizontal group of bottom buttons*/
 			bottomButtonGroup.addElement(okayButton);
 			bottomButtonGroup.addElement(cancelButton);
+			bottomButtonGroupNew.addElement(mySpace);
 			bottomButtonGroup.horizontalAlign = "center";
 			bottomButtonGroup.verticalAlign = "bottom";
 			
@@ -121,15 +132,19 @@ package components
 			scroller.horizontalCenter = 0;
 			categoryTiles.horizontalCenter = 0;
 			bottomButtonGroup.bottom = 0;
+			bottomButtonGroupNew.bottom = 0;
+			bottomButtonGroupNew.horizontalCenter=0;
 			bottomButtonGroup.horizontalCenter=0;
 			groupContainer.horizontalAlign = HorizontalAlign.CENTER;
 			groupContainer.horizontalCenter = 0;
+			bottomButtonGroupNew.bottom = 25;
 			howToUseThisFeatureLabel.text = Language.lookup("ClickThroughCategory");
 			groupContainer.addElement(howToUseThisFeatureLabel);
 			groupContainer.addElement(informationLabel);
 			this.addElement(groupContainer);
 			this.addElement(scroller);
-			this.addElement(bottomButtonGroup);
+			this.addElement(bottomButtonGroupNew);
+			this.addElement(bottomButtonGroup);			
 		}
 		
 		
@@ -149,6 +164,12 @@ package components
 						var button:Button = new Button;
 						button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 						button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						button.toolTip = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						if(categoryXML.@Name!=null && ((String)(categoryXML.@Name)).length > 32){
+							button.label = ((String)(categoryXML.@Name)).slice(0,30)+" .." ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						}else{
+							button.label = categoryXML.@Name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						}
 						button.setStyle("chromeColor", 0xA0CADB);					
 						button.addEventListener('click',function(e:Event):void{
 							//Begin private inner click event function for button
@@ -174,6 +195,10 @@ package components
 			PopUpManager.removePopUp(this);
 		}
 		
+		protected function submitMovePublish(event:MouseEvent):void{
+			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
+			AGORAController.getInstance().publishMap(mapID,-2); // for private use switch
+		}
 		protected function submitPublish(event:MouseEvent):void{
 			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
 			AGORAController.getInstance().publishMap(mapID,currCatID);

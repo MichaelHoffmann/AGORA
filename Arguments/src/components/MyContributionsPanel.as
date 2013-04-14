@@ -219,7 +219,10 @@ package components
 										if(adminXML.@name == e.target.label)
 										  url = adminXML.@url;
 									}
-									var myURL:URLRequest = new URLRequest(url);
+									var urllink:String = url;
+									if(url!=null && url.indexOf("http://") ==-1)
+										urllink = "http://"+url;
+									var myURL:URLRequest = new URLRequest(urllink);
 									navigateToURL(myURL, "_blank");
 								}, false, 1,false);		
 							}
@@ -250,7 +253,10 @@ package components
 									if(adminXML.@name == e.target.label)
 										url = adminXML.@url;
 								}
-								var myURL:URLRequest = new URLRequest(url);
+								var urllink:String = url;
+								if(url!=null && url.indexOf("http://") ==-1)
+									urllink = "http://"+url;
+								var myURL:URLRequest = new URLRequest(urllink);
 								navigateToURL(myURL, "_blank");
 							}, false, 1,false);
 						}
@@ -394,8 +400,11 @@ package components
 			rsp.mapTitle.text=thisMapInfo.mapName;
 			rsp.clickableMapOwnerInformation.toolTip = 
 				 thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+			var urllink:String = thisMapInfo.url;
+			if(urllink!=null && urllink.indexOf("http://") ==-1)
+				urllink = "http://"+urllink;			
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
-				navigateToURL(new URLRequest(thisMapInfo.url), 'quote');
+				navigateToURL(new URLRequest(urllink), 'quote');
 			},false, 0, false);
 			rsp.invalidateDisplayList();
 			//mapMetaDataVector = null;

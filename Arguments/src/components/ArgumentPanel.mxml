@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					  xmlns:s="library://ns.adobe.com/flex/spark" 
-					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" cornerRadius="30" width="255" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" cornerRadius="30" width="200" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -83,7 +83,7 @@
 		<!--<s:Image right="131.5" bottom="-35" id="showButton"  width="10" height="10"
 				 mouseOver="showMouseOver(event)"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>-->
-		<s:VGroup  left="53.5" bottom="-32" horizontalAlign="center" width="13">
+		<s:VGroup  id="showButtonG" left="53.5" bottom="-32" horizontalAlign="center" width="13">
 			<s:SWFLoader id="showButton" horizontalCenter="0" maxWidth="13" maxHeight="13"
 						 mouseOver="{event.stopImmediatePropagation();showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true;showMouseOver(event) }"
 						 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
@@ -225,6 +225,8 @@
 			public var connectingStr:String;
 			public function get prevauthorurl():String
 			{
+				if(_prevauthorurl!=null && _prevauthorurl.indexOf("http://") ==-1)
+					_prevauthorurl = "http://"+_prevauthorurl;				
 				return _prevauthorurl;
 			}
 			public function set prevauthorurl(value:String):void
@@ -273,7 +275,7 @@
 			}
 			public function get URL():String
 			{
-				if(_URL.indexOf("http://") ==-1)
+				if(_URL!=null && _URL.indexOf("http://") ==-1)
 					_URL = "http://"+_URL;
 				return _URL;
 			}		
@@ -608,6 +610,8 @@
 				{
 					
 					var u:URLRequest=new URLRequest(displayTxt.text); 
+					if(displayTxt.text!=null && displayTxt.text.indexOf("http://") ==-1)
+						u = new URLRequest("http://"+displayTxt.text);
 					navigateToURL(u,"_blank");
 				}
 			}
@@ -1012,16 +1016,7 @@
 				if(model.comments.length !=0 )
 				{
 					showButton.source = "images/yellowTriangle.swf";
-					/*showButton.width = 20;
-					showButton.height = 20;
-					showButton.right = 218;
-					bottomSlideout.right = 190;
-					
-				}
-				else if(panelType!= StatementModel.INFERENCE && panelType == StatementModel.STATEMENT){
-					showButton.right = 218;
-					bottomSlideout.right = 190;
-					*/
+				}else if(panelType!= StatementModel.INFERENCE && panelType == StatementModel.STATEMENT){
 				}
 				
 				
@@ -1168,7 +1163,6 @@
 					}
 					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
 						
-					//	showButton.right = 205;
 						showMoreBtn.visible = false;
 						this.setStyle("borderColor" ,0xFFFF00);
 						stmtButton.visible = false;

@@ -34,10 +34,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</components:StatusBar>
 	
 	<s:Group id="theMap">
-		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:Group id="alerts">
-				<components:AgoraMap updateComplete="{zoomerResize()}" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xffffff"/>	
-			</s:Group>
+		<s:Scroller id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
+			<s:VGroup id="alerts" paddingBottom="100" paddingRight="100" >
+				<components:AgoraMap updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xffffff"/>	
+			</s:VGroup>
 	</s:Scroller>
 		</s:Group>
 	<s:VGroup top = "50" left = "20" width = "30" horizontalAlign="center" >
@@ -79,13 +79,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import classes.Language;
 			var inited:Boolean = false;
 			public function mouseDownEvent(e:MouseEvent):void{
-				if(e.target.id=="agoraMap"){
-					
-					addEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
-					addEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
-					lastX=mouseX;
-					lastY=mouseY;
-					
+				if(e.target.hasOwnProperty("id")){
+					if(e.target.id=="agoraMap"){
+						
+						addEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
+						addEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
+						lastX=mouseX;
+						lastY=mouseY;
+						
+					}
 				}
 				
 			}
@@ -117,7 +119,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			}
 			public function zoomerResize():void{
 				if(inited){
-					
+					agora.verticalScrollBar.thumb.setStyle("chromeColor",0xF99653);
+					agora.horizontalScrollBar.thumb.setStyle("chromeColor",0xF99653);
+
 				var xRatio = agora.width/agoraMap.width;
 				var yRatio = agora.height/(agoraMap.height);
 				//mx.controls.Alert.show("1:"+agoraMap.width/agora.width);
