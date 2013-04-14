@@ -26,6 +26,7 @@ package components
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
+	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
@@ -70,9 +71,11 @@ package components
 		private static var _tempID:int;
 		public var timer:Timer;
 		private var _removePreviousElements:Boolean;
-		
+		public var rectangle:Shape;
 		public var panelsHash:Dictionary;
 		public var menuPanelsHash:Dictionary;
+		private var count:int;
+		private var flag:int;
 		
 		public function AgoraMap()
 		{	
@@ -85,7 +88,10 @@ package components
 			beganBy = BY_CLAIM;
 			removePreviousElements = false;
 			this.minHeight=600;
-			this.minWidth=800
+			this.minWidth=800;
+			rectangle = new Shape;
+			flag = 0;
+			count = 0;
 		}
 		
 		//--------------------- getters and setters -------------------//
@@ -119,13 +125,15 @@ package components
 			super.createChildren();
 			drawUtility = new UIComponent();
 			drawUtility1 = new UIComponent();
+			drawUtility2 = new UIComponent();
 			helpText = new HelpText;
 			addChild(helpText);
 			this.addChild(drawUtility);
 			helpText.visible = false;
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
-			firstClaimHelpText.visible = false;		
+			firstClaimHelpText.visible = false;	
+			this.addChild(drawUtility2);
 			this.addChild(drawUtility1);
 			
 		}
@@ -140,21 +148,26 @@ package components
 			{
 				for each(var sm in AGORAModel.getInstance().agoraMapModel.globalComments)
 				{
-					if(sm is StatementModel)
+					if(sm is ArgumentPanel)
 					{
-						if(sm.statementFunction == StatementModel.COMMENT || sm.statementFunction == StatementModel.REFERENCE || sm.statementFunction == StatementModel.AMENDMENT || sm.statementFunction == StatementModel.QUESTION || sm.statementFunction == StatementModel.DEFINITION || sm.statementFunction == StatementModel.SUPPORT || sm.statementFunction == StatementModel.LINKTOMAP || sm.statementFunction == StatementModel.LINKTORESOURCES || sm.statementFunction == StatementModel.REFORMULATION)
+						if(sm.panelType == StatementModel.COMMENT || sm.panelType == StatementModel.REFERENCE || sm.panelType == StatementModel.AMENDMENT || sm.panelType == StatementModel.QUESTION || sm.panelType == StatementModel.DEFINITION || sm.panelType == StatementModel.SUPPORT || sm.panelType == StatementModel.LINKTOMAP || sm.panelType == StatementModel.LINKTORESOURCES || sm.panelType == StatementModel.REFORMULATION)
 						{
-							AGORAModel.getInstance().agoraMapModel.deletedList.push(sm);
+							AGORAModel.getInstance().agoraMapModel.deletedList.push(sm.model);
+						//AGORAModel.getInstance().agoraMapModel.globalComments[sm.model.ID].showMoreBtn.label = "Show More";
+							delete AGORAModel.getInstance().agoraMapModel.panelListHash[sm.model.ID];
+							delete AGORAModel.getInstance().agoraMapModel.globalComments[sm.model.ID];					
+							delete AGORAModel.getInstance().agoraMapModel.showChildren[sm.model.ID];
 							
-							delete AGORAModel.getInstance().agoraMapModel.panelListHash[sm.ID];
-							delete AGORAModel.getInstance().agoraMapModel.globalComments[sm.ID];					
-							delete AGORAModel.getInstance().agoraMapModel.showChildren[sm.ID];
 						}
 						
 					}
 				}
+				rectangle.graphics.clear();
+				if(drawUtility2.numChildren > 0)
+				drawUtility2.removeChildren(0,drawUtility2.numChildren-1);
 			}
 			
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		
@@ -181,6 +194,7 @@ package components
 			if(removePreviousElements){
 				removeAllChildren();
 				removeAllElements();
+				rectangle.graphics.clear();
 				_removePreviousElements = false;
 			}
 			
@@ -272,8 +286,22 @@ package components
 					else if(model.statementFunction == StatementModel.REFERENCE || model.statementFunction == StatementModel.AMENDMENT || model.statementFunction == StatementModel.COMMENT ||  model.statementFunction == StatementModel.DEFINITION ||  model.statementFunction == StatementModel.QUESTION || model.statementFunction == StatementModel.SUPPORT || model.statementFunction == StatementModel.LINKTOMAP || model.statementFunction == StatementModel.LINKTORESOURCES || model.statementFunction == StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
 						argumentPanel.model = model;
+						//argumentPanel.x += AGORAModel.getInstance().agoraMapModel.newPositions[model.ID].x;
+						//argumentPanel.y += AGORAModel.getInstance().agoraMapModel.newPositions[model.ID].y;
 						panelsHash[model.ID] = argumentPanel;
 						addChild(argumentPanel);
+						if(flag == 0 && contains(drawUtility2) == false)
+						{
+							addChild(drawUtility2);
+							flag = 1;
+						}
+						if(count ==0 || getChildIndex(argumentPanel) < count)
+						{
+							//if(getChildIndex(argumentPanel) < getChildIndex(drawUtility2))
+							{
+								count = getChildIndex(argumentPanel);
+							}
+						}
 						
 						
 					}
@@ -289,14 +317,20 @@ package components
 				menuPanel.schemeSelector.visible = false;
 				menuPanel.schemeSelector.argumentTypeModel = argumentTypeModel;
 				menuPanelsHash[menuPanel.model.ID] =  menuPanel;
-				addChild(menuPanel);
+				addChildAt(menuPanel,0);
 				addChild(menuPanel.schemeSelector);
 			}
 			LoadController.getInstance().mapUpdateCleanUp();
 			AGORAModel.getInstance().agoraMapModel.check = false;
 			
 			var a:Array = getChildren();
+				
+			if(count!=0 && getChildIndex(drawUtility2)>count)
+				swapChildren(getChildAt(count),drawUtility2);
+			count = 0;
+			flag = 0;
 			addChild(drawUtility1);
+			
 			
 		}
 		
@@ -422,7 +456,6 @@ package components
 						}	
 					}
 					if(model.comments.length > 0){
-						
 						var test:int  = AGORAModel.getInstance().agoraMapModel.hide[model.ID];
 						var test1:Boolean = AGORAModel.getInstance().agoraMapModel.addClicked;
 						if (AGORAModel.getInstance().agoraMapModel.hide.hasOwnProperty(model.ID) && AGORAModel.getInstance().agoraMapModel.hide[model.ID] != 1)
@@ -439,16 +472,24 @@ package components
 							if(lastObjection != null){
 								
 								var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
+								var height:int = 0;
 								if(bottomObjection !=null)
 								{
 									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 70;
 									fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 									
 									fvlfpy = bottomObjection.y + 72;
-									
+									height = bottomObjection.x;
 									//draw a line from the first objection to the last objection
 									//and an arrow						
 								}
+								var width:int;
+								if(panelsHash[model.comments[0].ID] != null)
+									width = panelsHash[model.comments[0].ID].y;
+								else
+									width = 100;
+								 // initializing the variable named rectangle
+								
 								drawUtility1.graphics.lineStyle(10, 0xFFFF00, 1);
 								for each(var obj:StatementModel in model.comments){
 									//horizontal line from the vertical line to the objection
@@ -456,7 +497,10 @@ package components
 										var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
 										if(!textLabel[obj.ID])
 											textLabel[obj.ID] = new spark.components.Label();
-										
+										rectangle.graphics.beginFill(0xFFFFFF); // choosing the colour for the fill, here it is red
+										rectangle.graphics.drawRect(fvlspx,panelsHash[model.comments[0].ID].y,bottomObjection.x+300-fvlspx,fvlfpy+50-fvlspy); // (x spacing, y spacing, width, height)
+										//rectangle.graphics.drawRect(fvlspx,100,fvlspx,fvlfpy+50-fvlspy);
+										rectangle.graphics.endFill(); // not always needed but I like to put it in to end the fill
 										textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 30;
 										textLabel[obj.ID].y = objectionPanel.y+66;
 										
@@ -580,7 +624,8 @@ package components
 											textLabel[obj.ID].width=70;
 											textLabel[obj.ID].height=25;
 										}
-										
+										if(drawUtility2.contains(rectangle) == false)
+											drawUtility2.addChildAt(rectangle,0);
 										textLabel[obj.ID].visible = true;
 										textLabel[obj.ID].opaqueBackground = 0xFFFFFF;
 										drawUtility1.addChild(textLabel[obj.ID]);
@@ -589,6 +634,7 @@ package components
 								}
 							}
 						}	
+						
 					}
 				}
 			}

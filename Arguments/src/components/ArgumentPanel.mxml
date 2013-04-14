@@ -103,6 +103,7 @@
 			
 			import Events.AGORAEvent;
 			
+			import Model.AGORAMapModel;
 			import Model.AGORAModel;
 			import Model.SimpleStatementModel;
 			import Model.StatementModel;
@@ -493,6 +494,7 @@
 			protected function onshowButtonClicked(event:MouseEvent):void{
 				if(event.currentTarget.label == "Show More")
 				{
+					//FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 					AGORAModel.getInstance().agoraMapModel.showChildren =  new Dictionary;
 					var model1:StatementModel = model;
 					var stack:Array = new Array();
@@ -510,6 +512,7 @@
 					}
 					event.currentTarget.label = "Hide";
 					AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+					
 				}
 				else if(event.currentTarget.label == "Hide")
 				{
@@ -530,6 +533,10 @@
 							{
 								
 								AGORAModel.getInstance().agoraMapModel.deletedList.push(obj);
+								if(FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.numChildren > 0)
+									FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.removeChildren(0,FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.numChildren-1);
+								FlexGlobals.topLevelApplication.map.agoraMap.rectangle.graphics.clear();
+								
 								
 								delete AGORAModel.getInstance().agoraMapModel.panelListHash[obj.ID];
 								
@@ -1032,7 +1039,6 @@
 				doneBtn = new Button;
 				doneBtn.label = Language.lookup("Done");
 				doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
-				
 				
 				//TODO: Translate
 				displayTxt.minHeight = 50;

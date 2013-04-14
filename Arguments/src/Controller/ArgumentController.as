@@ -38,6 +38,8 @@ package Controller
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
+	import flashx.textLayout.formats.BackgroundColor;
+	
 	import mx.controls.Alert;
 	import mx.controls.Menu;
 	import mx.core.FlexGlobals;
@@ -1042,59 +1044,64 @@ package Controller
 			{
 				if(argumentPanel.model.supportingArguments.length == 0)
 				{
-					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
-					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
+					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
+					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel" contentBackgroundColor="#999999"/>);
 					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
 				}
 				else
 				{
-					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
-					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
+					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
+					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
 				}
 			}
 			else if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE)
 			{
-			addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" /></root>;
-			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel"/>);
+			addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
+			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel" contentBackgroundColor="#999999"/>);
 			//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
 			
 			}
 			else
 			{
-				addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" /></root>;
+				addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/></root>;
 				//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel"/>);
-				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel" contentBackgroundColor="#999999"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
 			}
 			var addMenu:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
-			addMenu.labelField = "@label";
+			var addMenu1:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
+			addMenu.labelField = "@label"; 
+			var color:String = addMenu.dataProvider[0].menuitem[0].@contentBackgroundColor;
+
+		//	addMenu.get.setStyle("contentBackgroundColor","#999999");
+					
 			var point:Point = new Point;
 			point.x = 0;
 			point.y = argumentPanel.height;

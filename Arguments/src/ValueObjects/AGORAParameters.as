@@ -195,7 +195,7 @@ package ValueObjects
 			registrationURL = "http://agora.gatech.edu/lokesh_test/register.php";
 			mapRemoveURL = "http://agora.gatech.edu/lokesh_test/remove_map.php";
 			deleteURL = "http://agora.gatech.edu/lokesh_test/remove.php";
-			insertURL = "http://agora.gatech.edu/Madhura_testing/php/insert.php";
+			insertURL = "http://agora.gatech.edu/lokesh_test/insert.php";
 			loadMapURL = "http://agora.gatech.edu/lokesh_test/load_map1.php";
 			nameUpdateURL = "http://agora.gatech.edu/lokesh_test/mapinfo.php";
 			projectListURL = "http://agora.gatech.edu/lokesh_test/list_projects.php";

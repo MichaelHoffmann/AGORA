@@ -23,6 +23,7 @@ package Model
 	import com.adobe.protocols.dict.Dict;
 	
 	import components.AgoraMap;
+	import components.ArgumentPanel;
 	import components.CategoryChain;
 	import components.InfoBox;
 	import components.Map;
@@ -89,7 +90,7 @@ package Model
 		private var _panelListHashTemp:Dictionary;
 		private var _addClicked:Boolean;
 		private var _check:Boolean;
-		
+		private var _newPositions:Dictionary;
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
@@ -147,6 +148,16 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get newPositions():Dictionary
+		{
+			return _newPositions;
+		}
+
+		public function set newPositions(value:Dictionary):void
+		{
+			_newPositions = value;
+		}
+
 		public function get globalComments():Dictionary
 		{
 			return _globalComments;
@@ -563,11 +574,23 @@ package Model
 				trace("Error in reading update to Map");
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
 			}
+			for each(var ob:NodeValueObject in map.nodeObjects)
+			{
+				if(ob.type == StatementModel.DEFINITION || ob.type == StatementModel.REFERENCE || ob.type == StatementModel.AMENDMENT || ob.type == StatementModel.COMMENT ||  ob.type == StatementModel.QUESTION || ob.type == StatementModel.SUPPORT || ob.type == StatementModel.LINKTOMAP || ob.type == StatementModel.LINKTORESOURCES || ob.type == StatementModel.REFORMULATION)
+				{
+					newPositions[ob.ID] = ob; 
+				}
+			}
 			for each(var obj1:StatementModel in showChildren)
 			{
+				obj1.xgrid = newPositions[obj1.ID].x;
+				obj1.ygrid = newPositions[obj1.ID].y;
 				newPanels.addItem(obj1);
 				panelListHash[obj1.ID] = obj1;
-				globalComments[obj1.ID] = obj1;
+				//panelListHash[obj1.ID].x = newPositions[obj1].x;
+				var arg:ArgumentPanel = new ArgumentPanel;
+				arg.model = obj1;
+				globalComments[arg.model.ID] = arg;
 				delete showChildren[obj1.ID];
 				check = true;
 			}
@@ -585,7 +608,9 @@ package Model
 						newPanels.addItem(node);
 						check = true;
 						panelListHash[node.ID] = node;
-						globalComments[node.ID] = node;
+						var arg:ArgumentPanel = new ArgumentPanel;
+						arg.model = node;
+						globalComments[arg.model.ID] = arg;
 						
 					}
 				}
@@ -1112,6 +1137,7 @@ package Model
 			panelListHashTemp = new Dictionary;
 			showChildren =  new Dictionary;
 			globalComments =  new Dictionary;
+			newPositions = new Dictionary;
 			addClicked = 0;
 			check = false;
 			hide = new Dictionary;
