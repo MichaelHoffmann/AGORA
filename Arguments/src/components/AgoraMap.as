@@ -324,9 +324,11 @@ package components
 			AGORAModel.getInstance().agoraMapModel.check = false;
 			
 			var a:Array = getChildren();
-				
+			if(contains(drawUtility2) !=false)
+			{
 			if(count!=0 && getChildIndex(drawUtility2)>count)
 				swapChildren(getChildAt(count),drawUtility2);
+			}
 			count = 0;
 			flag = 0;
 			addChild(drawUtility1);
@@ -363,9 +365,9 @@ package components
 					if(model.supportingArguments.length > 0){
 						//draw arrow
 						drawUtility.graphics.lineStyle(10, 0x29ABE2, 1);
-						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 87);
-						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width, argumentPanel.y + 72);
-						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 20, argumentPanel.y + 57);
+						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 70, argumentPanel.y + 87);
+						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 50, argumentPanel.y + 72);
+						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 70, argumentPanel.y + 57);
 						//First Vertical Line Finishing Point
 						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
 						var fvlfpy:int = (lastMenuPanel.y + 72);
@@ -419,7 +421,7 @@ package components
 						if(lastObjection != null){
 							
 							var bottomObjection:ArgumentPanel = panelsHash[lastObjection.ID];
-							fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 30;
+							fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() + 10;
 							fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 							fvlfpy = bottomObjection.y + 72;
 							//draw a line from the first objection to the last objection
@@ -475,7 +477,7 @@ package components
 								var height:int = 0;
 								if(bottomObjection !=null)
 								{
-									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 70;
+									fvlspx = argumentPanel.x + argumentPanel.getExplicitOrMeasuredWidth() - 30;
 									fvlspy = argumentPanel.y-15 + argumentPanel.getExplicitOrMeasuredHeight();
 									
 									fvlfpy = bottomObjection.y + 72;
@@ -573,9 +575,9 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.LINKTORESOURCES)
 										{
-											drawUtility1.graphics.moveTo(fvlspx-30,fvlspy);
-											drawUtility1.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
-											drawUtility1.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility1.graphics.moveTo(fvlspx-20,fvlspy);
+											drawUtility1.graphics.lineTo(fvlspx-20, objectionPanel.y +72);
+											drawUtility1.graphics.moveTo(fvlspx-20, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
@@ -586,9 +588,9 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.REFERENCE)
 										{
-											drawUtility1.graphics.moveTo(fvlspx-30,fvlspy);
-											drawUtility1.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
-											drawUtility1.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility1.graphics.moveTo(fvlspx-20,fvlspy);
+											drawUtility1.graphics.lineTo(fvlspx-20, objectionPanel.y +72);
+											drawUtility1.graphics.moveTo(fvlspx-20, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
@@ -613,9 +615,9 @@ package components
 										}
 										else if(objectionPanel.statementType == StatementModel.QUESTION)
 										{
-											drawUtility1.graphics.moveTo(fvlspx-30,fvlspy);
-											drawUtility1.graphics.lineTo(fvlspx-30, objectionPanel.y +72);
-											drawUtility1.graphics.moveTo(fvlspx-30, objectionPanel.y +72);
+											drawUtility1.graphics.moveTo(fvlspx-20,fvlspy);
+											drawUtility1.graphics.lineTo(fvlspx-20, objectionPanel.y +72);
+											drawUtility1.graphics.moveTo(fvlspx-20, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);

@@ -11,8 +11,12 @@ package Controller.logic
 	
 	import components.ArgSelector;
 	import components.ArgumentPanel;
+	import components.MenuPanel;
+	
+	import flash.utils.Dictionary;
 	
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	import mx.messaging.channels.StreamingAMFChannel;
 	
 	public class ModusPonens extends ParentArg
@@ -47,7 +51,13 @@ package Controller.logic
 			var reasonModels:Vector.<StatementModel> = argumentTypeModel.reasonModels;
 			var claimModel:StatementModel = argumentTypeModel.claimModel;
 			var i:int;
-		
+			var hash:Dictionary = FlexGlobals.topLevelApplication.map.agoraMap.menuPanelsHash;
+			var argSelector:ArgSelector = null;
+			if(hash.hasOwnProperty(argumentTypeModel.ID)){
+				argSelector = MenuPanel(hash[argumentTypeModel.ID]).schemeSelector;
+			}
+			if(argSelector != null)
+				argSelector.andor.visible = false;
 			if(reasonModels.length == 0){
 				return;
 			}
