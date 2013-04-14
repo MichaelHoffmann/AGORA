@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</components:StatusBar>
 	
 	<s:Group id="theMap">
-		<s:Scroller id="agora" visible="false" skinClass="Skins.ScrollerSkin"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
+		<s:Scroller id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
 			<s:VGroup id="alerts" paddingBottom="100" paddingRight="100" >
 				<components:AgoraMap updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xffffff"/>	
 			</s:VGroup>
@@ -119,7 +119,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			}
 			public function zoomerResize():void{
 				if(inited){
-					
+					agora.verticalScrollBar.thumb.setStyle("chromeColor",0xF99653);
+					agora.horizontalScrollBar.thumb.setStyle("chromeColor",0xF99653);
+
 				var xRatio = agora.width/agoraMap.width;
 				var yRatio = agora.height/(agoraMap.height);
 				//mx.controls.Alert.show("1:"+agoraMap.width/agora.width);
