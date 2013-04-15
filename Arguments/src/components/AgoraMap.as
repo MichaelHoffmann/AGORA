@@ -282,6 +282,11 @@ package components
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
 						addChild(argumentPanel);
+						if(contains(drawUtility2) == true)
+						{
+							if(getChildIndex(drawUtility2) < getChildIndex(argumentPanel))
+								swapChildren(argumentPanel,drawUtility2);
+						}
 					}
 					else if(model.statementFunction == StatementModel.REFERENCE || model.statementFunction == StatementModel.AMENDMENT || model.statementFunction == StatementModel.COMMENT ||  model.statementFunction == StatementModel.DEFINITION ||  model.statementFunction == StatementModel.QUESTION || model.statementFunction == StatementModel.SUPPORT || model.statementFunction == StatementModel.LINKTOMAP || model.statementFunction == StatementModel.LINKTORESOURCES || model.statementFunction == StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
@@ -359,7 +364,6 @@ package components
 				if(model.supportingArguments.length > 0 || model.objections.length > 0 || model.comments.length > 0){
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
-					
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
 					var fvlspy:int = argumentPanel.y + 72;
 					if(model.supportingArguments.length > 0){

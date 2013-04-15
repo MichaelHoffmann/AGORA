@@ -656,7 +656,7 @@ package Model
 				{
 					if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
 					{
-						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
 					}
 				}
 			}
@@ -706,7 +706,7 @@ package Model
 				{
 					//if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
 					//{
-						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
 					//}
 				}
 				
@@ -762,7 +762,7 @@ package Model
 					add = 1;
 				for (var i:int = 0; i<comments.length ;i++)
 					{
-					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
 				    //AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
 					}
 				}
@@ -785,7 +785,7 @@ package Model
 				add = 1;
 				for (var i:int = 0; i<comments.length ;i++)
 				{
-					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
 					//AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
 				}
 			}
@@ -863,12 +863,27 @@ package Model
 			objections.push(objection);
 		}
 		public function addCommentStatement(comment:StatementModel):void{
+			var index:int = 0;
+			var comments1:Vector.<StatementModel>; 
 			for each(var commentStatement:StatementModel in comments){
 				if(commentStatement == comment){
 					return;
 				}
 			}
-			
+			if(comment.statementFunction == StatementModel.LINKTORESOURCES || comment.statementFunction == StatementModel.REFERENCE)
+			{
+				for each(var comment1:StatementModel in comments)
+				{
+					if(comment1.statementFunction != StatementModel.LINKTORESOURCES)
+						break;
+					index++;
+				}
+				comments1 = comments.splice(index,comments.length);
+				comments.push(comment);
+				for each(var comment2:StatementModel in comments1)
+				comments.push(comment2);				
+			}
+			else
 				comments.push(comment);
 		}
 		public function getXML():XML{
