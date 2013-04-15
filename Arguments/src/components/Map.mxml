@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</s:Scroller>
 		</s:Group>
 	<s:VGroup top = "50" left = "20" width = "30" horizontalAlign="center" >
-		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
+		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
 		<s:Button  width = "100%" click = "zoomer.value+=zoomer.stepSize" id= "zoomIn" label = "+"/>
 		<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" maximum="2"  height = "200"/>
 		<s:Button  width = "100%" click="zoomer.value-=zoomer.stepSize" id = "zoomOut" label = "-"/>
