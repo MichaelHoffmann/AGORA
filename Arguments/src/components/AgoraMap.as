@@ -503,7 +503,7 @@ package components
 										var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
 										if(!textLabel[obj.ID])
 											textLabel[obj.ID] = new spark.components.Label();
-										rectangle.graphics.beginFill(0xFF0000); // choosing the colour for the fill, here it is red
+										rectangle.graphics.beginFill(0xFFFFFF); // choosing the colour for the fill, here it is red
 										rectangle.graphics.drawRect(fvlspx,panelsHash[model.comments[0].ID].y,bottomObjection.x+300-fvlspx,fvlfpy+50-fvlspy); // (x spacing, y spacing, width, height)
 										//rectangle.graphics.drawRect(fvlspx,100,fvlspx,fvlfpy+50-fvlspy);
 										rectangle.graphics.endFill(); // not always needed but I like to put it in to end the fill
