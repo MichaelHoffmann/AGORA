@@ -282,6 +282,11 @@ package components
 						argumentPanel.model = model;
 						panelsHash[model.ID] = argumentPanel;
 						addChild(argumentPanel);
+						if(contains(drawUtility2) == true)
+						{
+							if(getChildIndex(drawUtility2) < getChildIndex(argumentPanel))
+								swapChildren(argumentPanel,drawUtility2);
+						}
 					}
 					else if(model.statementFunction == StatementModel.REFERENCE || model.statementFunction == StatementModel.AMENDMENT || model.statementFunction == StatementModel.COMMENT ||  model.statementFunction == StatementModel.DEFINITION ||  model.statementFunction == StatementModel.QUESTION || model.statementFunction == StatementModel.SUPPORT || model.statementFunction == StatementModel.LINKTOMAP || model.statementFunction == StatementModel.LINKTORESOURCES || model.statementFunction == StatementModel.REFORMULATION){
 						argumentPanel = new ArgumentPanel;
@@ -359,7 +364,6 @@ package components
 				if(model.supportingArguments.length > 0 || model.objections.length > 0 || model.comments.length > 0){
 					//First Vertical Line Starting Point
 					var argumentPanel:ArgumentPanel = panelsHash[model.ID]; 
-					
 					var fvlspx:int = ((argumentPanel.x + argumentPanel.width)/gridWidth + 2) * gridWidth;
 					var fvlspy:int = argumentPanel.y + 72;
 					if(model.supportingArguments.length > 0){
@@ -499,7 +503,7 @@ package components
 										var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
 										if(!textLabel[obj.ID])
 											textLabel[obj.ID] = new spark.components.Label();
-										rectangle.graphics.beginFill(0xFFFFFF); // choosing the colour for the fill, here it is red
+										rectangle.graphics.beginFill(0xFF0000); // choosing the colour for the fill, here it is red
 										rectangle.graphics.drawRect(fvlspx,panelsHash[model.comments[0].ID].y,bottomObjection.x+300-fvlspx,fvlfpy+50-fvlspy); // (x spacing, y spacing, width, height)
 										//rectangle.graphics.drawRect(fvlspx,100,fvlspx,fvlfpy+50-fvlspy);
 										rectangle.graphics.endFill(); // not always needed but I like to put it in to end the fill
