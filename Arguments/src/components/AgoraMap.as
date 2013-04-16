@@ -294,13 +294,14 @@ package components
 						//argumentPanel.x += AGORAModel.getInstance().agoraMapModel.newPositions[model.ID].x;
 						//argumentPanel.y += AGORAModel.getInstance().agoraMapModel.newPositions[model.ID].y;
 						panelsHash[model.ID] = argumentPanel;
-						addChild(argumentPanel);
+						
 						if(flag == 0 && contains(drawUtility2) == false)
 						{
 							addChild(drawUtility2);
 							flag = 1;
 						}
-						if(count ==0 || getChildIndex(argumentPanel) < count)
+						addChild(argumentPanel);
+						if(count == 0 || getChildIndex(argumentPanel) < count)
 						{
 							//if(getChildIndex(argumentPanel) < getChildIndex(drawUtility2))
 							{

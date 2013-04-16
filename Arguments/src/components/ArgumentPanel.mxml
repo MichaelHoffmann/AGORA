@@ -916,7 +916,9 @@
 			public function addHoverMenuClicked(event:MenuEvent):void{
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
-						ArgumentController.getInstance().addSupportingArgument(model);
+					//	if(this.panelType != StatementModel.INFERENCE)
+							ArgumentController.getInstance().addSupportingArgument(model);
+						//else ArgumentController.getInstance().addSupportingArgumentForEnabler(this);
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
 						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;

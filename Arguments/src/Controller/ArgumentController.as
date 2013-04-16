@@ -430,6 +430,19 @@ package Controller
 				model.definition(model.xgrid + aPanel.getExplicitOrMeasuredHeight()/agoraParameters.gridWidth + 1);
 			}
 		}
+		public function addSupportingArgumentForEnabler(argumentPanel:ArgumentPanel):void
+		{
+			var addMenuData:XML = <root><menuitem label={"Modus Ponens"} type="TopLevel" /></root>;
+			addMenuData.appendChild(<menuitem label={"Conjunctive Syllogism"} type="TopLevel"/>);
+			var addMenu:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
+			addMenu.labelField = "@label";
+			var point:Point = new Point;
+			point.x = 0;
+			point.y = argumentPanel.height;
+			point = argumentPanel.localToGlobal(point);
+			addMenu.show(point.x, point.y);
+			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addMenuClicked);
+		}
 		//----------------- Adding an Argument -------------------------------//
 		public function addSupportingArgument(statementModel:StatementModel):void{
 			if(checkArgUnderConstruction()){

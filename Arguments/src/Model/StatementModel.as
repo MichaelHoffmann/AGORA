@@ -638,7 +638,7 @@ package Model
 		}
 		public function reference(x:int):void{
 			var y:int;
-			var count:int=0;
+			var count:int=-1;
 			for (var i:int = 0; i<comments.length ;i++)
 			{
 				if(comments[i].statementFunction == StatementModel.LINKTORESOURCES)
@@ -646,7 +646,7 @@ package Model
 					count++;
 				}
 			}
-			if(count == 0)
+			if(count == -1)
 				y = ygrid + 14;
 			else 
 				y = comments[count].ygrid;
@@ -656,7 +656,7 @@ package Model
 				{
 					if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
 					{
-						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
+						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
 					}
 				}
 			}
@@ -706,7 +706,7 @@ package Model
 				{
 					//if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
 					//{
-						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
+						AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
 					//}
 				}
 				
@@ -762,7 +762,7 @@ package Model
 					add = 1;
 				for (var i:int = 0; i<comments.length ;i++)
 					{
-					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
+					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
 				    //AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
 					}
 				}
@@ -785,7 +785,7 @@ package Model
 				add = 1;
 				for (var i:int = 0; i<comments.length ;i++)
 				{
-					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],9,0);
+					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
 					//AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
 				}
 			}
