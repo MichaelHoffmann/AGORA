@@ -993,7 +993,7 @@ package Controller
 				addArgumentsInfo.visible=false;
 				agoraMap.removeEventListener(MouseEvent.CLICK, arguments.callee);
 			});
-			FlexGlobals.topLevelApplication.map.alerts.addElement(addArgumentsInfo);
+			FlexGlobals.topLevelApplication.map.agoraMap.addElement(addArgumentsInfo);
 			addArgumentsInfo.y =  inference.y + inference.height + 20;
 			addArgumentsInfo.x = inference.x;
 			addArgumentsInfo.visible=true;
