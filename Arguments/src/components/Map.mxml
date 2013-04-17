@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:VGroup id="alerts" paddingBottom="100" minWidth="1024" minHeight = "1024">
+			<s:VGroup id="alerts" paddingBottom="100" minWidth="1024" minHeight = "1024" >
 				<components:AgoraMap  updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xfffffff"/>	
 			</s:VGroup>
 	</s:Scroller>
@@ -150,8 +150,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				//zoomer.value+=zoomer.stepSize;
 			}
 			public function setScrollers(hBar:int, vBar:int):void {
-				if(agoraMap.width<hBar){
-					agoraMap.width=hBar+screen.width;
+				if(agoraMap.width<hBar+screen.width){
+					agoraMap.width=hBar+screen.width+100;
 				}
 				if(agoraMap.height<vBar+screen.height){
 					agoraMap.height=vBar+screen.height;
