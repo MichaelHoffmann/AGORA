@@ -71,7 +71,7 @@ package components
 		private static var _tempID:int;
 		public var timer:Timer;
 		private var _removePreviousElements:Boolean;
-		public var rectangle:Shape;
+		public var rectangle:Dictionary;
 		public var panelsHash:Dictionary;
 		public var menuPanelsHash:Dictionary;
 		private var count:int;
@@ -89,7 +89,7 @@ package components
 			removePreviousElements = false;
 			this.minHeight=600;
 			this.minWidth=800;
-			rectangle = new Shape;
+			rectangle = new Dictionary;
 			flag = 0;
 			count = 0;
 		}
@@ -162,7 +162,8 @@ package components
 						
 					}
 				}
-				rectangle.graphics.clear();
+				for each(var shape1:Shape in rectangle)
+					shape1.graphics.clear();
 				if(drawUtility2.numChildren > 0)
 				drawUtility2.removeChildren(0,drawUtility2.numChildren-1);
 			}
@@ -194,7 +195,9 @@ package components
 			if(removePreviousElements){
 				removeAllChildren();
 				removeAllElements();
-				rectangle.graphics.clear();
+				for each(var shape1:Shape in rectangle)
+					shape1.graphics.clear();
+				//rectangle.graphics.clear();
 				_removePreviousElements = false;
 			}
 			
@@ -377,8 +380,8 @@ package components
 						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
 						var fvlfpy:int = (lastMenuPanel.y + 72);
 						//draw a line
-						drawUtility.graphics.moveTo(fvlspx, fvlspy);
-						drawUtility.graphics.lineTo(fvlspx, fvlfpy);
+						drawUtility.graphics.moveTo(fvlspx + 10, fvlspy);
+						drawUtility.graphics.lineTo(fvlspx + 10, fvlfpy);
 						
 						//Line from claim to vertical line starting point
 						var firstMenuPanel:MenuPanel = menuPanelsHash[model.supportingArguments[0].ID];
@@ -402,14 +405,14 @@ package components
 							drawUtility.graphics.lineTo(rspx, menuPanel.y + 72);
 							
 							//Line from first vertical line to menu Panel
-							drawUtility.graphics.moveTo(fvlspx, menuPanel.y + 72);
+							drawUtility.graphics.moveTo(fvlspx+10, menuPanel.y + 72);
 							drawUtility.graphics.lineTo(menuPanel.x+10, menuPanel.y + 72);
 							
 							//Line from menuPanel to Inference
 							var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
 							if(inferencePanel.visible){
 								drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height+10);
-								drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2, inferencePanel.y);
+								drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2 , inferencePanel.y);
 							}
 							for each(statementModel in argumentTypeModel.reasonModels){
 								//hline
@@ -499,15 +502,22 @@ package components
 								
 								drawUtility1.graphics.lineStyle(10, 0xFFFF00, 1);
 								for each(var obj:StatementModel in model.comments){
+									if(AGORAModel.getInstance().agoraMapModel.globalComments.hasOwnProperty(obj.ID)){
+										var shape:Shape = new Shape;
+										if(rectangle.hasOwnProperty(obj.ID))
+											rectangle[obj.ID].graphics.clear();
+										shape.graphics.beginFill(0xFFFFFF); // choosing the colour for the fill, here it is red
+										shape.graphics.drawRect(fvlspx,width,height,fvlfpy+50-fvlspy); // (x spacing, y spacing, width, height)
+										//rectangle.graphics.drawRect(fvlspx,100,fvlspx,fvlfpy+50-fvlspy);
+										shape.graphics.endFill();
+										rectangle[obj.ID] = shape;// not always needed but I like to put it in to end the fill
+									}
 									//horizontal line from the vertical line to the objection
 									if(AGORAModel.getInstance().agoraMapModel.panelListHash.hasOwnProperty(obj.ID)){
 										var objectionPanel:ArgumentPanel = panelsHash[obj.ID];
 										if(!textLabel[obj.ID])
 											textLabel[obj.ID] = new spark.components.Label();
-										rectangle.graphics.beginFill(0xFFFFFF); // choosing the colour for the fill, here it is red
-										rectangle.graphics.drawRect(fvlspx,panelsHash[model.comments[0].ID].y,bottomObjection.x+300-fvlspx,fvlfpy+50-fvlspy); // (x spacing, y spacing, width, height)
-										//rectangle.graphics.drawRect(fvlspx,100,fvlspx,fvlfpy+50-fvlspy);
-										rectangle.graphics.endFill(); // not always needed but I like to put it in to end the fill
+										
 										textLabel[obj.ID].x = objectionPanel.x - (objectionPanel.x - fvlspx)/2 - 30;
 										textLabel[obj.ID].y = objectionPanel.y+66;
 										
@@ -631,8 +641,9 @@ package components
 											textLabel[obj.ID].width=70;
 											textLabel[obj.ID].height=25;
 										}
-										if(drawUtility2.contains(rectangle) == false)
-											drawUtility2.addChildAt(rectangle,0);
+										//if(drawUtility2.contains(rectangle) == false)
+										for each(var shape1:Shape in rectangle)
+											drawUtility2.addChildAt(shape1,0);
 										textLabel[obj.ID].visible = true;
 										textLabel[obj.ID].opaqueBackground = 0xFFFFFF;
 										drawUtility1.addChild(textLabel[obj.ID]);

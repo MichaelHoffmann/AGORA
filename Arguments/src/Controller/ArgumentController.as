@@ -1136,7 +1136,7 @@ package Controller
 			point.x = 0;
 			point.y = argumentPanel.height;
 			point = argumentPanel.localToGlobal(point);
-			point.y = point.y - 250;
+			point.y = point.y - 150;
 			addMenu.show(point.x, point.y);
 			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addHoverMenuClicked);
 		}

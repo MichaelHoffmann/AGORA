@@ -537,8 +537,8 @@
 								AGORAModel.getInstance().agoraMapModel.deletedList.push(obj);
 								if(FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.numChildren > 0)
 									FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.removeChildren(0,FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.numChildren-1);
-								FlexGlobals.topLevelApplication.map.agoraMap.rectangle.graphics.clear();
-								
+								for each(var shape1:Shape in FlexGlobals.topLevelApplication.map.agoraMap.rectangle)
+									shape1.graphics.clear();
 								
 								delete AGORAModel.getInstance().agoraMapModel.panelListHash[obj.ID];
 								
