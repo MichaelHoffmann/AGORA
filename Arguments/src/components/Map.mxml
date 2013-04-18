@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<s:Group id="theMap">
 		<s:Scroller id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
 			<s:VGroup id="alerts" paddingBottom="100" minWidth="1024" minHeight = "1024" >
-				<components:AgoraMap  updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xfffffff"/>	
+				<components:AgoraMap updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xddfffff"/>	
 			</s:VGroup>
 	</s:Scroller>
 		</s:Group>
@@ -129,7 +129,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				if(yRatio<xRatio){
 					zoomer.minimum=agora.height/agoraMap.height;
 				}else{
-					zoomer.minimum=agora.width/agoraMap.width;
+					zoomer.minimum=agora.width/(agoraMap.width);
 
 				}
 					zoomer.maximum=2;
@@ -151,10 +151,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			}
 			public function setScrollers(hBar:int, vBar:int):void {
 				if(agoraMap.width<hBar+screen.width){
-					agoraMap.width=hBar+screen.width+100;
+					agoraMap.minWidth=hBar+screen.width+100;
 				}
 				if(agoraMap.height<vBar+screen.height){
-					agoraMap.height=vBar+screen.height;
+					agoraMap.minHeight=vBar+screen.height;
 				}
 				agora.horizontalScrollBar.value=hBar;
 				agora.verticalScrollBar.value=vBar;
