@@ -175,11 +175,11 @@
 	</WarnDelEnabl>
 	<AddDefeatStatement>
 		<EN-US
-			text="a defeat of this statement by a counter example (only against universal statements)" />
+			text="a counter example to defeat of this statement (only against universal statements)" />
 		<RUS
-			text="a defeat of this statement by a counter example (only against universal statements)" /> <!--TODO: Translate RUS -->
+			text="a counter example to defeat of this statement (only against universal statements)" /> <!--TODO: Translate RUS -->
 		<GER
-			text="a defeat of this statement by a counter example (only against universal statements)" />
+			text="a counter example to defeat of this statement (only against universal statements)" /> <!--TODO: Translate GER -->
 	</AddDefeatStatement>
 
 	<AddReplacement>
@@ -2611,14 +2611,14 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</AddArg>
 
 	<AddDef>
-		<EN-US text="Definition" />
+		<EN-US text="a definition of a term" />
 		<RUS text="определение термина" />
 		<GER text="eine Definition eines Begriffes" />
 	</AddDef>
 
 	<AddComment>
-		<EN-US text="Comment" />
-		<RUS text="Comment" />
+		<EN-US text="a comment" />
+		<RUS text="a comment" /> <!--TODO: Translate RUS-->
 		<GER text="einen Kommentar" />
 	</AddComment>
 	
