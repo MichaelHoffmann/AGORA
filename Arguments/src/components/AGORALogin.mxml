@@ -171,5 +171,7 @@
 
 
 		</s:SkinnableContainer>
-
+<components:AgoraList top = "0">
+	
+</components:AgoraList>
 </s:Group>
