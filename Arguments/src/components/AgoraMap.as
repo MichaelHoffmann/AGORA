@@ -376,12 +376,15 @@ package components
 						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 70, argumentPanel.y + 87);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 50, argumentPanel.y + 72);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 70, argumentPanel.y + 57);
+						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 50, argumentPanel.y + 72);
+						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 150, argumentPanel.y + 72);
+
 						//First Vertical Line Finishing Point
 						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
 						var fvlfpy:int = (lastMenuPanel.y + 72);
 						//draw a line
-						drawUtility.graphics.moveTo(fvlspx + 10, fvlspy);
-						drawUtility.graphics.lineTo(fvlspx + 10, fvlfpy);
+						drawUtility.graphics.moveTo(fvlspx +60, fvlspy);
+						drawUtility.graphics.lineTo(fvlspx + 60, fvlfpy);
 						
 						//Line from claim to vertical line starting point
 						var firstMenuPanel:MenuPanel = menuPanelsHash[model.supportingArguments[0].ID];
@@ -405,7 +408,7 @@ package components
 							drawUtility.graphics.lineTo(rspx, menuPanel.y + 72);
 							
 							//Line from first vertical line to menu Panel
-							drawUtility.graphics.moveTo(fvlspx+10, menuPanel.y + 72);
+							drawUtility.graphics.moveTo(fvlspx+60, menuPanel.y + 72);
 							drawUtility.graphics.lineTo(menuPanel.x+10, menuPanel.y + 72);
 							
 							//Line from menuPanel to Inference
@@ -507,7 +510,7 @@ package components
 										if(rectangle.hasOwnProperty(obj.ID))
 											rectangle[obj.ID].graphics.clear();
 										shape.graphics.beginFill(0xFFFFFF); // choosing the colour for the fill, here it is red
-										shape.graphics.drawRect(fvlspx,width,height,fvlfpy+50-fvlspy); // (x spacing, y spacing, width, height)
+										shape.graphics.drawRect(fvlspx,width + 25,height,fvlfpy+50-fvlspy); // (x spacing, y spacing, width, height)
 										//rectangle.graphics.drawRect(fvlspx,100,fvlspx,fvlfpy+50-fvlspy);
 										shape.graphics.endFill();
 										rectangle[obj.ID] = shape;// not always needed but I like to put it in to end the fill
