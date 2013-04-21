@@ -124,6 +124,8 @@ package Controller
 				//hide and show view components
 				menu.visible = false;
 				map.visible = true;
+				map.setScrollers(0,0);
+				map.zoomer.value=1;
 				// map specific chat
 				var  chatbox:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
 				chatbox.mapId = id;
@@ -154,6 +156,9 @@ package Controller
 			model.agoraMapModel.reinitializeModel();
 			model.agoraMapModel.createMap(mapName);	
 			map.agoraMap.initializeMapStructures();
+			map.setScrollers(0,0);
+			map.zoomer.value=1;
+
 		}
 
 		protected function onMapCreatedFault(event:AGORAEvent):void{

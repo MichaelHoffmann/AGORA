@@ -33,20 +33,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<components:StatusBar id="sBar" visible="false">
 	</components:StatusBar>
 	
-	<s:Group id="theMap">
-		<s:Scroller id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:VGroup id="alerts"  paddingLeft = "50" paddingBottom="100" minWidth="1024" minHeight = "1024" >
+	<s:HGroup id="theMap" >
+		<s:VGroup  width = "30" horizontalAlign="center" left = "0" >
+			<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
+			<s:Button  width = "100%" click = "zoomer.value+=zoomer.stepSize" id= "zoomIn" label = "+"/>
+			<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" maximum="2"  height = "200"/>
+			<s:Button  width = "100%" click="zoomer.value-=zoomer.stepSize" id = "zoomOut" label = "-"/>
+			
+		</s:VGroup>
+
+		<s:Scroller right ="0" id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
+			<s:VGroup id="alerts"  paddingLeft = "50" paddingRight= "200" paddingBottom="100" minWidth="500" minHeight = "500" >
 				<components:AgoraMap  updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xfffffff"/>	
 			</s:VGroup>
-	</s:Scroller>
-		</s:Group>
-	<s:VGroup top = "50" left = "20" width = "30" horizontalAlign="center" >
-		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
-		<s:Button  width = "100%" click = "zoomer.value+=zoomer.stepSize" id= "zoomIn" label = "+"/>
-		<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" maximum="2"  height = "200"/>
-		<s:Button  width = "100%" click="zoomer.value-=zoomer.stepSize" id = "zoomOut" label = "-"/>
+			</s:Scroller>
 
-	</s:VGroup>
+		</s:HGroup>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -151,7 +153,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			}
 			public function setScrollers(hBar:int, vBar:int):void {
 				if(agoraMap.width<hBar+screen.width){
-					agoraMap.minWidth=hBar+screen.width+100;
+					agoraMap.minWidth=hBar+screen.width;
 				}
 				if(agoraMap.height<vBar+screen.height){
 					agoraMap.minHeight=vBar+screen.height;

@@ -872,6 +872,8 @@ package Controller
 		}
 		
 		public function showMap():void{
+			map.setScrollers(0,0);
+			map.zoomer.value=1;
 			model.agoraMapModel.reinitializeModel();
 			//hide and show view components
 			menu.visible = false;

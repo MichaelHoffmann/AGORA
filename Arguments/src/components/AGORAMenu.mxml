@@ -479,7 +479,7 @@
 			  click="
 			  {
 			  	FlexGlobals.topLevelApplication.rightSidePanel.visible = true; 
-			  	FlexGlobals.topLevelApplication.map.agora.width = stage.stageWidth - FlexGlobals.topLevelApplication.rightSidePanel.width;
+			  	FlexGlobals.topLevelApplication.map.agora.width = stage.stageWidth -40- FlexGlobals.topLevelApplication.rightSidePanel.width;
 			  }" 
 			  height="30" top="0" right="0"/>
 

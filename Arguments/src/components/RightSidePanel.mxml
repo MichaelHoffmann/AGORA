@@ -188,7 +188,7 @@
 	<s:Button id="hidePanelButton" left="5" top="0" right="5" label="{Language.lookup('HidePanel')}" percentWidth="100"
 			  click="{
 			  		this.visible = false; 
-			  		FlexGlobals.topLevelApplication.map.agora.width = stage.stageWidth;
+			  		FlexGlobals.topLevelApplication.map.agora.width = stage.stageWidth-37;
 			  		FlexGlobals.topLevelApplication.map.agora.height = stage.stageHeight - FlexGlobals.topLevelApplication.map.topPanel.height - 25;
 			  		FlexGlobals.topLevelApplication.map.topPanel._unhideRSP.visible = true;
 			  }"/>
