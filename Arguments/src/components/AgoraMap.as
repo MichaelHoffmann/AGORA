@@ -412,10 +412,12 @@ package components
 							drawUtility.graphics.lineTo(menuPanel.x+10, menuPanel.y + 72);
 							
 							//Line from menuPanel to Inference
+							if(argumentTypeModel.hasOwnProperty("inferenceModel") && argumentTypeModel.inferenceModel!=null){
 							var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
-							if(inferencePanel.visible){
+							if(inferencePanel!=null && inferencePanel.visible){
 								drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height+10);
 								drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2 , inferencePanel.y);
+}
 							}
 							for each(statementModel in argumentTypeModel.reasonModels){
 								//hline

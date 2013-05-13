@@ -40,8 +40,8 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			public var time:Number;
 			public var pmodel:PushChatModel;
 			public var host:String = 'agora.gatech.edu'; // change 
-			public var port:int    = 1762;
-			public var mapport:int    = 1763;
+			public var port:int    = 1764; // chage to 1762 for local
+			public var mapport:int    = 1765; //  change to 1763 for local
 			public var times:int =0;			
 			protected var socket:Socket;
 			protected var mapsocket:Socket;

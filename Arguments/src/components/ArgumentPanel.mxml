@@ -830,7 +830,7 @@
 			
 			protected function setVisibility(value:Boolean):void{
 				if(model.statementFunction == StatementModel.INFERENCE){
-					if(!model.argumentTypeModel.reasonsCompleted){
+					if(model.argumentTypeModel && !model.argumentTypeModel.reasonsCompleted){
 						this.visible = false;
 					}
 					else{
