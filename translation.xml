@@ -800,7 +800,28 @@
 		<RUS text="Print Map" /><!-- TODO Translate RUS-->
 		<GER text="Drucken" />
 	</PrintMap>
-
+&gt;
+	<PrintFootNote>
+		<EN-US text="This argument map was created in &lt;font size = &quot;15&quot;&gt;AGORA-NET&lt;/font&gt; http://agora.gatech.edu/" />
+		<RUS text="This argument map was created in &lt;font size = &quot;15&quot;&gt;AGORA-NET&lt;/font&gt;  http://agora.gatech.edu/" /><!-- TODO Translate RUS-->
+		<GER text="This argument map was created in &lt;font size = &quot;15&quot;&gt;AGORA-NET&lt;/font&gt;  http://agora.gatech.edu/" /><!-- TODO Translate GER -->
+	</PrintFootNote>
+	<Title>
+		<EN-US text="Title: " />
+		<RUS text="Title: "  /><!-- TODO Translate RUS-->
+		<GER text="Title: "  /><!-- TODO Translate GER -->
+	</Title>
+	
+	<FirstAuthor>
+		<EN-US text="First Author: " />
+		<RUS text="First Author: " /><!-- TODO Translate RUS-->
+		<GER text="First Author: " /><!-- TODO Translate GER -->
+	</FirstAuthor>
+	<CreatedOn>
+		<EN-US text="Created on: " />
+		<RUS text="Created on: " /><!-- TODO Translate RUS-->
+		<GER text="Created on: " /><!-- TODO Translate GER -->
+	</CreatedOn>
 	<PrintMapHelp>
 		<EN-US text="Besides normal printing, you can use this button also to export maps as pdf-files (if you have a pdf converter installed on your computer or if your browser allows this). Keep in mind that everything you create here is stored on a central server and only accessible when you have an internet connection. " />
 		<RUS text="Besides normal printing, you can use this button also to export maps as pdf-files (if you have a pdf converter installed on your computer or if your browser allows this). Keep in mind that everything you create here is stored on a central server and only accessible when you have an internet connection." /><!-- TODO Translate RUS-->

@@ -37,20 +37,21 @@
 			public var vLabel:String;
 			private var model:ChainModel;
 			private var categoryChain:ArrayList =new ArrayList();
-			
+			public var asString:String;
 			public function update():void{
 				actualHistory.removeAllElements();
 				var subprojects:XMLList =model.historyXML.path;
 
 				var button:Button = new Button;
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
-				
+				asString=new String();
 				topButton();
 				var button:Button = new Button;				
 				button.width = 100;
 				button.id = "0";
 				button.name = subprojects.@pid; //The ID (unique DB identifier) of the category
 				button.label = subprojects.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
+				asString+= button.label+"/";
 				button.setStyle("chromeColor", 0xA0CADB);
 				if(subprojects.@pname!=""){
 				actualHistory.addElement(button);
@@ -64,7 +65,7 @@
 					button.name = project.@pid; //The ID (unique DB identifier) of the category
 					button.label = project.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 					button.setStyle("chromeColor", 0xA0CADB);
-				
+					asString+= button.label+"/";
 					if(project.@isproject==1){
 					button.addEventListener("click",navigateToWOAProject);
 					button.id = "1";
