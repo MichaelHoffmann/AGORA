@@ -800,7 +800,7 @@
 		<RUS text="Print Map" /><!-- TODO Translate RUS-->
 		<GER text="Drucken" />
 	</PrintMap>
-&gt;
+
 	<PrintFootNote>
 		<EN-US text="This argument map was created in &lt;font size = &quot;15&quot;&gt;AGORA-NET&lt;/font&gt; http://agora.gatech.edu/" />
 		<RUS text="This argument map was created in &lt;font size = &quot;15&quot;&gt;AGORA-NET&lt;/font&gt;  http://agora.gatech.edu/" /><!-- TODO Translate RUS-->

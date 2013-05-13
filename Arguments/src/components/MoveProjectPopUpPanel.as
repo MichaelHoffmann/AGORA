@@ -156,6 +156,14 @@ package components
 						var button:Button = new Button;
 						button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 						button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						if(categoryXML.@ID ==6){  // disabling Projects
+							continue;
+						}
+						if(categoryXML.@ID>9 || categoryXML.@ID == 42){
+							button.label = categoryXML.@Name; //The title of the category except level1 (e.g. Philosophy, Biology, or Projects)
+						}else{
+							button.label = Language.lookup("Category"+categoryXML.@ID); //The title of the category Level1 (e.g. Philosophy, Biology, or Projects)	
+						}
 						button.setStyle("chromeColor", 0xA0CADB);					
 						button.addEventListener('click',function(e:Event):void{
 							//Begin private inner click event function for button

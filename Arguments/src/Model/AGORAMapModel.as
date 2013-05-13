@@ -410,8 +410,8 @@ package Model
 			mapMetaData.mapName = resultEvent.result.map.title;
 			ID = resultEvent.result.map.ID;
 				moveMapToPrivProj();
-				var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
-				mapToPrivateProjService.send({user_id:usModel.uid, pass_hash:usModel.passHash, map_id:ID});
+			//	var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			//	mapToPrivateProjService.send({user_id:usModel.uid, pass_hash:usModel.passHash, map_id:ID});
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_CREATED, null, mapMetaData));
 			}else{
 				if(resultEvent.result.map.error.code=="319" || resultEvent.result.map.error.code==319){

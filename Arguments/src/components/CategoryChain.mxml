@@ -57,6 +57,12 @@
 				actualHistory.addElement(button);
 				button.addEventListener("click",navigateToWOA);
 					}
+				var isdisab:Boolean = false;
+				if(subprojects.@pid == 6)  // disbaling links for projects downwards
+				{
+					button.enabled = false;
+					isdisab=true;
+					}
 				for each(var project:XML in subprojects.child){
 					if(project.@pid && project.@pname && project.@pname!=""){
 					trace("Adding buttons");

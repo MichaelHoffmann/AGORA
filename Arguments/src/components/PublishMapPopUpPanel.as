@@ -166,6 +166,14 @@ package components
 						button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 						button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
 						button.toolTip = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						if(categoryXML.@ID ==6){  // disabling Projects
+							continue;
+						}
+						if(categoryXML.@ID>9 || categoryXML.@ID == 42){
+							button.label = categoryXML.@Name; //The title of the category except level1 (e.g. Philosophy, Biology, or Projects)
+						}else{
+							button.label = Language.lookup("Category"+categoryXML.@ID); //The title of the category Level1 (e.g. Philosophy, Biology, or Projects)	
+						}
 						if(categoryXML.@Name!=null && ((String)(categoryXML.@Name)).length > 32){
 							button.label = ((String)(categoryXML.@Name)).slice(0,30)+" .." ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 						}else{

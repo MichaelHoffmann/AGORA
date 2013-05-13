@@ -235,6 +235,9 @@ package components
 					button.height = 100;
 					button.width = 200;
 					button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
+					if(categoryXML.@ID ==6){  // disabling Projects
+						continue;
+					}
 					if(categoryXML.@ID>9 || categoryXML.@ID == 42){
 					button.label = categoryXML.@Name; //The title of the category except level1 (e.g. Philosophy, Biology, or Projects)
 					}else{
