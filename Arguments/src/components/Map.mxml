@@ -43,12 +43,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</s:VGroup>
 
 		<s:Scroller right ="0" id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:VGroup id="alerts"  paddingLeft = "50" paddingRight= "200" paddingBottom="100" minWidth="500" minHeight = "500" >
+			<s:VGroup id="alerts"  paddingLeft = "50" paddingRight= "200" paddingBottom="100" >
 				<components:AgoraMap  updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xfffffff"/>	
 			</s:VGroup>
 			</s:Scroller>
-
 		</s:HGroup>
+	<s:Group >
+		<s:SWFLoader  id = "agoraLogo" autoLoad="true"  visible="false"  source="@Embed(source='images/Agora_Logo.swf')">
+			
+		</s:SWFLoader>
+	</s:Group>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
@@ -57,6 +61,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import ValueObjects.AGORAParameters;
 			
 			import flash.display.*;
+			
+			import flashx.textLayout.formats.Float;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -124,8 +130,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					agora.verticalScrollBar.thumb.setStyle("chromeColor",0xF99653);
 					agora.horizontalScrollBar.thumb.setStyle("chromeColor",0xF99653);
 
-				var xRatio = agora.width/agoraMap.width;
-				var yRatio = agora.height/(agoraMap.height);
+				var xRatio =  (agoraMap.parent.width+400)/agoraMap.width;
+				var yRatio =  (agoraMap.parent.height+400)/(agoraMap.height);
 				//mx.controls.Alert.show("1:"+agoraMap.width/agora.width);
 				//mx.controls.Alert.show("2:"+agora.width/agoraMap.width);
 				if(yRatio<xRatio){
@@ -143,8 +149,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 			}
 			public function zoom():void{
-				agoraMap.scaleX=zoomer.value;
-				agoraMap.scaleY=zoomer.value;
+				var hScrollRatio:Number= agora.horizontalScrollBar.value/agoraMap.scaleX;
+				var vScrollRatio:Number= agora.verticalScrollBar.value/agoraMap.scaleY;
+				agoraMap.transformAround(new Vector3D(agoraMap.width/2 +agoraMap.x,agoraMap.height/2+agoraMap.y,0),new Vector3D(zoomer.value,zoomer.value,1));
+				agora.horizontalScrollBar.value = agoraMap.scaleX*hScrollRatio;
+				agora.verticalScrollBar.value = agoraMap.scaleY*vScrollRatio;
+
 			}
 			public function mouseZoom(e:MouseEvent):void{
 				e.stopImmediatePropagation();
@@ -152,12 +162,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				//zoomer.value+=zoomer.stepSize;
 			}
 			public function setScrollers(hBar:int, vBar:int):void {
-				if(agoraMap.width<hBar+screen.width){
-					agoraMap.minWidth=hBar+screen.width;
-				}
-				if(agoraMap.height<vBar+screen.height){
-					agoraMap.minHeight=vBar+screen.height;
-				}
+
 				agora.horizontalScrollBar.value=hBar;
 				agora.verticalScrollBar.value=vBar;
 				trace("moving to"+hBar+","+vBar);

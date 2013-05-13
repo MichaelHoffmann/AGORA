@@ -86,9 +86,8 @@ package components
 			timer = new Timer(10000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			beganBy = BY_CLAIM;
+
 			removePreviousElements = false;
-			this.minHeight=500;
-			this.minWidth=600;
 			rectangle = new Dictionary;
 			flag = 0;
 			count = 0;

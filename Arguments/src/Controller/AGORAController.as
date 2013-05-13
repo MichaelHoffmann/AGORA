@@ -29,6 +29,7 @@ package Controller
 	import components.MyMapName;
 	import components.MyMapPanel;
 	import components.ProjectName;
+	import components.RightSidePanel;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
@@ -37,8 +38,14 @@ package Controller
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
+	import mx.containers.Canvas;
 	import mx.controls.Alert;
+	import mx.controls.Label;
+	import mx.controls.SWFLoader;
+	import mx.controls.Text;
+	import mx.controls.TextArea;
 	import mx.core.FlexGlobals;
+	import mx.formatters.DateFormatter;
 	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
 	import mx.printing.FlexPrintJob;
@@ -48,7 +55,9 @@ package Controller
 	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.HGroup;
+	import spark.components.Label;
 	import spark.components.NavigatorContent;
+	import spark.components.VGroup;
 	
 	public class AGORAController
 	{
@@ -787,15 +796,79 @@ package Controller
 		}
 
 		public function printMap():void{
-			var flexPrintJob:FlexPrintJob = new FlexPrintJob;
+			var printIt:VGroup = new VGroup();
+			var rsp:RightSidePanel= FlexGlobals.topLevelApplication.rightSidePanel;
+			var flexPrintJob:FlexPrintJob = new FlexPrintJob();
 			flexPrintJob.printAsBitmap = false;
+			var created:Text=new Text();
+			var author:Text=new Text();
+			var agoraLogo=map.agoraLogo;
+			var mapTitle=new Text();
+			var agoraInfo:TextArea=new TextArea();
+			agoraInfo.minWidth=300;
+			agoraInfo.setStyle("borderVisible",false);
+			agoraInfo.htmlText=Language.lookup("PrintFootNote");
+			agoraLogo.visible=true;
+			mapTitle.text = Language.lookup("Title") +rsp.mapTitle.text;
+			var dateFormatter:DateFormatter = new DateFormatter();
+			dateFormatter.formatString = "MMM DD,  YYYY LL:NN:SS A";
+			created.text=Language.lookup("CreatedOn")+ dateFormatter.format(new Date());
+			author.text=Language.lookup("FirstAuthor")+rsp.clickableMapOwnerInformation.label;
+			author.percentWidth=100;
+			mapTitle.percentWidth=100;
+			agoraLogo.height=50;
+			var logoAndInfo:HGroup=new HGroup;
+			logoAndInfo.percentWidth==100;
+			logoAndInfo.addElement(agoraLogo);
+			logoAndInfo.addElement(agoraInfo);
+			logoAndInfo.minWidth=600;
+			printIt.minWidth=600;
+
 
 			if(flexPrintJob.start()){
+				printIt.addElement(logoAndInfo);
+				printIt.addElement(mapTitle);
+				printIt.addElement(author);
+				printIt.addElement(created);
+				printIt.gap=0;
+				var tempZoom =map.zoomer.value;
+				var printCanvas:Canvas = new Canvas;
+				map.alerts.removeElement(map.agoraMap);
+				FlexGlobals.topLevelApplication.addElement(printCanvas);
+				printCanvas.width=map.agoraMap.width;
+				printCanvas.height=map.agoraMap.height+200;
+
+				printIt.width=printCanvas.width/map.zoomer.value;
+				printIt.height = 100*map.zoomer.value;
+				printCanvas.addElement(map.agoraMap);
+				printCanvas.addElement(printIt);
+
+				map.zoomerResize();
+				map.zoomer.value=1;
+				map.zoom();
+				printCanvas.horizontalScrollPolicy="ScrollPolicy.OFF";
+				printCanvas.verticalScrollPolicy="ScrollPolicy.OFF";
+				printIt.scaleX=map.zoomer.value;
+				printIt.scaleY=map.zoomer.value;
+				//agoraLogo.scaleX=map.zoomer.value;
+				//agoraLogo.scaleY=map.zoomer.value;
+
+				map.agoraMap.top=printIt.height;
+				map.agoraMap.left=0;
+				map.agoraMap.top=100*map.zoomer.value;
+
+				//printIt.addElement(map.agoraMap);
 				flexPrintJob.printAsBitmap = false;
-				//map.agoraMap.cacheAsBitmap=false;
-				flexPrintJob.addObject(map.agoraMap, FlexPrintJobScaleType.SHOW_ALL);
+			    flexPrintJob.addObject(printCanvas,FlexPrintJobScaleType.SHOW_ALL);
 				flexPrintJob.send();
+				//printIt.removeElement(map.agoraMap);
+				FlexGlobals.topLevelApplication.removeElement(printCanvas);
+				map.alerts.addElementAt(map.agoraMap,0)
+					map.zoomer.value=tempZoom;
+					map.zoom();
+					printCanvas.removeElement(printIt);
 			}
+
 		}
 		
 		
