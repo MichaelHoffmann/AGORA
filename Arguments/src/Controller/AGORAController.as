@@ -835,8 +835,8 @@ package Controller
 				var printCanvas:Canvas = new Canvas;
 				map.alerts.removeElement(map.agoraMap);
 				FlexGlobals.topLevelApplication.addElement(printCanvas);
-				printCanvas.width=map.agoraMap.width;
-				printCanvas.height=map.agoraMap.height+200;
+				printCanvas.width=map.agoraMap.width+400;
+				printCanvas.height=map.agoraMap.height+300;
 
 				printIt.width=printCanvas.width/map.zoomer.value;
 				printIt.height = 100*map.zoomer.value;
