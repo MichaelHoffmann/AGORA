@@ -1007,14 +1007,17 @@ package Controller
 			var addArgumentsInfo:InfoBox=new InfoBox();
 			addArgumentsInfo.boxWidth=500;
 			addArgumentsInfo.text = Language.lookup('ArgComplete');
-			agoraMap.addEventListener(MouseEvent.CLICK,function(e:Event):void{
-				addArgumentsInfo.visible=false;
-				agoraMap.removeEventListener(MouseEvent.CLICK, arguments.callee);
+			map.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+				FlexGlobals.topLevelApplication.map.alerts.removeElement(addArgumentsInfo);
+				map.removeEventListener(MouseEvent.CLICK, arguments.callee);
 			});
-			FlexGlobals.topLevelApplication.map.agoraMap.addElement(addArgumentsInfo);
+			
+			FlexGlobals.topLevelApplication.map.alerts.addElement(addArgumentsInfo);
 			addArgumentsInfo.y =  inference.y + inference.height + 20;
 			addArgumentsInfo.x = inference.x;
 			addArgumentsInfo.visible=true;
+			map.setScrollers(addArgumentsInfo.x,addArgumentsInfo.y);
+			
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
 			if(claim.panelType != StatementModel.INFERENCE){

@@ -43,9 +43,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</s:VGroup>
 
 		<s:Scroller right ="0" id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:VGroup id="alerts"  paddingLeft = "50" paddingRight= "200" paddingBottom="100" >
+			<s:Group id="alerts">
 				<components:AgoraMap  minHeight="500" minWidth="600" updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xfffffff"/>	
-			</s:VGroup>
+			</s:Group>
 			</s:Scroller>
 		</s:HGroup>
 	<s:Group >
@@ -142,7 +142,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				}
 					zoomer.maximum=2;
 					zoomer.stepSize=(zoomer.maximum-zoomer.minimum)/10;
-					if (zoomer.minimum==0){
+					if (zoomer.minimum>=1){
 					zoomer.minimum=1;
 					}
 				}

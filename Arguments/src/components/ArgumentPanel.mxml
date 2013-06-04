@@ -83,7 +83,7 @@
 		<!--<s:Image right="131.5" bottom="-35" id="showButton"  width="10" height="10"
 				 mouseOver="showMouseOver(event)"
 				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>-->
-		<s:VGroup  id="showButtonG" left="53.5" bottom="-32" horizontalAlign="center" width="13">
+		<s:VGroup  id="showButtonG" right="137" bottom="-32" horizontalAlign="center" width="13">
 			<s:SWFLoader id="showButton" horizontalCenter="0" maxWidth="13" maxHeight="13"
 						 mouseOver="{event.stopImmediatePropagation();showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true;showMouseOver(event) }"
 						 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
