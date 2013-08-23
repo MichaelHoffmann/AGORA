@@ -140,7 +140,7 @@ function deleteProject($projID, $userID, $pass_hash) {
 	// check if maps are present - all of which are mine ... ... ...
 	// move to private project / delete project category mapping all table entries !!!!!
 
-	$query = "SELECT * FROM category_map c inner join maps p on c.map_id = p.map_id and c.category_id = $projID and p.user_id != $userID";
+	$query = "SELECT * FROM category_map c inner join maps p on c.map_id = p.map_id and c.category_id = $projID and p.user_id != $userID and is_deleted=0";
 	$resultID = mysql_query($query, $linkID);
 	if (!$resultID) {
 		dataNotFound($output, $query);

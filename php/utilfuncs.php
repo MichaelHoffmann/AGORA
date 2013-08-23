@@ -33,6 +33,14 @@
 			return false;
 		}
 	}
+	function checkLoginOmitGuest($userID)
+	{
+		// hard coded for now !
+		if($userID == '276'){
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	* Function for converting code to UTF-8.

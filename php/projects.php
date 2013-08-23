@@ -58,10 +58,11 @@ function createProject($userID, $pass_hash, $title, $is_hostile, $proj_users, $p
 		databaseNotFound($output);
 		return $output;
 	}
-	if (!checkLogin($userID, $pass_hash, $linkID)) {
+	if (!checkLogin($userID, $pass_hash, $linkID) || !checkLoginOmitGuest($userID)) {
 		incorrectLogin($output);
 		return $output;
 	}
+	// special checking for guest login ...
 	//Basic boilerplate is done. Next step is to create a new project with the various attributes.
 
 	// Validations ..

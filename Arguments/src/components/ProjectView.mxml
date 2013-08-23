@@ -483,7 +483,7 @@
 				}
 				for each (var projectXML:XML in model.userList.proj.users.userDetail)
 				{
-					if(!(projectXML.@userid==usm._uid)){
+				//	if(!(projectXML.@userid==usm._uid)){
 						var rdioBtn:RadioButton = new RadioButton();
 						var userButton:Button=new Button();
 						var theGroup:HGroup=new HGroup();
@@ -503,7 +503,7 @@
 						theGroup.addElement(userButton);
 						projectMemberPanel.addElement (theGroup);
 						
-					}
+					//}
 				}
 				}
 			}
