@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:GridRow xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" horizontalAlign="left" paddingLeft="10" width="680" >
+	<!--Map Name	Owner +permissions
+	desc
+	Text Matches -->
+	
+	<mx:states>
+		<mx:State enterState="setWidths(event)" name="basic"/>
+		<mx:State enterState="setWidths(event)" name="proj"/>
+	</mx:states>
+	
+			<mx:GridItem colSpan="3" width="200" id="cols1" horizontalAlign="left">
+				<mx:FormItem id="cols1fi" width="{this.getChildAt(0).width}" >
+					<s:HGroup  id="cols1label">
+					<mx:Label textAlign="{header?'center':'left'}"  toolTip="{dis?Language.lookup('SearchresultNoAccess'):h1noFormat}" color="{ (header)?BLACK:(dis?GREY:BLACK)}" htmlText="{h1}" fontWeight="{header?'bold':'normal'}"  buttonMode="true" fontSize="12" click="loadMapProj()"
+							  textDecoration="{header?'none':(umode?((h2!=null)?((h2.length>0)?'underline':'none'):'none'):!dis?'underline':'none')}" useHandCursor="{umode?((h2!=null)?((h2.length>0)?'true':false):false):(dis?false:true)}" mouseChildren="false"/>										
+					</s:HGroup>
+				</mx:FormItem>
+			</mx:GridItem>
+			<mx:GridItem colSpan="1" id="cols1fi2" width="100">
+				<s:VGroup>
+					<s:HGroup id="cols2label">
+				<mx:Label color="{ (header)?BLACK:(dis?GREY:BLACK)}" toolTip="{header?owners:Language.lookup('MapOwnerURLWarning')}"  mouseChildren="false" fontWeight="{header?'bold':'normal'}" maxWidth="{this.getChildAt(1).width}" buttonMode="true" textDecoration="{header?'none':(((h2!=null)?((h2.length>0)?'underline':'none'):'none'))}" useHandCursor="{header?true:((h2!=null)?((h2.length>0)?'true':false):false)}"  fontSize="12" text="{owners}" click="{header?customSort(2,1):gotoLink()}"/>
+					</s:HGroup>
+				<mx:Label color="{ (header)?BLACK:(dis?GREY:BLACK)}"  maxWidth="{this.getChildAt(1).width}"   fontSize="12" text="{modDate}"/>
+				</s:VGroup>
+			</mx:GridItem>
+			<mx:GridItem colSpan="4" width="240"  id="cols3" includeIn="basic">
+				<s:VGroup>
+					<s:HGroup id="cols3label">
+				<mx:Label color="{ (header)?BLACK:(dis?GREY:BLACK)}"  textDecoration="none" fontWeight="{header?'bold':'normal'}"  maxWidth="{this.getChildAt(2).width - 20}"  fontSize="12" text="{concl}" buttonMode="{header?true:false}" mouseChildren="{header?false:true}" useHandCursor="{header?true:false}" click="{header?customSort(3,1):linkShowFn()}" />	
+					<s:Scroller maxHeight="240" maxWidth="240">
+					<s:VGroup name="showR" id="showR">						
+					</s:VGroup>
+				</s:Scroller>
+</s:HGroup>
+				</s:VGroup>
+			</mx:GridItem>
+			<mx:GridItem colSpan="1" width="100">
+<s:VGroup>
+	
+				<mx:Label color="{ (header)?BLACK:(dis?GREY:BLACK)}" buttonMode="{header?true:false}" mouseChildren="{!header?true:false}" useHandCursor="{header?true:false}" fontWeight="{header?'bold':'normal'}" maxWidth="{this.getChildAt(3).width}"  fontSize="12" text="{usersC}" click="{header?customSort(4,1):null}"/>
+
+				<s:HGroup id="cols4label">
+					</s:HGroup>
+</s:VGroup>
+
+			</mx:GridItem>
+			<mx:GridItem colSpan="1" width="90">
+				<s:VGroup>
+					<mx:Label color="{ (header)?BLACK:(dis?GREY:BLACK)}" buttonMode="{header?true:false}" mouseChildren="{!header?true:false}" useHandCursor="{header?true:false}" fontWeight="{header?'bold':'normal'}" maxWidth="{this.getChildAt(3).width}"  fontSize="12" text="{textC}" click="{header?customSort(5,1):null}"/>							
+
+					<s:HGroup id="cols5label">
+
+					</s:HGroup>
+				</s:VGroup>
+
+			</mx:GridItem>
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			
+			import Model.AGORAModel;
+			import Model.AgoraSearchModel;
+			import Model.UserSessionModel;
+			
+			import classes.Language;
+			
+			import mx.collections.ArrayList;
+			import mx.controls.Alert;
+			import mx.controls.Image;
+			import mx.utils.OnDemandEventDispatcher;
+			
+			import spark.components.supportClasses.DisplayLayer;
+			
+			[Bindable]public var h1:String = "";
+			[Bindable]public var h1noFormat:String = "";
+			[Bindable]public var h2:String = "";
+			[Bindable]public var h3:String = "";
+			[Bindable]public var desc:String = "";
+			[Bindable]public var owners:String = "";
+			[Bindable]public var mapid:String = "";
+			[Bindable]public var usersC:String = "";
+			[Bindable]public var textC:String = "";
+			[Bindable]public var concl:String = "";
+			[Bindable]public var modDate:String = "";
+			[Bindable]public var header:Boolean = false;
+			[Bindable]public var msg:Boolean = false;
+			[Bindable]public var dis:Boolean = false;
+			[Bindable] public var linkShow = false;
+			[Bindable] public var umode:Boolean = false;
+			[Bindable] public var mmode:Boolean = false;
+			[Bindable] public var pmode:Boolean = false;
+			public static const BLACK:uint = (0x000000);
+			public static const GREY:uint = (0x7D7978);
+			[Bindable] public var dpprojs:Boolean = false;
+			[Bindable] public var dpmaps:Boolean = false;
+			
+			private function customSort(sort:int=1,order:int=1):void{
+				//if(mmode){
+				var sgr:AgoraSearchModel = AGORAModel.getInstance().searchModel;
+				AGORAModel.getInstance().searchModel.searchAgora(sgr.type,sgr.query,sgr.query2,sgr.stype,0,sgr.b1,sgr.b2,sgr.uvname,sgr.dateC,sgr.dateM,sort,order);
+				sgr.sortBy=sort;
+				sgr.order=order;
+				//}
+			}
+			
+			private function setWidths(event:Event):void{				
+				if(pmode){
+					cols1.width=420;
+					cols1.colSpan=7;
+					cols1fi2.width=120;
+				}
+				if(!header)
+					cols1fi.width=cols1.width;
+				
+				var links:ArrayList = new ArrayList();
+				links.addItemAt(cols1label,0);
+				links.addItemAt(cols2label,1);
+			if(!pmode)	links.addItemAt(cols3label,2);
+			else  links.addItemAt(cols2label,2);
+				
+				links.addItemAt(cols4label,3);
+				links.addItemAt(cols5label,4);
+				
+				if(header){
+					
+					for(var i:int=0;i<5;i++){			
+						if(pmode&&i==2)
+							continue;
+					// for all the 5 areas ..
+						var hg:HGroup = new HGroup();
+						hg.name=i+"";
+						var img1:Image =new Image();
+						var img2:Image=new Image();
+						img2.buttonMode= img1.buttonMode=true;
+						img2.mouseChildren=img1.mouseChildren=false;
+						img1.useHandCursor=img2.useHandCursor=true;
+						img1.source="images/arrow-down-search.png";
+						img2.source="images/arrow-up-search.png";
+						img1.width=img1.height=img2.height=img2.width=7;
+						var hgmain:HGroup = (HGroup)(links.getItemAt(i));
+						//img1.visible=img2.visible=false;
+						if(!(i==3||i==4))
+							hg.paddingTop=5;
+						else{
+							hg.horizontalAlign="center";
+							hg.width=hgmain.parent.parent.width;
+						}
+						
+						hg.addElement(img1);
+						hg.addElement(img2);
+						img1.addEventListener(MouseEvent.CLICK,function(event:Event):void{
+							var img:Image = (Image)(event.target);
+							var hg:HGroup = (HGroup)(img.parent);
+							var pos:int = new int(hg.name);
+							customSort(pos+1,1);
+						});
+						
+						img2.addEventListener(MouseEvent.CLICK,function(event:Event):void{
+							var img:Image = (Image)(event.target);
+							var hg:HGroup = (HGroup)(img.parent);
+							var pos:int = new int(hg.name);
+							customSort(pos+1,2);
+						});
+						
+						
+						hgmain.addElement(hg);
+					}
+						
+				}
+		
+			}
+			private function linkShowFn():void{
+				if(linkShow && !dis){
+					AGORAModel.getInstance().searchModel.searchShowAgora(mapid+"",(umode?2:1) +"");
+				}else if(!umode && !umode){
+					gotoLink();
+				}
+			}
+			
+			private function loadMapProj():void{
+				
+				if(header){
+					customSort(1,1);
+					return;
+				}
+				
+				if(umode){
+					gotoLink();
+				}else if(mmode && !dis){
+					ArgumentController.getInstance().loadMap(mapid);
+				}else if (!dis){
+					var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+					usm.hidemaptemp=true;					
+					AGORAModel.getInstance().agoraMapModel.tempprojectID = AGORAModel.getInstance().agoraMapModel.projectID;
+					AGORAModel.getInstance().agoraMapModel.tempprojID = AGORAModel.getInstance().agoraMapModel.projID;
+					AGORAModel.getInstance().agoraMapModel.projectID = new int(mapid);
+					AGORAModel.getInstance().agoraMapModel.projID = new int(mapid);
+					AGORAController.getInstance().setSelectedTab(0);
+					AGORAController.getInstance().verifyProjectMember(h1,new int(mapid));
+					
+				}
+			}
+			
+			private function gotoLink():void{
+				if(h2!=null && h2.length>0){
+					if(h2.indexOf("http://") ==-1)
+						h2 = "http://"+h2;				
+				navigateToURL(new URLRequest(h2), 'quote');
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	
+</mx:GridRow>

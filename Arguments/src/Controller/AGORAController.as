@@ -115,7 +115,8 @@ package Controller
 			model.removeUsers.addEventListener(AGORAEvent.REMOVED_USERS,onUsersChanged);
 			model.moveMap.addEventListener(AGORAEvent.MAP_ADDED,onMapAdded);
 			model.chainModel.addEventListener(AGORAEvent.CHAIN_LOADED,onChainLoaded);
-
+			model.searchModel.addEventListener(AGORAEvent.SEARCH_DONE,onSearchComplete);
+			model.searchModel.addEventListener(AGORAEvent.SEARCHSHOW_DONE,onSearchShowComplete);
 
 
 			menu = FlexGlobals.topLevelApplication.agoraMenu;
@@ -307,8 +308,9 @@ package Controller
 		}
 		public function onProjectDeleted(e:Event):void{
 			menu.myProjects.currentState="listOfProjects";
+			
 			//fetchDataMyProjects(1);			
-			//fetchDataProjectList(); // changed 
+			//fetchDataProjectList(); // changed			
 			var cg = FlexGlobals.topLevelApplication.rightSidePanel.categoryChain;			
 			var temp1:Number= AGORAModel.getInstance().agoraMapModel.projectID;
 			var selectT:String = AGORAModel.getInstance().userSessionModel.selectedTab;
@@ -329,6 +331,7 @@ package Controller
 				menu.myProjects.currentState=("listOfProjects");
 				Controller.AGORAController.getInstance().fetchDataMyProjects(1);
 			}
+			
 		}
 		public function onUsersChanged(e:Event):void{
 			updateProject(e)
@@ -351,6 +354,13 @@ package Controller
 			
 		}
 		public function createProj(e:Event){
+			
+			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			if(userSession.username == "Guest"){
+				Alert.show(Language.lookup('GuestCreateMapError'));
+				return;
+			}
+			
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
 			if(usm.loggedIn()){
@@ -375,6 +385,7 @@ package Controller
 			//model.myProjectsModel.sendRequest();
 			fetchDataMyProjects();
 		}
+		
 		public function updateProjectReload(e:Event):void{
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
@@ -572,7 +583,7 @@ package Controller
 				menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
 				menu.myProjects.loadingDisplay.visible = true;
 				model.myProjectsModel.sendRequest();
-				if(current == Language.lookup("MyContributions"))
+				if(current == Language.lookup("MyContributions") || current == Language.lookup("Search"))
 				{
 					menu.contributions.showpView();
 					usm.selectedMyContProjID=""+tempParentCategoryID;
@@ -655,6 +666,7 @@ package Controller
 				}
 			}
 		}
+		
 		//------------------Fetch my Projects ------------------------------//
 		public function fetchDataMyProjects(opt:int=0):void{
 			var usm:UserSessionModel=model.userSessionModel;
@@ -663,7 +675,6 @@ package Controller
 				if(current == Language.lookup("MyContributions"))
 				{
 					menu.myProjects.loadingDisplay.text = Language.lookup("Loading");
-
 					if(usm.selectedMyContProjID){
 						model.myProjectsModel.requestProjDetails(usm.selectedMyContProjID);
 						model.myProjectsModel.requestChildCategories(usm.selectedMyContProjID);
@@ -682,7 +693,7 @@ package Controller
 						model.myProjectsModel.requestChildCategories(usm.selectedMyProjProjID);
 						model.myProjectsModel.listProjMaps(usm.selectedMyProjProjID);
 						getChain(parseInt(usm.selectedMyProjProjID));
-					}					
+					}
 				}else if (current ==Language.lookup("MainTab"))
 				{
 					menu.categories.pView.loadingDisplay.text = Language.lookup("Loading");
@@ -727,6 +738,7 @@ package Controller
 				fetchDataMyProjects(1);	
 				else
 					fetchDataMyProjects();
+			
 			if (current ==Language.lookup("MainTab") && parseInt(""+usm.selectedWoAProjID) && menu.categories.layerView)
 			{
 				model.categoryModel.requestChildCategories("",usm.selectedWoAProjID);
@@ -823,8 +835,6 @@ package Controller
 			logoAndInfo.addElement(agoraInfo);
 			logoAndInfo.minWidth=600;
 			printIt.minWidth=600;
-
-
 			if(flexPrintJob.start()){
 				printIt.addElement(logoAndInfo);
 				printIt.addElement(mapTitle);
@@ -837,12 +847,10 @@ package Controller
 				FlexGlobals.topLevelApplication.addElement(printCanvas);
 				printCanvas.width=map.agoraMap.width+400;
 				printCanvas.height=map.agoraMap.height+300;
-
 				printIt.width=printCanvas.width/map.zoomer.value;
 				printIt.height = 100*map.zoomer.value;
 				printCanvas.addElement(map.agoraMap);
 				printCanvas.addElement(printIt);
-
 				map.zoomerResize();
 				map.zoomer.value=1;
 				map.zoom();
@@ -852,15 +860,13 @@ package Controller
 				printIt.scaleY=map.zoomer.value;
 				//agoraLogo.scaleX=map.zoomer.value;
 				//agoraLogo.scaleY=map.zoomer.value;
-
 				map.agoraMap.top=printIt.height;
 				map.agoraMap.left=0;
 				map.agoraMap.top=100*map.zoomer.value;
-
 				//printIt.addElement(map.agoraMap);
-				flexPrintJob.printAsBitmap = false;
+			flexPrintJob.printAsBitmap = false;
 			    flexPrintJob.addObject(printCanvas,FlexPrintJobScaleType.SHOW_ALL);
-				flexPrintJob.send();
+			flexPrintJob.send();
 				//printIt.removeElement(map.agoraMap);
 				FlexGlobals.topLevelApplication.removeElement(printCanvas);
 				map.alerts.addElementAt(map.agoraMap,0)
@@ -868,7 +874,6 @@ package Controller
 					map.zoom();
 					printCanvas.removeElement(printIt);
 			}
-
 		}
 		
 		
@@ -910,6 +915,7 @@ package Controller
 			//get the global chat on
 			var chatbx:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
 			chatbx.init();
+			
 			FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 			//When we return to the category screen by clicking save and home or loading an illegal map,
 			//find the current category and refresh it. Solved a problem with a created map not appearing
@@ -934,6 +940,7 @@ package Controller
 			AGORAController.getInstance().fetchDataMyMaps();
 			AGORAController.getInstance().fetchDataChat();
 			}
+			
 			if(model.rechain!=null && model.rechain){
 				UpdateChainonMapSaveAs();
 				model.rechain=false;
@@ -996,7 +1003,17 @@ package Controller
 				Alert.show(Language.lookup("MustRegister"));
 			}
 		}
+		
+		// Search related urilities
+		public function onSearchComplete(event:AGORAEvent):void{
+						FlexGlobals.topLevelApplication.agoraMenu.searchPanel.populateSearch();
+			
+		}
 
+
+		public function onSearchShowComplete(event:AGORAEvent):void{
+					FlexGlobals.topLevelApplication.agoraMenu.searchPanel.populateShowSearch();
+		}
 
 
 

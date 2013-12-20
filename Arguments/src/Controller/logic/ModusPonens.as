@@ -14,7 +14,6 @@ package Controller.logic
 	import components.MenuPanel;
 	
 	import flash.utils.Dictionary;
-	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.messaging.channels.StreamingAMFChannel;

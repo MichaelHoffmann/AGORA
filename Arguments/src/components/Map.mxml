@@ -33,30 +33,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<components:StatusBar id="sBar" visible="false">
 	</components:StatusBar>
 	
-	<s:HGroup id="theMap" >
+	<s:HGroup id="theMap" name="p1" >
 		<s:VGroup  width = "30" horizontalAlign="center" left = "0" >
-			<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
-			<s:Button  width = "100%" click = "zoomer.value+=zoomer.stepSize" id= "zoomIn" label = "+"/>
-			<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" maximum="2"  height = "200"/>
-			<s:Button  width = "100%" click="zoomer.value-=zoomer.stepSize" id = "zoomOut" label = "-"/>
-			
-		</s:VGroup>
+		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum;zoomer2.value=zoomer2.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
+		<s:Button  width = "100%" click = "{zoomer.value+=zoomer.stepSize;}" id= "zoomIn" label = "+"/>
+		<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" changeStart="updateSync()" maximum="2"  height = "200"/>
+		<s:Button  width = "100%" click="{zoomer.value-=zoomer.stepSize;}" id = "zoomOut" label = "-"/>
+			<s:VSlider  width = "100%"  creationComplete="{inited=true}"   visible="false" id = "zoomer2" maximum="2"  height = "200"/>
 
-		<s:Scroller right ="0" id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
-			<s:Group id="alerts">
-				<components:AgoraMap  minHeight="500" minWidth="600" updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xfffffff"/>	
+		</s:VGroup>
+		<s:Scroller right ="0" name="p2" id="agora" visible="false"  click='{trace("x:"+agora.horizontalScrollBar.value+"y:"+agora.verticalScrollBar.value)}'>	
+			<s:Group id="alerts" name="p3">
+				<components:AgoraMap minHeight="500" minWidth="600" updateComplete="{zoomerResize()}" resize="{zoomerResize(); }" mouseDown="{mouseDownEvent(event)}" id="agoraMap" verticalScrollPolicy="off" horizontalScrollPolicy="off" backgroundColor="0xfffffff"/>	
 			</s:Group>
 			</s:Scroller>
 		</s:HGroup>
 	<s:Group >
 		<s:SWFLoader  id = "agoraLogo" autoLoad="true"  visible="false"  source="@Embed(source='images/Agora_Logo.swf')">
-			
 		</s:SWFLoader>
 	</s:Group>
 	<fx:Script>
 		<![CDATA[
 			import Controller.AGORAController;
 			import Controller.LayoutController;
+			
+			import Model.AGORAModel;
 			
 			import ValueObjects.AGORAParameters;
 			
@@ -73,6 +74,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			import mx.events.ScrollEvent;
+			import mx.utils.OnDemandEventDispatcher;
 			
 			import spark.components.Group;
 			import spark.primitives.Graphic;
@@ -86,34 +88,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			import classes.Language;
 			var inited:Boolean = false;
+			var tempZoomHolder = true;
+			var prevZoomValue = 0;
 			public function mouseDownEvent(e:MouseEvent):void{
 				if(e.target.hasOwnProperty("id")){
 					if(e.target.id=="agoraMap"){
-						
-						addEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
-						addEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
-						lastX=mouseX;
-						lastY=mouseY;
-						
+					
+					addEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
+					addEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
+					
+					lastX=mouseX;
+					lastY=mouseY;
+					
 					}
 				}
 				
 			}
+			
+			
 			public function moveTheMap(e:Event):void{
 				var xDiff:int = lastX-mouseX;
 				var yDiff:int=lastY-mouseY;
 				lastY=mouseY;
 				lastX=mouseX;		
 				this.setScrollers(agora.horizontalScrollBar.value+xDiff ,agora.verticalScrollBar.value+yDiff);
-
+				
 			}
 			public function mapMouseUp(e:Event):void{
-					removeEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
-					removeEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
-
-
-
+				removeEventListener(MouseEvent.MOUSE_MOVE, moveTheMap);
+				removeEventListener(MouseEvent.MOUSE_UP, mapMouseUp);
+				
+				
+				
 			}
+			
+			private function updateSync(){
+				prevZoomValue=zoomer.value;
+			}
+			
 			public function discardChanges(event:Event):void
 			{
 				AGORAController.getInstance().hideMap();
@@ -121,40 +133,80 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			public function setWidth(event: Event):void
 			{
-//				agora.height =  stage.stageHeight - topPanel.height-25;
-//				agora.width = stage.stageWidth - agora.x;
+				//				agora.height =  stage.stageHeight - topPanel.height-25;
+				//				agora.width = stage.stageWidth - agora.x;
 				topPanel.width = stage.stageWidth;
 			}
 			public function zoomerResize():void{
 				if(inited){
 					agora.verticalScrollBar.thumb.setStyle("chromeColor",0xF99653);
 					agora.horizontalScrollBar.thumb.setStyle("chromeColor",0xF99653);
-
+					
 				var xRatio =  (agoraMap.parent.width)/agoraMap.width;
 				var yRatio =  (agoraMap.parent.height)/(agoraMap.height);
-				//mx.controls.Alert.show("1:"+agoraMap.width/agora.width);
-				//mx.controls.Alert.show("2:"+agora.width/agoraMap.width);
-				if(yRatio<xRatio){
-					zoomer.minimum=agora.height/agoraMap.height;
-				}else{
-					zoomer.minimum=agora.width/(agoraMap.width);
-
-				}
-					zoomer.maximum=2;
-					zoomer.stepSize=(zoomer.maximum-zoomer.minimum)/10;
-					if (zoomer.minimum>=1){
-					zoomer.minimum=1;
+				
+				trace(AGORAModel.getInstance().agoraMapModel.maxy*AGORAParameters.getInstance().gridWidth + "  "+agoraMap.width);
+					if(AGORAModel.getInstance().agoraMapModel.maxy*AGORAParameters.getInstance().gridWidth >= agoraMap.width)
+					{
+						agoraMap.width=AGORAModel.getInstance().agoraMapModel.maxy*AGORAParameters.getInstance().gridWidth+75;	
 					}
+					if(AGORAModel.getInstance().agoraMapModel.max*AGORAParameters.getInstance().gridWidth >= agoraMap.height)
+					{
+						agoraMap.height=AGORAModel.getInstance().agoraMapModel.max*AGORAParameters.getInstance().gridWidth+75;	
+					}
+					if(yRatio<xRatio){
+						zoomer.minimum=agora.height/agoraMap.height;
+						zoomer2.minimum = agora.width/(agoraMap.width);
+						tempZoomHolder=false;
+					}else{
+						zoomer.minimum=agora.width/(agoraMap.width);	
+						zoomer2.minimum = agora.height/agoraMap.height;
+					}
+					
+					if (zoomer.minimum>=1){
+						zoomer.minimum=1;
+						zoomer.maximum=2;
+					}else{
+						// sure the map has gone out of the limits..
+						zoomer.maximum=1;
+					}
+					
+					// added new logic
+					if (zoomer2.minimum>=1){
+						zoomer2.minimum=1;
+						zoomer2.maximum=2;
+					}else{
+						// sure the map has gone out of the limits..
+						zoomer2.maximum=1;
+					}
+					
+					zoomer.stepSize=(zoomer.maximum-zoomer.minimum)/10;
+					zoomer2.stepSize=(zoomer2.maximum-zoomer2.minimum)/10;
 				}
-
+				
 			}
 			public function zoom():void{
 				var hScrollRatio:Number= agora.horizontalScrollBar.value/agoraMap.scaleX;
 				var vScrollRatio:Number= agora.verticalScrollBar.value/agoraMap.scaleY;
-				agoraMap.transformAround(new Vector3D(agoraMap.width/2 +agoraMap.x,agoraMap.height/2+agoraMap.y,0),new Vector3D(zoomer.value,zoomer.value,1));
+				
+			//	trace("SYNCC"+prevZoomValue+" "+zoomer.value);
+				
+				// sync
+			//	if(prevZoomValue!=0){
+					var step:int = (zoomer.value-zoomer.minimum)/(zoomer.stepSize);
+					var step2:int = (zoomer2.value-zoomer2.minimum)/(zoomer2.stepSize);
+					zoomer2.value=zoomer2.minimum+zoomer2.stepSize*step;
+				//	prevZoomValue=0;
+				//}
+				
+				var scalev:Vector3D = new Vector3D(zoomer.value,zoomer2.value,1);
+				if(!tempZoomHolder){
+					scalev = new Vector3D(zoomer2.value,zoomer.value,1);
+				}
+				agoraMap.transformAround(new Vector3D(0,0,0),scalev,null,null,null,null,null,false);
+			//	theMap.transformAround(new Vector3D(agoraMap.width/2,agoraMap.height/2,0),scalev,null,null,null,null,null,true);
 				agora.horizontalScrollBar.value = agoraMap.scaleX*hScrollRatio;
 				agora.verticalScrollBar.value = agoraMap.scaleY*vScrollRatio;
-
 			}
 			public function mouseZoom(e:MouseEvent):void{
 				e.stopImmediatePropagation();
@@ -171,8 +223,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				super.measure();
 			}
 			
+			
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
-
+					
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 				topPanel.move(0,0);
 				sBar.move(this.getExplicitOrMeasuredWidth()/2-sBar.getExplicitOrMeasuredWidth()/2, topPanel.getExplicitOrMeasuredHeight());
@@ -181,7 +234,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				zoomerResize();
 			}
 			
-
+			
+			
 			
 		]]>
 	</fx:Script>

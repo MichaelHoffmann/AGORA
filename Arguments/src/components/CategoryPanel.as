@@ -123,10 +123,21 @@ package components
 			 createMapBtn=new Button();
 			 createProjBtn=new Button();
 			createMapBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+				
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show(Language.lookup('GuestCreateMapError'));
+					return;
+				} 
 				AGORAModel.getInstance().agoraMapModel.moveToProject=true;
 				Controller.AGORAController.getInstance().createMap(e);
 			});	
 			createProjBtn.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show(Language.lookup('GuestCreateMapError'));
+					return;
+				} 
 			Controller.AGORAController.getInstance().createProj(e)});	
 			bottomButtons.addElement(refreshBtn);
 			bottomStuff.addElement(bottomButtons);
@@ -238,6 +249,7 @@ package components
 					if(categoryXML.@ID ==6){  // disabling Projects
 						continue;
 					}
+					
 					if(categoryXML.@ID>9 || categoryXML.@ID == 42){
 					button.label = categoryXML.@Name; //The title of the category except level1 (e.g. Philosophy, Biology, or Projects)
 					}else{
@@ -276,8 +288,7 @@ package components
 					}
 					else 
 					{  
-
-						categoryTiles.addElement(button);
+						categoryTiles.addElement(button);						
 					}
 				}
 
@@ -359,11 +370,15 @@ package components
 			var thisMapInfo:MapMetaData = mapMetaDataVector[parseInt((Button) (event.target).id)];
 			rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 			rsp.mapTitle.text=thisMapInfo.mapName;
+			rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + thisMapInfo.mapID;
+			
 			rsp.clickableMapOwnerInformation.toolTip = 
 				thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
+			
 			var urllink:String = thisMapInfo.url;
 			if(thisMapInfo.url!=null && thisMapInfo.url.indexOf("http://") ==-1)
 				urllink = "http://"+thisMapInfo.url;
+			
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 				navigateToURL(new URLRequest(urllink), 'quote');
 			},false, 0, false);

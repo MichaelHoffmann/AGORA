@@ -46,6 +46,7 @@
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				asString=new String();
 				topButton();
+				
 				var button:Button = new Button;				
 				button.width = 100;
 				button.id = "0";
@@ -53,16 +54,18 @@
 				button.label = subprojects.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 				asString+= button.label+"/";
 				button.setStyle("chromeColor", 0xA0CADB);
+				
 				if(subprojects.@pname!=""){
-				actualHistory.addElement(button);
-				button.addEventListener("click",navigateToWOA);
+					actualHistory.addElement(button);
+					button.addEventListener("click",navigateToWOA);
 					}
+				
 				var isdisab:Boolean = false;
 				if(subprojects.@pid == 6)  // disbaling links for projects downwards
 				{
 					button.enabled = false;
 					isdisab=true;
-					}
+				}
 				for each(var project:XML in subprojects.child){
 					if(project.@pid && project.@pname && project.@pname!=""){
 					trace("Adding buttons");
@@ -71,7 +74,13 @@
 					button.name = project.@pid; //The ID (unique DB identifier) of the category
 					button.label = project.@pname ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 					button.setStyle("chromeColor", 0xA0CADB);
-					asString+= button.label+"/";
+					
+			asString+= button.label+"/";
+						
+					if(isdisab)
+						button.enabled = false;
+					
+					
 					if(project.@isproject==1){
 					button.addEventListener("click",navigateToWOAProject);
 					button.id = "1";

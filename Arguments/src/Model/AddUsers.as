@@ -1,8 +1,11 @@
 package Model 
 {
     import Events.*;
+    
     import ValueObjects.*;
+    
     import classes.Language;
+    
     import flash.events.*;
     
     import mx.controls.Alert;
@@ -37,7 +40,8 @@ package Model
 				}else{
                 loc2 = {"action":"add", "projID":loc1.selectedMyProjProjID, "uid":loc1.uid, "pass_hash":loc1.passHash, "usersList[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers};
 				}
-                this.request.send(loc2);
+				
+				this.request.send(loc2);
             }
             return;
         }
@@ -57,6 +61,7 @@ package Model
 			{
 						Alert.show("Users not found:"+arg1.result.userError.@message);
 			}
+
 			if (arg1.result.hasOwnProperty("addAdminError")) 
 			{
 				Alert.show(Language.lookup(arg1.result.addAdminError.@message));

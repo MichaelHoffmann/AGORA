@@ -5,6 +5,7 @@ package Model
     import ValueObjects.*;
     
     import classes.Language;
+    
     import flash.events.*;
     
     import mx.controls.Alert;
@@ -22,12 +23,15 @@ package Model
             request.requestTimeout = 3;
             request.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onResult);
             request.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+			
 			requestRename = new mx.rpc.http.HTTPService();
 			requestRename.url = ValueObjects.AGORAParameters.getInstance().pushProjectsURL;
 			requestRename.resultFormat = "e4x";
 			requestRename.requestTimeout = 3;
 			requestRename.addEventListener(mx.rpc.events.ResultEvent.RESULT, this.onResultRename);
 			requestRename.addEventListener(mx.rpc.events.FaultEvent.FAULT, this.onFault);
+			
+			
             return;
         }
 		public function changeType():void
@@ -41,9 +45,11 @@ package Model
 				if(current == Language.lookup("MyContributions"))
 				{
 					loc2 = { "projID":loc1.selectedMyContProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType,"changeType":true};
+					
 				}else if(current==Language.lookup("MyPPProjects"))
 				{
 					loc2 = { "projID":loc1.selectedMyProjProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType,"changeType":true};
+					
 				}else if (current ==Language.lookup("MainTab"))
 				{						
 					loc2 = { "projID":loc1.selectedWoAProjID,"uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType,"changeType":true};
@@ -58,6 +64,7 @@ package Model
             var loc1:*=Model.AGORAModel.getInstance().userSessionModel;
             if (loc1.loggedIn()) 
             {
+				
 				var usm:UserSessionModel=Model.AGORAModel.getInstance().userSessionModel;
 				var current=usm.selectedTab;
 				if(current == Language.lookup("MyContributions"))
@@ -65,7 +72,7 @@ package Model
 					loc2 = { "projID":loc1.selectedMyContProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};					
 				}else if(current==Language.lookup("MyPPProjects"))
 				{
-                loc2 = { "projID":loc1.selectedMyProjProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};
+					loc2 = { "projID":loc1.selectedMyProjProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};					
 				}else if (current ==Language.lookup("MainTab"))
 				{						
 					loc2 = { "projID":loc1.selectedWoAProjID,"title":newName, "uid":loc1.uid, "pass_hash":loc1.passHash,"is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType};
@@ -103,9 +110,13 @@ package Model
 					return;
 				}
 			}
+			
+			
 			dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.EDITED_PROJECTRELOAD));
 			return;
 		}
+
+		
         protected function onFault(arg1:mx.rpc.events.FaultEvent):void
         {
             dispatchEvent(new Events.AGORAEvent(Events.AGORAEvent.EDIT_PROJECT_FAILED));

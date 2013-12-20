@@ -1,6 +1,7 @@
 package components
 {
 	import Controller.AGORAController;
+	import Controller.ArgumentController;
 	
 	import Model.AGORAModel;
 	
@@ -15,15 +16,21 @@ package components
 	import flash.net.navigateToURL;
 	
 	import mx.binding.utils.BindingUtils;
+	import mx.containers.ControlBar;
+	import mx.containers.VBox;
 	import mx.controls.Alert;
 	import mx.controls.Button;
+	import mx.controls.Spacer;
+	import mx.controls.Text;
 	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
 	import mx.printing.FlexPrintJob;
 	import mx.printing.FlexPrintJobScaleType;
 	
+	import spark.components.HGroup;
 	import spark.components.Label;
+	import spark.components.Panel;
 	import spark.components.TextArea;
 	
 	public class TopPanel extends UIComponent
@@ -38,14 +45,18 @@ package components
 		public var _faqBtn:Button;
 		public var _contactUsBtn:Button;
 		public var _helpBtn:Button;
+		public var _publishMapHelp:Button;
 		
 		
 		private var agoraConstants:AGORAParameters;
 		private var background:Sprite;
+		private var hpanel:Panel;
+
 		
 		public function TopPanel()
 		{
 			super();
+			publishMapPanel();
 			agoraConstants = AGORAParameters.getInstance();
 		}
 		
@@ -94,6 +105,13 @@ package components
 				}
 				);
 				addChild(_whatYouShouldKnowBeforeYouStartBtn);
+			}
+			
+			if(!_publishMapHelp){
+				_publishMapHelp = new Button;
+				_publishMapHelp.label = Language.lookup("PublishMapHelp");
+				_publishMapHelp.addEventListener(MouseEvent.CLICK, publishMapTrigger);
+				addChild(_publishMapHelp);
 			}
 			
 			if(!_unhideRSP){
@@ -180,6 +198,11 @@ package components
 			_whatYouShouldKnowBeforeYouStartBtn.setActualSize(_whatYouShouldKnowBeforeYouStartBtn.getExplicitOrMeasuredWidth(), 30);
 			_whatYouShouldKnowBeforeYouStartBtn.move(xB, 5);
 			xB = xB + _whatYouShouldKnowBeforeYouStartBtn.getExplicitOrMeasuredWidth() + 15;
+			
+			_publishMapHelp.setActualSize(_publishMapHelp.getExplicitOrMeasuredWidth(), 30);
+			_publishMapHelp.move(xB, 5);
+			xB = xB + _publishMapHelp.getExplicitOrMeasuredWidth() + 15;
+			
 			_faqBtn.setActualSize(_faqBtn.getExplicitOrMeasuredWidth(), 30);
 			_faqBtn.move(xB, 5);
 			xB = xB + _faqBtn.getExplicitOrMeasuredWidth() + 15;
@@ -206,6 +229,71 @@ package components
 		
 		protected function onPrint(event:MouseEvent):void{
 			AGORAController.getInstance().printMap();
+		}
+		
+		protected function publishMapPanel():void
+		{
+				var vb:VBox = new VBox();
+				var label:Text = new Text();
+				var cb:ControlBar = new ControlBar();
+				var s:Spacer = new Spacer();
+				
+				var b1:Button = new Button();
+				b1.label = Language.lookup("PublishMapbtn");
+				b1.name="pb_Btn";
+				b1.addEventListener(MouseEvent.CLICK, pbMap);
+				
+				var b2:Button = new Button();
+				b2.label = Language.lookup("OK");
+				b2.addEventListener(MouseEvent.CLICK, closePopUp);				
+				
+				cb.addChild(s);
+				
+				label.htmlText = Language.lookup('NewMapToolTiphtml');
+				vb.setStyle("paddingBottom", 2);
+				vb.setStyle("paddingLeft", 12);
+				vb.setStyle("paddingRight", 2);
+				vb.setStyle("paddingTop", 12);
+				
+				vb.addChild(label);
+				var hg:HGroup = new HGroup();	
+				hg.name="pb_BtnG";
+				hg.addElement(b2);
+				hg.addElement(b1);
+				vb.addChild(hg);
+				hpanel = new Panel();
+				hpanel.title = Language.lookup('PublishMapHelp');
+				hpanel.width = 620;
+				hpanel.height = 450;
+				hpanel.addElement(vb);
+				hpanel.addElement(cb);
+			
+		}
+		
+		private function pbMap(ev:MouseEvent):void{
+			if(!FlexGlobals.topLevelApplication.publishMap){
+				FlexGlobals.topLevelApplication.publishMap = new PublishMapPopUpPanel();
+			}
+			
+			FlexGlobals.topLevelApplication.publishMap.mapID = AGORAModel.getInstance().agoraMapModel.ID;	
+			AGORAModel.getInstance().publishMapModel.sendForTopLevel();
+			PopUpManager.addPopUp(FlexGlobals.topLevelApplication.publishMap,FlexGlobals.topLevelApplication.agoraMenu,true);
+			PopUpManager.centerPopUp(FlexGlobals.topLevelApplication.publishMap);
+		}
+		
+		private function publishMapTrigger(ev:MouseEvent):void{
+			// permissions check !
+			if(!ArgumentController.getInstance().checkPermissionsForMap()){
+				var hg:HGroup =(HGroup)((VBox)(hpanel.getElementAt(0)).getElementAt(2))
+				hg.getElementAt(0).visible=false;				
+			}
+				
+			PopUpManager.addPopUp(hpanel, this, true);
+			PopUpManager.centerPopUp(hpanel);
+		}
+		
+		private function closePopUp(evt:MouseEvent):void {
+			PopUpManager.removePopUp(hpanel);
 		}
 		
 		protected function saveMapAs(event:MouseEvent):void{

@@ -33,6 +33,7 @@
 			return false;
 		}
 	}
+	
 	function checkLoginOmitGuest($userID)
 	{
 		// hard coded for now !
@@ -197,7 +198,11 @@
 		if($row['is_project']){
 			return 1;
 		}			
+		
+		return -1;
+		
 		$puquery = "SELECT * FROM parent_categories c inner join category p on c.category_id = p.category_id and c.parent_categoryid = $catId and p.is_project=1";
+		$resultID = mysql_query($puquery, $linkID);
 		if($resultID && mysql_num_rows($resultID)>0){
 			return 2;
 		}
@@ -451,5 +456,8 @@ function getUserNameFromUserId($userid,$linkID){
 				}
 			}
 	}
+	
+	
+	
 
 ?>

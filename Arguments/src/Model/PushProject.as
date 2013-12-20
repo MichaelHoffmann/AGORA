@@ -87,10 +87,8 @@ package Model
 				if(model.category.@category_count == 0 || model.category.category[0].@is_project == 1){
 					var params:Object = {"uid":usm.uid, "pass_hash":usm.passHash, "projID":0, "title":Model.AGORAModel.getInstance().agoraMapModel.projectName, "is_hostile":Model.AGORAModel.getInstance().agoraMapModel.projectType, "user_count":Model.AGORAModel.getInstance().agoraMapModel.numberUsers, "proj_users[]":Model.AGORAModel.getInstance().agoraMapModel.projectUsers, "parent_category":usm.selectedWoAProjID};
 				}
-				
 			}
 			this.request.send(params);
-
 		}
 		/**
 		 * If the sendRequest method comes back poorly, we enter here and broadcast the FAULT event

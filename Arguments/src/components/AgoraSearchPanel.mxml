@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:components="components.*"
+		  keyDown="panel_keyDownHandler(event)" percentHeight="100" percentWidth="100"
+		  stateChangeComplete="searchHeaders(event)">	
+	<fx:Declarations>
+		<s:RadioButtonGroup id="sUsersType"/>	
+		<s:RadioButtonGroup id="Bops1"/>	
+		<s:RadioButtonGroup id="Bops2"/>	
+		<s:RadioButtonGroup id="Bops3"/>	
+		<s:RadioButtonGroup id="Bops4"/>	
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:states>
+		<s:State enterState="searchHeaders(event)" name="basic"/>
+		<s:State enterState="searchHeaders(event)" name="full"/>
+		<s:State enterState="searchHeaders(event)" name="users"/>
+	</s:states>
+	<mx:Form horizontalGap="1" name="searchBox" textAlign="left" id="searchForm">
+		<s:HGroup fontSize="12" fontStyle="italic" fontWeight="bold" paddingLeft="6">
+			<s:BorderContainer id="mapSTabsB" minWidth="{mapSTabs.width+5}"
+							   minHeight="{mapSTabs.height+5}" backgroundColor="#808080"
+							   borderWeight="0" click="{currentState='basic'}" cornerRadius="5">
+			<s:HGroup id="mapSTabs" buttonMode="true" paddingLeft="10" paddingTop="7"
+					  useHandCursor="true">				
+				<s:Label buttonMode="true" text="{Language.lookup('SearchTabsMaps')}" useHandCursor="true">				
+			</s:Label>
+			</s:HGroup>
+				</s:BorderContainer>
+			<s:BorderContainer id="projSTabsB" minWidth="{projSTabs.width+5}"
+							   minHeight="{projSTabs.height+5}" backgroundColor="#808080"
+							   borderWeight="0" click="{currentState='full'}" cornerRadius="5"
+							   useHandCursor="true">
+				<s:HGroup id="projSTabs" buttonMode="true" paddingLeft="10" paddingTop="7"
+						  useHandCursor="true">	
+			<s:Label text="{Language.lookup('SearchTabsProjects')}" useHandCursor="true">				
+			</s:Label>
+					</s:HGroup></s:BorderContainer>
+			<s:BorderContainer id="usStabsB" minWidth="{usSTabs.width+5}"
+							   minHeight="{usSTabs.height+5}" backgroundColor="#808080"
+							   borderWeight="0" click="currentState='users'" cornerRadius="5"
+							   useHandCursor="true">			
+				<s:HGroup id="usSTabs" buttonMode="true" paddingLeft="10" paddingTop="7"
+						  useHandCursor="true">	
+			<s:Label text="{Language.lookup('SearchTabsUsers')}">				
+			</s:Label>
+		</s:HGroup></s:BorderContainer>
+		</s:HGroup>
+	<s:BorderContainer minWidth="0" borderColor="#B6BDC6" borderWeight="2" cornerRadius="5">
+		
+		<s:VGroup width="90%" name="searchBox" paddingBottom="10" paddingLeft="10" paddingRight="10"
+				  paddingTop="3">
+			
+	<s:VGroup includeIn="basic" width="740" name="mapDetails" paddingTop="3">
+		<s:HGroup>
+		<s:VGroup>			
+		<mx:FormItem label="{Language.lookup('SearchParamsMapName')}" fontSize="12" paddingRight="5" textAlign="left">
+				<s:TextInput id="mapname" focusColor="#151B54" width="350">			
+				</s:TextInput>
+			</mx:FormItem>
+			<mx:FormItem focusColor="#151B54" label="{Language.lookup('SearchParamsConcept')}"  fontSize="12" paddingRight="5"
+						 textAlign="left">
+				<s:TextInput id="concept" width="335">			
+				</s:TextInput>
+			</mx:FormItem>
+			<mx:FormItem label="{Language.lookup('SearchParamsMapOwnerName')}" fontSize="12" paddingRight="5" textAlign="left">
+				<s:TextInput toolTip="{Language.lookup('SearchresultUsernameOnlyOne')}" id="umname" focusColor="#151B54" width="330">			
+				</s:TextInput>
+			</mx:FormItem>		
+					
+		</s:VGroup>
+			<mx:VRule id="connLine" strokeColor="#a0a0a0" height="65">				
+			</mx:VRule>
+		<s:VGroup verticalAlign="middle" paddingLeft="5" horizontalAlign="left" paddingTop="10">			
+			<s:Label text="{Language.lookup('SearchHeaderConnectByText')}" fontStyle="italic">
+			</s:Label>	
+			<s:RadioButton group="{Bops2}" value="and" label="{Language.lookup('BooleanOperatorsAnd')}">				
+			</s:RadioButton>	
+			<s:RadioButton group="{Bops2}" value="or" selected="true" label="{Language.lookup('BooleanOperatorsOr')}">
+			</s:RadioButton>			
+		</s:VGroup>
+			<mx:VRule strokeColor="#a0a0a0" strokeWidth="3" height="80">				
+			</mx:VRule>
+		<s:VGroup>			
+			<mx:FormItem right="0" label="{Language.lookup('SearchParamsBooleanExpHelpLabel')}" color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" width="100%" fontSize="12" paddingRight="5" click="formitem1_clickHandler(event)">				
+			</mx:FormItem>			
+			<mx:FormItem focusColor="#151B54" label="{Language.lookup('SearchParamsMapID')}"  fontSize="12" textAlign="left">
+				<s:TextInput id="mapid" fontSize="12" width="40">			
+				</s:TextInput>
+			</mx:FormItem>
+			
+		</s:VGroup>
+</s:HGroup>
+		<s:HGroup>
+			<mx:Label fontSize="12" paddingLeft="8" paddingTop="8" text="{Language.lookup('SearchByDateCreated')}">			
+			</mx:Label>			
+			<s:ComboBox id="date3" dataProvider="{opts}" selectedIndex="0">				
+			</s:ComboBox>			
+			<s:Label fontSize="12" paddingLeft="8" paddingTop="8" text="{Language.lookup('SearchByDateModified')}">				
+			</s:Label>		
+			<s:ComboBox id="date4" dataProvider="{opts}" selectedIndex="0">				
+			</s:ComboBox>
+			<mx:FormItem fontSize="12" horizontalAlign="right" width="120">
+				<s:Button label="{Language.lookup('SearchButtonSearch')}" click="search(event,0)">
+				</s:Button>
+			</mx:FormItem>
+			<mx:FormItem fontSize="12" horizontalAlign="right" width="50" paddingTop="7" paddingLeft="-15">
+				<s:Label color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" text="{Language.lookup('Clear')}" click="resetSearch()">
+				</s:Label>
+			</mx:FormItem>
+		</s:HGroup>
+
+	</s:VGroup>
+				
+			<s:HGroup>
+			
+	<s:VGroup id="userDetails" includeIn="users" width="740" paddingTop="3">
+		<s:HGroup>
+			<mx:FormItem label="{Language.lookup('SearchHeadersSearchforUsers')}" fontSize="12">				
+			</mx:FormItem>	
+			<mx:FormItem label="{Language.lookup('SearchParamsUserFname')}" fontSize="12">
+				<s:TextInput id="fname">			
+				</s:TextInput>
+			</mx:FormItem>	
+			<mx:FormItem label="{Language.lookup('SearchParamsUserLname')}" fontSize="12">
+				<s:TextInput id="lname">			
+				</s:TextInput>
+			</mx:FormItem>	
+			
+			<mx:FormItem fontSize="12" horizontalAlign="right" width="120">
+				<s:Button label="{Language.lookup('SearchButtonSearch')}" click="search(event,0)">
+				</s:Button>
+			</mx:FormItem>
+			<mx:FormItem fontSize="12" horizontalAlign="right" paddingLeft="0" paddingTop="7">
+				<s:Label color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" text="{Language.lookup('Clear')}" click="resetSearch()">
+				</s:Label>
+			</mx:FormItem>
+		</s:HGroup>
+		
+		<!--s:HGroup>
+			<mx:FormItem label="{Language.lookup('SearchHeadersORLabel')}" horizontalAlign="center" fontSize="14" fontStyle="italic" click="formitem1_clickHandler(event)"/>			
+		</s:HGroup>
+		
+		<s:HGroup>
+			<s:VGroup>		
+				
+			<s:RadioButton group="{sUsersType}" value="usersMaps" selected="true" label="{Language.lookup('SearchHeadersMapsofUsername')}">				
+			</s:RadioButton>
+			<s:RadioButton group="{sUsersType}" value="usersProj" label="{Language.lookup('SearchHeadersProjofUsername')}">				
+			</s:RadioButton>
+			</s:VGroup>			
+			<mx:FormItem label="{Language.lookup('SearchParamsUserName')}" fontSize="12" horizontalAlign="right">
+				<s:TextInput id="uname" focusColor="#151B54">			
+				</s:TextInput>
+			</mx:FormItem>
+			<mx:FormItem fontSize="12" horizontalAlign="right" width="120">
+				<s:Button label="{Language.lookup('SearchButtonSearch')}" click="search(event,0)">
+				</s:Button>
+			</mx:FormItem>
+			<mx:FormItem fontSize="12" horizontalAlign="right" paddingLeft="0" paddingTop="7">
+				<s:Label color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" text="{Language.lookup('Clear')}" click="resetSearch()">
+				</s:Label>
+			</mx:FormItem>
+		</s:HGroup-->
+			
+	</s:VGroup>
+		
+	<s:VGroup id="projdetails" includeIn="full" width="740" paddingTop="3">	
+		<s:HGroup>
+		
+		<s:VGroup>			
+		<mx:FormItem label="{Language.lookup('SearchParamsProjName')}" fontSize="12">
+			<s:TextInput id="pName" focusColor="#151B54" width="400">			
+			</s:TextInput>
+		</mx:FormItem>
+			<mx:FormItem label="{Language.lookup('SearchParamsMapName')}" fontSize="12" paddingRight="5" textAlign="left">
+				<s:TextInput id="mapname1" focusColor="#151B54" width="370">			
+				</s:TextInput>
+			</mx:FormItem>
+			<mx:FormItem label="{Language.lookup('SearchParamsProjAdminName')}" fontSize="12">
+				<s:TextInput id="aProj" width="340">			
+				</s:TextInput>
+			</mx:FormItem>	
+							
+		</s:VGroup>
+			<mx:VRule id="connLine1" strokeColor="#a0a0a0" height="65">				
+			</mx:VRule>
+		<s:VGroup verticalAlign="middle" paddingLeft="5" horizontalAlign="left" paddingTop="10">			
+			<s:Label text="{Language.lookup('SearchHeaderConnectByText')}" fontStyle="italic" >
+			</s:Label>	
+			
+			<s:RadioButton group="{Bops4}" value="and" label="{Language.lookup('BooleanOperatorsAnd')}">				
+			</s:RadioButton>	
+			<s:RadioButton group="{Bops4}" value="or" selected="true" label="{Language.lookup('BooleanOperatorsOr')}">
+			</s:RadioButton>
+		</s:VGroup>
+		
+		<s:VGroup>
+			<mx:FormItem right="0" label="{Language.lookup('SearchParamsBooleanExpHelpLabel')}" color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" width="100%" fontSize="12" paddingRight="5" click="formitem1_clickHandler(event)">				
+			</mx:FormItem>						
+		</s:VGroup>
+			
+		</s:HGroup>
+		<s:HGroup>
+			<mx:FormItem fontSize="12" horizontalAlign="right" width="620">
+				<s:Button label="{Language.lookup('SearchButtonSearch')}" click="search(event,0)">
+				</s:Button>
+			</mx:FormItem>
+			<mx:FormItem fontSize="12" horizontalAlign="right" paddingTop="7" paddingLeft="-10">
+				<s:Label color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" text="{Language.lookup('Clear')}" click="resetSearch()">
+				</s:Label>
+			</mx:FormItem>
+		</s:HGroup>
+		<s:HGroup>
+			<!--s:Label  fontSize="12" paddingLeft="8" paddingTop="8" text="{Language.lookup('SearchByDateCreated')}">			
+			</s:Label>
+			<s:ComboBox id="date1" dataProvider="{opts}" selectedIndex="0">				
+			</s:ComboBox>			
+			<s:Label fontSize="12" paddingLeft="8" paddingTop="8" lineHeight="40" text="{Language.lookup('SearchByDateModified')}">				
+			</s:Label>
+			<s:ComboBox id="date2" dataProvider="{opts}" selectedIndex="0">				
+			</s:ComboBox-->
+			
+		</s:HGroup>
+		
+		
+	</s:VGroup>
+			</s:HGroup>
+	</s:VGroup>
+	</s:BorderContainer>
+	
+		</mx:Form>
+	
+	<s:HGroup width="100%" paddingTop="1" paddingBottom="2" paddingRight="10" horizontalAlign="right" fontSize="14" right="0">
+		<s:Label  id="rCntArr" fontSize="12" text="" >			
+		</s:Label>
+		<s:Label  visible="false" id="dprevArr" enabled="false" text="&lt;&lt;" useHandCursor="true" mouseChildren="false" buttonMode="true" click="search(event,0,AGORAModel.getInstance().searchModel.sortBy,AGORAModel.getInstance().searchModel.order)">			
+		</s:Label>
+		<s:Label visible="false" id="prevArr" text="&lt;" useHandCursor="true" mouseChildren="false" buttonMode="true" click="{search1(event,-1)}">		
+		</s:Label>
+		<s:Label  id="pgNumMin" fontSize="12" text="" >			
+		</s:Label>
+		<s:Label  id="pgNumMax" fontSize="12" text="" >			
+		</s:Label>
+		<s:Label visible="false" id="nextArr" text="&gt;" useHandCursor="true" mouseChildren="false" buttonMode="true" click="{search1(event,-2)}">			
+		</s:Label>		
+	</s:HGroup>
+	
+	<s:Scroller height="90%">
+	<s:Group>
+		<mx:Grid id="searchResults" width="90%">
+		</mx:Grid>
+	</s:Group>
+	</s:Scroller>
+
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			import Controller.logic.Equivalence;
+			
+			import Model.AGORAModel;
+			import Model.AgoraSearchModel;
+			import Model.UserSessionModel;
+			
+			import classes.Language;
+			
+			import flashx.textLayout.utils.CharacterUtil;
+			
+			import mx.collections.ArrayList;
+			import mx.containers.ControlBar;
+			import mx.containers.Panel;
+			import mx.containers.VBox;
+			import mx.controls.Alert;
+			import mx.controls.Spacer;
+			import mx.controls.Text;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			private var optCodes:Array = new Array(0,1,2,7,30,365,730);
+			private var hpanel:Panel;			
+			[Bindable]
+			private var opts:ArrayList = new ArrayList([{label:Language.lookup('searchdateany'),data:99},{label:Language.lookup('searchdatetoday'),data:100},{label:Language.lookup('searchdatewithinlast2days'),data:101},{label:Language.lookup('searchdatewith1week'),data:102},{label:Language.lookup('searchdatewithin1month'),data:103},{label:Language.lookup('searchdatewithin1Year'),data:104},{label:Language.lookup('searchdatewithin2Year'),data:105}]);
+
+			
+			private function search1(event:Event,start:int){
+				if(start==-1 && !prevArr.visible)
+					return;
+				if(start==-2 && !nextArr.visible)
+					return;
+				
+				search(event,start,AGORAModel.getInstance().searchModel.sortBy,AGORAModel.getInstance().searchModel.order);
+			}
+			protected function search(event:Event,start:int,sortBy:int=1,order:int=1){				
+				
+				var type:String = null;
+				var mapidOp:int = -1;
+				var query:String = "";
+				var query2:String = "";
+				var searchType:int = 1; 
+				var sparam:String = "";
+				
+				var b1:String = "";
+				var b2:String = "";
+				var uvname:String = "";
+				var dateC:int = 0;
+				var dateM:int = 0;
+				
+				if(currentState=="basic"){
+				
+				// map name empty
+				if(mapid.text!="" && mapid.text.length>0){
+					if(isNaN(Number(mapid.text))){
+						mapid.text=""; // place holder.
+						mapid.setFocus();
+						return;
+					}else{
+						query = Number(mapid.text)+"";
+						type = "mapid";
+					}
+				}else{
+					
+					if(mapname.text!="" && mapname.text.length>0){
+						sparam = mapname.text;
+						query = validateBooleanExpression(mapname.text,"title");
+						if(query==null){
+							mapname.setFocus();
+							Alert.show(Language.lookup('AgoraSearchBooleanParanError'));
+							return;
+						}
+						
+						type="title";
+					}
+					
+					if(concept.text!="" && concept.text.length>0){
+						sparam=concept.text;
+						var temo:String = validateBooleanExpressionTextBoxes(concept.text,"text");
+						if(temo==null){
+							concept.setFocus();
+							Alert.show(Language.lookup('AgoraSearchBooleanParanError'));
+							return;
+						}
+						
+						if(type=="title"){
+							type="titleandtext";
+							query2=temo;
+						}else{
+							type="text";
+							query2=temo;
+						}
+					}
+					
+					b1 = Bops2.selectedValue.valueOf();
+					b2 = Bops2.selectedValue.valueOf();
+					dateC = optCodes[date3.selectedIndex];
+					dateM = optCodes[date4.selectedIndex];
+					if(date3.selectedIndex >=1 && date3.selectedIndex<=5)
+						type="text";
+					if(date4.selectedIndex >=1 && date4.selectedIndex<=5)
+						type="text";
+					
+					if(umname.text!="" && umname.text.length>0) 
+					{
+						if(umname.text.indexOf(" ")!=-1){
+							Alert.show(Language.lookup('SearchresultUsernameOnlyOne'));
+							umname.setFocus();
+							return;
+						}
+						uvname = umname.text;
+						type = "text1";
+					}
+					
+					// valds
+					if(type==null){
+						mapname.setFocus();
+						return;
+					}
+					
+				}	
+				}else if(currentState=="full"){
+					if(pName.text!="" && pName.text.length>0){		
+						sparam=pName.text;
+						var temo:String = validateBooleanExpression(pName.text,"projects.title");
+						if(temo==null){
+							pName.setFocus();
+							Alert.show(Language.lookup('AgoraSearchBooleanParanError'));
+							return;
+						}
+						query=temo;
+						type="projects";
+					}
+					
+					if(mapname1.text!="" && mapname1.text.length>0){
+						var temo:String = validateBooleanExpression(mapname1.text,"maps.title");
+						if(temo==null){
+							mapname1.setFocus();
+							Alert.show(Language.lookup('AgoraSearchBooleanParanError'));
+							return;
+						}
+						query2=temo;
+						type="projects";
+					}
+					
+					b1 = Bops4.selectedValue.valueOf();
+					b2 = Bops4.selectedValue.valueOf();
+					dateC = 0;//optCodes[date1.selectedIndex];
+					dateM = 0;//optCodes[date2.selectedIndex];
+					
+					if(aProj.text!="" && aProj.text.length>0) 
+					{
+						uvname = aProj.text;
+						type = "projects";
+					}
+					// valds
+					if(type==null){
+						pName.setFocus();
+						return;
+					}
+					searchType=2;
+				}else{
+					
+					if(lname.text!="" && lname.text.length>0){
+						sparam=lname.text;
+						query=validateBooleanExpression(lname.text,"users.lastname");					
+						type="users";
+						query2=query;
+					}
+					
+					if(fname.text!="" && fname.text.length>0){
+						sparam=fname.text;
+						query2=validateBooleanExpression(fname.text,"users.firstname");						
+						type="users";
+						if(query=="")
+							query=query2;
+					}
+					
+				/*	if(type!="users"){
+						if(uname.text!="" && uname.text.length>0){
+							if(sUsersType.selectedValue.valueOf()){
+							query=uname.text;
+							type=sUsersType.selectedValue.valueOf();	
+							}
+						}
+					}*/
+					
+					// valds
+					if(type==null){
+						lname.setFocus();
+						return;
+					}
+					searchType=3;
+				}
+				
+				
+				if(type!=null){
+					AGORAModel.getInstance().searchModel.searchAgora(type,query,query2,searchType,start,b1,b2,uvname,dateC,dateM,sortBy,order);
+					AGORAModel.getInstance().searchModel.searchParam = sparam;
+				}
+			}
+			
+			public function searchHeaders(event:Event){
+				prevArr.visible=false;
+				dprevArr.visible=false;
+				nextArr.visible=false;
+				rCntArr.visible=false;
+				pgNumMax.text=pgNumMin.text="";
+				if(currentState == "basic"){
+					usStabsB.setStyle("backgroundColor","#eeeeee");
+					projSTabsB.setStyle("backgroundColor","#eeeeee");
+					mapSTabsB.setStyle("backgroundColor","#808080");
+				}else if(currentState == "full"){
+					mapSTabsB.setStyle("backgroundColor","#eeeeee");
+					usStabsB.setStyle("backgroundColor","#eeeeee");
+					projSTabsB.setStyle("backgroundColor","#808080");
+				}else{
+					mapSTabsB.setStyle("backgroundColor","#eeeeee");
+					projSTabsB.setStyle("backgroundColor","#eeeeee");
+					usStabsB.setStyle("backgroundColor","#808080");
+				}
+				searchResults.removeAllElements();
+				clearheaders();
+				createHelpBox();
+			}
+			
+			private function createHelpBox():void{	
+					var vb:VBox = new VBox();
+					
+					var label:Text = new Text();
+					var cb:ControlBar = new ControlBar();
+					var s:Spacer = new Spacer();
+										
+					var b1:Button = new Button();
+					b1.label = "OK";
+					b1.addEventListener(MouseEvent.CLICK, closePopUp);
+					cb.addChild(s);
+					
+					label.htmlText = Language.lookup('SearchParamsBooleanExpHelpToolTip');
+					vb.setStyle("paddingBottom", 2);
+					vb.setStyle("paddingLeft", 2);
+					vb.setStyle("paddingRight", 2);
+					vb.setStyle("paddingTop", 2);
+					b1.setStyle("paddingBottom", 15);
+					b1.setStyle("paddingLeft", 15);
+					b1.setStyle("paddingRight", 15);
+					b1.setStyle("paddingTop", 15);
+					vb.addChild(label);
+					vb.addChild(b1);
+					hpanel = new Panel();
+					hpanel.title = Language.lookup('SearchParamsBooleanExpHelpHeaderPopUP');
+					hpanel.width = 750;
+					hpanel.height = 550;
+					hpanel.addChild(vb);
+					hpanel.addChild(cb);
+				}
+				
+				private function closePopUp(evt:MouseEvent):void {
+					PopUpManager.removePopUp(hpanel);
+				}
+				
+				private function createPopUp(evt:MouseEvent):void {
+					PopUpManager.addPopUp(hpanel, this, true);
+					PopUpManager.centerPopUp(hpanel);
+				}
+			
+			
+			private function validateBooleanExpression(inpStr:String,param:String){
+				var pattern:RegExp = /^\w+(?:\s+(?:AND|OR)\s+\w+)*\z/;
+				
+				var cnt:int=0;
+				for(var i:int=0;i<inpStr.length;i++){
+					var ch = inpStr.charAt(i);
+					if(ch=='(')
+						cnt++;
+					else if(ch==')')
+						cnt--;
+				}
+				
+				if(cnt!=0)
+					return null;
+				
+				var pattern:RegExp = /\*/g;
+				inpStr=inpStr!=null?inpStr.replace(pattern,"\%"):inpStr;
+			
+				var opStr:String = "";
+				var str:String = "";
+
+				for(var i:int=0;i<inpStr.length;i++){
+					var ch = inpStr.charAt(i);
+					if(ch == '"'){
+						var endQ = inpStr.indexOf('"',i+1);
+						if(endQ==-1) continue;
+						str= inpStr.substring(i+1,endQ);						
+						opStr+= " LOWER("+param+') like "%' + str.toLowerCase()+'%" ';
+						str="";
+						i=endQ+1;
+					}
+					else if(ch!='(' && ch!=')' && ch!=' '){
+						str+=ch;			
+					}else{
+						if((str=="AND" || str == "OR")){
+							opStr+=" "+str+" ";
+						}else if(str.length>0){
+							
+							opStr+= " LOWER("+param+') like "%' + str.toLowerCase()+'%" ';
+						}					
+						opStr+=ch;
+						str="";
+					}
+				}
+				if(str.length>0){
+				if(((str == "AND") || (str == "OR"))){
+					opStr+=" "+str+" ";
+				}else if(str.length>0){					
+					opStr+= " LOWER("+param+') like "%' + str.toLowerCase() +'%" ';
+				}							
+				}
+				return opStr;
+				
+				/*var result:Object = pattern.exec(inpStr);	
+				if(result == null) {
+					return false;
+				}
+				return true;*/
+			}
+			
+			private function validateBooleanExpressionTextBoxes(inpStr:String,param:String){
+				var pattern:RegExp = /^\w+(?:\s+(?:AND|OR)\s+\w+)*\z/;
+				
+				var cnt:int=0;
+				for(var i:int=0;i<inpStr.length;i++){
+					var ch = inpStr.charAt(i);
+					if(ch=='(')
+						cnt++;
+					else if(ch==')')
+						cnt--;
+				}
+				
+				if(cnt!=0)
+					return null;
+				
+				var pattern:RegExp = /\*/g;
+				inpStr=inpStr!=null?inpStr.replace(pattern,"\%"):inpStr;
+				
+				var opStr:String = "";
+				var str:String = "";
+				var selStr:String = " $ ";
+				var unionStr=" UNION ";
+				var interStr=" and map_id in ( ";
+				var andSet:Boolean=false;
+				for(var i:int=0;i<inpStr.length;i++){
+					var ch = inpStr.charAt(i);
+					if(ch == '"'){
+						var endQ = inpStr.indexOf('"',i+1);
+						if(endQ==-1) continue;
+						str= inpStr.substring(i+1,endQ);						
+						opStr+= selStr+" LOWER("+param+') like "%' + str.toLowerCase()+'%" ';
+						opStr+=andSet?" ) ":"";
+						andSet=false;
+						str="";
+						i=endQ+1;
+					}
+					else if(ch!='(' && ch!=')' && ch!=' '){
+						str+=ch;			
+					}else{
+						if((str=="AND" || str == "OR")){
+							if(str=="OR"){
+								opStr+=" "+unionStr+" ";
+							//	andSet=true;
+							}
+							else{
+								opStr+=" "+interStr+" ";
+								andSet=true;
+							}
+								
+						}else if(str.length>0){							
+							opStr+= selStr+" LOWER("+param+') like "%' + str.toLowerCase()+'%" ';
+							opStr+=andSet?" ) ":"";
+							andSet=false;
+						}					
+						opStr+=ch;
+						str="";
+					}
+				}
+				if(str.length>0){
+					if(((str == "AND") || (str == "OR"))){
+						if(str=="OR"){
+							opStr+=" "+unionStr+" ";
+						//andSet=true;
+						}
+						else{
+							opStr+=" "+interStr+" ";
+							andSet=true;
+						}
+					}else if(str.length>0){					
+						opStr+= selStr+" LOWER("+param+') like "%' + str.toLowerCase() +'%" ';
+						opStr+=andSet?" ) ":"";
+						andSet=false;
+					}							
+				}
+				return opStr;
+								
+			}
+			
+			private function clearheaders(){
+				prevArr.visible=false;
+				nextArr.visible=false;
+				pgNumMax.text=pgNumMin.text="";
+				rCntArr.visible=false;
+				
+			}
+			public function populateSearch(){
+				var mode:String = "";
+				var resultXML:XMLList = AGORAModel.getInstance().searchModel.searchResult.map;
+				var resultMXML:XML = AGORAModel.getInstance().searchModel.searchResult;				
+				var numRows:int = 0;
+				searchResults.removeAllElements();
+				var dispError:Boolean= false;
+				for each(var entry:XML in resultXML){
+					var searchItem:components.AgoraSearchResultComponent = new AgoraSearchResultComponent();
+					searchItem = alignSearch(searchItem,entry);
+					// for mapid message
+					if(entry.@perm!=null && entry.@perm=="-1"){ 
+						dispError=true;
+						break;
+					}
+					if(searchItem.dpmaps)
+							mode="maps";
+						else if(searchItem.dpprojs)
+							mode="proj";
+					searchResults.addElement(searchItem);
+					numRows++;
+				}
+				
+				clearheaders();
+				dprevArr.visible=true;
+				
+				if(resultMXML.hasOwnProperty("meta")){
+					rCntArr.text = Language.lookup("Searchresultcount") + " " +resultMXML.meta[0].@Cnt;
+				}
+				
+				var smodel:AgoraSearchModel = AGORAModel.getInstance().searchModel;
+				if(smodel.level1==-1){
+					if(smodel.level2!=-1 && ((smodel.level2 - smodel.maxrows) >= smodel.maxrows)){
+						smodel.level1 = smodel.level2 - smodel.maxrows;
+						prevArr.visible=true;
+					}
+				}else{
+					prevArr.visible=true;
+				}
+				if(smodel.level2 == -1){
+					if(numRows>smodel.maxrows){
+						if(smodel.level1!=-1){
+							smodel.level2 = smodel.level1 + smodel.maxrows;
+						}else{
+							smodel.level2 = smodel.maxrows;
+						}	
+						nextArr.visible=true;
+					}
+				}else{
+					nextArr.visible=true;
+				}
+				
+				if(numRows==0){
+					var searchItem:components.AgoraSearchResultComponent = new AgoraSearchResultComponent();
+					searchItem.h1 = !dispError?Language.lookup("SearchResultsNoResults"):"";
+					searchItem.concl = !dispError?"":Language.lookup("SearchresultNoAccessToMap");
+					searchResults.addElementAt((searchItem),0);
+					searchItem.header=true;
+					searchResults.addElementAt((searchItem),0);
+					dprevArr.visible=false;					
+				}else{
+					if(numRows>smodel.maxrows)
+						searchResults.removeElementAt(searchResults.numElements-1);
+					var searchItem:components.AgoraSearchResultComponent = new AgoraSearchResultComponent();
+					searchItem = alignSearchDef(searchItem,mode);
+					searchResults.addElementAt((searchItem),0);
+					pgNumMin.text=smodel.level1==-1 ? "1 - ": ((smodel.level1+1)+" - ");
+					pgNumMax.text=smodel.level2 == -1 ? (smodel.level1+numRows+1)+"" : smodel.level2+"";
+					rCntArr.visible=true;
+				}
+				//searchResults.invalidateDisplayList();
+				
+			}
+			
+			public function populateShowSearch(){
+				var resultXML:XMLList = AGORAModel.getInstance().searchModel.searchShowResult.map;
+				var numRows:int = 0;
+				var elemId:String = AGORAModel.getInstance().searchModel.searchShowResult.@*;
+				if(elemId!=null){
+					var searchItem = searchResults.getChildByName(elemId);
+					var groupDv:VGroup = searchItem.showR;
+					groupDv.removeAllElements();
+					
+					for each(var entry:XML in resultXML){
+					var link:spark.components.Label = new spark.components.Label();
+					link.text = entry.@title;
+					var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+					if(userSessionModel.username == entry.@creator) entry.@perm = "1";	
+
+					if(entry.@perm!=null && entry.@perm!=""){
+					link.buttonMode=true;
+					link.useHandCursor=true;
+					link.setStyle("textDecoration","underline");
+					link.addEventListener(MouseEvent.CLICK,function(){
+						ArgumentController.getInstance().loadMap(entry.@ID);
+					});
+					}else{
+						link.toolTip = Language.lookup("SearchresultNoAccess");
+						link.setStyle("color","#808080");
+					}
+					groupDv.addElement(link);		
+					numRows++;
+				}
+				if(numRows!=0)
+				{
+				}else{
+					var link:spark.components.Label = new spark.components.Label();
+					link.text = Language.lookup("SearchResultsNoShowMaps");
+					var groupDv:VGroup = searchItem.showR;
+					groupDv.removeAllElements();
+					groupDv.addElement(link);		
+				}
+			//	searchItem.showD.visible=true;
+				searchResults.validateDisplayList();
+
+				}
+				//searchResults.invalidateDisplayList();
+				
+			}
+			
+			private function alignSearchDef(searchItem:AgoraSearchResultComponent,mode:String){
+				if(currentState=="basic" || mode == "maps"){
+					searchItem.h1 = Language.lookup("SearchResultsHeadersMapName");
+					searchItem.owners = Language.lookup("SearchResultsHeadersOwners");
+					searchItem.concl=Language.lookup("SearchResultsHeadersMainConclusion");
+					searchItem.usersC=Language.lookup("SearchResultsNumUsers");
+					searchItem.textC=Language.lookup("SearchResultsHeadersNumTboxes");
+					searchItem.header=true;
+				}else if(currentState=="full" || mode=="proj"){
+					searchItem.h1 = Language.lookup("SearchResultsHeadersProjName");
+					searchItem.owners = Language.lookup("SearchResultsHeadersProjAdmin");
+					searchItem.concl=Language.lookup("SearchResultsHeadersProjMaps");
+					searchItem.usersC=Language.lookup("SearchResultsHeadersProjectsNumMembers");
+					searchItem.textC=Language.lookup("SearchResultsHeadersNumMaps");
+					searchItem.header=true;
+					searchItem.pmode=true;
+					searchItem.currentState="proj";
+				}else{
+					searchItem.h1 = Language.lookup("SearchResultsHeadersUsername");
+				//	searchItem.concl=Language.lookup("SearchResultsHeadersProjMaps");
+					searchItem.concl=Language.lookup("SearchResultsHeadersNumMaps");
+					searchItem.usersC=Language.lookup("SearchResultsHeadersNumProjs");
+					searchItem.header=true;
+				}
+				return searchItem;
+			}
+			
+			private function setHighlightings(searchItem:AgoraSearchResultComponent,str:String){
+				if(str==null || str.length == 0) return searchItem;
+				searchItem.h1 = str;
+				searchItem.h1noFormat=str;
+				var str1:String = str.toLowerCase();				
+				var searchParam:String = AGORAModel.getInstance().searchModel.searchParam;
+				searchParam = searchParam!=null?searchParam.toLowerCase():null;
+				if(searchParam.indexOf(" ")!=-1) return searchItem;
+				var pattern:RegExp = /\*/g;
+				searchParam=searchParam.replace(pattern,"");
+				var indexp = str1.indexOf(searchParam);
+				if(indexp==-1) return searchItem;
+				searchItem.h1=str.substring(0,indexp)+"<B><FONT WEIGHT='BOLD' COLOR='#047495'>"+str.substr(indexp,searchParam.length)+"</FONT></B>"+str.substr(indexp+searchParam.length);
+				return searchItem;
+			}
+			
+			private function alignSearch(searchItem:AgoraSearchResultComponent,entry:XML){
+				searchItem.name = entry.@ID;
+				var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSessionModel.username == entry.@creator) entry.@perm = "1";	
+				searchItem.h1="";
+				searchItem.h2="";
+				searchItem.h3="";
+				if(currentState=="basic" || entry.@ttype == "maps"){
+					if(entry.@isproj == "0") entry.@perm = "1";
+				searchItem.mapid = entry.@ID;
+				searchItem.owners = entry.@creator;
+				searchItem.textC=entry.@textC;
+				searchItem.usersC=entry.@usersC;
+				searchItem.concl=entry.@concl;
+				searchItem.modDate = entry.@last_modified;
+				var str:String = entry.@title;
+				setHighlightings(searchItem,str);
+				searchItem.h2 = entry.@url;
+				if(entry.@perm==null || entry.@perm =="")
+					searchItem.dis=true;
+								
+				searchItem.mmode=true;
+				searchItem.dpmaps=true;
+				}else if(currentState=="full" || entry.@ttype=="proj"){
+					searchItem.mapid = entry.@ID;
+					searchItem.h1 = entry.@title;
+					searchItem.owners = entry.@creator;
+					searchItem.textC=entry.@mapsC;
+					searchItem.usersC=entry.@usersC;
+					searchItem.h2 = entry.@url;
+					var str:String = entry.@title;
+					setHighlightings(searchItem,str);
+					
+					if(entry.@perm==null || entry.@perm ==""){
+						searchItem.dis=true;
+						searchItem.concl = Language.lookup("SearchResultsContactProjAdmin");
+						if(searchItem.h2 !=null && searchItem.h2.length>0){
+							searchItem.linkShow=true;
+						}
+					}else{
+						searchItem.concl = Language.lookup("SearchResultsShowMapsPermitted");
+						searchItem.linkShow=true;
+					}
+					searchItem.dpprojs=true;
+					searchItem.pmode=true;
+					searchItem.currentState="proj";
+				}else{
+			
+					searchItem.mapid = entry.@ID;
+					var str:String = entry.@creator;
+					setHighlightings(searchItem,str);
+					searchItem.h2 = entry.@url;
+					searchItem.usersC=entry.@projC;
+					searchItem.concl=entry.@mapsC;
+					searchItem.linkShow=false;
+					searchItem.umode=true;
+				}
+				return searchItem;
+			}
+			
+			protected function panel_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.ENTER){
+					search(event,0);
+				}
+			}
+			
+			protected function formitem1_clickHandler(event:MouseEvent):void
+			{
+				createPopUp(event);
+				//Alert.show(Language.lookup('SearchParamsBooleanExpHelpToolTip'),Language.lookup('SearchParamsBooleanExpHelpLabel'));
+			}
+			protected function resetSearch():void{
+					if(currentState=="basic"){
+						mapname.text=mapid.text=concept.text=umname.text="";
+						date3.selectedIndex=date4.selectedIndex=0;
+					}else if(currentState=="full"){
+						aProj.text=pName.text=mapname1.text="";
+					}else{
+						lname.text=fname.text=/*uname.text=*/"";
+					}
+					searchResults.removeAllElements();
+					clearheaders();
+			}
+		]]>
+	</fx:Script>
+</s:VGroup>
+
+
+

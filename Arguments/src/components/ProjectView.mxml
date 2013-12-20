@@ -92,6 +92,13 @@
 	<s:HGroup bottom="0" >
 		<s:Button label="{Language.lookup('NewProject')}" toolTip="{Language.lookup('ProjectExplanation')}"  click="
 				  {
+				  
+				  var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				  if(userSession.username == 'Guest'){
+											  Alert.show(Language.lookup('GuestCreateMapError'));
+											  return;
+				  }
+											  
 				  Controller.AGORAController.getInstance().createProj(event);
 				
 				  return;
@@ -176,6 +183,12 @@
 			
 			public function createMapForProject(event:Event):void	
 			{
+				
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show(Language.lookup('GuestCreateMapError'));
+					return;
+				} 
 				Model.AGORAModel.getInstance().agoraMapModel.moveToProject=true;
 				Controller.AGORAController.getInstance().createMap(event);
 				return;
@@ -271,6 +284,7 @@
 			protected function deleteHandler():void{
 				Alert.show(Language.lookup("DeleteProjectConfirmMsg"),"Delete Project",Alert.YES|Alert.NO, null, function(event:CloseEvent){
 					if(event.detail == Alert.YES) {
+
 				var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 				var selectedTab:String=usm.selectedTab;
 				if (selectedTab == Language.lookup("MainTab")){
@@ -279,10 +293,10 @@
 					AGORAController.getInstance().deleteProject(usm.selectedMyProjProjID);
 				}else if (selectedTab == Language.lookup("MyContributions")){
 					AGORAController.getInstance().deleteProject(usm.selectedMyContProjID);
-				}				
+				}	
 				}
 			});
-			}
+					}
 			
 			private function alertListener(eventObj:CloseEvent):void {
 				// Check to see if the OK button was pressed.
@@ -455,7 +469,7 @@
 					currentState="admin";
 					isHostile.enabled = true;
 				}else if(model.userList.proj.@title==usm.username){
-					currentState="personal";
+					currentState="personal";										
 				}else {
 					currentState="normal";
 					adminName.label=model.userList.proj.@username;
@@ -468,10 +482,11 @@
 				}
 				projectMemberPanel.removeAllElements();
 				
+				
 				if(currentState == "admin"){
 				// add the admin
 					var theGroup1:HGroup=new HGroup();
-				var rdioBtnA:RadioButton = new RadioButton();
+					var rdioBtnA:RadioButton = new RadioButton();
 				var userButtonA:Button=new Button();
 				rdioBtnA.enabled=false;
 				rdioBtnA.setStyle("chromeColor", 0xA0CADB);				
@@ -481,6 +496,7 @@
 				theGroup1.addElement(userButtonA);
 				projectMemberPanel.addElement (theGroup1);
 				}
+				
 				for each (var projectXML:XML in model.userList.proj.users.userDetail)
 				{
 				//	if(!(projectXML.@userid==usm._uid)){
@@ -497,14 +513,15 @@
 							if(urllink!=null && urllink.indexOf("http://") ==-1)
 								urllink = "http://"+urllink;										
 						navigateToURL(new URLRequest(urllink), '_blank')});
-
 						rdioBtn.setStyle("chromeColor", 0xF99653);
 						theGroup.addElement(rdioBtn);
 						theGroup.addElement(userButton);
 						projectMemberPanel.addElement (theGroup);
-						
+
 					//}
 				}
+				
+				
 				}
 			}
 			
@@ -523,12 +540,16 @@
 				var thisMapInfo:MapMetaData = mapMetaDataVector[parseInt((Button) (event.target).id)];
 				rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 				rsp.mapTitle.text=thisMapInfo.mapName;
+				rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + thisMapInfo.mapID;
+				
 				rsp.clickableMapOwnerInformation.toolTip = 
 				thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+					
 					var urllink:String = thisMapInfo.url;
 					if(urllink!=null && urllink.indexOf("http://") ==-1)
 						urllink = "http://"+urllink;			
+					
 					navigateToURL(new URLRequest(urllink), '_blank');
 				},false, 0, false);
 				rsp.invalidateDisplayList();

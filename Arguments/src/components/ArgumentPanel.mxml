@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					  xmlns:s="library://ns.adobe.com/flex/spark" 
+<components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
 					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" cornerRadius="30" width="200" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<!--dragbutton formerly toparea-->
+	<!--dragbutton formerly toparea-->	
 	<s:Group id="dragBtnGroup" mouseDown ="beginDrag(event)" buttonMode="true" >
 		
 		<s:Ellipse width="30" height="30" left = "-35" top ="-26">
@@ -18,15 +18,15 @@
 					 source="@Embed('images/agoraMasterImages_Move.swf')" left= "-35"  top = "-26" height = "30" width = "30" />
 	</s:Group>
 	
-	<s:Group >
+	<s:Group>
 		
-		<s:VGroup id="normalComponents" width = "100%">
-			<s:VGroup id = "topHG" width = "100%">
+		<s:VGroup id="normalComponents" width="100%">
+			<s:VGroup id="topHG" width="100%">
 				<!--Within the topHG. It holds the author information and the type of statement-->
-				<s:HGroup id = "stmtInfoVG" width = "100%" fontSize="12"  >
-					<s:Label id = "stmtTypeLbl" alpha=".50" />
+				<s:HGroup id="stmtInfoVG" width="100%" fontSize="12">
+					<s:Label id="stmtTypeLbl" alpha=".50"/>
 					<s:Button  left = "0" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkin"   >
-
+						
 					</s:Button>
 					<!--Displays the user id-->
 					<s:Label id = "userIdLbl" click="{navigateToURL(new URLRequest(URL))}"    maxDisplayedLines="1" width="{100}"  left = "0" alpha=".50"/>
@@ -40,7 +40,7 @@
 				<s:VGroup id = "group" horizontalCenter="0" width = "200">
 					
 					<!--label for displaying 'It is not the case that' for negated statements-->
-					<s:Label id = "negatedLbl"/>
+					<s:Label id="negatedLbl"/>
 					<s:Label id = "displayTxt" minHeight="50" minWidth="50"/>
 				</s:VGroup>
 			</s:VGroup>
@@ -49,20 +49,20 @@
 			<!---->
 			<!---->
 		</s:VGroup>
-		<s:VGroup id = "msVGroup" >
+		<s:VGroup id="msVGroup">
 		</s:VGroup>
 		<!--the logical container that contains everything above the group container-->
 		
 		<!-- contains the doneHG and bottomHG-->
 		<!--contains the add and the delete button-->
-		<s:Group id = "bottomSlideout" visible = "false"  right = "90" bottom ="0">	
+		<s:Group id="bottomSlideout" visible="false" right="90" bottom="0">	
 			<s:Graphic>
 				<s:Rect bottom = "-95" height="70" width="115" radiusX="10" radiusY="10" left = "-15">
 					<s:stroke>
-						<s:SolidColorStroke color="{this.getStyle('borderColor')}" weight="0" />
+						<s:SolidColorStroke color="{this.getStyle('borderColor')}" weight="0"/>
 					</s:stroke>
 					<s:fill>
-						<s:SolidColor color="{this.getStyle('borderColor')}" />
+						<s:SolidColor color="{this.getStyle('borderColor')}"/>
 					</s:fill>
 				</s:Rect>
 			</s:Graphic>
@@ -88,7 +88,7 @@
 						 mouseOver="{event.stopImmediatePropagation();showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true;showMouseOver(event) }"
 						 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
 		</s:VGroup>
-
+		
 	</s:Group>
 	
 	
@@ -224,7 +224,7 @@
 			//other instance variables
 			public var connectingStr:String;
 			public function get prevauthorurl():String
-			{
+			{				
 				if(_prevauthorurl!=null && _prevauthorurl.indexOf("http://") ==-1)
 					_prevauthorurl = "http://"+_prevauthorurl;				
 				return _prevauthorurl;
@@ -378,7 +378,7 @@
 					BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
 					BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
 					BindingUtils.bindProperty(this, "panelType", model, ["statementFunction"]);
-					BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
+						BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
 					
 					author = model.author;
 					firstName=model.firstName;
@@ -514,7 +514,6 @@
 					}
 					event.currentTarget.label = "Hide";
 					AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
-					
 				}
 				else if(event.currentTarget.label == "Hide")
 				{
@@ -608,10 +607,10 @@
 			protected function onLink(event:MouseEvent):void {
 				if(panelType == StatementModel.LINKTORESOURCES)
 				{
-					
-					var u:URLRequest=new URLRequest(displayTxt.text); 
+					var u:URLRequest=new URLRequest(displayTxt.text);
 					if(displayTxt.text!=null && displayTxt.text.indexOf("http://") ==-1)
 						u = new URLRequest("http://"+displayTxt.text);
+					 
 					navigateToURL(u,"_blank");
 				}
 			}
@@ -829,6 +828,7 @@
 			}
 			
 			protected function setVisibility(value:Boolean):void{
+				
 				if(model.statementFunction == StatementModel.INFERENCE){
 					if(model.argumentTypeModel && !model.argumentTypeModel.reasonsCompleted){
 						this.visible = false;
@@ -866,7 +866,6 @@
 				completeArgument.addEventListener(MouseEvent.CLICK,completeArgumentClicked );
 				addReason.addEventListener(MouseEvent.CLICK,addReasonClicked);
 				showButton.addEventListener(MouseEvent.MOUSE_OVER,showMouseOver);
-
 				
 				var orLabel:Label = new Label;
 				var bigGroup:VGroup = new VGroup;
@@ -917,7 +916,7 @@
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
 					//	if(this.panelType != StatementModel.INFERENCE)
-							ArgumentController.getInstance().addSupportingArgument(model);
+						ArgumentController.getInstance().addSupportingArgument(model);
 						//else ArgumentController.getInstance().addSupportingArgumentForEnabler(this);
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
@@ -1018,6 +1017,7 @@
 				if(model.comments.length !=0 )
 				{
 					showButton.source = "images/yellowTriangle.swf";
+					
 				}else if(panelType!= StatementModel.INFERENCE && panelType == StatementModel.STATEMENT){
 				}
 				
@@ -1036,6 +1036,7 @@
 				doneBtn = new Button;
 				doneBtn.label = Language.lookup("Done");
 				doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
+				
 				
 				//TODO: Translate
 				displayTxt.minHeight = 50;

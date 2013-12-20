@@ -99,6 +99,8 @@ package Events
 		public static const PROJECTS_USER_DETAILS="UpdateUsers "
 		public static const GET_CHAIN_FAILED="ChainFailed";
 		public static const CHAIN_LOADED="ChainLoaded";
+		public static const SEARCH_DONE = "SearchComplete";
+		public static const SEARCHSHOW_DONE = "SearchShowComplete";
 
 		//ERROR EVENTS
 		public static const ILLEGAL_MAP:String = "IllegalMap";

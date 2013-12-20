@@ -467,11 +467,11 @@ List of variables for insertion:
 			 return $output;
 		}
 
-		if(!checkLogin($userID, $pass_hash, $linkID)){
+		if(!checkLogin($userID, $pass_hash, $linkID) || !checkLoginOmitGuest($userID)){
 			incorrectLogin($output);
 			return $output;
 		}
-
+		
 		//Dig the Map ID out of the XML
 		try{
 			$xml = new SimpleXMLElement($xmlin);

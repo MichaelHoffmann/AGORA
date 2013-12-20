@@ -23,9 +23,9 @@
 	/** dbName: name of the database to use */
 	$dbName = "agora";
 	/** dirName: name of the current directory */
-	$dirName = "release";
+	$dirName = "testing";
 	/** version: current version number */
-	$version = "11.11.14";
+	$version = "11.12.02";
 	/** server url */
-	$serverurlpath = "http://agora.gatech.edu/release/English/";
+	$serverurlpath = "http://localhost/";
 ?>

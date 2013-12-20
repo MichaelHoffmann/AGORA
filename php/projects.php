@@ -62,7 +62,10 @@ function createProject($userID, $pass_hash, $title, $is_hostile, $proj_users, $p
 		incorrectLogin($output);
 		return $output;
 	}
+	
 	// special checking for guest login ...
+	
+	
 	//Basic boilerplate is done. Next step is to create a new project with the various attributes.
 
 	// Validations ..

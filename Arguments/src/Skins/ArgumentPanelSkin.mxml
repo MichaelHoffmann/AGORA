@@ -151,8 +151,7 @@ in accordance with the terms of the license agreement accompanying it.
 	
 	<!-- drop shadow can't be hittable so all other graphics go in this group -->
 	<s:VGroup paddingBottom="0">
-		
-<s:Group left="0" right="0" top="0" bottom="0">
+	<s:Group left="0" right="0" top="0" bottom="0">
 
 
 		<!-- top group mask -->
@@ -281,8 +280,8 @@ in accordance with the terms of the license agreement accompanying it.
 				</s:Group>
 				<!-- layer 3: control bar -->
 				<!--- @copy spark.components.Panel#controlBarGroup -->
+				</s:Group>
 			</s:Group>
 		</s:Group>
-	</s:Group>
 	</s:VGroup>
 </s:SparkSkin>

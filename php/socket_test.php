@@ -119,6 +119,10 @@ function push_chat($username, $text, $map_id)
 	$username = mysql_real_escape_string($username);
 	$text = mysql_real_escape_string($text);
 	
+	$userid = getUserIdFromUserName($username,$linkID);
+	if($userid==-1){
+		return;
+	}
 	
 	$query = "INSERT INTO chat (username,chat_text,map_id) VALUES ('$username','$text','$map_id')";
 	$resultID = mysql_query($query, $linkID);
@@ -164,6 +168,23 @@ function pull_chat($map_id)
 	mysql_close($linkID);
 	return $messages;
 }
+
+function getUserIdFromUserName($username,$linkID){
+		$query = "SELECT * FROM users WHERE username='$username'";
+		$resultID = mysql_query($query, $linkID);
+		if(!$resultID){
+			return -1;
+		}
+		if((mysql_num_rows($resultID)==0)){
+			return -1;
+		}
+		$row = mysql_fetch_assoc($resultID);
+		if($row['is_deleted']){
+			return -1;
+		}
+		$newuser = $row['user_id'];
+		return $row['user_id'];
+	}
 
 
 ?>

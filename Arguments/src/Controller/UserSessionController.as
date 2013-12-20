@@ -116,6 +116,7 @@ package Controller
 			agoraController.fetchContributions();
 			agoraController.fetchDataMyProjects(1);			
 			
+			
 			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 			// show reg window in case security question is not set ...
 			

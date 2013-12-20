@@ -227,6 +227,7 @@
 							}
 						}else{
 							Alert.show(Language.lookup("MustAgree"));
+							registrationNote_clickHandler(null);
 								
 					}
 				}else if(currentState=="ChangeInfo"){					
@@ -330,10 +331,13 @@
 	</mx:Form>
 		<s:HGroup includeIn="Register">
 			<s:CheckBox id="policyTermsRead" tabIndex="9"/>
-			<s:Label id="registrationNote" width="200" click="registrationNote_clickHandler(event)"
-					 text="{Language.lookup('ReadRegistrationNote')}" textDecoration="underline"
-					 toolTip="{agoraConstants.REGISTRATION_NOTE}"/>
-		</s:HGroup>
+			<s:VGroup width="200">
+			<s:Label id="registrationNote" 
+					 text="{Language.lookup('ReadRegistrationNote')}"/>
+			<s:Label id="registrationNoteClick" click="registrationNote_clickHandler(event)"
+					 text="{Language.lookup('ReadRegistrationNoteClick')}" useHandCursor="true" buttonMode="true" textDecoration="underline"/>
+			</s:VGroup>
+			</s:HGroup>
 		<s:HGroup includeIn="Register">
 			<s:CheckBox id="is13orOlder" tabIndex="10"/>
 			<s:Label id="registrationAge" width="200" text="{Language.lookup('RegistrationAge')}"/>

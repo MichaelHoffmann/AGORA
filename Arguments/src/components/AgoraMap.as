@@ -86,7 +86,6 @@ package components
 			timer = new Timer(10000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
 			beganBy = BY_CLAIM;
-
 			removePreviousElements = false;
 			rectangle = new Dictionary;
 			flag = 0;
@@ -131,7 +130,7 @@ package components
 			helpText.visible = false;
 			firstClaimHelpText = new FirstClaimHelpText;
 			addChild(firstClaimHelpText);
-			firstClaimHelpText.visible = false;	
+			firstClaimHelpText.visible = false;
 			this.addChild(drawUtility2);
 			this.addChild(drawUtility1);
 			
@@ -140,9 +139,12 @@ package components
 		{
 			DragManager.acceptDragDrop(Canvas(d.currentTarget));
 		}
-
+		
+			
+			
 		public function mouseclicked(d:MouseEvent):void
 		{
+			
 			if(d.target == this)
 			{
 				for each(var sm in AGORAModel.getInstance().agoraMapModel.globalComments)
@@ -156,7 +158,6 @@ package components
 							delete AGORAModel.getInstance().agoraMapModel.panelListHash[sm.model.ID];
 							delete AGORAModel.getInstance().agoraMapModel.globalComments[sm.model.ID];					
 							delete AGORAModel.getInstance().agoraMapModel.showChildren[sm.model.ID];
-							
 						}
 						
 					}
@@ -303,7 +304,7 @@ package components
 							flag = 1;
 						}
 						addChild(argumentPanel);
-						if(count == 0 || getChildIndex(argumentPanel) < count)
+						if(count ==0 || getChildIndex(argumentPanel) < count)
 						{
 							//if(getChildIndex(argumentPanel) < getChildIndex(drawUtility2))
 							{
@@ -377,10 +378,12 @@ package components
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 70, argumentPanel.y + 57);
 						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 50, argumentPanel.y + 72);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 150, argumentPanel.y + 72);
-
 						//First Vertical Line Finishing Point
+						
 						var lastMenuPanel:MenuPanel = menuPanelsHash[layoutController.getBottomArgument(model).ID];
 						var fvlfpy:int = (lastMenuPanel.y + 72);
+						
+						
 						//draw a line
 						drawUtility.graphics.moveTo(fvlspx +60, fvlspy);
 						drawUtility.graphics.lineTo(fvlspx + 60, fvlfpy);
@@ -415,8 +418,8 @@ package components
 							var inferencePanel:ArgumentPanel = panelsHash[argumentTypeModel.inferenceModel.ID];
 							if(inferencePanel!=null && inferencePanel.visible){
 								drawUtility.graphics.moveTo(menuPanel.x + menuPanel.width/2, menuPanel.y+menuPanel.height+10);
-								drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2 , inferencePanel.y);
-}
+								drawUtility.graphics.lineTo(menuPanel.x + menuPanel.width/2, inferencePanel.y);
+							}
 							}
 							for each(statementModel in argumentTypeModel.reasonModels){
 								//hline
@@ -469,7 +472,9 @@ package components
 							}
 						}	
 					}
+					
 					if(model.comments.length > 0){
+						
 						var test:int  = AGORAModel.getInstance().agoraMapModel.hide[model.ID];
 						var test1:Boolean = AGORAModel.getInstance().agoraMapModel.addClicked;
 						if (AGORAModel.getInstance().agoraMapModel.hide.hasOwnProperty(model.ID) && AGORAModel.getInstance().agoraMapModel.hide[model.ID] != 1)
@@ -503,7 +508,6 @@ package components
 								else
 									width = 100;
 								 // initializing the variable named rectangle
-								
 								drawUtility1.graphics.lineStyle(10, 0xFFFF00, 1);
 								for each(var obj:StatementModel in model.comments){
 									if(AGORAModel.getInstance().agoraMapModel.globalComments.hasOwnProperty(obj.ID)){
@@ -653,6 +657,7 @@ package components
 										drawUtility1.addChild(textLabel[obj.ID]);
 										drawUtility1.invalidateDisplayList();	
 									}
+								
 								}
 							}
 						}	

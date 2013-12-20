@@ -91,6 +91,9 @@ package Model
 		private var _addClicked:Boolean;
 		private var _check:Boolean;
 		private var _newPositions:Dictionary;
+		private var _max:int;
+		private var _maxy:int;
+		private var _mapOwner:String;
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
@@ -148,27 +151,53 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get mapOwner():String
+		{
+			return _mapOwner;
+		}
+
+		public function set mapOwner(value:String):void
+		{
+			_mapOwner = value;
+		}
+
+		public function get maxy():int
+		{
+			return _maxy;
+		}
+
+		public function set maxy(value:int):void
+		{
+			_maxy = value;
+		}
+
+		public function get max():int
+		{
+			return _max;
+		}
+
+		public function set max(value:int):void
+		{
+			_max = value;
+		}
+
 		public function get newPositions():Dictionary
 		{
 			return _newPositions;
 		}
-
 		public function set newPositions(value:Dictionary):void
 		{
 			_newPositions = value;
 		}
-
 		public function get globalComments():Dictionary
 		{
 			return _globalComments;
 		}
-
 		public function set globalComments(value:Dictionary):void
 		{
 			_globalComments = value;
 		}
-
-		public function get check():Boolean
+public function get check():Boolean
 		{
 			return _check;
 		}
@@ -503,7 +532,7 @@ package Model
 		
 		protected function onLoadMapModelResult(event:ResultEvent):void{
 		//	deletedList = new Vector.<Object>;
-			var mapXMLRawObject:Object = event.result.map;
+			var mapXMLRawObject:Object = event.result.map; 				
 			try{
 				var map:MapValueObject = new MapValueObject(mapXMLRawObject);
 			}catch(propNotFoundError:Error){
@@ -516,6 +545,7 @@ package Model
 				//update timestamp
 				timestamp = map.timestamp;
 				name = map.title;
+				mapOwner=map.username;
 				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
 				// Reload panel only when required
 				var reloadpanel = event.result.map.reloadRPANEL;
@@ -531,7 +561,8 @@ package Model
 					rsp.mapTitle.enabled=false;
 				}
 				AGORAController.getInstance().getMapChain(map.ID);
-
+				rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + mapXMLRawObject.ID;
+				
 				rsp.clickableMapOwnerInformation.toolTip = 
 					mapXMLRawObject.username + "\n" + mapXMLRawObject.url + '\n' + Language.lookup('MapOwnerURLWarning');
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
@@ -571,8 +602,12 @@ package Model
 				
 				//read and set text - This should be performed after links are created
 				processTextbox(map.textboxes, textboxHash);
+				
+				trace(max*AGORAParameters.getInstance().gridWidth+" HJHKJHKJ");
+				trace(maxy*AGORAParameters.getInstance().gridWidth+" HJHKJHKJ");
 			}
 			catch(error:Error){
+				
 				trace(error.message);
 				trace("Error in reading update to Map");
 				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADING_FAILED));
@@ -725,6 +760,8 @@ package Model
 					statementModel.ygrid = nodeVO.y;
 					nodeHash[nodeVO.ID] = statementModel;
 					processNodeText(nodeVO, nodeHash, textboxHash);
+					max=max<(nodeVO.x+8)?(nodeVO.x+8):max;
+					maxy=maxy<(nodeVO.y+8)?(nodeVO.y+8):maxy;
 				}
 				else{
 					if(panelListHash.hasOwnProperty(nodeVO.ID)){
@@ -782,11 +819,14 @@ package Model
 			for each(var obj:ConnectionValueObject in objs){
 				if(!obj.deleted){
 					if(obj.type != StatementModel.OBJECTION && obj.type != StatementModel.COUNTER_EXAMPLE  && obj.type != StatementModel.COMMENT && obj.type != StatementModel.REFERENCE && obj.type != StatementModel.AMENDMENT && obj.type != StatementModel.DEFINITION && obj.type != StatementModel.QUESTION && obj.type != StatementModel.SUPPORT && obj.type != StatementModel.LINKTOMAP && obj.type != StatementModel.LINKTORESOURCES && obj.type != StatementModel.REFORMULATION){
+						
+						
 						if(!connectionListHash.hasOwnProperty(obj.connID)){
 							argumentTypeModel = ArgumentTypeModel.createArgumentTypeFromObject(obj);
 						}else{
 							argumentTypeModel = connectionListHash[obj.connID];
 						}
+						
 						
 						argumentTypeModel.dbType = obj.type;					
 						
@@ -808,10 +848,13 @@ package Model
 						connectionsHash[obj.connID] = argumentTypeModel;
 						processSourceNode(obj, connectionsHash, nodeHash);
 						dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_SCHEME_SET, null, argumentTypeModel)); //takes care of linking	
-					}else if(obj.type == StatementModel.OBJECTION || obj.type == StatementModel.COUNTER_EXAMPLE || obj.type == StatementModel.COMMENT || obj.type == StatementModel.REFERENCE || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION || obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
+						
+						
+						}else if(obj.type == StatementModel.OBJECTION || obj.type == StatementModel.COUNTER_EXAMPLE || obj.type == StatementModel.COMMENT || obj.type == StatementModel.REFERENCE || obj.type == StatementModel.AMENDMENT || obj.type == StatementModel.DEFINITION || obj.type == StatementModel.QUESTION || obj.type == StatementModel.SUPPORT || obj.type == StatementModel.LINKTOMAP || obj.type == StatementModel.LINKTORESOURCES || obj.type == StatementModel.REFORMULATION){
 						processSourceNode(obj, connectionsHash, nodeHash);
 						//linking could be done directly
-					}	
+					}
+					
 				}
 				else{
 					if(connectionListHash.hasOwnProperty(obj.connID)){
@@ -827,6 +870,7 @@ package Model
 						delete connectionListHash[obj.connID];
 					}
 				}
+				
 			}
 			return true;
 		}
@@ -974,9 +1018,7 @@ package Model
 					dispatchEvent(new AGORAEvent(AGORAEvent.ILLEGAL_MAP));
 					return;
 				}
-				
 			}
-			
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			updatePositionsService.send({uid: usm.uid, pass_hash: usm.passHash, xml:requestXML});
 		}

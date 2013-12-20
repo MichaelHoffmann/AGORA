@@ -91,36 +91,33 @@
 	</fx:Script>
 
 		<!--The left side of the page that houses the guest login button-->
-	
-		<s:SkinnableContainer  id="guestWelcome" left="0" top="0" bottom="0" width="250"
+		<s:SkinnableContainer id="guestWelcome" left="0" top="0" bottom="0" width="250"
 							  backgroundColor="#29ABE2" height = "100%">
  <s:layout>
 	 <s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
  </s:layout>
 			<s:VGroup top ="10%" height="95%" width="98%" verticalAlign="middle" horizontalAlign="center">
-				<!--This is the new user label on the side panel-->
+			<!--This is the new user label on the side panel-->
 				<s:Label  id="VisitorGreeting"  width="100%"  fontFamily="Arial"
-						  fontSize="20" text="{Language.lookup('NewHere')}"
+					 fontSize="20" text="{Language.lookup('NewHere')}"
 						  textAlign="center" />
-				<!--The Guest Login button-->
-				
+			<!--The Guest Login button-->
+
 				<s:Button width="100%" height="5%" label="{Language.lookup('EnterGuest')}"
 						   click="guestButton_onClick(event)"/>
 				<s:SWFLoader id = "tutLink" click="navigateToURL(new URLRequest('http://youtu.be/HJROsQGQOMY'), 'quote')" autoLoad="true"   source="https://i1.ytimg.com/vi/HJROsQGQOMY/3.jpg?time=1364444610918" useHandCursor="true" buttonMode="true"/>
 				<s:Label color="#575254" textAlign="center" width="100%" text = "{Language.lookup('Tutorial')}"/> 
 			</s:VGroup>
-			
 			<components:SponsorPanel width="100%" height="114" bottom="0" verticalAlign="bottom">
 			</components:SponsorPanel>
 
-			</s:SkinnableContainer>
+		</s:SkinnableContainer>
 	<s:Group click="navigateToURL(new URLRequest('http://youtu.be/HJROsQGQOMY'), 'quote')" width = "{tutLink.width}" height = "{tutLink.height}" y="{tutLink.y}" x="{tutLink.x}" alpha=".5" id="playButton" mouseOver="{playButton.alpha=.99}" buttonMode="true"  mouseOut="{playButton.alpha=.5}">
 		<s:Ellipse width="50" height="50" verticalCenter="0" horizontalCenter="0">
 			<s:fill>
 				<s:SolidColor color="{0}" />
 			</s:fill>
 		</s:Ellipse>
-
 		<s:SWFLoader rotationZ="270" verticalCenter="0" horizontalCenter="10" width = "40" height = "40" id="showButton" source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
 	</s:Group>
 		<!--The right side of the page that houses the login and register buttons and the links-->
@@ -129,7 +126,7 @@
 			<mx:Image id="loader1" horizontalCenter="0"
 					  source="@Embed(source='images/introBackground.png')" verticalCenter="0"/> 
 			<!--This is the banner for that goes above the login/register buttons-->
-			<s:Label  id="welcomeLabel" width="400" height="129" fontSize="35" horizontalCenter="-7" 
+			<s:Label  id="welcomeLabel" width="400" height="129" fontSize="24" horizontalCenter="-7" 
 					  text="{Language.lookup('WelcomeHere')}" textAlign="center" verticalCenter="-36"/>
 			<s:Label  id="welcomeLabel1" width="400" height="79" fontSize="16" horizontalCenter="-7" 
 					  text="{Language.lookup('ConstructArguments')}" textAlign="center" verticalCenter="-16" color="#757575"/>
@@ -145,7 +142,6 @@
 			<!--This is the New User Registration button-->
 			<s:Button id="registerButton" width="124" height="40" label="{Language.lookup('Register')}" toolTip="{Language.lookup('RegistrationNote')}" click = "registerButton_onClick(event)" horizontalCenter="59" verticalCenter="39"/>
 			<!--This is the box group that forms the smaller links below Login/Register"-->
-
 			<mx:HBox id="bottomLinks"  height="29" horizontalCenter="8" textAlign="center" verticalCenter="119">
 				<!--The "About Us" link-->
 				<mx:LinkButton id="about" label="{Language.lookup('AboutUs')}"
@@ -171,4 +167,5 @@
 
 
 		</s:SkinnableContainer>
+
 </s:Group>

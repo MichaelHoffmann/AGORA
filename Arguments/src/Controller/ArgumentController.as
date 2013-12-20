@@ -49,6 +49,7 @@ package Controller
 	import mx.managers.PopUpManager;
 	import mx.skins.spark.DefaultButtonSkin;
 	import mx.states.State;
+	import mx.utils.object_proxy;
 	
 	//import org.osmf.layout.AbsoluteLayoutFacet;
 	
@@ -84,6 +85,7 @@ package Controller
 		}
 		
 		//---------------------Get Instance -----------------------------//
+	
 		public static function getInstance():ArgumentController{
 			if(!instance){
 				instance = new ArgumentController(new SingletonEnforcer);
@@ -113,6 +115,7 @@ package Controller
 		
 		//-------------------- Load a saved Map --------------------------------//
 		public function loadMapMain(id:String,historyClear:Boolean):void{
+			
 			if(model.userSessionModel.loggedIn()){
 				if(historyClear){
 					var thisMapInfo:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
@@ -130,12 +133,15 @@ package Controller
 				var  chatbox:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
 				chatbox.mapId = id;
 				chatbox.initMapChat(true);
+
+				
 				FlexGlobals.topLevelApplication.rightSidePanel.invalidateDisplayList();
 				map.agora.visible = true;
 				//reinitialize map view
 				map.agoraMap.initializeMapStructures();
 				//fetch data
 				LoadController.getInstance().fetchMapData();
+				
 				// re on save and load
 				if(model.rechain!=null && model.rechain){
 					model.rechain=true;
@@ -158,7 +164,6 @@ package Controller
 			map.agoraMap.initializeMapStructures();
 			map.setScrollers(0,0);
 			map.zoomer.value=1;
-
 		}
 
 		protected function onMapCreatedFault(event:AGORAEvent):void{
@@ -178,6 +183,8 @@ package Controller
 			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
 			rsp.titleOfMap.text = this.model.agoraMapModel.name;
 			rsp.clickableMapOwnerInformation.label = mapMetaData.mapCreator;
+			rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + mapMetaData.mapID;
+			
 			rsp.clickableMapOwnerInformation.toolTip = 
 				mapMetaData.url + '\n' + Language.lookup('MapOwnerURLWarning');
 			rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
@@ -187,6 +194,7 @@ package Controller
 				navigateToURL(new URLRequest(urllink), 'quote');
 			},false, 0, false);
 			rsp.mapTitle.text = this.model.agoraMapModel.name;
+			rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + this.model.agoraMapModel.ID;
 			rsp.invalidateDisplayList();
 			startWithClaim();
 			if(mapMetaData.mapCreator== usm.username){
@@ -195,6 +203,7 @@ package Controller
 			}else{
 				rsp.mapTitle.enabled=false;
 			}
+		 
 			// update current view 
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
@@ -215,6 +224,7 @@ package Controller
 						model.myProjectsModel.listProjMaps(""+usm.selectedWoAProjID);
 					}
 				}
+			
 			AGORAController.getInstance().getMapChain(mapMetaData.mapID);
 
 		}
@@ -227,6 +237,15 @@ package Controller
 			model.agoraMapModel.saveAsMap(mapName,mapID);	
 //			map.agoraMap.initializeMapStructures();
 		}
+		
+		public function checkPermissionsForMap():Boolean{
+			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			if(AGORAModel.getInstance().agoraMapModel.mapOwner == userSessionModel.username)
+				return true;
+			
+				return false;
+		}
+		
 		protected function onMapSaveAsFault(event:AGORAEvent):void{
 			Alert.show(Language.lookup("MapNameUnique"));
 			var mapMetaData:MapMetaData = event.eventData as MapMetaData;
@@ -250,6 +269,7 @@ package Controller
 							urllink = "http://"+urllink;			
 						navigateToURL(new URLRequest(urllink), 'quote');
 					},false, 0, false);
+					rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + mapObj.ID;
 					rsp.invalidateDisplayList();
 					model.rechain=true;
 					ArgumentController.getInstance().loadMap(mapObj.ID);
@@ -408,7 +428,6 @@ package Controller
 					// obj= model.comments[i];
 			 //}
 			//if(model.comments.length == 0)
-				
 		//	else
 			//	obj= LayoutController.getInstance().getBottomComment(model);
 			if(obj != null && map.agoraMap.panelsHash[obj.ID]){
@@ -841,7 +860,6 @@ package Controller
 			}
 		}
 		public function addDefeatStatement(model:StatementModel):void{
-			
 			var obj:StatementModel = LayoutController.getInstance().getBottomObjection(model);
 			if(obj != null){
 				var bottomObjection: ArgumentPanel = map.agoraMap.panelsHash[obj.ID];
@@ -874,7 +892,6 @@ package Controller
 		protected function onCommentCreationFailed(event:AGORAEvent):void{
 			Alert.show(Language.lookup('ObjectionFailed'));
 		}
-		
 		protected function onAmendmentCreationFailed(event:AGORAEvent):void{
 			Alert.show(Language.lookup('ObjectionFailed'));
 		}
@@ -1011,13 +1028,11 @@ package Controller
 				FlexGlobals.topLevelApplication.map.alerts.removeElement(addArgumentsInfo);
 				map.removeEventListener(MouseEvent.CLICK, arguments.callee);
 			});
-			
 			FlexGlobals.topLevelApplication.map.alerts.addElement(addArgumentsInfo);
 			addArgumentsInfo.y =  inference.y + inference.height + 20;
 			addArgumentsInfo.x = inference.x;
 			addArgumentsInfo.visible=true;
 			map.setScrollers(addArgumentsInfo.x,addArgumentsInfo.y);
-			
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
 			if(claim.panelType != StatementModel.INFERENCE){
@@ -1081,18 +1096,21 @@ package Controller
 			if(argumentPanel.panelType == StatementModel.STATEMENT || argumentPanel.panelType == StatementModel.INFERENCE)
 			{
 				if(argumentPanel.model.supportingArguments.length == 0)
-				{
+			{
 					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
 					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem type="separator"/>);
+					
 					addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel" contentBackgroundColor="#999999"/>);
+
 					addMenuData.appendChild(<menuitem type="separator"/>);					
 					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
-					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);					
 					addMenuData.appendChild(<menuitem type="separator"/>);
+					
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel" contentBackgroundColor="#999999"/>);
@@ -1103,14 +1121,18 @@ package Controller
 					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					
 					addMenuData.appendChild(<menuitem type="separator"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);					
 					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+					
 					addMenuData.appendChild(<menuitem type="separator"/>);
+
 					addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.QUESTION} type="TopLevel" contentBackgroundColor="#999999"/>);
 					
+
 				}
 			}
 			else if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE)
@@ -1118,13 +1140,17 @@ package Controller
 			addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
 			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+			
 			addMenuData.appendChild(<menuitem type="separator"/>);
+			
 			addMenuData.appendChild(<menuitem label={agoraParameters.OBJECTION} type="TopLevel" contentBackgroundColor="#999999"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE} type="TopLevel" contentBackgroundColor="#999999"/>);
+
 			addMenuData.appendChild(<menuitem type="separator"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
 			//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+			
 			addMenuData.appendChild(<menuitem type="separator"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
@@ -1136,9 +1162,11 @@ package Controller
 				addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/></root>;
 				//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+			
 				addMenuData.appendChild(<menuitem type="separator"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
+				
 				addMenuData.appendChild(<menuitem type="separator"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.DEFINITION} type="TopLevel" contentBackgroundColor="#999999"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.COMMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
@@ -1147,20 +1175,18 @@ package Controller
 			}
 			var addMenu:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
 			var addMenu1:Menu = Menu.createMenu(argumentPanel.parent, addMenuData, false);
-			addMenu.labelField = "@label"; 
+			addMenu.labelField = "@label";
 			var color:String = addMenu.dataProvider[0].menuitem[0].@contentBackgroundColor;
-
 		//	addMenu.get.setStyle("contentBackgroundColor","#999999");
-					
 			var point:Point = new Point;
 			point.x = 0;
 			point.y = argumentPanel.height;
 			point = argumentPanel.localToGlobal(point);
 			point.y = point.y - 150;
 			addMenu.show(point.x, point.y);
+			
 			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addHoverMenuClicked);
 		}
-		
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{
 			CursorManager.removeAllCursors();

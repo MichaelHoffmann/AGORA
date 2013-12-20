@@ -433,7 +433,13 @@
 				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent percentWidth="100" percentHeight="100" label="{Language.lookup('Search')}">
-				<s:Label id="ComingSoon" text="{Language.lookup('ComingSoon')}"/>
+				<s:VGroup percentWidth="100" percentHeight="100" horizontalCenter="0" verticalCenter="0" horizontalAlign="center">
+					<components:AgoraSearchPanel id="searchPanel" percentWidth="100" percentHeight="100"
+													 horizontalCenter="0"
+													 verticalCenter="0">	
+					</components:AgoraSearchPanel>
+					
+				</s:VGroup>
 			</s:NavigatorContent>
 		</mx:TabNavigator>
 		<!--Horizontal row of buttons at the bottom of the screen-->
@@ -448,7 +454,7 @@
 						  label="{Language.lookup(UserSessionController.getInstance().getRegisterBtnText(AGORAModel.getInstance().userSessionModel._uid)) }"
 						  click="registerBtn_clickHandler(event)" />
 				<s:Button id="privacyPolicyBtn"
-						  label="{Language.lookup('PrivacyPolicy')}"
+						  label="{Language.lookup('TermsOfServiceHeader')}"
 						  click="privacyPolicyBtn_clickHandler(event)"/>
 				<s:Button id="backBtn"
 						  label="{Language.lookup('Back')}"

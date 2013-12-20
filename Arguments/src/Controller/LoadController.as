@@ -13,11 +13,9 @@ package Controller
 	import components.StatusBar;
 	
 	import flash.utils.Dictionary;
-	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
-	
 	import spark.components.Label;
 	
 	public class LoadController
@@ -74,7 +72,6 @@ package Controller
 				}
 				if(gridPanel != null && agoraMap.contains(gridPanel))
 				agoraMap.removeChild(gridPanel);
-				
 			}
 			
 			//empty the list

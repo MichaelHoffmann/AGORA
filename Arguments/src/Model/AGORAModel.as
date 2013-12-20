@@ -47,6 +47,7 @@ package Model
 		public var projMembers:XMLList;
 		public var projType: String;
 		public var chainModel:ChainModel;
+		public var searchModel:AgoraSearchModel;
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;
@@ -86,15 +87,18 @@ package Model
 			deleteProject= new DeleteProject();
 			selectAsAdmin= new SelectAsAdmin();
 			chainModel=new ChainModel();
+			searchModel = new AgoraSearchModel();
 
 		}
 		
 
 		//-----------------------------Getters and Setters--------------------------------------------------------//
+
 		public function get rechain():Boolean
 		{
 			return _rechain;
 		}
+
 		public function set rechain(value:Boolean):void
 		{
 			_rechain = value;

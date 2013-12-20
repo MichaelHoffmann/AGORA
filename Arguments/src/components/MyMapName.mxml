@@ -81,10 +81,13 @@
 				var urllink:String = thisMapInfo.url;
 				if(urllink!=null && urllink.indexOf("http://") ==-1)
 					urllink = "http://"+urllink;			
+				
 				rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
 					navigateToURL(new URLRequest(urllink), 'quote');
 				},false, 0, false);
 				rsp.mapTitle.text = mapName;
+				rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + thisMapInfo.mapID;
+				
 				rsp.invalidateDisplayList();
 				ArgumentController.getInstance().loadMap(event.target.name);
 			}

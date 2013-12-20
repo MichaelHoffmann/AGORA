@@ -1,7 +1,6 @@
 package Model
 {
 	import Controller.LoadController;
-	
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
@@ -134,32 +133,26 @@ package Model
 			addObjection.url = AGORAParameters.getInstance().insertURL;
 			addObjection.addEventListener(ResultEvent.RESULT, onObjectionAdded);
 			addObjection.addEventListener(FaultEvent.FAULT, onFault);
-			
 			addComment = new HTTPService;
 			addComment.url = AGORAParameters.getInstance().insertURL;
 			addComment.addEventListener(ResultEvent.RESULT, onCommentAdded);
 			addComment.addEventListener(FaultEvent.FAULT, onFault);
-			
 			addAmendment = new HTTPService;
 			addAmendment.url = AGORAParameters.getInstance().insertURL;
 			addAmendment.addEventListener(ResultEvent.RESULT, onAmendmentAdded);
 			addAmendment.addEventListener(FaultEvent.FAULT, onFault);
-			
 			addReference = new HTTPService;
 			addReference.url = AGORAParameters.getInstance().insertURL;
 			addReference.addEventListener(ResultEvent.RESULT, onReferenceAdded);
 			addReference.addEventListener(FaultEvent.FAULT, onFault);
-			
 			addDefinition = new HTTPService;
 			addDefinition.url = AGORAParameters.getInstance().insertURL;
 			addDefinition.addEventListener(ResultEvent.RESULT, onDefinitionAdded);
 			addDefinition.addEventListener(FaultEvent.FAULT, onFault);
-			
 			addQuestion = new HTTPService;
 			addQuestion.url = AGORAParameters.getInstance().insertURL;
 			addQuestion.addEventListener(ResultEvent.RESULT, onQuestionAdded);
 			addQuestion.addEventListener(FaultEvent.FAULT, onFault);
-			
 			addDefeat = new HTTPService;
 			addDefeat.url = AGORAParameters.getInstance().insertURL;
 			addDefeat.addEventListener(ResultEvent.RESULT, onDefeatAdded);
@@ -598,7 +591,7 @@ package Model
 			}
 			else{
 				//if(objections.length == 0)
-					y = comments[comments.length-1].ygrid;
+				y = comments[comments.length-1].ygrid;
 				//else 
 					//y = objections[objections.length-1].ygrid;
 			}
@@ -651,7 +644,6 @@ package Model
 			else 
 				y = comments[count].ygrid;
 			if(comments.length!=0){
-				
 				for (var i:int = 0; i<comments.length ;i++)
 				{
 					if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
@@ -692,16 +684,14 @@ package Model
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 			addComment.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
-		
 		public function linktoresource(x:int):void{
 			var y:int;
 			var count:int;
-			if(objections.length == 0)
-				y = ygrid + 14;
-			else 
-				y = objections[objections.length-1].ygrid;
+				if(objections.length == 0)
+					y = ygrid + 14;
+				else 
+					y = objections[objections.length-1].ygrid;
 			if(comments.length!=0){
-				
 				for (var i:int = 0; i<comments.length ;i++)
 				{
 					//if(comments[i].statementFunction != StatementModel.LINKTORESOURCES)
@@ -715,7 +705,6 @@ package Model
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 			addComment.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
-		
 		public function reformulation(x:int):void{
 			var y:int;
 			if(comments.length == 0){
@@ -731,7 +720,6 @@ package Model
 			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 			addComment.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
-		
 		public function support(x:int):void{
 			var y:int;
 			if(comments.length == 0){
@@ -770,8 +758,6 @@ package Model
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel; 
 				addObjection.send({uid:userSession.uid, pass_hash: userSession.passHash, xml:requestXML});
 		}
-
-		
 		public function defeat(x:int):void{
 			var y:int;
 			if(objections.length == 0){
@@ -819,7 +805,6 @@ package Model
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.COMMENT_CREATED, null, this));
 		}
-		
 		protected function onAmendmentAdded(event:ResultEvent):void{
 			var map:MapValueObject = new MapValueObject(event.result, true);
 			if(map.hasOwnProperty('error')){
@@ -828,7 +813,6 @@ package Model
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.AMENDMENT_CREATED, null, this));
 		}
-		
 		protected function onQuestionAdded(event:ResultEvent):void{
 			var map:MapValueObject = new MapValueObject(event.result, true);
 			if(map.hasOwnProperty('error')){
@@ -837,7 +821,6 @@ package Model
 			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.QUESTION_CREATED, null, this));
 		}
-		
 		protected function onReferenceAdded(event:ResultEvent):void{
 			var map:MapValueObject = new MapValueObject(event.result, true);
 			if(map.hasOwnProperty('error')){
@@ -884,7 +867,7 @@ package Model
 				comments.push(comment2);				
 			}
 			else
-				comments.push(comment);
+			comments.push(comment);
 		}
 		public function getXML():XML{
 			var xml:XML = <node></node>;
@@ -892,7 +875,7 @@ package Model
 			switch(statementFunction){
 				case INFERENCE:
 				xml.@Type = INFERENCE;
-					break;
+				break;
 				case OBJECTION:
 				xml.@Type = OBJECTION;
 					break;
@@ -916,10 +899,10 @@ package Model
 					break;
 				case COUNTER_EXAMPLE:
 					xml.@Type = COUNTER_EXAMPLE;
-					break;
+				break;
 				case STATEMENT:
 				xml.@Type = statementType;
-					break;
+				break;
 				case LINKTORESOURCES:
 					xml.@Type = LINKTORESOURCES;
 					break;

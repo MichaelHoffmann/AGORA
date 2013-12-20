@@ -115,6 +115,7 @@ package components
 			mySpace.addEventListener(MouseEvent.CLICK,submitMovePublish);
 			mySpace.setStyle("chromeColor", 0xF5E887);					
 		//	mySpace.
+			
 			/*Making the groups*/
 			bottomButtonGroup = new HGroup();
 			bottomButtonGroupNew = new HGroup();
@@ -142,6 +143,7 @@ package components
 			howToUseThisFeatureLabel.text = Language.lookup("ClickThroughCategory");
 			groupContainer.addElement(howToUseThisFeatureLabel);
 			groupContainer.addElement(informationLabel);
+		
 			this.addElement(groupContainer);
 			this.addElement(scroller);
 			this.addElement(bottomButtonGroupNew);
@@ -166,6 +168,7 @@ package components
 						button.name = categoryXML.@ID; //The ID (unique DB identifier) of the category
 						button.label = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
 						button.toolTip = categoryXML.@Name; //The title of the category (e.g. Philosophy, Biology, or Projects)
+						
 						if(categoryXML.@ID ==6){  // disabling Projects
 							continue;
 						}
@@ -174,11 +177,13 @@ package components
 						}else{
 							button.label = Language.lookup("Category"+categoryXML.@ID); //The title of the category Level1 (e.g. Philosophy, Biology, or Projects)	
 						}
+						
 						if(categoryXML.@Name!=null && ((String)(categoryXML.@Name)).length > 32){
 							button.label = ((String)(categoryXML.@Name)).slice(0,30)+" .." ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 						}else{
 							button.label = categoryXML.@Name ; //The title of the category (e.g. Philosophy, Biology, or Projects)
 						}
+						
 						button.setStyle("chromeColor", 0xA0CADB);					
 						button.addEventListener('click',function(e:Event):void{
 							//Begin private inner click event function for button
@@ -207,13 +212,14 @@ package components
 		protected function submitMovePublish(event:MouseEvent):void{
 			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
 			AGORAController.getInstance().publishMap(mapID,-2); // for private use switch
+			
 		}
+
 		protected function submitPublish(event:MouseEvent):void{
 			if(mapID == -1) mapID = AGORAModel.getInstance().agoraMapModel.ID;
 			AGORAController.getInstance().publishMap(mapID,currCatID);
 			
 		}
-		
 		override protected function measure():void{
 			super.measure();	
 		}

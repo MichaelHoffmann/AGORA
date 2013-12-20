@@ -219,11 +219,14 @@ package components
 										if(adminXML.@name == e.target.label)
 										  url = adminXML.@url;
 									}
+									
 									var urllink:String = url;
 									if(url!=null && url.indexOf("http://") ==-1)
 										urllink = "http://"+url;
+									
 									var myURL:URLRequest = new URLRequest(urllink);
 									navigateToURL(myURL, "_blank");
+									
 								}, false, 1,false);		
 							}
 						}
@@ -253,10 +256,12 @@ package components
 									if(adminXML.@name == e.target.label)
 										url = adminXML.@url;
 								}
+								
 								var urllink:String = url;
 								if(url!=null && url.indexOf("http://") ==-1)
 									urllink = "http://"+url;
 								var myURL:URLRequest = new URLRequest(urllink);
+								
 								navigateToURL(myURL, "_blank");
 							}, false, 1,false);
 						}
@@ -398,6 +403,8 @@ package components
 			var thisMapInfo:MapMetaData = mapMetaDataVector[parseInt((Button) (event.target).id)];
 			rsp.clickableMapOwnerInformation.label = thisMapInfo.mapCreator;
 			rsp.mapTitle.text=thisMapInfo.mapName;
+			rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + thisMapInfo.mapID;
+			
 			rsp.clickableMapOwnerInformation.toolTip = 
 				 thisMapInfo.url + '\n' + Language.lookup('MapOwnerURLWarning');
 			var urllink:String = thisMapInfo.url;

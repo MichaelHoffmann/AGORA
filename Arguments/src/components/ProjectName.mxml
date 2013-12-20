@@ -17,6 +17,7 @@
 			import Controller.ArgumentController;
 			
 			import Model.AGORAModel;
+			import Model.UserSessionModel;
 			
 			import classes.Language;
 			
@@ -33,6 +34,14 @@
 			
 			private var _password:String;
 			public function project_add():void{
+				
+				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+				if(userSession.username == "Guest"){
+					Alert.show(Language.lookup('GuestCreateMapError'));
+					return;
+				}
+				
+				
 					if(currentState!="rename"){
 						if(currentState!="addUsers"){
 							AGORAModel.getInstance().agoraMapModel.projectName = projectName.text;

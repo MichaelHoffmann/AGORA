@@ -19,6 +19,7 @@
 			import Model.UserSessionModel;
 			
 			import ValueObjects.MapHistoryValueObject;
+			
 			import classes.Language;
 			
 			import mx.collections.ArrayList;
@@ -68,7 +69,7 @@
 					historyBackBox.visible=true;
 					chat.visible=true;
 					history.visible=false;
-									
+					IdofMap.visible=true;
 				} else {
 					mapOwner.visible = false;
 					mapTitle.visible = false;
@@ -79,6 +80,7 @@
 					historyBackBox.visible=false;
 					chat.visible=true;
 					history.visible=false;
+					IdofMap.visible=false;
 				}
 				mapOwner.setActualSize(mapOwner.getExplicitOrMeasuredWidth(), mapOwner.getExplicitOrMeasuredHeight());
 				mapOwner.move(2, xB);
@@ -91,7 +93,11 @@
 				xB = xB + titleOfMap.getExplicitOrMeasuredHeight() + 1;
 				mapTitle.setActualSize(mapTitle.getExplicitOrMeasuredWidth(), mapTitle.getExplicitOrMeasuredHeight());
 				mapTitle.move(2, xB);
-				xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 25;
+				xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 5;
+				IdofMap.setActualSize(IdofMap.getExplicitOrMeasuredWidth(), IdofMap.getExplicitOrMeasuredHeight());
+				IdofMap.move(2,xB);
+				xB = xB + IdofMap.getExplicitOrMeasuredHeight() + 15;
+				
 			//	if(visibility.visible){
 				chatBox.setActualSize(chatBox.getExplicitOrMeasuredWidth(), chatBox.getExplicitOrMeasuredHeight());
 				chatBox.move(2, xB); 
@@ -108,10 +114,12 @@
 				// test if the history is empty
 				var mapList:Vector.<MapHistoryValueObject> = AGORAModel.getInstance().agoraMapModel.historylist;
 				var sessionMappings:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
+				
 				if(sessionMappings.historyMapsVisited.length<=0)
 					historyBackBox.visible=false;
+				
 				if(((mapList==null || mapList.length<=0) && sessionMappings.historyMapsVisited.length<=0)){
-					historyBox.visible=false;
+					historyBox.visible=false;					
 				}
 			//	xB = xB + chat.getExplicitOrMeasuredHeight();
 				
@@ -194,6 +202,7 @@
 			  }"/>
 	<s:Label id="youAreHereLabel" text="{Language.lookup('YouAreHere')}" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Label id="titleOfMap" text="{Language.lookup('TitleClickToChange')}" visible="false"/>
+	<s:Label id="IdofMap" fontWeight="bold" text="" visible="false"/>
 	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Button id="chatBox" visible="false" toolTip="" label="Chat" width="75" click="onChatSelect()"/>
 	<s:Button id="historyBox" visible="false" toolTip="" label="{Language.lookup('MapHistoryHeader')}" width="75" click="onHistorySelect()"/>
