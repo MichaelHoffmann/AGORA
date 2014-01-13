@@ -41,7 +41,7 @@
 			<mx:GridItem colSpan="1" width="100">
 <s:VGroup>
 	
-				<mx:Label color="{ (header)?BLACK:(dis?GREY:BLACK)}" buttonMode="{header?true:false}" mouseChildren="{!header?true:false}" useHandCursor="{header?true:false}" fontWeight="{header?'bold':'normal'}" maxWidth="{this.getChildAt(3).width}"  fontSize="12" text="{usersC}" click="{header?customSort(4,1):null}"/>
+				<mx:Label color="{ (header)?BLACK:(dis?GREY:BLACK)}" buttonMode="{header?true:false}" mouseChildren="{!header?true:false}" useHandCursor="{header?true:false}" fontWeight="{header?'bold':'normal'}" maxWidth="{Language.language==Language.ENGLISH ? this.getChildAt(3).width:100}"  fontSize="12" text="{usersC}" click="{header?customSort(4,1):null}"/>
 
 				<s:HGroup id="cols4label">
 					</s:HGroup>
@@ -132,6 +132,10 @@
 					for(var i:int=0;i<5;i++){			
 						if(pmode&&i==2)
 							continue;
+						
+						if(umode&& (i==1 || i==4))
+							continue;
+							
 					// for all the 5 areas ..
 						var hg:HGroup = new HGroup();
 						hg.name=i+"";
@@ -150,6 +154,7 @@
 						else{
 							hg.horizontalAlign="center";
 							hg.width=hgmain.parent.parent.width;
+							
 						}
 						
 						hg.addElement(img1);
