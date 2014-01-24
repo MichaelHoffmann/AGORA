@@ -778,6 +778,12 @@ Additional languages can be added later. -->
 		<GER text="Vergiss nicht, dass es deskriptive (&quot;es ist der Fall, dass ...&quot;) und normative (z.B. &quot;wir sollten x tun&quot;) Behauptungen gibt." />
 		<SPAN text="Recuerda que una tesis puede ser descriptiva (&quot;se da el caso de que ...&quot;) o normativa (e.g., &quot;deberíamos hacer x&quot;)" />
 	</ClaimReminder>
+	<ClaimReminder2>
+		<EN-US text="If you reconstruct the argument of somebody else, formulate it as if you were the person constructing the argument. Do not write things like 'Plato claims ...' because the truth value of those statements refers to whether Plato claimed it or not, but not to what he claimed. Simply use quotes to make clear that you reconstruct the argument of someone else. Click on the white triangle at the bottom of text boxes to add a comment in which you can clarify what you do, or a reference. The white triangle turns yellow if there is already something added. Click on 'Show more' after clicking on the triangle to see what others added." />
+		<RUS text="If you reconstruct the argument of somebody else, formulate it as if you were the person constructing the argument. Do not write things like 'Plato claims ...' because the truth value of those statements refers to whether Plato claimed it or not, but not to what he claimed. Simply use quotes to make clear that you reconstruct the argument of someone else. Click on the white triangle at the bottom of text boxes to add a comment in which you can clarify what you do, or a reference. The white triangle turns yellow if there is already something added. Click on 'Show more' after clicking on the triangle to see what others added." /> <!--TODO Translate RUS -->
+		<GER text="Wenn du die Argumentation von jemand anderem rekonstruierst, formuliere alles so als wärst du diese Person. Schreibe nicht 'Platon behauptet, dass ...' weil der Wahrheitswert dieser Aussage sich darauf bezieht, ob Platon das behauptet hat oder nicht, nicht aber darauf, ob das Behauptete wahr ist. Verwende einfach Zitate um klar zu machen, dass du ein Argument von jemand anderem rekonstruierst. Klicke auf das weiße Dreieck unten an der Textbox und füge einen 'Kommentar' hinzu, in dem du erklärst was vor sich geht, oder füge eine 'Literaturangabe' hinzu. Das weiße Dreieck wird gelb, sobald jemand etwas zu einer Text box hinzufügt. Klicke auf 'Zeige mehr' um das anzusehen." />
+		<SPAN text="If you reconstruct the argument of somebody else, formulate it as if you were the person constructing the argument. Do not write things like 'Plato claims ...' because the truth value of those statements refers to whether Plato claimed it or not, but not to what he claimed. Simply use quotes to make clear that you reconstruct the argument of someone else. Click on the white triangle at the bottom of text boxes to add a comment in which you can clarify what you do, or a reference. The white triangle turns yellow if there is already something added. Click on 'Show more' after clicking on the triangle to see what others added." /> <!--TODO Translate SPAN -->
+	</ClaimReminder2>
 
 	<CombineSearch>
 		<EN-US text="Combine your search with &quot;and&quot; or &quot;or&quot;" />
@@ -3130,6 +3136,12 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<GER text="ein link zu einem anderen Argument" />
 		<SPAN text="un enlace con otro mapa de argumentos"/>
 	</AddLinkToMap>
+	<AddLinkToMapEnterMapID>
+		<EN-US text="Enter Map ID" />
+		<RUS text="Enter Map ID" /><!--TODO Translate RUS -->
+		<GER text="Gib die Nummer des Argumentes ein" />
+		<SPAN text="Enter Map ID"/><!--TODO Translate SPAN -->
+	</AddLinkToMapEnterMapID>
 
 	<AddLinkToResource>
 		<EN-US text="a link to resources" />
@@ -4192,6 +4204,12 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<SPAN text="Error: Faltan paréntesis"/>
 	</AgoraSearchBooleanParanError>
 	<!-- SPECIAL -->
+	<ThereForeImgMoveToolTip>
+	<EN-US text="grab and move to left or right" />
+		<RUS text="grab and move to left or right" /><!--TODO Translate RUS -->
+		<GER text="grab and move to left or right" /><!--TODO Translate GER -->
+		<SPAN text="grab and move to left or right"/><!--TODO Translate SPAN -->
+	</ThereForeImgMoveToolTip>
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->
 

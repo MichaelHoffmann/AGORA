@@ -57,16 +57,16 @@
 		<s:HGroup>
 		<s:VGroup>			
 		<mx:FormItem label="{Language.lookup('SearchParamsMapName')}" fontSize="12" paddingRight="5" textAlign="left">
-				<s:TextInput id="mapname" focusColor="#151B54" width="350">			
+				<s:TextInput id="mapname" focusColor="#151B54" width="{(Language.language == Language.ENGLISH)?350:260}">			
 				</s:TextInput>
 			</mx:FormItem>
 			<mx:FormItem focusColor="#151B54" label="{Language.lookup('SearchParamsConcept')}"  fontSize="12" paddingRight="5"
 						 textAlign="left">
-				<s:TextInput id="concept" width="335">			
+				<s:TextInput id="concept" width="{(Language.language != Language.SPANISH)?335:265}">			
 				</s:TextInput>
 			</mx:FormItem>
 			<mx:FormItem label="{Language.lookup('SearchParamsMapOwnerName')}" fontSize="12" paddingRight="5" textAlign="left">
-				<s:TextInput toolTip="{Language.lookup('SearchresultUsernameOnlyOne')}" id="umname" focusColor="#151B54" width="330">			
+				<s:TextInput toolTip="{Language.lookup('SearchresultUsernameOnlyOne')}" id="umname" focusColor="#151B54" width="{(Language.language == Language.ENGLISH)?330:200}">			
 				</s:TextInput>
 			</mx:FormItem>		
 					
@@ -74,7 +74,7 @@
 			<mx:VRule id="connLine" strokeColor="#a0a0a0" height="65">				
 			</mx:VRule>
 		<s:VGroup verticalAlign="middle" paddingLeft="5" horizontalAlign="left" paddingTop="10">			
-			<s:Label text="{Language.lookup('SearchHeaderConnectByText')}" fontStyle="italic">
+			<s:Label toolTip="{Language.lookup('SearchHeaderConnectByText')}" text="{Language.lookup('SearchHeaderConnectByText').length>22?(Language.lookup('SearchHeaderConnectByText').substr(0,20)+'..'):Language.lookup('SearchHeaderConnectByText')}" fontSize="{Language.language == Language.ENGLISH ? 12 : 11}" fontStyle="italic">
 			</s:Label>	
 			<s:RadioButton group="{Bops2}" value="and" label="{Language.lookup('BooleanOperatorsAnd')}">				
 			</s:RadioButton>	
@@ -86,10 +86,10 @@
 		<s:VGroup>			
 			<mx:FormItem right="0" label="{Language.lookup('SearchParamsBooleanExpHelpLabel')}" color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" width="100%" fontSize="12" paddingRight="5" click="formitem1_clickHandler(event)">				
 			</mx:FormItem>			
-			<mx:FormItem focusColor="#151B54" label="{Language.lookup('SearchParamsMapID')}"  fontSize="12" textAlign="left">
+			<mx:FormItem focusColor="#151B54" label="{Language.lookup('SearchParamsMapID')}" textAlign="left">
+			</mx:FormItem>
 				<s:TextInput id="mapid" fontSize="12" width="40">			
 				</s:TextInput>
-			</mx:FormItem>
 			
 		</s:VGroup>
 </s:HGroup>
@@ -102,7 +102,7 @@
 			</s:Label>		
 			<s:ComboBox id="date4" dataProvider="{opts}" selectedIndex="0">				
 			</s:ComboBox>
-			<mx:FormItem fontSize="12" horizontalAlign="right" width="120">
+			<mx:FormItem fontSize="12" horizontalAlign="right" width="{Language.language==Language.SPANISH?70:120}">
 				<s:Button label="{Language.lookup('SearchButtonSearch')}" click="search(event,0)">
 				</s:Button>
 			</mx:FormItem>
@@ -128,15 +128,16 @@
 				<s:TextInput id="lname">			
 				</s:TextInput>
 			</mx:FormItem>	
-			
+			<s:VGroup>
 			<mx:FormItem fontSize="12" horizontalAlign="right" width="120">
 				<s:Button label="{Language.lookup('SearchButtonSearch')}" click="search(event,0)">
 				</s:Button>
 			</mx:FormItem>
-			<mx:FormItem fontSize="12" horizontalAlign="right" paddingLeft="0" paddingTop="7">
+			<mx:FormItem fontSize="12" horizontalAlign="right" width="120" paddingTop="7">
 				<s:Label color="#a0a0a0" textDecoration="underline" buttonMode="true" mouseChildren="false" useHandCursor="true" text="{Language.lookup('Clear')}" click="resetSearch()">
 				</s:Label>
 			</mx:FormItem>
+				</s:VGroup>
 		</s:HGroup>
 		
 		<!--s:HGroup>
@@ -188,7 +189,7 @@
 			<mx:VRule id="connLine1" strokeColor="#a0a0a0" height="65">				
 			</mx:VRule>
 		<s:VGroup verticalAlign="middle" paddingLeft="5" horizontalAlign="left" paddingTop="10">			
-			<s:Label text="{Language.lookup('SearchHeaderConnectByText')}" fontStyle="italic" >
+			<s:Label toolTip="{Language.lookup('SearchHeaderConnectByText')}" text="{Language.lookup('SearchHeaderConnectByText').length>22?(Language.lookup('SearchHeaderConnectByText').substr(0,20)+'..'):Language.lookup('SearchHeaderConnectByText')}" fontStyle="italic" >
 			</s:Label>	
 			
 			<s:RadioButton group="{Bops4}" value="and" label="{Language.lookup('BooleanOperatorsAnd')}">				
@@ -814,6 +815,7 @@
 					searchItem.concl=Language.lookup("SearchResultsHeadersNumMaps");
 					searchItem.usersC=Language.lookup("SearchResultsHeadersNumProjs");
 					searchItem.header=true;
+					searchItem.umode=true;
 				}
 				return searchItem;
 			}

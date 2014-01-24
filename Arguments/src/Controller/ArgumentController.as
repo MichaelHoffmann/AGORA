@@ -1098,7 +1098,7 @@ package Controller
 				if(argumentPanel.model.supportingArguments.length == 0)
 			{
 					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
-					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					//addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem type="separator"/>);
 					
@@ -1108,6 +1108,7 @@ package Controller
 					addMenuData.appendChild(<menuitem type="separator"/>);					
 					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);					
 					addMenuData.appendChild(<menuitem type="separator"/>);
 					
@@ -1118,12 +1119,13 @@ package Controller
 				else
 				{
 					addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
-					addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+					//addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 					
 					addMenuData.appendChild(<menuitem type="separator"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);					
+					addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel" contentBackgroundColor="#999999"/>);
 					addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
 					
 					addMenuData.appendChild(<menuitem type="separator"/>);
@@ -1138,7 +1140,7 @@ package Controller
 			else if (argumentPanel.panelType == StatementModel.OBJECTION || argumentPanel.panelType == StatementModel.COUNTER_EXAMPLE)
 			{
 			addMenuData= <root><menuitem label={agoraParameters.ARGUMENT_FOR_CLAIM} type="TopLevel" contentBackgroundColor="#999999"/></root>;
-			addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
+			//addMenuData.appendChild(<menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 			
 			addMenuData.appendChild(<menuitem type="separator"/>);
@@ -1148,6 +1150,7 @@ package Controller
 
 			addMenuData.appendChild(<menuitem type="separator"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
+			addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel" contentBackgroundColor="#999999"/>);
 			//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 			addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
 			
@@ -1159,12 +1162,13 @@ package Controller
 			}
 			else
 			{
-				addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/></root>;
+				//addMenuData= <root><menuitem label={agoraParameters.SUPPORTING_STATEMENT} type="TopLevel" contentBackgroundColor="#999999"/></root>;
 				//addMenuData.appendChild(<menuitem label={agoraParameters.EQUIVALENT_REFORMULATION} type="TopLevel"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.FRIENDLY_AMENDMENT} type="TopLevel" contentBackgroundColor="#999999"/>);
 			
 				addMenuData.appendChild(<menuitem type="separator"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_RESOURCES} type="TopLevel" contentBackgroundColor="#999999"/>);
+				addMenuData.appendChild(<menuitem label={agoraParameters.LINK_TO_ANOTHER_MAP} type="TopLevel" contentBackgroundColor="#999999"/>);
 				addMenuData.appendChild(<menuitem label={agoraParameters.REFERENCE} type="TopLevel" contentBackgroundColor="#999999"/>);
 				
 				addMenuData.appendChild(<menuitem type="separator"/>);

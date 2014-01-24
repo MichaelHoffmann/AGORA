@@ -32,6 +32,7 @@ package components
 	import spark.components.Label;
 	import spark.components.Panel;
 	import spark.components.TextArea;
+	import spark.components.VGroup;
 	
 	public class TopPanel extends UIComponent
 	{
@@ -244,7 +245,7 @@ package components
 				b1.addEventListener(MouseEvent.CLICK, pbMap);
 				
 				var b2:Button = new Button();
-				b2.label = Language.lookup("OK");
+				b2.label = Language.lookup("Back");
 				b2.addEventListener(MouseEvent.CLICK, closePopUp);				
 				
 				cb.addChild(s);
@@ -258,8 +259,8 @@ package components
 				vb.addChild(label);
 				var hg:HGroup = new HGroup();	
 				hg.name="pb_BtnG";
-				hg.addElement(b2);
 				hg.addElement(b1);
+				hg.addElement(b2);
 				vb.addChild(hg);
 				hpanel = new Panel();
 				hpanel.title = Language.lookup('PublishMapHelp');
@@ -284,7 +285,8 @@ package components
 		private function publishMapTrigger(ev:MouseEvent):void{
 			// permissions check !
 			if(!ArgumentController.getInstance().checkPermissionsForMap()){
-				var hg:HGroup =(HGroup)((VBox)(hpanel.getElementAt(0)).getElementAt(2))
+				var vg:VBox = (VBox)(hpanel.getElementAt(0));
+				var hg:HGroup =(HGroup)(vg.getElementAt(1));
 				hg.getElementAt(0).visible=false;				
 			}
 				

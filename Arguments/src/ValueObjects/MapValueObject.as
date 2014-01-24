@@ -11,6 +11,7 @@ package ValueObjects
 		public var title:String;
 		public var username:String;
 		public var timestamp:String;
+		public var createdTime:String;
 		public var textboxes:Vector.<TextboxValueObject>;
 		public var nodeObjects:Vector.<NodeValueObject>;
 		public var connections:Vector.<ConnectionValueObject>;
@@ -57,6 +58,11 @@ package ValueObjects
 					timestamp = mapObject.timestamp;
 				}else{
 					throw new PropNotFoundError("Map does not have property 'timestamp'");
+				}
+				if(mapObject.hasOwnProperty("created_date")){
+					createdTime = mapObject.created_date;
+				}else{
+					throw new PropNotFoundError("Map does not have property 'created_date'");
 				}
 			}
 			var obj:Object;

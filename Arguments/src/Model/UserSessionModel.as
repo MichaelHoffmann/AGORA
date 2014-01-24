@@ -206,6 +206,7 @@ package Model
 				securityAnswerSet = event.result.login.secQCode;
 				securityCodeNum = event.result.login.secQCodeNum;
 				securityAnswer = event.result.login.secQCodeAns;
+				username=event.result.login.userName;
 				if(!uid){
 					dispatchEvent(new AGORAEvent(AGORAEvent.USER_INVALID));
 					return;

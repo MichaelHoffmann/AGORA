@@ -3,6 +3,7 @@ package Model
 	import Controller.LoadController;
 	import Events.AGORAEvent;
 	
+	import Skins.panel;
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.ConnectionValueObject;
 	import ValueObjects.MapValueObject;
@@ -552,6 +553,7 @@ package Model
 			//var statementXML:XML = <node ID={ID} />;
 			//requestXML.appendChild(statementXML);
 			for each(var simpStatement:SimpleStatementModel in statements){
+			//simpStatement.
 				if(simpStatement.hasOwn){
 					requestXML.appendChild(<textbox ID={simpStatement.ID} text={simpStatement.text} nodeID={ID}/>)
 				}

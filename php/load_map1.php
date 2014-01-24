@@ -51,7 +51,7 @@
 				return $output;
 		}			
 		
-		$query = "SELECT maps.map_id,maps.proj_id, maps.title,maps.map_type, category_map.category_id,projects.is_hostile,users.username,users.url FROM maps INNER JOIN users ON users.user_id = maps.user_id inner JOIN category_map on maps.map_id=category_map.map_id left join projects on projects.proj_id=category_map.category_id WHERE maps.is_deleted = 0 and maps.map_id=$mapID";
+		$query = "SELECT maps.map_id,maps.proj_id, maps.title,maps.map_type,maps.created_date, category_map.category_id,projects.is_hostile,users.username,users.url FROM maps INNER JOIN users ON users.user_id = maps.user_id inner JOIN category_map on maps.map_id=category_map.map_id left join projects on projects.proj_id=category_map.category_id WHERE maps.is_deleted = 0 and maps.map_id=$mapID";
 		$resultID = mysql_query($query, $linkID); 
 		if(!$resultID){
 			dataNotFound($output, $query);
@@ -83,6 +83,7 @@
 		$output->addAttribute("project", $row['category_id']);
 		$output->addAttribute("map_type", $row['map_type']);
 		$output->addAttribute("is_hostile", $row['is_hostile']);		
+		$output->addAttribute("created_date", $row['created_date']);
 		if($timestamp == 0){
 			$output->addAttribute("reloadRPANEL", "1");
 		}else{

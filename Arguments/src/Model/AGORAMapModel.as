@@ -94,6 +94,7 @@ package Model
 		private var _max:int;
 		private var _maxy:int;
 		private var _mapOwner:String;
+		private var _createdTime:String;
 		public function AGORAMapModel(target:IEventDispatcher=null)
 		{	
 			super(target);
@@ -151,6 +152,14 @@ package Model
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get createdTime():String
+		{
+			return _createdTime;
+		}
+		public function set createdTime(value:String):void
+		{
+			_createdTime = value;
+		}
 		public function get mapOwner():String
 		{
 			return _mapOwner;
@@ -544,6 +553,7 @@ public function get check():Boolean
 				
 				//update timestamp
 				timestamp = map.timestamp;
+				createdTime = map.createdTime;
 				name = map.title;
 				mapOwner=map.username;
 				var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;

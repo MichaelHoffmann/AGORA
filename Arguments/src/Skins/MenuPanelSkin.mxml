@@ -27,6 +27,7 @@ in accordance with the terms of the license agreement accompanying it.
     
     <fx:Script fb:purpose="styling">
         <![CDATA[
+			import classes.Language;
 		import mx.core.FlexVersion;
 		
 		/* Define the skin elements that should not be colorized. 
@@ -196,7 +197,7 @@ in accordance with the terms of the license agreement accompanying it.
                 <!-- layer 3: text -->
                 <!--- @copy spark.components.Panel#titleDisplay -->
 				<s:Group id ="moveButton">
-					<s:SWFLoader height = "30" source="@Embed('images/agoraMoveLR.swf')" buttonMode="true" mouseDown="{hostComponent.beginDrag(event)}"  left ="20"  top = "42"   />
+					<s:SWFLoader height = "30" width="80" toolTip="{Language.lookup('ThereForeImgMoveToolTip')}" source="@Embed('images/agoraMoveLR_New.swf')" buttonMode="true" mouseDown="{hostComponent.beginDrag(event)}"  left ="20"  top = "42"   />
 					<s:Label id="titleDisplay"  top="60" bottom="0" minHeight="30" width = "80"
 							 fontWeight="bold" maxDisplayedLines="1" textAlign="start"
 							 verticalAlign="middle"

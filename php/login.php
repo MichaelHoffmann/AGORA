@@ -56,6 +56,7 @@
 			$output->addAttribute("lastname", $row['lastname']);
 			$output->addAttribute("url", $row['url']);
 			$output->addAttribute("email", $row['email']);
+			$output->addAttribute("userName", $row['username']);
 			$secQCode = $row['securityQNum'];
 			$secQCodeSet = false;
 			$secQCodeAns="";

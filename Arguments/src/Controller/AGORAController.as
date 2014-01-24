@@ -23,6 +23,7 @@ package Controller
 	import classes.Language;
 	
 	import components.AGORAMenu;
+	import components.AgoradateFormatter;
 	import components.ChatWindow;
 	import components.Map;
 	import components.MapName;
@@ -40,6 +41,7 @@ package Controller
 	import mx.collections.ArrayList;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
+	import mx.controls.DateField;
 	import mx.controls.Label;
 	import mx.controls.SWFLoader;
 	import mx.controls.Text;
@@ -51,6 +53,7 @@ package Controller
 	import mx.printing.FlexPrintJob;
 	import mx.printing.FlexPrintJobScaleType;
 	import mx.states.State;
+	import mx.validators.DateValidator;
 	
 	import spark.components.Button;
 	import spark.components.Group;
@@ -813,6 +816,7 @@ package Controller
 			var flexPrintJob:FlexPrintJob = new FlexPrintJob();
 			flexPrintJob.printAsBitmap = false;
 			var created:Text=new Text();
+			var mapidtext:Text = new Text();
 			var author:Text=new Text();
 			var agoraLogo=map.agoraLogo;
 			var mapTitle=new Text();
@@ -822,12 +826,18 @@ package Controller
 			agoraInfo.htmlText=Language.lookup("PrintFootNote");
 			agoraLogo.visible=true;
 			mapTitle.text = Language.lookup("Title") +rsp.mapTitle.text;
-			var dateFormatter:DateFormatter = new DateFormatter();
+			mapidtext.text = Language.lookup("IdOfTheMapDisplay") + " "+AGORAModel.getInstance().agoraMapModel.ID;
+			var dateFormatter:AgoradateFormatter = new AgoradateFormatter();
+			dateFormatter.formatString = "YYYY-MM-DD HH:MM:SS";
+			var cdateStr = AGORAModel.getInstance().agoraMapModel.createdTime;
+			var cdate:Date = dateFormatter.parseDate(cdateStr);
 			dateFormatter.formatString = "MMM DD,  YYYY LL:NN:SS A";
 			created.text=Language.lookup("CreatedOn")+ dateFormatter.format(new Date());
 			author.text=Language.lookup("FirstAuthor")+rsp.clickableMapOwnerInformation.label;
-			author.percentWidth=100;
-			mapTitle.percentWidth=100;
+			author.percentWidth=150;
+			mapidtext.percentWidth=150;
+			mapTitle.percentWidth=150;
+			created.percentWidth=150;
 			agoraLogo.height=50;
 			var logoAndInfo:HGroup=new HGroup;
 			logoAndInfo.percentWidth==100;
@@ -839,6 +849,7 @@ package Controller
 				printIt.addElement(logoAndInfo);
 				printIt.addElement(mapTitle);
 				printIt.addElement(author);
+				printIt.addElement(mapidtext);
 				printIt.addElement(created);
 				printIt.gap=0;
 				var tempZoom =map.zoomer.value;

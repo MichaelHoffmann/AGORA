@@ -42,6 +42,7 @@
 					<!--label for displaying 'It is not the case that' for negated statements-->
 					<s:Label id="negatedLbl"/>
 					<s:Label id = "displayTxt" minHeight="50" minWidth="50"/>
+					<s:Label id = "displayTxtLink"/>
 				</s:VGroup>
 			</s:VGroup>
 			
@@ -140,6 +141,7 @@
 			import mx.managers.DragManager;
 			import mx.managers.PopUpManager;
 			import mx.skins.Border;
+			import mx.utils.StringUtil;
 			
 			import spark.components.Button;
 			import spark.components.Group;
@@ -614,6 +616,15 @@
 					navigateToURL(u,"_blank");
 				}
 			}
+			protected function onLinkMap(event:MouseEvent):void {
+				if(panelType == StatementModel.LINKTOMAP)
+				{
+					if(displayTxtLink.text.indexOf("(")!=-1){
+						var mapId:String = StringUtil.trim(displayTxt.text);	
+						ArgumentController.getInstance().loadMap(mapId);
+					}
+				}
+			}
 			protected function keyEntered(event: KeyboardEvent):void
 			{
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
@@ -735,8 +746,8 @@
 						displayTxt.text = "[" + Language.lookup("ReferenceTo") + "]";
 					}
 					else if(model.statementFunction == StatementModel.LINKTOMAP){
-						displayTxt.text = "["+Language.lookup("AddLinkToMap") +"]";
-						
+						displayTxt.text = "["+Language.lookup("AddLinkToMapEnterMapID") +"]";
+						displayTxtLink.text = "";
 					}
 					else if(model.statementFunction == StatementModel.DEFINITION){
 						displayTxt.text = "["+Language.lookup("EnterDef") +"]";
@@ -790,8 +801,8 @@
 						displayTxt.text = "[" + Language.lookup("ReferenceTo") + "]";
 					}
 					else if(model.statementFunction == StatementModel.LINKTOMAP){
-						displayTxt.text = "["+Language.lookup("AddLinkToMap") +"]";
-						
+						displayTxt.text = "["+Language.lookup("AddLinkToMapEnterMapID") +"]";
+						displayTxtLink.text = "";	
 					}
 					else if(model.statementFunction == StatementModel.LINKTORESOURCES){
 						displayTxt.text = "["+Language.lookup("EnterURL") +"]";
@@ -823,6 +834,21 @@
 						displayTxt.addEventListener(MouseEvent.CLICK,onLink);
 						displayTxt.setStyle("textDecoration", "underline");
 						displayTxt.setStyle("color",0x0033FF);
+					}else if(panelType == StatementModel.LINKTOMAP)
+					{
+						displayTxt.text = value;						
+						displayTxtLink.text = "";
+						if(value.indexOf("(")!=-1){
+							displayTxt.text= value.substring(0,value.indexOf("(")-1);
+							displayTxtLink.text= value.substring(value.indexOf("("));
+							displayTxtLink.setStyle("buttonMode", true);
+							displayTxtLink.setStyle("useHandCursor", true);
+							displayTxtLink.setStyle("mouseChildren", false);
+							displayTxtLink.addEventListener(MouseEvent.CLICK,onLinkMap);
+							displayTxtLink.setStyle("textDecoration", "underline");
+							displayTxtLink.setStyle("color",0x0033FF);
+							displayTxtLink.setVisible(true);
+						}						
 					}
 				}
 			}
@@ -1139,6 +1165,7 @@
 							
 						}else{setDisplayStatement(model.statement.text);
 							group.addElement(displayTxt);
+							group.addElement(displayTxtLink);
 						}
 						if(state == DISPLAY){
 							//remove inputs
@@ -1150,7 +1177,11 @@
 							//node was changed from positive
 							//to negative
 							setDisplayStatement(model.statement.text);
-							group.addElement(displayTxt);
+							var temp:HGroup = new HGroup();
+							temp.addElement(displayTxt);
+							temp.addElement(displayTxtLink);
+							group.addElement(temp);
+							//group.addElement(displayTxtLink);
 							displayTxt.minHeight=10;
 							displayTxt.minWidth=100;
 							//add button
@@ -1200,6 +1231,7 @@
 					group.removeAllElements();
 					state = DISPLAY;
 					group.addElement(displayTxt);
+					group.addElement(displayTxtLink);
 				}
 					
 					//If the statement is an enabler.

@@ -108,6 +108,34 @@ List of variables for insertion:
 			$resultID = mysql_query($query, $linkID);
 			$row = mysql_fetch_assoc($resultID);
 			$dbUID = $row["user_id"];
+			// check for Map Link
+			$queryM = "SELECT * FROM nodes WHERE node_id=$nodeID";
+			$resultIDM = mysql_query($queryM, $linkID);
+			$rowM = mysql_fetch_assoc($resultIDM);
+			$nodeTypeM = $rowM['nodetype_id'];
+			if($nodeTypeM == 11 && $text!=""){
+				// check if text is a proper map name
+				// long check -- mapid check
+				// get name and convert text and save
+				$pos = strpos($text, "(");
+				if (($pos !== false)) {
+						$text = substr($text, 0, $pos-1);
+				}
+				if (is_numeric($text)) {
+					// check for Map Link
+					$text=trim($text);
+					$queryM = "SELECT * FROM maps WHERE map_id=$text";					
+					$resultIDM = mysql_query($queryM, $linkID);
+					if($resultIDM!=null && mysql_num_rows($resultIDM)>0){
+							$rowM = mysql_fetch_assoc($resultIDM);
+							$text = $text." (".$rowM['title'].")";												
+					}else{
+						$text = "";
+					}					
+				}else{					
+						$text = "";						
+				}					
+			}
 			/*if ($is_project == 0)
 			{
 				if($userID == $dbUID){
