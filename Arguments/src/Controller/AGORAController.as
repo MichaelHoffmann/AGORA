@@ -831,7 +831,7 @@ package Controller
 			dateFormatter.formatString = "YYYY-MM-DD HH:MM:SS";
 			var cdateStr = AGORAModel.getInstance().agoraMapModel.createdTime;
 			var cdate:Date = dateFormatter.parseDate(cdateStr);
-			dateFormatter.formatString = "MMM DD,  YYYY LL:NN:SS A";
+			dateFormatter.formatString = "MMM DD,  YYYY: LL:NN:SS A";
 			created.text=Language.lookup("CreatedOn")+ dateFormatter.format(new Date());
 			author.text=Language.lookup("FirstAuthor")+rsp.clickableMapOwnerInformation.label;
 			author.percentWidth=150;

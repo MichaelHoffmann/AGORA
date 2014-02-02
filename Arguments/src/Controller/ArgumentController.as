@@ -76,6 +76,7 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATION_FAILED, onMapCreatedFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_SAVEDAS, onMapSaveAsPass);
+			model.agoraMapModel.addEventListener(AGORAEvent.MAP_FROMLINK, onMapSaveAsPassNoConfirm);
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_SAVEDASFAULT, onMapSaveAsFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
@@ -256,7 +257,11 @@ package Controller
 			var mapObj = event.eventData;
 			AGORAController.getInstance().unfreeze();
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
-			Alert.show(Language.lookup("SaveAsMapSuccessMsg"),"Map saved",Alert.YES|Alert.NO, null, function(event:CloseEvent){
+			var mapStringCong:String = Language.lookup("SaveAsMapSuccessMsg");
+			if(mapObj.hasOwnProperty("message")){
+				mapStringCong = Language.lookup("LinkAsMapSuccessMsg");
+			}
+			Alert.show(mapStringCong,"Map saved",Alert.YES|Alert.NO, null, function(event:CloseEvent){
 				if(event.detail == Alert.YES) {
 					var rsp:RightSidePanel= FlexGlobals.topLevelApplication.rightSidePanel;
 					rsp.clickableMapOwnerInformation.label = mapObj.username;
@@ -275,6 +280,26 @@ package Controller
 					ArgumentController.getInstance().loadMap(mapObj.ID);
 				}
 			});	
+			}
+		protected function onMapSaveAsPassNoConfirm(event:AGORAEvent):void{
+			var mapObj = event.eventData;
+			AGORAController.getInstance().unfreeze();
+			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
+					var rsp:RightSidePanel= FlexGlobals.topLevelApplication.rightSidePanel;
+					rsp.clickableMapOwnerInformation.label = mapObj.username;
+					rsp.mapTitle.text=mapObj.title;
+					rsp.clickableMapOwnerInformation.toolTip = 
+					mapObj.url + '\n' + Language.lookup('MapOwnerURLWarning');
+					rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+						var urllink:String = mapObj.url;
+						if(urllink!=null && urllink.indexOf("http://") ==-1)
+							urllink = "http://"+urllink;			
+						navigateToURL(new URLRequest(urllink), 'quote');
+					},false, 0, false);
+					rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + mapObj.ID;
+					rsp.invalidateDisplayList();
+					model.rechain=true;
+					ArgumentController.getInstance().loadMap(mapObj.ID);
 			}
 		
 		//-------------------Start with Claim----------------------------//

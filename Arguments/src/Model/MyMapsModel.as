@@ -1,13 +1,20 @@
 package Model
 {
+	import Controller.ArgumentController;
 	import Events.AGORAEvent;
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	import components.RightSidePanel;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.events.MouseEvent;
+	import flash.net.URLRequest;
 	
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
@@ -17,6 +24,7 @@ package Model
 		private var myMapsXML:XML;
 		private var requestMapsService:HTTPService;
 		private var removeMapsService:HTTPService;
+		private var permMapServices:HTTPService;
 		
 		public function MyMapsModel(target:IEventDispatcher=null)
 		{

@@ -592,7 +592,7 @@ package components
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72+15);
-											textLabel[obj.ID].text = Language.lookup("SeeAlsoArgumentMap");
+											textLabel[obj.ID].text = Language.lookup("See");
 											textLabel[obj.ID].width=50;
 											textLabel[obj.ID].height=20;
 										}

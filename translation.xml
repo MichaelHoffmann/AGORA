@@ -133,6 +133,18 @@ Additional languages can be added later. -->
 		<SPAN text="Publish Map ! ?"/><!--TODO: Translate SPAN -->
 	</PublishMapHelp>
 	
+	<PublishMapHelpNoAccess>
+		<EN-US text="You can publish or move a map only if you are the creator of the map" />
+		<RUS text="You can publish or move a map only if you are the creator of the map" /><!--TODO: Translate RUS -->
+		<GER text="You can publish or move a map only if you are the creator of the map" /><!--TODO: Translate GER -->
+		<SPAN text="You can publish or move a map only if you are the creator of the map"/><!--TODO: Translate SPAN -->
+	</PublishMapHelpNoAccess>
+	<MapHelpNoAccess>
+		<EN-US text="You donot have access to this map" />
+		<RUS text="You donot have access to this map" /><!--TODO: Translate RUS -->
+		<GER text="You donot have access to this map" /><!--TODO: Translate GER -->
+		<SPAN text="You donot have access to this map"/><!--TODO: Translate SPAN -->
+	</MapHelpNoAccess>
 	<PublishMapbtn>
 		<EN-US text="Publish" />
 		<RUS text="Publish" /><!--TODO: Translate RUS -->
@@ -184,10 +196,10 @@ Additional languages can be added later. -->
  </NewMapToolTip>
  
  <NewMapToolTiphtml>
-	 <EN-US text="Every map will be created in your private folder to which only you have access. If you want to publish your map&lt;br&gt;in the World of Arguments,close the map through 'Save and Home.' Then open the tab 'My maps' and search&lt;br&gt;for the map you created in the left column.Click on the blue button to the right of the map name that specifies the&lt;br&gt;location of your map, and click through the categories until you find the place where you want to&lt;br&gt;publish your map." />
-	 <RUS text="Every map will be created in your private folder to which only you have access. If you want to publish your map&lt;br&gt;in the World of Arguments,close the map through 'Save and Home.' Then open the tab 'My maps' and search&lt;br&gt;for the map you created in the left column.Click on the blue button to the right of the map name that specifies the&lt;br&gt;location of your map, and click through the categories until you find the place where you want to&lt;br&gt;publish your map." /><!--TODO: Translate RUS -->
-	 <GER text="Jedes Argument wird in deinem privaten Ordner erstellt zu dem nur du Zugang hast. Wenn du dein Argument in der&lt;br&gt;Welt der Argumente veröffentlichen willst, schließe es mit 'Ab nach Hause.' Dann öffne 'Meine Argumente'&lt;br&gt;und suche nach dem Argument welches du konstruiert hast in der linken Spalte. Klicke auf den blauen Funktionsknopf&lt;br&gt;rechts vom Namen der anzeigt, wo dein Argument derzeit gespeichert ist, und klicke dich durch die&lt;br&gt;Kategorien bis du die Stelle findest, wo du dein Argument veröffentlichen willst." />
-		<SPAN text="Every map will be created in your private folder to which only you have access. If you want to publish your map&lt;br&gt;in the World of Arguments,close the map through 'Save and Home.' Then open the tab 'My maps' and search&lt;br&gt;for the map you created in the left column.Click on the blue button to the right of the map name that specifies the&lt;br&gt;location of your map, and click through the categories until you find the place where you want to&lt;br&gt;publish your map."/><!--TODO: Translate SPAN -->
+	 <EN-US text="If you want to publish your map in the World of Arguments or move it to another location, you can either click on&lt;br&gt;the button 'Publish' below or you close the map through 'Save and Home,' search for the map in 'My maps' and&lt;br&gt; click on the blue button to the right of the map name.Both ways a window will open that shows the structure of &lt;br&gt;categories in the World of Arguments. Click through these categories until you find the place where you want to &lt;br&gt;publish or move your map." />
+	 <RUS text="If you want to publish your map in the World of Arguments or move it to another location, you can either click on&lt;br&gt;the button 'Publish' below or you close the map through 'Save and Home,' search for the map in 'My maps' and&lt;br&gt; click on the blue button to the right of the map name.Both ways a window will open that shows the structure of &lt;br&gt;categories in the World of Arguments. Click through these categories until you find the place where you want to &lt;br&gt;publish or move your map." /><!--TODO: Translate RUS -->
+	 <GER text="Wenn du dein Argument in der Welt der Argumente veröffentlichen willst oder es an einen anderen Ort&lt;br&gt;verschieben willst kannst du entweder unten auf 'Veröffentliche' klicken oder du schließt es mit 'Ab nach Hause',&lt;br&gt;suchst es dann in 'Meine Argumente' und klickst dann auf das blaue Feld rechts vom Namen des Argumentes.&lt;br&gt;In beiden Fällen öffnet sich ein Fenster, das die Struktur der Kategorien in der Welt der Argumente zeigt.Klicke&lt;br&gt;dich durch diese Kategorien bis du die Stelle findest, wo du dein Argument veröffentlichen oder hinschieben willst." />
+	 <SPAN text="If you want to publish your map in the World of Arguments or move it to another location, you can either click on&lt;br&gt;the button 'Publish' below or you close the map through 'Save and Home,' search for the map in 'My maps' and&lt;br&gt; click on the blue button to the right of the map name.Both ways a window will open that shows the structure of &lt;br&gt;categories in the World of Arguments. Click through these categories until you find the place where you want to &lt;br&gt;publish or move your map"/><!--TODO: Translate SPAN -->
  </NewMapToolTiphtml>
  
  <IsIn>
@@ -985,8 +997,8 @@ Additional languages can be added later. -->
 		<SPAN text="Primer autor/a" />
 	</FirstAuthor>
 	<CreatedOn>
-		<EN-US text="Created on: " />
-		<RUS text="Created on: " /><!-- TODO Translate RUS-->
+		<EN-US text="PDF Created on: " />
+		<RUS text="PDF Created on: " /><!-- TODO Translate RUS-->
 		<GER text="Datum: " />
 		<SPAN text="Fecha: " />
 	</CreatedOn>
@@ -3790,6 +3802,12 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<SPAN text="El mapa ha sido guardado con el nombre que le has dado en tu espacio privado de proyectos . ¿Quieres editar el mapa que acabas de crear?" />
 	</SaveAsMapSuccessMsg>
 	
+	<LinkAsMapSuccessMsg>
+		<EN-US text="Do you want to move to this linked map" />
+		<RUS text="Do you want to move to this linked map." /><!--TODO Translate RUS-->
+		<GER text="Do you want to move to this linked map." /><!--TODO Translate GER-->
+		<SPAN text="Do you want to move to this linked map." /><!--TODO Translate SPAN -->
+	</LinkAsMapSuccessMsg>
 	<MapHistoryPreviousOwner>
 		<EN-US text="Previous Owner :" />
 		<RUS text="Previous Owner :" /><!--TODO Translate RUS-->

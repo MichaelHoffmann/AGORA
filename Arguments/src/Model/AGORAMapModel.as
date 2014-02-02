@@ -1,6 +1,7 @@
 package Model
 {
 	import Controller.AGORAController;
+	import Controller.ArgumentController;
 	import Controller.LoadController;
 	import Controller.UserSessionController;
 	import Controller.logic.LogicFetcher;
@@ -64,6 +65,7 @@ package Model
 		private var loadMapService: HTTPService;
 		private var updatePositionsService:HTTPService;
 		private var updateMapInfoService:HTTPService;
+		private var permMapServices:HTTPService;		
 		
 		public var moveToProject:Boolean;
 		private var _name:String;
@@ -77,6 +79,7 @@ package Model
 		private var _projID:int;
 		private var _tempprojID:int;
 		private var _tempprojectID:int;
+		private var _tempMapID:int;
 		private var _projectID:int;
 		private var _parentProjID:int;
 		private var _projectPassword:String;
@@ -148,10 +151,23 @@ package Model
 			saveMapAsService.addEventListener(FaultEvent.FAULT, onFault);
 			reinitializeModel();
 			statementWidth = 8;
+			//create permissions checker map info service
+			permMapServices = new HTTPService;
+			permMapServices.url = AGORAParameters.getInstance().mapPermURL;
+			permMapServices.addEventListener(ResultEvent.RESULT, onMapPermInfoRec);
+			permMapServices.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
 		//-------------------------Getters and Setters--------------------------------//
 		
+		public function get tempMapID():int
+		{
+			return _tempMapID;
+		}
+		public function set tempMapID(value:int):void
+		{
+			_tempMapID = value;
+		}
 		public function get createdTime():String
 		{
 			return _createdTime;
@@ -429,6 +445,20 @@ public function get check():Boolean
 		public function saveAsMap(mapName:String,mapId:String):void{
 			var usModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;			
 			saveMapAsService.send({uid:usModel.uid, pass_hash:usModel.passHash, map_id:mapId,newName:mapName});
+		}
+		public function checkPerm(mapId:String):void{
+			var userModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			AGORAModel.getInstance().agoraMapModel.tempMapID=new int(mapId);
+			permMapServices.send({uid: userModel.uid, mapid:mapId});
+		}
+		public function onMapPermInfoRec(event:ResultEvent):void{
+			if(event.result.map.hasOwnProperty("error")){
+				Alert.show(Language.lookup('MapHelpNoAccess'));
+			}else{
+				var xmlForMap:XML = <map ID={event.result.map.ID} message="true"></map>;
+				dispatchEvent(new AGORAEvent(AGORAEvent.MAP_SAVEDAS, xmlForMap, event.result.map));
+				//	ArgumentController.getInstance().loadMap("9154");
+			}			
 		}
 		protected function onMapSaveAsCreated(resultEvent:ResultEvent):void{
 			if(!resultEvent.result.map.hasOwnProperty('error')){

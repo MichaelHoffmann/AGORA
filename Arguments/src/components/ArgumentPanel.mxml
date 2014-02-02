@@ -42,7 +42,7 @@
 					<!--label for displaying 'It is not the case that' for negated statements-->
 					<s:Label id="negatedLbl"/>
 					<s:Label id = "displayTxt" minHeight="50" minWidth="50"/>
-					<s:Label id = "displayTxtLink"/>
+					<s:Label id = "displayTxtLink" minWidth="50"/>
 				</s:VGroup>
 			</s:VGroup>
 			
@@ -106,6 +106,7 @@
 			
 			import Model.AGORAMapModel;
 			import Model.AGORAModel;
+			import Model.MyMapsModel;
 			import Model.SimpleStatementModel;
 			import Model.StatementModel;
 			import Model.UserSessionModel;
@@ -621,7 +622,7 @@
 				{
 					if(displayTxtLink.text.indexOf("(")!=-1){
 						var mapId:String = StringUtil.trim(displayTxt.text);	
-						ArgumentController.getInstance().loadMap(mapId);
+						AGORAModel.getInstance().agoraMapModel.checkPerm(mapId);
 					}
 				}
 			}
@@ -837,6 +838,8 @@
 					}else if(panelType == StatementModel.LINKTOMAP)
 					{
 						displayTxt.text = value;						
+						displayTxt.width = 50;
+						displayTxtLink.maxWidth = 200;
 						displayTxtLink.text = "";
 						if(value.indexOf("(")!=-1){
 							displayTxt.text= value.substring(0,value.indexOf("(")-1);
