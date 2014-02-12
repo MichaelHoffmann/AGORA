@@ -721,6 +721,12 @@ package Controller
 
 			if(!AGORAModel.getInstance().requested){
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
+				// check for collabs
+				if(FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.isNodebeingUsed(model.ID)){				
+					return;
+				}
+				// send a signal
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && model.objections.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
 						if(/*model.statement.text!="" &&*/ checkArgUnderConstruction()){
@@ -794,6 +800,10 @@ package Controller
 		}
 		
 		public function onStatementDeleted(event:AGORAEvent):void{
+			// clear here
+			// send a signal
+			var statementModel:StatementModel = StatementModel(event.eventData);
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(statementModel.ID,true);
 			AGORAModel.getInstance().requested = false;
 			map.sBar.hideStatus();
 			LoadController.getInstance().fetchMapData();
@@ -1215,6 +1225,11 @@ package Controller
 			addMenu.show(point.x, point.y);
 			
 			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addHoverMenuClicked);
+			addMenu.addEventListener(MenuEvent.MENU_HIDE,function(e:Event){
+				// send a signal
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(argumentPanel.model.ID,true);
+					// clear here
+			});
 		}
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{

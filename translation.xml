@@ -3869,6 +3869,12 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<GER text="GA" />
 		<SPAN text="AA" />
 	</MapHistoryPA>
+	<MapCollaborators>
+		<EN-US text="Collaborators Online" />
+		<RUS text="Collaborators Online" /><!--TODO Translate RUS-->
+		<GER text="Collaborators Online" /><!--TODO Translate GER-->
+		<SPAN text="Collaborators Online" /><!--TODO Translate SPAN-->
+	</MapCollaborators>
 	
 	<!-- End of entries for Map Save As -->
 	
@@ -4228,6 +4234,12 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<GER text="grab and move to left or right" /><!--TODO Translate GER -->
 		<SPAN text="grab and move to left or right"/><!--TODO Translate SPAN -->
 	</ThereForeImgMoveToolTip>
+	<AnotherCollaboratorLockedThisNode>
+	<EN-US text="Another collaborator is currently modifying this node." />
+		<RUS text="Another collaborator is currently modifying this node." /><!--TODO Translate RUS -->
+		<GER text="Another collaborator is currently modifying this node." /><!--TODO Translate GER -->
+		<SPAN text="Another collaborator is currently modifying this node."/><!--TODO Translate SPAN -->
+	</AnotherCollaboratorLockedThisNode>
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->
 

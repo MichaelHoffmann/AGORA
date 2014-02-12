@@ -16,6 +16,7 @@ package Controller
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 
 	public class ViewController
 	{
@@ -43,6 +44,12 @@ package Controller
 		//---------------------------- Editing Text -------------------------------------//
 		public function changeToEdit(argumentPanel:ArgumentPanel):void{
 			//if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === argumentPanel.author.toLocaleLowerCase()){
+			argumentPanel.model.ID;
+			if(FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.isNodebeingUsed(argumentPanel.model.ID)){				
+				return;
+			}
+			// send a signal
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(argumentPanel.model.ID);
 				argumentPanel.toEditState();
 			//}
 		}

@@ -44,6 +44,9 @@
 					<s:Label id = "displayTxt" minHeight="50" minWidth="50"/>
 					<s:Label id = "displayTxtLink" minWidth="50"/>
 				</s:VGroup>
+				<s:Group width="200">
+					<s:Label id = "nodeCollabStatus" visible="false" minWidth="10" toolTip="" height="10" backgroundColor="#66BA06" right="0"/>					
+				</s:Group>
 			</s:VGroup>
 			
 			<!-- branch option control-->
@@ -572,6 +575,12 @@
 			protected function onAddBtnClicked(event:MouseEvent):void{
 			var type:String = AGORAModel.getInstance().projType;
 			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				// check for collabs
+				if(FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.isNodebeingUsed(model.ID)){				
+					return;
+				}
+				// send a signal
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 			ArgumentController.getInstance().showAddHoverMenu(this);
 			}
 			else {
@@ -601,7 +610,10 @@
 			protected function doneBtnClicked(event:MouseEvent):void{
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 					
+					// clear here
 					ArgumentController.getInstance().saveText(model);
 				} else {
 					Alert.show(Language.lookup("GuestEditMapError"));
@@ -942,6 +954,9 @@
 				}
 			}
 			public function addHoverMenuClicked(event:MenuEvent):void{
+				// clear here
+				// send a signal
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
 					//	if(this.panelType != StatementModel.INFERENCE)

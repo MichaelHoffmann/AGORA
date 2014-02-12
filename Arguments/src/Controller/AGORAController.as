@@ -960,6 +960,8 @@ package Controller
 			//timers
 			map.agoraMap.timer.reset();
 			menu.timer.start();
+			//collab
+			map.agoraMap.collabtimer.reset();
 		}
 		
 		public function showMap():void{
