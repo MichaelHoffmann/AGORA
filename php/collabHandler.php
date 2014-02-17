@@ -9,7 +9,7 @@ ini_set ( 'display_errors' , 1 );
 set_time_limit ( 0 );
 
 // Set the ip and port we will listen on
-$address = 'agora.gatech.edu' ; $port = 1768 ;
+$address = 'localhost' ; $port = 1768 ;
 // Create a TCP Stream socket
 $sock = socket_create ( AF_INET , SOCK_STREAM , 0 );
 // Bind the socket to an address/port
@@ -84,6 +84,24 @@ while ( true )
 							$pos = strpos($ustr,":");
 							$nodeid = substr($ustr,$pos+1,strlen($ustr));
 							$ustr = substr($ustr,0,$pos);
+						}else if($uname == "SendCollabs"){
+						// tell all clients new client has come in ..
+						echo "COLLAB *****".$msg;
+						$stat = array_key_exists($msg, $mapclients);
+						if($stat) {
+							$arrclients = $mapclients[$msg];
+							foreach ( $arrclients AS $k => $v )
+							{
+								$index = array_search($v, $read);
+								if(!$index)
+									unset($arrclients[$k]);
+								else if($v!=$socket){
+									socket_write($v, "SendCollabs", strlen("SendCollabs"));
+									echo "COLLAB *****".$msg;
+								}
+							}
+						}
+						// telling complete ..
 						}
 						
 					if($uname == "init" || $uname == "initNode" || $uname == "initNodeC"){
@@ -214,6 +232,23 @@ while ( true )
 						$msgs = "nodeInfo:";
 						$nodelinknames = $nodenames[$msg];
 						
+						// tell all clients new client has come in ..
+						if($sendNodeInfo){
+							$stat = array_key_exists($msg, $mapclients);
+						if($stat) {
+							$arrclients = $mapclients[$msg];
+							foreach ( $arrclients AS $k => $v )
+							{
+								$index = array_search($v, $read);
+								if(!$index)
+									unset($arrclients[$k]);
+								else if($v!=$socket){
+									socket_write($v, "GetC", strlen("GetC"));
+								}
+							}
+						}
+						}						
+						// telling complete ..
 						if($sendNodeInfo && $nodelinknames!=null){
 						echo $sendNodeInfo." -- ".$nodelinknames;
 							foreach ($nodelinknames as $key => $value) {
