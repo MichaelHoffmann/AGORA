@@ -34,7 +34,7 @@ package components
 	
 	public class CollabSocketHandler extends EventDispatcher
 	{
-		public var host:String = 'localhost'; // change 
+		public var host:String = 'agora.gatech.edu'; // change -- agora.gatech.edu
 		public var mapport:int    = 1768; //for global 1767; 
 		public var times:int =0;			
 		protected var socket:Socket;
@@ -106,6 +106,10 @@ package components
 				for(var i=1;i<endIn;i++){
 					if(data[i].toString().length>0)
 						message+=" "+data[i]+",";
+				}
+				var ifNum:Boolean = isNaN(Number(data[0]));
+				if(ifNum){
+					return;
 				}
 				numCollabs = data[0];
 				FlexGlobals.topLevelApplication.rightSidePanel.onlineBox.text = data[0]+" "+Language.lookup("MapCollaborators");
