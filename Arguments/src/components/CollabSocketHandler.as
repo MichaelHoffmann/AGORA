@@ -1,6 +1,7 @@
 package components
 {
 	import Controller.AGORAController;
+	import Controller.LoadController;
 	import Controller.UserSessionController;
 	
 	import Model.AGORAModel;
@@ -33,12 +34,13 @@ package components
 	
 	public class CollabSocketHandler extends EventDispatcher
 	{
-		public var host:String = 'agora.gatech.edu'; // change 
+		public var host:String = 'localhost'; // change 
 		public var mapport:int    = 1768; //for global 1767; 
 		public var times:int =0;			
 		protected var socket:Socket;
 		protected var collabSocket:Socket;
 		private var _mapId:String;
+		private var numCollabs:int;
 		public var timer:Timer;
 		public var nodesUsed:Dictionary;
 		public function CollabSocketHandler(){
@@ -55,6 +57,7 @@ package components
 		public function set mapId(value:String):void
 		{
 			_mapId = value;
+			numCollabs=0;
 		}
 
 		public function MapCollabHandler()
@@ -75,6 +78,17 @@ package components
 			var data:Array = message.split(":");
 			if(data.length>0){
 				var message = "";
+				// Get recent Collab count
+				if(data.indexOf("GetC")==0){
+					sendInfoMessage();
+					return;
+				}
+				// Get latest data added
+				if(data.indexOf("SendCollabs")==0){
+			//**		Alert.show(data+"");					
+					LoadController.getInstance().fetchMapData();		
+					return;
+				}
 				var posN:int = data.indexOf("nodeInfo");
 				var oldNodes:Dictionary = nodesUsed;
 				
@@ -93,6 +107,7 @@ package components
 					if(data[i].toString().length>0)
 						message+=" "+data[i]+",";
 				}
+				numCollabs = data[0];
 				FlexGlobals.topLevelApplication.rightSidePanel.onlineBox.text = data[0]+" "+Language.lookup("MapCollaborators");
 				FlexGlobals.topLevelApplication.rightSidePanel.onlineBox.toolTip = message;
 				FlexGlobals.topLevelApplication.rightSidePanel.onlineBoxHtml.text = message;				
@@ -131,6 +146,14 @@ package components
 				}					
 				delete oldNodes[key];
 			}
+		}
+		public function sendCollabsMessage():void{
+			var usm:UserSessionModel= AGORAModel.getInstance().userSessionModel;	
+			if(collabSocket==null || !collabSocket.connected || numCollabs<=0){
+				return;
+			}
+			collabSocket.writeUTFBytes("SendCollabs:"+mapId+":"+usm.username);
+			collabSocket.flush(); // Windows needs this
 		}
 		
 		public function sendInfoMessage():void {

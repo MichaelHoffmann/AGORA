@@ -205,6 +205,9 @@ package Controller
 				rsp.mapTitle.enabled=false;
 			}
 		 
+			var  chatbox:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
+			chatbox.mapId = mapMetaData.mapID+"";
+			chatbox.initMapChat(true);
 			// update current view 
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
@@ -329,7 +332,7 @@ package Controller
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
 			model.requested = false;
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		protected function onFirstClaimFailed(event:AGORAEvent):void{
@@ -532,7 +535,7 @@ package Controller
 		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			model.requested = false;
-			LoadController.getInstance().fetchMapData(); 
+			LoadController.getInstance().fetchMapData(true); 
 		}
 		
 		protected function onArgumentCreationFailed(event:AGORAEvent):void{
@@ -597,7 +600,7 @@ package Controller
 		
 		protected function onReasonAdded(event:AGORAEvent):void{
 			AGORAModel.getInstance().requested = false;
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		//----------------- Construct Argument -----------------------------//
@@ -725,8 +728,8 @@ package Controller
 				if(FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.isNodebeingUsed(model.ID)){				
 					return;
 				}
-				// send a signal
-				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
+				
+				
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && model.objections.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
 						if(/*model.statement.text!="" &&*/ checkArgUnderConstruction()){
@@ -744,6 +747,8 @@ package Controller
 							}
 						}
 						*/
+						// send a signal
+						FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 						map.sBar.displayLoading();
 						model.deleteMe();
 					}
@@ -766,6 +771,8 @@ package Controller
 					if(checkArgUnderConstruction()){
 						return;
 					}
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
@@ -778,6 +785,8 @@ package Controller
 					if(checkArgUnderConstruction()){
 						return;
 					}
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
@@ -790,6 +799,8 @@ package Controller
 					if(checkArgUnderConstruction()){
 						return;
 					}
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
@@ -802,11 +813,12 @@ package Controller
 		public function onStatementDeleted(event:AGORAEvent):void{
 			// clear here
 			// send a signal
-			var statementModel:StatementModel = StatementModel(event.eventData);
+		/*	var statementModel:StatementModel = StatementModel(event.eventData);
 			FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(statementModel.ID,true);
+		*/
 			AGORAModel.getInstance().requested = false;
 			map.sBar.hideStatus();
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		protected function onArgumentDeleted(event:AGORAEvent):void{
@@ -841,7 +853,7 @@ package Controller
 			argumentPanel.state = ArgumentPanel.DISPLAY;
 			CursorManager.removeAllCursors();
 			onTextEntered(argumentPanel);
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		//------------------- configuration functions -----------------//
@@ -906,16 +918,16 @@ package Controller
 			}
 		}
 		protected function onObjectionCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		protected function onDefeatCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		protected function onCommentCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		protected function onAmendmentCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		protected function onObjectionCreationFailed(event:AGORAEvent):void{

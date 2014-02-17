@@ -43,10 +43,12 @@ package Controller
 		}
 		
 		//-----------------Update Map -----------------------------------//
-		public function fetchMapData():void{
+		public function fetchMapData(tellCollab:Boolean=false):void{						
 			if(!model.requested){
 				sbar.displayLoading();
 				model.requested = true;
+				if(tellCollab)
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendCollabsMessage();
 				model.agoraMapModel.loadMapModel();
 			}
 		}

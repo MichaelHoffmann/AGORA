@@ -644,6 +644,8 @@
 					if(event.keyCode == Keyboard.ENTER)	
 					{				
 						if(state == EDIT){
+							// send a signal
+							FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 							ArgumentController.getInstance().saveText(model);
 						}
 					}
