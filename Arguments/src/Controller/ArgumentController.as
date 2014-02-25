@@ -915,7 +915,6 @@ package Controller
 			argumentPanel.state = ArgumentPanel.DISPLAY;
 			CursorManager.removeAllCursors();
 			ArgumentController.getInstance().constructArgument(statementModel.argumentTypeModel); //directly opens the argument box
-			LoadController.getInstance().fetchMapData();
 		}
 		
 		//------------------- configuration functions -----------------//

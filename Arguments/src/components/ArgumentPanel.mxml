@@ -956,12 +956,15 @@
 				}
 			}
 			public function addHoverMenuClicked(event:MenuEvent):void{
+				// clear here
+				// send a signal
 				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
 						ArgumentController.getInstance().addSupportingArgumentTry(model);	//vinodh
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
+						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
 					}
 					else if(event.label == agoraLabels.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE){
 						if(this.statementType != "Particular")

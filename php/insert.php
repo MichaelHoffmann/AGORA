@@ -124,6 +124,22 @@ List of variables for insertion:
 				if (is_numeric($text)) {
 					// check for Map Link
 					$text=trim($text);
+					// check for map permissions first
+					$queryP = "SELECT maps.map_id,maps.proj_id, maps.title,maps.map_type,maps.created_date, category_map.category_id,projects.is_hostile,users.username,users.url FROM maps INNER JOIN users ON users.user_id = maps.user_id inner JOIN category_map on maps.map_id=category_map.map_id left join projects on projects.proj_id=category_map.category_id WHERE maps.is_deleted = 0 and maps.map_id=$text";
+					$resultIDP = mysql_query($queryP, $linkID);
+					if($resultIDP && mysql_num_rows($resultIDP)!=0){
+					$row = mysql_fetch_assoc($resultIDP);
+					if($row['proj_id']){
+						//Map is in a project.
+						//Confirm that the project allows the user to open a map
+						if(!isUserInMapProject($userID, $text, $linkID)){
+							$text="";
+						}
+					}
+					}else{
+						$text="";
+					}			
+					if($text!=""){ 
 					$queryM = "SELECT * FROM maps WHERE map_id=$text";					
 					$resultIDM = mysql_query($queryM, $linkID);
 					if($resultIDM!=null && mysql_num_rows($resultIDM)>0){
@@ -132,6 +148,7 @@ List of variables for insertion:
 					}else{
 						$text = "";
 					}					
+					}
 				}else{					
 						$text = "";						
 				}					

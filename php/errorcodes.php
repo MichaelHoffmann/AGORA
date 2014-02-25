@@ -240,6 +240,12 @@
 		$fail->addAttribute("text", "This map name has already been taken.Kindly choose a different map name.");
 		$fail->addAttribute("code", 319);
 	}
+	function mapAccessFailed($output){
+		$fail=$output->addChild("error");
+		$fail->addAttribute("text", "PermissionsError");
+		$fail->addAttribute("Permissions", "false");
+		$fail->addAttribute("code", 400);
+	}
 	function mapNameTakedonEdit($output){
 		$fail=$output->addChild("errorMapName");
 		$fail->addAttribute("text", "This map name has already been taken.Kindly choose a different map name.");
