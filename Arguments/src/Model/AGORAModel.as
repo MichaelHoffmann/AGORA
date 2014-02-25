@@ -48,6 +48,7 @@ package Model
 		public var projType: String;
 		public var chainModel:ChainModel;
 		public var searchModel:AgoraSearchModel;
+		public var savedStatement:StatementModel = null; //vinodh - to save instane of the saved statement for auto opening arguments
 		//makes sure that at a time, there is only one
 		//pending request
 		private var _requested:Boolean;

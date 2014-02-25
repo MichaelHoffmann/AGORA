@@ -79,12 +79,12 @@ package Controller.logic
 		}
 		
 		public function getImplicationArray():Array{
-			var array:Array = [AGORAParameters.getInstance().COND_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().MOD_TOL, AGORAParameters.getInstance().DIS_SYLL,AGORAParameters.getInstance().COND_SYLL];
 			return array;
 		}
 		
 		public function getDisjunctionPositiveArray():Array{
-			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_PON];//, AGORAParameters.getInstance().DIS_SYLL];
 			return array;
 		}
 		

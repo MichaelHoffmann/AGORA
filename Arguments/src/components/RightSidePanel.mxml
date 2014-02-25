@@ -65,6 +65,7 @@
 					titleOfMap.visible = true;
 					clickableMapOwnerInformation.visible = true;
 					chatBox.visible=true;
+					onlineBox.visible=true;
 					historyBox.visible=true;
 					historyBackBox.visible=true;
 					chat.visible=true;
@@ -76,6 +77,7 @@
 					titleOfMap.visible = false;
 					clickableMapOwnerInformation.visible = false;
 					chatBox.visible=false;
+					onlineBox.visible=false;
 					historyBox.visible=false;
 					historyBackBox.visible=false;
 					chat.visible=true;
@@ -96,6 +98,9 @@
 				xB = xB + mapTitle.getExplicitOrMeasuredHeight() + 5;
 				IdofMap.setActualSize(IdofMap.getExplicitOrMeasuredWidth(), IdofMap.getExplicitOrMeasuredHeight());
 				IdofMap.move(2,xB);
+			//	xB = xB + IdofMap.getExplicitOrMeasuredHeight() + 15;
+				onlineBox.setActualSize(onlineBox.getExplicitOrMeasuredWidth(), onlineBox.getExplicitOrMeasuredHeight());
+				onlineBox.move(IdofMap.getExplicitOrMeasuredWidth()+10,xB);
 				xB = xB + IdofMap.getExplicitOrMeasuredHeight() + 15;
 				
 			//	if(visibility.visible){
@@ -206,6 +211,8 @@
 	<components:CategoryChain id="categoryChain" visible="{!onMyMapsTab.getTabAt(1).visible}"/>
 	<s:Button id="chatBox" visible="false" toolTip="" label="Chat" width="75" click="onChatSelect()"/>
 	<s:Button id="historyBox" visible="false" toolTip="" label="{Language.lookup('MapHistoryHeader')}" width="75" click="onHistorySelect()"/>
+	<s:Label id="onlineBox" visible="true" text="{Language.lookup('MapCollaborators')}" buttonMode="true" mouseChildren="false" textDecoration="underline" useHandCursor="true" toolTip="" />
+	<s:Label id="onlineBoxHtml" visible="false" text="" buttonMode="true" mouseChildren="false" textDecoration="underline" useHandCursor="true" />
 	<s:Button id="historyBackBox" visible="false" label="&lt; -" toolTip="{Language.lookup('MapHistoryBackButtonToolTip')}" width="35" click="onHistoryBackSelect()"/>
 	<components:SponsorPanel visible="true" id="sponsorPanel" height="75" width="200" bottom="0" horizontalCenter="0"/>
 	

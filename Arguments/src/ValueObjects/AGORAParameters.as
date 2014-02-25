@@ -18,6 +18,7 @@ package ValueObjects
 		public var projectListURL:String;
 		public var deleteURL:String;
 		public var nameUpdateURL:String;
+		public var mapPermURL:String;
 		public var gridWidth:int;
 		public var version:String;
 		public var myProjectsURL:String;
@@ -200,6 +201,7 @@ package ValueObjects
 			insertURL = "http://agora.gatech.edu/lokesh_test/insert.php";
 			loadMapURL = "http://agora.gatech.edu/lokesh_test/load_map1.php";
 			nameUpdateURL = "http://agora.gatech.edu/lokesh_test/mapinfo.php";
+			mapPermURL = "http://agora.gatech.edu/lokesh_test/mapPermissionsCheck.php";
 			projectListURL = "http://agora.gatech.edu/lokesh_test/list_projects.php";
 			myProjectsURL = "http://agora.gatech.edu/lokesh_test/my_projects.php";
 			pushProjectsURL = "http://agora.gatech.edu/lokesh_test/projects.php";

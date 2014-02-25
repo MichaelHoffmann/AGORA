@@ -36,7 +36,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			private var model:ChatModel;
 			public var time:Number;
 			public var pmodel:PushChatModel;
-			public var host:String = 'localhost'; // change 
+			public var host:String = 'agora.gatech.edu'; // change 
 			public var mapport:int    = 1763;
 			public var times:int =0;
 			

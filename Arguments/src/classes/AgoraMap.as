@@ -28,6 +28,7 @@ package classes
 	import Model.ArgumentTypeModel;
 	import Model.InferenceModel;
 	import Model.StatementModel;
+	import classes.Configure;
 	import components.ArgSelector;
 	import components.HelpText;
 	import components.Option;
@@ -59,7 +60,7 @@ package classes
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
 	
-	import classes.Configure;
+	import mx.managers.LayoutManager;
 	
 	public class AgoraMap extends Canvas
 	{
@@ -78,7 +79,7 @@ package classes
 		
 		public function AgoraMap()
 		{
-			layoutManager = new ALayoutManager;	
+			layoutManager = new LayoutManager;
 			addEventListener(DragEvent.DRAG_ENTER,acceptDrop);
 			addEventListener(DragEvent.DRAG_DROP,handleDrop );
 			addEventListener(FlexEvent.CREATION_COMPLETE, mapCreated);

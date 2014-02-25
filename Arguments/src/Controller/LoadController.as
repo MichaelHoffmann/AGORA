@@ -43,10 +43,12 @@ package Controller
 		}
 		
 		//-----------------Update Map -----------------------------------//
-		public function fetchMapData():void{
+		public function fetchMapData(tellCollab:Boolean=false):void{						
 			if(!model.requested){
 				sbar.displayLoading();
 				model.requested = true;
+				if(tellCollab)
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendCollabsMessage();
 				model.agoraMapModel.loadMapModel();
 			}
 		}
@@ -83,7 +85,26 @@ package Controller
 			FlexGlobals.topLevelApplication.rightSidePanel.history.invalidateProperties();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.reset();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.start();
+			
+			//vinodh
+			if(model.savedStatement!=null)
+			{
+				if(FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[model.savedStatement.ID])
+				{
+					ArgumentController.getInstance().textSavedTry(model.savedStatement);
+					//	FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[model.savedStatement.ID].showMenu();
+					
+					model.savedStatement = null;
+				}
+				else
+				{
+					model.agoraMapModel.loadMapModel();
+					//flash.events.EventDispatcher.dispatchEvent(new AGORAEvent(AGORAEvent.MAP_LOADED));
+				}
+				
+			}
 			model.requested = false;
+			
 		}
 		
 		protected function onMapLoadingFailed(event:AGORAEvent):void{

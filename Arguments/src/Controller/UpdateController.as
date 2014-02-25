@@ -57,7 +57,7 @@ package Controller
 			mapModel.updateMapInfo(title);
 		}
 		protected function onMapInfoUpdated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();		
+			LoadController.getInstance().fetchMapData(true);		
 		}
 		protected function onMapInfoUpdateFailed(event:AGORAEvent):void{
 			LoadController.getInstance().fetchMapData();

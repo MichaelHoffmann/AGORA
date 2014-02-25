@@ -7,6 +7,8 @@ package Controller.logic
 	
 	import ValueObjects.AGORAParameters;
 	
+	import classes.Language;
+	
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
 	
@@ -14,8 +16,6 @@ package Controller.logic
 	
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
-	
-	import classes.Language;
 	
 	public class ConditionalSyllogism extends ParentArg
 	{		
@@ -53,7 +53,7 @@ package Controller.logic
 			if(reasonModels.length == 0){
 				return;
 			}
-			
+			trace(reasonModels.length);
 			inferenceModel.statements[0].text = reasonModels[reasonModels.length-1].statements[1].text;
 			inferenceModel.statements[1].text = claimModel.statements[1].text;
 			
@@ -75,7 +75,8 @@ package Controller.logic
 			var simpleStatement:SimpleStatementModel;
 			var stmtToBeUnlinked:SimpleStatementModel;
 			var i:int;
-			
+			for(i=0;i<reasonModels.length;i++)
+				trace(reasonModels[i].statements[1].text);
 			var claimText:String = claimModel.statements[0].text;
 			if(reasonModels.length > 0){
 				var reasonText:String = reasonModels[0].statements[0].text;
@@ -97,8 +98,15 @@ package Controller.logic
 					simpleStatement.parent.statements.splice(simpleStatement.parent.statements.indexOf(simpleStatement),1);
 				}
 			}
-			
+		
 			for(i=0; i<reasonModels.length; i++){
+				trace(reasonModels[i].statements[0].text);
+				trace(reasonModels[i].statements[1].text);
+				var a:String = reasonModels[i].statements[1].text;
+				reasonModels[i].statements[1].text = reasonModels[i].statements[0].text;
+				reasonModels[i].statements[0].text = a;
+				trace(reasonModels[i].statements[0].text);
+				trace(reasonModels[i].statements[1].text);
 				for each(simpleStatement in reasonModels[i].statements){
 					if(simpleStatement.ID == SimpleStatementModel.TEMPORARY){
 						simpleStatement.parent.statements.splice(simpleStatement.parent.statements.indexOf(simpleStatement),1);
@@ -107,10 +115,14 @@ package Controller.logic
 			}
 			
 			//So that changes get reflected in the statement
+			for(i=0;i<reasonModels.length;i++)
+				trace(reasonModels[i].statements[0].text);
 			claimModel.statements[0].updateStatementTexts();
 			if(reasonModels.length > 0){
-				reasonModels[0].statements[0].updateStatementTexts();
+				reasonModels[0].statements[0].updateStatementTexts();	//changed
 			}
+			
+			
 		}
 		
 		override public function link(argumentTypeModel:ArgumentTypeModel):void{

@@ -288,6 +288,9 @@ package components
 				var vg:VBox = (VBox)(hpanel.getElementAt(0));
 				var hg:HGroup =(HGroup)(vg.getElementAt(1));
 				hg.getElementAt(0).visible=false;				
+				_publishMapHelp.label = Language.lookup("PublishMapHelpNoAccess");
+			}else{
+				_publishMapHelp.label = Language.lookup("PublishMapHelp");
 			}
 				
 			PopUpManager.addPopUp(hpanel, this, true);

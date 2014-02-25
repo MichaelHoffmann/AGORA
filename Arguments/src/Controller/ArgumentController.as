@@ -76,6 +76,7 @@ package Controller
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATED, onMapCreated);
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_CREATION_FAILED, onMapCreatedFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_SAVEDAS, onMapSaveAsPass);
+			model.agoraMapModel.addEventListener(AGORAEvent.MAP_FROMLINK, onMapSaveAsPassNoConfirm);
 			model.agoraMapModel.addEventListener(AGORAEvent.MAP_SAVEDASFAULT, onMapSaveAsFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FAULT, onFault);
 			model.agoraMapModel.addEventListener(AGORAEvent.FIRST_CLAIM_ADDED, onFirstClaimAdded);
@@ -204,6 +205,9 @@ package Controller
 				rsp.mapTitle.enabled=false;
 			}
 		 
+			var  chatbox:ChatWindow = FlexGlobals.topLevelApplication.rightSidePanel.chat;
+			chatbox.mapId = mapMetaData.mapID+"";
+			chatbox.initMapChat(true);
 			// update current view 
 			var usm:UserSessionModel=model.userSessionModel;
 			var current=usm.selectedTab;
@@ -256,7 +260,11 @@ package Controller
 			var mapObj = event.eventData;
 			AGORAController.getInstance().unfreeze();
 			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
-			Alert.show(Language.lookup("SaveAsMapSuccessMsg"),"Map saved",Alert.YES|Alert.NO, null, function(event:CloseEvent){
+			var mapStringCong:String = Language.lookup("SaveAsMapSuccessMsg");
+			if(mapObj.hasOwnProperty("message")){
+				mapStringCong = Language.lookup("LinkAsMapSuccessMsg");
+			}
+			Alert.show(mapStringCong,"Map saved",Alert.YES|Alert.NO, null, function(event:CloseEvent){
 				if(event.detail == Alert.YES) {
 					var rsp:RightSidePanel= FlexGlobals.topLevelApplication.rightSidePanel;
 					rsp.clickableMapOwnerInformation.label = mapObj.username;
@@ -275,6 +283,26 @@ package Controller
 					ArgumentController.getInstance().loadMap(mapObj.ID);
 				}
 			});	
+			}
+		protected function onMapSaveAsPassNoConfirm(event:AGORAEvent):void{
+			var mapObj = event.eventData;
+			AGORAController.getInstance().unfreeze();
+			PopUpManager.removePopUp(FlexGlobals.topLevelApplication.saveAsMapBox);
+					var rsp:RightSidePanel= FlexGlobals.topLevelApplication.rightSidePanel;
+					rsp.clickableMapOwnerInformation.label = mapObj.username;
+					rsp.mapTitle.text=mapObj.title;
+					rsp.clickableMapOwnerInformation.toolTip = 
+					mapObj.url + '\n' + Language.lookup('MapOwnerURLWarning');
+					rsp.clickableMapOwnerInformation.addEventListener(MouseEvent.CLICK, function event(e:Event):void{
+						var urllink:String = mapObj.url;
+						if(urllink!=null && urllink.indexOf("http://") ==-1)
+							urllink = "http://"+urllink;			
+						navigateToURL(new URLRequest(urllink), 'quote');
+					},false, 0, false);
+					rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + mapObj.ID;
+					rsp.invalidateDisplayList();
+					model.rechain=true;
+					ArgumentController.getInstance().loadMap(mapObj.ID);
 			}
 		
 		//-------------------Start with Claim----------------------------//
@@ -304,7 +332,7 @@ package Controller
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
 			model.requested = false;
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		protected function onFirstClaimFailed(event:AGORAEvent):void{
@@ -505,9 +533,54 @@ package Controller
 			}
 		}
 		
+		//vinodh
+		public function addSupportingArgumentTry(statementModel:StatementModel){
+			if(checkArgUnderConstruction()){
+				return statementModel;
+			}
+			if(!AGORAModel.getInstance().requested){
+				if(statementModel.firstClaim){//first claim
+					if(statementModel.supportingArguments.length == 0){
+						map.agoraMap.firstClaimHelpText.visible = false;
+					}
+				}
+				//tell the statement to support itself with an argument. Supply the position.
+				//figure out the position
+				//find out the last menu panel
+				if(statementModel.supportingArguments.length > 0){
+					var argumentTypeModel:ArgumentTypeModel = statementModel.supportingArguments[statementModel.supportingArguments.length - 1];
+					//Find the last grid
+					//Find out the inference
+					var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+					var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
+					var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + .10;
+					//find out hte last reason
+					var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
+					var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
+					//find the last grid
+					var xgridReason:int = (reason.y + reason.height ) / agoraParameters.gridWidth +10;
+					//compare and figure out the max
+					var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
+				}else{
+					nxgrid = statementModel.xgrid;
+				}
+				//call the function
+				AGORAModel.getInstance().requested = true;
+				model.agoraMapModel.argUnderConstruction = true;
+				statementModel.addSupportingArgumentTry(nxgrid);  //adds a new enabler
+				
+				//Vinodh
+				//trace(statementModel.argumentTypeModel.claimModel.statement.text);
+				//statementModel.argumentTypeModel.reasonModels[0].statement.text = "Either P or Q";
+				
+				//	statementModel.addSupportingArgument(nxgrid);
+			}
+			
+		}
+		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			model.requested = false;
-			LoadController.getInstance().fetchMapData(); 
+			LoadController.getInstance().fetchMapData(true); 
 		}
 		
 		protected function onArgumentCreationFailed(event:AGORAEvent):void{
@@ -572,7 +645,7 @@ package Controller
 		
 		protected function onReasonAdded(event:AGORAEvent):void{
 			AGORAModel.getInstance().requested = false;
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		//----------------- Construct Argument -----------------------------//
@@ -605,6 +678,9 @@ package Controller
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
 			else if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+	//			var i:int = 0;
+//				for(i=0;i<argumentTypeModel.reasonModels.length;i++)
+	//				argumentTypeModel.reasonModels[i].removeTemporaryStatement();			---	 Need to see this
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
 			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1 && argumentTypeModel.claimModel.supportingArguments.length == 1){
@@ -696,6 +772,12 @@ package Controller
 
 			if(!AGORAModel.getInstance().requested){
 				var model:StatementModel = (gridPanel as ArgumentPanel).model;
+				// check for collabs
+				if(FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.isNodebeingUsed(model.ID)){				
+					return;
+				}
+				
+				
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && model.objections.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
 						if(/*model.statement.text!="" &&*/ checkArgUnderConstruction()){
@@ -713,6 +795,8 @@ package Controller
 							}
 						}
 						*/
+						// send a signal
+						FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 						map.sBar.displayLoading();
 						model.deleteMe();
 					}
@@ -735,6 +819,8 @@ package Controller
 					if(checkArgUnderConstruction()){
 						return;
 					}
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
@@ -747,6 +833,8 @@ package Controller
 					if(checkArgUnderConstruction()){
 						return;
 					}
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
@@ -759,6 +847,8 @@ package Controller
 					if(checkArgUnderConstruction()){
 						return;
 					}
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
 					AGORAModel.getInstance().requested = true;
 					map.sBar.displayLoading();
 					model.deleteMe();
@@ -769,9 +859,14 @@ package Controller
 		}
 		
 		public function onStatementDeleted(event:AGORAEvent):void{
+			// clear here
+			// send a signal
+		/*	var statementModel:StatementModel = StatementModel(event.eventData);
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(statementModel.ID,true);
+		*/
 			AGORAModel.getInstance().requested = false;
 			map.sBar.hideStatus();
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		protected function onArgumentDeleted(event:AGORAEvent):void{
@@ -806,6 +901,20 @@ package Controller
 			argumentPanel.state = ArgumentPanel.DISPLAY;
 			CursorManager.removeAllCursors();
 			onTextEntered(argumentPanel);
+			LoadController.getInstance().fetchMapData(true);
+		}
+		
+		//vinodh
+		public function textSavedTry(model:StatementModel):void{
+			AGORAModel.getInstance().requested = false;
+			map.sBar.hideStatus();
+			var statementModel:StatementModel = StatementModel(model);
+			trace(statementModel.statement.text);
+			statementModel.statement.text = "C";
+			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
+			argumentPanel.state = ArgumentPanel.DISPLAY;
+			CursorManager.removeAllCursors();
+			ArgumentController.getInstance().constructArgument(statementModel.argumentTypeModel); //directly opens the argument box
 			LoadController.getInstance().fetchMapData();
 		}
 		
@@ -871,16 +980,16 @@ package Controller
 			}
 		}
 		protected function onObjectionCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		protected function onDefeatCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		protected function onCommentCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		protected function onAmendmentCreated(event:AGORAEvent):void{
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		protected function onObjectionCreationFailed(event:AGORAEvent):void{
@@ -1190,6 +1299,11 @@ package Controller
 			addMenu.show(point.x, point.y);
 			
 			addMenu.addEventListener(MenuEvent.ITEM_CLICK, argumentPanel.addHoverMenuClicked);
+			addMenu.addEventListener(MenuEvent.MENU_HIDE,function(e:Event){
+				// send a signal
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(argumentPanel.model.ID,true);
+					// clear here
+			});
 		}
 		//-------------------Generic Fault Handler---------------------//
 		protected function onFault(event:AGORAEvent):void{

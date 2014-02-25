@@ -114,7 +114,7 @@ package Controller
 			var m:StatementModel = new StatementModel(); 
 			model.requested = false;
 			map.sBar.hideStatus();
-			LoadController.getInstance().fetchMapData();
+			LoadController.getInstance().fetchMapData(true);
 		}
 		
 		//------------------------- other public functions --------------------//

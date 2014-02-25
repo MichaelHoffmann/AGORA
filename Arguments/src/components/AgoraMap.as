@@ -45,6 +45,7 @@ package components
 	import mx.controls.Label;
 	import mx.controls.Menu;
 	import mx.core.DragSource;
+	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
@@ -70,6 +71,7 @@ package components
 		public var firstClaimHelpText:FirstClaimHelpText;
 		private static var _tempID:int;
 		public var timer:Timer;
+		public var collabtimer:Timer;
 		private var _removePreviousElements:Boolean;
 		public var rectangle:Dictionary;
 		public var panelsHash:Dictionary;
@@ -85,6 +87,8 @@ package components
 			initializeMapStructures();
 			timer = new Timer(10000);
 			timer.addEventListener(TimerEvent.TIMER, onMapTimer);
+			collabtimer = new Timer(30000);
+			collabtimer.addEventListener(TimerEvent.TIMER, onMapCollabTimer);
 			beganBy = BY_CLAIM;
 			removePreviousElements = false;
 			rectangle = new Dictionary;
@@ -104,6 +108,9 @@ package components
 		
 		protected function onMapTimer(event:TimerEvent):void{
 			LoadController.getInstance().fetchMapData();
+		}
+		protected function onMapCollabTimer(event:TimerEvent):void{
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendInfoMessage();
 		}
 		
 		public function getGlobalCoordinates(point:Point):Point
@@ -592,7 +599,7 @@ package components
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72-15);
 											drawUtility1.graphics.moveTo(objectionPanel.x, objectionPanel.y +72);
 											drawUtility1.graphics.lineTo(objectionPanel.x-15, objectionPanel.y+72+15);
-											textLabel[obj.ID].text = Language.lookup("SeeAlsoArgumentMap");
+											textLabel[obj.ID].text = Language.lookup("See");
 											textLabel[obj.ID].width=50;
 											textLabel[obj.ID].height=20;
 										}

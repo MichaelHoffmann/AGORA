@@ -25,6 +25,7 @@ package Model
 	public class VerifyProjectMemberModel extends EventDispatcher
 	{
 		private var request: HTTPService;
+		private var permMapServices: HTTPService;
 		private var loadProjMaps:LoadProjectMapsModel;
 		public var verified:Boolean;
 		private var currTime:Date;

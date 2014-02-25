@@ -47,6 +47,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			protected var socket:Socket;
 			protected var mapsocket:Socket;
 			private var _mapId:String;
+			public var collabHandler:CollabSocketHandler;
 
 			public function get mapId():String
 			{
@@ -65,6 +66,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				mapId = null;
 				chatField.visible =true;
 				chatMapField.visible=false;
+				collabHandler = new CollabSocketHandler();
 				if(mapsocket!=null && mapsocket.connected) mapsocket.close();
 				if(socket!=null && socket.connected) return;
 				
@@ -222,6 +224,10 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				chatMapField.text="";
 				chatMapField.visible=true;
 				chatField.visible=false;
+				collabHandler.mapId=mapId;
+				collabHandler.initCollabSocket();
+				FlexGlobals.topLevelApplication.map.agoraMap.collabtimer.reset();
+				FlexGlobals.topLevelApplication.map.agoraMap.collabtimer.start();
 				if(mapsocket!=null && mapsocket.connected && !reload) return;
 				
 				// Create new socket connection
