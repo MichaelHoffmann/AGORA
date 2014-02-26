@@ -962,9 +962,7 @@
 				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
-					//	if(this.panelType != StatementModel.INFERENCE)
-						ArgumentController.getInstance().addSupportingArgument(model);
-						//else ArgumentController.getInstance().addSupportingArgumentForEnabler(this);
+						ArgumentController.getInstance().addSupportingArgumentTry(model);	//vinodh
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
 						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
