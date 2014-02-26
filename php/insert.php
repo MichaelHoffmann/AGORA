@@ -572,7 +572,7 @@ List of variables for insertion:
 		}
 
 		if($auto_open){
-			$output->addAttribute("auto_open",$auto_open);
+			$output->addAttribute("autoopenarg",$auto_open);
 		}
 
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
