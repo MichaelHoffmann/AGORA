@@ -146,7 +146,7 @@ package Controller.logic
 			for(i = 0; i<reasonModels.length; i++){
 				if(reasonModels[i].statements.length < 2){
 					reasonModels[i].addTemporaryStatement();
-					reasonModels[i].statements[1].text = (reasonModels[i].statements[0].text == null || reasonModels[i].statements[0].text == "")? "W"+i : reasonModels[i].statements[0].text ;
+					reasonModels[i].statements[1].text = (reasonModels[i].statements[0].text == null || reasonModels[i].statements[0].text == "")? Language.lookup("EnterReason") : reasonModels[i].statements[0].text ;
 					reasonModels[i].connectingString = StatementModel.IMPLICATION;
 				}
 			}

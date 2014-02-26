@@ -911,11 +911,12 @@ package Controller
 			map.sBar.hideStatus();
 			var statementModel:StatementModel = StatementModel(model);
 			trace(statementModel.statement.text);
-			statementModel.statement.text = "C";
+			statementModel.statement.text = Language.lookup("EnterReason");
 			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
 			argumentPanel.state = ArgumentPanel.DISPLAY;
 			CursorManager.removeAllCursors();
 			ArgumentController.getInstance().constructArgument(statementModel.argumentTypeModel); //directly opens the argument box
+			LoadController.getInstance().fetchMapData();
 		}
 		
 		//------------------- configuration functions -----------------//
