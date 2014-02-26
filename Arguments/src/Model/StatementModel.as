@@ -590,7 +590,7 @@ package Model
 		}
 		
 		//---------------- save statement Texts --------------------------//
-		public function saveTexts():void{
+		public function saveTexts(vart:String=""):void{
 			var requestXML:XML = <map ID={AGORAModel.getInstance().agoraMapModel.ID} />;
 			//var statementXML:XML = <node ID={ID} />;
 			//requestXML.appendChild(statementXML);

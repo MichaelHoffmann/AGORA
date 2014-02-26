@@ -646,6 +646,7 @@
 						if(state == EDIT){
 							// send a signal
 							FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
+							FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.removeNodesOnline(model.ID);
 							ArgumentController.getInstance().saveText(model);
 						}
 					}
@@ -961,7 +962,9 @@
 				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
-						ArgumentController.getInstance().addSupportingArgumentTry(model);	//vinodh
+					//	if(this.panelType != StatementModel.INFERENCE)
+						ArgumentController.getInstance().addSupportingArgument(model);
+						//else ArgumentController.getInstance().addSupportingArgumentForEnabler(this);
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
 						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;

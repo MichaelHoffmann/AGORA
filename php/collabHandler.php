@@ -9,7 +9,7 @@ ini_set ( 'display_errors' , 1 );
 set_time_limit ( 0 );
 
 // Set the ip and port we will listen on
-$address = 'localhost' ; $port = 1768 ;
+$address = 'agora.gatech.edu' ; $port = 1768 ; //agora.gatech.edu / localhost
 // Create a TCP Stream socket
 $sock = socket_create ( AF_INET , SOCK_STREAM , 0 );
 // Bind the socket to an address/port
@@ -48,7 +48,9 @@ while ( true )
 			}
 		} else
 		{
-			$bytes = @socket_recv($socket, $buffer, 2048, 0);
+			//$bytes = @socket_recv($socket, $buffer, 2048, 0);
+			$buffer = @socket_read($socket, 2048,PHP_NORMAL_READ);
+			echo $buffer;
 			if (preg_match("/policy-file-request/i", $buffer) || preg_match("/crossdomain/i", $buffer))
 			{
 				echo "[".date('Y-m-d H:i:s')."] CROSSDOMAIN.XML REQUEST\n";
@@ -61,7 +63,7 @@ while ( true )
 				socket_close($socket);
 			}
 
-			if (strlen($buffer) == 0)
+			if ($buffer === false || strlen($buffer) == 0)
 			{
 				$index = array_search($socket, $read);
 				unset($read[$index]);
@@ -72,7 +74,9 @@ while ( true )
 			}
 			else
 			{
+				$buffer = trim($buffer);
 				$pos = strpos($buffer,":");
+				echo "\nGot this : $buffer";
 				if($pos){
 					$uname = substr($buffer,0,$pos);
 					$msg = substr($buffer,$pos+1,strlen($buffer));
@@ -86,7 +90,7 @@ while ( true )
 							$ustr = substr($ustr,0,$pos);
 						}else if($uname == "SendCollabs"){
 						// tell all clients new client has come in ..
-						echo "COLLAB *****".$msg;
+						//echo "COLLAB *****".$msg;
 						$stat = array_key_exists($msg, $mapclients);
 						if($stat) {
 							$arrclients = $mapclients[$msg];
@@ -97,7 +101,7 @@ while ( true )
 									unset($arrclients[$k]);
 								else if($v!=$socket){
 									socket_write($v, "SendCollabs", strlen("SendCollabs"));
-									echo "COLLAB *****".$msg;
+									//echo "COLLAB *****".$msg;
 								}
 							}
 						}
@@ -154,7 +158,7 @@ while ( true )
 							$nodelinknames = $nodenames[$msg];
 							if($nodelinknames[$nodeid]==null || $nodelinknames[$nodeid][1] == $ustr ){
 							$nodelinknamesATTR = $nodelinknames[$nodeid];	
-							echo "nodelevel";
+							//echo "nodelevel";
 							if($uname == "initNodeC"){ 
 							$nodelinknamesATTR[0] = -1;// delete mode
 							}
@@ -167,17 +171,19 @@ while ( true )
 																				
 							$cnt=0;
 							foreach ($nodelinknames as $key => $value) {
-    									echo $currtime." ";
+    									//echo $currtime." ";
     									if($value[0] > ($currtime - 200)){
+    										if(strpos($key, "initNode") === false && strpos($key, "initNode") === false){     										
     											$msgs = $msgs.$key.":".$value[1].":";	
     											$cnt++;
+    										}
     									}else{
     											unset($nodelinknames[$key]);
     									}    																
 							}	
 							$nodenames[$msg] = $nodelinknames;	
 							print_r($nodenames);
-							echo "Nodessss";	
+							//echo "Nodessss";	
 							
 							}else{
 								
@@ -187,7 +193,7 @@ while ( true )
 							$cnt=0;
 							foreach ($arrayunames as $key => $value) {
     								if($key != $ustr){
-    									echo $currtime." ";
+    									//echo $currtime." ";
     									if($value > ($currtime - 60)){
     											$msgs = $msgs.$key.":";	
     											$cnt++;
@@ -204,7 +210,7 @@ while ( true )
 						// retrn string 
 						if($uname == "initNode" || $uname == "initNodeC"){
 						//$msgs = ":".$msgs;	
-						echo $msgs." ------------".$uname;
+						//echo "OP".$msgs." ------------".$uname;
 						socket_write ( $socket , $msgs , strlen($msgs) );
 						
 						// now write to all other clients connected on this map
@@ -225,7 +231,7 @@ while ( true )
 						
 							}else{
 						$msgs = $cnt.":".$msgs;	
-						echo $msgs." ** ".$uname;
+						//echo $msgs." ** ".$uname;
 						socket_write ( $socket , $msgs , strlen($msgs) );						
 						
 						// send extra node info as well
@@ -250,17 +256,19 @@ while ( true )
 						}						
 						// telling complete ..
 						if($sendNodeInfo && $nodelinknames!=null){
-						echo $sendNodeInfo." -- ".$nodelinknames;
+						//echo $sendNodeInfo." -- ".$nodelinknames;
 							foreach ($nodelinknames as $key => $value) {
     									if($value[0] > ($currtime - 200)){
+    										if(strpos($key, "initNode") === false && strpos($key, "initNode") === false){
     											$msgs = $msgs.$key.":".$value[1].":";	
     											$cnt++;
+    										}
     									}else{
     											unset($nodelinknames[$key]);
     									}    																
 							}	
 							$nodenames[$msg] = $nodelinknames;	
-							echo $msgs." ------------";
+							//echo $msgs." ------------";
 							usleep(50);
 							socket_write ( $socket , $msgs , strlen($msgs) );						
 						}

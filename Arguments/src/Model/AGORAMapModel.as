@@ -1020,6 +1020,12 @@ public function get check():Boolean
 					}
 					if(simpleStatement){
 						if(simpleStatement.hasOwn){
+							// handling for collab setter fix
+							// collab sockets
+							if(simpleStatement.text == obj.text){
+								simpleStatement.text = obj.text+" ";								
+							}
+							// just to make the setter code resetted
 							simpleStatement.text = obj.text;
 						}			
 					}

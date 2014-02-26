@@ -136,13 +136,13 @@ Additional languages can be added later. -->
 	<PublishMapHelpNoAccess>
 		<EN-US text="You can publish or move a map only if you are the creator of the map" />
 		<RUS text="You can publish or move a map only if you are the creator of the map" /><!--TODO: Translate RUS -->
-		<GER text="You can publish or move a map only if you are the creator of the map" /><!--TODO: Translate GER -->
+		<GER text="Du kannst ein Argument nur dann publizieren oder woanders hinschieben wenn du der Autor bist." />
 		<SPAN text="You can publish or move a map only if you are the creator of the map"/><!--TODO: Translate SPAN -->
 	</PublishMapHelpNoAccess>
 	<MapHelpNoAccess>
-		<EN-US text="You donot have access to this map" />
-		<RUS text="You donot have access to this map" /><!--TODO: Translate RUS -->
-		<GER text="You donot have access to this map" /><!--TODO: Translate GER -->
+		<EN-US text="You do not have access to this map" />
+		<RUS text="You do not have access to this map" /><!--TODO: Translate RUS -->
+		<GER text="Du hast keinen Zugang zu diesem Argument" />
 		<SPAN text="You donot have access to this map"/><!--TODO: Translate SPAN -->
 	</MapHelpNoAccess>
 	<PublishMapbtn>
@@ -1011,9 +1011,9 @@ Additional languages can be added later. -->
 		<SPAN text="Primer autor/a" />
 	</FirstAuthor>
 	<CreatedOn>
-		<EN-US text="PDF Created on: " />
-		<RUS text="PDF Created on: " /><!-- TODO Translate RUS-->
-		<GER text="Datum: " />
+		<EN-US text="PDF created on: " />
+		<RUS text="PDF created on: " /><!-- TODO Translate RUS-->
+		<GER text="PDF produziert: " />
 		<SPAN text="Fecha: " />
 	</CreatedOn>
 	<PrintMapHelp>
@@ -2782,10 +2782,10 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<SPAN text="Espera, por favor .. .. .." />
 	</ServerResponding>
 	<AgoraVersion>
-	<EN-US text="V 3.5" />
-		<RUS text="V 3.5" /><!--TODO: Translate RUS-->
-		<GER text="V 3.5" />
-		<SPAN text="V 3.5"/>
+	<EN-US text="V 3.6" />
+		<RUS text="V 3.6" /><!--TODO: Translate RUS-->
+		<GER text="V 3.6" />
+		<SPAN text="V 3.6"/>
 	</AgoraVersion>
 
 
@@ -3817,10 +3817,10 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	</SaveAsMapSuccessMsg>
 	
 	<LinkAsMapSuccessMsg>
-		<EN-US text="Do you want to move to this linked map" />
-		<RUS text="Do you want to move to this linked map." /><!--TODO Translate RUS-->
-		<GER text="Do you want to move to this linked map." /><!--TODO Translate GER-->
-		<SPAN text="Do you want to move to this linked map." /><!--TODO Translate SPAN -->
+		<EN-US text="Do you want to see this linked map?" />
+		<RUS text="Do you want to see this linked map?" /><!--TODO Translate RUS-->
+		<GER text="Willst du dieses verknüpfte Argument sehen?" />
+		<SPAN text="Do you want to see this linked map?" /><!--TODO Translate SPAN -->
 	</LinkAsMapSuccessMsg>
 	<MapHistoryPreviousOwner>
 		<EN-US text="Previous Owner :" />
@@ -3884,10 +3884,10 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<SPAN text="AA" />
 	</MapHistoryPA>
 	<MapCollaborators>
-		<EN-US text="Collaborators Online" />
-		<RUS text="Collaborators Online" /><!--TODO Translate RUS-->
-		<GER text="Collaborators Online" /><!--TODO Translate GER-->
-		<SPAN text="Collaborators Online" /><!--TODO Translate SPAN-->
+		<EN-US text=" users online" />
+		<RUS text=" users online" /><!--TODO Translate RUS-->
+		<GER text="Nutzer online" />
+		<SPAN text=" users online" /><!--TODO Translate SPAN-->
 	</MapCollaborators>
 	
 	<!-- End of entries for Map Save As -->
@@ -4097,7 +4097,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<SearchResultsShowMaps>
 		<EN-US text="Show only published maps" />
 		<RUS text="Show only published maps" /><!--TODO Translate RUS -->
-		<GER text="Zeige Argumente" /><!--TODO Translate GER -->
+		<GER text="Zeige nur publizierte Argumente" />
 		<SPAN text="Mostrar solo mapas publicados"/>
 	</SearchResultsShowMaps>
 	<SearchResultsShowMapsPermitted>
@@ -4238,21 +4238,21 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<AgoraSearchBooleanParanError>
 	<EN-US text="Error: Incomplete parentheses" />
 		<RUS text="Error: Incomplete parentheses" /><!--TODO Translate RUS -->
-		<GER text="Error: Incomplete parentheses" /><!--TODO Translate GER -->
+		<GER text="Fehler: Unvollständige Klammern" />
 		<SPAN text="Error: Faltan paréntesis"/>
 	</AgoraSearchBooleanParanError>
 	<!-- SPECIAL -->
 	<ThereForeImgMoveToolTip>
 	<EN-US text="grab and move to left or right" />
 		<RUS text="grab and move to left or right" /><!--TODO Translate RUS -->
-		<GER text="grab and move to left or right" /><!--TODO Translate GER -->
+		<GER text="greif hier und beweg nach links oder rechts" />
 		<SPAN text="grab and move to left or right"/><!--TODO Translate SPAN -->
 	</ThereForeImgMoveToolTip>
 	<AnotherCollaboratorLockedThisNode>
-	<EN-US text="Another collaborator is currently modifying this node." />
-		<RUS text="Another collaborator is currently modifying this node." /><!--TODO Translate RUS -->
-		<GER text="Another collaborator is currently modifying this node." /><!--TODO Translate GER -->
-		<SPAN text="Another collaborator is currently modifying this node."/><!--TODO Translate SPAN -->
+	<EN-US text="Another user is currently modifying this statement." />
+		<RUS text="Another user is currently modifying this statement." /><!--TODO Translate RUS -->
+		<GER text="Ein anderer Nutzer ändert gerade diese Aussage." />
+		<SPAN text="Another user is currently modifying this statement."/><!--TODO Translate SPAN -->
 	</AnotherCollaboratorLockedThisNode>
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->

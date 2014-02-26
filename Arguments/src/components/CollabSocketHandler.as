@@ -34,7 +34,7 @@ package components
 	
 	public class CollabSocketHandler extends EventDispatcher
 	{
-		public var host:String = 'agora.gatech.edu'; // change -- agora.gatech.edu
+		public var host:String = 'agora.gatech.edu'; // change -- agora.gatech.edu / localhost
 		public var mapport:int    = 1768; //for global 1767; 
 		public var times:int =0;			
 		protected var socket:Socket;
@@ -85,7 +85,8 @@ package components
 				}
 				// Get latest data added
 				if(data.indexOf("SendCollabs")==0){
-			//**		Alert.show(data+"");					
+				//	Alert.show("got Allert");
+					AGORAModel.getInstance().requested = false;
 					LoadController.getInstance().fetchMapData();		
 					return;
 				}
@@ -151,13 +152,19 @@ package components
 				delete oldNodes[key];
 			}
 		}
+		public function removeNodesOnline(key:Object):void{
+			if(FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[key]!=null){
+				var apanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[key];
+				apanel.nodeCollabStatus.visible=false;
+				apanel.nodeCollabStatus.toolTip="";					
+			}					
+			delete nodesUsed[key];
+		}
 		public function sendCollabsMessage():void{
-			var usm:UserSessionModel= AGORAModel.getInstance().userSessionModel;	
 			if(collabSocket==null || !collabSocket.connected || numCollabs<=0){
 				return;
 			}
-			collabSocket.writeUTFBytes("SendCollabs:"+mapId+":"+usm.username);
-			collabSocket.flush(); // Windows needs this
+			sendNodeInfoMessage(0,false,true);
 		}
 		
 		public function sendInfoMessage():void {
@@ -169,20 +176,24 @@ package components
 				setOnlineMarkers(nodesUsed,oldNodes);
 				return;
 			}
-			collabSocket.writeUTFBytes("init:"+mapId+":"+usm.username);
+			collabSocket.writeUTFBytes("init:"+mapId+":"+usm.username+"\n");
 			collabSocket.flush(); // Windows needs this
 			
 			
 		}		
 		
-		public function sendNodeInfoMessage(nodeid:int,completeMode:Boolean=false):void {
+		public function  sendNodeInfoMessage(nodeid:int,completeMode:Boolean=false,collabMode:Boolean=false):void {
 			var usm:UserSessionModel= AGORAModel.getInstance().userSessionModel;	
 			if(collabSocket==null || !collabSocket.connected)
 				return;
+			if(collabMode){
+				collabSocket.writeUTFBytes("SendCollabs:"+mapId+":"+usm.username+"\n");
+			}else{
 			if(completeMode)
-				collabSocket.writeUTFBytes("initNodeC:"+mapId+":"+usm.username+":"+nodeid);
+				collabSocket.writeUTFBytes("initNodeC:"+mapId+":"+usm.username+":"+nodeid+"\n");
 			else
-				collabSocket.writeUTFBytes("initNode:"+mapId+":"+usm.username+":"+nodeid);
+				collabSocket.writeUTFBytes("initNode:"+mapId+":"+usm.username+":"+nodeid+"\n");
+			}
 			collabSocket.flush(); // Windows needs this
 		}		
 		
@@ -195,7 +206,7 @@ package components
 			if(collabSocket==null || !collabSocket.connected)
 				return;
 			
-			collabSocket.writeUTFBytes("init:"+mapId+":"+usm.username);
+			collabSocket.writeUTFBytes("init:"+mapId+":"+usm.username+"\n");
 			collabSocket.flush(); // Windows needs this
 			
 			//sendNodeInfoMessage(-1);

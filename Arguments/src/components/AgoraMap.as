@@ -402,6 +402,11 @@ package components
 						//for each argument
 						for each(argumentTypeModel in model.supportingArguments){
 							//get the point one grid before the first reason horizontally.
+							// collab sockets checking
+							if(argumentTypeModel.reasonModels==null || argumentTypeModel.reasonModels.length<=0){
+							Alert.show("caught");
+								//continue;
+							}
 							var rspx:int = (argumentTypeModel.reasonModels[0].ygrid - 1) * gridWidth;
 							var rspy:int = argumentTypeModel.xgrid * gridWidth + 72;
 							//get the point in front of the last reason

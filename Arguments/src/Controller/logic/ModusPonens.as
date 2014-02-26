@@ -60,7 +60,7 @@ package Controller.logic
 			if(reasonModels.length == 0){
 				return;
 			}
-			trace(reasonModels.length);
+			
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
 					reasonText = reasonModels[0].statement.text;

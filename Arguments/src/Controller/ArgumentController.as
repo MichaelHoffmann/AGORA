@@ -580,7 +580,8 @@ package Controller
 		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			model.requested = false;
-			LoadController.getInstance().fetchMapData(true); 
+			// collab sockets
+			LoadController.getInstance().fetchMapData(); 
 		}
 		
 		protected function onArgumentCreationFailed(event:AGORAEvent):void{
@@ -885,11 +886,11 @@ package Controller
 		}
 		
 		//------------------ Saving Text -----------------------------------//
-		public function saveText(statementModel:StatementModel):void{
+		public function saveText(statementModel:StatementModel,vart:String=""):void{
 			if(!AGORAModel.getInstance().requested){
 				//call the model's update text function
 				AGORAModel.getInstance().requested = true;
-				statementModel.saveTexts();
+				statementModel.saveTexts(vart);
 				map.sBar.displayLoading();
 			}
 		}
@@ -1159,6 +1160,11 @@ package Controller
 			reason.changeTypeInfo.y = reason.y - reason.changeTypeInfo.getExplicitOrMeasuredHeight() - 10;
 			//reason.changeTypeInfo.visible = true;
 			reason.changeTypeInfo.depth = reason.parent.numChildren;
+			// Inform other colabs
+			// collab sockets
+			// update timestamp and send collab message
+			AGORAModel.getInstance().requested = false;
+			ArgumentController.getInstance().saveText(argumentTypeModel.reasonModels[0]," ");
 		}
 		
 		protected function onArgumentSaveFailed(event:AGORAEvent):void{

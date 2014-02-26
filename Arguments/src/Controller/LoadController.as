@@ -47,8 +47,9 @@ package Controller
 			if(!model.requested){
 				sbar.displayLoading();
 				model.requested = true;
-				if(tellCollab)
+				if(tellCollab){
 					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendCollabsMessage();
+				}
 				model.agoraMapModel.loadMapModel();
 			}
 		}
