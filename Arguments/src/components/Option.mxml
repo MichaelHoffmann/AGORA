@@ -20,12 +20,13 @@
 -->
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/mx" width="75" preinitialize="initializeOption(event)"  backgroundColor="0xFFFF00">
+		   xmlns:mx="library://ns.adobe.com/flex/mx" width="166" preinitialize="initializeOption(event)"  backgroundColor="0xFFFF00">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:Text text="{Language.lookup(&quot;OrStartWithScheme&quot;)}" width="75" >
-	</mx:Text>
+<!--	<mx:Text x="14" y="0" width="95" height="118"
+			 text="{Language.lookup(&quot;OrStartWithScheme&quot;)}">
+	</mx:Text>-->
 	<fx:Script>	
 		<![CDATA[
 			import Controller.ArgumentController;

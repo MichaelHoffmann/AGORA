@@ -961,9 +961,7 @@
 				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
-					//	if(this.panelType != StatementModel.INFERENCE)
-						ArgumentController.getInstance().addSupportingArgument(model);
-						//else ArgumentController.getInstance().addSupportingArgumentForEnabler(this);
+						ArgumentController.getInstance().addSupportingArgumentTry(model);	//vinodh
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
 						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
@@ -1173,11 +1171,19 @@
 						if(state == EDIT){
 							
 							group.removeAllElements();
-							
+							var i:int=0;
 							if(statementNegated){
 								group.addElement(negatedLbl);
 							}
 							for each(dta in inputs){
+								if(model.argumentTypeModel!=null)
+								{
+									if(model.argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL && i==0)
+									{ 
+										dta.editable = false;
+										i++;
+									}
+								}
 								group.addElement(dta);
 								group.addElement(doneBtn);
 								stage.focus = dta;

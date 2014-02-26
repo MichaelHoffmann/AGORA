@@ -411,6 +411,14 @@ package Model
 			statements.push(simpleStatement);
 		}
 		
+		public function removeTemporaryStatement():void{
+			var simpleStatement:SimpleStatementModel = new SimpleStatementModel;
+			simpleStatement.parent = this;
+			trace(simpleStatement.text);
+			simpleStatement.forwardList.pop();
+			statements.pop();
+		}
+		
 		public function hasArgument(argumentTypeModel:ArgumentTypeModel):Boolean{
 			for each(var object:Object in supportingArguments){
 				if(object == argumentTypeModel){
@@ -516,6 +524,37 @@ package Model
 			addArgumentService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:addArgumentXML.toXMLString()});
 		}
 		
+		//Vinodh
+		public function addSupportingArgumentTry(x:int){
+			var statementWidth:int = AGORAModel.getInstance().agoraMapModel.statementWidth;
+			
+			var addArgumentXML:XML =<map ID={AGORAModel.getInstance().agoraMapModel.ID}>
+										<textbox text="" TID="1"/>
+										<textbox text={SimpleStatementModel.DEPENDENT_TEXT} TID="10" />
+										<textbox text={SimpleStatementModel.DEPENDENT_TEXT} TID="11" />
+									</map>;
+			
+			var reasonNodeXML:XML = <node TID= "4" Type="Particular" typed="0" is_positive="1" x={x} y={ygrid + 25}>
+											<nodetext TID="5" textboxTID="1"/>
+									</node>;
+			
+			var inferenceXML:XML =  <node TID="6" Type="Inference" typed="0" is_positive="1" x={x + 5} y={ygrid + 13}>
+											<nodetext TID="7" textboxTID="11"/>
+											<nodetext TID="8" textboxTID="10"/>
+									</node>;
+			
+			var connectionXML:XML  = <connection TID="9" type="Unset" x={x} y={ygrid +15} targetnodeID={ID}>
+										<sourcenode TID="12" nodeTID="6" />
+										<sourcenode TID="13" nodeTID="4" />
+									 </connection>;
+			
+			addArgumentXML.appendChild(reasonNodeXML);
+			addArgumentXML.appendChild(inferenceXML);
+			//addArgumentXML.appendChild(inference1XML);
+			addArgumentXML.appendChild(connectionXML);
+			addArgumentService.send({uid:AGORAModel.getInstance().userSessionModel.uid, pass_hash: AGORAModel.getInstance().userSessionModel.passHash, xml:addArgumentXML.toXMLString(),autoopenarg:true});
+		}
+		
 		protected function onAddArgumentServiceResponse(event:ResultEvent):void{
 			if(!event.result.map.hasOwnProperty("error")){
 				var map:MapValueObject = new MapValueObject(event.result.map, true);
@@ -541,6 +580,9 @@ package Model
 				AGORAModel.getInstance().agoraMapModel.connectionListHash[argumentTypeModel.ID] = argumentTypeModel;
 				AGORAModel.getInstance().agoraMapModel.newConnections.addItem(argumentTypeModel);
 				dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATED, null, argumentTypeModel));
+				
+				if(event.result.map.hasOwnProperty("autoopenarg"))				//Important to transfer the created sentence model to the load controller so that the argument chooser
+					AGORAModel.getInstance().savedStatement = statementModel;	//can be opened - Vinodh
 			}
 			else{
 				dispatchEvent(new AGORAEvent(AGORAEvent.ARGUMENT_CREATION_FAILED, null, null));

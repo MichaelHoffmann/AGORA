@@ -909,12 +909,26 @@ Additional languages can be added later. -->
 
 	<LastName>
 		<EN-US text="Last Name" />
-		<RUS
- text="Фамилия" />
+		<RUS text="Фамилия" />
 		<GER text="Nachname" />
 		<SPAN text="Apellidos" />
 	</LastName>
 
+<!--  Added for Con Dillemma - Vinodh-->
+	<AltClaim>
+		<EN-US text="alt-claim" />
+		<RUS text="если, то" />
+		<GER text="wenn-dann" />
+		<SPAN text="si, entonces" />
+	</AltClaim>
+	
+	<PropClaim>
+		<EN-US text="prop-claim" />
+		<RUS text="если, то" />
+		<GER text="wenn-dann" />
+		<SPAN text="si, entonces" />
+	</PropClaim>
+	
 	<Login>
 		<EN-US text="Login" />
 		<RUS text="Логин" />

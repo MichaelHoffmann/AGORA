@@ -495,7 +495,7 @@ List of variables for insertion:
 	/**
 	*	Highest-level function, that does the top level logic.
 	*/
-	function insert($xmlin, $userID, $pass_hash)
+	function insert($xmlin, $userID, $pass_hash, $auto_open)
 	{
 		global $dbName, $version;
 		header("Content-type: text/xml");
@@ -571,6 +571,10 @@ List of variables for insertion:
 			$output->addAttribute("ID", $mapClause);
 		}
 
+		if($auto_open){
+			$output->addAttribute("auto_open",$auto_open);
+		}
+
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id WHERE map_id = $mapClause";
 		$resultID = mysql_query($query, $linkID);
 		if(!$resultID){
@@ -622,6 +626,7 @@ List of variables for insertion:
 	$userID = mysql_real_escape_string($_REQUEST['uid']);
 	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
 	$proj_type = mysql_real_escape_string($_REQUEST['proj_type']);
-	$output = insert($xmlparam, $userID, $pass_hash);
+	$auto_open = mysql_real_escape_string($_REQUEST['autoopenarg']);
+	$output = insert($xmlparam, $userID, $pass_hash, $auto_open);
 	print($output->asXML());
 ?>

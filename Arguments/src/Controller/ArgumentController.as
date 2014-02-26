@@ -533,6 +533,51 @@ package Controller
 			}
 		}
 		
+		//vinodh
+		public function addSupportingArgumentTry(statementModel:StatementModel){
+			if(checkArgUnderConstruction()){
+				return statementModel;
+			}
+			if(!AGORAModel.getInstance().requested){
+				if(statementModel.firstClaim){//first claim
+					if(statementModel.supportingArguments.length == 0){
+						map.agoraMap.firstClaimHelpText.visible = false;
+					}
+				}
+				//tell the statement to support itself with an argument. Supply the position.
+				//figure out the position
+				//find out the last menu panel
+				if(statementModel.supportingArguments.length > 0){
+					var argumentTypeModel:ArgumentTypeModel = statementModel.supportingArguments[statementModel.supportingArguments.length - 1];
+					//Find the last grid
+					//Find out the inference
+					var inferenceModel:StatementModel = argumentTypeModel.inferenceModel;
+					var inference:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[inferenceModel.ID];
+					var xgridInference:int = (inference.y + inference.height) / AGORAParameters.getInstance().gridWidth + .10;
+					//find out hte last reason
+					var reasonModel:StatementModel = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length - 1];
+					var reason:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[reasonModel.ID];
+					//find the last grid
+					var xgridReason:int = (reason.y + reason.height ) / agoraParameters.gridWidth +10;
+					//compare and figure out the max
+					var nxgrid:int = xgridInference > xgridReason? xgridInference:xgridReason;
+				}else{
+					nxgrid = statementModel.xgrid;
+				}
+				//call the function
+				AGORAModel.getInstance().requested = true;
+				model.agoraMapModel.argUnderConstruction = true;
+				statementModel.addSupportingArgumentTry(nxgrid);  //adds a new enabler
+				
+				//Vinodh
+				//trace(statementModel.argumentTypeModel.claimModel.statement.text);
+				//statementModel.argumentTypeModel.reasonModels[0].statement.text = "Either P or Q";
+				
+				//	statementModel.addSupportingArgument(nxgrid);
+			}
+			
+		}
+		
 		protected function onArgumentCreated(event:AGORAEvent):void{
 			model.requested = false;
 			LoadController.getInstance().fetchMapData(true); 
@@ -633,6 +678,9 @@ package Controller
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
 			else if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL){
+	//			var i:int = 0;
+//				for(i=0;i<argumentTypeModel.reasonModels.length;i++)
+	//				argumentTypeModel.reasonModels[i].removeTemporaryStatement();			---	 Need to see this
 				schemeSelector.scheme = ParentArg.getInstance().getConstrainedArray(argumentTypeModel);
 			}
 			else if(argumentTypeModel.claimModel.firstClaim && argumentTypeModel.claimModel.statements.length == 1 && argumentTypeModel.claimModel.supportingArguments.length == 1){
@@ -854,6 +902,19 @@ package Controller
 			CursorManager.removeAllCursors();
 			onTextEntered(argumentPanel);
 			LoadController.getInstance().fetchMapData(true);
+		}
+		
+		//vinodh
+		public function textSavedTry(model:StatementModel):void{
+			AGORAModel.getInstance().requested = false;
+			map.sBar.hideStatus();
+			var statementModel:StatementModel = StatementModel(model);
+			trace(statementModel.statement.text);
+			statementModel.statement.text = "C";
+			var argumentPanel:ArgumentPanel = FlexGlobals.topLevelApplication.map.agoraMap.panelsHash[statementModel.ID];
+			argumentPanel.state = ArgumentPanel.DISPLAY;
+			CursorManager.removeAllCursors();
+			ArgumentController.getInstance().constructArgument(statementModel.argumentTypeModel); //directly opens the argument box
 		}
 		
 		//------------------- configuration functions -----------------//
