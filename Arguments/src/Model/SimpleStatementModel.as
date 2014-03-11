@@ -86,11 +86,7 @@ package Model
 			{
 				if(parent.argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL && parent.statementFunction != StatementModel.INFERENCE)
 				{
-					if(parent.firstReason == true)
-					{
-						return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
-					}
-					else
+					if(parent.firstReason == false && parent.argumentTypeModel.reasonModels.length>1)
 					{
 						//For subsequent reasons, to ensure that only the positive text changes and not anything else
 						//find which index the calling statement (parent) is and then return that string
@@ -109,52 +105,44 @@ package Model
 						}
 					
 						//set the string to the previous argument 
-						if (parent.dependentStatement == false)
+						var statement1:String = parent.argumentTypeModel.reasonModels[i-1].statement.positiveText;
+						var statement2:String = parent.argumentTypeModel.reasonModels[i].statement.positiveText;
+						if (statement1 !=null)
 						{
-							var statement1:String = parent.argumentTypeModel.reasonModels[i-1].statement.positiveText;
-							var statement2:String = parent.argumentTypeModel.reasonModels[i].statement.positiveText;
-							if (statement1 !=null)
-							{
-								statement1 = statement1.replace(rex,'');
-							}
-							if (statement2!=null)
-							{
-								statement2 = statement2.replace(rex,'');
-							}
-							
-							if (statement1==statement2 || (statement1.search(statement2)!=-1 && statement2!=""))
-							{
-								var a:String = "";
-								if (parent.statement.setAdditionalReasonConditionalText == null)
-									a = "";
-								else
-									a = parent.statement.setAdditionalReasonConditionalText;
-								parent.argumentTypeModel.reasonModels[i].statement.positiveText = a;
-								parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = a;
-								return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+a;
-							}
-							else
-							{
-								//trace(parent.argumentTypeModel.reasonModels[i-1].statement.positiveText.search(parent.argumentTypeModel.reasonModels[i].statement.positiveText));	
-								parent.statement.setAdditionalReasonConditionalText = _text;	//store the latest text here, which you get when actually editing the reason
-								parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = _text;
-								parent.argumentTypeModel.reasonModels[i].statement.positiveText = _text;
-								return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+parent.argumentTypeModel.reasonModels[i].statement.positiveText;
-							}
-							
+							statement1 = statement1.replace(rex,'');
+						}
+						if (statement2!=null)
+						{
+							statement2 = statement2.replace(rex,'');
 						}
 						
-						return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+_text;
+						if (statement1==statement2 || (statement1.search(statement2)!=-1 && statement2!=""))
+						{
+							var a:String = "";
+							if (parent.statement.setAdditionalReasonConditionalText == null)
+								a = "";
+							else
+								a = parent.statement.setAdditionalReasonConditionalText;
+							parent.argumentTypeModel.reasonModels[i].statement.positiveText = a;
+							parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = a;
+							return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+a;
+						}
+						else
+						{
+							//trace(parent.argumentTypeModel.reasonModels[i-1].statement.positiveText.search(parent.argumentTypeModel.reasonModels[i].statement.positiveText));	
+							parent.statement.setAdditionalReasonConditionalText = _text;	//store the latest text here, which you get when actually editing the reason
+							parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = _text;
+							parent.argumentTypeModel.reasonModels[i].statement.positiveText = _text;
+							return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+parent.argumentTypeModel.reasonModels[i].statement.positiveText;
+						}
+						
 					}
-					
-				}
-				
-				else
-					return _text;
+					else{
+							return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
+					}	
+				}		
 			}
-			else{
-				return _text;
-			}
+			return _text;
 		}
 		
 		public function set text(value:String):void{
