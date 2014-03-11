@@ -224,18 +224,18 @@ package Model
 			var inputXML:XML = 	<map ID={AGORAModel.getInstance().agoraMapModel.ID}>			
 								</map>;
 			
-			if(logicClass == AGORAParameters.getInstance().COND_SYLL){
-				inputXML.appendChild(<textbox TID="1" text={SimpleStatementModel.DEPENDENT_TEXT} />);
-			}
+		//	if(logicClass == AGORAParameters.getInstance().COND_SYLL){
+		//		inputXML.appendChild(<textbox TID="1" text={SimpleStatementModel.DEPENDENT_TEXT} />);
+		//	}
 			
 			inputXML.appendChild(<textbox TID="2" text="" />);
 			
 			reasonXML = <node TID= "3" Type="Particular" typed="0" is_positive="1" x={x} y={y}>
 						</node>;
 			
-			if(logicClass == AGORAParameters.getInstance().COND_SYLL){
-				reasonXML.appendChild(<nodetext TID="4" textboxTID="1" />);
-			}
+	//		if(logicClass == AGORAParameters.getInstance().COND_SYLL){
+	//			reasonXML.appendChild(<nodetext TID="4" textboxTID="1" />);
+	//		}
 			
 			reasonXML.appendChild(<nodetext TID="5" textboxTID="2" />);
 			inputXML.appendChild(reasonXML);

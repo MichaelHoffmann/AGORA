@@ -41,7 +41,10 @@
 					
 					<!--label for displaying 'It is not the case that' for negated statements-->
 					<s:Label id="negatedLbl"/>
-					<s:Label id = "displayTxt" minHeight="50" minWidth="50"/>
+					<!--label for displaying 'If reason[i-1] then for conditional syllogism reasons-->
+					<s:Label id="condSyllLbl"/>
+					<s:Label id="displayTxt" minWidth="50" minHeight="50" paddingBottom="0"
+							 paddingTop="0"/>
 					<s:Label id = "displayTxtLink" minWidth="50"/>
 				</s:VGroup>
 				<s:Group width="200">
@@ -1108,6 +1111,8 @@
 				
 				negatedLbl.text = Language.lookup("ArgNotCase");
 				negatedLbl.visible = true;
+				condSyllLbl.text = "Test";
+				condSyllLbl.visible = true;
 				addBtn.label = Language.lookup("Add") + "...";
 				deleteBtn.label = Language.lookup("Delete") + "...";
 				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
@@ -1172,38 +1177,62 @@
 						if(state == EDIT){
 							
 							group.removeAllElements();
+							if(model.argumentTypeModel!=null && model.argumentTypeModel.logicClass ==  AGORAParameters.getInstance().COND_SYLL)
+							{
+								//For conditional syllogism : Enter Reason Here
+								if(model.statement.positiveText!="")
+									condSyllLbl.text = model.statement.text.split(model.statement.positiveText)[0];
+								else
+								{
+									condSyllLbl.text = model.statement.text;						
+								}
+								group.addElement(condSyllLbl);
+							}
 							var i:int=0;
 							if(statementNegated){
 								group.addElement(negatedLbl);
 							}
 							for each(dta in inputs){
-								if(model.argumentTypeModel!=null)
-								{
-									if(model.argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL && i==0)
-									{ 
-										dta.editable = false;
-										i++;
-									}
-								}
 								group.addElement(dta);
 								group.addElement(doneBtn);
 								stage.focus = dta;
 							}	
 							
-						}else{setDisplayStatement(model.statement.text);
+						}else{
+							//actually redundant : Remove it
+							trace(model.statement.text);
+							setDisplayStatement(model.statement.text);
 							group.addElement(displayTxt);
 							group.addElement(displayTxtLink);
 						}
 						if(state == DISPLAY){
 							//remove inputs
 							group.removeAllElements();
+							
 							//remove buttons
 							//add label
 							//add the changed text.
 							//needed in case if the 
 							//node was changed from positive
 							//to negative
-							setDisplayStatement(model.statement.text);
+							
+							//The part below was added only for conditional syllogism display statement : It displays Enter Reason Here only if there was no reason before
+							if(model.argumentTypeModel!=null && model.argumentTypeModel.logicClass ==  AGORAParameters.getInstance().COND_SYLL)
+							{
+								if(model.statement.positiveText == "")
+								{
+									condSyllLbl.text = model.statement.text;
+									setDisplayStatement(null);
+									group.addElement(condSyllLbl);
+								}
+								else
+								{
+									//condSyllLbl.text = model.statement.text.split(model.statement.positiveText)[0];
+									setDisplayStatement(model.statement.positiveText);					//To get Enter reason here text in conditional syllogism
+								}									
+							}
+							else
+								setDisplayStatement(model.statement.text);
 							var temp:HGroup = new HGroup();
 							temp.addElement(displayTxt);
 							temp.addElement(displayTxtLink);

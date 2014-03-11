@@ -1,9 +1,11 @@
 package Model
 {
 	import Controller.LoadController;
+	
 	import Events.AGORAEvent;
 	
 	import Skins.panel;
+	
 	import ValueObjects.AGORAParameters;
 	import ValueObjects.ConnectionValueObject;
 	import ValueObjects.MapValueObject;
@@ -86,7 +88,9 @@ package Model
 		private var mapModel:AGORAMapModel;
 		public var objections:Vector.<StatementModel>;
 		public var comments:Vector.<StatementModel>;
-		
+		public var firstReason:Boolean = true;				//This is to find if the given statement model is of a subsequent reason or not. 
+		public var conditionalSyllAdditionalReasonUpdate:Boolean = false;				//This is to ensure that the text box doesnt get edited
+		public var dependentStatement:Boolean = false;
 		public function StatementModel(modelType:String=STATEMENT, target:IEventDispatcher=null)
 		{
 			super(target);

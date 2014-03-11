@@ -19,62 +19,62 @@
 		<link>
 			<name>bin-release</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release</location>
+			<location>C:/Users/nut/Desktop/exported_agora/agora_export</location>
 		</link>
 		<link>
 			<name>bin-release1</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop</location>
+			<location>C:/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop</location>
 		</link>
 		<link>
 			<name>bin-release10</name>
 			<type>2</type>
-			<location>/Users/agora/Desktop/Paul_testing/german</location>
+			<location>C:/Users/agora/Desktop/Paul_testing/german</location>
 		</link>
 		<link>
 			<name>bin-release11</name>
 			<type>2</type>
-			<location>/Users/agora/Desktop/Paul_testing/russian</location>
+			<location>C:/Users/agora/Desktop/Paul_testing/russian</location>
 		</link>
 		<link>
 			<name>bin-release2</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release</location>
+			<location>C:/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release</location>
 		</link>
 		<link>
 			<name>bin-release3</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/german</location>
+			<location>C:/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/german</location>
 		</link>
 		<link>
 			<name>bin-release4</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/Russian</location>
+			<location>C:/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/Russian</location>
 		</link>
 		<link>
 			<name>bin-release5</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/german</location>
+			<location>C:/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/german</location>
 		</link>
 		<link>
 			<name>bin-release6</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/English</location>
+			<location>C:/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/English</location>
 		</link>
 		<link>
 			<name>bin-release7</name>
 			<type>2</type>
-			<location>/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/German</location>
+			<location>C:/Applications/Adobe Flash Builder 4.6/Adobe Flash Builder 4.6.app/Contents/MacOS/C::/Users/pwill/Desktop/release/German</location>
 		</link>
 		<link>
 			<name>bin-release8</name>
 			<type>2</type>
-			<location>/Users/agora/Desktop/agora</location>
+			<location>C:/Users/agora/Desktop/agora</location>
 		</link>
 		<link>
 			<name>bin-release9</name>
 			<type>2</type>
-			<location>/Users/agora/Desktop/Paul_testing/english</location>
+			<location>C:/Users/agora/Desktop/Paul_testing/english</location>
 		</link>
 	</linkedResources>
 </projectDescription>

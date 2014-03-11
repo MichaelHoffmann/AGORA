@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GridPanel xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="components.*" cornerRadius="30" width="200" minHeight="100" preinitialize="preInit();" borderVisible="true" borderColor ="#29ABE2" skinClass="Skins.ArgumentPanelSkin">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!--dragbutton formerly toparea-->	
+	<s:Group id="dragBtnGroup" mouseDown ="beginDrag(event)" buttonMode="true" >
+		
+		<s:Ellipse width="30" height="30" left = "-35" top ="-26">
+			<s:fill>
+				<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
+			</s:fill>
+		</s:Ellipse>
+		<s:SWFLoader id="dragButton" mouseDown ="beginDrag(event)" buttonMode="true"
+					 source="@Embed('images/agoraMasterImages_Move.swf')" left= "-35"  top = "-26" height = "30" width = "30" />
+	</s:Group>
+	
+	<s:Group>
+		
+		<s:VGroup id="normalComponents" width="100%">
+			<s:VGroup id="topHG" width="100%">
+				<!--Within the topHG. It holds the author information and the type of statement-->
+				<s:HGroup id="stmtInfoVG" width="100%" fontSize="12">
+					<s:Label id="stmtTypeLbl" alpha=".50"/>
+					<s:Button  left = "0" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkin"   >
+						
+					</s:Button>
+					<!--Displays the user id-->
+					<s:Label id = "userIdLbl" click="{navigateToURL(new URLRequest(URL))}"    maxDisplayedLines="1" width="{100}"  left = "0" alpha=".50"/>
+					<s:Label id = "userIdLblPA" textDecoration="underline" visible="false" click="{navigateToURL(new URLRequest(prevauthorurl))}"    maxDisplayedLines="2" width="{20}" color="#F87217" left = "-30" alpha=".50"/>
+				</s:HGroup>
+				<s:Line width ="75%" height ="0" id = "theLine" >
+					<s:stroke>
+						<s:SolidColorStroke color="black" alpha=".50"/>
+					</s:stroke>
+				</s:Line>
+				<s:VGroup id = "group" horizontalCenter="0" width = "200">
+					
+					<!--label for displaying 'It is not the case that' for negated statements-->
+					<s:Label id="negatedLbl"/>
+					<s:Label id = "displayTxt" minHeight="50" minWidth="50"/>
+					<s:Label id = "displayTxtLink" minWidth="50"/>
+				</s:VGroup>
+				<s:Group width="200">
+					<s:Label id = "nodeCollabStatus" visible="false" minWidth="10" toolTip="" height="10" backgroundColor="#66BA06" right="0"/>					
+				</s:Group>
+			</s:VGroup>
+			
+			<!-- branch option control-->
+			<!---->
+			<!---->
+		</s:VGroup>
+		<s:VGroup id="msVGroup">
+		</s:VGroup>
+		<!--the logical container that contains everything above the group container-->
+		
+		<!-- contains the doneHG and bottomHG-->
+		<!--contains the add and the delete button-->
+		<s:Group id="bottomSlideout" visible="false" right="90" bottom="0">	
+			<s:Graphic>
+				<s:Rect bottom = "-95" height="70" width="115" radiusX="10" radiusY="10" left = "-15">
+					<s:stroke>
+						<s:SolidColorStroke color="{this.getStyle('borderColor')}" weight="0"/>
+					</s:stroke>
+					<s:fill>
+						<s:SolidColor color="{this.getStyle('borderColor')}"/>
+					</s:fill>
+				</s:Rect>
+			</s:Graphic>
+			
+			<s:HGroup id = "bottomHG" verticalAlign="middle" color="0" bottom = "-75" height = "30">
+				<s:VGroup>
+					<s:Button id = "addBtn" scaleX=".8" scaleY=".8" width="100%"/>
+					<s:Button id = "showMoreBtn" label="Show More" scaleX=".8" scaleY=".8" width= "100%"/>
+					<!--delete button-->
+					<s:Button id = "deleteBtn" scaleX=".8" scaleY=".8" width="100%"/>
+				</s:VGroup>
+				<s:SWFLoader id="hideButton" horizontalAlign="right"  width="10" height="10" verticalAlign="top"
+							 click="{event.stopImmediatePropagation(); ;showButton.visible = true;hideButton.visible=false; bottomSlideout.visible=false; }" buttonMode="true"
+							 source="@Embed('images/agoraMasterImages_Triangle.swf')" visible="false"  scaleY="-1"/>
+			</s:HGroup>
+		</s:Group>
+		
+		<!--<s:Image right="131.5" bottom="-35" id="showButton"  width="10" height="10"
+				 mouseOver="showMouseOver(event)"
+				 source="@Embed('images/agoraMasterImages_Triangle.png')"/>-->
+		<s:VGroup  id="showButtonG" right="137" bottom="-32" horizontalAlign="center" width="13">
+			<s:SWFLoader id="showButton" horizontalCenter="0" maxWidth="13" maxHeight="13"
+						 mouseOver="{event.stopImmediatePropagation();showButton.visible = false;hideButton.visible=true; bottomSlideout.visible=true;showMouseOver(event) }"
+						 source="@Embed('images/agoraMasterImages_Triangle.swf')"/>
+		</s:VGroup>
+		
+	</s:Group>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import Controller.ArgumentController;
+			import Controller.LoadController;
+			import Controller.UpdateController;
+			import Controller.ViewController;
+			import Controller.logic.ConditionalSyllogism;
+			import Controller.logic.ParentArg;
+			
+			import Events.AGORAEvent;
+			
+			import Model.AGORAMapModel;
+			import Model.AGORAModel;
+			import Model.MyMapsModel;
+			import Model.SimpleStatementModel;
+			import Model.StatementModel;
+			import Model.UserSessionModel;
+			
+			import Skins.TopBarLessPanel;
+			
+			import ValueObjects.AGORAParameters;
+			
+			import classes.Language;
+			
+			import flash.display.Sprite;
+			import flash.display.Stage;
+			import flash.events.Event;
+			import flash.events.FocusEvent;
+			import flash.events.KeyboardEvent;
+			import flash.events.MouseEvent;
+			import flash.geom.Point;
+			import flash.ui.Keyboard;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.binding.utils.ChangeWatcher;
+			import mx.containers.Canvas;
+			import mx.controls.Alert;
+			import mx.controls.Menu;
+			import mx.controls.TextInput;
+			import mx.core.DragSource;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.DragEvent;
+			import mx.events.EventListenerRequest;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			import mx.managers.DragManager;
+			import mx.managers.PopUpManager;
+			import mx.skins.Border;
+			import mx.utils.StringUtil;
+			
+			import spark.components.Button;
+			import spark.components.Group;
+			import spark.components.HGroup;
+			import spark.components.Panel;
+			import spark.components.TextArea;
+			import spark.effects.Resize;
+			import spark.layouts.HorizontalAlign;
+			import spark.layouts.HorizontalLayout;
+			import spark.layouts.VerticalLayout;
+			import spark.skins.spark.PanelSkin;
+			
+			//model class
+			[Bindable]
+			private var _model:StatementModel;
+			private var  dta:DynamicTextArea;
+			private var doneBtn:Button;
+			private var agoraLabels:AGORAParameters;
+			private var argPopUp:Panel=new Panel;
+			
+			//Input boxes
+			public var inputs:Vector.<DynamicTextArea>;
+			public var changeWatchers:Vector.<ChangeWatcher>;
+			//dragging handle	
+			
+			//Text display elements
+			//A statment exists in two states: editable, and non-editable. When
+			//the user clicks the done button, it goes to the non-editable state.
+			//The input textboxes are hidden and the below Text control is shown.
+			public var  branchControl:Option = new Option();
+			
+			//appearance
+			//skin of the panel
+			
+			//State Variables
+			private var _state:String;
+			
+			//Takes either INFERENCE or ARGUMENT_PANEL
+			private var _panelType:String;
+			[Bindable]
+			private var _statementNegated:Boolean;
+			[Bindable]
+			private var _statementType:String;
+			[Bindable]
+			private var _author:String;
+			private var _firstName:String;
+			private var _lastName:String;
+			private var _URL:String;
+			private var _prevauthor:String;
+			private var _prevauthorurl:String
+			
+			//dirty flags
+			private var _statementNegatedDF:Boolean;		
+			private var _statementsAddedDF:Boolean;
+			private var _stateDF:Boolean;
+			private var _statementTypeChangedDF:Boolean;
+			
+			
+			
+			//constants
+			//connecting string constants required for multistatements
+			public static const IF_THEN:String = "If-then";
+			public static const IMPLIES:String = "Implies";	
+			public static const EDIT:String = "Edit";
+			public static const DISPLAY:String = "Display";
+			
+			//References to other objects
+			public var changeTypeInfo:InfoBox;
+			
+			//A reference to the current map diplayed to the user
+			public static var parentMap:AgoraMap;
+			
+			//Containers
+			//The logical container that holds the text elements of the statement
+			//that is, input boxes and displayTxt
+			
+			//multistatement group
+			
+			//Menu data
+			
+			
+			//other instance variables
+			public var connectingStr:String;
+			public function get prevauthorurl():String
+			{				
+				if(_prevauthorurl!=null && _prevauthorurl.indexOf("http://") ==-1)
+					_prevauthorurl = "http://"+_prevauthorurl;				
+				return _prevauthorurl;
+			}
+			public function set prevauthorurl(value:String):void
+			{
+				_prevauthorurl = value;
+			}
+			public function get prevauthor():String
+			{
+				return _prevauthor;
+			}
+			public function set prevauthor(value:String):void
+			{
+				_prevauthor = value;
+			}
+			public function preInit():void
+			{
+				agoraLabels = AGORAParameters.getInstance();
+				inputs = new Vector.<DynamicTextArea>;
+				changeWatchers = new Vector.<ChangeWatcher>;
+				minWidth = 225;
+				minHeight = 50;
+				state = DISPLAY;
+				addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
+			}
+			
+			//------------------- Getters and Setters -----------------------------//
+			public function get panelType():String{
+				return _panelType;
+			}
+			
+			public function set panelType(value:String):void{
+				_panelType = value;
+			}
+			
+			public function get author():String
+			{
+				return _author;
+			}
+			public function get firstName():String
+			{
+				return _firstName;
+			}
+			public function get lastName():String
+			{
+				return _lastName;
+			}
+			public function get URL():String
+			{
+				if(_URL!=null && _URL.indexOf("http://") ==-1)
+					_URL = "http://"+_URL;
+				return _URL;
+			}		
+			public function set firstName(value:String):void
+			{
+				_firstName = value;
+			}
+			public function set lastName(value:String):void
+			{
+				_lastName = value;
+			}
+			public function set URL(value:String):void
+			{
+				_URL = value;
+			}
+			public function set author(value:String):void
+			{
+				_author = value;
+			}			
+			public function get statementNegated():Boolean
+			{
+				return _statementNegated;
+			}
+			
+			public function set statementNegated(value:Boolean):void
+			{
+				_statementNegated = value;
+				statementNegatedDF = true;
+				stateDF = true;
+				
+				invalidateProperties();
+				invalidateSize();
+				invalidateDisplayList();
+			}
+			
+			
+			public function get statementType():String
+			{
+				return _statementType;
+			}
+			
+			[Bindable]
+			public function set statementType(value:String):void
+			{
+				_statementType = value;
+				statementTypeChangedDF = true;
+				
+				invalidateProperties();
+				invalidateSize();
+				invalidateDisplayList();
+			}
+			
+			public function get model():StatementModel{
+				return _model;
+			}
+			
+			public function set model(value:StatementModel):void{
+				if(model == null){
+					_model = value;
+					//bind variables
+					
+					if(value.statementFunction == StatementModel.STATEMENT || value.statementFunction == StatementModel.INFERENCE){ 
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementType"]);
+					}
+					else if(value.statementFunction == StatementModel.OBJECTION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.COUNTER_EXAMPLE){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.COMMENT){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.AMENDMENT){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.REFERENCE){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.REFORMULATION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.LINKTOMAP){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.LINKTORESOURCES){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.DEFINITION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.QUESTION){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					else if(value.statementFunction == StatementModel.SUPPORT){
+						BindingUtils.bindProperty(this, "statementType", this, ["model","statementFunction"]);
+					}
+					BindingUtils.bindProperty(this, "statementNegated", model, ["negated"]);
+					BindingUtils.bindProperty(this, "gridX", model, ["xgrid"]);
+					BindingUtils.bindSetter(this.setX,model, ["xgrid"]);
+					BindingUtils.bindSetter(this.setY, model, ["ygrid"]);
+					BindingUtils.bindProperty(this, "panelType", model, ["statementFunction"]);
+						BindingUtils.bindSetter(this.setVisibility, model, ["argumentTypeModel","reasonsCompleted"]);
+					
+					author = model.author;
+					firstName=model.firstName;
+					lastName=model.lastName;
+					URL=model.URL;
+					statementsAddedDF = true;
+					prevauthor = model.prevauthor;
+					prevauthorurl = model.prevauthorurl;
+					invalidateProperties();
+					invalidateSize();
+					invalidateDisplayList();
+				}else{
+					trace("Error (ArgumentPanel.as, set model): attempted to reassign the model of statement view. Not allowed.");
+				}
+				
+			}
+			
+			public function get statementTypeChangedDF():Boolean
+			{
+				return _statementTypeChangedDF;
+			}
+			
+			public function set statementTypeChangedDF(value:Boolean):void
+			{
+				_statementTypeChangedDF = value;
+			}
+			
+			public function get state():String
+			{
+				return _state;
+			}
+			
+			public function set state(value:String):void
+			{
+				_state = value;
+				stateDF = true;
+				invalidateProperties();
+				invalidateSize();
+				invalidateDisplayList();
+			}
+			
+			public function get stateDF():Boolean
+			{
+				return _stateDF;
+			}
+			
+			public function set stateDF(value:Boolean):void
+			{
+				_stateDF = value;
+			}
+			
+			public function get statementsAddedDF():Boolean
+			{
+				return _statementsAddedDF;
+			}
+			
+			public function set statementsAddedDF(value:Boolean):void
+			{
+				_statementsAddedDF = value;
+			}
+			
+			public function get statementNegatedDF():Boolean
+			{
+				return _statementNegatedDF;
+			}
+			
+			public function set statementNegatedDF(value:Boolean):void
+			{
+				_statementNegatedDF = value;
+			}
+			
+			//--------------------- Event Handlers ----------------------//
+			
+			protected function onCreationComplete(event:FlexEvent):void{
+				
+				//Event Listeners that are appropriate only after the component is 
+				//created
+				addEventListener(KeyboardEvent.KEY_DOWN, keyEntered);
+			}
+			
+			protected function onDeleteBtnClicked(event:MouseEvent):void{
+				var type:String = AGORAModel.getInstance().projType;
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ArgumentController.getInstance().deleteNodes(this);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().deleteNodes(this);
+					
+				} else {
+					Alert.show(Language.lookup("GuestEditMapError"));
+				}
+			}
+			
+			protected function onStmtTypeClicked(event:MouseEvent):void{
+				var type:String = AGORAModel.getInstance().projType;
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ArgumentController.getInstance().changeType(model.ID);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().changeType(model.ID);
+				} else {
+					Alert.show(Language.lookup("GuestEditMapError"));
+				}
+			}
+			protected function onshowButtonClicked(event:MouseEvent):void{
+				if(event.currentTarget.label == "Show More")
+				{
+					//FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
+					AGORAModel.getInstance().agoraMapModel.showChildren =  new Dictionary;
+					var model1:StatementModel = model;
+					var stack:Array = new Array();
+					stack.push(model);
+					while (stack.length != 0)
+					{
+						model1 = stack.pop();
+						for each(var obj:StatementModel in model1.comments)
+						{
+							stack.push(obj);
+							if(obj.parentStatement!=null) 
+								AGORAModel.getInstance().agoraMapModel.showChildren[obj.ID] = obj; 
+						}
+						
+					}
+					event.currentTarget.label = "Hide";
+					AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+				}
+				else if(event.currentTarget.label == "Hide")
+				{
+					event.currentTarget.label = "Show More";
+					AGORAModel.getInstance().agoraMapModel.addClicked = 0;
+					AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 1;
+					var model1:StatementModel = model;
+					var stack:Array = new Array();
+					stack.push(model);
+					while (stack.length != 0)
+					{
+						
+						model1 = stack.pop();
+						for each(var obj:StatementModel in model1.comments)
+						{
+							stack.push(obj);
+							if(obj.statementFunction != StatementModel.OBJECTION || obj.statementFunction != StatementModel.COUNTER_EXAMPLE)
+							{
+								
+								AGORAModel.getInstance().agoraMapModel.deletedList.push(obj);
+								if(FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.numChildren > 0)
+									FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.removeChildren(0,FlexGlobals.topLevelApplication.map.agoraMap.drawUtility2.numChildren-1);
+								for each(var shape1:Shape in FlexGlobals.topLevelApplication.map.agoraMap.rectangle)
+									shape1.graphics.clear();
+								
+								delete AGORAModel.getInstance().agoraMapModel.panelListHash[obj.ID];
+								
+								delete AGORAModel.getInstance().agoraMapModel.showChildren[obj.ID];
+							}
+						}
+						
+					}
+				}
+				LoadController.getInstance().fetchMapData();
+			}
+			protected function onAddBtnMouseOver(event:MouseEvent):void{
+				/*	var type:String = AGORAModel.getInstance().projType;
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ArgumentController.getInstance().showAddHoverMenu(this);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ArgumentController.getInstance().showAddHoverMenu(this);
+				} else {
+					Alert.show("Guests to AGORA cannot edit maps");
+				}*/
+			}
+			
+			protected function onAddBtnClicked(event:MouseEvent):void{
+			var type:String = AGORAModel.getInstance().projType;
+			if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+				// check for collabs
+				if(FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.isNodebeingUsed(model.ID)){				
+					return;
+				}
+				// send a signal
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID);
+			ArgumentController.getInstance().showAddHoverMenu(this);
+			}
+			else {
+			Alert.show("Guests to AGORA cannot edit maps");
+			}
+			}
+			
+			protected function lblClicked(event:MouseEvent):void
+			{
+				var type:String = AGORAModel.getInstance().projType;
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if (type == "adversarial")
+					{
+						if(AGORAModel.getInstance().userSessionModel.username.toLowerCase() === author.toLocaleLowerCase()){
+							ViewController.getInstance().changeToEdit(this);
+						}
+						else
+							Alert.show(AGORAParameters.getInstance().EDIT_OTHER);
+					}
+					else ViewController.getInstance().changeToEdit(this);
+					
+				} else {
+					Alert.show(Language.lookup("GuestEditMapError"));
+				}
+			}
+			
+			protected function doneBtnClicked(event:MouseEvent):void{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					
+					// send a signal
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
+					
+					// clear here
+					ArgumentController.getInstance().saveText(model);
+				} else {
+					Alert.show(Language.lookup("GuestEditMapError"));
+				}
+			}
+			protected function onLink(event:MouseEvent):void {
+				if(panelType == StatementModel.LINKTORESOURCES)
+				{
+					var u:URLRequest=new URLRequest(displayTxt.text);
+					if(displayTxt.text!=null && displayTxt.text.indexOf("http://") ==-1)
+						u = new URLRequest("http://"+displayTxt.text);
+					 
+					navigateToURL(u,"_blank");
+				}
+			}
+			protected function onLinkMap(event:MouseEvent):void {
+				if(panelType == StatementModel.LINKTOMAP)
+				{
+					if(displayTxtLink.text.indexOf("(")!=-1){
+						var mapId:String = StringUtil.trim(displayTxt.text);	
+						AGORAModel.getInstance().agoraMapModel.checkPerm(mapId);
+					}
+				}
+			}
+			protected function keyEntered(event: KeyboardEvent):void
+			{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if(event.keyCode == Keyboard.ENTER)	
+					{				
+						if(state == EDIT){
+							// send a signal
+							FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
+							ArgumentController.getInstance().saveText(model);
+						}
+					}
+				} else {
+					Alert.show(Language.lookup("GuestEditMapError"));
+				}
+			}
+			
+			public function beginDrag(mouseEvent: MouseEvent ):void
+			{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					try{
+						var dPInitiator:ArgumentPanel = this;
+						var ds:DragSource = new DragSource();
+						var tmpx:int = int(dPInitiator.mouseX);
+						var tmpy:int = int(dPInitiator.mouseY);
+						ds.addData(tmpx,"x");
+						ds.addData(tmpy,"y");
+						ds.addData(dPInitiator.model.xgrid,"gx");
+						ds.addData(dPInitiator.model.ygrid,"gy");
+						DragManager.doDrag(dPInitiator,ds,mouseEvent,null);
+						if(state == EDIT){
+							state = DISPLAY;
+						}
+					}
+					catch(error:Error)
+					{
+						Alert.show(error.toString()+"1");
+					}
+				} else {
+					Alert.show(Language.lookup("GuestEditMapError"));
+				}
+			}
+			
+			
+			protected function optionClicked(event:MouseEvent):void
+			{
+			}
+			
+			protected function hideOption(event:KeyboardEvent):void
+			{
+			}
+			protected function completeArgumentClicked(event:MouseEvent):void
+			{
+				
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+				} else {
+					Alert.show("Guests cannot edit maps");
+				}
+				PopUpManager.removePopUp(argPopUp);
+			}
+			protected function addReasonClicked(event:MouseEvent):void
+			{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					ArgumentController.getInstance().addReason(model.argumentTypeModel);
+				} else {
+					Alert.show("Guests cannot edit maps");
+				}
+				PopUpManager.removePopUp(argPopUp);
+				
+			}
+			protected function showMouseOver(event:MouseEvent):void
+			{
+				showButton.visible = false; bottomSlideout.visible=true;
+				var parent:DisplayObjectContainer = FlexGlobals.topLevelApplication.map.agoraMap;
+				parent.setChildIndex(this, parent.numChildren-1);
+				
+			}
+			protected function argConstructionMenuClicked(menuEvent:MenuEvent):void{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if(menuEvent.label == Language.lookup("AddReason")){
+						ArgumentController.getInstance().addReason(model.argumentTypeModel);
+					}else{
+						ArgumentController.getInstance().constructArgument(model.argumentTypeModel);
+					}
+				} else {
+					Alert.show("Guests cannot edit maps");
+				}
+			}
+			
+			//----------------------- Bind Setters -------------------------------------------------//
+			protected function setDisplayStatement(value:String):void{
+				if(value == null){
+					if(model.statementFunction == StatementModel.STATEMENT){
+						if(model.firstClaim){
+							displayTxt.text = "[" + Language.lookup("EnterClaim") +"]";
+						}else{
+							displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
+						}
+					}
+					else if(model.statementFunction == StatementModel.OBJECTION){
+						displayTxt.text = "[" + Language.lookup("EnterObjection") + "]";
+						this.title = "Objection";
+					}
+					else if(model.statementFunction == StatementModel.COUNTER_EXAMPLE){
+						displayTxt.text = "[" + Language.lookup("CounterEx") + "]";
+					}
+					else if(model.statementFunction == StatementModel.COMMENT)
+					{
+						displayTxt.text = "[" + Language.lookup("EnterComment") + "]";
+					}
+					else if(model.statementFunction == StatementModel.SUPPORT){
+						displayTxt.text = "["+Language.lookup("AddSupport") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.AMENDMENT)
+					{
+						displayTxt.text = "[" + Language.lookup("FriendlyAmend") + "]";
+					}
+					else if(model.statementFunction == StatementModel.REFERENCE)
+					{
+						displayTxt.text = "[" + Language.lookup("ReferenceTo") + "]";
+					}
+					else if(model.statementFunction == StatementModel.LINKTOMAP){
+						displayTxt.text = "["+Language.lookup("AddLinkToMapEnterMapID") +"]";
+						displayTxtLink.text = "";
+					}
+					else if(model.statementFunction == StatementModel.DEFINITION){
+						displayTxt.text = "["+Language.lookup("EnterDef") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.LINKTORESOURCES){
+						displayTxt.text = "["+Language.lookup("EnterURL") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.SUPPORT){
+						displayTxt.text = "["+Language.lookup("AddSupport") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.REFORMULATION){
+						displayTxt.text = "["+Language.lookup("AddEquiv") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.QUESTION){
+						displayTxt.text = "["+Language.lookup("Question") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.INFERENCE){
+						displayTxt.text = AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
+					}
+				}
+				else if(value.split(" ").join("").length == 0){
+					if(model.statementFunction == StatementModel.STATEMENT){
+						if(model.firstClaim){
+							displayTxt.text = "[" + Language.lookup("EnterClaim") +"]";
+						}else{
+							displayTxt.text = "[" + Language.lookup("EnterReason")+ "]";
+						}
+					}else if(model.statementFunction == StatementModel.OBJECTION){
+						displayTxt.text = "["+Language.lookup("EnterObjection") +"]";
+						this.title = "Objection";
+						
+					}
+					else if(model.statementFunction == StatementModel.COUNTER_EXAMPLE){
+						displayTxt.text = "[" + Language.lookup("CounterEx") + "]";
+					}
+					else if(model.statementFunction == StatementModel.COMMENT){
+						displayTxt.text = "["+Language.lookup("EnterComment") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.AMENDMENT)
+					{
+						displayTxt.text = "[" + Language.lookup("FriendlyAmend") + "]";
+					}
+					else if(model.statementFunction == StatementModel.REFERENCE)
+					{
+						displayTxt.text = "[" + Language.lookup("ReferenceTo") + "]";
+					}
+					else if(model.statementFunction == StatementModel.LINKTOMAP){
+						displayTxt.text = "["+Language.lookup("AddLinkToMapEnterMapID") +"]";
+						displayTxtLink.text = "";	
+					}
+					else if(model.statementFunction == StatementModel.LINKTORESOURCES){
+						displayTxt.text = "["+Language.lookup("EnterURL") +"]";
+					}
+					else if(model.statementFunction == StatementModel.DEFINITION){
+						displayTxt.text = "["+Language.lookup("EnterDef") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.SUPPORT){
+						displayTxt.text = "["+Language.lookup("AddSupport") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.REFORMULATION){
+						displayTxt.text = "["+Language.lookup("AddEquiv") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.QUESTION){
+						displayTxt.text = "["+Language.lookup("Question") +"]";
+						
+					}
+					else if(model.statementFunction == StatementModel.INFERENCE){
+						displayTxt.text =  AGORAParameters.getInstance().SUPPORT_SELECT_ARG_SCHEME;
+					}
+				}
+				else{
+					displayTxt.text = value;
+					if(panelType == StatementModel.LINKTORESOURCES)
+					{
+						displayTxt.addEventListener(MouseEvent.CLICK,onLink);
+						displayTxt.setStyle("textDecoration", "underline");
+						displayTxt.setStyle("color",0x0033FF);
+					}else if(panelType == StatementModel.LINKTOMAP)
+					{
+						displayTxt.text = value;						
+						displayTxt.width = 50;
+						displayTxtLink.maxWidth = 200;
+						displayTxtLink.text = "";
+						if(value.indexOf("(")!=-1){
+							displayTxt.text= value.substring(0,value.indexOf("(")-1);
+							displayTxtLink.text= value.substring(value.indexOf("("));
+							displayTxtLink.setStyle("buttonMode", true);
+							displayTxtLink.setStyle("useHandCursor", true);
+							displayTxtLink.setStyle("mouseChildren", false);
+							displayTxtLink.addEventListener(MouseEvent.CLICK,onLinkMap);
+							displayTxtLink.setStyle("textDecoration", "underline");
+							displayTxtLink.setStyle("color",0x0033FF);
+							displayTxtLink.setVisible(true);
+						}						
+					}
+				}
+			}
+			
+			protected function setVisibility(value:Boolean):void{
+				
+				if(model.statementFunction == StatementModel.INFERENCE){
+					if(model.argumentTypeModel && !model.argumentTypeModel.reasonsCompleted){
+						this.visible = false;
+					}
+					else{
+						this.visible = true;
+					}
+				}
+			}
+			
+			//-------------------- Other Public Methods ----------------------------//
+			public function enableDelete():void{
+				//remove button
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					
+					if(AGORAModel.getInstance().leafDelete){
+						
+						if(model.supportingArguments.length != 0 || ( model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length != 0)){
+							if(deleteBtn){
+								deleteBtn.enabled = false;
+							}			
+						}
+					}
+				}
+			}
+			
+			public function showMenu():void
+			{
+				var vgroup:VGroup=new VGroup;
+				
+				var addReason:Button=new Button;
+				var completeArgument:Button= new Button;
+				addReason.label= Language.lookup("AddReason");
+				completeArgument.label= Language.lookup("Construct");
+				completeArgument.addEventListener(MouseEvent.CLICK,completeArgumentClicked );
+				addReason.addEventListener(MouseEvent.CLICK,addReasonClicked);
+				showButton.addEventListener(MouseEvent.MOUSE_OVER,showMouseOver);
+				
+				var orLabel:Label = new Label;
+				var bigGroup:VGroup = new VGroup;
+				var selectLabel:Label = new Label;
+				selectLabel.left=0;
+				orLabel.text = Language.lookup("ArgOr");
+				vgroup.horizontalAlign="center";
+				argPopUp.setStyle("skinClass", TopBarLessPanel);
+				addReason.toolTip=Language.lookup("AnotherReasonHelp");
+				argPopUp.titleDisplay=null;
+				vgroup.addElement(selectLabel);
+				vgroup.addElement(addReason);
+				vgroup.addElement(orLabel);
+				vgroup.addElement(completeArgument);
+				addReason.percentWidth=completeArgument.percentWidth=100;
+				selectLabel.text = Language.lookup("Select")+":";
+				selectLabel.top=10;
+				
+				bigGroup.addElement(selectLabel);
+				bigGroup.addElement(vgroup);
+				argPopUp.addElement(bigGroup);
+				argPopUp.setStyle("borderVisible",true);
+				argPopUp.setStyle("cornerRadius",15);
+				
+				
+				PopUpManager.addPopUp(argPopUp, this.parent, true);
+				PopUpManager.centerPopUp(argPopUp);
+			}
+			
+			
+			public function toEditState():void{
+				state = EDIT;
+				dispatchEvent(new AGORAEvent(AGORAEvent.STATEMENT_STATE_TO_EDIT, null, this));
+			}
+			
+			public function addMenuClicked(event:MenuEvent):void{
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if(event.label == agoraLabels.ADD_SUPPORTING_STATEMENT){
+						ArgumentController.getInstance().addSupportingArgument(model);
+					}else if(event.label == agoraLabels.ADD_OBJECTION){
+						ArgumentController.getInstance().addAnObjection(model);
+					}
+				} else { 
+					Alert.show("Guests to AGORA cannot edit maps.");
+				}
+			}
+			public function addHoverMenuClicked(event:MenuEvent):void{
+<<<<<<< HEAD
+=======
+				// clear here
+				// send a signal
+>>>>>>> 90f77469f2950497f3b062db66281b8d5173eab0
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
+				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
+					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
+						ArgumentController.getInstance().addSupportingArgumentTry(model);	//vinodh
+					}else if(event.label == agoraLabels.ADD_OBJECTION){
+						ArgumentController.getInstance().addAnObjection(model);
+					}
+					else if(event.label == agoraLabels.DEFEAT_STATEMENT_BY_COUNTER_EXAMPLE){
+						if(this.statementType != "Particular")
+						{
+							ArgumentController.getInstance().addDefeatStatement(model);
+							//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
+						}
+						else
+						{
+							Alert.show(Language.lookup("AddObjectionByCounterExample"));
+						}
+					}
+					else if(event.label == agoraLabels.COMMENT)
+					{
+						ArgumentController.getInstance().addComment(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if(event.label == agoraLabels.SUPPORTING_STATEMENT)
+					{
+						ArgumentController.getInstance().addSupport(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if(event.label == agoraLabels.EQUIVALENT_REFORMULATION)
+					{
+						ArgumentController.getInstance().addReformulation(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.FRIENDLY_AMENDMENT)
+					{
+						ArgumentController.getInstance().addAmendment(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.REFERENCE)
+					{
+						ArgumentController.getInstance().addReference(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.QUESTION)
+					{
+						ArgumentController.getInstance().addQuestion(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.DEFINITION)
+					{
+						ArgumentController.getInstance().addDefinition(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.LINK_TO_ANOTHER_MAP)
+					{
+						ArgumentController.getInstance().addLinkToMap(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+					else if (event.label == agoraLabels.LINK_TO_RESOURCES)
+					{
+						ArgumentController.getInstance().addLinkToResource(model);
+						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
+						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
+						showMoreBtn.label = "Hide"
+					}
+				} else { 
+					Alert.show("Guests to AGORA cannot edit maps.");
+				}
+			}
+			
+			//----------------------- Life Cycle Methods -------------------------------------------//
+			//create children must be overriden to create dynamically allocated children
+			override protected function createChildren():void
+			{
+				//Elements are constructed, initialized with properties, and attached to display list		
+				//create the children of MX Panel
+				super.createChildren();
+				var uLayout:VerticalLayout = new VerticalLayout;
+				uLayout.paddingBottom = 10;
+				uLayout.paddingLeft = 10;
+				uLayout.paddingRight = 10;
+				uLayout.paddingTop = 10;
+				this.layout = uLayout;
+				if(model.comments.length !=0 )
+				{
+					showButton.source = "images/yellowTriangle.swf";
+					
+				}else if(panelType!= StatementModel.INFERENCE && panelType == StatementModel.STATEMENT){
+				}
+				
+				
+				// default setting    	
+				
+				if(model.statementFunction == StatementModel.STATEMENT){
+					stmtTypeLbl.toolTip = Language.lookup("ParticularUniversalClarification");
+				}
+				
+				stmtTypeLbl.text=statementType;
+				stmtTypeLbl.addEventListener(MouseEvent.CLICK, onStmtTypeClicked);
+				
+				bottomHG = new HGroup();
+				
+				doneBtn = new Button;
+				doneBtn.label = Language.lookup("Done");
+				doneBtn.addEventListener(MouseEvent.CLICK, doneBtnClicked);
+				
+				
+				//TODO: Translate
+				displayTxt.minHeight = 50;
+				displayTxt.width = 200;
+				BindingUtils.bindSetter(setDisplayStatement, model, ["statement", "text"]);
+				this.displayTxt.addEventListener(MouseEvent.CLICK, lblClicked);
+				
+				if(model.statementFunction == StatementModel.INFERENCE){
+					topHG.removeElement(stmtInfoVG);
+					topHG.removeElement(theLine);
+					this.toolTip = Language.lookup("Enabler");
+					deleteBtn.toolTip=Language.lookup("WarnDelEnabl");
+				}
+				userIdLbl.text = Language.lookup("AU")+ ": "+ author;
+				var theAuthor:UserSessionModel=AGORAModel.getInstance().userSessionModel;
+				var userInfoStr:String = " URL: "+URL;
+				userIdLbl.toolTip = Language.lookup("MapOwnerURLWarning")+" "+ userInfoStr;
+				if(prevauthor!=null && prevauthor!=""){					
+					userIdLblPA.text = Language.lookup('MapHistoryPA');
+					userIdLblPA.toolTip = Language.lookup('NodeHistoryPreviousAuthorToolTip')+ prevauthor;
+					userIdLblPA.visible = true;
+				}
+				
+				
+				negatedLbl.text = Language.lookup("ArgNotCase");
+				negatedLbl.visible = true;
+				addBtn.label = Language.lookup("Add") + "...";
+				deleteBtn.label = Language.lookup("Delete") + "...";
+				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteBtnClicked);
+				addBtn.addEventListener(MouseEvent.CLICK, onAddBtnClicked);
+				addBtn.addEventListener(MouseEvent.MOUSE_OVER,onAddBtnMouseOver);
+				showMoreBtn.addEventListener(MouseEvent.CLICK,onshowButtonClicked);
+				
+				
+				
+			}
+			
+			override protected function commitProperties():void
+			{
+				
+				super.commitProperties();
+				if(!(panelType == StatementModel.INFERENCE)){
+					var simpleStatement:SimpleStatementModel;
+					statementsAddedDF = true;
+					//check if new statements were added
+					//associate every statement in statments vector with a new dynamc text area
+					if(statementsAddedDF){
+						//clear flag
+						statementsAddedDF = false;
+						//remove inputs
+						for each(dta in inputs){
+							try{
+								group.removeElement(dta);
+								group.removeElement(doneBtn);
+							}catch(error:Error){
+								//trace("error: Trying to remove an element that is not present");
+							}
+						}
+						inputs.splice(0,inputs.length);
+						
+						//for each statement add an input text
+						for each(simpleStatement in model.statements){
+							dta = new DynamicTextArea;
+							dta.width = 200;
+							//add model
+							dta.model = simpleStatement;
+							//push that into inputs
+							inputs.push(dta);
+						}	
+					}
+					
+					userIdLbl.maxWidth = this.explicitWidth - 60;
+					if(statementTypeChangedDF){
+						statementTypeChangedDF = false;
+						if(statementType == StatementModel.UNIVERSAL){
+							skin.setStyle("cornerRadius","30");
+						}
+						else{
+							skin.setStyle("cornerRadius","15");
+							
+						}
+						stmtTypeLbl.text=Language.lookup(statementType+"Name");
+					}
+					
+					//Handle state change between DISPLAY AND EDIT.
+					if(stateDF){
+						stateDF = false;
+						if(state == EDIT){
+							
+							group.removeAllElements();
+							var i:int=0;
+							if(statementNegated){
+								group.addElement(negatedLbl);
+							}
+							for each(dta in inputs){
+								if(model.argumentTypeModel!=null)
+								{
+									if(model.argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL && i==0)
+									{ 
+										dta.editable = false;
+										i++;
+									}
+								}
+								group.addElement(dta);
+								group.addElement(doneBtn);
+								stage.focus = dta;
+							}	
+							
+						}else{setDisplayStatement(model.statement.text);
+							group.addElement(displayTxt);
+							group.addElement(displayTxtLink);
+						}
+						if(state == DISPLAY){
+							//remove inputs
+							group.removeAllElements();
+							//remove buttons
+							//add label
+							//add the changed text.
+							//needed in case if the 
+							//node was changed from positive
+							//to negative
+							setDisplayStatement(model.statement.text);
+							var temp:HGroup = new HGroup();
+							temp.addElement(displayTxt);
+							temp.addElement(displayTxtLink);
+							group.addElement(temp);
+							//group.addElement(displayTxtLink);
+							displayTxt.minHeight=10;
+							displayTxt.minWidth=100;
+							//add button
+						}
+					}
+					if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
+						this.setStyle("borderColor" ,0xF99653);
+						stmtButton.visible = false;
+						if(panelType == StatementModel.OBJECTION)
+							stmtTypeLbl.text = Language.lookup("ObjectionName");
+						else if(panelType == StatementModel.COUNTER_EXAMPLE)
+							stmtTypeLbl.text = Language.lookup("DefeatsByCounterEx");
+					}
+					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
+						
+						showMoreBtn.visible = false;
+						this.setStyle("borderColor" ,0xFFFF00);
+						stmtButton.visible = false;
+						if(panelType == StatementModel.COMMENT)
+							stmtTypeLbl.text = Language.lookup("AddComment");
+						else if(panelType == StatementModel.QUESTION)
+							stmtTypeLbl.text = Language.lookup("AddQuestion");
+						else if(panelType == StatementModel.REFORMULATION)
+							stmtTypeLbl.text = Language.lookup("AddEquiv");
+						else if(panelType == StatementModel.AMENDMENT)
+							stmtTypeLbl.text = Language.lookup("AddFriendlyAmend");
+						else if(panelType == StatementModel.REFERENCE)
+							stmtTypeLbl.text = Language.lookup("AddReference");
+						else if(panelType == StatementModel.DEFINITION)
+							stmtTypeLbl.text = Language.lookup("AddDef");
+						else if(panelType == StatementModel.LINKTOMAP)
+							stmtTypeLbl.text = Language.lookup("AddLinkToMap");
+						else if(panelType == StatementModel.LINKTORESOURCES)
+							stmtTypeLbl.text = Language.lookup("ResourceLink");
+						else if(panelType == StatementModel.SUPPORT)
+							stmtTypeLbl.text = Language.lookup("AddSupport");
+						
+					}}
+				else if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
+					skin.setStyle("borderColor" ,252525);
+					group.removeAllElements();
+					state = DISPLAY;
+					group.addElement(displayTxt);
+				}
+				else if(panelType == StatementModel.COMMENT || panelType == StatementModel.QUESTION || panelType == StatementModel.REFERENCE || panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
+					skin.setStyle("borderColor" ,252525);
+					group.removeAllElements();
+					state = DISPLAY;
+					group.addElement(displayTxt);
+					group.addElement(displayTxtLink);
+				}
+					
+					//If the statement is an enabler.
+				else{
+					//remove all textboxes
+					inputs.splice(0,inputs.length);
+					//remove inputs
+					group.removeAllElements();
+					//remove buttons
+					//add label
+					
+					group.addElement(displayTxt);
+					//add button
+					
+					//set corner radius
+					stmtInfoVG.removeAllElements();					
+				}
+			}
+			
+			override protected function measure():void{
+				//call parent's measure
+				super.measure();
+			}
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				//Draw the top left box for moving stuff
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+			}
+			
+			
+			
+			
+		]]>
+	</fx:Script>
+</components:GridPanel>

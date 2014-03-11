@@ -14,12 +14,10 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="resetPassword.mxml"/>
     <application path="index.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>
-
 

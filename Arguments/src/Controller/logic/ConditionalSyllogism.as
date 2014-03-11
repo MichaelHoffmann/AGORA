@@ -54,7 +54,7 @@ package Controller.logic
 				return;
 			}
 			trace(reasonModels.length);
-			inferenceModel.statements[0].text = reasonModels[reasonModels.length-1].statements[1].text;
+			inferenceModel.statements[0].text = reasonModels[reasonModels.length-1].statements[0].text;
 			inferenceModel.statements[1].text = claimModel.statements[1].text;
 			
 			switch(argumentTypeModel.language){
@@ -75,17 +75,17 @@ package Controller.logic
 			var simpleStatement:SimpleStatementModel;
 			var stmtToBeUnlinked:SimpleStatementModel;
 			var i:int;
-			for(i=0;i<reasonModels.length;i++)
-				trace(reasonModels[i].statements[1].text);
+			//for(i=0;i<reasonModels.length;i++)
+			//	trace(reasonModels[i].statements[1].text);
 			var claimText:String = claimModel.statements[0].text;
 			if(reasonModels.length > 0){
 				var reasonText:String = reasonModels[0].statements[0].text;
 				removeDependence(claimModel.statements[0], reasonModels[0].statements[0]);
-				for(i=0; i<reasonModels.length - 1; i++){
-					removeDependence(reasonModels[i].statements[1], reasonModels[i+1].statements[0]);
-				}
+		//		for(i=0; i<reasonModels.length - 1; i++){
+		//			removeDependence(reasonModels[i].statements[1], reasonModels[i+1].statements[0]);
+		//		}
 				//reason to inference
-				removeDependence(reasonModels[reasonModels.length - 1].statements[1], inferenceModel.statements[0]);
+				removeDependence(reasonModels[reasonModels.length - 1].statements[0], inferenceModel.statements[0]);
 			}
 			
 			//claim to inference
@@ -99,7 +99,7 @@ package Controller.logic
 				}
 			}
 		
-			for(i=0; i<reasonModels.length; i++){
+		/*	for(i=0; i<reasonModels.length; i++){
 				trace(reasonModels[i].statements[0].text);
 				trace(reasonModels[i].statements[1].text);
 				var a:String = reasonModels[i].statements[1].text;
@@ -113,7 +113,7 @@ package Controller.logic
 					}
 				}
 			}
-			
+			*/
 			//So that changes get reflected in the statement
 			for(i=0;i<reasonModels.length;i++)
 				trace(reasonModels[i].statements[0].text);
@@ -143,28 +143,32 @@ package Controller.logic
 				claimModel.statements[1].text = "T";
 			}
 			
-			for(i = 0; i<reasonModels.length; i++){
+	/*		for(i = 0; i<reasonModels.length; i++){
 				if(reasonModels[i].statements.length < 2){
 					reasonModels[i].addTemporaryStatement();
-					reasonModels[i].statements[1].text = (reasonModels[i].statements[0].text == null || reasonModels[i].statements[0].text == "")? Language.lookup("EnterReason") : reasonModels[i].statements[0].text ;
+					reasonModels[i].statements[1].text = ""
 					reasonModels[i].connectingString = StatementModel.IMPLICATION;
 				}
 			}
+		*/
 			
 			//connect the conclusion of the claim
 			//to the conclusion of the inference
 			claimModel.statements[1].addDependentStatement(inferenceModel.statements[1]);
 			//connect the first reason's premise to the
 			//claim's premise
-			claimModel.statements[0].addDependentStatement(reasonModels[0].statements[0]);
+			//claimModel.statements[0].addDependentStatement(reasonModels[0].statements[0]);
 			
 			//connect subsequent reasons
 			for(i=0; i<reasonModels.length -1; i++){
-				reasonModels[i].statements[1].addDependentStatement(reasonModels[i+1].statements[0]);
+				reasonModels[i].statements[0].addDependentStatement(reasonModels[i+1].statements[0]);
+			}
+			for(i=1;i<reasonModels.length;i++){
+				reasonModels[i].firstReason = false;
 			}
 			//connect last reason's conclusion to the 
 			//inference's premise
-			reasonModels[reasonModels.length - 1].statements[1].addDependentStatement(inferenceModel.statements[0]);
+			reasonModels[reasonModels.length - 1].statements[0].addDependentStatement(inferenceModel.statements[0]);
 			
 			
 			
@@ -173,7 +177,7 @@ package Controller.logic
 			claimModel.statements[1].updateStatementTexts();
 			for each(var reasonModel:StatementModel in reasonModels){
 				reasonModel.statements[0].updateStatementTexts();
-				reasonModel.statements[1].updateStatementTexts();
+			//	reasonModel.statements[1].updateStatementTexts();
 				reasonModel.connectingString = StatementModel.IMPLICATION;
 			}
 			
