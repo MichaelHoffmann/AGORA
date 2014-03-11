@@ -8,11 +8,20 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import classes.Language
+			import classes.Language;
+			import Controller.AGORAController;
+			import Controller.ArgumentController;
+			
+			public function startWithScheme():void 
+			{
+				ArgumentController.getInstance().startWithScheme();
+			}
 		]]>
 	</fx:Script>
-	<s:Label paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" backgroundColor ="0xffff00" width="150"  id="help2" top = "-50" left = "-325" text="{Language.lookup('WhatIsMainClaim')}"/>
-
-	<s:Label paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" backgroundColor ="0xffff00" width="150"  id="helpTxt" text="{Language.lookup('ClaimReminder')}"/>
+	<s:Label paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" backgroundColor ="0xffff00" width="150"  id="help2" top = "-50" left = "-325"  text="{Language.lookup('WhatIsMainClaim')}"/>
+	<s:Label paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" id="schemeStart" backgroundColor ="0xffff00" width="180" top = "-50" left = "-160" text="{Language.lookup(&quot;UseArgScheme&quot;)}" 
+			 click="startWithScheme()" />
+	<s:Label paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" backgroundColor ="0xffff00" width="150"  id="helpTxt" left = "25" text="{Language.lookup('ClaimReminder')}"/>
 	<s:Label paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" backgroundColor ="0xffff00" width="300"  id="helpTxt3" top="290" left = "-325" text="{Language.lookup('ClaimReminder2')}"/>
 </s:Group>
+

@@ -62,6 +62,7 @@ package Controller
 		private var map:Map;
 		private var menu:AGORAMenu;
 		private var sbar:StatusBar;
+		public var firstClaimStatementModel:StatementModel = null;
 		
 		public function ArgumentController(singletonEnforcer:SingletonEnforcer)
 		{
@@ -316,6 +317,27 @@ package Controller
 			addFirstClaim();
 		}
 		
+		//---------------------Start with Scheme---------------------//
+		public function startWithScheme():void{
+			if(firstClaimStatementModel!=null)
+			{
+				trace(firstClaimStatementModel.statement.text);
+				ArgumentController.getInstance().addSupportingArgumentTry(firstClaimStatementModel);
+			}
+			else
+			{
+				try
+				{
+					addFirstClaim();
+					ArgumentController.getInstance().addSupportingArgumentTry(firstClaimStatementModel);
+				}
+				catch(myError:Error)
+				{
+					Alert.show("Error encountered. Please Save and Home and try again");
+				}
+			}
+		}
+		
 		//-------------------Add First Claim------------------------------//
 		public function addFirstClaim():void{
 			if(!model.requested){
@@ -331,6 +353,7 @@ package Controller
 		
 		protected function onFirstClaimAdded(event:AGORAEvent):void{
 			var statementModel:StatementModel = event.eventData as StatementModel;
+			firstClaimStatementModel = statementModel;
 			model.requested = false;
 			LoadController.getInstance().fetchMapData(true);
 		}
