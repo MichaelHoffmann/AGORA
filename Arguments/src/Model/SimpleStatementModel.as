@@ -138,6 +138,15 @@ package Model
 						
 					}
 					else{
+							if(parent.argumentTypeModel.claimModel.statements[0].text!=null)
+							{
+								if(parent.argumentTypeModel.claimModel.statements[0].text.indexOf(Language.lookup("ArgNotCase"))!=-1)
+								{
+									parent.argumentTypeModel.claimModel.statements[0].text = parent.argumentTypeModel.claimModel.statements[0].text.split(Language.lookup("ArgNotCase"))[1];
+									parent.argumentTypeModel.claimModel.statements[0].positiveText = parent.argumentTypeModel.claimModel.statements[0].text;
+									return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
+								}
+							}
 							return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
 					}	
 				}		
