@@ -677,6 +677,11 @@ package Controller
 			if(checkArgUnderConstruction()){
 				return;
 			}
+			if(argumentTypeModel.inferenceModel.supportingArguments.length>0)
+			{
+				Alert.show(Language.lookup("ChangeArgScheme"));
+				return ;
+			}
 			model.agoraMapModel.argUnderConstruction = true;
 			var helpText:HelpText = map.agoraMap.helpText;
 			helpText.visible = false;
