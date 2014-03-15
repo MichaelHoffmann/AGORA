@@ -103,51 +103,75 @@ package Model
 							else
 								flag = 0;
 						}
-					
+						if(flag==0 || i>parent.argumentTypeModel.reasonModels.length - 1)
+						{
+							i = parent.argumentTypeModel.reasonModels.length - 1
+						}
 						//set the string to the previous argument 
-						var statement1:String = parent.argumentTypeModel.reasonModels[i-1].statement.positiveText;
-						var statement2:String = parent.argumentTypeModel.reasonModels[i].statement.positiveText;
-						if (statement1 !=null)
+						if (i>0)
 						{
-							statement1 = statement1.replace(rex,'');
-						}
-						if (statement2!=null)
-						{
-							statement2 = statement2.replace(rex,'');
-						}
-						
-						if (statement1==statement2 || (statement1.search(statement2)!=-1 && statement2!=""))
-						{
-							var a:String = "";
-							if (parent.statement.setAdditionalReasonConditionalText == null)
-								a = "";
+							var statement1:String = parent.argumentTypeModel.reasonModels[i-1].statement.positiveText;
+							var statement2:String = parent.argumentTypeModel.reasonModels[i].statement.positiveText;
+							if (statement1 !=null)
+							{
+								statement1 = statement1.replace(rex,'');
+							}
+							if (statement2!=null)
+							{
+								statement2 = statement2.replace(rex,'');
+							}
+							
+							if (statement1==statement2 || (statement1.search(statement2)!=-1 && statement2!=""))
+							{
+								var a:String = "";
+								if (parent.statement.setAdditionalReasonConditionalText == null)
+									a = "";
+								else
+									a = parent.statement.setAdditionalReasonConditionalText;
+								parent.argumentTypeModel.reasonModels[i].statement.positiveText = a;
+								parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = a;
+								if(parent.argumentTypeModel.language == "if-then")
+									return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+a;
+								else
+									return parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" implies "+a;
+							}
 							else
-								a = parent.statement.setAdditionalReasonConditionalText;
-							parent.argumentTypeModel.reasonModels[i].statement.positiveText = a;
-							parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = a;
-							return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+a;
+							{
+								//trace(parent.argumentTypeModel.reasonModels[i-1].statement.positiveText.search(parent.argumentTypeModel.reasonModels[i].statement.positiveText));	
+								parent.statement.setAdditionalReasonConditionalText = _text;	//store the latest text here, which you get when actually editing the reason
+								parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = _text;
+								parent.argumentTypeModel.reasonModels[i].statement.positiveText = _text;
+								if(parent.argumentTypeModel.language == "if-then")
+									return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+parent.argumentTypeModel.reasonModels[i].statement.positiveText;
+								else
+									return parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" implies "+parent.argumentTypeModel.reasonModels[i].statement.positiveText;
+							}
 						}
-						else
-						{
-							//trace(parent.argumentTypeModel.reasonModels[i-1].statement.positiveText.search(parent.argumentTypeModel.reasonModels[i].statement.positiveText));	
-							parent.statement.setAdditionalReasonConditionalText = _text;	//store the latest text here, which you get when actually editing the reason
-							parent.argumentTypeModel.reasonModels[i].statements[0].positiveText = _text;
-							parent.argumentTypeModel.reasonModels[i].statement.positiveText = _text;
-							return "If "+parent.argumentTypeModel.reasonModels[i-1].statement.positiveText+" then "+parent.argumentTypeModel.reasonModels[i].statement.positiveText;
-						}
-						
 					}
 					else{
 							if(parent.argumentTypeModel.claimModel.statements[0].text!=null)
 							{
 								if(parent.argumentTypeModel.claimModel.statements[0].text.indexOf(Language.lookup("ArgNotCase"))!=-1)
 								{
+									var temp:String = parent.argumentTypeModel.claimModel.statements[0].text;
 									parent.argumentTypeModel.claimModel.statements[0].text = parent.argumentTypeModel.claimModel.statements[0].text.split(Language.lookup("ArgNotCase"))[1];
 									parent.argumentTypeModel.claimModel.statements[0].positiveText = parent.argumentTypeModel.claimModel.statements[0].text;
-									return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
+									if(parent.argumentTypeModel.claimModel.statement.text.indexOf(Language.lookup("Implies"))!=-1)
+									{
+										parent.argumentTypeModel.claimModel.statements[1].text = parent.argumentTypeModel.claimModel.statement.text.split(Language.lookup("Implies"))[1];
+										parent.argumentTypeModel.claimModel.statements[1].positiveText = parent.argumentTypeModel.claimModel.statements[1].text;
+									}
+									if(parent.argumentTypeModel.language == "if-then")
+										return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
+									else
+										return parent.argumentTypeModel.claimModel.statements[0].text+" implies "+_text;
 								}
 							}
-							return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
+							if(parent.argumentTypeModel.language == "if-then")
+								return  "If "+parent.argumentTypeModel.claimModel.statements[0].text+" then "+ _text;
+							else
+								return parent.argumentTypeModel.claimModel.statements[0].text+" implies "+_text;
+							
 					}	
 				}		
 			}

@@ -27,7 +27,7 @@ package Controller.logic
 		//Ideally, they could be the same, but the server and client were developed parallelly and then integrated.
 		public var langTypes:Array;
 		public var expLangTypes:Array;
-		
+		public var isInference:Boolean = false;
 	
 		
 		public function ParentArg(){
@@ -68,6 +68,11 @@ package Controller.logic
 			return array;
 		}
 		
+		public function getCompleteImplicatiomArray():Array{
+			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL,AGORAParameters.getInstance().COND_SYLL];
+			return array;
+		}
+		
 		public function getPositiveArray():Array{
 			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL];
 			return array;
@@ -79,7 +84,7 @@ package Controller.logic
 		}
 		
 		public function getImplicationArray():Array{
-			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL,AGORAParameters.getInstance().COND_SYLL];
+			var array:Array = [AGORAParameters.getInstance().MOD_PON, AGORAParameters.getInstance().DIS_SYLL];
 			return array;
 		}
 		
@@ -114,6 +119,8 @@ package Controller.logic
 		}
 		
 		public function hasLanguageOptions():Boolean{
+			if(this is ConditionalSyllogism && this.isInference)
+				return false;												//If it is an inference, don't show the suboptions
 			if(this is DisjunctiveSyllogism || this is NotAllSyllogism){
 				return false;
 			}else{

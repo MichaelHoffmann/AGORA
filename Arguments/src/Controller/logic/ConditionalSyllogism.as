@@ -59,12 +59,18 @@ package Controller.logic
 			
 			switch(argumentTypeModel.language){
 				case langTypes[0]:
+					trace(inferenceModel.statements[0].text);
+					trace(inferenceModel.statements[1].text);
 					inferenceModel.statement.text = Language.lookup("ArgIfCap") + inferenceModel.statements[0].text + 
 					Language.lookup("ArgThen") + inferenceModel.statements[1].text;
+					trace(inferenceModel.statement.text);
 					break;
 				case langTypes[1]:
-					inferenceModel.statement.text = inferenceModel.statements[0].text + Language.lookup("ArgImplies") +
-					inferenceModel.statements[1].text;
+					trace(inferenceModel.statements[0].text);
+					trace(inferenceModel.statements[1].text);
+					inferenceModel.statement.text = inferenceModel.statements[0].text + Language.lookup("ArgImplies") + claimModel.statements[1].text;
+					trace(inferenceModel.statement.text);
+					break;
 			}
 		}
 		

@@ -20,11 +20,10 @@ package logic
 	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 
 	 */
+	import components.ArgSelector;
 	import components.ArgumentPanel;
 	import components.DynamicTextArea;
 	import components.Inference;
-	
-	import components.ArgSelector;
 	
 	import flashx.textLayout.operations.SplitParagraphOperation;
 	
@@ -80,6 +79,7 @@ package logic
 		public static const EQiff:String = "EQiff";
 		public static const EQnecsuf:String = "EQnecsuf";
 		public static const EQ:String = "EQ";
+		
 		public static const CSifthen:String = "CSifthen";
 		public static const CSimplies:String = "CSimplies";
 		public static const CDaltclaim:String = "CDaltclaim";

@@ -14,6 +14,7 @@ package Controller
 	import Model.UserSessionModel;
 	
 	import ValueObjects.AGORAParameters;
+	import ValueObjects.ArgumentScheme;
 	
 	import classes.Language;
 	
@@ -722,7 +723,10 @@ package Controller
 				
 				//if positive implication
 				if(argumentTypeModel.claimModel.connectingString == StatementModel.IMPLICATION){
-					schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
+					if(argumentTypeModel.claimModel.statementFunction == "Inference" && (argumentTypeModel.claimModel.argumentTypeModel.language != "if-then" && argumentTypeModel.claimModel.argumentTypeModel.language != Language.lookup("Implies")))
+						schemeSelector.scheme = ParentArg.getInstance().getImplicationArray();
+					else
+						schemeSelector.scheme = ParentArg.getInstance().getCompleteImplicatiomArray();
 				}
 				
 				//if positive disjunction -- This is conditional dilemma
@@ -1047,6 +1051,11 @@ package Controller
 			argumentTypeModel.logicClass = scheme;
 			logicClassController = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
 			logicClassController.link(argumentTypeModel);
+			
+			if (argumentTypeModel.claimModel.statementFunction == "Inference")	//if it is inference the is inference variable is set to true 
+				logicClassController.isInference = true;						//so that the argument selector knows to show only the conditional syllogism option and not the suboptions
+			else
+				logicClassController.isInference = false;
 			//if(argSchemeSelector.mainSchemes.selectedItem||){
 			//	argSchemeSelector.mainToolTip.text =argSchemeSelector.mainSchemes.selectedItem.Label;
 			//}
@@ -1105,7 +1114,26 @@ package Controller
 						map.sBar.displayLoading();
 						argumentTypeModel.updateConnection();
 						FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
-						break;
+				}
+				if(argumentTypeModel.claimModel!=null)
+				{
+					if (scheme == AGORAParameters.getInstance().COND_SYLL && argumentTypeModel.claimModel.statementFunction == "Inference")
+					{
+							AGORAModel.getInstance().requested = true;
+							trace(argumentTypeModel.logicClass);
+							if(argumentTypeModel.claimModel.argumentTypeModel.language == "if-then")
+							{
+								argumentTypeModel.dbType = "CSifthen";
+							}
+							if(argumentTypeModel.claimModel.argumentTypeModel.language == Language.lookup("Implies"))
+							{
+								argumentTypeModel.dbType = "CSimplies";
+							}
+							map.sBar.displayLoading();
+							argumentTypeModel.updateConnection();
+							FlexGlobals.topLevelApplication.map.agoraMap.helpText.visible = false;
+						
+					}
 				}
 			}
 		}

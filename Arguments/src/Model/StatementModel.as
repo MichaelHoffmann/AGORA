@@ -466,6 +466,18 @@ package Model
 				if(this.argumentTypeModel.reasonModels.length == 1){
 					inputXML.appendChild(<node ID = {argumentTypeModel.inferenceModel.ID} />);
 				}
+				else if(this.argumentTypeModel!=null && this.argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL)
+				{
+					if(this.argumentTypeModel.reasonModels[0] == this)		//deleting the first argument, the rest are useless.
+					{
+						inputXML.appendChild(<node ID = {argumentTypeModel.inferenceModel.ID} />);
+						for each(var stmt:StatementModel in argumentTypeModel.reasonModels){
+							if(stmt!=this)
+								inputXML.appendChild(<node ID={stmt.ID} />);
+						}
+						
+					}
+				}
 			}
 			inputXML.appendChild(statementXML);
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;

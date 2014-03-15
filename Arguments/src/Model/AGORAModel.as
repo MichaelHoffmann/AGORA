@@ -164,7 +164,7 @@ package Model
 			schemeAndLanguage[agoraParameters.NotAllSyll] = new ArgumentScheme(agoraParameters.NOT_ALL_SYLL, null);
 			
 			schemeAndLanguage[agoraParameters.CSifthen] = new ArgumentScheme(agoraParameters.COND_SYLL, agoraParameters.IF_THEN);
-			schemeAndLanguage[agoraParameters.CSimplies] = new ArgumentScheme(agoraParameters.COND_SYLL, agoraParameters.CSimplies);
+			schemeAndLanguage[agoraParameters.CSimplies] = new ArgumentScheme(agoraParameters.COND_SYLL, agoraParameters.IMPLIES);
 			
 			dbSchemeHashMap = new Dictionary;
 			dbSchemeHashMap[agoraParameters.MOD_PON] = agoraParameters.dbMP;

@@ -51,6 +51,7 @@ package Controller.logic
 			
 			//Conditional Syllogism
 			logicHash[AGORAParameters.getInstance().COND_SYLL] = ConditionalSyllogism.getInstance();
+
 			logicHash[AGORAParameters.getInstance().CSifthen] = ConditionalSyllogism.getInstance();
 			logicHash[AGORAParameters.getInstance().CSimplies] = ConditionalSyllogism.getInstance();
 			
