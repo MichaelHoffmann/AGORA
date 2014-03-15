@@ -56,8 +56,10 @@ package Controller.logic
 			trace(reasonModels.length);
 			inferenceModel.statements[0].text = reasonModels[reasonModels.length-1].statements[0].text;
 			inferenceModel.statements[1].text = claimModel.statements[1].text;
-			
-			switch(argumentTypeModel.language){
+			var switchString:String = argumentTypeModel.language;
+			if(argumentTypeModel.claimModel.argumentTypeModel!=null)
+				switchString = argumentTypeModel.claimModel.argumentTypeModel.language;			
+			switch(switchString){
 				case langTypes[0]:
 					trace(inferenceModel.statements[0].text);
 					trace(inferenceModel.statements[1].text);
