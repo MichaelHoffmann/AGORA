@@ -1188,17 +1188,29 @@ package Controller
 			//infobox beside enabler
 			var inference:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.inferenceModel.ID];
 			var addArgumentsInfo:InfoBox=new InfoBox();
-			addArgumentsInfo.boxWidth=500;
+			
+			addArgumentsInfo.y =  inference.y ;
+			if(inference.x < 550)
+			{
+				addArgumentsInfo.boxWidth = inference.x - 50;
+				addArgumentsInfo.x = 0;
+			}
+			else
+			{	
+				addArgumentsInfo.boxWidth = 500;			//max length
+				addArgumentsInfo.x = inference.x - 50 - addArgumentsInfo.boxWidth;
+			}
+		//	addArgumentsInfo.width = addArgumentsInfo.boxWidth;
 			addArgumentsInfo.text = Language.lookup('ArgComplete');
+			addArgumentsInfo.visible=true;
+			
+			map.setScrollers(addArgumentsInfo.x,addArgumentsInfo.y);
 			map.addEventListener(MouseEvent.CLICK,function(e:Event):void{
 				FlexGlobals.topLevelApplication.map.alerts.removeElement(addArgumentsInfo);
 				map.removeEventListener(MouseEvent.CLICK, arguments.callee);
 			});
-			FlexGlobals.topLevelApplication.map.alerts.addElement(addArgumentsInfo);
-			addArgumentsInfo.y =  inference.y + inference.height + 20;
-			addArgumentsInfo.x = inference.x;
-			addArgumentsInfo.visible=true;
-			map.setScrollers(addArgumentsInfo.x,addArgumentsInfo.y);
+			
+			FlexGlobals.topLevelApplication.map.alerts.addElement(addArgumentsInfo);		//so the text is fitted, thats why we are calling this at the end
 			//infobox on top of the claim and the reason
 			var claim:ArgumentPanel = agoraMap.panelsHash[argumentTypeModel.claimModel.ID];
 			if(claim.panelType != StatementModel.INFERENCE){
