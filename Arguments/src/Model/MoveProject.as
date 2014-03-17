@@ -46,6 +46,7 @@ package Model
 		}
 		
 		public function moveProject(proj_id:int, target_proj_id:int):void{
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.projectsSockHandler.nodeId=target_proj_id+"";
 			MoveProjectIntoProject.send({proj_id: proj_id, target_proj_id: target_proj_id,
 				uid: AGORAModel.getInstance().userSessionModel.uid,
 				pass_hash: AGORAModel.getInstance().userSessionModel.passHash});
@@ -76,6 +77,8 @@ package Model
 				else
 					FlexGlobals.topLevelApplication.moveProject.informationLabel.text = Language.lookup("UnsuccessfullyPublishedProject");
 			} else {
+				// category sockets
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.projectsSockHandler.sendNodeInfoMessage();
 				FlexGlobals.topLevelApplication.moveProject.informationLabel.text = Language.lookup("SuccessfullyPublishedProject");
 				FlexGlobals.topLevelApplication.moveProject.okayButton.visible = false;
 				FlexGlobals.topLevelApplication.moveProject.cancelButton.label = Language.lookup('OK');				

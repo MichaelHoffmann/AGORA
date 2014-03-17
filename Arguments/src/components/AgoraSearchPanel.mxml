@@ -76,9 +76,9 @@
 		<s:VGroup verticalAlign="middle" paddingLeft="5" horizontalAlign="left" paddingTop="10">			
 			<s:Label toolTip="{Language.lookup('SearchHeaderConnectByText')}" text="{Language.lookup('SearchHeaderConnectByText').length>22?(Language.lookup('SearchHeaderConnectByText').substr(0,20)+'..'):Language.lookup('SearchHeaderConnectByText')}" fontSize="{Language.language == Language.ENGLISH ? 12 : 11}" fontStyle="italic">
 			</s:Label>	
-			<s:RadioButton group="{Bops2}" value="and" label="{Language.lookup('BooleanOperatorsAnd')}">				
+			<s:RadioButton group="{Bops2}" value="and" selected="true"  label="{Language.lookup('BooleanOperatorsAnd')}">				
 			</s:RadioButton>	
-			<s:RadioButton group="{Bops2}" value="or" selected="true" label="{Language.lookup('BooleanOperatorsOr')}">
+			<s:RadioButton group="{Bops2}" value="or" label="{Language.lookup('BooleanOperatorsOr')}">
 			</s:RadioButton>			
 		</s:VGroup>
 			<mx:VRule strokeColor="#a0a0a0" strokeWidth="3" height="80">				
@@ -192,9 +192,9 @@
 			<s:Label toolTip="{Language.lookup('SearchHeaderConnectByText')}" text="{Language.lookup('SearchHeaderConnectByText').length>22?(Language.lookup('SearchHeaderConnectByText').substr(0,20)+'..'):Language.lookup('SearchHeaderConnectByText')}" fontStyle="italic" >
 			</s:Label>	
 			
-			<s:RadioButton group="{Bops4}" value="and" label="{Language.lookup('BooleanOperatorsAnd')}">				
+			<s:RadioButton group="{Bops4}" value="and" selected="true" label="{Language.lookup('BooleanOperatorsAnd')}">				
 			</s:RadioButton>	
-			<s:RadioButton group="{Bops4}" value="or" selected="true" label="{Language.lookup('BooleanOperatorsOr')}">
+			<s:RadioButton group="{Bops4}" value="or"  label="{Language.lookup('BooleanOperatorsOr')}">
 			</s:RadioButton>
 		</s:VGroup>
 		

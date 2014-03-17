@@ -130,6 +130,23 @@
 		}
 		return false;
 	}
+	function isUserInMapProjectDomain($userID, $mapID, $linkID,$projID){
+		$pquery = "SELECT user_id FROM projects WHERE proj_id = $projID";
+		$resultID = mysql_query($pquery, $linkID);
+		$row = mysql_fetch_assoc($resultID);
+		$proj_owner = $row['user_id'];
+		if($userID==$proj_owner){
+			return true;
+			//The project's owner has rights to any map in the project
+		}
+		$puquery = "SELECT user_id FROM projusers WHERE proj_id = $projID AND user_id = $userID";
+		$resultID = mysql_query($puquery, $linkID);
+		if($resultID && mysql_num_rows($resultID)>0){
+			return true;
+			//The user is in the project
+		}
+		return false;
+	}
 
 	function isUserInProjectSpace($userID, $projID, $linkID){
 		$puquery = "SELECT * FROM projusers WHERE proj_id = $projID AND user_id = $userID";

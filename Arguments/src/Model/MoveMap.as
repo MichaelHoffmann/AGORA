@@ -1,15 +1,16 @@
 package Model 
 {
+	import Controller.AGORAController;
 	import Events.*;
 	
 	import ValueObjects.*;
 	
 	import classes.Language;
 	
-	import Controller.AGORAController;
 	import flash.events.*;
 	
 	import mx.controls.*;
+	import mx.core.FlexGlobals;
 	import mx.rpc.events.*;
 	import mx.rpc.http.*;
 	
@@ -32,6 +33,7 @@ package Model
 
 			var usm:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(usm.loggedIn()){
+				FlexGlobals.topLevelApplication.rightSidePanel.chat.projectsSockHandler.nodeId=projName;
 
 				request.send({uid:usm.uid,pass_hash:usm.passHash, map_id:mapID, category_id:projName});	
 			}
@@ -42,6 +44,8 @@ package Model
 
 			AGORAController.getInstance().onMapAdded();
 			dispatchEvent(new AGORAEvent(AGORAEvent.MAP_ADDED));//not sending, using direct calling to workaround
+			// category sockets
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.projectsSockHandler.sendNodeInfoMessage();
 
 		}
 		

@@ -506,6 +506,8 @@ public function get check():Boolean
 					{						
 							Controller.AGORAController.getInstance().moveMap(this.ID,usm.selectedWoAProjID.toString());
 					}
+					// category sockets
+					FlexGlobals.topLevelApplication.rightSidePanel.chat.projectsSockHandler.sendNodeInfoMessage();
 				}
 				moveToProject=false;
 
