@@ -1200,10 +1200,10 @@
 							
 						}else{
 							//actually redundant : Remove it
-							trace(model.statement.text);
+						/*	trace(model.statement.text);
 							setDisplayStatement(model.statement.text);
 							group.addElement(displayTxt);
-							group.addElement(displayTxtLink);
+							group.addElement(displayTxtLink);*/
 						}
 						if(state == DISPLAY){
 							//remove inputs
@@ -1222,8 +1222,8 @@
 								if(model.statement.positiveText == "")
 								{
 									condSyllLbl.text = model.statement.text;
-									setDisplayStatement(null);
 									group.addElement(condSyllLbl);
+									setDisplayStatement(null);
 								}
 								else
 								{
