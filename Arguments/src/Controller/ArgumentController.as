@@ -184,7 +184,7 @@ package Controller
 			AGORAModel.getInstance().agoraMapModel.ID = mapMetaData.mapID;
 			map.visible = true;
 			var rsp:RightSidePanel = FlexGlobals.topLevelApplication.rightSidePanel;
-			rsp.titleOfMap.text = this.model.agoraMapModel.name;
+			rsp.mapTitle.text = this.model.agoraMapModel.name;
 			rsp.clickableMapOwnerInformation.label = mapMetaData.mapCreator;
 			rsp.IdofMap.text = Language.lookup("IdOfTheMapDisplay") + " " + mapMetaData.mapID;
 			

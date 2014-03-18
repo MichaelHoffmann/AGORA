@@ -47,7 +47,7 @@ package components
 		public var _contactUsBtn:Button;
 		public var _helpBtn:Button;
 		public var _publishMapHelp:Button;
-		
+		public var _refreshButton:Button;
 		
 		private var agoraConstants:AGORAParameters;
 		private var background:Sprite;
@@ -115,6 +115,12 @@ package components
 				addChild(_publishMapHelp);
 			}
 			
+			if(!_refreshButton){
+				_refreshButton = new Button;
+				_refreshButton.label =  Language.lookup("Refresh");
+				_refreshButton.addEventListener(MouseEvent.CLICK, refreshMapTrigger);
+				addChild(_refreshButton);
+			}
 			if(!_unhideRSP){
 				_unhideRSP = new Button;
 				_unhideRSP.label = Language.lookup("UnhidePanel");
@@ -204,6 +210,9 @@ package components
 			_publishMapHelp.move(xB, 5);
 			xB = xB + _publishMapHelp.getExplicitOrMeasuredWidth() + 15;
 			
+			_refreshButton.setActualSize(_refreshButton.getExplicitOrMeasuredWidth(), 30);
+			_refreshButton.move(xB, 5);
+			xB = xB + _refreshButton.getExplicitOrMeasuredWidth() + 15;
 			_faqBtn.setActualSize(_faqBtn.getExplicitOrMeasuredWidth(), 30);
 			_faqBtn.move(xB, 5);
 			xB = xB + _faqBtn.getExplicitOrMeasuredWidth() + 15;
@@ -297,6 +306,10 @@ package components
 			PopUpManager.centerPopUp(hpanel);
 		}
 		
+		//refreshMapTrigger
+		private function refreshMapTrigger(ev:MouseEvent):void{
+			AGORAModel.getInstance().agoraMapModel.loadMapModel();
+		}
 		private function closePopUp(evt:MouseEvent):void {
 			PopUpManager.removePopUp(hpanel);
 		}
