@@ -46,6 +46,7 @@ package Model
 		}
 		
 		public function publishMap(mapID:int, currCatID:int):void{
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.projectsSockHandler.nodeId=currCatID;
 			publishTheMap.send({map_id: mapID, current_category: currCatID,
 				uid: AGORAModel.getInstance().userSessionModel.uid,
 				passhash: AGORAModel.getInstance().userSessionModel.passHash});

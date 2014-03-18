@@ -515,6 +515,8 @@ package Controller
 			var usm:UserSessionModel=AGORAModel.getInstance().userSessionModel;
 			menu.myProjects.setCurrentProject(usm.selectedMyProjProjID);	
 
+			// category sockets
+			FlexGlobals.topLevelApplication.rightSidePanel.chat.projectsSockHandler.sendNodeInfoMessage();
 		}
 		protected function onProjectPublished(event:AGORAEvent):void{
 		/*	fetchDataMyMaps();

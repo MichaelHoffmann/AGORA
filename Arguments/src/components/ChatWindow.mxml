@@ -48,6 +48,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 			protected var mapsocket:Socket;
 			private var _mapId:String;
 			public var collabHandler:CollabSocketHandler;
+			public var projectsSockHandler:ProjectsSocketsHandler;
 
 			public function get mapId():String
 			{
@@ -87,6 +88,7 @@ buttons that hide the chat, send the message currently in the chat box, and clea
 				times=1;
 				// Connect to socket
 				socket.connect(host, port);
+				projectsSockHandler = new ProjectsSocketsHandler();
 			}
 
 			/**

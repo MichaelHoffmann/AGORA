@@ -404,7 +404,7 @@ package components
 							//get the point one grid before the first reason horizontally.
 							// collab sockets checking
 							if(argumentTypeModel.reasonModels==null || argumentTypeModel.reasonModels.length<=0){
-							Alert.show("caught");
+							Alert.show("c");
 								//continue;
 							}
 							var rspx:int = (argumentTypeModel.reasonModels[0].ygrid - 1) * gridWidth;
