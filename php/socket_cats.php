@@ -9,7 +9,7 @@ ini_set('display_errors', 1);
 set_time_limit(0);
 
 // Set the ip and port we will listen on
-$address = 'localhost';
+$address = 'agora.gatech.edu';
 $port = 1767; //agora.gatech.edu
 // Create a TCP Stream socket
 $sock = socket_create(AF_INET, SOCK_STREAM, 0);
