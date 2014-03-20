@@ -2768,11 +2768,6 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<SPAN text="Una de las razones de este argumento se justifica mediante más argumentos. Por tanto, no puedes borrar esta garantía. Se pueden borrar los argumentos  no justificados." />
 	</DeleteSuppStmtExt>
 
-	<ChangeArgScheme>
-		<EN-US
-			text="The argument scheme cannot be changed as the enabler has supporting arguments. Please delete them to continue."/>
-	</ChangeArgScheme>
-
 	<ServerBusy>
 		<EN-US text="Please wait. The server is busy." />
 		<RUS text="Please wait. The server is busy." /><!--TODO: Translate RUS-->
@@ -4261,5 +4256,15 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->
 
+	<ChangeArgScheme>
+		<EN-US
+			text="The argument scheme cannot be changed as the enabler has supporting arguments. Please delete them to continue."/>
+	</ChangeArgScheme>
+	
+	<UpdateReasonToContinue>
+		<EN-US
+			text="You cannot add a reason without completing previous reason for conditional syllogism. Please complete the reason to continue"/>
+		
+	</UpdateReasonToContinue>
 </Translations>
 

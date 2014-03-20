@@ -1219,7 +1219,7 @@
 							//The part below was added only for conditional syllogism display statement : It displays Enter Reason Here only if there was no reason before
 							if(model.argumentTypeModel!=null && model.argumentTypeModel.logicClass ==  AGORAParameters.getInstance().COND_SYLL)
 							{
-								if(model.statement.positiveText == "")
+								if(model.statement.positiveText == "" || model.statement.positiveText == " " ||  model.statement.positiveText == "\n" || model.statement.positiveText == null)
 								{
 									condSyllLbl.text = model.statement.text;
 									group.addElement(condSyllLbl);
@@ -1228,11 +1228,44 @@
 								else
 								{
 									//condSyllLbl.text = model.statement.text.split(model.statement.positiveText)[0];
-									setDisplayStatement(model.statement.positiveText);					//To get Enter reason here text in conditional syllogism
+						//			group.removeAllElements();
+							//		condSyllLbl.text = model.statement.text.split(model.statement.positiveText)[0];
+							//		group.addElement(condSyllLbl);
+									setDisplayStatement(model.statement.text);					//To get Enter reason here text in conditional syllogism
 								}									
 							}
 							else
-								setDisplayStatement(model.statement.text);
+							{
+							
+								if(statementNegated)
+								{
+									if(model.firstClaim)
+									{
+										
+										if(model.statement.positiveText == "" || model.statement.positiveText == " " ||  model.statement.positiveText == "\n" || model.statement.positiveText == null)
+										{
+											group.addElement(negatedLbl);
+											setDisplayStatement(null);
+										}
+										else
+											setDisplayStatement(model.statement.text);
+									}
+									else
+									{
+										setDisplayStatement(model.statement.text);
+									}
+								}
+								else 
+								{
+									if(model.statement.positiveText == "" || model.statement.positiveText == null)
+									{
+										setDisplayStatement(null);
+									}
+									else
+										setDisplayStatement(model.statement.text);
+								}
+								
+							}
 							var temp:HGroup = new HGroup();
 							temp.addElement(displayTxt);
 							temp.addElement(displayTxtLink);

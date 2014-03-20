@@ -80,7 +80,17 @@ package Model
 		
 		public function get text():String{
 			if(this.parent.negated && parent.statement === this && parent.statementFunction != StatementModel.INFERENCE){
-				return Language.lookup("ArgNotCase") + _text;
+				if (_text == " ")
+					return Language.lookup("ArgNotCase") + "";
+				else
+					return Language.lookup("ArgNotCase") + _text;
+				if(!parent.firstClaim)
+				{
+					if(_text == " " || _text == "")
+						parent.statement.positiveText = "";
+					else
+						parent.statement.positiveText = _text;
+				}
 			}
 			else if(parent.statement === this && parent.argumentTypeModel!=null)
 			{
@@ -123,9 +133,9 @@ package Model
 							
 							if (statement1==statement2 || (statement1.search(statement2)!=-1 && statement2!=""))
 							{
-								var a:String = "";
+								var a:String = null;
 								if (parent.statement.setAdditionalReasonConditionalText == null)
-									a = "";
+									a = null;
 								else
 									a = parent.statement.setAdditionalReasonConditionalText;
 								parent.argumentTypeModel.reasonModels[i].statement.positiveText = a;

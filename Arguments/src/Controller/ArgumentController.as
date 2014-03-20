@@ -626,6 +626,25 @@ package Controller
 			var x:int;
 			var y:int;
 			var flag:int = 0;
+			
+			if(!model.requested)
+			{
+				if(argumentTypeModel.logicClass!=null)
+				{
+					if(argumentTypeModel.logicClass == AGORAParameters.getInstance().COND_SYLL)
+					{
+						if(argumentTypeModel.reasonModels.length>0)
+						{
+							var tempString:String = argumentTypeModel.reasonModels[argumentTypeModel.reasonModels.length-1].statement.positiveText 
+							if(tempString == null || tempString == "" || tempString == "\n")
+							{
+								Alert.show(Language.lookup("UpdateReasonToContinue"));
+								return ;
+							}
+						}
+					}
+				}
+			}
 			if(!model.requested){
 				if(argumentTypeModel.logicClass != null){
 					var logicController:ParentArg = LogicFetcher.getInstance().logicHash[argumentTypeModel.logicClass];
@@ -737,7 +756,7 @@ package Controller
 			}
 				//if simple positive statement
 			else if(!argumentTypeModel.claimModel.negated){
-				schemeSelector.scheme = ParentArg.getInstance().getPositiveArray();
+					schemeSelector.scheme = ParentArg.getInstance().getPositiveArray();
 			}
 				//if simple negative statement
 			else if(argumentTypeModel.claimModel.negated){
@@ -1168,6 +1187,7 @@ package Controller
 			if(logicController != null){
 				logicController.link(argumentTypeModel);
 			}	
+			//LoadController.getInstance().fetchMapData(true);
 		}
 				
 		protected function onArgumentSaved(event:AGORAEvent):void{
