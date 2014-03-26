@@ -239,6 +239,11 @@ package Model
 					}
 				}
 				else{
+					//var rex:RegExp = /[a-zA-Z0-9]/g;
+					if(simpleStatement.parent.firstReason == true && simpleStatement.parent.argumentTypeModel!=null)
+						if(simpleStatement.parent.statementFunction==StatementModel.STATEMENT && simpleStatement.parent.argumentTypeModel.logicClass==AGORAParameters.getInstance().COND_SYLL && simpleStatement.text == simpleStatement.parent.statement.text && (text == "" || text == " "))
+							if(simpleStatement.parent.argumentTypeModel.reasonModels.length<2)
+								continue;
 					simpleStatement.text = text;
 					
 				}
