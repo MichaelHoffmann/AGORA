@@ -4258,13 +4258,23 @@ If you provide a URL in your registration, this URL shows up when people hover o
 
 	<ChangeArgScheme>
 		<EN-US
-			text="The argument scheme cannot be changed as the enabler has supporting arguments. Please delete them to continue."/>
+			text="The argument scheme cannot be changed because the enabler has supporting arguments. They need to be deleted if you want to change the scheme."/>
+		<GER text="Das Argumentschema kann nicht verändert werden weil der Garant durch weitere Argumente verteidigt ist. Diese müssen zunächst gelöscht werden wenn du das Schema verändern willst." />
+		<RUS
+			text="The argument scheme cannot be changed because the enabler has supporting arguments. They need to be deleted if you want to change the scheme."/><!-- TODO Translate RUS -->
+		<SPAN
+			text="The argument scheme cannot be changed because the enabler has supporting arguments. They need to be deleted if you want to change the scheme."/><!-- TODO Translate SPAN -->
+	
 	</ChangeArgScheme>
 	
 	<UpdateReasonToContinue>
 		<EN-US
-			text="You cannot add a reason without completing previous reason for conditional syllogism. Please complete the reason to continue"/>
-		
+			text="You cannot add a reason without completing previous reason. Please complete the reason to continue."/>
+		<GER text="Du kannst nicht einen weiteren Grund hinzufügen ohne den vorherigen zu vervollständigen. Bitte vervollständige zuerst den Grund oben." />
+		<RUS
+			text="You cannot add a reason without completing previous reason. Please complete the reason to continue."/><!-- TODO Translate RUS -->
+		<SPAN
+			text="You cannot add a reason without completing previous reason. Please complete the reason to continue."/><!-- TODO Translate SPAN -->
 	</UpdateReasonToContinue>
 </Translations>
 
