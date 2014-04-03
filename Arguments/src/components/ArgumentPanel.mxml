@@ -1276,18 +1276,51 @@
 							//add button
 						}
 					}
+					
 					if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
-						this.setStyle("borderColor" ,0xF99653);
+						
+						if(model.parentStatement.borderColor == "0xF99653")		//if the border color is orange
+						{
+							this.setStyle("borderColor", 0x29ABE2);				//make it blue		
+							model.borderColor = "0x29ABE2";						//set the color to that so the supporting statement knows to follow that
+						}
+						else													//if the border color is blue
+						{
+							this.setStyle("borderColor", 0xF99653);				//make it orange
+							model.borderColor = "0xF99653";						//set the color to orange so that the following supporting argument is also orange
+						}
 						stmtButton.visible = false;
 						if(panelType == StatementModel.OBJECTION)
 							stmtTypeLbl.text = Language.lookup("ObjectionName");
 						else if(panelType == StatementModel.COUNTER_EXAMPLE)
 							stmtTypeLbl.text = Language.lookup("DefeatsByCounterEx");
 					}
-					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT){
+					if(panelType == StatementModel.STATEMENT)				//inference doesnt even reach here, so i have added it in the else for the enabler below
+					{
+						if(model.argumentTypeModel!=null)
+						{
+							if(model.argumentTypeModel.claimModel.borderColor == "0xF99653")		//if the border color is orange
+							{
+								this.setStyle("borderColor", 0xF99653)				//make it orange	
+								model.borderColor = "0xF99653";						//set the color to that so the supporting statement knows to follow that
+							}
+							else													//if the border color is blue or null
+							{
+								this.setStyle("borderColor", 0x29ABE2);				//make it blue
+								model.borderColor = "0x29ABE2";						//set the color to blue so that the following supporting argument is also blue
+							}
+						}
+						else
+						{
+							this.setStyle("borderColor", 0x29ABE2);					//same as the else above
+							model.borderColor = "0x29ABE2";
+						}
 						
+					}
+					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT)
+					{	
+						this.setStyle("borderColor", 0xFFFF00);
 						showMoreBtn.visible = false;
-						this.setStyle("borderColor" ,0xFFFF00);
 						stmtButton.visible = false;
 						if(panelType == StatementModel.COMMENT)
 							stmtTypeLbl.text = Language.lookup("AddComment");
@@ -1326,6 +1359,25 @@
 					//If the statement is an enabler.
 				else{
 					//remove all textboxes
+					if(model.argumentTypeModel!=null)
+					{
+						if(model.argumentTypeModel.claimModel.borderColor == "0xF99653")		//if the border color is orange
+						{
+							this.setStyle("borderColor", 0xF99653)				//make it orange	
+							model.borderColor = "0xF99653";						//set the color to that so the supporting statement knows to follow that
+						}
+						else													//if the border color is blue or null
+						{
+							this.setStyle("borderColor", 0x29ABE2);				//make it blue
+							model.borderColor = "0x29ABE2";						//set the color to blue so that the following supporting argument is also blue
+						}
+					}
+					else
+					{
+						this.setStyle("borderColor", 0x29ABE2);					//same as the else above
+						model.borderColor = "0x29ABE2";
+					}
+					
 					inputs.splice(0,inputs.length);
 					//remove inputs
 					group.removeAllElements();

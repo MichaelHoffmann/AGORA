@@ -91,7 +91,7 @@ package Model
 		public var firstReason:Boolean = true;				//This is to find if the given statement model is of a subsequent reason or not. 
 		public var conditionalSyllAdditionalReasonUpdate:Boolean = false;				//This is to ensure that the text box doesnt get edited
 		public var dependentStatement:Boolean = false;
-		
+		public var borderColor:String = null;					//For the color coding issue
 		public function StatementModel(modelType:String=STATEMENT, target:IEventDispatcher=null)
 		{
 			super(target);
@@ -812,7 +812,7 @@ package Model
 				for (var i:int = 0; i<comments.length ;i++)
 					{
 					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
-				    //AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
+				   // AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
 					}
 				}
 				var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="Objection" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="Objection" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
@@ -832,8 +832,8 @@ package Model
 				add = 1;
 				for (var i:int = 0; i<comments.length ;i++)
 				{
-					AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
-					//AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
+					//AGORAModel.getInstance().agoraMapModel.moveYellowStatement(this.comments[i],6,0);
+					AGORAModel.getInstance().agoraMapModel.moveStatement(this.comments[0],8,0);
 				}
 			}
 			var requestXML:XML = <map ID={mapModel.ID}><textbox TID="3" text="" /><node TID="4" Type="CounterExample" typed="0" is_positive="0" x={x-2} y={y} ><nodetext TID="5" textboxTID="3" /></node><connection TID="6" type="CounterExample" x="0" y="0" targetnodeID={ID}><sourcenode TID="7" nodeTID="4"/></connection></map>;
