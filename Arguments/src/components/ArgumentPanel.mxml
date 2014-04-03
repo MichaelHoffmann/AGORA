@@ -965,7 +965,10 @@
 				FlexGlobals.topLevelApplication.rightSidePanel.chat.collabHandler.sendNodeInfoMessage(model.ID,true);
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
-						ArgumentController.getInstance().addSupportingArgumentTry(model);	//vinodh
+						if(model.statementFunction == StatementModel.INFERENCE)
+							ArgumentController.getInstance().addSupportingArgumentTry(model);	//to support enabler, you directly get the argument scheme
+						else
+							ArgumentController.getInstance().addSupportingArgument(model);	//else you get the normal scheme
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
 						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
