@@ -858,33 +858,33 @@ package Controller
 				var printCanvas:Canvas = new Canvas;
 				map.alerts.removeElement(map.agoraMap);
 				FlexGlobals.topLevelApplication.addElement(printCanvas);
-				printCanvas.width=map.agoraMap.width+400;
-				printCanvas.height=map.agoraMap.height+300;
-				printIt.width=printCanvas.width/map.zoomer.value;
-				printIt.height = 100*map.zoomer.value;
+				//map.zoomerResize();
+				map.zoomer.value=(map.zoomer.minimum+map.zoomer.maximum)/2;
+				map.zoom();
+				printCanvas.width=map.agoraMap.width + 20;
+				printCanvas.height=map.agoraMap.height + 130;
+			//	printIt.width=printCanvas.width/map.zoomer.value;
+			//	printIt.height = 100*map.zoomer.value;
 				printCanvas.addElement(map.agoraMap);
 				printCanvas.addElement(printIt);
-				map.zoomerResize();
-				map.zoomer.value=1;
-				map.zoom();
 				printCanvas.horizontalScrollPolicy="ScrollPolicy.OFF";
 				printCanvas.verticalScrollPolicy="ScrollPolicy.OFF";
-				printIt.scaleX=map.zoomer.value;
-				printIt.scaleY=map.zoomer.value;
+			//	printIt.scaleX=map.zoomer.value;
+			//	printIt.scaleY=map.zoomer.value;
 				//agoraLogo.scaleX=map.zoomer.value;
 				//agoraLogo.scaleY=map.zoomer.value;
-				map.agoraMap.top=printIt.height;
+				var temp = map.agoraMap.getBounds(map.agoraMap.parent);
+				//Alert.show(temp);
+				map.agoraMap.top=130;
 				map.agoraMap.left=0;
-				map.agoraMap.top=100*map.zoomer.value;
-				//printIt.addElement(map.agoraMap);
 			flexPrintJob.printAsBitmap = false;
 			    flexPrintJob.addObject(printCanvas,FlexPrintJobScaleType.SHOW_ALL);
 			flexPrintJob.send();
-				//printIt.removeElement(map.agoraMap);
 				FlexGlobals.topLevelApplication.removeElement(printCanvas);
-				map.alerts.addElementAt(map.agoraMap,0)
+				map.alerts.addElementAt(map.agoraMap,0);
 					map.zoomer.value=tempZoom;
 					map.zoom();
+					map.agoraMap.top=0;
 					printCanvas.removeElement(printIt);
 			}
 		}

@@ -633,6 +633,8 @@ public function get check():Boolean
 				var nodeHash:Dictionary = new Dictionary;
 				var textboxHash:Dictionary = new Dictionary;
 				
+				// try this
+				max=maxy=0;
 				//read nodes and create Statment Models
 				processNode(map.nodeObjects,nodeHash, textboxHash);
 				
