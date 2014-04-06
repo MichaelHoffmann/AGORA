@@ -215,6 +215,12 @@ Additional languages can be added later. -->
 		<SPAN text="Ajustar a la pantalla" />
  
  </ZoomFit>
+ <Zoom100>
+	 <EN-US text="100 percent zoom" />
+	 <RUS text="100 percent zoom" /><!--TODO: Translate RUS -->
+	 <GER text="100 percent zoom" /><!--TODO: Translate GER -->
+		<SPAN text="100 percent zoom" /><!--TODO: Translate SPAN -->
+ </Zoom100>
  <MapOwnerURLWarning>
  <EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
  <RUS text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." /><!--TODO: Translate RUS -->

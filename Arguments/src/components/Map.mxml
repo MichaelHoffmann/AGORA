@@ -35,7 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<s:HGroup id="theMap" name="p1" >
 		<s:VGroup  width = "30" horizontalAlign="center" left = "0" >
-		<s:Button width = "100%" click = "{zoomer.value= (zoomer.maximum+zoomer.minimum)/2;zoomer2.value=(zoomer2.maximum+zoomer2.minimum)/2;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
+		<s:Button width = "100%" click = "{zoomer.value= zoomer.minimum;zoomer2.value=zoomer2.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" icon="@Embed('images/fit.png')" height="20"  toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "="/>
+		<s:Button width = "100%" click = "{zoomer.value= (zoomer.maximum+zoomer.minimum)/2;zoomer2.value=(zoomer2.maximum+zoomer2.minimum)/2;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('Zoom100')}" id = "zoomNormal" fontSize="5" icon="@Embed('images/fit100.png')" label = "100%" />
 		<s:Button  width = "100%" click = "{zoomer.value+=zoomer.stepSize;}" id= "zoomIn" label = "+"/>
 		<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" changeStart="updateSync()" maximum="2"  height = "200"/>
 		<s:Button  width = "100%" click="{zoomer.value-=zoomer.stepSize;}" id = "zoomOut" label = "-"/>

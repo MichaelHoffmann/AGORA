@@ -861,7 +861,7 @@ package Controller
 				//map.zoomerResize();
 				map.zoomer.value=(map.zoomer.minimum+map.zoomer.maximum)/2;
 				map.zoom();
-				printCanvas.width=map.agoraMap.width + 20;
+				printCanvas.width=map.agoraMap.width + 150;
 				printCanvas.height=map.agoraMap.height + 130;
 			//	printIt.width=printCanvas.width/map.zoomer.value;
 			//	printIt.height = 100*map.zoomer.value;
