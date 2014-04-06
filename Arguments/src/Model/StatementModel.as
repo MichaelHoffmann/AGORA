@@ -13,6 +13,7 @@ package Model
 	import ValueObjects.NodetextValueObject;
 	import ValueObjects.TextboxValueObject;
 	
+	import classes.Language;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
@@ -622,6 +623,11 @@ package Model
 			saveTextService.send({uid: AGORAModel.getInstance().userSessionModel.uid, pass_hash:AGORAModel.getInstance().userSessionModel.passHash,proj_type:AGORAModel.getInstance().agoraMapModel.projectType,xml:requestXML});
 		}
 		protected function onSaveTextServiceResult(event:ResultEvent):void{
+			if(event.result.hasOwnProperty("map")){
+				if(event.result.map.hasOwnProperty("mapLinkError")){
+					Alert.show(Language.lookup("MapHelpNoAccess"));
+				}
+			}
 			dispatchEvent(new AGORAEvent(AGORAEvent.TEXT_SAVED, null, this));
 		}
 		

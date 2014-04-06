@@ -152,6 +152,9 @@ List of variables for insertion:
 				}else{					
 						$text = "";						
 				}					
+				if($text == ""){
+					$output->addAttribute("mapLinkError","true");
+				}					
 			}
 			/*if ($is_project == 0)
 			{

@@ -35,7 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<s:HGroup id="theMap" name="p1" >
 		<s:VGroup  width = "30" horizontalAlign="center" left = "0" >
-		<s:Button width = "100%" click = "{zoomer.value=zoomer.minimum;zoomer2.value=zoomer2.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "=" />
+		<s:Button width = "100%" click = "{zoomer.value= zoomer.minimum;zoomer2.value=zoomer2.minimum;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" icon="@Embed('images/fit.png')" height="20"  toolTip="{Language.lookup('ZoomFit')}" id = "zoomFit" label = "="/>
+		<s:Button width = "100%" click = "{zoomer.value= (zoomer.maximum+zoomer.minimum)/2;zoomer2.value=(zoomer2.maximum+zoomer2.minimum)/2;agora.horizontalScrollBar.value =0; agora.verticalScrollBar.value=0;}" toolTip="{Language.lookup('Zoom100')}" id = "zoomNormal" fontSize="5" icon="@Embed('images/fit100.png')" label = "100%" />
 		<s:Button  width = "100%" click = "{zoomer.value+=zoomer.stepSize;}" id= "zoomIn" label = "+"/>
 		<s:VSlider  width = "100%"  creationComplete="{inited=true}"   id = "zoomer" valueCommit="zoom()" changeStart="updateSync()" maximum="2"  height = "200"/>
 		<s:Button  width = "100%" click="{zoomer.value-=zoomer.stepSize;}" id = "zoomOut" label = "-"/>
@@ -88,6 +89,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 			import classes.Language;
 			var inited:Boolean = false;
+			var stype:Boolean = false;
 			var tempZoomHolder = true;
 			var prevZoomValue = 0;
 			public function mouseDownEvent(e:MouseEvent):void{
@@ -163,21 +165,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						zoomer2.minimum = agora.height/agoraMap.height;
 					}
 					
+					//Alert.show("2 "+agoraMap.parent.width+" "+agoraMap.width+" "+zoomer.minimum);
+					stype=true;
 					if (zoomer.minimum>=1){
-						zoomer.minimum=1;
-						zoomer.maximum=2;
-					}else{
+						zoomer.minimum=zoomer.minimum/2;
+						zoomer.maximum=zoomer.minimum*2;
+						stype=false;
+					}
+					else{
 						// sure the map has gone out of the limits..
 						zoomer.maximum=1;
+						zoomer.maximum += zoomer.maximum - zoomer.minimum;
 					}
 					
 					// added new logic
 					if (zoomer2.minimum>=1){
-						zoomer2.minimum=1;
-						zoomer2.maximum=2;
-					}else{
+						zoomer2.minimum=zoomer2.minimum/2;
+						zoomer2.maximum=zoomer2.minimum*2;
+						stype=false;
+					}
+					else{
 						// sure the map has gone out of the limits..
 						zoomer2.maximum=1;
+						zoomer2.maximum += zoomer2.maximum - zoomer2.minimum;
 					}
 					
 					zoomer.stepSize=(zoomer.maximum-zoomer.minimum)/10;
