@@ -23,6 +23,8 @@ package Model
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	
+	import components.MenuPanel;
+	
 	[Bindable]
 	public class StatementModel extends EventDispatcher
 	{

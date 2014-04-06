@@ -25,6 +25,7 @@ package components
 	
 	import Model.AGORAModel;
 	import Model.ArgumentTypeModel;
+	import Model.StatementModel;
 	
 	import Skins.AddButtonSkin;
 	import Skins.MenuPanelSkin;
@@ -55,8 +56,6 @@ package components
 	import spark.components.HGroup;
 	import spark.primitives.Ellipse;
 
-	import classes.Language;
-
 	public class MenuPanel extends GridPanel
 	{
 		private var _model:ArgumentTypeModel;
@@ -66,8 +65,10 @@ package components
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
 		public var changeButton:Button;
-		
-		
+		public static var color:uint = 0x29ABE2;
+		public static var boxColor:uint = 0x29ABE2;
+		public static var fileName:String = "images/agoraMoveLR_New.swf";
+		public static var boxCreated:Boolean = false;
 		private var _schemeSelector:ArgSelector;
 		
 		public function MenuPanel()
@@ -125,6 +126,33 @@ package components
 			
 		}
 		
+		//To get the color for the toggle and the add supporting arguments button
+		public function getColor():uint
+		{
+			if(model.claimModel!=null)
+			{
+				if(model.claimModel.borderColor == "0xF99653")
+					return 0xF99653;
+				else
+					return 0x29ABE2;
+			}
+			else
+				return 0x29ABE2;
+		}
+		
+		public function getFile():String
+		{
+			if(model.claimModel!=null)
+			{
+				if(model.claimModel.borderColor == "0xF99653")
+					return "images/agoraMoveLR_newOrange.swf";
+				else
+					return "images/agoraMoveLR_New.swf";	
+			}
+			else
+				return "images/agoraMoveLR_New.swf";
+		}
+		
 		//------------------ Bind Setters --------------------------//
 		//Buttons must not be enabled when the user is still constructing
 		//the argument
@@ -176,12 +204,14 @@ package components
 			addReasonBtn = new Button;
 			vgroup.percentWidth = 100;
 			vgroup.verticalAlign = "middle";
+			color = getColor();
+			fileName = getFile();
+			boxCreated = true;		//color coding issue
 			addReasonBtn.setStyle("skinClass",AddButtonSkin);
 			addReasonBtn.toolTip=Language.lookup('AnotherReasonHelp2');
 			changeButton = new Button;
 			changeSchemeBtn = new Button;
-			changeButton.toolTip=changeButton.toolTip=Language.lookup("ArgSchemeChange");
-			changeSchemeBtn.toolTip=changeButton.toolTip=Language.lookup("ArgSchemeChange");
+			changeButton.toolTip=Language.lookup("ArgSchemeChange");
 			changeButton.setStyle("skinClass",ToggleButtonSkin);
 			var endParen:Label=new Label();
 			

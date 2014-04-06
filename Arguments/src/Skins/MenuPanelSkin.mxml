@@ -29,6 +29,7 @@ in accordance with the terms of the license agreement accompanying it.
         <![CDATA[
 			import classes.Language;
 		import mx.core.FlexVersion;
+			import components.MenuPanel;
 		
 		/* Define the skin elements that should not be colorized. 
         For panel, border and title background are skinned, but the content area, background, border, and title text are not. */
@@ -59,6 +60,7 @@ in accordance with the terms of the license agreement accompanying it.
         override protected function initializationComplete():void
         {
             useChromeColor = true;
+			this.setStyle("fileName",MenuPanel.fileName);
             super.initializationComplete();
         }
         
@@ -81,7 +83,7 @@ in accordance with the terms of the license agreement accompanying it.
             }
             
             dropShadow.visible = getStyle("dropShadowVisible");
-            
+			moveButtonImg.source = MenuPanel.fileName;
             var cr:Number = getStyle("cornerRadius");
             var withControls:Boolean = 
                 (currentState == "disabledWithControlBar" || 
@@ -197,7 +199,7 @@ in accordance with the terms of the license agreement accompanying it.
                 <!-- layer 3: text -->
                 <!--- @copy spark.components.Panel#titleDisplay -->
 				<s:Group id ="moveButton">
-					<s:SWFLoader height = "30" width="80" toolTip="{Language.lookup('ThereForeImgMoveToolTip')}" source="@Embed('images/agoraMoveLR_New.swf')" buttonMode="true" mouseDown="{hostComponent.beginDrag(event)}"  left ="20"  top = "42"   />
+					<s:SWFLoader id = "moveButtonImg" height = "30" width="80" toolTip="{Language.lookup('ThereForeImgMoveToolTip')}" source="@Embed('images/agoraMoveLR_New.swf')" buttonMode="true" mouseDown="{hostComponent.beginDrag(event)}"  left ="20"  top = "42"   />
 					<s:Label id="titleDisplay"  top="60" bottom="0" minHeight="30" width = "80"
 							 fontWeight="bold" maxDisplayedLines="1" textAlign="start"
 							 verticalAlign="middle"

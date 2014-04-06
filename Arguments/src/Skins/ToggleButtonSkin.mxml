@@ -38,6 +38,7 @@
     <fx:Script fb:purpose="styling">
         <![CDATA[         
             import spark.components.Group;
+			import components.MenuPanel;
             /* Define the skin elements that should not be colorized. 
             For button, the graphics are colorized but the label is not. */
             static private const exclusions:Array = ["labelDisplay"];
@@ -53,6 +54,9 @@
             override protected function initializationComplete():void
             {
                 useChromeColor = false;
+			//	trace("Color in the toggle button "+MenuPanel.color);
+				this.setStyle("borderColor",MenuPanel.color);
+				toggleButtonColor.color = MenuPanel.color;
                 super.initializationComplete();
             }  
             
@@ -62,7 +66,6 @@
             override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number) : void
             {
                 var cr:Number = getStyle("cornerRadius");
-                
                 if (cornerRadius != cr)
                 {
                     cornerRadius = cr;
@@ -72,7 +75,6 @@
                     highlight.radiusX = cornerRadius;
                     border.radiusX = cornerRadius;
                 }
-                
                 if (highlightStroke) highlightStroke.radiusX = cornerRadius;
                 if (hldownstroke1) hldownstroke1.radiusX = cornerRadius;
                 if (hldownstroke2) hldownstroke2.radiusX = cornerRadius;
@@ -147,7 +149,7 @@
 			</s:Label>
 		<s:Ellipse  height = "15" width = "15" id = "stmtellipse"  >
 					<s:fill>
-									<s:SolidColor color="#29ABE2" alpha = "1"/>
+									<s:SolidColor id="toggleButtonColor" color="{this.getStyle('borderColor')}" alpha = "1"/>
 									</s:fill>
 					</s:Ellipse>	
 		<s:VGroup width="15" height ="15" horizontalAlign="center" verticalAlign="middle"  top = "0" left = "0"  gap="1">

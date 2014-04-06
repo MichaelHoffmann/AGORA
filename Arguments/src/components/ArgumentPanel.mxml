@@ -25,7 +25,7 @@
 				<!--Within the topHG. It holds the author information and the type of statement-->
 				<s:HGroup id="stmtInfoVG" width="100%" fontSize="12">
 					<s:Label id="stmtTypeLbl" alpha=".50"/>
-					<s:Button  left = "0" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkin"   >
+					<s:Button  left = "0" click="onStmtTypeClicked(event)" buttonMode="true" id = "stmtButton" skinClass="Skins.ToggleButtonSkinBox"   >
 						
 					</s:Button>
 					<!--Displays the user id-->
@@ -117,6 +117,8 @@
 			import Model.StatementModel;
 			import Model.UserSessionModel;
 			
+			import Skins.ToggleButtonSkin;
+			import Skins.ToggleButtonSkinBox;
 			import Skins.TopBarLessPanel;
 			
 			import ValueObjects.AGORAParameters;
@@ -966,9 +968,9 @@
 				if(!(AGORAModel.getInstance().userSessionModel.username == "Guest")){
 					if(event.label == agoraLabels.ARGUMENT_FOR_CLAIM){
 						if(model.statementFunction == StatementModel.INFERENCE)
-							ArgumentController.getInstance().addSupportingArgumentTry(model);	//to support enabler, you directly get the argument scheme
+							ArgumentController.getInstance().addSupportingArgumentTry(model);	//vinodh
 						else
-							ArgumentController.getInstance().addSupportingArgument(model);	//else you get the normal scheme
+							ArgumentController.getInstance().addSupportingArgument(model);
 					}else if(event.label == agoraLabels.ADD_OBJECTION){
 						ArgumentController.getInstance().addAnObjection(model);
 						//AGORAModel.getInstance().agoraMapModel.addClicked = 1;
@@ -1302,23 +1304,29 @@
 					{
 						if(model.argumentTypeModel!=null)
 						{
+							trace("Color is " +MenuPanel.color);
 							if(model.argumentTypeModel.claimModel.borderColor == "0xF99653")		//if the border color is orange
 							{
 								this.setStyle("borderColor", 0xF99653)				//make it orange	
+								MenuPanel.boxColor = 0xF99653;							
+						//		stmtButton.visible = true;
 								model.borderColor = "0xF99653";						//set the color to that so the supporting statement knows to follow that
 							}
 							else													//if the border color is blue or null
 							{
 								this.setStyle("borderColor", 0x29ABE2);				//make it blue
+								MenuPanel.boxColor = 0x29ABE2;
+							//	stmtButton.visible = true;
 								model.borderColor = "0x29ABE2";						//set the color to blue so that the following supporting argument is also blue
 							}
 						}
 						else
 						{
 							this.setStyle("borderColor", 0x29ABE2);					//same as the else above
+							MenuPanel.boxColor = 0x29ABE2;
 							model.borderColor = "0x29ABE2";
 						}
-						
+						MenuPanel.boxCreated = true;
 					}
 					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT)
 					{	
