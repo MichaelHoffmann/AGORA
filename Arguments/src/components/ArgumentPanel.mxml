@@ -1417,7 +1417,7 @@
 									}
 									else
 										tempStatement = model.argumentTypeModel.claimModel.argumentTypeModel.claimModel;
-									if(tempStatement.argumentTypeModel!=null)
+									if(tempStatement!=null && tempStatement.argumentTypeModel!=null)
 										while(tempStatement.argumentTypeModel.claimModel.firstClaim != true)
 										{
 											if(tempStatement.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
@@ -1515,7 +1515,7 @@
 								}
 								else
 									tempStatement = model.argumentTypeModel.claimModel.argumentTypeModel.claimModel;
-								if(tempStatement.argumentTypeModel!=null)
+								if(tempStatement!=null && tempStatement.argumentTypeModel!=null && tempStatement.argumentTypeModel.claimModel!=null)
 									while(tempStatement.argumentTypeModel.claimModel.firstClaim != true)
 									{
 										if(tempStatement.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
