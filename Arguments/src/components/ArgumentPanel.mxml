@@ -11,7 +11,7 @@
 		
 		<s:Ellipse width="30" height="30" left = "-35" top ="-26">
 			<s:fill>
-				<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
+				<s:SolidColor id = "color3" color="{this.getStyle('borderColor')}" alpha = "1"/>
 			</s:fill>
 		</s:Ellipse>
 		<s:SWFLoader id="dragButton" mouseDown ="beginDrag(event)" buttonMode="true"
@@ -66,10 +66,10 @@
 			<s:Graphic>
 				<s:Rect bottom = "-95" height="70" width="115" radiusX="10" radiusY="10" left = "-15">
 					<s:stroke>
-						<s:SolidColorStroke color="{this.getStyle('borderColor')}" weight="0"/>
+						<s:SolidColorStroke id = "color1" color="{this.getStyle('borderColor')}" weight="0"/>
 					</s:stroke>
 					<s:fill>
-						<s:SolidColor color="{this.getStyle('borderColor')}"/>
+						<s:SolidColor id = "color2" color="{this.getStyle('borderColor')}"/>
 					</s:fill>
 				</s:Rect>
 			</s:Graphic>
@@ -1284,15 +1284,80 @@
 					
 					if(panelType == StatementModel.OBJECTION || panelType == StatementModel.COUNTER_EXAMPLE){
 						
-						if(model.parentStatement.borderColor == "0xF99653")		//if the border color is orange
+						if(model.parentStatement.borderColor == 0xF99653)		//if the border color is orange
 						{
 							this.setStyle("borderColor", 0x29ABE2);				//make it blue		
-							model.borderColor = "0x29ABE2";						//set the color to that so the supporting statement knows to follow that
+							model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
+							MenuPanel.color = 0x29ABE2;
+							MenuPanel.fileName = "images/agoraMoveLR_New.swf"
+							/*if (model.argumentTypeModel!=null)
+								if(model.argumentTypeModel.inferenceModel!=null)
+								{
+									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
+									{
+										model.argumentTypeModel.inferenceModel.borderColor = 0x29ABE2;
+									}
+								}
+								*/
 						}
-						else													//if the border color is blue
+						else if(model.parentStatement.borderColor == 0x29ABE2)													//if the border color is blue
 						{
 							this.setStyle("borderColor", 0xF99653);				//make it orange
-							model.borderColor = "0xF99653";						//set the color to orange so that the following supporting argument is also orange
+							model.borderColor = 0xF99653;						//set the color to orange so that the following supporting argument is also orange
+							MenuPanel.color = 0xF99653;
+							MenuPanel.fileName = "images/agoraMoveLR_newOrange.swf"
+							/*if(model.argumentTypeModel!=null)
+								if(model.argumentTypeModel.inferenceModel!=null)
+								{
+									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
+									{
+										model.argumentTypeModel.inferenceModel.borderColor = 0xF99653;
+									}
+								}
+								*/
+							
+						}
+						else		//if the parent statement's color isnt helping, figure out using the structure
+						{
+							var objection:int = 0;
+							if(model.parentStatement.argumentTypeModel == null)
+							{
+								if(model.parentStatement.firstClaim == true || model.parentStatement.firstReason == true)
+								{
+									this.setStyle("borderColor", 0xF99653)				//make it orange	
+									model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+								}
+							}
+							else
+							{
+								var tempStatement:StatementModel = model.parentStatement.argumentTypeModel.claimModel;
+								while(tempStatement.firstClaim != true)
+								{
+									if(tempStatement.statementFunction == StatementModel.OBJECTION)
+										objection+=1
+									if(tempStatement.parentStatement!=null)
+										if(tempStatement.parentStatement.argumentTypeModel == null)
+											break;
+										else
+											tempStatement = tempStatement.parentStatement.argumentTypeModel.claimModel;
+									else
+										if(tempStatement.argumentTypeModel.claimModel==null)
+											break;
+										else
+											tempStatement = tempStatement.argumentTypeModel.claimModel;
+									
+								}
+								if(objection%2 == 0)
+								{
+									this.setStyle("borderColor", 0xF99653)				//make it orange	
+									model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+								}
+								else
+								{
+									this.setStyle("borderColor",0x29ABE2 )				//make it orange	
+									model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
+								}
+							}
 						}
 						stmtButton.visible = false;
 						if(panelType == StatementModel.OBJECTION)
@@ -1305,26 +1370,80 @@
 						if(model.argumentTypeModel!=null)
 						{
 							trace("Color is " +MenuPanel.color);
-							if(model.argumentTypeModel.claimModel.borderColor == "0xF99653")		//if the border color is orange
+							if(model.argumentTypeModel.claimModel.borderColor == 0xF99653)		//if the border color is orange
 							{
 								this.setStyle("borderColor", 0xF99653)				//make it orange	
 								MenuPanel.boxColor = 0xF99653;							
 						//		stmtButton.visible = true;
-								model.borderColor = "0xF99653";						//set the color to that so the supporting statement knows to follow that
+								model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+								MenuPanel.color = 0xF99653;
+								MenuPanel.fileName = "images/agoraMoveLR_newOrange.swf"
+								/*if(model.argumentTypeModel.inferenceModel!=null)
+								{
+									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
+									{
+										model.argumentTypeModel.inferenceModel.borderColor = 0xF99653;
+									}
+								}
+									*/
 							}
-							else													//if the border color is blue or null
+							else if(model.argumentTypeModel.claimModel.borderColor == 0x29ABE2)		//if the border color is orange													//if the border color is blue or null
 							{
 								this.setStyle("borderColor", 0x29ABE2);				//make it blue
 								MenuPanel.boxColor = 0x29ABE2;
 							//	stmtButton.visible = true;
-								model.borderColor = "0x29ABE2";						//set the color to blue so that the following supporting argument is also blue
+								model.borderColor = 0x29ABE2;						//set the color to blue so that the following supporting argument is also blue
+								MenuPanel.color = 0x29ABE2;
+								MenuPanel.fileName = "images/agoraMoveLR_New.swf";
+								/*if(model.argumentTypeModel.inferenceModel!=null)
+								{
+									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
+									{
+										model.argumentTypeModel.inferenceModel.borderColor = 0x29ABE2;
+									}
+								}
+								*/
+							}
+							else	//if the parent statement color isnt helping
+							{
+								var objection:int = 0;
+								if(model.argumentTypeModel.claimModel.firstClaim!=true)
+								{
+									var tempStatement:StatementModel;
+									if(model.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
+									{
+										objection+=1;
+										tempStatement = model.argumentTypeModel.claimModel.parentStatement;
+									}
+									else
+										tempStatement = model.argumentTypeModel.claimModel.argumentTypeModel.claimModel;
+									if(tempStatement.argumentTypeModel!=null)
+										while(tempStatement.argumentTypeModel.claimModel.firstClaim != true)
+										{
+											if(tempStatement.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
+												objection+=1
+											tempStatement = tempStatement.argumentTypeModel.claimModel.parentStatement;
+										}
+								}
+								if(objection%2 == 0)
+								{
+									this.setStyle("borderColor", 0x29ABE2)				//make it orange	
+									model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
+								}
+								else
+								{
+									this.setStyle("borderColor", 0xF99653)				//make it orange	
+									model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+								}
 							}
 						}
 						else
 						{
 							this.setStyle("borderColor", 0x29ABE2);					//same as the else above
 							MenuPanel.boxColor = 0x29ABE2;
-							model.borderColor = "0x29ABE2";
+							model.borderColor = 0x29ABE2;
+							MenuPanel.color = 0x29ABE2;
+							MenuPanel.fileName = "images/agoraMoveLR_New.swf";
 						}
 						MenuPanel.boxCreated = true;
 					}
@@ -1372,21 +1491,54 @@
 					//remove all textboxes
 					if(model.argumentTypeModel!=null)
 					{
-						if(model.argumentTypeModel.claimModel.borderColor == "0xF99653")		//if the border color is orange
-						{
-							this.setStyle("borderColor", 0xF99653)				//make it orange	
-							model.borderColor = "0xF99653";						//set the color to that so the supporting statement knows to follow that
-						}
-						else													//if the border color is blue or null
+						//while((model.argumentTypeModel.claimModel.borderColor != 0x29ABE2) && (model.argumentTypeModel.claimModel.borderColor != 0xF99653));
+						if(model.argumentTypeModel.claimModel.borderColor == 0x29ABE2)		//if the border color is orange
 						{
 							this.setStyle("borderColor", 0x29ABE2);				//make it blue
-							model.borderColor = "0x29ABE2";						//set the color to blue so that the following supporting argument is also blue
+							model.borderColor = 0x29ABE2;						//set the color to blue so that the following supporting argument is also blue
+						}
+						else if(model.argumentTypeModel.claimModel.borderColor == 0xF99653)													//if the border color is blue or null
+						{
+							this.setStyle("borderColor", 0xF99653)				//make it orange	
+							model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+						}
+						else
+						{
+							var objection:int = 0;
+							var tempStatement:StatementModel;
+							if(model.argumentTypeModel.claimModel.firstClaim!=true)
+							{
+								if(model.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
+								{
+									objection+=1;
+									tempStatement = model.argumentTypeModel.claimModel.parentStatement;
+								}
+								else
+									tempStatement = model.argumentTypeModel.claimModel.argumentTypeModel.claimModel;
+								if(tempStatement.argumentTypeModel!=null)
+									while(tempStatement.argumentTypeModel.claimModel.firstClaim != true)
+									{
+										if(tempStatement.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
+											objection+=1
+										tempStatement = tempStatement.argumentTypeModel.claimModel.parentStatement;
+									}
+							}
+							if(objection%2 == 0)
+							{
+								this.setStyle("borderColor", 0x29ABE2)				//make it orange	
+								model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
+							}
+							else
+							{
+								this.setStyle("borderColor", 0xF99653)				//make it orange	
+								model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+							}
 						}
 					}
 					else
 					{
-						this.setStyle("borderColor", 0x29ABE2);					//same as the else above
-						model.borderColor = "0x29ABE2";
+						this.setStyle("borderColor", 0);					//same as the else above
+						model.borderColor = 0;
 					}
 					
 					inputs.splice(0,inputs.length);
@@ -1411,6 +1563,10 @@
 			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 			{
 				//Draw the top left box for moving stuff
+				color1.color = model.borderColor;
+				color2.color = model.borderColor;
+				color3.color = model.borderColor;
+				this.setStyle("borderColor", model.borderColor);	
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 			}
 			

@@ -123,7 +123,6 @@ package components
 			BindingUtils.bindSetter(this.setX, model, "xgrid");
 			BindingUtils.bindSetter(this.setY, model, "ygrid");
 			BindingUtils.bindSetter(this.setSchemeText, model, "logicClass");
-			
 		}
 		
 		//To get the color for the toggle and the add supporting arguments button
@@ -131,7 +130,7 @@ package components
 		{
 			if(model.claimModel!=null)
 			{
-				if(model.claimModel.borderColor == "0xF99653")
+				if(model.claimModel.borderColor == 0xF99653)
 					return 0xF99653;
 				else
 					return 0x29ABE2;
@@ -144,7 +143,7 @@ package components
 		{
 			if(model.claimModel!=null)
 			{
-				if(model.claimModel.borderColor == "0xF99653")
+				if(model.claimModel.borderColor == 0xF99653)
 					return "images/agoraMoveLR_newOrange.swf";
 				else
 					return "images/agoraMoveLR_New.swf";	
@@ -204,8 +203,8 @@ package components
 			addReasonBtn = new Button;
 			vgroup.percentWidth = 100;
 			vgroup.verticalAlign = "middle";
-			color = getColor();
-			fileName = getFile();
+		//	color = getColor();
+		//	fileName = getFile();
 			boxCreated = true;		//color coding issue
 			addReasonBtn.setStyle("skinClass",AddButtonSkin);
 			addReasonBtn.toolTip=Language.lookup('AnotherReasonHelp2');

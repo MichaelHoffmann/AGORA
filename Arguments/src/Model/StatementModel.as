@@ -94,7 +94,7 @@ package Model
 		public var firstReason:Boolean = true;				//This is to find if the given statement model is of a subsequent reason or not. 
 		public var conditionalSyllAdditionalReasonUpdate:Boolean = false;				//This is to ensure that the text box doesnt get edited
 		public var dependentStatement:Boolean = false;
-		public var borderColor:String = null;					//For the color coding issue
+		public var borderColor:uint;					//For the color coding issue
 		public function StatementModel(modelType:String=STATEMENT, target:IEventDispatcher=null)
 		{
 			super(target);

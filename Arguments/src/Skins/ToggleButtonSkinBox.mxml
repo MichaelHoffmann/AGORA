@@ -74,9 +74,9 @@
                     highlight.radiusX = cornerRadius;
                     border.radiusX = cornerRadius;
                 }
-				if(MenuPanel.boxCreated)
-					toggleButtonColor.color = MenuPanel.boxColor;
-				MenuPanel.boxCreated = false;
+			//	if(MenuPanel.boxCreated)
+			//	toggleButtonColor.color = MenuPanel.boxColor;
+			//	MenuPanel.boxCreated = false;
                 if (highlightStroke) highlightStroke.radiusX = cornerRadius;
                 if (hldownstroke1) hldownstroke1.radiusX = cornerRadius;
                 if (hldownstroke2) hldownstroke2.radiusX = cornerRadius;

@@ -184,7 +184,8 @@ package Controller.logic
 			claimModel.statements[0].updateStatementTexts();
 			claimModel.statements[1].updateStatementTexts();
 			for each(var reasonModel:StatementModel in reasonModels){
-				reasonModel.statements[0].updateStatementTexts();
+				if(reasonModel.statements[0]!=null)
+					reasonModel.statements[0].updateStatementTexts();
 			//	reasonModel.statements[1].updateStatementTexts();
 				reasonModel.connectingString = StatementModel.IMPLICATION;
 			}

@@ -379,15 +379,15 @@ package components
 					var fvlspy:int = argumentPanel.y + 72;
 					if(model.supportingArguments.length > 0){
 						//draw arrow
-						if(model.borderColor == "0xF99653")		//if the border color is orange
+						if(model.borderColor == 0xF99653)		//if the border color is orange
 						{
 							drawUtility.graphics.lineStyle(10, 0xF99653, 1);				//make it orange	
-							model.borderColor = "0xF99653";						//set the color to that so the supporting statement knows to follow that
+							model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
 						}
 						else													//if the border color is blue or null
 						{
 							drawUtility.graphics.lineStyle(10, 0x29ABE2, 1);				//make it blue
-							model.borderColor = "0x29ABE2";						//set the color to blue so that the following supporting argument is also blue
+							model.borderColor = 0x29ABE2;						//set the color to blue so that the following supporting argument is also blue
 						}
 						drawUtility.graphics.moveTo(argumentPanel.x + argumentPanel.width + 70, argumentPanel.y + 87);
 						drawUtility.graphics.lineTo(argumentPanel.x + argumentPanel.width + 50, argumentPanel.y + 72);
@@ -453,7 +453,7 @@ package components
 					if(model.objections.length > 0){
 						//The line color
 						trace(model.borderColor);
-						if(model.borderColor == "0xF99653")		//if the border color is orange
+						if(model.borderColor == 0xF99653)		//if the border color is orange
 						{
 							this.setStyle("borderColor", 0x29ABE2);				//make it blue		
 							drawUtility.graphics.lineStyle(10, 0x29ABE2, 1);					//set the color to that so the supporting statement knows to follow that

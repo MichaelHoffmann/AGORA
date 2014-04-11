@@ -60,7 +60,7 @@ in accordance with the terms of the license agreement accompanying it.
         override protected function initializationComplete():void
         {
             useChromeColor = true;
-			this.setStyle("fileName",MenuPanel.fileName);
+		//	this.setStyle("fileName",MenuPanel.fileName);
             super.initializationComplete();
         }
         
@@ -83,7 +83,7 @@ in accordance with the terms of the license agreement accompanying it.
             }
             
             dropShadow.visible = getStyle("dropShadowVisible");
-			moveButtonImg.source = MenuPanel.fileName;
+		//	moveButtonImg.source = MenuPanel.fileName;
             var cr:Number = getStyle("cornerRadius");
             var withControls:Boolean = 
                 (currentState == "disabledWithControlBar" || 

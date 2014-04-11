@@ -55,8 +55,8 @@
             {
                 useChromeColor = false;
 			//	trace("Color in the toggle button "+MenuPanel.color);
-				this.setStyle("borderColor",MenuPanel.color);
-				toggleButtonColor.color = MenuPanel.color;
+			//	this.setStyle("borderColor",MenuPanel.color);
+			//	toggleButtonColor.color = MenuPanel.color;
                 super.initializationComplete();
             }  
             
@@ -149,7 +149,7 @@
 			</s:Label>
 		<s:Ellipse  height = "15" width = "15" id = "stmtellipse"  >
 					<s:fill>
-									<s:SolidColor id="toggleButtonColor" color="{this.getStyle('borderColor')}" alpha = "1"/>
+									<s:SolidColor id="toggleButtonColor" color="0x29ABE2" alpha = "1"/>
 									</s:fill>
 					</s:Ellipse>	
 		<s:VGroup width="15" height ="15" horizontalAlign="center" verticalAlign="middle"  top = "0" left = "0"  gap="1">

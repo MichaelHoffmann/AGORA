@@ -55,7 +55,8 @@
             override protected function initializationComplete():void
             {
                 useChromeColor = false;
-				this.setStyle("borderColor",MenuPanel.color);
+			//	this.setStyle("borderColor",MenuPanel.color);
+			//	colorBorder.color = MenuPanel.color;
                 super.initializationComplete();
             }  
             
@@ -133,7 +134,7 @@
     <!--- @private -->
 	<s:Ellipse id="border" left = "0" right = "0" top = "0" bottom ="0">
 		<s:fill>
-			<s:SolidColor color="{this.getStyle('borderColor')}" alpha = "1"/>
+			<s:SolidColor id = "colorBorder" color="#29ABE2" alpha = "1"/>
 		</s:fill>
 	</s:Ellipse>
     

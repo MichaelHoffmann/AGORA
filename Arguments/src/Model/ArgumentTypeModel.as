@@ -69,8 +69,6 @@ package Model
 			updateConnectionService.addEventListener(FaultEvent.FAULT, onFault);
 			
 			
-			
-			
 			AGORAModel.getInstance().agoraMapModel.newArgumentTypeModelAdded(this);
 		}
 		
