@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+ADOBE SYSTEMS INCORPORATED
+Copyright 2008 Adobe Systems Incorporated
+All Rights Reserved.
+
+NOTICE: Adobe permits you to use, modify, and distribute this file
+in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for the Spark Button component.  
+
+@see spark.components.Button
+
+@langversion 3.0
+@playerversion Flash 10
+@playerversion AIR 1.5
+@productversion Flex 4
+-->
+<s:SparkButtonSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+				   width="13" height="13" 
+				   alpha.disabled="0.5">
+	
+	<fx:Metadata>
+		<![CDATA[ 
+		/** 
+		* @copy spark.skins.spark.ApplicationSkin#hostComponent
+		*/
+		[HostComponent("spark.components.Button")]
+		]]>
+	</fx:Metadata>
+	
+	<fx:Script fb:purpose="styling">
+		<![CDATA[         
+			import spark.components.Group;
+			import components.MenuPanel;
+			/* Define the skin elements that should not be colorized. 
+			For button, the graphics are colorized but the label is not. */
+			static private const exclusions:Array = ["labelDisplay"];
+			
+			/** 
+			 * @private
+			 */     
+			override public function get colorizeExclusions():Array {return exclusions;}
+			
+			/**
+			 * @private
+			 */
+			override protected function initializationComplete():void
+			{
+				useChromeColor = false;
+				//	trace("Color in the toggle button "+MenuPanel.color);
+				//	this.setStyle("borderColor",MenuPanel.boxColor);
+				super.initializationComplete();
+			}  
+			
+			/**
+			 *  @private
+			 */
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number) : void
+			{
+				var cr:Number = getStyle("cornerRadius");
+				if (cornerRadius != cr)
+				{
+					cornerRadius = cr;
+					shadow.radiusX = cornerRadius;
+					fill.radiusX = cornerRadius;
+					lowlight.radiusX = cornerRadius;
+					highlight.radiusX = cornerRadius;
+					border.radiusX = cornerRadius;
+				}
+				//	if(MenuPanel.boxCreated)
+				//	toggleButtonColor.color = MenuPanel.boxColor;
+				//	MenuPanel.boxCreated = false;
+				if (highlightStroke) highlightStroke.radiusX = cornerRadius;
+				if (hldownstroke1) hldownstroke1.radiusX = cornerRadius;
+				if (hldownstroke2) hldownstroke2.radiusX = cornerRadius;
+				
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+			}
+			
+			private var cornerRadius:Number = 2;
+			
+		]]>        
+	</fx:Script>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="up" />
+		<s:State name="over" />
+		<s:State name="down" />
+		<s:State name="disabled" />
+	</s:states>
+	
+	<s:Group width="15" height="15">	
+		
+		
+		
+		<!-- layer 1: shadow -->
+		<!--- @private -->
+		<s:Rect id="shadow" visible = "false">
+		</s:Rect>
+		
+		<!-- layer 2: fill -->
+		<!--- @private -->
+		<s:Rect id="fill" >
+			
+		</s:Rect>
+		
+		<!-- layer 3: fill lowlight -->
+		<!--- @private -->
+		<s:Rect id="lowlight">
+			
+		</s:Rect>
+		
+		<!-- layer 4: fill highlight -->
+		<!--- @private -->
+		<s:Rect id="highlight" >
+			
+		</s:Rect>
+		
+		<!-- layer 5: highlight stroke (all states except down) -->
+		<!--- @private -->
+		<s:Rect id="highlightStroke" >
+			
+		</s:Rect>
+		
+		<!-- layer 6: highlight stroke (down state only) -->
+		<!--- @private -->
+		<s:Rect id="hldownstroke1">
+			
+		</s:Rect>
+		<!--- @private -->
+		<s:Rect id="hldownstroke2" >
+			
+		</s:Rect>
+		
+		<!-- layer 7: border - put on top of the fill so it doesn't disappear when scale is less than 1 -->
+		<!--- @private -->
+		<s:Rect id="border" left="0" >
+		</s:Rect>
+		
+		<!-- layer 8: text -->
+		<!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay  -->
+		<s:Label id="labelDisplay" height = "0"  >
+		</s:Label>
+		<s:Ellipse  height = "15" width = "15" id = "stmtellipse"  >
+			<s:fill>
+				<s:SolidColor id="toggleButtonColor" color="0xF99653" alpha = "1"/>
+			</s:fill>
+		</s:Ellipse>	
+		<s:VGroup width="15" height ="15" horizontalAlign="center" verticalAlign="middle"  top = "0" left = "0"  gap="1">
+			<s:SWFLoader  scaleX=".66" scaleY="-.66"  source="@Embed('/images/agoraMasterImages_Triangle.swf')" />
+			<s:SWFLoader scaleX=".66" scaleY=".66"  source="@Embed('/images/agoraMasterImages_Triangle.swf')"  />
+		</s:VGroup>
+	</s:Group>
+	
+</s:SparkButtonSkin>

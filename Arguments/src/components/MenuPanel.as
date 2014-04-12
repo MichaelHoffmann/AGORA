@@ -28,9 +28,12 @@ package components
 	import Model.StatementModel;
 	
 	import Skins.AddButtonSkin;
+	import Skins.AddButtonSkinOrange;
 	import Skins.MenuPanelSkin;
+	import Skins.MenuPanelSkinOrange;
 	import Skins.SchemeButtonSkin;
 	import Skins.ToggleButtonSkin;
+	import Skins.ToggleButtonSkinOrange;
 	
 	import ValueObjects.AGORAParameters;
 	
@@ -65,9 +68,8 @@ package components
 		public var addReasonBtn:Button;
 		public var changeSchemeBtn:Button;
 		public var changeButton:Button;
-		public static var color:uint = 0x29ABE2;
+		public var color:uint = 0x29ABE2;
 		public static var boxColor:uint = 0x29ABE2;
-		public static var fileName:String = "images/agoraMoveLR_New.swf";
 		public static var boxCreated:Boolean = false;
 		private var _schemeSelector:ArgSelector;
 		
@@ -132,26 +134,42 @@ package components
 			{
 				if(model.claimModel.borderColor == 0xF99653)
 					return 0xF99653;
-				else
+				else if(model.claimModel.borderColor == 0x29ABE2)
 					return 0x29ABE2;
+				else
+				{
+					var objection:int = 0;
+					var tempStatement:StatementModel = model.claimModel;
+					while(tempStatement.firstClaim!=true)
+					{
+						if(tempStatement.statementFunction == StatementModel.OBJECTION)
+						{
+							objection+=1;
+							tempStatement = tempStatement.parentStatement;
+						}
+						else		//if it is an enabler or reason
+						{
+							tempStatement = tempStatement.argumentTypeModel.claimModel;
+						}
+					}
+
+					if(objection%2 == 0)
+					{
+						return 0x29ABE2;				//make it orange	
+						
+					}
+					else
+					{
+						return 0xF99653;				//make it orange	
+						
+					}
+				}	
+				
 			}
 			else
 				return 0x29ABE2;
 		}
-		
-		public function getFile():String
-		{
-			if(model.claimModel!=null)
-			{
-				if(model.claimModel.borderColor == 0xF99653)
-					return "images/agoraMoveLR_newOrange.swf";
-				else
-					return "images/agoraMoveLR_New.swf";	
-			}
-			else
-				return "images/agoraMoveLR_New.swf";
-		}
-		
+				
 		//------------------ Bind Setters --------------------------//
 		//Buttons must not be enabled when the user is still constructing
 		//the argument
@@ -203,15 +221,24 @@ package components
 			addReasonBtn = new Button;
 			vgroup.percentWidth = 100;
 			vgroup.verticalAlign = "middle";
-		//	color = getColor();
+			color = getColor();
 		//	fileName = getFile();
 			boxCreated = true;		//color coding issue
-			addReasonBtn.setStyle("skinClass",AddButtonSkin);
+			if (color == 0xF99653)
+				addReasonBtn.setStyle("skinClass",AddButtonSkinOrange);
+			else
+				addReasonBtn.setStyle("skinClass",AddButtonSkin);
 			addReasonBtn.toolTip=Language.lookup('AnotherReasonHelp2');
 			changeButton = new Button;
 			changeSchemeBtn = new Button;
 			changeButton.toolTip=Language.lookup("ArgSchemeChange");
-			changeButton.setStyle("skinClass",ToggleButtonSkin);
+			if (color == 0xF99653)
+			{
+				setStyle("skinClass", MenuPanelSkinOrange);
+				changeButton.setStyle("skinClass",ToggleButtonSkinOrange);
+			}	
+			else
+				changeButton.setStyle("skinClass",ToggleButtonSkin);
 			var endParen:Label=new Label();
 			
 			endParen.text=")";

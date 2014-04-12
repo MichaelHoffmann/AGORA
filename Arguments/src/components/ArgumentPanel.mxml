@@ -119,6 +119,7 @@
 			
 			import Skins.ToggleButtonSkin;
 			import Skins.ToggleButtonSkinBox;
+			import Skins.ToggleButtonSkinBoxOrange;
 			import Skins.TopBarLessPanel;
 			
 			import ValueObjects.AGORAParameters;
@@ -1288,75 +1289,38 @@
 						{
 							this.setStyle("borderColor", 0x29ABE2);				//make it blue		
 							model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
-							MenuPanel.color = 0x29ABE2;
-							MenuPanel.fileName = "images/agoraMoveLR_New.swf"
-							/*if (model.argumentTypeModel!=null)
-								if(model.argumentTypeModel.inferenceModel!=null)
-								{
-									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
-									{
-										model.argumentTypeModel.inferenceModel.borderColor = 0x29ABE2;
-									}
-								}
-								*/
 						}
 						else if(model.parentStatement.borderColor == 0x29ABE2)													//if the border color is blue
 						{
 							this.setStyle("borderColor", 0xF99653);				//make it orange
 							model.borderColor = 0xF99653;						//set the color to orange so that the following supporting argument is also orange
-							MenuPanel.color = 0xF99653;
-							MenuPanel.fileName = "images/agoraMoveLR_newOrange.swf"
-							/*if(model.argumentTypeModel!=null)
-								if(model.argumentTypeModel.inferenceModel!=null)
-								{
-									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
-									{
-										model.argumentTypeModel.inferenceModel.borderColor = 0xF99653;
-									}
-								}
-								*/
-							
 						}
 						else		//if the parent statement's color isnt helping, figure out using the structure
 						{
 							var objection:int = 0;
-							if(model.parentStatement.argumentTypeModel == null)
+							var tempStatement:StatementModel = model.parentStatement;
+							while(tempStatement.firstClaim!=true)
 							{
-								if(model.parentStatement.firstClaim == true || model.parentStatement.firstReason == true)
+								if(tempStatement.statementFunction == StatementModel.OBJECTION)
 								{
-									this.setStyle("borderColor", 0xF99653)				//make it orange	
-									model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+									objection +=1
+									tempStatement = tempStatement.parentStatement;
 								}
+								else 
+								{
+									tempStatement = tempStatement.argumentTypeModel.claimModel;
+								}
+							}
+							
+							if(objection%2 == 0)
+							{
+								this.setStyle("borderColor", 0xF99653)				//make it orange	
+								model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
 							}
 							else
 							{
-								var tempStatement:StatementModel = model.parentStatement.argumentTypeModel.claimModel;
-								while(tempStatement.firstClaim != true)
-								{
-									if(tempStatement.statementFunction == StatementModel.OBJECTION)
-										objection+=1
-									if(tempStatement.parentStatement!=null)
-										if(tempStatement.parentStatement.argumentTypeModel == null)
-											break;
-										else
-											tempStatement = tempStatement.parentStatement.argumentTypeModel.claimModel;
-									else
-										if(tempStatement.argumentTypeModel.claimModel==null)
-											break;
-										else
-											tempStatement = tempStatement.argumentTypeModel.claimModel;
-									
-								}
-								if(objection%2 == 0)
-								{
-									this.setStyle("borderColor", 0xF99653)				//make it orange	
-									model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
-								}
-								else
-								{
-									this.setStyle("borderColor",0x29ABE2 )				//make it orange	
-									model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
-								}
+								this.setStyle("borderColor",0x29ABE2 )				//make it orange	
+								model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
 							}
 						}
 						stmtButton.visible = false;
@@ -1369,71 +1333,48 @@
 					{
 						if(model.argumentTypeModel!=null)
 						{
-							trace("Color is " +MenuPanel.color);
+	
 							if(model.argumentTypeModel.claimModel.borderColor == 0xF99653)		//if the border color is orange
 							{
 								this.setStyle("borderColor", 0xF99653)				//make it orange	
 								MenuPanel.boxColor = 0xF99653;							
-						//		stmtButton.visible = true;
 								model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
-								MenuPanel.color = 0xF99653;
-								MenuPanel.fileName = "images/agoraMoveLR_newOrange.swf"
-								/*if(model.argumentTypeModel.inferenceModel!=null)
-								{
-									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
-									{
-										model.argumentTypeModel.inferenceModel.borderColor = 0xF99653;
-									}
-								}
-									*/
+								stmtButton.setStyle("skinClass",Skins.ToggleButtonSkinBoxOrange);
 							}
 							else if(model.argumentTypeModel.claimModel.borderColor == 0x29ABE2)		//if the border color is orange													//if the border color is blue or null
 							{
 								this.setStyle("borderColor", 0x29ABE2);				//make it blue
 								MenuPanel.boxColor = 0x29ABE2;
-							//	stmtButton.visible = true;
 								model.borderColor = 0x29ABE2;						//set the color to blue so that the following supporting argument is also blue
-								MenuPanel.color = 0x29ABE2;
-								MenuPanel.fileName = "images/agoraMoveLR_New.swf";
-								/*if(model.argumentTypeModel.inferenceModel!=null)
-								{
-									if(model.argumentTypeModel.inferenceModel.borderColor == 0)
-									{
-										model.argumentTypeModel.inferenceModel.borderColor = 0x29ABE2;
-									}
-								}
-								*/
+								stmtButton.setStyle("skinClass",Skins.ToggleButtonSkinBox);
 							}
 							else	//if the parent statement color isnt helping
 							{
 								var objection:int = 0;
-								if(model.argumentTypeModel.claimModel.firstClaim!=true)
+								var tempStatement:StatementModel = model.argumentTypeModel.claimModel;
+								while(tempStatement.firstClaim!=true)
 								{
-									var tempStatement:StatementModel;
-									if(model.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
+									if(tempStatement.statementFunction == StatementModel.OBJECTION)
 									{
 										objection+=1;
-										tempStatement = model.argumentTypeModel.claimModel.parentStatement;
+										tempStatement = tempStatement.parentStatement;
 									}
 									else
-										tempStatement = model.argumentTypeModel.claimModel.argumentTypeModel.claimModel;
-									if(tempStatement!=null && tempStatement.argumentTypeModel!=null)
-										while(tempStatement.argumentTypeModel.claimModel.firstClaim != true)
-										{
-											if(tempStatement.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
-												objection+=1
-											tempStatement = tempStatement.argumentTypeModel.claimModel.parentStatement;
-										}
+									{
+										tempStatement = tempStatement.argumentTypeModel.claimModel;
+									}
 								}
 								if(objection%2 == 0)
 								{
 									this.setStyle("borderColor", 0x29ABE2)				//make it orange	
 									model.borderColor = 0x29ABE2;						//set the color to that so the supporting statement knows to follow that
+									stmtButton.setStyle("skinClass",Skins.ToggleButtonSkinBox);
 								}
 								else
 								{
 									this.setStyle("borderColor", 0xF99653)				//make it orange	
 									model.borderColor = 0xF99653;						//set the color to that so the supporting statement knows to follow that
+									stmtButton.setStyle("skinClass",Skins.ToggleButtonSkinBoxOrange);
 								}
 							}
 						}
@@ -1442,8 +1383,6 @@
 							this.setStyle("borderColor", 0x29ABE2);					//same as the else above
 							MenuPanel.boxColor = 0x29ABE2;
 							model.borderColor = 0x29ABE2;
-							MenuPanel.color = 0x29ABE2;
-							MenuPanel.fileName = "images/agoraMoveLR_New.swf";
 						}
 						MenuPanel.boxCreated = true;
 					}
@@ -1491,7 +1430,6 @@
 					//remove all textboxes
 					if(model.argumentTypeModel!=null)
 					{
-						//while((model.argumentTypeModel.claimModel.borderColor != 0x29ABE2) && (model.argumentTypeModel.claimModel.borderColor != 0xF99653));
 						if(model.argumentTypeModel.claimModel.borderColor == 0x29ABE2)		//if the border color is orange
 						{
 							this.setStyle("borderColor", 0x29ABE2);				//make it blue
@@ -1505,23 +1443,18 @@
 						else
 						{
 							var objection:int = 0;
-							var tempStatement:StatementModel;
-							if(model.argumentTypeModel.claimModel.firstClaim!=true)
+							var tempStatement:StatementModel = model.argumentTypeModel.claimModel;
+							while(tempStatement.firstClaim!=true)
 							{
-								if(model.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
+								if(tempStatement.statementFunction == StatementModel.OBJECTION)
 								{
 									objection+=1;
-									tempStatement = model.argumentTypeModel.claimModel.parentStatement;
+									tempStatement = tempStatement.parentStatement;
 								}
 								else
-									tempStatement = model.argumentTypeModel.claimModel.argumentTypeModel.claimModel;
-								if(tempStatement!=null && tempStatement.argumentTypeModel!=null && tempStatement.argumentTypeModel.claimModel!=null)
-									while(tempStatement.argumentTypeModel.claimModel.firstClaim != true)
-									{
-										if(tempStatement.argumentTypeModel.claimModel.statementFunction == StatementModel.OBJECTION)
-											objection+=1
-										tempStatement = tempStatement.argumentTypeModel.claimModel.parentStatement;
-									}
+								{
+									tempStatement = tempStatement.argumentTypeModel.claimModel;
+								}
 							}
 							if(objection%2 == 0)
 							{
