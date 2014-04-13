@@ -1389,6 +1389,7 @@
 					if(panelType == StatementModel.COMMENT ||panelType == StatementModel.REFERENCE || panelType == StatementModel.QUESTION|| panelType == StatementModel.REFORMULATION || panelType == StatementModel.AMENDMENT || panelType == StatementModel.DEFINITION || panelType == StatementModel.LINKTOMAP || panelType == StatementModel.LINKTORESOURCES || panelType == StatementModel.SUPPORT)
 					{	
 						this.setStyle("borderColor", 0xFFFF00);
+						model.borderColor = 0xFFFF00;
 						showMoreBtn.visible = false;
 						stmtButton.visible = false;
 						if(panelType == StatementModel.COMMENT)
