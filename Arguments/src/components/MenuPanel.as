@@ -142,14 +142,24 @@ package components
 					var tempStatement:StatementModel = model.claimModel;
 					while(tempStatement.firstClaim!=true)
 					{
-						if(tempStatement.statementFunction == StatementModel.OBJECTION)
+						if(tempStatement.statementFunction == StatementModel.OBJECTION || tempStatement.statementFunction == StatementModel.COUNTER_EXAMPLE)
 						{
 							objection+=1;
 							tempStatement = tempStatement.parentStatement;
 						}
 						else		//if it is an enabler or reason
 						{
-							tempStatement = tempStatement.argumentTypeModel.claimModel;
+							try
+							{
+								tempStatement = tempStatement.argumentTypeModel.claimModel;
+							}
+							catch(e:Error)
+							{
+								if(tempStatement.parentStatement!=null)
+									tempStatement = tempStatement.parentStatement;
+								else
+									break;
+							}
 						}
 					}
 

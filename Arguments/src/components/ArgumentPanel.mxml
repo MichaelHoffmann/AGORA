@@ -1301,14 +1301,24 @@
 							var tempStatement:StatementModel = model.parentStatement;
 							while(tempStatement.firstClaim!=true)
 							{
-								if(tempStatement.statementFunction == StatementModel.OBJECTION)
+								if(tempStatement.statementFunction == StatementModel.OBJECTION || tempStatement.statementFunction == StatementModel.COUNTER_EXAMPLE)
 								{
 									objection +=1
 									tempStatement = tempStatement.parentStatement;
 								}
 								else 
 								{
-									tempStatement = tempStatement.argumentTypeModel.claimModel;
+									try
+									{
+										tempStatement = tempStatement.argumentTypeModel.claimModel;
+									}
+									catch(e:Error)
+									{
+										if(tempStatement.parentStatement!=null)
+											tempStatement = tempStatement.parentStatement;
+										else
+											break;
+									}
 								}
 							}
 							
@@ -1354,14 +1364,24 @@
 								var tempStatement:StatementModel = model.argumentTypeModel.claimModel;
 								while(tempStatement.firstClaim!=true)
 								{
-									if(tempStatement.statementFunction == StatementModel.OBJECTION)
+									if(tempStatement.statementFunction == StatementModel.OBJECTION || tempStatement.statementFunction == StatementModel.COUNTER_EXAMPLE)
 									{
 										objection+=1;
 										tempStatement = tempStatement.parentStatement;
 									}
 									else
 									{
-										tempStatement = tempStatement.argumentTypeModel.claimModel;
+										try
+										{
+											tempStatement = tempStatement.argumentTypeModel.claimModel;
+										}
+										catch(e:Error)
+										{
+											if(tempStatement.parentStatement!=null)
+												tempStatement = tempStatement.parentStatement;
+											else
+												break;
+										}
 									}
 								}
 								if(objection%2 == 0)
@@ -1447,14 +1467,24 @@
 							var tempStatement:StatementModel = model.argumentTypeModel.claimModel;
 							while(tempStatement.firstClaim!=true)
 							{
-								if(tempStatement.statementFunction == StatementModel.OBJECTION)
+								if(tempStatement.statementFunction == StatementModel.OBJECTION || tempStatement.statementFunction == StatementModel.COUNTER_EXAMPLE)
 								{
 									objection+=1;
 									tempStatement = tempStatement.parentStatement;
 								}
 								else
 								{
-									tempStatement = tempStatement.argumentTypeModel.claimModel;
+									try
+									{
+										tempStatement = tempStatement.argumentTypeModel.claimModel;
+									}
+									catch(e:Error)
+									{
+										if(tempStatement.parentStatement!=null)
+											tempStatement = tempStatement.parentStatement;
+										else
+											break;
+									}
 								}
 							}
 							if(objection%2 == 0)
