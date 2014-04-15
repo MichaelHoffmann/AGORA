@@ -859,7 +859,7 @@ package Controller
 				map.alerts.removeElement(map.agoraMap);
 				FlexGlobals.topLevelApplication.addElement(printCanvas);
 				//map.zoomerResize();
-				map.zoomer.value=(map.zoomer.minimum+map.zoomer.maximum)/2;
+				map.zoomer.value=1;//(map.zoomer.minimum+map.zoomer.maximum)/2;
 				map.zoom();
 				printCanvas.width=map.agoraMap.width + 150;
 				printCanvas.height=map.agoraMap.height + 130;

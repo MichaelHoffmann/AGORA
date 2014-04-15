@@ -132,7 +132,7 @@ package Controller
 				map.visible = true;
 				map.setScrollers(0,0);
 				
-				map.zoomer.value=(map.zoomer.minimum+map.zoomer.maximum)/2;
+				map.zoomer.value=1;//(map.zoomer.minimum+map.zoomer.maximum)/2;
 				// resting to norms
 				map.agoraMap.width=map.agoraMap.minWidth;
 				map.agoraMap.height=map.agoraMap.minHeight;
@@ -171,7 +171,7 @@ package Controller
 			map.agoraMap.initializeMapStructures();
 			map.setScrollers(0,0);
 			//map.zoomer.value=1;
-			map.zoomer.value=(map.zoomer.minimum+map.zoomer.maximum)/2;
+			map.zoomer.value=1;//(map.zoomer.minimum+map.zoomer.maximum)/2;
 		}
 
 		protected function onMapCreatedFault(event:AGORAEvent):void{
