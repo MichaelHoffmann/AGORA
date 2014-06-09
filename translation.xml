@@ -2799,7 +2799,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<ArgComplete>
 		<EN-US
 			text="Support: Is your argument strong and convincing? You should check five things:
-		1. Is your argument complete or do you need another reason so that the combination of two or more dependent reasons justifies your claim? Sometimes only the combination of several reasons can justify the claim. If you need another dependent reason, click on the &quot;+&quot; button between &quot;therefore&quot; and your reason.
+		1. Can you think of circumstances in which the conclusion of your argument could be false even though all the reasons you provided are true? If that is possible, you need either to add further reasons so that the combination of all reasons justifies your claim, or you should include a qualifier in your conclusion such as \'probably\', \'usually\' or \'there is reason to assume\' or you should try another argument. In order to add another dependent reason to your argument, click on the &quot;+&quot; button between &quot;therefore&quot; and your reason.
 		2. Is each of your reasons acceptable, or does one of them need additional support by further arguments? If any of your reasons is either not evident or controversial, provide further arguments by clicking on the &quot;add ...&quot; button under that reason to which you want to add a supporting argument.
 		3. Are there further independent arguments for your claim? &quot;Independent arguments&quot; provide additional reasons for your claim that do not depend on the reasons you already have. Having more independent arguments makes your claim stronger than having many reasons that are mutually dependent. To add independent arguments, click on the &quot;add ...&quot; under your claim.
 		4. If you can imagine possible objections against one of your reasons, you might add these objections in order to refute them then by further arguments. That makes your argument stronger.
@@ -2807,24 +2807,26 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<RUS
 			text="Поддержка:
 		Действительно ли Ваш аргумент силен и убедителен? Вы должны проверить пять вещей: 
-		1. Ваш аргумент полон, или Вы нуждаетесь в другой причине так, чтобы комбинация двух или больше зависимых причин подтвердила Ваше заявление? Иногда только комбинация нескольких причин может подтвердить заявление. Если Вы нуждаетесь в другой зависимой причине, щелкните кнопку &quot;+&quot; под &quot;поэтому&quot;.
+		1. Can you think of circumstances in which the conclusion of your argument could be false even though all the reasons you provided are true? If that is possible, you need either to add further reasons so that the combination of all reasons justifies your claim, or you should include a qualifier in your conclusion such as \'probably\', \'usually\' or \'there is reason to assume\' or you should try another argument. In order to add another dependent reason to your argument, click on the &quot;+&quot; button between &quot;therefore&quot; and your reason.
 		2. Действительно ли каждая из Ваших причин является приемлемой, или одна из них нуждается в дополнительной поддержке дальнейшими аргументами? Если какая-либо из Ваших причин или не очевидна или спорна, обеспечьте дальнейшие аргументы, щелкая, кнопку &quot;добавьте...&quot; под той причиной, к которой Вы хотите добавить аргумент поддержки.
 		3. Есть ли дальнейшие независимые аргументы для  Вашего заявления? &quot;Независимые аргументы&quot; обеспечивают дополнительные причины Вашего заявления, которые не зависят от причин, которые Вы уже имеете. Наличие дополнительных независимых аргументов делает Ваше заявление более сильным, чем наличие многих причин, которые взаимно зависимы. Чтобы добавить независимые аргументы, щелкните, &quot;добавьте...&quot; в соответствии с Вашим заявлением.
 		4. Если Вы можете вообразить возможные возражения против одной из Ваших причин, Вы могли бы добавить эти возражения, чтобы опровергнуть их затем дальнейшими аргументами. Это делает  Ваш аргумент более сильным.
 		5. Пересмотрите формулировки своего заявления и причин, и структуры Вашего аргумента, поскольку это требуется, чтобы создать самый лучший возможный аргумент. Вы можете  включать исключения в свое заявление, или Вы сформулируете его более определенно." /><!--TODO Translate RUS Line 1 .. Click on the-->
+		<!-- TODO Translate RUS -->
 		<GER
 			text="Ist dein Argument überzeugend und stark genug? Du solltest fünf Dinge bedenken:
-		1. Ist dein Argument vollständig oder brauchst du einen weiteren Grund, so dass die Verbindung von zwei oder mehr abhängigen Gründen deine Behauptung rechtfertigen kann? Manchmal kann allein die Verbindung mehrerer Gründe eine Behauptung rechtfertigen. Falls du einen weiteren abhängigen Grund brauchst, klicke auf das &quot;+&quot; Symbol zwischen &quot;deshalb&quot; und deinem Grund.
+		1. Kannst du dir irgendwelche Umstände vorstellen in denen die Schlussfolgerung deines Argumentes falsch ist obwohl all deine Gründe wahr sind? Falls das möglich ist musst du entweder weitere Gründe hinzufügen so dass die Kombination aller Gründe deine Behauptung rechtfertigen kann, oder du musst eine Qualifikation in deine Schlussfolgerung einfügen--so etwas wie \'wahrscheinlich\', \'normalerweise\' oder \'es gibt Grund zu der Annahme dass ...\'-- oder du solltest ein anderes Argument ausprobieren. Falls du einen weiteren abhängigen Grund hinzufügen willst, klicke auf das &quot;+&quot; Symbol zwischen &quot;deshalb&quot; und deinem Grund.
 		2. Ist jeder deiner Gründe akzeptabel oder benötigt einer von ihnen Unterstützung durch weitere Argumente? Wenn einer deiner Gründe entweder nicht wirklich evident oder kontrovers ist, entwickle weitere Argumente indem du auf &quot;füge hinzu ...&quot; unter demjenigen Grund klickst zu dem du ein unterstützendes Argument hinzufügen willst.
 		3. Gibt es weitere unabhänge Argumente für deine Behauptung? &quot;Unabhängige Argumente&quot; bieten zusätzliche Gründe für deine Behauptung an welche nicht von den Gründen abhängig sind, die du schon formuliert hast. Mehr unabhängige Gründe zu haben macht deine Argumentation stärker als wenn du nur wechselseitig abhängige Gründe hast. Um weitere unabhängige Argumente hinzuzufügen, klicke auf &quot;füge hinzu ...&quot; unter deiner Schlussfolgerung.
 		 4. Falls du dir mögliche Einwände gegen einen deiner Gründe vorstellen kannst, könntest Du diese selbst hinzufügen, um sie dann im nächsten Schritt zu widerlegen. Das macht dein Argument stärker.
 		 5. Verbessere die Formulierung deiner Schlussfolgerung und deiner Gründe, wie auch die Struktur deines Arguments, so lange wie nötig um das best mögliche Argument zu konstruieren. Du könntest Ausnahmen in deine Schlussfolgerung einfügen oder du formulierst sie so, dass sie sich genauer auf das bezieht, was du wirklich willst." />
 		<SPAN text="Ayuda: ¿Es tu argumento fuerte y convincente? Deberías comprobar estas cinco cosas: 
-		1. ¿Está completo tu argumento o necesitas otra razón de tal forma que la combinación de dos o más razones dependientes justifique tu tesis? A veces solo la combinación de varias razones puede justificar una tesis. Si necesitas otra razón dependiente, haz clic en la tecla &quot;+&quot; entre &quot;por lo tanto&quot; y tu razón.
+		1. Can you think of circumstances in which the conclusion of your argument could be false even though all the reasons you provided are true? If that is possible, you need either to add further reasons so that the combination of all reasons justifies your claim, or you should include a qualifier in your conclusion such as \'probably\', \'usually\' or \'there is reason to assume\' or you should try another argument. In order to add another dependent reason to your argument, click on the &quot;+&quot; button between &quot;therefore&quot; and your reason.
 		2. ¿Son todas tu razones aceptables o necesita alguna de ellas un soporte adicional por medio de más argumentos? Si alguna de tus razones no es evidente o es controvertida, proporciona más argumentos para defenderla haciendo clic en el botón &quot;añadir...&quot; y situándote bajo la razón a la que quieres añadir un argumento de apoyo.
 		3. ¿Hay más argumentos independientes para justificar tu tesis? Los &quot;argumentos independientes&quot; proporcionan razones adicionales para justificar tu tesis que no dependen de las razones que ya tienes. Tener más argumentos independientes hace que la tesis se justifique de forma más fuerte que  mediante varias razones que dependen una de otra. Para añadir argumentos independientes haz clic en  &quot;añadir ...&quot; situándote bajo la tesis.
 		4. Si puedes imaginar posibles objeciones contra alguna de tus razones, podrías añadir esas objeciones con el fin de refutarlas mediante más argumentos. Esto hace que tu argumentación tenga más fuerza.
 		5. Revisa las formulaciones de tu tesis y razones y la estructura de tu argumento con el fin de crear el mejor argumento posible. Puedes incluir excepciones en tu tesis o formularla de forma más específica." />
+		<!-- TODO Translate SPAN -->
  </ArgComplete>
 
  <Intro>
@@ -4282,5 +4284,27 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<SPAN
 			text="You cannot add a reason without completing previous reason. Please complete the reason to continue."/><!-- TODO Translate SPAN -->
 	</UpdateReasonToContinue>
+	
+	<Copy>
+	<EN-US
+			text="Copy"/>
+	<GER
+			text="Copy"/>
+	<RUS
+			text="Copy"/>
+	<SPAN
+			text="Copy"/>
+	</Copy>
+	
+	<PasteStatement>
+	<EN-US
+			text="Paste"/>
+	<GER
+			text="Paste"/>
+	<RUS
+			text="Paste"/>
+	<SPAN
+			text="Paste"/>
+	</PasteStatement>
 </Translations>
 
