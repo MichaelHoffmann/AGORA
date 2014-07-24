@@ -57,7 +57,7 @@ Additional languages can be added later. -->
 		<EN-US text="You cannot move a project into a project which you are not a member of" />
 		<RUS text="You cannot move a project into a project which you are not a member of" /> <!--TODO: Translate RUS -->
 		<GER text="Du kannst nicht ein Projekt in ein Projekt schieben, in dem du nicht Mitglied bist" /> 
-		<SPAN text="No se puede mover un proyecto a otro proyecto del que no eres miembro" />
+		<SPAN text="No puedes mover un proyecto a otro proyecto del que no eres miembro" />
 	</NotProjMemberProjects>
 
 	<TermsOfService>
@@ -130,26 +130,26 @@ Additional languages can be added later. -->
 		<EN-US text="Publish Map ! ?" />
 		<RUS text="Publish Map ! ?" /><!--TODO: Translate RUS -->
 		<GER text="Veröffentlichen ! ?" />
-		<SPAN text="Publish Map ! ?"/><!--TODO: Translate SPAN -->
+		<SPAN text="¿¡Publicar el mapa! ?"/>
 	</PublishMapHelp>
 	
 	<PublishMapHelpNoAccess>
 		<EN-US text="You can publish or move a map only if you are the creator of the map" />
 		<RUS text="You can publish or move a map only if you are the creator of the map" /><!--TODO: Translate RUS -->
 		<GER text="Du kannst ein Argument nur dann publizieren oder woanders hinschieben wenn du der Autor bist." />
-		<SPAN text="You can publish or move a map only if you are the creator of the map"/><!--TODO: Translate SPAN -->
+		<SPAN text="Solo puedes publicar o mover un mapa si eres la persona que lo creó"/>
 	</PublishMapHelpNoAccess>
 	<MapHelpNoAccess>
 		<EN-US text="You do not have access to this map" />
 		<RUS text="You do not have access to this map" /><!--TODO: Translate RUS -->
 		<GER text="Du hast keinen Zugang zu diesem Argument" />
-		<SPAN text="You donot have access to this map"/><!--TODO: Translate SPAN -->
+		<SPAN text="No tienes acceso a este mapa"/>
 	</MapHelpNoAccess>
 	<PublishMapbtn>
 		<EN-US text="Publish" />
 		<RUS text="Publish" /><!--TODO: Translate RUS -->
 		<GER text="Veröffentlichen" />
-		<SPAN text="Publish"/><!--TODO: Translate SPAN -->
+		<SPAN text="Publicar"/>
 	</PublishMapbtn>
 	
 	
@@ -192,14 +192,14 @@ Additional languages can be added later. -->
 	 <EN-US text="Every map will be created in your private folder to which only you have access. If you want to publish your map in the World of Arguments, close the map through 'Save and Home.' Then open the tab 'My maps' and search for the map you created in the left column. Click on the blue button to the right of the map name that specifies the location of your map, and click through the categories until you find the place where you want to publish your map." />
 	 <RUS text="Every map will be created in your private folder to which only you have access. If you want to publish your map in the World of Arguments, close the map through 'Save and Home.' Then open the tab 'My maps' and search for the map you created in the left column. Click on the blue button to the right of the map name that specifies the location of your map, and click through the categories until you find the place where you want to publish your map." /><!--TODO: Translate RUS -->
 	 <GER text="Jedes Argument wird in deinem privaten Ordner erstellt zu dem nur du Zugang hast. Wenn du dein Argument in der Welt der Argumente veröffentlichen willst, schließe es mit 'Ab nach Hause.' Dann öffne 'Meine Argumente' und suche nach dem Argument welches du konstruiert hast in der linken Spalte. Klicke auf den blauen Funktionsknopf rechts vom Namen der anzeigt, wo dein Argument derzeit gespeichert ist, und klicke dich durch die Kategorien bis du die Stelle findest, wo du dein Argument veröffentlichen willst." />
-		<SPAN text="Todo mapa se crea en el espacio de un proyecto privado que lleva tu nombre y al que solo tú tienes acceso. Si quieres publicar tu mapa en el Mundo de los Argumentos, vete a 'Mis Mapas'  y haz clic en el botón que especifica dónde esta tu mapa." />
+	 <SPAN text="Todo mapa se crea en el espacio de un proyecto privado que lleva tu nombre y al que solo tú tienes acceso. Si quieres publicar tu mapa en el Mundo de los Argumentos, cierra el mapa con la opción 'Salvar y volver al inicio'. Después accede a 'Mis Mapas'  y busca en la columna de la izquierda el mapa creado. Haz clic en el botón azul, a la derecha del nombre del mapa, que especifica dónde está tu mapa. Luego, haz clic clic en las categorías para decidir dónde quieres publicar tu mapa." />
  </NewMapToolTip>
  
  <NewMapToolTiphtml>
 	 <EN-US text="If you want to publish your map in the World of Arguments or move it to another location, you can either click on&lt;br&gt;the button 'Publish' below or you close the map through 'Save and Home,' search for the map in 'My maps' and&lt;br&gt; click on the blue button to the right of the map name.Both ways a window will open that shows the structure of &lt;br&gt;categories in the World of Arguments. Click through these categories until you find the place where you want to &lt;br&gt;publish or move your map." />
 	 <RUS text="If you want to publish your map in the World of Arguments or move it to another location, you can either click on&lt;br&gt;the button 'Publish' below or you close the map through 'Save and Home,' search for the map in 'My maps' and&lt;br&gt; click on the blue button to the right of the map name.Both ways a window will open that shows the structure of &lt;br&gt;categories in the World of Arguments. Click through these categories until you find the place where you want to &lt;br&gt;publish or move your map." /><!--TODO: Translate RUS -->
 	 <GER text="Wenn du dein Argument in der Welt der Argumente veröffentlichen willst oder es an einen anderen Ort&lt;br&gt;verschieben willst kannst du entweder unten auf 'Veröffentliche' klicken oder du schließt es mit 'Ab nach Hause',&lt;br&gt;suchst es dann in 'Meine Argumente' und klickst dann auf das blaue Feld rechts vom Namen des Argumentes.&lt;br&gt;In beiden Fällen öffnet sich ein Fenster, das die Struktur der Kategorien in der Welt der Argumente zeigt.Klicke&lt;br&gt;dich durch diese Kategorien bis du die Stelle findest, wo du dein Argument veröffentlichen oder hinschieben willst." />
-	 <SPAN text="If you want to publish your map in the World of Arguments or move it to another location, you can either click on&lt;br&gt;the button 'Publish' below or you close the map through 'Save and Home,' search for the map in 'My maps' and&lt;br&gt; click on the blue button to the right of the map name.Both ways a window will open that shows the structure of &lt;br&gt;categories in the World of Arguments. Click through these categories until you find the place where you want to &lt;br&gt;publish or move your map"/><!--TODO: Translate SPAN -->
+	 <SPAN text="Si quieres publicar un mapa en el Mundo de los Argumentos o moverlo a otro sitio, puedes hacer clic en &lt;br&gt;el botón 'Publicar' debajo del mapa o cerrarlo mediante  'Salvar y volver al inicio,' buscar el mapa en  'Mis mapas' y&lt;br&gt; hacer clic en el botón azul a la derecha del nombre del mapa. De las dos formas se abrirá una ventana que mostrará la estructura de &lt;br&gt;categorías en el Mundo de los argumentos. Haz clic en estas categorías hasta que encuentres donde quieres  &lt;br&gt;publicar o mover tu mapa"/>
  </NewMapToolTiphtml>
  
  <IsIn>
@@ -219,7 +219,7 @@ Additional languages can be added later. -->
 	 <EN-US text="100 percent zoom" />
 	 <RUS text="100 percent zoom" /><!--TODO: Translate RUS -->
 	 <GER text="100 percent zoom" /><!--TODO: Translate GER -->
-		<SPAN text="100 percent zoom" /><!--TODO: Translate SPAN -->
+		<SPAN text="zoom 100 por cien" />
  </Zoom100>
  <MapOwnerURLWarning>
  <EN-US text="If you click on this button and the owner of this map provided a URL, you will be directed to this URL in a new tab of your browser. Please note that the AGORA-net project is not responsible for the content of web pages provided by users of the system." />
@@ -800,7 +800,7 @@ Additional languages can be added later. -->
 		<EN-US text="If you reconstruct the argument of somebody else, formulate it as if you were the person constructing the argument. Do not write things like 'Plato claims ...' because the truth value of those statements refers to whether Plato claimed it or not, but not to what he claimed. Simply use quotes to make clear that you reconstruct the argument of someone else. Click on the white triangle at the bottom of text boxes to add a comment in which you can clarify what you do, or a reference. The white triangle turns yellow if there is already something added. Click on 'Show more' after clicking on the triangle to see what others added." />
 		<RUS text="If you reconstruct the argument of somebody else, formulate it as if you were the person constructing the argument. Do not write things like 'Plato claims ...' because the truth value of those statements refers to whether Plato claimed it or not, but not to what he claimed. Simply use quotes to make clear that you reconstruct the argument of someone else. Click on the white triangle at the bottom of text boxes to add a comment in which you can clarify what you do, or a reference. The white triangle turns yellow if there is already something added. Click on 'Show more' after clicking on the triangle to see what others added." /> <!--TODO Translate RUS -->
 		<GER text="Wenn du die Argumentation von jemand anderem rekonstruierst, formuliere alles so als wärst du diese Person. Schreibe nicht 'Platon behauptet, dass ...' weil der Wahrheitswert dieser Aussage sich darauf bezieht, ob Platon das behauptet hat oder nicht, nicht aber darauf, ob das Behauptete wahr ist. Verwende einfach Zitate um klar zu machen, dass du ein Argument von jemand anderem rekonstruierst. Klicke auf das weiße Dreieck unten an der Textbox und füge einen 'Kommentar' hinzu, in dem du erklärst was vor sich geht, oder füge eine 'Literaturangabe' hinzu. Das weiße Dreieck wird gelb, sobald jemand etwas zu einer Text box hinzufügt. Klicke auf 'Zeige mehr' um das anzusehen." />
-		<SPAN text="If you reconstruct the argument of somebody else, formulate it as if you were the person constructing the argument. Do not write things like 'Plato claims ...' because the truth value of those statements refers to whether Plato claimed it or not, but not to what he claimed. Simply use quotes to make clear that you reconstruct the argument of someone else. Click on the white triangle at the bottom of text boxes to add a comment in which you can clarify what you do, or a reference. The white triangle turns yellow if there is already something added. Click on 'Show more' after clicking on the triangle to see what others added." /> <!--TODO Translate SPAN -->
+		<SPAN text="Si reconstruyes el argumento de otra persona, formúlalo como si fueras la persona que lo construyó. No escribas afirmaciones del tipo  'Platón dice ...' porque el valor de verdad de estos enunciados se refiere a si Platón dijo esto o no lo dijo pero no al valor de verdad de lo que Platón dijo. Entrecomilla el texto introducido para dejar claro que estas reconstruyendo el argumento de otra persona. Haz clic en el triángulo blanco que está al final de las cajas de texto para añadir un comentario en el que puedas explicar lo que haces o dar una referencia. Los triángulos blancos se vuelven amarillos en cuanto se añade algo. Haz clic en  'Mostrar más' después de hacerlo en el triángulo para ver lo que otras personas han añadido." /> 
 	</ClaimReminder2>
 
 	<CombineSearch>
@@ -2826,7 +2826,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		3. ¿Hay más argumentos independientes para justificar tu tesis? Los &quot;argumentos independientes&quot; proporcionan razones adicionales para justificar tu tesis que no dependen de las razones que ya tienes. Tener más argumentos independientes hace que la tesis se justifique de forma más fuerte que  mediante varias razones que dependen una de otra. Para añadir argumentos independientes haz clic en  &quot;añadir ...&quot; situándote bajo la tesis.
 		4. Si puedes imaginar posibles objeciones contra alguna de tus razones, podrías añadir esas objeciones con el fin de refutarlas mediante más argumentos. Esto hace que tu argumentación tenga más fuerza.
 		5. Revisa las formulaciones de tu tesis y razones y la estructura de tu argumento con el fin de crear el mejor argumento posible. Puedes incluir excepciones en tu tesis o formularla de forma más específica." />
-		<!-- TODO Translate SPAN -->
+		
  </ArgComplete>
 
  <Intro>
@@ -3173,7 +3173,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<EN-US text="Enter Map ID" />
 		<RUS text="Enter Map ID" /><!--TODO Translate RUS -->
 		<GER text="Gib die Nummer des Argumentes ein" />
-		<SPAN text="Enter Map ID"/><!--TODO Translate SPAN -->
+		<SPAN text="Introducir ID del mapa"/>
 	</AddLinkToMapEnterMapID>
 
 	<AddLinkToResource>
@@ -3663,28 +3663,28 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	 <EN-US text="Please enter an answer to one of the security questions"/> 
 	 <RUS text="Please enter an answer to one of the security questions"/> <!--TODO Translate RUS-->
 	 <GER text="Bitte gib eine Antwort auf eine der Sicherheitsfragen ein."/> 
-		<SPAN text="Por favor introduce una respuesta a una de las preguntas de seguridad" />
+		<SPAN text="Por favor, introduce una respuesta a una de las preguntas de seguridad" />
  </SecurityAnswerInValid>
  
  <FNameInValid>
 	 <EN-US text="Please enter a first name!"/> 
 	 <RUS text="Please enter a first name!"/> <!--TODO Translate RUS-->
 	 <GER text="Bitte gib einen Vornamen ein!"/> 
-	<SPAN text="Por favor introduce un nombre" />
+	<SPAN text="Por favor, introduce un nombre" />
  </FNameInValid>
  
  <LNameInValid>
 	 <EN-US text="Please enter a last name!"/> 
 	 <RUS text="Please enter a last name!"/> <!--TODO Translate RUS-->
 	 <GER text="Bitte gib einen Nachnamen ein!"/> 
-	<SPAN text="Por favor introduce tus apellidos" />
+	<SPAN text="Por favor, introduce tus apellidos" />
  </LNameInValid>
  
  <EmailInValid>
 	 <EN-US text="Please enter a valid e-mail address! Without one we cannot contact you in case you forgot your password."/> 
 	 <RUS text="Please enter a valid e-mail address! Without one we cannot contact you in case you forgot your password."/> <!--TODO Translate RUS-->
 	 <GER text="Bitte gib eine gültige E-mail Adresse ein! Wir brauchen sie um dich zu kontaktieren, falls du dein Passwort vergisst."/>
-	<SPAN text="Por favor introduce una dirección  de e-mail valida. Sin ella no podemos ponernos en contacto contigo en caso de olvidar la contraseña." />
+	<SPAN text="Por favor, introduce una dirección  de e-mail valida. Sin ella no podemos ponernos en contacto contigo en caso de olvidar la contraseña." />
  </EmailInValid>
  
  
@@ -3781,7 +3781,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	 <EN-US text="Close"/> 
 	 <RUS text="Close"/> <!--TODO Translate RUS-->
 	 <GER text="Schließen"/> 
-	<SPAN text="Cierra" />
+	<SPAN text="Cerrar" />
  </fgtPwdClose>
  
  <fgtPwdErrorMsg>
@@ -3894,7 +3894,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<EN-US text=" users online" />
 		<RUS text=" users online" /><!--TODO Translate RUS-->
 		<GER text="Nutzer online" />
-		<SPAN text=" users online" /><!--TODO Translate SPAN-->
+		<SPAN text=" usuarios online" />
 	</MapCollaborators>
 	
 	<!-- End of entries for Map Save As -->
@@ -3938,7 +3938,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<EN-US text="Username of Map Owner:" />
 		<RUS text="Username of Map Owner:" /><!--TODO Translate RUS -->
 		<GER text="Benutzername des Argument-Eigentümers:" />
-		<SPAN text="Usuario del propietario/a del mapa:"/>
+		<SPAN text="Nombre de usuario del propietario del mapa:"/>
 	</SearchParamsMapOwnerName>
 	<SearchParamsBooleanExpHelpLabel>
 		<EN-US text="help" />
@@ -3950,13 +3950,13 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<EN-US text="AGORA Search help" />
 		<RUS text=" AGORA Search help" /><!--TODO Translate RUS -->
 		<GER text=" AGORA Hilfe für Suche" />
-		<SPAN text="Ayuda de búsqueda en AGORA"/>
+		<SPAN text="Ayuda para búsqueda en AGORA"/>
 	</SearchParamsBooleanExpHelpHeaderPopUP>	
 	<SearchParamsBooleanExpHelpToolTip>
 		<EN-US text="&lt;b&gt;Help for searching:&lt;/b&gt;&lt;br&gt;&lt;br&gt;* You can search for any string of letters or digits: &quot;app&quot; will find &quot;apple,&quot; &quot;application,&quot; &quot;mapping,&quot; etc.&lt;br&gt;* The Map ID of each argument map is shown on each map in the blue panel underneath the map name.&lt;br&gt;* Use the Map ID to refer to certain maps in publications or elsewhere, or to create references to other maps within AGORA-net.  &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;b&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;br&gt;In the fields &quot;Map name,&quot; &quot;Text used,&quot; and &quot;Project name&quot; you can use&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;&lt;/b&gt;&lt;br&gt;* &quot;AND&quot; in capital letters between two or more strings of letters or digits to find results in which these strings appear together &lt;br&gt;* &quot;OR&quot; in capital letters between two or more strings of letters or digits to find results in which one of these strings appears &lt;br&gt;* Parentheses to combine searches that use both &quot;AND&quot; and &quot;OR.&quot; &lt;br&gt;* For example, the search &quot;(hypo OR science) AND (truth)&quot; in Map name will find all maps in which one of the terms &quot;truth,&quot; &quot;truthful,&quot;&lt;br&gt; etc.appears together with one of the following in the map name: &quot;hypothesis,&quot; hypotheses,&quot; &quot;hypothetical,&quot; &quot;science,&quot; &quot;sciences,&quot; etc. &lt;br&gt;* Use quotation marks to search for entire phrases .&lt;br&gt;"/>
 		<RUS text="&lt;b&gt;Help for searching:&lt;/b&gt;&lt;br&gt;&lt;br&gt;* You can search for any string of letters or digits: &quot;app&quot; will find &quot;apple,&quot; &quot;application,&quot; &quot;mapping,&quot; etc.&lt;br&gt;* The Map ID of each argument map is shown on each map in the blue panel underneath the map name.&lt;br&gt;* Use the Map ID to refer to certain maps in publications or elsewhere, or to create references to other maps within AGORA-net.  &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;b&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;br&gt;In the fields &quot;Map name,&quot; &quot;Text used,&quot; and &quot;Project name&quot; you can use&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;&lt;/b&gt;&lt;br&gt;* &quot;AND&quot; in capital letters between two or more strings of letters or digits to find results in which these strings appear together &lt;br&gt;* &quot;OR&quot; in capital letters between two or more strings of letters or digits to find results in which one of these strings appears &lt;br&gt;* Parentheses to combine searches that use both &quot;AND&quot; and &quot;OR.&quot; &lt;br&gt;* For example, the search &quot;(hypo OR science) AND (truth)&quot; in Map name will find all maps in which one of the terms &quot;truth,&quot; &quot;truthful,&quot;&lt;br&gt; etc.appears together with one of the following in the map name: &quot;hypothesis,&quot; hypotheses,&quot; &quot;hypothetical,&quot; &quot;science,&quot; &quot;sciences,&quot; etc. &lt;br&gt;* Use quotation marks to search for entire phrases .&lt;br&gt;" /><!--TODO Translate RUS -->
 		<GER text="&lt;b&gt;Hilfe für Suche:&lt;/b&gt;&lt;br&gt;&lt;br&gt;* Du kannst nach jeder beliebigen Folge von Buchstaben und Zahlen suchen: &quot;air&quot; wird &quot;fair,&quot; &quot;Fairness,&quot; &quot;air,&quot; etc. finden&lt;br&gt;* Die Argumentnummer jedes Argumentes wird im blauen Seitenbalken unterhalb des Argumentnamens angezeigt wenn das Argument geöffnet ist.&lt;br&gt;Verwende diese Argumentnummer um in Publikationen und anderswo bestimmte Argumente in AGORA-net zu zitieren oder um Referenzen innerhalb von AGORA-net herzustellen.&lt;br&gt; &lt;/ul&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;b&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;In den Feldern &quot;Argumentname,&quot; &quot;Text in Argumenten,&quot; und &quot;Projektname&quot; kannst du&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;&lt;/b&gt; * &quot;UND&quot; in Großbuchstaben zwischen zwei oder mehr Folgen von Buchstaben und Zahlen benutzen um Ergebnisse zu finden in denen diese Folgen zusammen auftauchen&lt;br&gt;* &quot;OR&quot; in Großbuchstaben zwischen zwei oder mehr Folgen von Buchstaben und Zahlen benutzen um Ergebnisse zu finden in denen eine dieser Folgen verwendet ist&lt;br&gt;* Klammern benutzen um Suchen zu verbinden welche sowohl &quot;AND&quot; als auch &quot;ODER&quot; verwenden.&lt;br&gt; Die Suche &quot;(hypo ODER wissen) UND (wahr)&quot; in Argumentname, zum Beispiel, wird alle Argumente finden in denen einer der Begriffe &quot;wahr,&quot; &quot;Wahrheit,&quot; usw.&lt;br&gt; zusammen mit einem der folgenden im Argumentnamen erscheint: &quot;Hypothese,&quot; Hypothesen,&quot; &quot;hypothetisch,&quot; &quot;wissen,&quot; &quot;Wissenschaft,&quot; usw.&lt;br&gt;* verwende Anführungszeichen um nach ganzen Satzteilen zu suchen&lt;br&gt; &lt;/ul&gt;." />
-		<SPAN text="&lt;b&gt;Ayuda para la búsqueda:&lt;/b&gt;&lt;br&gt;&lt;br&gt;*Puedes buscar cualquier secuencia de letras o dígitos: &quot;app&quot; encontrará &quot;application,&quot; &quot;apple,&quot; &quot;mapping,&quot; etc.&lt;br&gt;* El identificador de cada mapa argumentativo se mostrará en el panel azul que aparece debajo del nombre del mismo..&lt;br&gt;* Usa el identificador del mapa para referirte a los mapas publicados o no o para crear referencias con otros mapas en AGORA-net.  &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;b&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;br&gt;En los campos &quot;Nombre del mapa,&quot; &quot;Texto utilizado,&quot; y &quot;Nombre del proyecto&quot; puedes utilizar&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;&lt;/b&gt;&lt;br&gt;* &quot;Y&quot; en mayúsculas entre dos o más secuencias de letras o dígitos, para buscar resultados en los que estas secuencias aparecen juntas &lt;br&gt;* &quot;O&quot; en mayúsculas entre dos o más secuencias de letras o dígitos, para buscar resultados en los que alguna de estas secuencias aparece &lt;br&gt;* Utiliza paréntesis para combinar búsquedas que incluyan ambas letras &quot;Y&quot; y &quot;O.&quot; &lt;br&gt;* Por ejemplo, la búsqueda &quot;(hypo O science) Y (truth)&quot; en el nombre del mapa buscará mapas en cuyo nombre aparece alguno de los siguientes términos  &quot;truth,&quot; &quot;truthful,&quot;&lt;br&gt; etc. junto con alguno de los siguientes: &quot;hypothesis,&quot; hypotheses,&quot; &quot;hypothetical,&quot; &quot;science,&quot; &quot;sciences,&quot; etc. &lt;br&gt;* Utiliza comillas para buscar frases enteras.&lt;br&gt;"/><!--TODO Translate SPAN --><!--TODO Translate SPAN -->
+		<SPAN text="&lt;b&gt;Ayuda para la búsqueda:&lt;/b&gt;&lt;br&gt;&lt;br&gt;*Puedes buscar cualquier secuencia de letras o dígitos: &quot;app&quot; encontrará &quot;application,&quot; &quot;apple,&quot; &quot;mapping,&quot; etc.&lt;br&gt;* El identificador de cada mapa argumentativo se mostrará en el panel azul que aparece debajo del nombre del mismo..&lt;br&gt;* Usa el identificador del mapa para referirte a los mapas publicados o no o para crear referencias con otros mapas en AGORA-net.  &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;b&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;br&gt;En los campos &quot;Nombre del mapa,&quot; &quot;Texto utilizado,&quot; y &quot;Nombre del proyecto&quot; puedes utilizar&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;&lt;/b&gt;&lt;br&gt;* &quot;Y&quot; en mayúsculas entre dos o más secuencias de letras o dígitos, para buscar resultados en los que estas secuencias aparecen juntas &lt;br&gt;* &quot;O&quot; en mayúsculas entre dos o más secuencias de letras o dígitos, para buscar resultados en los que alguna de estas secuencias aparece &lt;br&gt;* Utiliza paréntesis para combinar búsquedas que incluyan ambas letras &quot;Y&quot; y &quot;O.&quot; &lt;br&gt;* Por ejemplo, la búsqueda &quot;(hypo O science) Y (truth)&quot; en el nombre del mapa buscará mapas en cuyo nombre aparece alguno de los siguientes términos  &quot;truth,&quot; &quot;truthful,&quot;&lt;br&gt; etc. junto con alguno de los siguientes: &quot;hypothesis,&quot; hypotheses,&quot; &quot;hypothetical,&quot; &quot;science,&quot; &quot;sciences,&quot; etc. &lt;br&gt;* Utiliza comillas para buscar frases enteras.&lt;br&gt;"/>
 	</SearchParamsBooleanExpHelpToolTip>
 	
 	<SearchParamsConcept>
@@ -3969,7 +3969,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<EN-US text="Map ID:" />
 		<RUS text="Map ID:" /><!--TODO Translate RUS -->
 		<GER text="Argumentnummer:" />
-		<SPAN text="Identificador Mapa:"/>
+		<SPAN text="Identificador del Mapa, ID:"/>
 	</SearchParamsMapID>
 	
 	
@@ -3982,13 +3982,13 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<SearchParamsUserLname>
 		<EN-US text=" lastname:" />
 		<RUS text=" lastname:" /><!--TODO Translate RUS -->
-		<GER text=" Nachname:" /><!--TODO Translate GER -->
+		<GER text=" Nachname:" />
 		<SPAN text="Apellidos:"/>
 	</SearchParamsUserLname>
 	<SearchParamsUserFname>
 		<EN-US text="firstname:" />
 		<RUS text=" firstname:" /><!--TODO Translate RUS -->
-		<GER text=" Vorname:" /><!--TODO Translate GER -->
+		<GER text=" Vorname:" />
 		<SPAN text="Nombre:"/>
 	</SearchParamsUserFname>
 	
@@ -4129,20 +4129,20 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<SearchHeadersMapsofUsername>
 		<EN-US text="Search for published maps by this user" />
 		<RUS text="Search for published maps by this user" /><!--TODO Translate RUS -->
-		<GER text="Suche nach Argumenten, die von diesem Benutzer kreiert wurden" /><!--TODO Translate GER -->
-		<SPAN text="Buscar mapas publicados por este/a usuario/a"/>
+		<GER text="Suche nach Argumenten, die von diesem Benutzer kreiert wurden" />
+		<SPAN text="Buscar mapas publicados por este usuario"/>
 	</SearchHeadersMapsofUsername>
 	<SearchHeadersProjofUsername>
 		<EN-US text="Search for projects administered by this user" />
 		<RUS text="Search for projects administered by this user" /><!--TODO Translate RUS -->
 		<GER text="Suche nach Projekten, die von diesem Benutzer verwalted werden" />
-		<SPAN text="Buscar proyectos administrados por este/a usuario/a"/>
+		<SPAN text="Buscar proyectos administrados por este usuario"/>
 	</SearchHeadersProjofUsername>
 	<SearchHeadersSearchforUsers>
 		<EN-US text="Search for users by:" />
 		<RUS text="Search for users by:" /><!--TODO Translate RUS -->
 		<GER text="Suche nach Benutzern nach:" />
-		<SPAN text="Buscar usuarios/as mediante:"/>
+		<SPAN text="Buscar usuarios mediante:"/>
 	</SearchHeadersSearchforUsers>
 	
 	<BooleanOperatorsAnd>
@@ -4253,13 +4253,13 @@ If you provide a URL in your registration, this URL shows up when people hover o
 	<EN-US text="grab and move to left or right" />
 		<RUS text="grab and move to left or right" /><!--TODO Translate RUS -->
 		<GER text="greif hier und beweg nach links oder rechts" />
-		<SPAN text="grab and move to left or right"/><!--TODO Translate SPAN -->
+		<SPAN text="seleccionar y mover a la izquierda o a la derecha"/>
 	</ThereForeImgMoveToolTip>
 	<AnotherCollaboratorLockedThisNode>
 	<EN-US text="Another user is currently modifying this statement." />
 		<RUS text="Another user is currently modifying this statement." /><!--TODO Translate RUS -->
 		<GER text="Ein anderer Nutzer ändert gerade diese Aussage." />
-		<SPAN text="Another user is currently modifying this statement."/><!--TODO Translate SPAN -->
+		<SPAN text="Otro usuario está en este momento modificando este enunciado"/>
 	</AnotherCollaboratorLockedThisNode>
 	<!--POSSESSIVE ENGLISH: <Name>'s <object> RUSSIAN: <???> <???????> GERMAN: 
 		<Name>s <object> -->
@@ -4271,7 +4271,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<RUS
 			text="The argument scheme cannot be changed because the enabler has supporting arguments. They need to be deleted if you want to change the scheme."/><!-- TODO Translate RUS -->
 		<SPAN
-			text="The argument scheme cannot be changed because the enabler has supporting arguments. They need to be deleted if you want to change the scheme."/><!-- TODO Translate SPAN -->
+			text="El esquema argumentativo no puede cambiarse porque la garantía tiene argumentos que la apoyan. Estos argumentos tienen que borrarse si quieres cambiar el esquema. "/>
 	
 	</ChangeArgScheme>
 	
@@ -4282,7 +4282,7 @@ If you provide a URL in your registration, this URL shows up when people hover o
 		<RUS
 			text="You cannot add a reason without completing previous reason. Please complete the reason to continue."/><!-- TODO Translate RUS -->
 		<SPAN
-			text="You cannot add a reason without completing previous reason. Please complete the reason to continue."/><!-- TODO Translate SPAN -->
+			text="No puedes añadir una nueva razón sin completar la anterior. Por favor, complétala para continuar."/>
 	</UpdateReasonToContinue>
 	
 	<Copy>
