@@ -2,8 +2,10 @@ package components
 {
 	import Controller.AGORAController;
 	import Controller.ArgumentController;
+	import Controller.UserSessionController;
 	
 	import Model.AGORAModel;
+	import Model.UserSessionModel;
 	
 	import ValueObjects.AGORAParameters;
 	
@@ -45,7 +47,7 @@ package components
 		public var _aboutUsBtn:Button;
 		public var _faqBtn:Button;
 		public var _contactUsBtn:Button;
-		public var _helpBtn:Button;
+		public var _signInBtn:Button;
 		public var _publishMapHelp:Button;
 		public var _refreshButton:Button;
 		
@@ -102,7 +104,7 @@ package components
 				_whatYouShouldKnowBeforeYouStartBtn.label = Language.lookup("BeforeYouStart");
 				_whatYouShouldKnowBeforeYouStartBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
 				{
-					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=255'), 'quote');
+					navigateToURL(new URLRequest('http://agora.gatech.edu/learn/what-you-should-know'), 'quote');
 				}
 				);
 				addChild(_whatYouShouldKnowBeforeYouStartBtn);
@@ -134,7 +136,7 @@ package components
 				_aboutUsBtn.label=Language.lookup('AboutUs');
 				_aboutUsBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
 					{
-					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote');
+					navigateToURL(new URLRequest('http://agora.gatech.edu/node/42'), 'quote');
 					}
 				);
 				
@@ -146,7 +148,7 @@ package components
 				_faqBtn.label=Language.lookup('FAQ');
 				_faqBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
 				{
-					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote');
+					navigateToURL(new URLRequest('http://agora.gatech.edu/learn/faq'), 'quote');
 				}
 				);
 				addChild(_faqBtn);
@@ -157,21 +159,22 @@ package components
 				_contactUsBtn.label=Language.lookup('ContactUS');
 				_contactUsBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
 				{
-					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote');
+					navigateToURL(new URLRequest('http://agora.gatech.edu/project/about'), 'quote');
 				}
 				);
 				addChild(_contactUsBtn);
 			}
-			if(!_helpBtn){
-				_helpBtn = new Button;
-				_helpBtn.id="helpBtn";
-				_helpBtn.label=Language.lookup('Help');
-				_helpBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+			//Changed help button to sign in button
+			if(!_signInBtn){
+				_signInBtn = new Button;
+				_signInBtn.id="signInBtn";
+				_signInBtn.label=Language.lookup(UserSessionController.getInstance().getSignInBtnText(AGORAModel.getInstance().userSessionModel._uid));
+				_signInBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
 				{
-					navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote');
+					UserSessionController.getInstance().signInSignOut();
 				}
 				);
-				addChild(_helpBtn);
+				addChild(_signInBtn);
 			}
 		} 
 		
@@ -213,19 +216,29 @@ package components
 			_refreshButton.setActualSize(_refreshButton.getExplicitOrMeasuredWidth(), 30);
 			_refreshButton.move(xB, 5);
 			xB = xB + _refreshButton.getExplicitOrMeasuredWidth() + 15;
+			
 			_faqBtn.setActualSize(_faqBtn.getExplicitOrMeasuredWidth(), 30);
 			_faqBtn.move(xB, 5);
 			xB = xB + _faqBtn.getExplicitOrMeasuredWidth() + 15;
-			xB = xB + _aboutUsBtn.getExplicitOrMeasuredWidth() + 15;
-			_faqBtn.setActualSize(_faqBtn.getExplicitOrMeasuredWidth(), 30);
-			_faqBtn.move(xB, 5);
-			xB = xB + _faqBtn.getExplicitOrMeasuredWidth() + 15;
+			
+			//Decreased width so that it is not hidden in laptops
+		//	xB = xB + _aboutUsBtn.getExplicitOrMeasuredWidth() + 15;
+		//	_faqBtn.setActualSize(_faqBtn.getExplicitOrMeasuredWidth(), 30);
+		//	_faqBtn.move(xB, 5);
+		//	xB = xB + _faqBtn.getExplicitOrMeasuredWidth() + 15;
+			
 			_contactUsBtn.setActualSize(_contactUsBtn.getExplicitOrMeasuredWidth(), 30);
 			_contactUsBtn.move(xB, 5);
 			xB = xB + _contactUsBtn.getExplicitOrMeasuredWidth() + 15;
-			_helpBtn.setActualSize(_helpBtn.getExplicitOrMeasuredWidth(), 30);
-			_helpBtn.move(xB, 5);
-			xB = xB + _helpBtn.getExplicitOrMeasuredWidth() + 15;
+			
+			var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
+			if(userSession.username == "Guest"){
+				
+			_signInBtn.setActualSize(_signInBtn.getExplicitOrMeasuredWidth(), 30);
+			_signInBtn.move(xB, 5);
+			xB = xB + _signInBtn.getExplicitOrMeasuredWidth() + 15;
+			}
+			
 			_unhideRSP.setActualSize(_unhideRSP.getExplicitOrMeasuredWidth(),30);
 			_unhideRSP.move(this.width - _unhideRSP.width, 5);
 			

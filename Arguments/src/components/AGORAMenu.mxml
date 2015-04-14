@@ -283,26 +283,27 @@
 			
 			protected function privacyPolicyBtn_clickHandler(event:MouseEvent):void
 			{
-				var registrationNote:RegistrationNote = new RegistrationNote;
-				PopUpManager.addPopUp(registrationNote, this.parent,false);
-				PopUpManager.centerPopUp(registrationNote);				
+				navigateToURL(new URLRequest('http://agora.gatech.edu/learn/tos'), 'quote'); //Commented out popup and navigating to url
+			//	var registrationNote:RegistrationNote = new RegistrationNote;
+			//	PopUpManager.addPopUp(registrationNote, this.parent,false);
+			//	PopUpManager.centerPopUp(registrationNote);				
 			}
 			
 			protected function aboutUsBtn_clickHandler(event:MouseEvent):void
 			{
-				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote');
+				navigateToURL(new URLRequest('http://agora.gatech.edu/node/42'), 'quote');
 				
 			}
 			
 			protected function faqBtn_clickHandler(event:MouseEvent):void
 			{
-				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote');
+				navigateToURL(new URLRequest('http://agora.gatech.edu/learn/faq'), 'quote');
 				
 			}
 			
 			protected function contactUsBtn_clickHandler(event:MouseEvent):void
 			{
-				navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote');
+				navigateToURL(new URLRequest('http://agora.gatech.edu/project/about'), 'quote');
 				
 			}
 			
@@ -475,9 +476,7 @@
 				<s:Button id="contactUsBtn"
 						  label="{Language.lookup('ContactUS')}"
 						  click="contactUsBtn_clickHandler(event)"/>
-				<s:Button id="helpBtn"
-						  label="{Language.lookup('Help')}"
-						  click="helpBtn_clickHandler(event)"/>
+				
 			</s:HGroup>
 		</s:VGroup>
 	</s:VGroup>

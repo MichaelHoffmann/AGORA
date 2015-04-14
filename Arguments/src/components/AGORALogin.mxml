@@ -145,21 +145,17 @@
 			<mx:HBox id="bottomLinks"  height="29" horizontalCenter="8" textAlign="center" verticalCenter="119" fontSize="{(Language.language == Language.SPANISH)?10:12}">
 				<!--The "About Us" link-->
 				<mx:LinkButton id="about" label="{Language.lookup('AboutUs')}"
-							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=6'), 'quote')"
+							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/node/42'), 'quote')"
 							   color="#757575" toolTip="{Language.lookup('AboutUsTT')}"/>
 				<!--The "FAQ" link-->
 				<mx:LinkButton id="faq" label="{Language.lookup('FAQ')}"
-							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=250'), 'quote')"
+							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/learn/faq'), 'quote')"
 							   color="#757575" toolTip="{Language.lookup('FAQTT')}"/>
 				<!--The "Contact Us" link-->
 				<mx:LinkButton id="contact" label="{Language.lookup('ContactUS')}"
-							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=24'), 'quote')"
+							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/project/about'), 'quote')"
 							   color="#757575" toolTip="{Language.lookup('ContactUSTT')}"/>
-				<!--The "Help" link"-->
-				<mx:LinkButton id="help" label="{Language.lookup('Help')}"
-							   click="navigateToURL(new URLRequest('http://agora.gatech.edu/?page_id=240'), 'quote')"
-							   color="#757575" toolTip="{Language.lookup('HelpTT')}"/>
-				
+				<!--The "forgot password" link-->
 				<mx:LinkButton id="forgotPassWordButton" label="{Language.lookup('ForgotPasswordLabel')}"
 							   click="forgotPwdButton_onClick(event)"
 							   color="#757575" toolTip="{Language.lookup('ForgotPasswordToolTip')}"/>

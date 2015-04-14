@@ -50,9 +50,10 @@
 
 			protected function registrationNote_clickHandler(event:MouseEvent):void
 			{
-				var registrationNote:RegistrationNote = new RegistrationNote;
-				PopUpManager.addPopUp(registrationNote, this.parent);
-				PopUpManager.centerPopUp(registrationNote);
+				navigateToURL(new URLRequest('http://agora.gatech.edu/learn/tos'), 'quote');
+			//	var registrationNote:RegistrationNote = new RegistrationNote;
+			//	PopUpManager.addPopUp(registrationNote, this.parent);
+			//	PopUpManager.centerPopUp(registrationNote);
 			}
 		]]>
 	</fx:Script>
