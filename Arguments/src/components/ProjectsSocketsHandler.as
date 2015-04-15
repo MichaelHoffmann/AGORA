@@ -35,7 +35,7 @@ package components
 	public class ProjectsSocketsHandler extends EventDispatcher
 	{
 		public var host:String = 'agora.gatech.edu'; // change -- agora.gatech.edu / localhost
-		public var mapport:int    = 1767; //for global 1767; 
+		public var mapport:int    = 1767; //for global 1767; for local same .. 
 		public var times:int =0;			
 		protected var projectsSocket:Socket;
 		private var _nodeId:String;

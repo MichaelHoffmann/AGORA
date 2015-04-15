@@ -35,7 +35,7 @@ package components
 	public class CollabSocketHandler extends EventDispatcher
 	{
 		public var host:String = 'agora.gatech.edu'; // change -- agora.gatech.edu / localhost
-		public var mapport:int    = 1768; //for global 1767; 
+		public var mapport:int    = 1766; //for global 1766; for local 1768
 		public var times:int =0;			
 		protected var socket:Socket;
 		protected var collabSocket:Socket;

@@ -29,6 +29,7 @@ package Model
 	import components.InfoBox;
 	import components.Map;
 	import components.RightSidePanel;
+	import components.TopPanel;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -626,6 +627,11 @@ public function get check():Boolean
 					AGORAModel.getInstance().projType = "collaborative";
 				}else{
 					AGORAModel.getInstance().projType = "adversarial";
+				}
+				if(!ArgumentController.getInstance().checkPermissionsForMap()){
+				FlexGlobals.topLevelApplication.map.topPanel._publishMapHelp.visible=false;
+				}else{
+					FlexGlobals.topLevelApplication.map.topPanel._publishMapHelp.visible=true;
 				}
 					
 				//Form a map of nodes

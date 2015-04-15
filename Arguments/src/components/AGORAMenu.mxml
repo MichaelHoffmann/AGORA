@@ -207,6 +207,11 @@
 					updateWOA(tempEvent);
 				}else if(current==Language.lookup("MyMaps"))
 				{
+					if(!AGORAModel.getInstance().myMapsModel.mapsLoaded){
+					//	ajaxLoader_1.visible=true;
+						AGORAModel.getInstance().myMapsModel.mapsLoaded=true;
+						Controller.AGORAController.getInstance().fetchDataMyMaps(true);
+					}
 					cg.topButton();
 				}
 
@@ -325,6 +330,9 @@
 			{
 				hidePanelButton.x = stage.stageWidth - hidePanelButton.getExplicitOrMeasuredWidth();
 				hidePanelButton.y = 0;
+				ajaxLoader.x= 10;
+				ajaxLoader.y = 0;
+				ajaxLoader.visible=true;
 			}
 			protected function getRegistrationNote():void{
 				var userSession:UserSessionModel = AGORAModel.getInstance().userSessionModel;
@@ -476,9 +484,16 @@
 				<s:Button id="contactUsBtn"
 						  label="{Language.lookup('ContactUS')}"
 						  click="contactUsBtn_clickHandler(event)"/>
-				
+				<s:Button id="helpBtn"
+						  label="{Language.lookup('Help')}"
+						  click="helpBtn_clickHandler(event)"/>
 			</s:HGroup>
 		</s:VGroup>
+	</s:VGroup>
+	<s:VGroup id="ajaxLoader_1" top="100" left="100" visible="false">
+			<s:SWFLoader id="ajaxLoader" autoLoad="true" source="@Embed(source='images/ajax_loader.gif')" width="20" height="30"/>
+		<s:Label text="loading ..">			
+		</s:Label>
 	</s:VGroup>
 	<s:Button id="hidePanelButton" label="{Language.lookup('UnhidePanel')}" 
 			  click="

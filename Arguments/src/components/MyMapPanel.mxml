@@ -60,6 +60,7 @@
 				}
 				mapMetaDataVector.sort(MapMetaData.isGreater);
 				var i:int = 0;
+				AGORAModel.getInstance().myMapsModel.mapsCounter=mapMetaDataVector.length;;				
 				for each( mapMetaData in mapMetaDataVector){
 
 					/*Creates the button for the map to be added to the panel*/

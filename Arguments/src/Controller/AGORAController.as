@@ -343,7 +343,7 @@ package Controller
 			fetchContributions();
 		}
 		public function updateMyMaps(event:MouseEvent):void{
-			fetchDataMyMaps();
+			fetchDataMyMaps(true);
 		}
 		public function updateWOA(event:MouseEvent):void{
 			updateMapProj();
@@ -620,7 +620,7 @@ package Controller
 		}
 		
 		//-------------------Fetch My Maps Data---------------------------//
-		public function fetchDataMyMaps():void{
+		public function fetchDataMyMaps(call:Boolean = true):void{
 
 			if(AGORAModel.getInstance().userSessionModel.loggedIn()){
 				var statusNE:String = Language.lookup("NetworkError");;
@@ -630,7 +630,7 @@ package Controller
 //				}
 				//FlexGlobals.topLevelApplication.agoraMenu.myMaps.loadingDisplay.visible = true;
 				
-
+				if(call || AGORAModel.getInstance().myMapsModel.mapsCounter<100)
 				AGORAModel.getInstance().myMapsModel.requestMapList();
 			}
 		}
@@ -805,7 +805,7 @@ package Controller
 		
 		protected function onMyMapsDeleted(event:AGORAEvent):void{
 			Alert.show(Language.lookup("MapsDeleted"));
-			fetchDataMyMaps();
+			fetchDataMyMaps(true);
 			fetchDataMapList();
 		}
 		

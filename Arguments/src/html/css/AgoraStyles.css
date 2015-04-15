@@ -1,0 +1,723 @@
+/** Add css rules here for your application. */
+/** Example rules used by the template application (remove for your app) */
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+	text-align: center;
+}
+
+
+
+body {
+    font-family: "Trebuchet MS","Helvetica","Arial","Verdana","sans-serif";
+    font-size: 62.5%;
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #444444;
+    font: 14px Arial,Helvetica,sans-serif;
+    //overflow-y: scroll;
+}
+
+
+.divs {
+	border-radius: 30px;
+    border-style: solid;
+    border-width: 3px;
+    float: left;
+    height: 25%;
+    background-color: #FFFFFF;
+    font-size: 16px;
+    width: 29%;
+    margin-left: 3%;
+    margin-top: 3%;
+    cursor: pointer;
+    
+
+}
+
+.sele{
+	border-color: #00BB00;
+}
+
+.seled{
+	border-color: #888800;
+}
+
+.divs div
+{
+    position: relative;
+    font-size: 15px;
+    padding: 10px;
+    }
+
+.sendButton {
+	display: block;
+	font-size: 16pt;
+}
+
+/** Most GWT widgets already have a style name defined */
+.dialogVPanel {
+	margin: 5px;
+}
+
+.serverResponseLabelError {
+	color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+	margin: 15px 6px 6px;
+}
+
+/* Login Page reg contents */
+.loginPanel {
+	background-color: #FFFFFF;
+	height: 200px;
+	width: 300px;
+	padding:10px;
+	position: absolute;
+	top: 20%;
+	left: 42%;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 12px;
+	border-color: 2caadd;
+	font-weight: bold;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.loginPanel span {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.loginPanel div {
+	position: relative;
+	top: 7%;
+	left: 28%;
+}
+
+.loginPanel input {
+	height: 35px;
+	width: 140px;
+	font-size: 16px;
+	text-indent: 3px;
+}
+
+.heading {
+	font-size: 24px;
+	font-family: verdana;
+	top: 5%;
+	left: 40%;
+	position: absolute;
+	color: #010101;
+	margin-left: 37px;
+}
+
+.loginPanel input:focus {
+	border: 2px solid #AAAAAA;
+}
+
+.loginPanel input.red {
+	border: 2px solid #810714
+}
+
+input.red {
+	border: 2px solid #810714
+}
+
+.gry {
+	background-color: #f4f9e9;
+}
+
+.clsBtns {
+	left: 43px;
+	margin-top: 40px;
+}
+
+.btns {
+	background-color: #eff8d9;
+	height: 30px;
+	width: 100px;
+	text-align: center;
+	line-height: 28px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	cursor: pointer;	
+}
+
+.btns:hover {
+	background-position: 0 center;
+}
+
+.btns:active {
+	background-position: 0 top;
+	position: relative;
+	top: 1px;
+}
+
+/* Tasks Main Page */
+.tasksBox {
+	background-color: #d7efa5;
+	height: auto;
+	width: 70%;
+	position: absolute;
+	top: 10%;
+	left: 15%;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 12px;
+	border-color: f0f8dd;
+}
+
+.headingPanel span.head {
+	display: block;
+	margin: 20px;
+}
+
+.taskSelector {
+	padding: 5px 10px;
+	display: inline;
+	background: #f3fae3 url(images/taskSelector.png) repeat-x bottom;
+	border: none;
+	color: #777;
+	cursor: pointer;
+	font-weight: normal;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.taskSelector:hover {
+	background-position: 0 center;
+}
+
+.taskSelector:active {
+	background-position: 0 top;
+	position: relative;
+	top: 1px;
+	padding: 6px 10px 4px;
+}
+
+.taskSelector.green {
+	background-color: #99ab67;
+	color: #000;
+}
+
+.taskSelector.orange {
+	background-color: #ff9c00;
+}
+
+.taskSelector.blue {
+	background-color: #2c6da0;
+	color: white;
+}
+
+.taskSelector.white {
+	background-color: #fff;
+	color: #000;
+	text-shadow: 1px 1px #fff;
+}
+
+div.row {
+	background-color: #EFF8D9;
+	display: block;
+	height: auto;
+	line-height: 3;
+	font-size:14px;
+	margin: 20px 0 15px 20px;
+	text-indent: 5px;
+	width: 96%;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+div.row input {
+	margin-left: 5px;
+	margin-right: 15px;
+}
+
+div.tasks {
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+div.tasks hr {
+	width: 95%;
+	height: 5px;
+	background-color: #D2DABE;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: none;
+}
+
+div.rowheader {
+	font-family: cursive;
+	font-size: 17px;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+
+.prir {
+	float: right;
+	margin-right: 20px;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+.edit {
+	float: right;
+	margin-top: 13px;
+	cursor: pointer;
+}
+
+.sh {
+	visibility: hidden;
+}
+
+/* add task pop */
+.addTask {
+	background-color: #e8f5c7;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	margin: 40px;
+	padding: 20px;
+	font-size: 13px;
+}
+
+.addTask span{
+	display: block;
+	margin: 10px;
+}
+
+.editTask{
+	margin: 20px;
+	padding : 10px;
+}
+
+.editTask span{
+	display: block;
+	margin: 10px;
+}
+
+.editTask .taskSelector{
+	height: 18px;
+	line-height: 18px;
+}
+
+div.addTask hr {
+	width: 100%;
+	height: 5px;
+	background-color: #D2DABE;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: none;
+}
+
+p.red{
+	font-size: 10;
+	color: #810714;
+	
+}
+span.red{
+	font-size: 10;
+	color: #810714;
+	
+}
+
+div.rowmsg{
+	padding:20px;
+	font-size: 12px;
+	font-family: verdana;
+}
+
+div.ui-datepicker{
+ font-size:10px;
+}
+
+
+.evoslider.default .evoText.partialleft {    
+    padding: 0px 20px 20px;
+    width: 350px;
+    height: 240px;
+}
+.evoslider .evoText.partialleft {
+    float: right;
+    position: relative;
+}
+
+
+.evoslider h3 {
+    color: #8BB45F;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 22px;
+    font-family: Yanone,Arial,sans-serif;
+}
+
+.evoslider ul.custom-list, ol.custom-list {
+    list-style: none outside none;
+    margin-bottom: 15px;
+    margin-left: -40px;
+}
+
+ul.custom-list li, ol.custom-list li {
+    margin-bottom: 6px;
+}
+.evoslider .check li {
+    background: url("../images/check.png") no-repeat scroll 0 3px rgba(0, 0, 0, 0);
+    padding-left: 20px;
+}
+
+.arrowLog{
+	position: absolute;
+	top: 70%;
+	left: 20%;
+}
+
+.draggableDev { width: 100px; height: 30px; padding: 0.5em; float: left;margin: 5px;border-style: dashed;border-radius:10px;border-width: 1px; }
+
+#droppable { width: 150px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
+
+.devicesPanel div{
+
+}
+.home{
+border-color: #E5E5E5 #DBDBDB #D2D2D2;
+border-image: none;
+border-radius: 5px;border-style: none;border-width: 1px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);width: 50%;  height:60%; border-radius: 3px; display: inline-block;
+position: absolute;left: 10%;
+top:15%;
+
+}
+
+.inactive{
+border-left:1px solid #DDDDDD;
+border-width:1px;
+border-radius:4px;
+
+}
+.ui-state-highlight{
+}
+
+.navbar {
+    background: url("../images/menuBlackBg.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    font-size: 13px;
+    height: 3px;
+    margin-top: 15px;
+    margin-bottom: 10px;    
+    width: 70%;
+}
+.navbar li {
+    float: left;
+    height: 37px;
+    margin: 0 0 0 5px;
+    position: relative;
+    z-index: 100;
+}
+.navbar li a {
+    border-left: 1px solid rgba(0, 0, 0, 0);
+    border-right: 1px solid rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 37px;
+    line-height: 37px;
+    max-width: 135px;
+    min-width: 10px;
+    overflow: hidden;
+    padding: 0 8px;
+    position: relative;
+    white-space: nowrap;
+    width: auto;
+    text-decoration: none;
+}
+ul, li {
+    list-style: none outside none;
+}
+.navbar li.sel {
+    background: -moz-linear-gradient(center top , #111111, #333333) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #222222 #444444;
+    border-left: 1px solid #444444;
+    border-right: 1px solid #444444;
+    box-shadow: 0 0 9px #000000 inset;
+    color: #FFFFFF;
+}
+
+.container {
+    border: 0 solid #DDDDDD;
+    margin: 0 auto;
+    max-width: 1240px;
+    width: 100%;
+}
+
+.logo {
+    float: left;
+    height: 27px;    
+    width: 20%;
+}
+
+.headTop {
+padding-top:10px;
+    z-index: 101;
+    height: 18%;
+    color: #2E6E9E;
+}
+
+.header .tr {
+    color: #848484;
+    float: right;
+    font-size: 12px;
+    position: relative;
+    z-index: 2;
+}
+.header .tr a {
+    color: #333333;
+    margin: 0 2px 0 20px;
+    position: relative;
+    z-index: 10001;
+    text-decoration:none;
+}
+
+.header .tr a:hover {
+    color: #357FD4;
+    text-decoration: underline;
+}
+
+ul, li {
+    list-style: none outside none;
+}
+
+.active .draggableDev {
+	height: 100px; 
+}
+#dp{
+	padding-left: 19px;
+}
+
+#onoff{
+	padding-left: 10px;
+}
+
+#extras{
+	padding-bottom: 5px;
+}
+
+#name{
+	font-size: 11px;
+}
+
+
+
+ .headList {   
+    height: 28px;
+    margin-left: 0;
+    padding: 0;
+     font-size: 12px;
+    height: 15px;
+    margin: 10px 1px 0;
+}
+.headList span {
+    color: #585858;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 15px;
+    left: 0;
+    line-height: 27px;
+   /* margin: 0 15px 0 0;*/
+    padding: 1px 0 0;
+    position: relative;
+    top: 0;
+    z-index: 11;
+}
+
+.headList span a {
+    color: #585858;
+    display: block;
+    height: 28px;
+    overflow: hidden;
+    padding: 0 8px;
+    text-decoration: none;
+    text-shadow: 0 1px #FFFFFF;
+    white-space: nowrap;
+}
+.headList span.selArw a {
+    font-weight: bold;
+}
+
+.slider1{
+	 color: #585858;
+    display: block;
+    overflow: hidden;
+    padding: 0 8px;
+    text-decoration: none;
+    text-shadow: 0 1px #FFFFFF;
+    white-space: nowrap;
+    font-family: cursive;
+    
+}
+    .messageBox {  
+    width:150px;  
+    height:10px;
+    line-height:10px;
+    padding:10px;  
+    position:fixed; right:50%;  
+    background-color:#FCE779;
+    top:2%;  
+    z-index:999;  
+    -webkit-border-radius: 6px; -moz-border-radius: 6px;}  
+    
+      .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: none;
+    border: none;   
+}
+
+#format >    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: none;   
+}
+
+.ui-sortable .ui-state-default{
+	height: 60px;
+}
+    input {
+    font-size: 16px;
+    text-indent: 3px;
+  
+}
+    
+.pics{
+	width: 210px;
+}
+
+.picsspan{
+	padding-left: 0px;
+}
+
+
+.addMovie{
+	width: 600px;
+	height: 450px;
+		-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 12px;
+	border-color: 2E6E81;
+	position: absolute;
+	top: 12%;
+	left: 40%;
+	padding:5px;
+	background-color: #ffffff;
+}
+
+.addMovie input{
+	border: 0px;
+	border-bottom: 2px solid #888888;
+	height: auto;
+	font-size: 15px;
+	width: 320px;
+	
+}
+
+.addMovie label{
+	font-size: 16px;
+	padding-right: 5px;
+}
+
+.bld{
+	font-weight: bold;
+}
+
+.slt{
+	border: 1px solid green;
+}
+
+.movies > div{
+	float: left;
+	padding-left: 10px;
+	width: 25%;
+	height: 100px;
+}
+
+.grey{
+	color: #888888;	
+}
+
+.sell{
+	border:1px solid #2E6E81;
+	height: auto;
+}
+
+.inact{
+	border:1px solid #888888;
+	height: auto;
+}
+
+.inact >span{
+	cursor: pointer;
+	padding: 2px;
+	margin: 0px;
+}
+
+.inact:hover{
+	cursor: pointer;
+}
+
+.inact1:hover{
+	cursor: pointer;
+}
+
+.movieInfo{
+	width: 70%;
+	height: 500px;
+	overflow:scroll;
+		-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 12px;
+	border-color: 2E6E81;
+	position: absolute;
+	top: 5%;
+	left: 10%;
+	padding:15px;
+	background-color: #ffffff;
+	
+}
+
+.moviesDiv > div{
+	float: left;
+	padding-left: 10px;
+	width: 25%;
+	height: 100px;
+	color: #2E6E9E;
+    font-weight: bold;
+	
+}
+
+.moviesDiv label{
+	font-size: 16px;
+	padding-right: 5px;
+}
+
+.blk{
+	color: #333333;
+}
+

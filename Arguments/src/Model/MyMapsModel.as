@@ -6,6 +6,8 @@ package Model
 	import ValueObjects.AGORAParameters;
 	
 	import classes.Language;
+	
+	import components.AGORAMenu;
 	import components.RightSidePanel;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -25,11 +27,15 @@ package Model
 		private var requestMapsService:HTTPService;
 		private var removeMapsService:HTTPService;
 		private var permMapServices:HTTPService;
+		public var mapsLoaded:Boolean;
+		public var mapsCounter:Number;
 		
 		public function MyMapsModel(target:IEventDispatcher=null)
 		{
 			
 			super(target);
+			
+			mapsLoaded = false;
 			
 			//request maps http service
 			requestMapsService = new HTTPService;
@@ -54,7 +60,7 @@ package Model
 			var userSessionModel:UserSessionModel = AGORAModel.getInstance().userSessionModel;
 			if(userSessionModel.loggedIn()){
 				
-				
+				FlexGlobals.topLevelApplication.agoraMenu.ajaxLoader_1.visible=true;
 				
 
 				requestMapsService.send({uid:userSessionModel.uid, pass_hash:userSessionModel.passHash});
@@ -68,8 +74,7 @@ package Model
 	
 		protected function onRequestMapsServiceResult(event:ResultEvent):void{
 			myMapsXML = event.result as XML;
-			
-
+			FlexGlobals.topLevelApplication.agoraMenu.ajaxLoader_1.visible=false;			
 			dispatchEvent(new AGORAEvent(AGORAEvent.MY_MAPS_LIST_FETCHED, myMapsXML));
 		}	
 		

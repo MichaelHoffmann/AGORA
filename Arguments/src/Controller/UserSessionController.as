@@ -112,7 +112,7 @@ package Controller
 			FlexGlobals.topLevelApplication.agoraMenu.setVisible(true,true);
 			FlexGlobals.topLevelApplication.rightSidePanel.setVisible(true,true);
 			var agoraController:AGORAController = AGORAController.getInstance();
-			agoraController.fetchDataMyMaps();
+		//	agoraController.fetchDataMyMaps();   -- Moving this to Maps Tab click .. 
 			agoraController.fetchContributions();
 			agoraController.fetchDataMyProjects(1);			
 			

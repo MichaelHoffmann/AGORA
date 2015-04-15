@@ -506,7 +506,7 @@
 				}
 			}
 			protected function onshowButtonClicked(event:MouseEvent):void{
-				if(event.currentTarget.label == "Show More")
+				if(event.currentTarget.label == Language.lookup('ShowMoreLabel'))
 				{
 					//FlexGlobals.topLevelApplication.map.agoraMap.invalidateDisplayList();
 					AGORAModel.getInstance().agoraMapModel.showChildren =  new Dictionary;
@@ -524,12 +524,12 @@
 						}
 						
 					}
-					event.currentTarget.label = "Hide";
+					event.currentTarget.label = Language.lookup("HideLabel");
 					AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 				}
-				else if(event.currentTarget.label == "Hide")
+				else if(event.currentTarget.label == Language.lookup("HideLabel"))
 				{
-					event.currentTarget.label = "Show More";
+					event.currentTarget.label = Language.lookup('ShowMoreLabel');
 					AGORAModel.getInstance().agoraMapModel.addClicked = 0;
 					AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 1;
 					var model1:StatementModel = model;
@@ -992,63 +992,63 @@
 						ArgumentController.getInstance().addComment(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if(event.label == agoraLabels.SUPPORTING_STATEMENT)
 					{
 						ArgumentController.getInstance().addSupport(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if(event.label == agoraLabels.EQUIVALENT_REFORMULATION)
 					{
 						ArgumentController.getInstance().addReformulation(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if (event.label == agoraLabels.FRIENDLY_AMENDMENT)
 					{
 						ArgumentController.getInstance().addAmendment(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if (event.label == agoraLabels.REFERENCE)
 					{
 						ArgumentController.getInstance().addReference(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if (event.label == agoraLabels.QUESTION)
 					{
 						ArgumentController.getInstance().addQuestion(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if (event.label == agoraLabels.DEFINITION)
 					{
 						ArgumentController.getInstance().addDefinition(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if (event.label == agoraLabels.LINK_TO_ANOTHER_MAP)
 					{
 						ArgumentController.getInstance().addLinkToMap(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 					else if (event.label == agoraLabels.LINK_TO_RESOURCES)
 					{
 						ArgumentController.getInstance().addLinkToResource(model);
 						AGORAModel.getInstance().agoraMapModel.hide[model.ID] = 0;
 						AGORAModel.getInstance().agoraMapModel.addClicked = 1;	
-						showMoreBtn.label = "Hide"
+						showMoreBtn.label = Language.lookup("HideLabel");
 					}
 				} else { 
 					Alert.show("Guests to AGORA cannot edit maps.");

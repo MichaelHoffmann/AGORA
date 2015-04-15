@@ -71,6 +71,10 @@
 				UserSessionController.getInstance().signInAsGuest();	
 			}
 			
+			public function guestButton_onClickDirect():void
+			{
+				UserSessionController.getInstance().signInAsGuest();	
+			}
 			/**
 			* @param event The mouse event to be listened for. Typically just "event" unless others are instantiated
 			* 

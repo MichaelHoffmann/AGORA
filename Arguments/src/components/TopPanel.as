@@ -47,7 +47,7 @@ package components
 		public var _aboutUsBtn:Button;
 		public var _faqBtn:Button;
 		public var _contactUsBtn:Button;
-		public var _signInBtn:Button;
+		public var _helpBtn:Button;
 		public var _publishMapHelp:Button;
 		public var _refreshButton:Button;
 		
@@ -310,10 +310,12 @@ package components
 				var vg:VBox = (VBox)(hpanel.getElementAt(0));
 				var hg:HGroup =(HGroup)(vg.getElementAt(1));
 				hg.getElementAt(0).visible=false;				
-				_publishMapHelp.label = Language.lookup("PublishMapHelpNoAccess");
 			}else{
-				_publishMapHelp.label = Language.lookup("PublishMapHelp");
+				var vg:VBox = (VBox)(hpanel.getElementAt(0));
+				var hg:HGroup =(HGroup)(vg.getElementAt(1));
+				hg.getElementAt(0).visible=true;
 			}
+			_publishMapHelp.label = Language.lookup("PublishMapHelp");
 				
 			PopUpManager.addPopUp(hpanel, this, true);
 			PopUpManager.centerPopUp(hpanel);
