@@ -47,7 +47,7 @@ package components
 		public var _aboutUsBtn:Button;
 		public var _faqBtn:Button;
 		public var _contactUsBtn:Button;
-		public var _helpBtn:Button;
+		public var _signInBtn:Button;
 		public var _publishMapHelp:Button;
 		public var _refreshButton:Button;
 		
