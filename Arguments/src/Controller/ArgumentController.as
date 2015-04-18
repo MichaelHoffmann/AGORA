@@ -119,7 +119,7 @@ package Controller
 		//-------------------- Load a saved Map --------------------------------//
 		public function loadMapMain(id:String,historyClear:Boolean):void{
 			
-			if(model.userSessionModel.loggedIn()){
+		//	if(model.userSessionModel.loggedIn()){
 				if(historyClear){
 					var thisMapInfo:UserSessionModel =  AGORAModel.getInstance().userSessionModel;
 					((Vector.<Object>)(thisMapInfo.historyMapsVisited)).splice(0,((Vector.<Object>)(thisMapInfo.historyMapsVisited)).length);;
@@ -155,9 +155,9 @@ package Controller
 				}else{
 					model.rechain=false;
 				}
-			}else{
-				Alert.show(Language.lookup("MustRegister"));
-			}
+		//	}else{
+		//		Alert.show(Language.lookup("MustRegister"));
+			//}
 		}
 		//-------------------- Load a saved Map With History --------------------------------//
 		public function loadMap(id:String):void{
@@ -562,6 +562,7 @@ package Controller
 			}
 		}
 		
+		//vinodh
 		public function addSupportingArgumentTry(statementModel:StatementModel){
 			if(checkArgUnderConstruction()){
 				return statementModel;
@@ -836,8 +837,11 @@ package Controller
 				
 				if(model.statementFunction == StatementModel.STATEMENT){
 					if(model.supportingArguments.length == 0 && model.objections.length == 0 && (model.argumentTypeModel && model.argumentTypeModel.inferenceModel.supportingArguments.length == 0)){
-						if(/*model.statement.text!="" &&*/ checkArgUnderConstruction()){
-							return;
+						model.statementType;
+						if(AGORAModel.getInstance().agoraMapModel.argUnderConstruction){
+							AGORAModel.getInstance().agoraMapModel.argUnderConstruction=false;
+							// line added for reason delete .. first time add
+							//return;
 						}
 						AGORAModel.getInstance().requested = true;
 						/* for empty nodes
