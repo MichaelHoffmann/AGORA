@@ -484,9 +484,6 @@
 				<s:Button id="contactUsBtn"
 						  label="{Language.lookup('ContactUS')}"
 						  click="contactUsBtn_clickHandler(event)"/>
-				<s:Button id="helpBtn"
-						  label="{Language.lookup('Help')}"
-						  click="helpBtn_clickHandler(event)"/>
 			</s:HGroup>
 		</s:VGroup>
 	</s:VGroup>
