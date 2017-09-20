@@ -16,7 +16,7 @@ package Controller
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
-	import spark.components.Label;
+	import classes.SWFAddress;
 	
 	public class LoadController
 	{
@@ -86,6 +86,8 @@ package Controller
 			FlexGlobals.topLevelApplication.rightSidePanel.history.invalidateProperties();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.reset();
 			FlexGlobals.topLevelApplication.map.agoraMap.timer.start();
+			SWFAddress.href('#map='+model.agoraMapModel.ID);
+			
 			
 			//vinodh
 			if(model.savedStatement!=null)

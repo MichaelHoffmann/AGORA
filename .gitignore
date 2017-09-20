@@ -5,7 +5,8 @@
 #Ignore flex build directories
 bin-debug/
 bin-release/
-html-template/
+Arguments/bin-debug/
+Arguments/bin-release/
 libs/flexunit-*
 generated/
 #Ignore update script

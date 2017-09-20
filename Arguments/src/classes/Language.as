@@ -40,7 +40,7 @@ package classes
 		public static const RUSSIAN:String = "RUS";
 		public static const SPANISH:String = "SPAN";
 		public static const CHINESE:String = "CHIN";
-		public static var language:String = CHINESE;
+		public static var language:String = ENGLISH;
 		
 		public static var xml:XML;
 		private static var ready:Boolean=false;

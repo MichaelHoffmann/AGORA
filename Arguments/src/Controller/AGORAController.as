@@ -1,41 +1,8 @@
 package Controller
 {
-	import Events.AGORAEvent;
-	
-	import Model.AGORAMapModel;
-	import Model.AGORAModel;
-	import Model.CategoryModel;
-	import Model.ChatModel;
-	import Model.MapListModel;
-	import Model.MoveMap;
-	import Model.MyContributionsModel;
-	import Model.ProjectListModel;
-	import Model.ProjectsModel;
-	import Model.PublishMapModel;
-	import Model.PushProject;
-	import Model.UserSessionModel;
-	import Model.VerifyProjectMemberModel;
-	
-	import ValueObjects.CategoryDataV0;
-	import ValueObjects.ChatDataVO;
-	import ValueObjects.UserDataVO;
-	
-	import classes.Language;
-	
-	import components.AGORAMenu;
-	import components.AgoradateFormatter;
-	import components.ChatWindow;
-	import components.Map;
-	import components.MapName;
-	import components.MyMapName;
-	import components.MyMapPanel;
-	import components.ProjectName;
-	import components.RightSidePanel;
-	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.printing.*;
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
@@ -61,6 +28,39 @@ package Controller
 	import spark.components.Label;
 	import spark.components.NavigatorContent;
 	import spark.components.VGroup;
+	
+	import Events.AGORAEvent;
+	
+	import Model.AGORAMapModel;
+	import Model.AGORAModel;
+	import Model.CategoryModel;
+	import Model.ChatModel;
+	import Model.MapListModel;
+	import Model.MoveMap;
+	import Model.MyContributionsModel;
+	import Model.ProjectListModel;
+	import Model.ProjectsModel;
+	import Model.PublishMapModel;
+	import Model.PushProject;
+	import Model.UserSessionModel;
+	import Model.VerifyProjectMemberModel;
+	
+	import ValueObjects.CategoryDataV0;
+	import ValueObjects.ChatDataVO;
+	import ValueObjects.UserDataVO;
+	
+	import classes.Language;
+	import classes.SWFAddress;
+	
+	import components.AGORAMenu;
+	import components.AgoradateFormatter;
+	import components.ChatWindow;
+	import components.Map;
+	import components.MapName;
+	import components.MyMapName;
+	import components.MyMapPanel;
+	import components.ProjectName;
+	import components.RightSidePanel;
 	
 	public class AGORAController
 	{
@@ -964,6 +964,8 @@ package Controller
 			menu.timer.start();
 			//collab
 			map.agoraMap.collabtimer.reset();
+			
+			SWFAddress.href('#');
 		}
 		
 		public function showMap():void{

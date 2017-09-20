@@ -1,5 +1,16 @@
 package Controller
 {
+	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
+	
+	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
+	import mx.managers.PopUpManager;
+	import mx.managers.SystemManager;
+	import mx.rpc.events.ResultEvent;
+	
 	import Events.AGORAEvent;
 	
 	import Model.AGORAModel;
@@ -8,22 +19,12 @@ package Controller
 	import ValueObjects.UserDataVO;
 	
 	import classes.Language;
+	import classes.SWFAddress;
 	
 	import components.ForgotPasswordPopUpPanel;
 	import components.LoginWindow;
 	import components.Projects;
 	import components.RegisterPanel;
-	
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-	import flash.net.*;
-	import flash.net.URLRequest;
-	
-	import mx.controls.Alert;
-	import mx.core.FlexGlobals;
-	import mx.managers.PopUpManager;
-	import mx.managers.SystemManager;
-	import mx.rpc.events.ResultEvent;
 	
 	public class UserSessionController
 	{	
@@ -130,6 +131,29 @@ package Controller
 			}
 			}
 			
+			
+			// Check if we need to load a map.
+			var value:String = SWFAddress.getValue();
+			var index:Number = value.indexOf('#');
+			var mapID:String = null;
+			if (index != -1) {
+				value = value.substr(index + 1);
+				var params:Array = value.split('&');
+				var p:Array;
+				var i:Number = params.length;
+				var r:Array = new Array();
+				while(i--) {
+					p = params[i].split('=');
+					if (p[0] == 'map') {
+						mapID = p[1];
+						break;
+					}
+				}
+			}
+			
+			if(mapID != null){
+				ArgumentController.getInstance().loadMapMain(mapID,false);
+			}
 		}
 		
 		protected function onAuthenticationFailure(event:AGORAEvent):void{
