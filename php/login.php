@@ -28,7 +28,7 @@
 	*/
 	function login($username, $pass_hash)
 	{
-		global $dbName, $version;
+		global $version;
 		header("Content-type: text/xml");
 		$outputstr = "<?xml version='1.0' ?>\n<login version='$version'></login>";
 		$output = new SimpleXMLElement($outputstr);
@@ -37,19 +37,17 @@
 			badDBLink($output);
 			return $output;
 		}
-		$status=mysql_select_db($dbName, $linkID);
-		if(!$status){
-			databaseNotFound($output);
-			return $output;
-		}
+
+		$username   = mysqli_real_escape_string( $linkID, $username );
+		$pass_hash  = mysqli_real_escape_string( $linkID, $pass_hash);
 		$query = "SELECT * FROM users WHERE username='$username' AND password='$pass_hash'";
 
-		$resultID = mysql_query($query, $linkID);
+		$resultID = mysqli_query( $linkID, $query );
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;
 		}
-		$row = mysql_fetch_assoc($resultID);
+		$row = mysqli_fetch_assoc( $resultID );
 		if($row['user_id']){
 			$output->addAttribute("ID", $row['user_id']);
 			$output->addAttribute("firstname", $row['firstname']);
@@ -74,8 +72,5 @@
 		return $output;
 	}
 
-	$username = mysql_real_escape_string($_REQUEST['username']);  //TODO: Change this back to a GET when all testing is done.
-	$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);  //TODO: Change this back to a GET when all testing is done.
-	$output = login($username, $pass_hash);
+	$output = login($_REQUEST['username'], $_REQUEST['pass_hash']);
 	print($output->asXML());
-?>

@@ -29,7 +29,7 @@ require 'utilfuncs.php';
 *	Function for getting the project list.
 */
 function checkUserNamesinFile() {
-	global $dbName, $version;
+	global $version;
 	header("Content-type: text/xml");
 	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 	$output = new SimpleXMLElement($xmlstr);
@@ -37,11 +37,6 @@ function checkUserNamesinFile() {
 	$linkID = establishLink();
 	if (!$linkID) {
 		badDBLink($output);
-		return $output;
-	}
-	$status = mysql_select_db($dbName, $linkID);
-	if (!$status) {
-		databaseNotFound($output);
 		return $output;
 	}
 	$myFile = "C:\Users\lokesh\Desktop\AGORA\ValidatorTool\sample1.csv";
@@ -57,4 +52,3 @@ function checkUserNamesinFile() {
 
 }
 $output = checkUserNamesinFile();
-?>

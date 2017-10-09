@@ -1,190 +1,175 @@
-<?php 
-	require 'establish_link.php';
-	require 'errorcodes.php';
+<?php
+require 'establish_link.php';
+require 'errorcodes.php';
 
-ini_set ( 'error_reporting' , E_ALL ^ E_NOTICE );
-ini_set ( 'display_errors' , 1 );
+ini_set( 'error_reporting', E_ALL ^ E_NOTICE );
+ini_set( 'display_errors', 1 );
 // Set time limit to indefinite execution
 //ignore_user_abort(true);
-set_time_limit ( 0 );
+set_time_limit( 0 );
 
 // Set the ip and port we will listen on
-$address = 'agora.gatech.edu' ; $port = 1762 ;
+$address = 'agora.gatech.edu';
+$port    = 1762;
 // Create a TCP Stream socket
-$sock = socket_create ( AF_INET , SOCK_STREAM , 0 );
+$sock = socket_create( AF_INET, SOCK_STREAM, 0 );
 // Bind the socket to an address/port
-socket_bind ( $sock , $address , $port ) or die( 'Could not bind to address' );
+socket_bind( $sock, $address, $port ) or die( 'Could not bind to address' );
 // Start listening for connections
-socket_listen ( $sock );
+socket_listen( $sock );
 // Non block socket type
-socket_set_nonblock ( $sock );
+socket_set_nonblock( $sock );
 // Loop continuously
-    $read = array($sock);
+$read = array( $sock );
 
-while ( true )
-{
+while ( true ) {
 
-  $changed_sockets = $read;
-  $num_changed_sockets = socket_select($changed_sockets, $write = NULL, $except = NULL, NULL);
-  $clients = $read;
+	$changed_sockets     = $read;
+	$num_changed_sockets = socket_select( $changed_sockets, $write = null, $except = null, null );
+	$clients             = $read;
 
-  foreach($changed_sockets as $socket)
-  {
-    if ($socket == $sock)
-    {
-    	if (($client = socket_accept($sock)) < 0)
-    	{
-        echo "socket_accept() failed: reason: " . socket_strerror($msgsock) . "\n";
-        continue;
-    	}
-    	else
-    	{
-    	  array_push($read, $client);
-			//$msgs = pull_chat(0);
-			//socket_write ( $client , $msgs , strlen($msgs) );
-    	  echo "[".date('Y-m-d H:i:s')."] CONNECTED "."(".count($read_sockets)."/".SOMAXCONN.")\n";
-    	}
-    } else
-    {
-      $bytes = @socket_recv($socket, $buffer, 2048, 0);
-    	if (preg_match("/policy-file-request/i", $buffer) || preg_match("/crossdomain/i", $buffer))
-    	{
-         echo "[".date('Y-m-d H:i:s')."] CROSSDOMAIN.XML REQUEST\n";
-    	  $contents="<?xml version=\"1.0\"?><!DOCTYPE cross-domain-policy SYSTEM \"http://www.adobe.com/xml/dtds/cross-domain-policy.dtd\"><cross-domain-policy><site-control permitted-cross-domain-policies=\"all\"/><allow-access-from domain=\"*\" to-ports=\"*\"/><allow-http-request-headers-from domain=\"*\" headers=\"*\"/><allow-http-request-headers-from domain=\"*\" secure=\"false\"/></cross-domain-policy>"."\0";
-    	  socket_write($socket,$contents);
-    	  $contents="";
-    	  $index = array_search($socket, $read);
-    	  unset($read[$index]);
-    	  socket_shutdown($socket, 2);
-        socket_close($socket);
-    	}
-	
-    if (strlen($buffer) == 0)
-    {
-	    $index = array_search($socket, $read);
-	    unset($read[$index]);
-				echo 'Client disconnected!',"\r\n";
-	    @socket_shutdown($socket, 2);
-       	@socket_close($socket);
-     }
-    else
-    {
-		$pos = strpos($buffer,":");
-				echo " $buffer hjk \n" ;
-				if($pos){
-					$uname = substr($buffer,0,$pos);
-					$msg = substr($buffer,$pos+1,strlen($buffer));
+	foreach ( $changed_sockets as $socket ) {
+		if ( $socket == $sock ) {
+			if ( ( $client = socket_accept( $sock ) ) < 0 ) {
+				echo "socket_accept() failed: reason: " . socket_strerror( $msgsock ) . "\n";
+				continue;
+			} else {
+				array_push( $read, $client );
+				//$msgs = pull_chat(0);
+				//socket_write ( $client , $msgs , strlen($msgs) );
+				echo "[" . date( 'Y-m-d H:i:s' ) . "] CONNECTED " . "(" . count( $read_sockets ) . "/" . SOMAXCONN . ")\n";
+			}
+		} else {
+			$bytes = @socket_recv( $socket, $buffer, 2048, 0 );
+			if ( preg_match( "/policy-file-request/i", $buffer ) || preg_match( "/crossdomain/i", $buffer ) ) {
+				echo "[" . date( 'Y-m-d H:i:s' ) . "] CROSSDOMAIN.XML REQUEST\n";
+				$contents = "<?xml version=\"1.0\"?><!DOCTYPE cross-domain-policy SYSTEM \"http://www.adobe.com/xml/dtds/cross-domain-policy.dtd\"><cross-domain-policy><site-control permitted-cross-domain-policies=\"all\"/><allow-access-from domain=\"*\" to-ports=\"*\"/><allow-http-request-headers-from domain=\"*\" headers=\"*\"/><allow-http-request-headers-from domain=\"*\" secure=\"false\"/></cross-domain-policy>" . "\0";
+				socket_write( $socket, $contents );
+				$contents = "";
+				$index    = array_search( $socket, $read );
+				unset( $read[ $index ] );
+				socket_shutdown( $socket, 2 );
+				socket_close( $socket );
+			}
+
+			if ( strlen( $buffer ) == 0 ) {
+				$index = array_search( $socket, $read );
+				unset( $read[ $index ] );
+				echo 'Client disconnected!', "\r\n";
+				@socket_shutdown( $socket, 2 );
+				@socket_close( $socket );
+			} else {
+				$pos = strpos( $buffer, ":" );
+				echo " $buffer hjk \n";
+				if ( $pos ) {
+					$uname = substr( $buffer, 0, $pos );
+					$msg   = substr( $buffer, $pos + 1, strlen( $buffer ) );
 					echo "$msg-$uname";
-					if($uname == "init"){
-					$msgs = pull_chat(0);
-					socket_write ( $socket , $msgs , strlen($msgs) );
-					}else{
-					push_chat($uname,$msg,0);
-					foreach ( $clients AS $k => $v )
-					{
-					if($v!=$sock)
-					 socket_write($v, $buffer, strlen($buffer));
-					}
-					echo " $k : $buffer \n" ;
+					if ( $uname == "init" ) {
+						$msgs = pull_chat( 0 );
+						socket_write( $socket, $msgs, strlen( $msgs ) );
+					} else {
+						push_chat( $uname, $msg, 0 );
+						foreach ( $clients AS $k => $v ) {
+							if ( $v != $sock ) {
+								socket_write( $v, $buffer, strlen( $buffer ) );
+							}
+						}
+						echo " $k : $buffer \n";
 					}
 				}
-		
-      } //else
-    }
-}
+
+			} //else
+		}
+	}
 
 //echo ".";
-	sleep ( 1 );
+	sleep( 1 );
 }
 // Close the master sockets
-socket_close ( $sock );
+socket_close( $sock );
 
 
-function push_chat($username, $text, $map_id)
-{
-	global $dbName, $version;
+function push_chat( $username, $text, $map_id ) {
+	global $version;
 	$outputstr = "<?xml version='1.0' ?>\n<chat version='$version'></chat>";
-	$output = new SimpleXMLElement($outputstr);
-	$linkID= establishLink();
-	if(!$linkID){
-		badDBLink($output);
+	$output    = new SimpleXMLElement( $outputstr );
+	$linkID    = establishLink();
+	if ( ! $linkID ) {
+		badDBLink( $output );
+
 		return $output;
 	}
-	$status=mysql_select_db("agorabackup", $linkID);
-	if(!$status){
-		databaseNotFound($output);
-		return $output;
-	}
-	
-	$username = mysql_real_escape_string($username);
-	$text = mysql_real_escape_string($text);
-	
-	$userid = getUserIdFromUserName($username,$linkID);
-	if($userid==-1){
+
+	$username = mysqli_real_escape_string( $linkID, $username );
+	$text     = mysqli_real_escape_string( $linkID, $text );
+
+	$userid = getUserIdFromUserName( $username, $linkID );
+	if ( $userid == -1 ) {
 		return;
 	}
-	
-	$query = "INSERT INTO chat (username,chat_text,map_id) VALUES ('$username','$text','$map_id')";
-	$resultID = mysql_query($query, $linkID);
-	if(!$resultID){
-		dataNotFound($output, $query);
+
+	$query    = "INSERT INTO chat (username,chat_text,map_id) VALUES ('$username','$text','$map_id')";
+	$resultID = mysqli_query( $linkID, $query );
+	if ( ! $resultID ) {
+		dataNotFound( $output, $query );
+
 		return $output;
-	}else{
-		$map = $output->addChild("chat");
-		$map->addAttribute("Added", true);
+	} else {
+		$map = $output->addChild( "chat" );
+		$map->addAttribute( "Added", true );
 	}
+
 	return $output;
 }
 
-function pull_chat($map_id)
-{
-	global $dbName, $version;
+function pull_chat( $map_id ) {
+	global $version;
 	$messages = "";
-	$linkID= establishLink();
-	if(!$linkID){
-		return $messages;
-	}
-	$status=mysql_select_db("agorabackup", $linkID);
-	if(!$status){
+	$linkID   = establishLink();
+	if ( ! $linkID ) {
 		return $messages;
 	}
 	$query = "SELECT * FROM chat WHERE map_id=$map_id and username!= '' ORDER BY node_number desc LIMIT 50";
 
-	$result = mysql_query($query, $linkID);
-	if(!$result){
+	$result = mysqli_query( $linkID, $query );
+	if ( ! $result ) {
 		return $messages;
 	}
 
-	$row = mysql_fetch_assoc($result);
-	if($row['username']){
-		for($x = 0 ; $x < mysql_num_rows($result) ; $x++){
-			$messages = $row['username'] .": ".$row['chat_text']."\n".$messages;
-			$row = mysql_fetch_assoc($result);
+	$row = mysqli_fetch_assoc( $result );
+	if ( $row['username'] ) {
+		for ( $x = 0; $x < mysqli_num_rows( $result ); $x++ ) {
+			$messages = $row['username'] . ": " . $row['chat_text'] . "\n" . $messages;
+			$row      = mysqli_fetch_assoc( $result );
 		}
-	}else{
+	} else {
 		return $messages;
 	}
 
-	mysql_close($linkID);
+	mysqli_close( $linkID );
+
 	return $messages;
 }
 
-function getUserIdFromUserName($username,$linkID){
-		$query = "SELECT * FROM users WHERE username='$username'";
-		$resultID = mysql_query($query, $linkID);
-		if(!$resultID){
-			return -1;
-		}
-		if((mysql_num_rows($resultID)==0)){
-			return -1;
-		}
-		$row = mysql_fetch_assoc($resultID);
-		if($row['is_deleted']){
-			return -1;
-		}
-		$newuser = $row['user_id'];
-		return $row['user_id'];
+function getUserIdFromUserName( $username, $linkID ) {
+	$username = mysqli_real_escape_string( $linkID, $username );
+	$query    = "SELECT * FROM users WHERE username='$username'";
+	$resultID = mysqli_query( $linkID, $query );
+	if ( ! $resultID ) {
+		return -1;
 	}
+	if ( ( mysqli_num_rows( $resultID ) == 0 ) ) {
+		return -1;
+	}
+	$row = mysqli_fetch_assoc( $resultID );
+	if ( $row['is_deleted'] ) {
+		return -1;
+	}
+	$newuser = $row['user_id'];
+
+	return $row['user_id'];
+}
 
 
-?>
+

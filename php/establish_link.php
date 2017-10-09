@@ -25,8 +25,8 @@
 	*/
 	function establishLink()
 	{
-		$linkID = mysql_connect("localhost", "root", "");
-		//$linkID = mysql_connect("localhost", "root", "root");
+		global $dbName;
+		$linkID = mysqli_connect("localhost", "root", "toor", $dbName);
+		//$linkID = mysqli_connect("localhost", "root", "root");
 		return $linkID;
 	}
-?>

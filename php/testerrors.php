@@ -46,4 +46,3 @@
 	repeatUsername($output);
 	cannotDeleteFromNonexistent($output);
 	print($output->asXML());
-?>

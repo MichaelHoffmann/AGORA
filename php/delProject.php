@@ -44,14 +44,14 @@ require 'utilfuncs.php';
 * http://php.net/manual/en/function.mysql-insert-id.php
 */
 function getLastInsert($linkID) {
-	$query = "SELECT LAST_INSERT_ID()";
-	$resultID = mysql_query($query, $linkID);
-	$row = mysql_fetch_assoc($resultID);
+	$query    = "SELECT LAST_INSERT_ID()";
+	$resultID = mysqli_query( $linkID, $query );
+	$row      = mysqli_fetch_assoc( $resultID );
 	return $row['LAST_INSERT_ID()'];
 }
 
 function deleteProject($projID, $userID, $pass_hash) {
-	global $dbName, $version;
+	global $version;
 	header("Content-type: text/xml");
 	$xmlstr = "<?xml version='1.0'?>\n<project version='$version'></project>";
 	$output = new SimpleXMLElement($xmlstr);
@@ -61,11 +61,6 @@ function deleteProject($projID, $userID, $pass_hash) {
 	$linkID = establishLink();
 	if (!$linkID) {
 		badDBLink($output);
-		return $output;
-	}
-	$status = mysql_select_db($dbName, $linkID);
-	if (!$status) {
-		databaseNotFound($output);
 		return $output;
 	}
 	if (!checkLogin($userID, $pass_hash, $linkID)) {
@@ -79,16 +74,20 @@ function deleteProject($projID, $userID, $pass_hash) {
 		return $output;
 	}
 
+	$userID    = mysqli_real_escape_string( $linkID, $userID );
+	$projID    = mysqli_real_escape_string( $linkID, $projID );
+	$pass_hash = mysqli_real_escape_string( $linkID, $pass_hash );
+
 	// check if any child projects exist ...
-	$query = "SELECT * FROM parent_categories c inner join category p on c.parent_categoryid = p.category_id and p.category_id = $projID";
-	$resultID = mysql_query($query, $linkID);
+	$query    = "SELECT * FROM parent_categories c inner join category p on c.parent_categoryid = p.category_id and p.category_id = $projID";
+	$resultID = mysqli_query( $linkID, $query );
 
 	if (!$resultID) {
 		dataNotFound($output, $query);
 		return $output;
 	}
 
-	if (mysql_num_rows($resultID) != 0) {
+	if ( mysqli_num_rows( $resultID ) != 0 ) {
 		deleteParentCatrgory($output);
 		return $output;
 	}
@@ -96,28 +95,28 @@ function deleteProject($projID, $userID, $pass_hash) {
 	/// 1 .
 	// Check if no maps are present .. Then delete both project and Category .. ... ....	
 	// move to private project / delete project category mapping all table entries !!!!!
-	$query = "SELECT * FROM `category_map` c inner join projects p on c.category_id = p.proj_id and c.category_id = $projID";
-	$resultID = mysql_query($query, $linkID);
+	$query    = "SELECT * FROM `category_map` c inner join projects p on c.category_id = p.proj_id and c.category_id = $projID";
+	$resultID = mysqli_query( $linkID, $query );
 	if (!$resultID) {
 		dataNotFound($output, $query);
 		return $output;
 	}
 
-	if (mysql_num_rows($resultID) == 0) {
+	if ( mysqli_num_rows( $resultID ) == 0 ) {
 		$complete = true;
-		mysql_query("START TRANSACTION");
-		$query = "DELETE FROM category WHERE category_id=$projID AND is_project=1";
-		$success = mysql_query($query, $linkID);
+		mysqli_query( $linkID, "START TRANSACTION" );
+		$query   = "DELETE FROM category WHERE category_id=$projID AND is_project=1";
+		$success = mysqli_query( $linkID, $query );
 		if ($success) {
-			$query = "DELETE FROM parent_categories WHERE category_id=$projID";
-			$success = mysql_query($query, $linkID);
-			$query = "DELETE FROM projects WHERE proj_id=$projID";
-			$success = mysql_query($query, $linkID);
+			$query   = "DELETE FROM parent_categories WHERE category_id=$projID";
+			$success = mysqli_query( $linkID, $query );
+			$query   = "DELETE FROM projects WHERE proj_id=$projID";
+			$success = mysqli_query( $linkID, $query );
 			if (!$success) {
 				$complete = false;
 			} else {
-				$query = "DELETE FROM projusers WHERE proj_id=$projID";
-				$success = mysql_query($query, $linkID);
+				$query   = "DELETE FROM projusers WHERE proj_id=$projID";
+				$success = mysqli_query( $linkID, $query );
 			}
 		} else {
 			$complete = false;
@@ -125,12 +124,12 @@ function deleteProject($projID, $userID, $pass_hash) {
 		$proj->addAttribute("map_count", "0");
 		if (!$complete) {
 			error_log("Rolled back", 0);
-			mysql_query("ROLLBACK");
+			mysqli_query( $linkID, "ROLLBACK" );
 			$proj->addAttribute("deleted", "0");
 		} else {
 			$proj->addAttribute("deleted", "1");
 		}
-		mysql_query("COMMIT");
+		mysqli_query( $linkID, "COMMIT" );
 		return $output;
 	}
 
@@ -140,47 +139,47 @@ function deleteProject($projID, $userID, $pass_hash) {
 	// check if maps are present - all of which are mine ... ... ...
 	// move to private project / delete project category mapping all table entries !!!!!
 
-	$query = "SELECT * FROM category_map c inner join maps p on c.map_id = p.map_id and c.category_id = $projID and p.user_id != $userID and is_deleted=0";
-	$resultID = mysql_query($query, $linkID);
+	$query    = "SELECT * FROM category_map c inner join maps p on c.map_id = p.map_id and c.category_id = $projID and p.user_id != $userID and is_deleted=0";
+	$resultID = mysqli_query( $linkID, $query );
 	if (!$resultID) {
 		dataNotFound($output, $query);
 		return $output;
 	}
 
-	if (mysql_num_rows($resultID) == 0) {
+	if ( mysqli_num_rows( $resultID ) == 0 ) {
 		$complete = true;
-		mysql_query("START TRANSACTION");
-		$query = "DELETE FROM category WHERE category_id=$projID AND is_project=1";
-		$success = mysql_query($query, $linkID);
+		mysqli_query( $linkID, "START TRANSACTION" );
+		$query   = "DELETE FROM category WHERE category_id=$projID AND is_project=1";
+		$success = mysqli_query( $linkID, $query );
 		if ($success) {
-			$query = "DELETE FROM parent_categories WHERE category_id=$projID";
-			$success = mysql_query($query, $linkID);
-			$query = "SELECT * FROM maps INNER JOIN category_map ON maps.map_id = category_map.map_id where category_map.category_id = $projID ";
-			$resultID = mysql_query($query, $linkID);
-			if ($resultID && (mysql_num_rows($resultID) > 0)) {
+			$query    = "DELETE FROM parent_categories WHERE category_id=$projID";
+			$success  = mysqli_query( $linkID, $query );
+			$query    = "SELECT * FROM maps INNER JOIN category_map ON maps.map_id = category_map.map_id where category_map.category_id = $projID ";
+			$resultID = mysqli_query( $linkID, $query );
+			if ( $resultID && ( mysqli_num_rows( $resultID ) > 0 ) ) {
 				$getAutoProjName = generateAutoProjName($userID, $linkID);
 				$privProjectID = $getAutoProjName['Id'];
-				for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
-					$row = mysql_fetch_assoc($resultID);
-					$mapID = $row['map_id'];
-					$query = "UPDATE maps SET proj_id=$privProjectID where map_id=$mapID";
-					$success = mysql_query($query, $linkID);
-					$query = "UPDATE category_map SET category_id=$privProjectID where map_id=$mapID";
-					$success = mysql_query($query, $linkID);
-					if (!$status) {
-						mysql_query("ROLLBACK");
+				for ( $x = 0; $x < mysqli_num_rows( $resultID ); $x++ ) {
+					$row     = mysqli_fetch_assoc( $resultID );
+					$mapID   = $row['map_id'];
+					$query   = "UPDATE maps SET proj_id=$privProjectID where map_id=$mapID";
+					$success = mysqli_query( $linkID, $query );
+					$query   = "UPDATE category_map SET category_id=$privProjectID where map_id=$mapID";
+					$success = mysqli_query( $linkID, $query );
+					if ( ! $success ) {
+						mysqli_query( $linkID, "ROLLBACK" );
 						rolledBack($output);
 						return $output;
 					}
 				}
-			}			
-			$query = "DELETE FROM projects WHERE proj_id=$projID";
-			$success = mysql_query($query, $linkID);
+			}
+			$query   = "DELETE FROM projects WHERE proj_id=$projID";
+			$success = mysqli_query( $linkID, $query );
 			if (!$success) {
 				$complete = false;
 			} else {
-				$query = "DELETE FROM projusers WHERE proj_id=$projID";
-				$success = mysql_query($query, $linkID);
+				$query   = "DELETE FROM projusers WHERE proj_id=$projID";
+				$success = mysqli_query( $linkID, $query );
 			}
 		} else {
 			$complete = false;
@@ -188,10 +187,10 @@ function deleteProject($projID, $userID, $pass_hash) {
 		if (!$complete) {
 			error_log("Rolled back", 0);
 			$proj->addAttribute("deleted", "0");
-			mysql_query("ROLLBACK");
+			mysqli_query( $linkID, "ROLLBACK" );
 		} else {
 			$proj->addAttribute("deleted", "1");
-			mysql_query("COMMIT");		
+			mysqli_query( $linkID, "COMMIT" );
 								error_log("changing commit",0);
 					
 		}
@@ -203,12 +202,11 @@ function deleteProject($projID, $userID, $pass_hash) {
 	return $output;
 }
 
-$userID = mysql_real_escape_string($_REQUEST['uid']);
-$pass_hash = mysql_real_escape_string($_REQUEST['pass_hash']);
-$projID = mysql_real_escape_string($_REQUEST['projID']);
+$userID    = $_REQUEST['uid'];
+$pass_hash = $_REQUEST['pass_hash'];
+$projID    = $_REQUEST['projID'];
 
 header("Content-type: text/xml");
 $output = deleteProject($projID, $userID, $pass_hash);
 error_log($output->asXML(), 0);
 print $output->asXML();
-?>

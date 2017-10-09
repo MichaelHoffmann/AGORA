@@ -38,14 +38,14 @@
 	function getLastInsert($linkID)
 	{
 		$query = "SELECT LAST_INSERT_ID()";
-		$resultID = mysql_query($query, $linkID);
-		$row = mysql_fetch_assoc($resultID);
+		$resultID = mysqli_query( $linkID, $query );
+		$row = mysqli_fetch_assoc($resultID);
 		return $row['LAST_INSERT_ID()'];
 	}
 
 	function runPCatMigration(){
 		
-			global $dbName, $version;
+			global $version;
 			header("Content-type: text/xml");
 			$xmlstr = "<?xml version='1.0'?>\n<migration version='$version'></migration>";
 			$output = new SimpleXMLElement($xmlstr);
@@ -54,24 +54,19 @@
 				badDBLink($output);
 				return $output;
 			}
-			$status=mysql_select_db($dbName, $linkID);
-				if(!$status){
-				 databaseNotFound($output);
-				 return $output;
-				}
-		
+
 			$query="SELECT parent_categories.category_id categoryid,parent_categories.parent_category_name as pcategoryname ,parent_categories.parent_categoryid as pcategoryid, category.category_id as cid ,category.category_name as cname FROM `parent_categories` inner join category on parent_categories.parent_category_name = category.category_name";
-			$resultID = mysql_query($query, $linkID);
-			if(mysql_num_rows($resultID)==0){				
+			$resultID = mysqli_query( $linkID, $query );
+			if(mysqli_num_rows($resultID)==0){
 				return $output;
 			}else{
 				$count = 0 ;
-				for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
-				$row = mysql_fetch_assoc($resultID);
+				for($x = 0 ; $x < mysqli_num_rows($resultID) ; $x++){
+				$row = mysqli_fetch_assoc($resultID);
 				$pid = $row['cid'];
 				$cid = $row['categoryid'];
 				$query1 = "UPDATE parent_categories SET parent_categoryid=$pid WHERE category_id=$cid";
-				$upresultID = mysql_query($query1, $linkID);
+				$upresultID = mysqli_query( $linkID, $query1 );
 				}
 			}
 		//This is a lame hack that shouldn't be needed, but it'll work.
@@ -84,4 +79,3 @@
 	$output = runPCatMigration();
 	
 	print($output->asXML());
-?>

@@ -28,7 +28,7 @@ require 'establish_link.php';
 *	Function for getting the map list.
 */
 function moveProject($uid, $passhash, $category_id, $target_proj_id) {
-	global $dbName, $version;
+	global $version;
 	header("Content-type: text/xml");
 	$xmlstr = "<?xml version='1.0' ?>\n<list version='$version'></list>";
 	$output = new SimpleXMLElement($xmlstr);
@@ -38,14 +38,8 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 		badDBLink($output);
 		return $output;
 	}
-	$status = mysql_select_db($dbName, $linkID);
-	if (!$status) {
-		databaseNotFound($output);
-		return $output;
-	}
 
-	$checkLogin = "SELECT user_id FROM users WHERE user_id='$uid' AND password='$passhash'";
-	if (!mysql_query($checkLogin, $linkID)) {
+	if ( ! checkLogin( $uid, $passhash, $linkID ) ) {
 		incorrectLogin($output);
 		return $output;
 	}
@@ -64,21 +58,26 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 
 	// check if private project is being moved !!!
 	$username = getUserNameFromUserId($uid,$linkID);
-	$query = "SELECT * FROM category WHERE category_id=$category_id AND category_name='$username'";
-	$resultID = mysql_query($query, $linkID);
-	if ($resultID && mysql_num_rows($resultID) > 0) {
+	$query    = "SELECT * FROM category WHERE category_id=$category_id AND category_name='$username'";
+	$resultID = mysqli_query( $linkID, $query );
+	if ( $resultID && mysqli_num_rows( $resultID ) > 0 ) {
 		privateProjectMovePath($output);
 		return $output;
 	}
-	$checkIfProj = "SELECT * FROM category WHERE category_id=$target_proj_id
+
+	$target_proj_id = mysqli_real_escape_string( $linkID, $target_proj_id );
+	$category_id    = mysqli_real_escape_string( $linkID, $category_id );
+	$uid            = mysqli_real_escape_string( $linkID, $uid );
+
+	$checkIfProj   = "SELECT * FROM category WHERE category_id=$target_proj_id
 			        AND is_project=1";
-	$result_IsProj = mysql_query($checkIfProj, $linkID);
-	if ($result_IsProj && mysql_num_rows($result_IsProj) > 0) {
+	$result_IsProj = mysqli_query( $linkID, $checkIfProj );
+	if ( $result_IsProj && mysqli_num_rows( $result_IsProj ) > 0 ) {
 		$output->addAttribute("Proj", "Yes");
 		$verifyProjMember = "SELECT proj_id FROM projusers 
 		                    		WHERE proj_id=$target_proj_id AND user_id = $uid";
-		$result_VerifyMem = mysql_query($verifyProjMember, $linkID);
-		if (!mysql_num_rows($result_VerifyMem) > 0) {
+		$result_VerifyMem = mysqli_query( $linkID, $verifyProjMember );
+		if ( ! mysqli_num_rows( $result_VerifyMem ) > 0 ) {
 			$output->addAttribute("Verified", "No");
 			notProjectTargetUser($output);
 			return $output;
@@ -87,12 +86,12 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 	// get the children of the project and check for cyclic paths ..
 	$vistedNodes = Array ();
 	// Form the hierarchy for the projects ...			
-	$query = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category as c left join `parent_categories` as child on c.category_id = child.category_id";
-	$resultID = mysql_query($query, $linkID);
-	$catMap = Array ();
-	if ($resultID && mysql_num_rows($resultID) > 0) {
-		for ($x = 0; $x < mysql_num_rows($resultID); $x++) {
-			$row = mysql_fetch_assoc($resultID);
+	$query    = "SELECT c.category_id catid,c.category_name catname,child.category_id pcCatId,child.parent_categoryid,c.is_project FROM category AS c LEFT JOIN `parent_categories` AS child ON c.category_id = child.category_id";
+	$resultID = mysqli_query( $linkID, $query );
+	$catMap   = Array();
+	if ( $resultID && mysqli_num_rows( $resultID ) > 0 ) {
+		for ( $x = 0; $x < mysqli_num_rows( $resultID ); $x++ ) {
+			$row      = mysqli_fetch_assoc( $resultID );
 			$catIdVal = $row['catid'];
 			// details ...
 			$catParent = $row['parent_categoryid'];
@@ -110,13 +109,13 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 	
 	$checkIfCatLeaf = "SELECT * FROM category WHERE category_id=$target_proj_id
 			        AND is_project=0";
-	$result_IsProj = mysql_query($checkIfCatLeaf, $linkID);
-	if (mysql_num_rows($result_IsProj) > 0) {
+	$result_IsProj  = mysqli_query( $linkID, $checkIfCatLeaf );
+	if ( mysqli_num_rows( $result_IsProj ) > 0 ) {
 		$output->addAttribute("Proj", "No");
-		$verifyProjMember = "SELECT * FROM parent_categories inner join category on parent_categories.category_id = category.category_id
+		$verifyProjMember  = "SELECT * FROM parent_categories inner join category on parent_categories.category_id = category.category_id
 				                    		WHERE parent_categoryid=$target_proj_id and category.is_project=0";
-		$result_VerifyLeaf = mysql_query($verifyProjMember, $linkID);
-		if (mysql_num_rows($result_VerifyLeaf) > 0) {
+		$result_VerifyLeaf = mysqli_query( $linkID, $verifyProjMember );
+		if ( mysqli_num_rows( $result_VerifyLeaf ) > 0 ) {
 			$output->addAttribute("Verified", "No");
 			notProjectDestination($output);
 			return $output;
@@ -124,21 +123,21 @@ function moveProject($uid, $passhash, $category_id, $target_proj_id) {
 	}
 	
 	$parent_catname = getCategoryNamefromID($target_proj_id,$linkID);
-	$parent_catname = mysql_real_escape_string($parent_catname);
-	$query = "UPDATE parent_categories SET parent_categoryid=$target_proj_id,parent_category_name='$parent_catname' WHERE category_id=$category_id";
+	$parent_catname = mysqli_real_escape_string( $linkID, $parent_catname );
+	$query          = "UPDATE parent_categories SET parent_categoryid=$target_proj_id,parent_category_name='$parent_catname' WHERE category_id=$category_id";
 	$output->addAttribute("Category", $category_id);
-	$resultID = mysql_query($query, $linkID);
+	$resultID = mysqli_query( $linkID, $query );
 	if (!$resultID) {
 		dataNotFound($output, $query);
 		return $output;
 	}
 	return $output;
 }
-$category_id = mysql_real_escape_string($_REQUEST['proj_id']); //TODO: Change this back to a GET when all testing is done.
-$target_proj_id = mysql_real_escape_string($_REQUEST['target_proj_id']);
-$uid = mysql_real_escape_string($_REQUEST['uid']);
-$passhash = mysql_real_escape_string($_REQUEST['pass_hash']);
+
+$category_id    = $_REQUEST['proj_id']; //TODO: Change this back to a GET when all testing is done.
+$target_proj_id = $_REQUEST['target_proj_id'];
+$uid            = $_REQUEST['uid'];
+$passhash       = $_REQUEST['pass_hash'];
 
 $output = moveProject($uid, $passhash, $category_id, $target_proj_id);
 print ($output->asXML());
-?>

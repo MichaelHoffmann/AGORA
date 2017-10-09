@@ -289,4 +289,3 @@
 		$fail->addAttribute("text", "Map could not be saved $query");
 		$fail->addAttribute("code", 309);
 	}
-?>

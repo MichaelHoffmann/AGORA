@@ -28,4 +28,3 @@
 	$version = "11.12.02";
 	/** server url */
 	$serverurlpath = "http://localhost/";
-?>

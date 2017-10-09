@@ -11,3 +11,4 @@ libs/flexunit-*
 generated/
 #Ignore update script
 update.scr
+.idea/

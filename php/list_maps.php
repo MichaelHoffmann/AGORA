@@ -36,24 +36,20 @@
 			badDBLink($output);
 			return $output;
 		}
-		$status=mysql_select_db($dbName, $linkID);
-		if(!$status){
-			databaseNotFound($output);
-			return $output;
-		}
+
 		$query = "SELECT * FROM maps INNER JOIN users ON users.user_id = maps.user_id  AND maps.is_deleted=0 ORDER BY maps.title";
-		$resultID = mysql_query($query, $linkID); 
+		$resultID = mysqli_query($linkID, $query);
 		if(!$resultID){
 			dataNotFound($output, $query);
 			return $output;
 		}
-		if(mysql_num_rows($resultID)==0){
+		if(mysqli_num_rows($resultID)==0){
 			$output->addAttribute("map_count", "0");
 			//This is a better alternative than reporting an error.
 			return $output;
 		}else{
-			for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){ 
-				$row = mysql_fetch_assoc($resultID);
+			for($x = 0 ; $x < mysqli_num_rows($resultID) ; $x++){
+				$row = mysqli_fetch_assoc($resultID);
 				if($row['is_deleted']){
 					accessDeleted($output);
 				}else{				
@@ -70,4 +66,3 @@
 	}
 	$output=list_maps();
 	print($output->asXML());
-?>

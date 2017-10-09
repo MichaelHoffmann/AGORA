@@ -56,4 +56,3 @@
 		print "Text from XML: $text \n<BR>";
 	}		
 	
-?>
